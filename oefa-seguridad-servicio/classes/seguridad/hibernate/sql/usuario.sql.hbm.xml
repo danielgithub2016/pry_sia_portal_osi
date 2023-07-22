@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : core.Usuario -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	
+	<sql-query name="seguridad.usuario.listarIguales">
+            <![CDATA[
+            select count(*)  
+            from sgcoresys.Usuario u 
+			where usuario=UPPER(NVL(:p_usuario,usuario))
+			]]>
+	</sql-query>
+
+	<sql-query name="seguridad.usuario.listarOracleCursor" callable="true">
+			<return alias="usu" class="net.royal.seguridad.dominio.Usuario">
+				<return-property name="usuarioperfil" column="usuarioperfil"/>
+				<return-property name="nombre" column="nombre"/>
+				<return-property name="clave" column="clave"/>
+			</return>        
+			<![CDATA[   
+            { ? = call SGCORESYS.FN_USUARIO_LISTAR }
+            ]]>		
+	</sql-query>
+	
+	
+	<sql-query name="seguridad.usuario.contarPerfilAdministradorFicha">
+		<![CDATA[
+		select nvl(count(1),0) 
+	        from sgcoresys.SEGURIDADPERFILUSUARIO 
+	        where perfil = 'HCADMFICHA' 
+	        AND usuario = :usuario
+	        and estado = 'A'   
+		]]>
+	</sql-query>
+	
+	<sql-query name="seguridad.usuario.contarPerfilAdministradorEmpleados">
+		<![CDATA[
+		select nvl(count(1),0) 
+	        from sgcoresys.SEGURIDADPERFILUSUARIO 
+	        where perfil = 'HCADMEMP' 
+	        AND usuario =  :usuario
+	        and estado = 'A'  
+		]]>
+	</sql-query>
+
+</hibernate-mapping>

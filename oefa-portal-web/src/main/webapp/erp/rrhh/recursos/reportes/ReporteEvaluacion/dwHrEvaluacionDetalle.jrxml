@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportPrueaba02" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b8196333-8c79-4055-9b67-7f19d6239d33">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parCompany" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEmpleado" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEvaluador" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parSecuencia" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parFactor" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+	HR_DetalleEvaluacion.CompanyOwner,
+	HR_DetalleEvaluacion.SecuenciaEval,
+	HR_DetalleEvaluacion.Empleado,
+	HR_DetalleEvaluacion.Secuencia,
+	HR_DetalleEvaluacion.Factor,
+	HR_DetalleEvaluacion.Calificacion,
+	hr_factoresevaluacion.Factor,
+	hr_factoresevaluacion.descripcion,
+
+	HR_FactorValor.Descripcion as descripcionLetra,
+	HR_FactorValor.explicacion,
+	HR_FactorValor.Valor,
+
+	(case when
+		hr_detalleevaluacion.calificacion = HR_FactorValor.Valor then 'S'
+		else 'N' end) as marca,
+	(case when
+		hr_detalleevaluacion.calificacion = HR_FactorValor.Valor + 1 then 'S'
+		else 'N' end) as marca_2,
+	(case when
+		hr_detalleevaluacion.calificacion = HR_FactorValor.Valor + 2 then 'S'
+		else 'N' end) as marca_3,
+	(case when
+		hr_detalleevaluacion.calificacion = HR_FactorValor.Valor + 3 then 'S'
+		else 'N' end) as marca_4,
+
+(	select sum(a.Calificacion)
+	from SGCORESYS.HR_DetalleEvaluacion a
+where a.companyowner = HR_DetalleEvaluacion.companyowner and
+		a.SecuenciaEval = HR_DetalleEvaluacion.SecuenciaEval and
+		a.EmpleadoEvaluador = HR_DetalleEvaluacion.EmpleadoEvaluador and
+		a.Empleado = HR_DetalleEvaluacion.Empleado and
+		a.Tipo = 'N'
+) as cf_suma,
+
+(	select count(a.Calificacion)
+	from SGCORESYS.HR_DetalleEvaluacion a
+where a.companyowner = HR_DetalleEvaluacion.companyowner and
+		a.SecuenciaEval = HR_DetalleEvaluacion.SecuenciaEval and
+		a.EmpleadoEvaluador = HR_DetalleEvaluacion.EmpleadoEvaluador and
+		a.Empleado = HR_DetalleEvaluacion.Empleado and
+		a.Tipo = 'N'
+) as cf_cuenta,
+
+SGCORESYS.HR_DetalleEvaluacion.Tipo,
+SGCORESYS.HR_DetalleEvaluacion.Plantilla,
+SGCORESYS.HR_DetalleEvaluacion.Factorponderacion,
+SGCORESYS.HR_DetalleEvaluacion.empleadoevaluador,
+
+(select count (a.factor)
+ from SGCORESYS.hr_detalleevaluacion a
+where
+a.COMPANYOWNER = hr_detalleevaluacion.COMPANYOWNER and
+a.SECUENCIAEVAL     = hr_detalleevaluacion.SECUENCIAEVAL and
+a.EMPLEADO  = hr_detalleevaluacion.EMPLEADO and
+a.EMPLEADOEVALUADOR = hr_detalleevaluacion.EMPLEADOEVALUADOR
+) as num_evaluaciones,
+EmpleadoMast.CentroCostos,
+HR_EvaluacionPeriodo.Descripcion as PeriodoEvalDes,
+EmpleadoMast.Cargo,
+EmpleadoMast.GrupoOcupacional,
+hr_factoresevaluacion.OrdenPlantilla,
+HR_FactorValor.ValorHasta
+from 	SGCORESYS.HR_DetalleEvaluacion
+
+INNER JOIN SGCORESYS.hr_factoresevaluacion ON
+	hr_detalleevaluacion.factor 				= hr_factoresevaluacion.factor
+INNER JOIN SGCORESYS.HR_FactorValor ON
+	HR_DetalleEvaluacion.Factor 					= HR_FactorValor.factor
+INNER JOIN SGCORESYS.EmpleadoMast ON
+		( hr_detalleevaluacion.Empleado		=	EmpleadoMast.Empleado )
+INNER JOIN SGCORESYS.HR_EvaluacionPeriodo ON
+		( HR_DetalleEvaluacion.CompanyOwner		=	HR_EvaluacionPeriodo.CompanyOwner) AND
+		( HR_DetalleEvaluacion.SecuenciaEval		=	HR_EvaluacionPeriodo.SecuenciaEval)
+
+where
+	hr_detalleevaluacion.CompanyOwner =$P{parCompany} and
+	hr_detalleevaluacion.empleado 	=$P{parEmpleado} and
+	hr_detalleevaluacion.empleadoevaluador =$P{parEvaluador}	and
+	hr_detalleevaluacion.secuenciaeval = $P{parSecuencia} and
+	HR_factoresevaluacion.FlagConcepto= 'N'	and
+  hr_detalleevaluacion.tipo= 'N'
+and hr_factoresevaluacion.Factor=$P{parFactor}
+ order by  HR_FactorValor.Valor]]>
+	</queryString>
+	<field name="COMPANYOWNER" class="java.lang.String"/>
+	<field name="SECUENCIAEVAL" class="java.math.BigDecimal"/>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="FACTOR" class="java.math.BigDecimal"/>
+	<field name="CALIFICACION" class="java.lang.Double"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="DESCRIPCIONLETRA" class="java.lang.String"/>
+	<field name="EXPLICACION" class="java.lang.String"/>
+	<field name="VALOR" class="java.lang.Double"/>
+	<field name="MARCA" class="java.lang.String"/>
+	<field name="MARCA_2" class="java.lang.String"/>
+	<field name="MARCA_3" class="java.lang.String"/>
+	<field name="MARCA_4" class="java.lang.String"/>
+	<field name="CF_SUMA" class="java.math.BigDecimal"/>
+	<field name="CF_CUENTA" class="java.math.BigDecimal"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="PLANTILLA" class="java.lang.String"/>
+	<field name="FACTORPONDERACION" class="java.math.BigDecimal"/>
+	<field name="EMPLEADOEVALUADOR" class="java.math.BigDecimal"/>
+	<field name="NUM_EVALUACIONES" class="java.math.BigDecimal"/>
+	<field name="CENTROCOSTOS" class="java.lang.String"/>
+	<field name="PERIODOEVALDES" class="java.lang.String"/>
+	<field name="CARGO" class="java.lang.String"/>
+	<field name="GRUPOOCUPACIONAL" class="java.math.BigDecimal"/>
+	<field name="ORDENPLANTILLA" class="java.math.BigDecimal"/>
+	<field name="VALORHASTA" class="java.lang.Double"/>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<rectangle>
+				<reportElement x="56" y="0" width="10" height="10" uuid="6febe4b1-91aa-4fb4-8c6e-2478735d4050"/>
+			</rectangle>
+			<textField pattern="###0">
+				<reportElement x="56" y="10" width="10" height="10" forecolor="#0000CC" uuid="412f8c93-d80c-4101-8ae6-170c57b8a4ea"/>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VALOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement x="68" y="0" width="16" height="10" forecolor="#FFFFFF" uuid="38c004c0-d0f5-4d06-80c4-c2545967c857"/>
+				<textFieldExpression><![CDATA[$F{CALIFICACION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="87" y="0" width="370" height="20" uuid="47d46239-722e-46bc-b969-5f219316d89a"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXPLICACION}!=null?$F{EXPLICACION}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="56" y="0" width="10" height="10" uuid="5cacd896-5c28-4d91-be83-86a38a2b3e71"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{CALIFICACION}==$F{VALOR})?"X":""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="52" height="20" uuid="0db75b29-5248-40d4-93f0-ad0f025c118c"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCIONLETRA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

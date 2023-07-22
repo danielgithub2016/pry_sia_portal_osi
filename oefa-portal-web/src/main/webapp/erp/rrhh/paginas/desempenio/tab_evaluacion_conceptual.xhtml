@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		style="#{cwHrEvaluacionempleadoEdit.opciones.dw2_disable ? 'pointer-events:none' : null}"
+		paginator="true" paginatorPosition="bottom" scrollWidth="560"
+		tableStyle="width:540px" scrollable="true" scrollHeight="250"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+		<p:column headerText="Competencia" width="100">
+		</p:column>
+		<p:column headerText="Descripcion" width="400">
+		</p:column>
+
+	</p:dataTable>
+
+</ui:composition>

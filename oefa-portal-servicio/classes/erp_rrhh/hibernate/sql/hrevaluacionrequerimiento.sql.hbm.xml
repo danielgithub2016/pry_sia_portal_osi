@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : rrhh.HrEvaluacionempleado
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="hrevaluacionrequerimiento.listaRequerimiento">
+		SELECT hed.descripcion as "descripcion"
+        FROM sgcoresys.HR_EVALREQUERIMIENTO_DATOS_DET hed
+        WHERE hed.REQUERIMIENTO='LIMA000002'
+    </sql-query>
+</hibernate-mapping>

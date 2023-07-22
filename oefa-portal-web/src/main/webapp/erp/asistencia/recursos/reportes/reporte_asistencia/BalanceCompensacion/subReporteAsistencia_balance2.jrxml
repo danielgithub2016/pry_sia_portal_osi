@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subReporteAsistencia_balance" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b065eb2a-1f18-41e6-9b10-ad7c10478ca2">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_centro_costos" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Fabrica\\Desarrollo\\DesarrolloProductos\\OEFA\\oefa-portal-web\\src\\main\\webapp\\erp\\asistencia\\recursos\\reportes\\reporte_asistencia\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_sid" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_FlagFiltroPeriodo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha_desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha_hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_adicionalesFeriados" class="java.lang.String"/>
+	<parameter name="balancePersonal" class="java.lang.String"/>
+	<parameter name="p_mesesacompensar" class="java.lang.Integer"/>
+	<parameter name="p_empleado" class="java.math.BigDecimal"/>
+	<queryString>
+		<![CDATA[select
+            sum(round(registros.Cantidad * 60)) as cantidad,
+            sgcoresys.f_cent2sex_texto(sum(registros.Cantidad)) as cantidadt
+from
+
+(
+SELECT                   AS_ConceptoAcceso.ExpresadoEn,
+                                         AS_ConceptoAcceso.DescripcionLocal,
+                                         AS_Autorizacion.Fecha,
+                                         AS_Autorizacion.FechaFin,
+                                         AS_Autorizacion.Desde,
+                                         AS_Autorizacion.Hasta,
+                                         AS_AutorizacionFecha.Cantidad,
+                                         AS_Autorizacion.FechaSolicitud,
+                                         AS_Autorizacion.SolicitadoPor,
+                                         AS_Autorizacion.UltimaFechaModif
+FROM                     sgcoresys.AS_Autorizacion
+                                         JOIN   sgcoresys.AS_ConceptoAcceso
+                                                          ON  (AS_Autorizacion.ConceptoAcceso = AS_ConceptoAcceso.ConceptoAcceso)
+                                         JOIN   sgcoresys.AS_AutorizacionFecha
+                                                          ON  (AS_AutorizacionFecha.Empleado = AS_Autorizacion.Empleado) AND
+                                                                        (AS_AutorizacionFecha.FechaSolicitud = AS_Autorizacion.Fecha) AND
+                                                                        (AS_AutorizacionFecha.Desde = AS_Autorizacion.Desde)
+WHERE           (AS_Autorizacion.CategoriaAutorizacion = 'COMP') AND
+                                        (AS_Autorizacion.Empleado = $P{p_empleado})  AND
+                                        (to_char(AS_Autorizacion.Fecha,'YYYYMMDD')  >= to_char($P{p_fecha_desde},'YYYYMMDD'))  AND (to_char(AS_Autorizacion.Fecha,'YYYYMMDD') <= to_char($P{p_fecha_hasta},'YYYYMMDD'))
+ORDER BY                 AS_ConceptoAcceso.ExpresadoEn,
+                                         AS_Autorizacion.Fecha
+ ) registros]]>
+	</queryString>
+	<field name="CANTIDAD" class="java.math.BigDecimal"/>
+	<field name="CANTIDADT" class="java.lang.String"/>
+	<title>
+		<band height="151">
+			<staticText>
+				<reportElement x="4" y="1" width="275" height="20" forecolor="#000099" uuid="32e6f2b4-fb80-46b0-a2a5-20b8c7880868">
+					<printWhenExpression><![CDATA[$F{CANTIDAD} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horas Extras Consumido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="42" width="119" height="30" uuid="9d73ebd4-f2a0-4e0c-b7c2-3f3d76eca77c">
+					<printWhenExpression><![CDATA[$F{CANTIDAD} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Evento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="116" y="42" width="43" height="30" uuid="680bb78a-0f2f-447c-8018-498cb6b75cf3">
+					<printWhenExpression><![CDATA[$F{CANTIDAD} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha Desde]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="206" y="42" width="38" height="30" uuid="b28a3ce4-36be-49bf-bb7b-233191d6159f">
+					<printWhenExpression><![CDATA[$F{CANTIDAD} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Hora Desde]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="163" y="42" width="40" height="30" uuid="b550be72-2357-435c-bc74-5e1c697ba70e">
+					<printWhenExpression><![CDATA[$F{CANTIDAD} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha Hasta]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="39" width="531" height="1" uuid="da9583c6-7b1b-4d90-8a17-a721bda76663">
+					<printWhenExpression><![CDATA[$F{CANTIDAD}!=null]]></printWhenExpression>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="3" y="76" width="531" height="1" uuid="27ff907e-3252-4e6e-8ab7-b2ca82404f0c">
+					<printWhenExpression><![CDATA[$F{CANTIDAD}!=null]]></printWhenExpression>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="247" y="42" width="37" height="30" uuid="aabfde0e-5a3d-4255-b8ce-bf435b1a4e7f">
+					<printWhenExpression><![CDATA[$F{CANTIDAD}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Hora Hasta]]></text>
+			</staticText>
+			<subreport isUsingCache="true">
+				<reportElement isPrintRepeatedValues="false" x="3" y="77" width="549" height="70" uuid="45331a28-eb7a-49af-b368-d9ef2d08e265"/>
+				<subreportParameter name="p_empleado">
+					<subreportParameterExpression><![CDATA[$P{p_empleado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_hasta">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_hasta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_desde">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_desde}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["subReporteAsistencia_balance_expresadoen.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="287" y="42" width="54" height="30" uuid="9cfa3a5a-08c2-4901-983b-dc3f95693c15">
+					<printWhenExpression><![CDATA[$F{CANTIDAD}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Minutos Consumidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="342" y="42" width="56" height="35" uuid="d525e711-24a8-4f4e-a299-dad11d7bc226">
+					<printWhenExpression><![CDATA[$F{CANTIDAD}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Horas Consumidas (HH:MM)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="398" y="42" width="46" height="30" uuid="da2fcd73-b827-4f43-a208-6df0eb31ee51">
+					<printWhenExpression><![CDATA[$F{CANTIDAD}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha Solicitud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="42" width="44" height="30" uuid="f990d3e8-a1dc-4ee5-8530-716d7148eda0">
+					<printWhenExpression><![CDATA[$F{CANTIDAD}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Usuario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="489" y="42" width="63" height="30" uuid="461169ea-231f-453e-a480-dad585ed2151">
+					<printWhenExpression><![CDATA[$F{CANTIDAD}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Ult. Fecha Modif.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="21" width="274" height="16" forecolor="#990000" uuid="3164f199-f74f-4385-9946-62965ce534c6">
+					<printWhenExpression><![CDATA[$F{CANTIDAD} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ocurrencia]]></text>
+			</staticText>
+		</band>
+	</title>
+	<summary>
+		<band height="24">
+			<rectangle>
+				<reportElement x="291" y="2" width="52" height="20" uuid="ee0e7890-53da-4480-b9c5-0b7cb10c1988">
+					<printWhenExpression><![CDATA[$F{CANTIDAD}!=null]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="343" y="2" width="51" height="20" uuid="c49dc565-3357-4183-ab79-0a3f3289ce43">
+					<printWhenExpression><![CDATA[$F{CANTIDAD}!=null]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="202" y="4" width="81" height="18" forecolor="#000099" uuid="8482bf9b-25c2-404e-8910-15b9d00feb0d">
+					<printWhenExpression><![CDATA[$F{CANTIDAD}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Consumidos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="291" y="4" width="52" height="18" forecolor="#000099" uuid="08fe5bea-688e-4123-94ec-3bcae479b8b1">
+					<printWhenExpression><![CDATA[$F{CANTIDAD}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="346" y="3" width="49" height="18" forecolor="#000099" uuid="2233f2d3-be0e-4765-bbc5-29eb8d97c721">
+					<printWhenExpression><![CDATA[$F{CANTIDAD}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTIDADT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

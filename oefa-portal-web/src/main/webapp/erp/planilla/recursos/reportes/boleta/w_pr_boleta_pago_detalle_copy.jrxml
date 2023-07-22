@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_pr_boleta_pago_detalle" language="groovy" pageWidth="547" pageHeight="595" columnWidth="547" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8380167c-748e-470c-9c35-cff1fd059cf2">
+	<property name="ireport.zoom" value="1.1000000000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="empleado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="periodo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="proceso" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="planilla" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="compania" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT PR_Concepto.Concepto,
+            PR_PlanillaEmpleadoConcepto.Monto,
+         PR_PlanillaEmpleadoConcepto.Cantidad,
+         PR_PlanillaEmpleadoConcepto.Saldo,
+            PR_Concepto.TipoConcepto,
+            PR_Concepto.PlanillaOrden,
+            PR_Concepto.TextoImpresion
+    FROM SGCORESYS.PR_Concepto,
+            SGCORESYS.PR_PlanillaEmpleadoConcepto
+   WHERE ( PR_Concepto.Concepto = PR_PlanillaEmpleadoConcepto.Concepto ) and
+         ( PR_PlanillaEmpleadoConcepto.Periodo = $P{periodo}) AND
+         ( PR_PlanillaEmpleadoConcepto.TipoProceso = $P{proceso} ) and
+         ( PR_PlanillaEmpleadoConcepto.TipoPlanilla = $P{planilla}) and
+            ( PR_PlanillaEmpleadoConcepto.Empleado =$P{empleado} ) and
+            ( PR_PlanillaEmpleadoConcepto.CompaniaSocio = $P{compania}) and
+( PR_Concepto.TipoConcepto ='IN' OR PR_Concepto.TipoConcepto ='DE' ) and
+            (PR_PlanillaEmpleadoConcepto.Monto <> 0 OR PlanillaOrden < 0 or PR_PlanillaEmpleadoConcepto.Saldo>0)
+    ORDER BY PR_Concepto.Concepto,PR_Concepto.TipoConcepto DESC, PR_Concepto.PlanillaOrden ASC]]>
+	</queryString>
+	<field name="CONCEPTO" class="java.lang.String"/>
+	<field name="MONTO" class="java.lang.Double"/>
+	<field name="CANTIDAD" class="java.lang.Double"/>
+	<field name="SALDO" class="java.math.BigDecimal"/>
+	<field name="TIPOCONCEPTO" class="java.lang.String"/>
+	<field name="PLANILLAORDEN" class="java.math.BigDecimal"/>
+	<field name="TEXTOIMPRESION" class="java.lang.String"/>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="21" y="0" width="195" height="16" uuid="9c6ab33a-5144-4130-8916-c67cf531469b"/>
+				<textFieldExpression><![CDATA[$F{TEXTOIMPRESION}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToTallestObject" x="1" y="0" width="1" height="16" isPrintWhenDetailOverflows="true" uuid="1af3d39b-43c0-42e4-a29a-95189d956f1c"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToTallestObject" x="544" y="0" width="1" height="16" isPrintWhenDetailOverflows="true" uuid="dee1f9d5-dd0f-40c2-8f26-35c22e3ae528"/>
+			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="248" y="0" width="100" height="16" uuid="efe2dfe0-7202-4061-bec7-3bb02a58e634"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[($F{TIPOCONCEPTO}=="IN"?$F{MONTO}:"")]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="382" y="0" width="98" height="16" uuid="1287120b-78ea-430a-88ad-e64237907d5e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[($F{TIPOCONCEPTO}=="DE"?$F{MONTO}:"")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

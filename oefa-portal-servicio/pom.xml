@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.royal</groupId>
+	<artifactId>oefa-portal-servicio</artifactId>
+	<version>1.0</version>
+	<name>Oefa - Portal - Servicio</name>
+
+	<properties>
+		<project.build.sourceEncoding>Cp1252</project.build.sourceEncoding>
+		<javaVersion>1.7</javaVersion>
+		<springVersion>4.2.1.RELEASE</springVersion>
+		<hibernateVersion>4.3.11.Final</hibernateVersion>
+		<primefacesVersion>5.3.5</primefacesVersion>
+		<primefacesExtensionsVersion>3.2.0</primefacesExtensionsVersion>
+		<jsfMojarraVersion>2.2.12</jsfMojarraVersion>
+		<jasperreportsVersion>6.1.1</jasperreportsVersion>
+		<mavenCompilerPlugin>3.1</mavenCompilerPlugin>
+		<mavenWarPlugin>2.4</mavenWarPlugin>
+		<mavenEclipsePlugin>2.9</mavenEclipsePlugin>
+		<mavenResourcesPlugin>2.6</mavenResourcesPlugin>
+		<wtpVersion>2.0</wtpVersion>
+		<sonarMavenPlugin>2.4</sonarMavenPlugin>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.royal</groupId>
+			<artifactId>oefa-framework-web</artifactId>
+			<version>1.0</version>
+		</dependency>		
+	</dependencies>
+
+	<build>
+		<finalName>oefa-portal-servicio</finalName>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<filtering>true</filtering>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+		<outputDirectory>classes/</outputDirectory>
+		<defaultGoal>install</defaultGoal>
+		
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>${sonarMavenPlugin}</version>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

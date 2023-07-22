@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.rrhh.dominio.HrEvalrequerimiento"
+		table="SGCORESYS.HR_EVALREQUERIMIENTO">
+		<composite-id name="pk"
+			class="net.royal.erp.rrhh.dominio.HrEvalrequerimientoPk">
+			<key-property name="requerimiento" type="string">
+				<column name="REQUERIMIENTO" length="10" />
+			</key-property>
+			<key-property name="secuencia" type="integer">
+				<column name="SECUENCIA" length="22" />
+			</key-property>
+			<key-property name="companyowner" type="string">
+				<column name="COMPANYOWNER" length="8" />
+			</key-property>
+		</composite-id>
+		<property name="unidadnegocio" type="string">
+			<column name="UNIDADNEGOCIO" length="4" />
+		</property>
+		<property name="etapa" type="string">
+			<column name="ETAPA" length="5" />
+		</property>
+		<property name="peso" type="big_decimal">
+			<column name="PESO" length="22" />
+		</property>
+		<property name="plantillaevaluacion" type="string">
+			<column name="PLANTILLAEVALUACION" length="5" />
+		</property>
+		<property name="fechaevaluacion" type="timestamp">
+			<column name="FECHAEVALUACION" length="7" />
+		</property>
+		<property name="fechaevaluaciondesde" type="timestamp">
+			<column name="FECHAEVALUACIONDESDE" length="7" />
+		</property>
+		<property name="calificacionmaximo" type="big_decimal">
+			<column name="CALIFICACIONMAXIMO" length="22" />
+		</property>
+		<property name="flagpublicado" type="string">
+			<column name="FLAGPUBLICADO" length="1" />
+		</property>
+		<property name="ultimaFechaModif" type="timestamp">
+			<column name="ULTIMAFECHAMODIF" length="7" />
+		</property>
+		<property name="lugar" type="string">
+			<column name="LUGAR" length="4000" />
+		</property>
+		<property name="reclutamientoetapa" type="integer">
+			<column name="RECLUTAMIENTOETAPA" length="22" />
+		</property>
+		<property name="evaluacion" type="integer">
+			<column name="EVALUACION" length="22" />
+		</property>
+		<property name="ultimoUsuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+		<property name="fechaevaluacionhasta" type="timestamp">
+			<column name="FECHAEVALUACIONHASTA" length="7" />
+		</property>
+	</class>
+</hibernate-mapping>

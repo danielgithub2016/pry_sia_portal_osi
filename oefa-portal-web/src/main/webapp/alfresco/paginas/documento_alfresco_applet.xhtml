@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/comun/plantillas/main_alfresco.xhtml">
+
+	<ui:define name="content">
+
+		<div class="ui-fluid">
+			<h:form id="frmAppletAlfresco">
+
+				<div id="appletalfresco">
+					<object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"
+						codebase="http://java.sun.com/update/1.6.0/jinstall-6u12-windows-x64.cab"
+						width="450" height="100" mayscript="true"
+						type="application/x-java-applet">
+						<param name="type" value="application/x-java-applet;version=1.7" />
+						<param name="code"
+							value="pe.gob.oefa.applet.FrmSeleccionDocumento.class" />
+						<param name="archive"
+							value="alfresco.jar,org-apache-commons-logging.jar,axis-ant.jar,axis.jar,BASE64Decoder.jar,commons-discovery-0.2.jar,javax.wsdl_1.6.2.v201012040545.jar,jaxrpc.jar,perfilService.jar,service.jar,wsdl4j.jar" />
+						<param name="mayscript" value="true" />
+						<param name="scriptable" value="true" />
+						<param name="KeyAlfresco" value="#{cDocumentoAlfrescoApplet.key}" />
+						<param name="WsAlfresco" value="#{cDocumentoAlfrescoApplet.ws}" />
+						<param name="AccionAlfresco" value="#{cDocumentoAlfrescoApplet.paramurl.accion}" />
+						<param name="CarpetaAlfresco" value="#{cDocumentoAlfrescoApplet.paramurl.carpeta}" />
+						<param name="IdProcesoAlfresco" value="#{cDocumentoAlfrescoApplet.paramurl.idproceso}" />
+						<param name="ProcesoAlfresco" value="#{cDocumentoAlfrescoApplet.paramurl.proceso}" />
+						<param name="SessionAlfresco" value="#{cDocumentoAlfrescoApplet.paramurl.session_usuario}" />
+						<param name="UsuarioAlfresco" value="#{cDocumentoAlfrescoApplet.paramurl.usuario}" />
+						<param name="UuidAlfresco" value="#{cDocumentoAlfrescoApplet.paramurl.uuid}" />
+
+						<comment> <embed
+							type="application/x-java-applet;version=1.7"
+							pluginspage="http://java.sun.com/products/plugin/index.html#download"
+							code="pe.gob.oefa.applet.FrmSeleccionDocumento.class"
+							archive="alfresco.jar,org-apache-commons-logging.jar,axis-ant.jar,axis.jar,BASE64Decoder.jar,commons-discovery-0.2.jar,javax.wsdl_1.6.2.v201012040545.jar,jaxrpc.jar,perfilService.jar,service.jar,wsdl4j.jar"
+							width="450" height="100" mayscript="true" scriptable="true"
+							KeyAlfresco="#{cDocumentoAlfrescoApplet.key}"
+						    WsAlfresco="#{cDocumentoAlfrescoApplet.ws}"
+						AccionAlfresco="#{cDocumentoAlfrescoApplet.paramurl.accion}"
+						CarpetaAlfresco="#{cDocumentoAlfrescoApplet.paramurl.carpeta}"
+						IdProcesoAlfresco="#{cDocumentoAlfrescoApplet.paramurl.idproceso}" 
+						ProcesoAlfresco="#{cDocumentoAlfrescoApplet.paramurl.proceso}"
+						SessionAlfresco="#{cDocumentoAlfrescoApplet.paramurl.session_usuario}"
+						UsuarioAlfresco="#{cDocumentoAlfrescoApplet.paramurl.usuario}"
+						UuidAlfresco="#{cDocumentoAlfrescoApplet.paramurl.uuid}">
+							<noembed> No se pudo inicializar el applet de firma por
+								que Java Plugin 1.6 no esta instalado. </noembed>
+						</embed> </comment>
+					</object>
+				</div>
+
+
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+

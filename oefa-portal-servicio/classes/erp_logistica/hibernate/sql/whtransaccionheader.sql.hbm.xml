@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : logistica.WhTransaccionheader
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="whtransaccionheader.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+    </sql-query>
+    
+    <!-- syfinan.dw_wh_item_stock_direcciondestino -->
+	<sql-query name="whtransaccionheader.DwWhItemStockDirecciondestino">
+	SELECT  
+		WH_TransaccionHeader.DireccionDestino as "direcciondestino",           
+		WH_Kardex.Item as "item",           
+		WH_DestinoFinal.DescripcionLocal as "descripcionlocal",           
+		sum(CASE WHEN IngresoEgresoFlag='T' THEN -Cantidad ELSE Cantidad END ) as "sumcantidad"    
+		FROM 
+		sgcoresys.WH_TransaccionHeader
+			INNER JOIN sgcoresys.WH_Kardex
+				ON (WH_TransaccionHeader.CompaniaSocio = WH_Kardex.ReferenciaCompaniaSocio AND
+					 WH_TransaccionHeader.TipoDocumento = WH_Kardex.ReferenciaTipoDocumento AND
+					 WH_TransaccionHeader.NumeroDocumento = WH_Kardex.ReferenciaNumeroDocumento AND
+					 WH_TransaccionHeader.AlmacenCodigo = WH_Kardex.AlmacenCodigo)
+			INNER JOIN sgcoresys.WH_DestinoFinal
+				ON (WH_TransaccionHeader.DireccionDestino = WH_DestinoFinal.CodigoDestino)
+			INNER JOIN sgcoresys.WH_TransaccionMast     
+				ON (WH_TransaccionMast.TransaccionCodigo = WH_Kardex.TransaccionCodigo)
+	</sql-query>
+	
+		<!-- syfinan.dw_wh_item_stock_direcciondestino Contar -->
+	<sql-query name="whtransaccionheader.DwWhItemStockDirecciondestinoConteo">
+	SELECT  
+		count(1) 
+		FROM 
+		sgcoresys.WH_TransaccionHeader
+			INNER JOIN sgcoresys.WH_Kardex
+				ON (WH_TransaccionHeader.CompaniaSocio = WH_Kardex.ReferenciaCompaniaSocio AND
+					 WH_TransaccionHeader.TipoDocumento = WH_Kardex.ReferenciaTipoDocumento AND
+					 WH_TransaccionHeader.NumeroDocumento = WH_Kardex.ReferenciaNumeroDocumento AND
+					 WH_TransaccionHeader.AlmacenCodigo = WH_Kardex.AlmacenCodigo)
+			INNER JOIN sgcoresys.WH_DestinoFinal
+				ON (WH_TransaccionHeader.DireccionDestino = WH_DestinoFinal.CodigoDestino)
+			INNER JOIN sgcoresys.WH_TransaccionMast     
+				ON (WH_TransaccionMast.TransaccionCodigo = WH_Kardex.TransaccionCodigo)
+	</sql-query>
+    
+</hibernate-mapping>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : logistica.WhItemalmacenlote
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<!-- syfinan.dw_wh_item_stock_list -->
+	<sql-query name="whitemalmacenlote.DwWhItemStockList">
+	SELECT 
+		WH_ItemAlmacenLote.AlmacenCodigo as "almacencodigo",   
+		WH_ItemAlmacenLote.Lote as "lote",   
+		NVL(WH_ItemAlmacenLote.StockActual,0) as "stockactual",   
+		WH_AlmacenMast.DescripcionLocal as "descripcionlocal",   
+		WH_ItemAlmacenLote.Condicion as "condicion",   
+		WH_ItemAlmacenLote.Item as "item",   
+		NVL(WH_ItemAlmacenLote.StockActualDoble,0) as "stockactualdoble",   
+		WH_ItemAlmacenLote.FechaIngreso as "fechaingreso",   
+		WH_ItemAlmacenLote.FechaVencimiento as "fechavencimiento",   
+		WH_ItemAlmacenLote.LoteEquivalente as "loteequivalente",  
+		WH_AlmacenMast.AlmacenRegion as "almacenregion",   
+		WH_AlmacenMast.TipoAlmacen as "tipoalmacen",   
+		WH_AlmacenMast.AlmacenVentaFlag as "almacenventaflag",   
+		WH_AlmacenMast.AlmacenProduccionFlag as "almacenproduccionflag",   
+		WH_AlmacenMast.AlmacenConsignacionFlag as "almacenconsignacionflag",
+		WH_AlmacenMast.UnidadNegocio as "unidadnegocio",
+		rownum as "rowkey"
+		FROM 
+		sgcoresys.WH_ItemAlmacenLote
+			INNER JOIN sgcoresys.WH_AlmacenMast 
+				ON (WH_ItemAlmacenLote.AlmacenCodigo = WH_AlmacenMast.AlmacenCodigo)
+	</sql-query>
+
+	<!-- syfinan.dw_wh_item_stock_list Conteo -->
+	<sql-query name="whitemalmacenlote.DwWhItemStockListConteo">
+	SELECT 
+		count(1)
+		FROM 
+		sgcoresys.WH_ItemAlmacenLote
+			INNER JOIN sgcoresys.WH_AlmacenMast 
+				ON (WH_ItemAlmacenLote.AlmacenCodigo = WH_AlmacenMast.AlmacenCodigo)
+	</sql-query>
+        
+    <sql-query name="whitemalmacenlote.obtenerStockActual">
+		 SELECT 
+		 	Sum(WH_ItemAlmacenLote.StockActual)  
+    	 FROM 
+    	 	SGCORESYS.WH_ItemAlmacenLote  
+  		 WHERE 
+  		 	WH_ItemAlmacenLote.Item = :p_item  AND
+	 		WH_ItemAlmacenLote.AlmacenCodigo = :p_almacen
+    </sql-query>
+    
+</hibernate-mapping>

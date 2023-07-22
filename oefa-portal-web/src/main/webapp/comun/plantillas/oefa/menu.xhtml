@@ -1,0 +1,295 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<script type="text/javascript">
+		function accion(id) {
+			document.getElementById('frmMenu:'+id).click(); 
+		}
+	</script>
+	<h:form id="frmMenu">
+		<nav class="pushy pushy-left">
+			<header>
+				<img alt="logo" height="45"
+					src="#{request.contextPath}/comun/recursos/imagenes/sistema/oefa-logo-header.png" /><br />
+				#{cComunGlobal.nombreAplicacion}
+			</header>
+			<ul
+				style="font-size: 11px; font-family: Open sans, Arial, sans-serif;">
+
+				<li><a href="#" onclick="accion('btnInicio')"><img
+						width="18" style="margin-right: 10px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/blue-home-icon.png" />
+						Inicio</a></li>
+
+				<!-- Asistencia -->
+				<li style="#{cLogin.opcion.estiloSPGRUP04CON003}"><a href="#" onclick="accion('btnSolicitudes')"><img
+						width="18" style="margin-right: 12px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/solicitudes_menu.png" />
+						Solicitudes</a></li>
+						
+
+				<!-- Reprogramación Vacaciones -->
+				<li style="#{cLogin.opcion.estiloSPGRUP04CON008}"><a href="#" onclick="accion('btnReprogVacas')"><img
+						width="18" style="margin-right: 12px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/reprogramacion_menu.png" />
+						Reprogramar Vacaciones</a></li>
+
+				<li style="#{cLogin.opcion.estiloSPGRUP04CON001}"><a href="#" onclick="accion('btnAutorizaciones')"><img
+						width="18" style="margin-right: 12px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/autorizacion_menu.png" />
+						Autorizaciones</a></li>
+						
+
+				<li style="#{cLogin.opcion.estiloSPGRUP04CON002}"><a href="#" onclick="accion('btnMarcaAsistencia')"><img
+						width="16" style="margin-right: 13px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/marcaciones_menu.png" />
+						Marcaciones</a></li>
+				<li style="#{cLogin.opcion.estiloSPGRUP04CON004}"><a href="#"
+					onclick="accion('btnReporteAsistencia')"><img width="16"
+						style="margin-right: 13px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/reporte_asistencia_menu.png" />
+						Reporte de Asistencia</a></li>
+
+				<li style="#{cLogin.opcion.estiloSPGRUP04CON005}"><a href="#" onclick="accion('btnReporteMarcas')"><img
+						width="16" style="margin-right: 13px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/reporte_marcacion_menu.png" />
+						Reporte de Marcas</a></li>
+
+				<li style="#{cLogin.opcion.estiloSPGRUP04CON006}"><a href="#" onclick="accion('btnFeriadosGanados')"><img
+						width="18" style="margin-right: 12px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/reporte_marcacion_menu.png" />
+						Reporte Feriados Ganados</a></li>
+
+				<li style="#{cLogin.opcion.estiloSPGRUP04CON007}"><a href="#"
+					onclick="accion('btnFeriadosCompensadas')"><img width="18"
+						style="margin-right: 12px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/reporte_marcacion_menu.png" />
+						Reporte Horas Ganadas</a></li>
+						
+				<li style="#{cLogin.opcion.estiloSPGRUP04CON009}"><a href="#"
+					onclick="accion('btnHorasCompensadas')"><img width="18"
+						style="margin-right: 12px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/reporte_marcacion_menu.png" />
+						Lista Horas Extras</a></li>
+
+
+				<!-- Recursos Humanos -->
+				<li style="#{cLogin.opcion.estiloSPGRUP05CON001}"><a href="#" onclick="accion('btnReqPersonal')"><img
+						width="18" style="margin-right: 12px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/personal_menu.png" />
+						Requerimiento de Personal</a></li>
+				<li style="#{cLogin.opcion.estiloSPGRUP05CON004}"><a href="#" onclick="accion('btnEncuestas')"><img
+						width="16" style="margin-right: 17px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/encuesta_menu.png" />Encuestas</a></li>
+
+				<li style="#{cLogin.opcion.estiloSPGRUP05CON005}"><a href="#" onclick="accion('btnCalendarioAct')"><img
+						width="18" style="margin-right: 13px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/actividades_menu.png" />
+						Actividades</a></li>
+			
+				<li style="#{cLogin.opcion.estiloSPGRUP05CON009}"><a href="#" onclick="accion('btnEvaluacionCas')"><img
+						width="15" style="margin-right: 14px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/evalcas.png" />
+						Eval. de Conoc. CAS</a></li>
+						
+				<li style="#{cLogin.opcion.estiloSPGRUP05CON011}"><a href="#" onclick="accion('btnEvaluacionCeu')"><img
+						width="15" style="margin-right: 14px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/evalcas.png" />
+						Eval. de Conoc. CEU</a></li>
+						
+				<li style="#{cLogin.opcion.estiloSPGRUP05CON012}"><a href="#" onclick="accion('btnEvaluacionSalaCeu')"><img
+						width="15" style="margin-right: 14px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/capacitaciones_menu.png" />
+						Gestión de Salas CEU</a></li>		
+						
+				<li style="#{cLogin.opcion.estiloSPGRUP05CON010}"><a href="#" onclick="accion('btnEntrevistaCas')"><img
+						width="15" style="margin-right: 14px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/entrcas.png" />
+						Entrevista CAS</a></li>
+						
+						
+
+				<!-- Planillas -->
+				<li style="#{cLogin.opcion.estiloSPGRUP06CON002}"><a href="#"
+					onclick="accion('btnCertificado4ta5ta')"><img width="15"
+						style="margin-right: 14px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/cursosemp_menu.png" />
+						Certificados 4ta y 5ta</a></li>
+				<li style="#{cLogin.opcion.estiloSPGRUP06CON003}"><a href="#"
+					onclick="accion('btnReporteVacaciones')"><img width="15"
+						style="margin-right: 14px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/reporte_vacaciones_menu.png" />
+						Reporte de Vacaciones</a></li>
+				<li style="#{cLogin.opcion.estiloSPGRUP06CON004}"><a href="#" onclick="accion('btnReporteCTS')"><img
+						width="15" style="margin-right: 14px"
+						src="#{request.contextPath}/comun/recursos/imagenes/menu/reporte_cts_menu.png" />
+						Reporte de CTS</a></li>
+
+
+
+			</ul>
+		</nav>
+
+
+		<!-- Planillas -->
+		<p:commandButton style="display:none" id="btnCertificado4ta5ta"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP06CON002" />
+		</p:commandButton>
+		<p:commandButton style="display:none" id="btnReporteVacaciones"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP06CON003" />
+		</p:commandButton>
+		<p:commandButton style="display:none" id="btnReporteCTS"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP06CON004" />
+		</p:commandButton>
+
+
+
+		<!-- Asistencia -->
+		<p:commandButton style="display:none" id="btnAutorizaciones"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP04CON001" />
+		</p:commandButton>
+		<p:commandButton style="display:none" id="btnMarcaAsistencia"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP04CON002" />
+		</p:commandButton>
+		
+		
+		<p:commandButton style="display:none" id="btnSolicitudes"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP04CON003" />
+		</p:commandButton>
+		<p:commandButton style="display:none" id="btnReporteAsistencia"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP04CON004" />
+		</p:commandButton>
+		<p:commandButton style="display:none" id="btnReporteMarcas"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP04CON005" />
+		</p:commandButton>
+		<p:commandButton style="display:none" id="btnFeriadosGanados"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP04CON006" />
+			<f:setPropertyActionListener
+				target="#{cwReporteSaldoFeriado.tipoReporte}" value="feriados" />
+		</p:commandButton>
+		<p:commandButton style="display:none" id="btnFeriadosCompensadas"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP04CON007" />
+			<f:setPropertyActionListener
+				target="#{cwReporteSaldoFeriado.tipoReporte}" value="compensadas" />
+		</p:commandButton>
+		<p:commandButton style="display:none" id="btnReprogVacas"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP04CON008" /> 
+		</p:commandButton>
+
+
+		
+		
+		
+		<p:commandButton style="display:none" id="btnCalendarioAct"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP05CON005" />
+		</p:commandButton>
+		<p:commandButton style="display:none" id="btnEncuestas"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP05CON004" />
+		</p:commandButton>
+		<p:commandButton style="display:none" id="btnEvluacionCandidatos"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP05CON002" />
+		</p:commandButton>
+		<p:commandButton style="display:none" id="btnReqPersonal"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP05CON001" />
+		</p:commandButton>
+
+		<p:commandButton style="display:none" id="btnEvaluacionCas"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP05CON009" />
+		</p:commandButton>
+		<p:commandButton style="display:none" id="btnEntrevistaCas"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP05CON010" />
+		</p:commandButton>
+		
+		 <p:commandButton style="display:none" id="btnEvaluacionCeu"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP05CON011" />
+		</p:commandButton>
+		
+		 <p:commandButton style="display:none" id="btnEvaluacionSalaCeu"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP05CON012" />
+		</p:commandButton>
+		
+		
+		<p:commandButton id="btnInicio" style="display:none"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="INICIO" />
+		</p:commandButton>
+		<p:commandButton style="display:none" id="btnHorasCompensadas"
+			action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+			oncomplete="PF('bUI').unblock();">
+			<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+				value="SPGRUP04CON009" />
+		</p:commandButton>
+		
+
+	</h:form>
+
+	<pe:blockUI target="@(body)" widgetVar="bUI">
+		<h:graphicImage value="/comun/recursos/imagenes/loading.gif"
+			style="vertical-align: middle;width:15em;" />
+	</pe:blockUI>
+
+</ui:composition>

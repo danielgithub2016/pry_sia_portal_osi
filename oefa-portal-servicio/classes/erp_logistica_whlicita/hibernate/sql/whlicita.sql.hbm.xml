@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : whlicita.w_wh_transactiondraft_list
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- whlicita.d_wh_interfase_seace_control_01 -->
+    <sql-query name="whlicita.DWhInterfaseSeaceControl01">
+    </sql-query>
+
+    <!-- whlicita.d_wh_interfase_seace_control_02 -->
+    <sql-query name="whlicita.DWhInterfaseSeaceControl02">
+    </sql-query>
+
+    <!-- whlicita.d_wh_interfase_seace_control_03 -->
+    <sql-query name="whlicita.DWhInterfaseSeaceControl03">
+    </sql-query>
+
+    <!-- whlicita.d_wh_interfase_seace_control_04 -->
+    <sql-query name="whlicita.DWhInterfaseSeaceControl04">
+    </sql-query>
+
+    <!-- whlicita.d_wh_interfase_seace_control_05 -->
+    <sql-query name="whlicita.DWhInterfaseSeaceControl05">
+    </sql-query>
+
+    <!-- whlicita.d_wh_interfase_seace_validacion_00 -->
+    <sql-query name="whlicita.DWhInterfaseSeaceValidacion00">
+    </sql-query>
+
+    <!-- whlicita.d_wh_interfase_seace_validacion_01 -->
+    <sql-query name="whlicita.DWhInterfaseSeaceValidacion01">
+    </sql-query>
+
+    <!-- whlicita.d_wh_interfase_seace_validacion_02 -->
+    <sql-query name="whlicita.DWhInterfaseSeaceValidacion02">
+    </sql-query>
+
+    <!-- whlicita.d_wh_interfase_seace_validacion_03 -->
+    <sql-query name="whlicita.DWhInterfaseSeaceValidacion03">
+    </sql-query>
+
+    <!-- whlicita.d_wh_interfase_seace_validacion_03_prueba -->
+    <sql-query name="whlicita.DWhInterfaseSeaceValidacion03Prueba">
+    </sql-query>
+
+    <!-- whlicita.dw_ma_textos_select -->
+    <sql-query name="whlicita.DwMaTextosSelect">
+    </sql-query>
+
+    <!-- whlicita.dw_ma_wh_carta_fianza_asociada_list2 -->
+    <sql-query name="whlicita.DwMaWhCartaFianzaAsociadaList2">
+    </sql-query>
+
+    <!-- whlicita.dw_ma_wh_licitacionmotivo_list -->
+    <sql-query name="whlicita.DwMaWhLicitacionmotivoList">
+    </sql-query>
+
+    <!-- whlicita.dw_ma_wh_licitacionmotivo_position -->
+    <sql-query name="whlicita.DwMaWhLicitacionmotivoPosition">
+    </sql-query>
+
+    <!-- whlicita.dw_ma_wh_licitacionmotivo_select -->
+    <sql-query name="whlicita.DwMaWhLicitacionmotivoSelect">
+    </sql-query>
+
+    <!-- whlicita.dw_ma_wh_licitacionmotivo_tipo_select -->
+    <sql-query name="whlicita.DwMaWhLicitacionmotivoTipoSelect">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_comite_edit -->
+    <sql-query name="whlicita.DwWhComiteEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_comite_edit_detail -->
+    <sql-query name="whlicita.DwWhComiteEditDetail">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_comite_list -->
+    <sql-query name="whlicita.DwWhComiteList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_comite_select -->
+    <sql-query name="whlicita.DwWhComiteSelect">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_comite_select_detail -->
+    <sql-query name="whlicita.DwWhComiteSelectDetail">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_contrato_ddw -->
+    <sql-query name="whlicita.DwWhContratoDdw">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_lic_generation_contrato_detail -->
+    <sql-query name="whlicita.DwWhLicGenerationContratoDetail">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_lic_generation_contrato_header -->
+    <sql-query name="whlicita.DwWhLicGenerationContratoHeader">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licconvdetalle_convocatoria_list -->
+    <sql-query name="whlicita.DwWhLicconvdetalleConvocatoriaList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licconvdetalle_convocatoriadetalle -->
+    <sql-query name="whlicita.DwWhLicconvdetalleConvocatoriadetalle">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_liccotizdetalle_convocatoria_list -->
+    <sql-query name="whlicita.DwWhLiccotizdetalleConvocatoriaList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_accion_edit -->
+    <sql-query name="whlicita.DwWhLicitacionAccionEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_accion_list -->
+    <sql-query name="whlicita.DwWhLicitacionAccionList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_accion_select -->
+    <sql-query name="whlicita.DwWhLicitacionAccionSelect">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_adj_edit -->
+    <sql-query name="whlicita.DwWhLicitacionAdjEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_adjudicaciones_select -->
+    <sql-query name="whlicita.DwWhLicitacionAdjudicacionesSelect">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_adjudicaciones_select_tipo -->
+    <sql-query name="whlicita.DwWhLicitacionAdjudicacionesSelectTipo">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_asignar_bases_list -->
+    <sql-query name="whlicita.DwWhLicitacionAsignarBasesList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_asignar_comite_list -->
+    <sql-query name="whlicita.DwWhLicitacionAsignarComiteList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_bases_edit_t1a -->
+    <sql-query name="whlicita.DwWhLicitacionBasesEditT1a">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_bases_edit_t1b -->
+    <sql-query name="whlicita.DwWhLicitacionBasesEditT1b">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_bases_edit_t2a -->
+    <sql-query name="whlicita.DwWhLicitacionBasesEditT2a">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_bases_edit_t2b -->
+    <sql-query name="whlicita.DwWhLicitacionBasesEditT2b">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_bases_edit_t3a -->
+    <sql-query name="whlicita.DwWhLicitacionBasesEditT3a">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_bases_edit_t4a -->
+    <sql-query name="whlicita.DwWhLicitacionBasesEditT4a">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_bases_edit_t5a -->
+    <sql-query name="whlicita.DwWhLicitacionBasesEditT5a">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_bases_list -->
+    <sql-query name="whlicita.DwWhLicitacionBasesList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_bases_list_position -->
+    <sql-query name="whlicita.DwWhLicitacionBasesListPosition">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_buenapro_edit -->
+    <sql-query name="whlicita.DwWhLicitacionBuenaproEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_cartafianza_conv_edit -->
+    <sql-query name="whlicita.DwWhLicitacionCartafianzaConvEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_cfianza_edit_from_contr -->
+    <sql-query name="whlicita.DwWhLicitacionCfianzaEditFromContr">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_cfianza_edit_precontr -->
+    <sql-query name="whlicita.DwWhLicitacionCfianzaEditPrecontr">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_cfianzaas_edit_precontr -->
+    <sql-query name="whlicita.DwWhLicitacionCfianzaasEditPrecontr">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_clasificacion_select -->
+    <sql-query name="whlicita.DwWhLicitacionClasificacionSelect">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_compania -->
+    <sql-query name="whlicita.DwWhLicitacionCompania">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_consentimiento -->
+    <sql-query name="whlicita.DwWhLicitacionConsentimiento">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_consentimiento2 -->
+    <sql-query name="whlicita.DwWhLicitacionConsentimiento2">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_consulta_bases_list -->
+    <sql-query name="whlicita.DwWhLicitacionConsultaBasesList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_consulta_ventasbase_t1 -->
+    <sql-query name="whlicita.DwWhLicitacionConsultaVentasbaseT1">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_consultas_edit -->
+    <sql-query name="whlicita.DwWhLicitacionConsultasEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_contr_clausulaadic_edit -->
+    <sql-query name="whlicita.DwWhLicitacionContrClausulaadicEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_contr_conformidad_edit -->
+    <sql-query name="whlicita.DwWhLicitacionContrConformidadEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_contrato2_edit -->
+    <sql-query name="whlicita.DwWhLicitacionContrato2Edit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_contrato_control_list -->
+    <sql-query name="whlicita.DwWhLicitacionContratoControlList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_contrato_control_list2 -->
+    <sql-query name="whlicita.DwWhLicitacionContratoControlList2">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_contrato_detail -->
+    <sql-query name="whlicita.DwWhLicitacionContratoDetail">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_contrato_edit -->
+    <sql-query name="whlicita.DwWhLicitacionContratoEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_contrato_edit2 -->
+    <sql-query name="whlicita.DwWhLicitacionContratoEdit2">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_contrato_list -->
+    <sql-query name="whlicita.DwWhLicitacionContratoList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_contrato_list1a -->
+    <sql-query name="whlicita.DwWhLicitacionContratoList1a">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_contrato_list2 -->
+    <sql-query name="whlicita.DwWhLicitacionContratoList2">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_contrato_list2a -->
+    <sql-query name="whlicita.DwWhLicitacionContratoList2a">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_contrato_poliza_edit -->
+    <sql-query name="whlicita.DwWhLicitacionContratoPolizaEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_contratogeneracion_list -->
+    <sql-query name="whlicita.DwWhLicitacionContratogeneracionList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_conv_adenda_edit -->
+    <sql-query name="whlicita.DwWhLicitacionConvAdendaEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_conv_list_id_position -->
+    <sql-query name="whlicita.DwWhLicitacionConvListIdPosition">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_convdetalle_edit -->
+    <sql-query name="whlicita.DwWhLicitacionConvdetalleEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_convocatoria_cuadro -->
+    <sql-query name="whlicita.DwWhLicitacionConvocatoriaCuadro">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_convocatoria_cuadro0 -->
+    <sql-query name="whlicita.DwWhLicitacionConvocatoriaCuadro0">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_convocatoria_cuadro2 -->
+    <sql-query name="whlicita.DwWhLicitacionConvocatoriaCuadro2">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_convocatoria_edit_t1a -->
+    <sql-query name="whlicita.DwWhLicitacionConvocatoriaEditT1a">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_convocatoria_edit_t2 -->
+    <sql-query name="whlicita.DwWhLicitacionConvocatoriaEditT2">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_convocatoria_edit_t2a -->
+    <sql-query name="whlicita.DwWhLicitacionConvocatoriaEditT2a">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_convocatoria_list -->
+    <sql-query name="whlicita.DwWhLicitacionConvocatoriaList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_convocatoria_list_id -->
+    <sql-query name="whlicita.DwWhLicitacionConvocatoriaListId">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_convocatoria_print -->
+    <sql-query name="whlicita.DwWhLicitacionConvocatoriaPrint">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_convocatoria_puntajes -->
+    <sql-query name="whlicita.DwWhLicitacionConvocatoriaPuntajes">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_convocatoria_retrieve -->
+    <sql-query name="whlicita.DwWhLicitacionConvocatoriaRetrieve">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_convocatoriadet_list -->
+    <sql-query name="whlicita.DwWhLicitacionConvocatoriadetList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_convocatoriadet_prov -->
+    <sql-query name="whlicita.DwWhLicitacionConvocatoriadetProv">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_cotizacion_detalle_list -->
+    <sql-query name="whlicita.DwWhLicitacionCotizacionDetalleList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_cotizacion_precio_print -->
+    <sql-query name="whlicita.DwWhLicitacionCotizacionPrecioPrint">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_cotizacion_print -->
+    <sql-query name="whlicita.DwWhLicitacionCotizacionPrint">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_cotizacion_print_congre -->
+    <sql-query name="whlicita.DwWhLicitacionCotizacionPrintCongre">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_cotizacion_prop_de_edit -->
+    <sql-query name="whlicita.DwWhLicitacionCotizacionPropDeEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_cotizacion_prop_detalle -->
+    <sql-query name="whlicita.DwWhLicitacionCotizacionPropDetalle">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_cotizacion_prop_edit -->
+    <sql-query name="whlicita.DwWhLicitacionCotizacionPropEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_cotizacion_prop_list -->
+    <sql-query name="whlicita.DwWhLicitacionCotizacionPropList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_cotizacion_texto2_print -->
+    <sql-query name="whlicita.DwWhLicitacionCotizacionTexto2Print">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_cotizacion_texto_print -->
+    <sql-query name="whlicita.DwWhLicitacionCotizacionTextoPrint">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_desierto_select -->
+    <sql-query name="whlicita.DwWhLicitacionDesiertoSelect">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_edit_t1a -->
+    <sql-query name="whlicita.DwWhLicitacionEditT1a">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_edit_t1b -->
+    <sql-query name="whlicita.DwWhLicitacionEditT1b">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_edit_t3a -->
+    <sql-query name="whlicita.DwWhLicitacionEditT3a">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_edit_t3b -->
+    <sql-query name="whlicita.DwWhLicitacionEditT3b">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_entrega_absolucion_edit -->
+    <sql-query name="whlicita.DwWhLicitacionEntregaAbsolucionEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_impugnacion_edit -->
+    <sql-query name="whlicita.DwWhLicitacionImpugnacionEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_impugnacion_edit2 -->
+    <sql-query name="whlicita.DwWhLicitacionImpugnacionEdit2">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_interfase_comite -->
+    <sql-query name="whlicita.DwWhLicitacionInterfaseComite">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_interfase_comite_destino -->
+    <sql-query name="whlicita.DwWhLicitacionInterfaseComiteDestino">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_interfase_comite_id -->
+    <sql-query name="whlicita.DwWhLicitacionInterfaseComiteId">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_interfase_control -->
+    <sql-query name="whlicita.DwWhLicitacionInterfaseControl">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_interfase_convoca -->
+    <sql-query name="whlicita.DwWhLicitacionInterfaseConvoca">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_interfase_convoca_destino -->
+    <sql-query name="whlicita.DwWhLicitacionInterfaseConvocaDestino">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_interfase_convocatoria_destino -->
+    <sql-query name="whlicita.DwWhLicitacionInterfaseConvocatoriaDestino">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_interfase_error -->
+    <sql-query name="whlicita.DwWhLicitacionInterfaseError">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_interfase_item -->
+    <sql-query name="whlicita.DwWhLicitacionInterfaseItem">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_interfase_licitacion_comite -->
+    <sql-query name="whlicita.DwWhLicitacionInterfaseLicitacionComite">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_interfase_postor -->
+    <sql-query name="whlicita.DwWhLicitacionInterfasePostor">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_interfase_postor_destino -->
+    <sql-query name="whlicita.DwWhLicitacionInterfasePostorDestino">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_interfase_proceso -->
+    <sql-query name="whlicita.DwWhLicitacionInterfaseProceso">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_interfase_proceso_destino -->
+    <sql-query name="whlicita.DwWhLicitacionInterfaseProcesoDestino">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_list -->
+    <sql-query name="whlicita.DwWhLicitacionList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_list_postition -->
+    <sql-query name="whlicita.DwWhLicitacionListPostition">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_observacion_edit -->
+    <sql-query name="whlicita.DwWhLicitacionObservacionEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_postor_conv_select -->
+    <sql-query name="whlicita.DwWhLicitacionPostorConvSelect">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_postor_ptaje_conv -->
+    <sql-query name="whlicita.DwWhLicitacionPostorPtajeConv">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_postores_list -->
+    <sql-query name="whlicita.DwWhLicitacionPostoresList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_postorptje_conv_edit -->
+    <sql-query name="whlicita.DwWhLicitacionPostorptjeConvEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_postorptje_conv_select -->
+    <sql-query name="whlicita.DwWhLicitacionPostorptjeConvSelect">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_precontrato_edit -->
+    <sql-query name="whlicita.DwWhLicitacionPrecontratoEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_precontrato_list -->
+    <sql-query name="whlicita.DwWhLicitacionPrecontratoList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_presprop_edit_list -->
+    <sql-query name="whlicita.DwWhLicitacionPrespropEditList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_presprop_list -->
+    <sql-query name="whlicita.DwWhLicitacionPrespropList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_proceso_adj_edit -->
+    <sql-query name="whlicita.DwWhLicitacionProcesoAdjEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_proceso_adj_edit_2 -->
+    <sql-query name="whlicita.DwWhLicitacionProcesoAdjEdit2">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_proceso_adj_list -->
+    <sql-query name="whlicita.DwWhLicitacionProcesoAdjList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_proceso_adj_select -->
+    <sql-query name="whlicita.DwWhLicitacionProcesoAdjSelect">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_procesos_select -->
+    <sql-query name="whlicita.DwWhLicitacionProcesosSelect">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_process_list -->
+    <sql-query name="whlicita.DwWhLicitacionProcessList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_propuesta_cotiza_list -->
+    <sql-query name="whlicita.DwWhLicitacionPropuestaCotizaList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_puntajes_edit -->
+    <sql-query name="whlicita.DwWhLicitacionPuntajesEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_recep_prop_edit -->
+    <sql-query name="whlicita.DwWhLicitacionRecepPropEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_req_cotiz_detalle -->
+    <sql-query name="whlicita.DwWhLicitacionReqCotizDetalle">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_requisicion_list -->
+    <sql-query name="whlicita.DwWhLicitacionRequisicionList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_requisicion_list_id -->
+    <sql-query name="whlicita.DwWhLicitacionRequisicionListId">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_requisicion_list_psel -->
+    <sql-query name="whlicita.DwWhLicitacionRequisicionListPsel">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_requisicion_ult_proc -->
+    <sql-query name="whlicita.DwWhLicitacionRequisicionUltProc">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_requisicion_input_det -->
+    <sql-query name="whlicita.DwWhLicitacionRequisicionInputDet">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_requisicion_input_det1 -->
+    <sql-query name="whlicita.DwWhLicitacionRequisicionInputDet1">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_requisicion_input_det2 -->
+    <sql-query name="whlicita.DwWhLicitacionRequisicionInputDet2">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_requisicion_input_det3 -->
+    <sql-query name="whlicita.DwWhLicitacionRequisicionInputDet3">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_select -->
+    <sql-query name="whlicita.DwWhLicitacionSelect">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_tipomast_edit -->
+    <sql-query name="whlicita.DwWhLicitacionTipomastEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_tipomast_list -->
+    <sql-query name="whlicita.DwWhLicitacionTipomastList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_tipomast_select -->
+    <sql-query name="whlicita.DwWhLicitacionTipomastSelect">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_vb_consorcio_edit_det -->
+    <sql-query name="whlicita.DwWhLicitacionVbConsorcioEditDet">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_venta_bases_list -->
+    <sql-query name="whlicita.DwWhLicitacionVentaBasesList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_ventasbase_t1 -->
+    <sql-query name="whlicita.DwWhLicitacionVentasbaseT1">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_ventasbase_t2 -->
+    <sql-query name="whlicita.DwWhLicitacionVentasbaseT2">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_verifica_postor_consult -->
+    <sql-query name="whlicita.DwWhLicitacionVerificaPostorConsult">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_vtabases_consorcio_edit -->
+    <sql-query name="whlicita.DwWhLicitacionVtabasesConsorcioEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacion_vtabases_copy -->
+    <sql-query name="whlicita.DwWhLicitacionVtabasesCopy">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacionconvocatoria_list -->
+    <sql-query name="whlicita.DwWhLicitacionconvocatoriaList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitaciondet_buenapro_edit -->
+    <sql-query name="whlicita.DwWhLicitaciondetBuenaproEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitaciones_desierto_edit -->
+    <sql-query name="whlicita.DwWhLicitacionesDesiertoEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacionprocesocomite_edit_list -->
+    <sql-query name="whlicita.DwWhLicitacionprocesocomiteEditList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacionprocesosrango_edit -->
+    <sql-query name="whlicita.DwWhLicitacionprocesosrangoEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacionreq_convocatoria_list -->
+    <sql-query name="whlicita.DwWhLicitacionreqConvocatoriaList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacionrequisiciondetalle_all -->
+    <sql-query name="whlicita.DwWhLicitacionrequisiciondetalleAll">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacionrequisiciondetalle_edit -->
+    <sql-query name="whlicita.DwWhLicitacionrequisiciondetalleEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacionrequisiciondetalle_list -->
+    <sql-query name="whlicita.DwWhLicitacionrequisiciondetalleList">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacionrequisiciondetalle2_edit -->
+    <sql-query name="whlicita.DwWhLicitacionrequisiciondetalle2Edit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_licitacionvtabases_list_edit -->
+    <sql-query name="whlicita.DwWhLicitacionvtabasesListEdit">
+    </sql-query>
+
+    <!-- whlicita.dw_wh_seace_list_position -->
+    <sql-query name="whlicita.DwWhSeaceListPosition">
+    </sql-query>
+
+</hibernate-mapping>

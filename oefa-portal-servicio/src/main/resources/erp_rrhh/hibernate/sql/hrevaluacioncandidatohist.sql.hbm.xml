@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : rrhh.HrEvaluacioncandidatohist
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="hrevaluacioncandidatohist.insertaEvaluacionCandidatos">
+    INSERT INTO SGCORESYS.HR_EvaluacionCandidatoHist
+		(Fecha, CompanyOwner,Postulante,Requerimiento,Secuencia,Evaluacion, Valor1,Valor2,Valor3,Valor4,
+		 Valor5,Valor6, Valor7,Valor8,Valor9,Valor10, UltimoUsuario, UltimaFechaModif, Factor, Empleado, NombreEval, Tipo,
+		DescripcionFactor, OrdenPlantillaFactor, TipoCompetenciaFactor, 
+		Area, DescripcionArea, ValorRequerido, ValorMinimoesperado, EmpleadoEvaluador)
+		SELECT DISTINCT
+		:w_getdate, HR_DetalleEvaluacion.CompanyOwner,' ',HR_DetalleEvaluacion.SecuenciaEval,HR_DetalleEvaluacion.SecuenciaEval,
+		HR_DetalleEvaluacion.EmpleadoEvaluador,HR_DetalleEvaluacion.Calificacion,0,0,0,0,0,0,0,0,0,
+		HR_DetalleEvaluacion.UltimoUsuario,HR_DetalleEvaluacion.UltimaFechaModif,HR_DetalleEvaluacion.Factor,
+		HR_DetalleEvaluacion.Empleado, HR_EvaluacionPeriodo.Descripcion, HR_DetalleEvaluacion.Tipo,
+		HR_FactoresEvaluacion.Descripcion,
+					(select max(HR_PlantillaFactorEvaluacion.OrdenFactor)
+					from SGCORESYS.HR_PlantillaFactorEvaluacion
+					where HR_PlantillaFactorEvaluacion.Plantilla = HR_DetalleEvaluacion.Plantilla and
+							HR_PlantillaFactorEvaluacion.Factor 	= HR_DetalleEvaluacion.Factor),
+		HR_FactoresEvaluacion.TipoCompetencia,
+		HR_EvaluacionArea.Area, HR_EvaluacionArea.Descripcion, 
+		HR_FactoresEvaluacion.ValorRequerido, HR_FactoresEvaluacion.ValorMinimoesperado,HR_DetalleEvaluacion.EmpleadoEvaluador
+			FROM	SGCORESYS.HR_DetalleEvaluacion,
+					SGCORESYS.HR_EvaluacionPeriodo,
+					SGCORESYS.HR_FactoresEvaluacion
+			LEFT JOIN SGCORESYS.HR_EvaluacionArea ON
+					HR_FactoresEvaluacion.Area 			= HR_EvaluacionArea.Area
+			WHERE HR_DetalleEvaluacion.CompanyOwner	= HR_EvaluacionPeriodo.CompanyOwner		AND
+					HR_DetalleEvaluacion.SecuenciaEval	= HR_EvaluacionPeriodo.SecuenciaEval	AND
+					HR_DetalleEvaluacion.companyowner 	= :iv_compania 								AND
+					HR_DetalleEvaluacion.SecuenciaEval 	= :iv_secuencia 								AND
+					HR_DetalleEvaluacion.Empleado 		= :iv_empleado 								AND
+					HR_DetalleEvaluacion.EmpleadoEvaluador=:iv_empleadoevaluador 					AND
+					HR_DetalleEvaluacion.Tipo 				= :tipo												AND
+					HR_FactoresEvaluacion.Factor			=	HR_DetalleEvaluacion.Factor
+    </sql-query>
+</hibernate-mapping>

@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<h:form id="frmUsuarioActual01">
+		<p:panelGrid columns="6" layout="grid"
+			columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3"
+			styleClass="ui-panelgrid-blank">
+			<p:outputLabel value="Empleado" />
+			<p:inputText disabled="true" 
+				value="${usuario.idPersona} - ${usuario.nombreCompleto}" />
+
+			<p:outputLabel value="Área Operativa" />
+			<p:inputText value="${usuario.areaCodigo} - ${usuario.areaNombre}"
+				disabled="true" />
+
+			<p:outputLabel value="Centro de Costos" />
+			<p:inputText
+				value="${usuario.centroCostosCodigo} - ${usuario.centroCostosNombre}"
+				disabled="true" />
+
+			<p:outputLabel value="Puesto" />
+			<p:inputText value="${usuario.cargoCodigo} - ${usuario.cargoNombre}"
+				disabled="true" />
+
+			<p:outputLabel value="Sucursal" />
+			<p:inputText
+				value="${usuario.sucursalCodigo} - ${usuario.sucursalNombre}"
+				disabled="true" />
+
+			<p:outputLabel value="Unidad de Negocio" />
+			<p:inputText
+				value="${usuario.unidadNegocioCodigo} - ${usuario.unidadNegocioNombre}"
+				disabled="true" />
+
+		</p:panelGrid>
+	</h:form>
+
+</ui:composition>

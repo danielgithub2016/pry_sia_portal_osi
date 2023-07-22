@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : rrhh.HrActividad -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="hractividad.listarHrActividad">
+		<![CDATA[
+			SELECT 
+				    CAST(MD.DESCRIPCIONLOCAL AS VARCHAR2(200)) as "categoria",
+				    CAST(H.FLAGAPOYOSOCIAL AS VARCHAR2(1)) as "flagapoyosocial",
+				    H.ACTDEFINICION as "actdefinicion",
+				    H.ACTIVIDAD as "actividad",
+				    H.COMPANYOWNER as "companyowner",
+				    H.CODIGOESTRATEGIA as "codigoestrategia",
+				   H.NOMBRE as "nombre",
+				   H.ESTADO as "estado",
+				   H.FECHADESDE as "fechadesde",  
+				   H.FECHAHASTA as "fechahasta",
+				   H.FECHADESDEPUBLICACION as "fechadesdepublicacion",
+				   H.FECHAHASTAPUBLICACION as "fechahastapublicacion",
+				   H.TIPOPARTICIPANTE as "tipoparticipante",
+				   CAST(H.TIPOACTIVIDAD AS VARCHAR2(1)) as "tipoactividad",
+				     (SELECT VALORCODIGO1 
+                                FROM
+                                SGCORESYS.MA_MiscelaneosDetalle MISC
+                                    WHERE    MISC.AplicacionCodigo = 'HR'  AND  
+                                                  MISC.CodigoTabla = 'ACTIVIDAD'  AND  
+                                                  MISC.CODIGOELEMENTO=  H.ACTDEFINICION) as "valor1",
+				   H.LUGAR as "lugar",
+				   (SELECT COUNT(1) FROM SGCORESYS.HR_ACTIVIDADPARTICIPANTE HP WHERE HP.ACTIVIDAD = H.ACTIVIDAD AND HP.EMPLEADO =:empleado AND NVL(HP.FLAGASISTENCIA,'N') = 'S' ) as "participo",
+				   (SELECT HP.MONTO  FROM SGCORESYS.HR_ACTIVIDADPARTICIPANTE HP WHERE HP.ACTIVIDAD = H.ACTIVIDAD AND HP.EMPLEADO =:empleado ) as "monto",
+				   (SELECT COUNT(1) FROM SGCORESYS.HR_ACTIVIDADPARTICIPANTE HCOUNT WHERE HCOUNT.ACTIVIDAD = H.ACTIVIDAD) as "participantes"
+				FROM SGCORESYS.HR_ACTIVIDAD H LEFT JOIN SGCORESYS.MA_MiscelaneosDetalle MD
+				    ON  H.ACTDEFINICION = MD.CODIGOELEMENTO
+				LEFT JOIN SGCORESYS.MA_MiscelaneosHeader MH 
+				                        ON (MD.AplicacionCodigo = MH.AplicacionCodigo AND
+				                             MD.CodigoTabla = MH.CodigoTabla AND
+				                             MD.Compania = MH.Compania)
+				WHERE 
+				                ( ( MD.AplicacionCodigo = 'HR' ) AND  
+				                ( MD.CodigoTabla = 'ACTIVIDAD' ) AND  
+				                ( SUBSTR(MD.Compania,0,6) = SUBSTR('999999',0,6) ) )                              
+				                AND NVL(H.FLAGPUBLICACION,'N') = NVL(:flg_publicacion,NVL(H.FLAGPUBLICACION,'N')) 
+				                AND (SELECT COUNT(1) FROM SGCORESYS.HR_ACTIVIDADPARTICIPANTE HP WHERE HP.ACTIVIDAD = H.ACTIVIDAD AND HP.EMPLEADO =:empleado 
+				                AND NVL(HP.FLAGASISTENCIA,'N') = 'S'  and H.TIPOACTIVIDAD=HP.TIPOACTIVIDAD) < 1 
+				                AND H.ESTADO IN ('A','E')
+		]]>
+	</sql-query>
+
+</hibernate-mapping>

@@ -1,0 +1,118 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/comun/plantillas/main.xhtml">
+
+	<ui:define name="content">
+
+		<p:outputLabel value="Selector de Empleados"
+			style="text-decoration:underline;font-size:15px" />
+
+		<h:form id="wasempleadoselect">
+			<p:growl life="#{msg.generico_tiempo_growl}" />
+			<p:focus for="txtbuscaemp" />
+			<p:panelGrid columns="4"
+				columnClasses="ui-grid-col-1,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+				layout="grid" styleClass="ui-panelgrid-blank">
+				<p:selectOneMenu
+					value="#{cwAsEmpleadoSelect.dw_position.codigodescripcionflag}">
+					<f:selectItem itemLabel="Código" itemValue="C" />
+					<f:selectItem itemLabel="Nombre" itemValue="N" />
+				</p:selectOneMenu>
+				<p:inputText id="txtbuscaemp"
+					value="#{cwAsEmpleadoSelect.dw_position.codigodescripciontext}"
+					onkeypress="return noAcepto(event);" />
+
+				<p:commandButton value="Buscar" update="@form"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					action="#{cwAsEmpleadoSelect.buscar}" icon="buscar" />
+
+				<p:commandButton value="Cancelar" icon="cancelar"
+					action="#{cwAsEmpleadoSelect.salir}" />
+			</p:panelGrid>
+
+			<p:panelGrid columns="2"
+				columnClasses="ui-grid-col-0.5,ui-grid-col-4" layout="grid"
+				styleClass="ui-panelgrid-blank">
+
+				<p:selectBooleanCheckbox value="#{cwAsEmpleadoSelect.asignarTodos}"
+					rendered="#{cwAsEmpleadoSelect.mostraAsignarTodos}">
+					<p:ajax update="@form" />
+				</p:selectBooleanCheckbox>
+				<h:outputText rendered="#{cwAsEmpleadoSelect.mostraAsignarTodos}"
+					style="font-size: 14px;font-weight: bold;"
+					value="Asignar a Todas las bandejas" />
+
+			</p:panelGrid>
+
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				id="tblempleado" paginatorPosition="bottom" selectionMode="single"
+				paginator="true" rowKey="#{e.persona}" scrollable="true"
+				scrollHeight="450" rows="20" reflow="true"
+				rowStyleClass="#{e.estadoempleado eq 2 ? 'red' : null}"
+				selection="#{cwAsEmpleadoSelect.registroSeleccionado}"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+				value="#{cwAsEmpleadoSelect.dw_list}" var="e">
+
+
+				<p:ajax event="rowDblselect"
+					listener="#{cwAsEmpleadoSelect.onRowSelect}"
+					oncomplete="document.getElementById('wasempleadoselect:btnRedireccionar').click();" />
+
+
+
+				<p:column headerText="Código" width="50">
+					<h:outputText value="#{e.persona}" style="#{e.estilo}" />
+				</p:column>
+
+				<p:column headerText="Nombre" width="220">
+					<h:outputText value="#{e.nombrecompleto}" style="#{e.estilo}" />
+				</p:column>
+
+				<p:column headerText="Tarjeta" width="50">
+					<h:outputText value="#{e.codigocarnet}" style="#{e.estilo}" />
+				</p:column>
+
+				<p:column headerText="Sin Asist." width="40">
+					<p:selectBooleanCheckbox disabled="true"
+						value="#{e.nogeneraasistencia}" />
+				</p:column>
+
+				<p:column headerText="Entidad" width="80">
+					<h:outputText value="#{e.companiasocio}" style="#{e.estilo}" />
+				</p:column>
+
+				<p:column headerText="Area Operativa" width="150">
+					<h:outputText value="#{e.nombrearea}" style="#{e.estilo}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:panelGrid columns="4"
+				columnClasses="ui-grid-col-0.5,ui-grid-col-1,ui-grid-col-0.5,ui-grid-col-1"
+				layout="grid" styleClass="ui-panelgrid-blank">
+				<p:selectBooleanCheckbox value="#{cwAsEmpleadoSelect.cbx_cesados}">
+					<p:ajax update="tblempleado"
+						listener="#{cwAsEmpleadoSelect.filtrar}" />
+				</p:selectBooleanCheckbox>
+				<h:outputText value="Cesados" />
+
+				<p:selectBooleanCheckbox value="#{cwAsEmpleadoSelect.cbx_concarnet}">
+					<p:ajax update="tblempleado"
+						listener="#{cwAsEmpleadoSelect.filtrar}" />
+				</p:selectBooleanCheckbox>
+				<h:outputText value="Sin Asistencia" />
+			</p:panelGrid>
+
+			<p:commandButton action="#{cwAsEmpleadoSelect.salir}"
+				style="display:none" id="btnRedireccionar" />
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

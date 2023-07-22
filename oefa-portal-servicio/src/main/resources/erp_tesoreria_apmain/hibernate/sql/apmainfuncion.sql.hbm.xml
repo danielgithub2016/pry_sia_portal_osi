@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : apmain.
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- apmain.f_sql_validate_documento_duplicado -->
+    <sql-query name="apmain.fsqlvalidatedocumentoduplicado">
+		SELECT 	
+          count(*) as "secuencia",
+					max(AP_CajaChicaDetalle.CajaChicaReporteFlag) as "cajachicareporteflag",   
+		        max(AP_CajaChicaDetalle.UnidadReplicacion)as "unidadreplicacion",   
+		         max(AP_CajaChicaDetalle.CajaChicaNumero) as  "cajachicanumero" 
+    FROM SGCORESYS.AP_CajaChicaDetalle
+   WHERE 	(Rtrim(AP_CajaChicaDetalle.DocumentoFiscal)	= :par_proveedorruc  ) AND  
+         			( AP_CajaChicaDetalle.TipoDocumento 	= :par_tipodocumento ) AND  
+         			(Rtrim(AP_CajaChicaDetalle.NumeroDocumento)	= :par_numerodocumento )  AND
+              
+				( Not Exists (SELECT 1 FROM SGCORESYS.AP_CajaChica WHERE
+										AP_CajaChicaDetalle.CajaChicaReporteFlag = AP_CajaChica.CajaChicaReporteFlag AND
+										AP_CajaChicaDetalle.UnidadReplicacion = AP_CajaChica.UnidadReplicacion AND
+										AP_CajaChicaDetalle.CajaChicaNumero = AP_CajaChica.CajaChicaNumero AND
+										((AP_CajaChica.CajaChicaReporteFlag 	= :par_cajachicaflag  AND  
+										AP_CajaChica.UnidadReplicacion 		= :par_cajaChicaUnidadReplicacion AND  
+			         						AP_CajaChica.CajaChicaNumero 		= :par_cajachicanumero) OR 	AP_CajaChica.Estado = 'AN')))
+    
+    </sql-query>
+    
+    
+    
+    
+</hibernate-mapping>

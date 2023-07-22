@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : asoracle.w_as_captura_string_idle -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<!-- asoracle.dddw_as_estados_movpersonal -->
+	<sql-query name="asoracle.DddwAsEstadosMovpersonal">
+	</sql-query>
+
+	<!-- asoracle.dddw_as_seguridad_area_usuario -->
+	<sql-query name="asoracle.DddwAsSeguridadAreaUsuario">
+	</sql-query>
+
+	<!-- asoracle.dddw_as_seguridad_area_usuario_adm -->
+	<sql-query name="asoracle.DddwAsSeguridadAreaUsuarioAdm">
+	</sql-query>
+
+	<!-- asoracle.dddw_as_seguridad_usuario -->
+	<sql-query name="asoracle.DddwAsSeguridadUsuario">
+	</sql-query>
+
+	<!-- asoracle.dddw_as_tipohorario_activo_select -->
+	<sql-query name="asoracle.DddwAsTipohorarioActivoSelect">
+	</sql-query>
+
+	<!-- asoracle.dddw_as_tipohorario_select -->
+	<sql-query name="asoracle.DddwAsTipohorarioSelect">
+		SELECT
+		as_TipoHorario.TipoHorario as
+		"tipohorario",
+		as_TipoHorario.DescripcionLocal as "descripcionlocal",
+		as_TipoHorario.TipoTurno as "tipoturno"
+		FROM sgcoresys.as_TipoHorario
+		UNION ALL
+		SELECT
+		0 as "tipohorario",
+		'(Ninguno)' as "descripcionlocal",
+		0
+		"tipoturno"
+		from dual
+		ORDER BY 2 ASC
+	</sql-query>
+
+	<!-- asoracle.dddw_as_tipolicencia -->
+	<sql-query name="asoracle.DddwAsTipolicencia">
+	</sql-query>
+
+	<!-- asoracle.dddw_seguridad_usuario -->
+	<sql-query name="asoracle.DddwSeguridadUsuario">
+	</sql-query>
+
+	<!-- asoracle.dddw_test_area_tempo -->
+	<sql-query name="asoracle.DddwTestAreaTempo">
+	</sql-query>
+
+	<!-- asoracle.ds_as_asistenciadiariamarca -->
+	<sql-query name="asoracle.DsAsAsistenciadiariamarca">
+	</sql-query>
+
+	<!-- asoracle.ds_as_rep_tiemposxactividad -->
+	<sql-query name="asoracle.DsAsRepTiemposxactividad">
+	</sql-query>
+
+	<!-- asoracle.dw_ac_rep_901_autorizaciones_usuario -->
+	<sql-query name="asoracle.DwAcRep901AutorizacionesUsuario">
+	</sql-query>
+
+	<!-- asoracle.dw_as_areasxareas_hijos_select -->
+	<sql-query name="asoracle.DwAsAreasxareasHijosSelect">
+	</sql-query>
+
+	<!-- asoracle.dw_as_areasxusuario_select -->
+	<sql-query name="asoracle.DwAsAreasxusuarioSelect">
+	</sql-query>
+
+	<!-- asoracle.dw_as_asistencia_balance_comp_copia -->
+	<sql-query name="asoracle.DwAsAsistenciaBalanceCompCopia">
+	</sql-query>
+
+	<!-- asoracle.dw_as_asistencia_balance_compensacion -->
+	<sql-query name="asoracle.DwAsAsistenciaBalanceCompensacion">
+	</sql-query>
+
+	<!-- asoracle.dw_as_asistencia_balance_compensacion_onfer -->
+	<sql-query name="asoracle.DwAsAsistenciaBalanceCompensacionOnfer">
+	</sql-query>
+
+	<!-- asoracle.dw_as_asistencia_crosstab_diario_sex -->
+	<sql-query name="asoracle.DwAsAsistenciaCrosstabDiarioSex">
+	</sql-query>
+
+	<!-- asoracle.dw_as_asistencia_he_no_autorizadas -->
+	<sql-query name="asoracle.DwAsAsistenciaHeNoAutorizadas">
+	</sql-query>
+
+	<!-- asoracle.dw_as_asistencia_horas_compensadas_cli_d -->
+	<sql-query name="asoracle.DwAsAsistenciaHorasCompensadasCliD">
+	</sql-query>
+
+	<!-- asoracle.dw_as_asistencia_resumen_sobretiempo -->
+	<sql-query name="asoracle.DwAsAsistenciaResumenSobretiempo">
+	</sql-query>
+
+	<!-- asoracle.dw_as_asistenciadiaria_rpt -->
+	<sql-query name="asoracle.DwAsAsistenciadiariaRpt">
+	</sql-query>
+
+	<!-- asoracle.dw_as_asistenciadiaria_rpt_semana -->
+	<sql-query name="asoracle.DwAsAsistenciadiariaRptSemana">
+	</sql-query>
+
+	<!-- asoracle.dw_as_autorizacion_preproceso -->
+	<sql-query name="asoracle.DwAsAutorizacionPreproceso">
+	</sql-query>
+
+	<!-- asoracle.dw_as_autorizacion_x_periodo -->
+	<sql-query name="asoracle.DwAsAutorizacionXPeriodo">
+	</sql-query>
+
+	<!-- asoracle.dw_as_captura_string_idle -->
+	<sql-query name="asoracle.DwAsCapturaStringIdle">
+	</sql-query>
+
+	<!-- asoracle.dw_as_concepto_select_multiple -->
+	<sql-query name="asoracle.DwAsConceptoSelectMultiple">
+	</sql-query>
+
+	<!-- asoracle.dw_as_datoscarnet_rpt -->
+	<sql-query name="asoracle.DwAsDatoscarnetRpt">
+	</sql-query>
+
+	<!-- asoracle.dw_as_departamentosxusuario_select -->
+	<sql-query name="asoracle.DwAsDepartamentosxusuarioSelect">
+	</sql-query>
+
+	<!-- asoracle.dw_as_empleado_select -->
+	<sql-query name="asoracle.DwAsEmpleadoSelect">
+	</sql-query>
+
+	<!-- asoracle.dw_as_empleado_select_multiple -->
+	<sql-query name="asoracle.DwAsEmpleadoSelectMultiple">
+     <![CDATA[
+			  SELECT PersonaMast.Persona as "persona",
+				  PersonaMast.NombreCompleto as "nombrecompleto",
+				  EmpleadoMast.TipoContrato as "tipocontrato",
+				  CAST('N' as varchar(2)) AS "seleccionado",
+				  EmpleadoMast.Companiasocio as "companiasocio",
+				  AS_CARNETIDENTIFICACION.CodigoCarnet as "codigocarnet" ,
+				  EmpleadoMast.TipoHorario as "tipohorario" ,
+				  PersonaMast.PersonaAnt as "personaant" ,
+				  EmpleadoMast.Estado as "estado" ,
+				  EMPLEADOMAST.CENTROCOSTOS as "centrocosto",
+				  EmpleadoMast.EstadoEmpleado as "estadoempleado" ,
+				  AS_CARNETIDENTIFICACION.Area as "area",
+				  (SELECT AS_AREA.Nombre
+				  FROM SGCORESYS.AS_AREA
+				  WHERE AS_AREA.area= EmpleadoMast.DPTOAREAOPERATIVA
+				  ) AS "nombrearea",
+				  (
+				  CASE
+				    WHEN AS_CARNETIDENTIFICACION.NOGENERAASISTENCIA = 'N'
+				    THEN 1
+				    ELSE 0
+				  END) AS "cf_flagcarnet",
+				  EmpleadoMast.departamentooperacional as "departamentooperacional",
+				    EmpleadoMast.CODIGOUSUARIO "codigoUsuarioEmpleado",
+                  PersonaMast.CODIGOUSUARIO "codigoUsuarioPersona"
+				FROM SGCORESYS.PersonaMast,
+				  SGCORESYS.EmpleadoMast,
+				  SGCORESYS.AS_CARNETIDENTIFICACION 
+
+				WHERE ( PersonaMast.Persona          = EmpleadoMast.Empleado )
+				AND ( EmpleadoMast.Empleado          = AS_CARNETIDENTIFICACION.Empleado )
+				AND ( PersonaMast.EsEmpleado         = 'S' )
+				AND ( PersonaMast.Persona            > 0 )
+				AND ( AS_CARNETIDENTIFICACION.estado = 'A' )
+				AND ( EmpleadoMast.empleado         IN
+				  (SELECT AS_EMPLEADOS_AUTORIZADOS.empleado
+				  FROM SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+				  WHERE SGCORESYS.AS_EMPLEADOS_AUTORIZADOS.sid =:an_sid
+				  ))
+         			 AND Upper(PersonaMast.NombreCompleto)  like UPPER(:w_filtroNom)
+				 	 AND NVL(Upper(PersonaMast.Persona),'')  like nvl(:w_filtroCod,'%')
+				  order by nombrecompleto,ESTADOEMPLEADO,PERSONA asc
+				  
+     ]]>
+	</sql-query>
+
+	<sql-query name="asoracle.DwAsEmpleadoSelectAll">
+     <![CDATA[
+			  SELECT PersonaMast.Persona as "persona",
+				  PersonaMast.NombreCompleto as "nombrecompleto",
+				  EmpleadoMast.TipoContrato as "tipocontrato",
+				  CAST('N' as varchar(2)) AS "seleccionado",
+				  EmpleadoMast.Companiasocio as "companiasocio",
+				  AS_CARNETIDENTIFICACION.CodigoCarnet as "codigocarnet" ,
+				  EmpleadoMast.TipoHorario as "tipohorario" ,
+				  PersonaMast.PersonaAnt as "personaant" ,
+				  EmpleadoMast.Estado as "estado" ,
+				  EMPLEADOMAST.CENTROCOSTOS as "centrocosto",
+				  EmpleadoMast.EstadoEmpleado as "estadoempleado" ,
+				  AS_CARNETIDENTIFICACION.Area as "area",
+				  (SELECT AS_AREA.Nombre
+				  FROM SGCORESYS.AS_AREA
+				  WHERE AS_AREA.area= EmpleadoMast.DPTOAREAOPERATIVA
+				  ) AS "nombrearea",
+				  (
+				  CASE
+				    WHEN AS_CARNETIDENTIFICACION.NOGENERAASISTENCIA = 'N'
+				    THEN 1
+				    ELSE 0
+				  END) AS "cf_flagcarnet",
+				  EmpleadoMast.departamentooperacional as "departamentooperacional",
+				  EmpleadoMast.CODIGOUSUARIO "codigoUsuarioEmpleado",
+                  PersonaMast.CODIGOUSUARIO "codigoUsuarioPersona"
+                  
+				FROM SGCORESYS.PersonaMast,
+				  SGCORESYS.EmpleadoMast,
+				  SGCORESYS.AS_CARNETIDENTIFICACION 
+
+				WHERE ( PersonaMast.Persona          = EmpleadoMast.Empleado )
+				AND ( EmpleadoMast.Empleado          = AS_CARNETIDENTIFICACION.Empleado )
+				AND ( PersonaMast.EsEmpleado         = 'S' )
+				AND ( PersonaMast.Persona            > 0 )
+				AND ( AS_CARNETIDENTIFICACION.estado = 'A' )
+         			 AND Upper(PersonaMast.NombreCompleto)  like UPPER(:w_filtroNom)
+				 	 AND NVL(Upper(PersonaMast.Persona),'')  like nvl(:w_filtroCod,'%')
+				  order by nombrecompleto,ESTADOEMPLEADO,PERSONA asc
+				  
+     ]]>
+	</sql-query>
+
+
+	<!-- asoracle.dw_as_estadosentrefechas -->
+	<sql-query name="asoracle.DwAsEstadosentrefechas">
+	</sql-query>
+
+	<!-- asoracle.dw_as_evento_seguridad_usuario -->
+	<sql-query name="asoracle.DwAsEventoSeguridadUsuario">
+	</sql-query>
+
+	<!-- asoracle.dw_as_horariosdelpersonal -->
+	<sql-query name="asoracle.DwAsHorariosdelpersonal">
+	</sql-query>
+
+	<!-- asoracle.dw_as_horariosentrefechas -->
+	<sql-query name="asoracle.DwAsHorariosentrefechas">
+	</sql-query>
+
+	<!-- asoracle.dw_as_horariossemanales -->
+	<sql-query name="asoracle.DwAsHorariossemanales">
+	</sql-query>
+
+	<!-- asoracle.dw_as_marcaciones_rpt -->
+	<sql-query name="asoracle.DwAsMarcacionesRpt">
+	</sql-query>
+
+	<!-- asoracle.dw_as_marcaciones_rpt_cf -->
+	<sql-query name="asoracle.DwAsMarcacionesRptCf">
+	</sql-query>
+
+	<!-- asoracle.dw_as_onomasticos_rpt -->
+	<sql-query name="asoracle.DwAsOnomasticosRpt">
+	</sql-query>
+
+	<!-- asoracle.dw_as_proceso_asistencia_diaria -->
+	<sql-query name="asoracle.DwAsProcesoAsistenciaDiaria">
+	</sql-query>
+
+	<!-- asoracle.dw_as_proceso_asistencia_diaria_empleado -->
+	<sql-query name="asoracle.DwAsProcesoAsistenciaDiariaEmpleado">
+	</sql-query>
+
+	<!-- asoracle.dw_as_rep_saldo_feriado -->
+	<sql-query name="asoracle.DwAsRepSaldoFeriado">
+	</sql-query>
+
+	<!-- asoracle.dw_as_reportecambios -->
+	<sql-query name="asoracle.DwAsReportecambios">
+	</sql-query>
+
+	<!-- asoracle.dw_as_reportecambiosdeturno -->
+	<sql-query name="asoracle.DwAsReportecambiosdeturno">
+	</sql-query>
+
+	<!-- asoracle.dw_as_reporteoficialministerio -->
+	<sql-query name="asoracle.DwAsReporteoficialministerio">
+	</sql-query>
+
+	<!-- asoracle.dw_as_seleccionar_empleado_autorizacion_pp -->
+	<sql-query name="asoracle.DwAsSeleccionarEmpleadoAutorizacionPp">
+	</sql-query>
+
+	<!-- asoracle.dw_as_seleccionar_empleado_autorizacionp -->
+	<sql-query name="asoracle.DwAsSeleccionarEmpleadoAutorizacionp">
+	</sql-query>
+
+	<!-- asoracle.dw_as_seleccionar_empleado_reprogramacio -->
+	<sql-query name="asoracle.DwAsSeleccionarEmpleadoReprogramacio">
+	</sql-query>
+
+	<!-- asoracle.dw_as_sinhorariosdelpersonal -->
+	<sql-query name="asoracle.DwAsSinhorariosdelpersonal">
+	</sql-query>
+
+	<!-- asoracle.dw_as_tardanzasacumuladas -->
+	<sql-query name="asoracle.DwAsTardanzasacumuladas">
+	</sql-query>
+
+	<!-- asoracle.dw_as_tardanzasacumuladas_v2 -->
+	<sql-query name="asoracle.DwAsTardanzasacumuladasV2">
+	</sql-query>
+
+	<!-- asoracle.dw_as_tardanzasacumuladas_v3 -->
+	<sql-query name="asoracle.DwAsTardanzasacumuladasV3">
+	</sql-query>
+
+	<!-- asoracle.dw_as_tardanzasacumuladas_v4 -->
+	<sql-query name="asoracle.DwAsTardanzasacumuladasV4">
+	</sql-query>
+
+	<!-- asoracle.dw_as_tarjetasdelpersonal -->
+	<sql-query name="asoracle.DwAsTarjetasdelpersonal">
+	</sql-query>
+
+	<!-- asoracle.dw_as_transf_a_planillas_valida_concepto -->
+	<sql-query name="asoracle.DwAsTransfAPlanillasValidaConcepto">
+	</sql-query>
+
+	<!-- asoracle.dw_as_vacacionespendientes_reporte -->
+	<sql-query name="asoracle.DwAsVacacionespendientesReporte">
+	</sql-query>
+
+	<!-- asoracle.dw_filtro_estado_mov -->
+	<sql-query name="asoracle.DwFiltroEstadoMov">
+	</sql-query>
+
+	<!-- asoracle.dw_filtro_terminal -->
+	<sql-query name="asoracle.DwFiltroTerminal">
+	</sql-query>
+
+	<!-- asoracle.dw_filtro_tipolicencia -->
+	<sql-query name="asoracle.DwFiltroTipolicencia">
+	</sql-query>
+
+	<!-- asoracle.dw_hr_licencia -->
+	<sql-query name="asoracle.DwHrLicencia">
+	</sql-query>
+
+	<!-- asoracle.dw_ma_pr_calendarioferiados_edit -->
+	<sql-query name="asoracle.DwMaPrCalendarioferiadosEdit">
+	</sql-query>
+
+	<!-- asoracle.dw_ma_pr_feriadorecuperar_edit -->
+	<sql-query name="asoracle.DwMaPrFeriadorecuperarEdit">
+	</sql-query>
+
+	<!-- asoracle.dw_ma_pr_vacacionperiodo_select -->
+	<sql-query name="asoracle.DwMaPrVacacionperiodoSelect">
+	</sql-query>
+
+	<!-- asoracle.dw_ma_usuario_select -->
+	<sql-query name="asoracle.DwMaUsuarioSelect">
+	</sql-query>
+
+	<!-- asoracle.dw_pr_vacaciones_resumen_reporte -->
+	<sql-query name="asoracle.DwPrVacacionesResumenReporte">
+	</sql-query>
+
+	<!-- asoracle.dw_pr_vacaciones_resumenxperiodo_pago -->
+	<sql-query name="asoracle.DwPrVacacionesResumenxperiodoPago">
+	</sql-query>
+
+	<!-- asoracle.dw_pr_vacaciones_resumenxperiodo_reporte -->
+	<sql-query name="asoracle.DwPrVacacionesResumenxperiodoReporte">
+	</sql-query>
+
+	<!-- asoracle.dw_pr_vacaciones_utilizacion_reporte -->
+	<sql-query name="asoracle.DwPrVacacionesUtilizacionReporte">
+	</sql-query>
+
+	<sql-query name="asoracle.DwAsEmpleadoConceptoReporte">
+		SELECT PersonaMast.Persona as "persona",
+		PersonaMast.NombreCompleto as "nombrecompleto",
+		EmpleadoMast.TipoContrato as "tipocontrato",
+		CAST('N' as varchar(2)) AS "seleccionado",
+		EmpleadoMast.Companiasocio as "companiasocio",
+		AS_CARNETIDENTIFICACION.CodigoCarnet as "codigocarnet" ,
+		EmpleadoMast.TipoHorario as "tipohorario" ,
+		PersonaMast.PersonaAnt as "personaant" ,
+		EmpleadoMast.Estado as "estado" ,
+		EMPLEADOMAST.CENTROCOSTOS as "centrocosto",
+		EmpleadoMast.EstadoEmpleado as "estadoempleado" ,
+		AS_CARNETIDENTIFICACION.Area as "area",
+		(SELECT AS_AREA.Nombre
+		FROM SGCORESYS.AS_AREA
+		WHERE AS_AREA.area= EmpleadoMast.DPTOAREAOPERATIVA
+		) AS "nombrearea",
+		(
+		CASE
+		WHEN AS_CARNETIDENTIFICACION.NOGENERAASISTENCIA = 'N'
+		THEN 1
+		ELSE 0
+		END) AS "cf_flagcarnet",
+		EmpleadoMast.departamentooperacional as "departamentooperacional"
+		FROM SGCORESYS.PersonaMast,
+		SGCORESYS.EmpleadoMast,
+		SGCORESYS.AS_CARNETIDENTIFICACION
+
+		WHERE ( PersonaMast.Persona = EmpleadoMast.Empleado )
+		AND ( EmpleadoMast.Empleado = AS_CARNETIDENTIFICACION.Empleado )
+		AND ( PersonaMast.EsEmpleado = 'S' )
+		AND ( PersonaMast.Persona > 0 )
+		AND ( AS_CARNETIDENTIFICACION.estado = 'A' )
+		AND (( EmpleadoMast.dptoareaoperativa IN
+		(SELECT E.dptoareaoperativa
+		FROM SGCORESYS.EMPLEADOMAST E INNER JOIN
+		SGCORESYS.SEGURIDADPERFILUSUARIO SP
+		ON E.CODIGOUSUARIO = SP.USUARIO
+		INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+		ON SP.PERFIL = SA.USUARIO
+		WHERE SA.CONCEPTO = 'SYSREA' AND
+		SP.USUARIO = :p_userid
+		)) or (
+		(EmpleadoMast.dptoareaoperativa IN (
+		    SELECT AREA FROM SGCORESYS.AS_AREA WHERE AREApADRE in 
+		    (SELECT E.dptoareaoperativa
+		FROM SGCORESYS.EMPLEADOMAST E INNER JOIN
+		SGCORESYS.SEGURIDADPERFILUSUARIO SP
+		ON E.CODIGOUSUARIO = SP.USUARIO
+		INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+		ON SP.PERFIL = SA.USUARIO
+		WHERE SA.CONCEPTO = 'SYSREA' AND
+		SP.USUARIO = :p_userid)
+		    )) 
+		))
+		AND NVL(Upper(PersonaMast.NombreCompleto),'') like nvl(:w_filtroNom,'%')
+		AND NVL(Upper(PersonaMast.Persona),'') like nvl(:w_filtroCod,'%')
+		order by nombrecompleto,ESTADOEMPLEADO,PERSONA asc
+	</sql-query>
+
+
+
+</hibernate-mapping>

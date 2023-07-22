@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : core.Impuestos
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="impuestos.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+    </sql-query>
+    	<sql-query name="impuestos.fsqlreadtiposerviciox">
+		SELECT
+		Impuestos.FactorPorcentaje as
+		"factorporcentaje",
+		Impuestos.Signo as "signo",
+		Impuestos.Impuesto as
+		"impuesto",
+		Impuestos.TipoImpuesto as "tipoimpuesto",
+		ServicioXImpuesto.TipoServicio as "tiposervicio"
+		FROM
+		SGCORESYS.ServicioXImpuesto
+		INNER JOIN SGCORESYS.Impuestos
+		ON
+		(Impuestos.Impuesto = ServicioXImpuesto.Impuesto)
+		WHERE
+		(
+		ServicioXImpuesto.TipoServicio = :par_tiposervicio )
+	</sql-query>
+</hibernate-mapping>

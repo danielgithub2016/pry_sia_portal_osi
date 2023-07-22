@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado_5ta_mensual_subreport8" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="88830c65-5f10-4b7a-bdca-f0b74e176a2c">
+	<property name="ireport.zoom" value="2.143588810000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="EMPLEADO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{EMPLEADO}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EJERCICIO_FISCAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{EJERCICIO_FISCAL}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{COMPANIA}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select 'Dscto. 5ta. '||CASE     WHEN max(substr(TRIM(ejerciciofiscal),-2,2))='01' THEN  'ENERO'
+                 WHEN max(substr(TRIM(ejerciciofiscal),-2,2))='02' THEN  'FEBRERO'
+                 WHEN max(substr(TRIM(ejerciciofiscal),-2,2))='03' THEN  'MARZO'
+                 WHEN max(substr(TRIM(ejerciciofiscal),-2,2))='04' THEN  'ABRIL'
+                 WHEN max(substr(TRIM(ejerciciofiscal),-2,2))='05' THEN  'MAYO'
+                 WHEN max(substr(TRIM(ejerciciofiscal),-2,2))='06' THEN  'JUNIO'
+                 WHEN max(substr(TRIM(ejerciciofiscal),-2,2))='07' THEN  'JULIO'
+                 WHEN max(substr(TRIM(ejerciciofiscal),-2,2))='08' THEN  'AGOSTO'
+                 WHEN max(substr(TRIM(ejerciciofiscal),-2,2))='09' THEN  'SETIEMBRE'
+                 WHEN max(substr(TRIM(ejerciciofiscal),-2,2))='10' THEN  'OCTUBRE'
+                 WHEN max(substr(TRIM(ejerciciofiscal),-2,2))='11' THEN  'NOVIEMBRE'
+                 WHEN max(substr(TRIM(ejerciciofiscal),-2,2))='12' THEN  'DICIEMBRE' END AS MES
+        ,sum(estimadoimpuestomensual ) as impuesto
+from SGCORESYS.pr_impuestorenta
+where empleado = $P{EMPLEADO} and substr(ejerciciofiscal,1,4) = substr($P{EJERCICIO_FISCAL},1,4) and companiasocio =$P{COMPANIA} and estimadoimpuestomensual > 0
+group by substr(ejerciciofiscal,1,6)
+order by substr(ejerciciofiscal,1,6)]]>
+	</queryString>
+	<field name="MES" class="java.lang.String"/>
+	<field name="IMPUESTO" class="java.math.BigDecimal"/>
+	<variable name="TOTAL_RETENIDO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPUESTO}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="110" height="14" forecolor="#333333" uuid="1f9b65c8-6661-4fd9-ae79-a171a229b3b6"/>
+				<box leftPadding="5" rightPadding="0">
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="110" y="0" width="110" height="14" forecolor="#333333" uuid="c9e0ba85-8a93-41c2-9124-cc2496012019"/>
+				<box leftPadding="5" rightPadding="5">
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IMPUESTO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="13" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="110" height="13" forecolor="#000000" uuid="bd5a12ff-8fd2-4797-a87c-9b8a3fee758c"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL RETENIDO]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="110" y="0" width="110" height="13" forecolor="#000000" uuid="960ecc73-bc83-4904-b6a0-c96e64cf99e2"/>
+				<box leftPadding="5" rightPadding="5">
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_RETENIDO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

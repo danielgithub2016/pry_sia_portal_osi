@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dw_hr_rep_desempeno_cedula_competencia" language="groovy" pageWidth="550" pageHeight="842" columnWidth="550" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="37f54eaf-2c87-4dd2-bd34-8a72b3ef005e">
+	<property name="ireport.zoom" value="1.3310000000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="miestilo1">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{CALIFICACIONMeasure}>0]]></conditionExpression>
+			<style forecolor="#000000" backcolor="#999999"/>
+		</conditionalStyle>
+	</style>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="PAR_COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_SECUENCIA" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_EVALUADO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_EVALUADOR" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_cabezera" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT B.ORDENPLANTILLA AS ORDEN_PLANTILLA, C.VALOR AS VALOR, B.DESCRIPCION AS FACTOR, C.EXPLICACION AS EXPLICACION,
+--CASE C.VALOR WHEN 1 THEN '5 - ' WHEN 2 THEN '4 - ' WHEN 3 THEN '3 - ' WHEN 4 THEN '2 - ' WHEN 5 THEN '1 - ' END || --SUBSTR(C.DESCRIPCION,0,1) || ' (*)' AS RESPUESTA,
+TO_CHAR(C.VALOR) || ' - ' || SUBSTR(C.DESCRIPCION,1,3) AS RESPUESTA,
+CASE WHEN A.CALIFICACION = C.VALOR THEN A.CALIFICACION ELSE 0 END AS CALIFICACION
+FROM  SGCORESYS.HR_DETALLEEVALUACION A
+JOIN SGCORESYS.HR_FACTORVALOR C ON A.FACTOR = C.FACTOR
+JOIN SGCORESYS.HR_FACTORESEVALUACION B ON C.FACTOR = B.FACTOR
+WHERE
+A.COMPANYOWNER = $P{PAR_COMPANIA}
+AND A.SECUENCIAEVAL = $P{PAR_SECUENCIA}
+AND A.EMPLEADO = $P{PAR_EVALUADO}
+AND A.EMPLEADOEVALUADOR =  $P{PAR_EVALUADOR}
+ORDER BY B.ORDENPLANTILLA, C.VALOR DESC]]>
+	</queryString>
+	<field name="ORDEN_PLANTILLA" class="java.math.BigDecimal"/>
+	<field name="VALOR" class="java.lang.Double"/>
+	<field name="FACTOR" class="java.lang.String"/>
+	<field name="EXPLICACION" class="java.lang.String"/>
+	<field name="RESPUESTA" class="java.lang.String"/>
+	<field name="CALIFICACION" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="50" splitType="Stretch">
+			<crosstab>
+				<reportElement mode="Opaque" x="0" y="0" width="600" height="50" uuid="e1ae98df-5ae4-4eed-a86f-eadd16f8124e"/>
+				<crosstabHeaderCell>
+					<cellContents>
+						<staticText>
+							<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="70" height="20" backcolor="#CCCCCC" uuid="ca5205e9-e95b-4836-bd1b-ac1718036588"/>
+							<box>
+								<pen lineWidth="0.75"/>
+								<topPen lineWidth="0.75"/>
+								<leftPen lineWidth="0.75"/>
+								<bottomPen lineWidth="0.75"/>
+								<rightPen lineWidth="0.75"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font size="7" isBold="true"/>
+							</textElement>
+							<text><![CDATA[FACTORES A EVALUAR]]></text>
+						</staticText>
+						<staticText>
+							<reportElement style="Crosstab Data Text" mode="Opaque" x="70" y="0" width="329" height="20" backcolor="#CCCCCC" uuid="cdcfa1e0-3ab6-4dc9-8213-92f7a059e958"/>
+							<box>
+								<pen lineWidth="0.75"/>
+								<topPen lineWidth="0.75"/>
+								<leftPen lineWidth="0.75"/>
+								<bottomPen lineWidth="0.75"/>
+								<rightPen lineWidth="0.75"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font size="7" isBold="true"/>
+							</textElement>
+							<text><![CDATA[DESCRIPCIÓN]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="FACTOR" width="70">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{FACTOR}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" x="0" y="0" width="70" height="25" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="20e4b2b5-914a-45cb-9b67-9029346af767"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{FACTOR}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="EXPLICACION" width="329">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{EXPLICACION}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement style="Crosstab Data Text" x="6" y="0" width="318" height="21" forecolor="#000000" uuid="a92e619d-ab42-41a3-a193-8127c147ef01"/>
+								<textElement textAlignment="Justified">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{EXPLICACION}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="RESPUESTA" height="20">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{RESPUESTA}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#CC0000" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="30" height="20" forecolor="#000000" backcolor="#CCCCCC" uuid="f21e12d8-869d-4963-a7b6-27fabeeb91ee"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{RESPUESTA}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="CALIFICACIONMeasure" class="java.lang.Integer" calculation="Average">
+					<measureExpression><![CDATA[$F{CALIFICACION}]]></measureExpression>
+				</measure>
+				<crosstabCell width="30" height="25">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="30" height="25" uuid="cc23d7d5-7769-43d1-907a-85e1669d8648"/>
+							<textElement verticalAlignment="Middle">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{CALIFICACIONMeasure}!=0?$V{CALIFICACIONMeasure}:""]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="25" rowTotalGroup="FACTOR">
+					<cellContents backcolor="#702400" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="274ec5a1-3455-4944-a55c-32d478aaf4f0"/>
+							<textFieldExpression><![CDATA[$V{CALIFICACIONMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="RESPUESTA">
+					<cellContents backcolor="#FFD4BF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="37f292be-2b54-4751-bf24-5d3cf3a81b54"/>
+							<textFieldExpression><![CDATA[$V{CALIFICACIONMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="FACTOR" columnTotalGroup="RESPUESTA">
+					<cellContents backcolor="#702400" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="906999e4-e9a3-4595-b99d-3d4efab4b29e"/>
+							<textFieldExpression><![CDATA[$V{CALIFICACIONMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="25" rowTotalGroup="EXPLICACION">
+					<cellContents backcolor="#FFD4BF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="97857609-077e-4825-bfa6-9beda75c36ed"/>
+							<textFieldExpression><![CDATA[$V{CALIFICACIONMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="EXPLICACION" columnTotalGroup="RESPUESTA">
+					<cellContents backcolor="#FFD4BF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="693522cd-592a-488c-a0ad-513fae892959"/>
+							<textFieldExpression><![CDATA[$V{CALIFICACIONMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

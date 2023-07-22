@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.erp.contabilidad.dominio.AcCostcentermst" table="SGCORESYS.AC_COSTCENTERMST">
+        <composite-id name="pk" class="net.royal.erp.contabilidad.dominio.AcCostcentermstPk">
+            <key-property name="costcenter" type="string">
+                <column name="COSTCENTER" length="10" />
+            </key-property>
+        </composite-id>
+        <property name="localname" type="string">
+            <column name="LOCALNAME" length="120" />
+        </property>
+        <property name="englishname" type="string">
+            <column name="ENGLISHNAME" length="255" />
+        </property>
+        <property name="costcenterclasification" type="string">
+            <column name="COSTCENTERCLASIFICATION" length="6" />
+        </property>
+        <property name="costcentergroup" type="string">
+            <column name="COSTCENTERGROUP" length="10" />
+        </property>
+        <property name="costcentersubgroup" type="string">
+            <column name="COSTCENTERSUBGROUP" length="10" />
+        </property>
+        <property name="costcenterrelation" type="string">
+            <column name="COSTCENTERRELATION" length="10" />
+        </property>
+        <property name="responsible" type="string">
+            <column name="RESPONSIBLE" length="4" />
+        </property>
+        <property name="expensefinanceflag" type="string">
+            <column name="EXPENSEFINANCEFLAG" length="1" />
+        </property>
+        <property name="expenseadministrativeflag" type="string">
+            <column name="EXPENSEADMINISTRATIVEFLAG" length="1" />
+        </property>
+        <property name="expensesalesflag" type="string">
+            <column name="EXPENSESALESFLAG" length="1" />
+        </property>
+        <property name="expenseproductionflag" type="string">
+            <column name="EXPENSEPRODUCTIONFLAG" length="1" />
+        </property>
+        <property name="costcenternext" type="string">
+            <column name="COSTCENTERNEXT" length="10" />
+        </property>
+        <property name="vendor" type="integer">
+            <column name="VENDOR" length="22" />
+        </property>
+        <property name="amountinvoices" type="integer">
+            <column name="AMOUNTINVOICES" length="22" />
+        </property>
+        <property name="amountrequisitions" type="integer">
+            <column name="AMOUNTREQUISITIONS" length="22" />
+        </property>
+        <property name="amountadvances" type="integer">
+            <column name="AMOUNTADVANCES" length="22" />
+        </property>
+        <property name="amountothers01" type="integer">
+            <column name="AMOUNTOTHERS01" length="22" />
+        </property>
+        <property name="amountothers02" type="integer">
+            <column name="AMOUNTOTHERS02" length="22" />
+        </property>
+        <property name="amountothers03" type="integer">
+            <column name="AMOUNTOTHERS03" length="22" />
+        </property>
+        <property name="vendorsignfile" type="string">
+            <column name="VENDORSIGNFILE" length="20" />
+        </property>
+        <property name="account" type="string">
+            <column name="ACCOUNT" length="20" />
+        </property>
+        <property name="status" type="string">
+            <column name="STATUS" length="1" />
+        </property>
+        <property name="lastuser" type="string">
+            <column name="LASTUSER" length="20" />
+        </property>
+        <property name="lastdate" type="timestamp">
+            <column name="LASTDATE" length="7" />
+        </property>
+        <property name="costproductionlevel" type="string">
+            <column name="COSTPRODUCTIONLEVEL" length="1" />
+        </property>
+        <property name="accountdestination" type="string">
+            <column name="ACCOUNTDESTINATION" length="20" />
+        </property>
+        <property name="costcentertype" type="string">
+            <column name="COSTCENTERTYPE" length="2" />
+        </property>
+        <property name="incomeflag" type="string">
+            <column name="INCOMEFLAG" length="1" />
+        </property>
+        <property name="accountinflation" type="string">
+            <column name="ACCOUNTINFLATION" length="20" />
+        </property>
+        <property name="expensefixedflag" type="string">
+            <column name="EXPENSEFIXEDFLAG" length="1" />
+        </property>
+        <property name="expensedirectflag" type="string">
+            <column name="EXPENSEDIRECTFLAG" length="1" />
+        </property>
+        <property name="sucursal" type="string">
+            <column name="SUCURSAL" length="4" />
+        </property>
+        <property name="internalnumber" type="string">
+            <column name="INTERNALNUMBER" length="20" />
+        </property>
+        <property name="racionperfil" type="string">
+            <column name="RACIONPERFIL" length="4" />
+        </property>
+        <property name="racionperfilmantenimiento" type="string">
+            <column name="RACIONPERFILMANTENIMIENTO" length="4" />
+        </property>
+        <property name="address" type="string">
+            <column name="ADDRESS" length="60" />
+        </property>
+        <property name="cpautomaticinvoflag" type="string">
+            <column name="CPAUTOMATICINVOFLAG" length="1" />
+        </property>
+        <property name="cpautomaticrequflag" type="string">
+            <column name="CPAUTOMATICREQUFLAG" length="1" />
+        </property>
+        <property name="multicompanyflag" type="string">
+            <column name="MULTICOMPANYFLAG" length="1" />
+        </property>
+        <property name="companyowner" type="string">
+            <column name="COMPANYOWNER" length="15" />
+        </property>
+        <property name="referenciafiscal02" type="string">
+            <column name="REFERENCIAFISCAL02" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

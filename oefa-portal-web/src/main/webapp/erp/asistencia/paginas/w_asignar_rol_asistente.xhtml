@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panelGrid columns="2" id="grdEmpleadoAsignacionAsistente"
+		style="border-spacing:0px;"
+		columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid"
+		styleClass="ui-panelgrid-blank">
+
+		<h:outputLabel value="Area Siged"
+			style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;" />
+
+		<p:selectOneMenu requiredMessage="El campo Area Siged es obligatorio."
+			filter="true" filterMatchMode="contains" required="true"
+			disabled="#{cwAsAutorizacionPreprocesoHextraEditSIGED.puedeEditarPermisosSIGED}"
+			valueChangeListener="#{cwAsAutorizacionPreprocesoHextraEditSIGED.mostrarJefeAsistenteSegunArea}"
+			value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.nuevaBandeja.idAreaSIGED}">
+
+			<f:selectItem itemLabel="--Seleccione--" />
+			<f:selectItems
+				value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.listaAreasSIGED}"
+				var="area" itemValue="#{area.idArea}" itemLabel="#{area.nombre}" />
+			<p:ajax update="@form" />
+		</p:selectOneMenu>
+
+
+		<h:outputLabel value="Cargo del asistente asignado"
+			style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;" />
+
+		<h:outputLabel
+			value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.cargoaaSel}"
+			style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;" />
+
+		<h:outputLabel value="Cargo del asistente permanente asignado"
+			style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;" />
+
+		<h:outputLabel
+			value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.cargoaaPermSel}"
+			style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;" />
+
+
+
+
+	</p:panelGrid>
+
+	<p:panel header="Asignación de rol asistente">
+
+
+		<p:panelGrid columns="3"
+			columnClasses="ui-grid-col-3,ui-grid-col-7,ui-grid-col-2"
+			layout="grid" styleClass="ui-panelgrid-blank">
+			<p:selectOneMenu
+				value="#{cwAsEmpleadoSelect.dw_position.codigodescripcionflag}">
+				<f:selectItem itemLabel="Código" itemValue="C" />
+				<f:selectItem itemLabel="Nombre" itemValue="N" />
+			</p:selectOneMenu>
+			<p:inputText id="txtbuscaemp"
+				value="#{cwAsEmpleadoSelect.dw_position.codigodescripciontext}"
+				onkeypress="return noAcepto(event);" />
+
+			<p:commandButton value="Buscar" update="@form"
+				onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+				action="#{cwAsAutorizacionPreprocesoHextraEditSIGED.buscarEmpleadosRolAsistente}"
+				icon="buscar" />
+
+		</p:panelGrid>
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			id="tblempleado" paginatorPosition="bottom" selectionMode="single"
+			paginator="true" rowKey="#{e.persona}" scrollable="true"
+			scrollHeight="400" rows="10" reflow="true"
+			rowStyleClass="#{e.estadoempleado eq 2 ? 'red' : null}"
+			selection="#{cwAsEmpleadoSelect.registroSeleccionado}"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+			value="#{cwAsEmpleadoSelect.dw_list}" var="e">
+
+			<p:column headerText="Asistente Siged" width="60"
+				styleClass="columnatablaCentro">
+				<p:selectBooleanCheckbox value="#{e.blasistentesiged}"
+					disabled="#{cwAsAutorizacionPreprocesoHextraEditSIGED.puedeEditarPermisosSIGED}"
+					onchange="return obtenerEmpleadoSel(#{e.persona},this);" />
+			</p:column>
+
+			<p:column headerText="Asistente Siged Permanente" width="60"
+				styleClass="columnatablaCentro">
+				<p:selectBooleanCheckbox value="#{e.blasistentepermsiged}"
+					disabled="#{cwAsAutorizacionPreprocesoHextraEditSIGED.puedeEditarPermisosSIGED}"
+					onchange="return obtenerEmpleadoPermSel(#{e.persona},this);" />
+			</p:column>
+
+			<p:column headerText="Código" width="50"
+				styleClass="columnatablaCentro">
+				<h:outputText value="#{e.persona}" style="#{e.estilo}" />
+			</p:column>
+
+			<p:column headerText="Nombre" width="220">
+				<h:outputText value="#{e.nombrecompleto}" style="#{e.estilo}" />
+			</p:column>
+
+			<p:column headerText="Area Operativa" width="150">
+				<h:outputText value="#{e.nombrearea}" style="#{e.estilo}" />
+			</p:column>
+		</p:dataTable>
+
+	</p:panel>
+
+
+</ui:composition>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : rrhh.HrEvaluacionperiodo -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="hrevaluacionperiodo.obtenerListaEvaluaciones">
+		SELECT
+		HR_EvaluacionPeriodo.CompanyOwner as
+		"companyowner",
+		HR_EvaluacionPeriodo.SecuenciaEval as "secuenciaeval",
+		companyowner.description as "companyNombre",
+		HR_EvaluacionPeriodo.Periodo as "periodo",
+		HR_EvaluacionPeriodo.Descripcion as "descripcion",
+		HR_EvaluacionPeriodo.FechaInicio as "fechainicio",
+		HR_EvaluacionPeriodo.FechaFin as "fechafin",
+		HR_EvaluacionPeriodo.FechaPlanInicio as "fechaplaninicio",
+		HR_EvaluacionPeriodo.FechaPlanFin as "fechaplanfin",
+		HR_EvaluacionPeriodo.FechaRealInicio as "fecharealinicio",
+		HR_EvaluacionPeriodo.FechaRealFin as "fecharealfin",
+		HR_EvaluacionPeriodo.FECHAEVALINICIO as "fechaevalinicio",
+		HR_EvaluacionPeriodo.FECHAEVALFIN as "fechaevalfin",
+		HR_EvaluacionPeriodo.FECHACIERREEVAL as "fechacierrereal",
+		HR_EvaluacionPeriodo.UltimoUsuario as "ultimousuario",
+		HR_EvaluacionPeriodo.UltimaFechaModif as "ultimafechamodif",
+		HR_EvaluacionPeriodo.Estado as "estado",
+		HR_EvaluacionPeriodo.EstadoProceso as "estadoproceso"
+		FROM
+		sgcoresys.HR_EvaluacionPeriodo
+		JOIN sgcoresys.companyowner ON
+		(companyowner.companyowner =HR_EvaluacionPeriodo.CompanyOwner)
+		order by SecuenciaEval desc
+
+	</sql-query>
+
+	<sql-query name="hrevaluacionperiodo.obtenerCantHistorial">
+	   <![CDATA[
+	   SELECT COUNT(*) FROM sgcoresys.HR_DETALLEEVALUACIONMEJORA A 
+	   JOIN sgcoresys.HR_EVALUACIONPERIODO B ON A.COMPANYOWNER = B.COMPANYOWNER AND A.SECUENCIAEVAL = B.SECUENCIAEVAL
+	   WHERE A.COMPANYOWNER = :iv_compania 
+	   AND A.EMPLEADO = :iv_empleado 
+	   AND A.FACTOR = :il_factor 
+	   AND A.SECUENCIAEVAL <> :iv_secuencia
+	    ]]>
+	</sql-query>
+
+</hibernate-mapping>

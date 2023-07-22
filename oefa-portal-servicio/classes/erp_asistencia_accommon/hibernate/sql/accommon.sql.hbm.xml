@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : accommon.empl
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- accommon.dw_ac_accountbalance_edit -->
+    <sql-query name="accommon.DwAcAccountbalanceEdit">
+    </sql-query>
+
+    <!-- accommon.dw_ac_afe_list_by_company -->
+    <sql-query name="accommon.DwAcAfeListByCompany">
+    </sql-query>
+
+    <!-- accommon.dw_ac_afe_list_by_multicompany -->
+    <sql-query name="accommon.DwAcAfeListByMulticompany">
+    </sql-query>
+
+    <!-- accommon.dw_ac_afe_select_afemst -->
+    <sql-query name="accommon.DwAcAfeSelectAfemst">
+    </sql-query>
+
+    <!-- accommon.dw_ac_afe_select_afemst_element -->
+    <sql-query name="accommon.DwAcAfeSelectAfemstElement">
+    		SELECT 
+				elementmst.element as "element",   
+				elementmst.localname as "localname",   
+				elementmst.elementgroup as "elementgroup",   
+				elementgroupmst.localname as "localname_1",
+				rownum as "rowkey"  
+				FROM 
+				SGCORESYS.elementmst INNER JOIN 
+				SGCORESYS.elementgroupmst ON (elementmst.elementgroup = elementgroupmst.elementgroup )
+				WHERE 
+				( elementmst.status = 'A' )
+				ORDER BY 
+				elementmst.element ASC,   
+				elementmst.localname ASC  
+    </sql-query>
+    
+        <!-- accommon.dw_ac_afe_select_afemst_element CONTAR-->
+    <sql-query name="accommon.DwAcAfeSelectAfemstElementConteo">
+    		SELECT 
+				count(1) 
+				FROM 
+				SGCORESYS.elementmst INNER JOIN 
+				SGCORESYS.elementgroupmst ON (elementmst.elementgroup = elementgroupmst.elementgroup )
+				WHERE 
+				( elementmst.status = 'A' )
+				ORDER BY 
+				elementmst.element ASC,   
+				elementmst.localname ASC  	
+    
+    </sql-query>
+
+    <!-- accommon.dw_ac_afe_select_tree_position -->
+    <sql-query name="accommon.DwAcAfeSelectTreePosition">
+    </sql-query>
+
+    <!-- accommon.dw_ac_cc_balance_generation_voucherdet -->
+    <sql-query name="accommon.DwAcCcBalanceGenerationVoucherdet">
+    </sql-query>
+
+    <!-- accommon.dw_ac_company_select_union -->
+    <sql-query name="accommon.DwAcCompanySelectUnion">
+    </sql-query>
+
+    <!-- accommon.dw_ac_costcenter_list -->
+    <sql-query name="accommon.DwAcCostcenterList">
+    </sql-query>
+
+    <!-- accommon.dw_ac_costcenter_list_all -->
+    <sql-query name="accommon.DwAcCostcenterListAll">
+    </sql-query>
+
+    <!-- accommon.dw_ac_costcenter_list_by_clasification -->
+    <sql-query name="accommon.DwAcCostcenterListByClasification">
+    </sql-query>
+
+    <!-- accommon.dw_ac_costcenterclasification_list -->
+    <sql-query name="accommon.DwAcCostcenterclasificationList">
+    </sql-query>
+
+    <!-- accommon.dw_ac_invoice -->
+    <sql-query name="accommon.DwAcInvoice">
+    </sql-query>
+
+    <!-- accommon.dw_ac_lastvouchernumber -->
+    <sql-query name="accommon.DwAcLastvouchernumber">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_automatic_input -->
+    <sql-query name="accommon.DwAcVoucherAutomaticInput">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_automatic_period -->
+    <sql-query name="accommon.DwAcVoucherAutomaticPeriod">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_browse_documentos -->
+    <sql-query name="accommon.DwAcVoucherBrowseDocumentos">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_browse_documentos_detail -->
+    <sql-query name="accommon.DwAcVoucherBrowseDocumentosDetail">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_browse_lines -->
+    <sql-query name="accommon.DwAcVoucherBrowseLines">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_browse_obligacion -->
+    <sql-query name="accommon.DwAcVoucherBrowseObligacion">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_detail -->
+    <sql-query name="accommon.DwAcVoucherDetail">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_detail_edit -->
+    <sql-query name="accommon.DwAcVoucherDetailEdit">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_edit_short_detail -->
+    <sql-query name="accommon.DwAcVoucherEditShortDetail">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_export_detail -->
+    <sql-query name="accommon.DwAcVoucherExportDetail">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_export_header -->
+    <sql-query name="accommon.DwAcVoucherExportHeader">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_export_position -->
+    <sql-query name="accommon.DwAcVoucherExportPosition">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_header -->
+    <sql-query name="accommon.DwAcVoucherHeader">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_header_edit -->
+    <sql-query name="accommon.DwAcVoucherHeaderEdit">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_list_browse -->
+    <sql-query name="accommon.DwAcVoucherListBrowse">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_list_browse_position -->
+    <sql-query name="accommon.DwAcVoucherListBrowsePosition">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_posting -->
+    <sql-query name="accommon.DwAcVoucherPosting">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_report -->
+    <sql-query name="accommon.DwAcVoucherReport">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_report_afpunion -->
+    <sql-query name="accommon.DwAcVoucherReportAfpunion">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_report_cotel -->
+    <sql-query name="accommon.DwAcVoucherReportCotel">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_report_gbh -->
+    <sql-query name="accommon.DwAcVoucherReportGbh">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_report_masive -->
+    <sql-query name="accommon.DwAcVoucherReportMasive">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_report_napsa -->
+    <sql-query name="accommon.DwAcVoucherReportNapsa">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_report_portrait -->
+    <sql-query name="accommon.DwAcVoucherReportPortrait">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_report_portrait_napsa -->
+    <sql-query name="accommon.DwAcVoucherReportPortraitNapsa">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_report_position -->
+    <sql-query name="accommon.DwAcVoucherReportPosition">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_status_list -->
+    <sql-query name="accommon.DwAcVoucherStatusList">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_status_position -->
+    <sql-query name="accommon.DwAcVoucherStatusPosition">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucher_validation_feeder -->
+    <sql-query name="accommon.DwAcVoucherValidationFeeder">
+    </sql-query>
+
+    <!-- accommon.dw_ac_voucherinterfacework_edit -->
+    <sql-query name="accommon.DwAcVoucherinterfaceworkEdit">
+    </sql-query>
+
+    <!-- accommon.dw_ac_xvoucher_errors_edit -->
+    <sql-query name="accommon.DwAcXvoucherErrorsEdit">
+    </sql-query>
+
+    <!-- accommon.dw_cp_voucher_position -->
+    <sql-query name="accommon.DwCpVoucherPosition">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_cashflow_select -->
+    <sql-query name="accommon.DwMaAcCashflowSelect">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_clasification_edit -->
+    <sql-query name="accommon.DwMaAcCostcenterClasificationEdit">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_clasification_list -->
+    <sql-query name="accommon.DwMaAcCostcenterClasificationList">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_partida_select_posit -->
+    <sql-query name="accommon.DwMaAcCostcenterPartidaSelectPosit">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_select -->
+    <sql-query name="accommon.DwMaAcCostcenterSelect">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_select_completo -->
+    <sql-query name="accommon.DwMaAcCostcenterSelectCompleto">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_select_gloria -->
+    <sql-query name="accommon.DwMaAcCostcenterSelectGloria">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_select_gloria_detail -->
+    <sql-query name="accommon.DwMaAcCostcenterSelectGloriaDetail">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_select_gloria_pos -->
+    <sql-query name="accommon.DwMaAcCostcenterSelectGloriaPos">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_select_location -->
+    <sql-query name="accommon.DwMaAcCostcenterSelectLocation">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_select_location_pos -->
+    <sql-query name="accommon.DwMaAcCostcenterSelectLocationPos">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_select_master -->
+    <sql-query name="accommon.DwMaAcCostcenterSelectMaster">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_select_master_ccsup -->
+    <sql-query name="accommon.DwMaAcCostcenterSelectMasterCcsup">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_select_position -->
+    <sql-query name="accommon.DwMaAcCostcenterSelectPosition">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_select_prime -->
+    <sql-query name="accommon.DwMaAcCostcenterSelectPrime">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_select_retrieve_cc -->
+    <sql-query name="accommon.DwMaAcCostcenterSelectRetrieveCc">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_select_retrv_cc_all -->
+    <sql-query name="accommon.DwMaAcCostcenterSelectRetrvCcAll">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenter_select_xpersona -->
+    <sql-query name="accommon.DwMaAcCostcenterSelectXpersona">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcenterdistribution_copy -->
+    <sql-query name="accommon.DwMaAcCostcenterdistributionCopy">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcentergroup_edit -->
+    <sql-query name="accommon.DwMaAcCostcentergroupEdit">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcentergroup_edit_detail -->
+    <sql-query name="accommon.DwMaAcCostcentergroupEditDetail">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_costcentergroup_list -->
+    <sql-query name="accommon.DwMaAcCostcentergroupList">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_finance_rules_list -->
+    <sql-query name="accommon.DwMaAcFinanceRulesList">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_primegroup_edit -->
+    <sql-query name="accommon.DwMaAcPrimegroupEdit">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_primegroup_list -->
+    <sql-query name="accommon.DwMaAcPrimegroupList">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_primegroup_select -->
+    <sql-query name="accommon.DwMaAcPrimegroupSelect">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ac_vouchermodel_select -->
+    <sql-query name="accommon.DwMaAcVouchermodelSelect">
+    </sql-query>
+
+    <!-- accommon.dw_ma_afe_retrieve -->
+    <sql-query name="accommon.DwMaAfeRetrieve">
+    </sql-query>
+
+    <!-- accommon.dw_ma_afe_select -->
+    <sql-query name="accommon.DwMaAfeSelect">
+    </sql-query>
+
+    <!-- accommon.dw_ma_companiadistribucionsplit_retrieve -->
+    <sql-query name="accommon.DwMaCompaniadistribucionsplitRetrieve">
+    </sql-query>
+
+    <!-- accommon.dw_ma_companiamast_select_only_rep_sec -->
+    <sql-query name="accommon.DwMaCompaniamastSelectOnlyRepSec">
+    </sql-query>
+
+    <!-- accommon.dw_ma_companiamast_select_sec -->
+    <sql-query name="accommon.DwMaCompaniamastSelectSec">
+    </sql-query>
+
+    <!-- accommon.dw_ma_companyowner_select_vou_sec -->
+    <sql-query name="accommon.DwMaCompanyownerSelectVouSec">
+    </sql-query>
+
+    <!-- accommon.dw_ma_cp_costcenter_partida_select_posit -->
+    <sql-query name="accommon.DwMaCpCostcenterPartidaSelectPosit">
+    </sql-query>
+
+    <!-- accommon.dw_ma_cp_regimenfiscal_select -->
+    <sql-query name="accommon.DwMaCpRegimenfiscalSelect">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ledger_edit -->
+    <sql-query name="accommon.DwMaLedgerEdit">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ledger_list -->
+    <sql-query name="accommon.DwMaLedgerList">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ledger_select -->
+    <sql-query name="accommon.DwMaLedgerSelect">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ledgergroup_edit -->
+    <sql-query name="accommon.DwMaLedgergroupEdit">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ledgergroup_edit_ledger -->
+    <sql-query name="accommon.DwMaLedgergroupEditLedger">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ledgergroup_list -->
+    <sql-query name="accommon.DwMaLedgergroupList">
+    </sql-query>
+
+    <!-- accommon.dw_ma_ledgergroup_select -->
+    <sql-query name="accommon.DwMaLedgergroupSelect">
+    </sql-query>
+
+    <!-- accommon.dw_ma_prime2_select -->
+    <sql-query name="accommon.DwMaPrime2Select">
+    </sql-query>
+
+    <!-- accommon.dw_ma_prime3_select -->
+    <sql-query name="accommon.DwMaPrime3Select">
+    </sql-query>
+
+    <!-- accommon.dw_ma_prime4_select -->
+    <sql-query name="accommon.DwMaPrime4Select">
+    </sql-query>
+
+    <!-- accommon.dw_ma_primetype_edit -->
+    <sql-query name="accommon.DwMaPrimetypeEdit">
+    </sql-query>
+
+    <!-- accommon.dw_ma_primetype_list -->
+    <sql-query name="accommon.DwMaPrimetypeList">
+    </sql-query>
+
+    <!-- accommon.dw_ma_primetype_select -->
+    <sql-query name="accommon.DwMaPrimetypeSelect">
+    </sql-query>
+
+    <!-- accommon.dw_ma_tipodocumentocxp_select_fondo -->
+    <sql-query name="accommon.DwMaTipodocumentocxpSelectFondo">
+    </sql-query>
+
+</hibernate-mapping>

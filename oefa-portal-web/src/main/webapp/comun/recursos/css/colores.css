@@ -1,0 +1,241 @@
+/* inicio de colores basicos */
+.cssColorBlack{
+    background-color: rgb(0,0,0)!important;
+    color:#FFFFFF!important;
+    font-size: 1.1em!important;
+}
+.cssColorWhite{
+    background-color: rgb(255,255,255)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorRed{
+    background-color: rgb(255,0,0)!important;
+    color:#FFFFFF!important;
+    font-size: 1.1em!important;
+}
+.cssColorLime{
+    background-color: rgb(0,255,0)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorBlue  {
+    background-color: rgb(0,0,255)!important;
+    color:#FFFFFF!important;
+    font-size: 1.1em!important;
+}
+.cssColorBlue .fc-event-skin {
+    background-color: rgb(0,0,255)!important;
+    color:#FFFFFF!important;
+    font-size: 1.1em!important;
+}
+
+.cssColorYellow {
+    background-color: rgb(255,255,0)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorCyan{
+    background-color: rgb(0,255,255)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorMagenta{
+    background-color: rgb(255,0,255)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorSilver{
+    background-color: rgb(192,192,192)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorSilver .fc-event-skin{
+    background-color: rgb(192,192,192)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+
+.cssColorGray{
+    background-color: rgb(128,128,128)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorMaroon{
+    background-color: rgb(128,0,0)!important;
+    color:#FFFFFF!important;
+    font-size: 1.1em!important;
+}
+.cssColorOlive {
+    background-color: rgb(128,128,0)!important;
+    color:#FFFFFF!important;
+    font-size: 1.1em!important;
+}
+.cssColorGreen{
+    background-color: rgb(0,128,0)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorPurple{
+    background-color: rgb(128,0,128)!important;
+    color:#FFFFFF!important;
+    font-size: 1.1em!important;
+}
+.cssColorTeal{
+    background-color: rgb(0,128,128)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorNavy{
+    background-color: rgb(0,0,128)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+/* fin de colores basicos */
+
+
+/* inicio de colores derivados */
+.cssColorSkyBlue{
+    background-color: rgb(135,206,235)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorSkyBlue .fc-event-skin{
+    background-color: rgb(135,206,235)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+
+.cssColorYellowGreen{
+    background-color: rgb(154,205,50)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorYellowGreen .fc-event-skin{
+    background-color: rgb(154,205,50)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+
+.cssColorNavajoWhite{
+    background-color: rgb(255,222,173)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorNavajoWhite .fc-event-skin{
+    background-color: rgb(255,222,173)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+
+.cssColorSandyBrown{
+    background-color: rgb(244,164,96)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorSandyBrown .fc-event-skin{
+    background-color: rgb(244,164,96)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+
+.cssColorViolet{
+    background-color: rgb(238,130,238)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorViolet .fc-event-skin{
+    background-color: rgb(238,130,238)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+
+.cssColorGold{
+    background-color: rgb(255,215,0)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorGold .fc-event-skin{
+    background-color: rgb(255,215,0)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+
+.cssColorMoccasin{
+    background-color: rgb(255,228,181)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorMoccasin .fc-event-skin{
+    background-color: rgb(255,228,181)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+
+.cssColorAzure{
+    background-color: rgb(240,255,255)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorAzure .fc-event-skin{
+    background-color: rgb(240,255,255)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+
+.cssColorSpringGreen{
+    background-color: rgb(0,255,127)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorSpringGreen .fc-event-skin{
+    background-color: rgb(0,255,127)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+
+.cssColorPaleGreen{
+    background-color: rgb(152,251,152)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorPaleGreen .fc-event-skin{
+    background-color: rgb(152,251,152)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+
+.cssColorCore{
+    background-color: rgb(255,127,80)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorCore .fc-event-skin{
+    background-color: rgb(255,127,80)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+
+.cssColorAquaMarine{
+    background-color: rgb(127,255,212)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorAquaMarine .fc-event-skin{
+    background-color: rgb(127,255,212)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+
+.cssColorAlice{
+    background-color: rgb(240,248,255)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+.cssColorAlice .fc-event-skin{
+    background-color: rgb(240,248,255)!important;
+    color:#000000!important;
+    font-size: 1.1em!important;
+}
+
+/* fin de colores derivados */

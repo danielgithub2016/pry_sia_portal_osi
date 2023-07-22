@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.asistencia.dominio.AsEventousuario" table="SGCORESYS.AS_EVENTOUSUARIO">
+        <composite-id name="pk" class="net.royal.erp.asistencia.dominio.AsEventousuarioPk">
+            <key-property name="idevento" type="integer">
+                <column name="IDEVENTO" length="22" />
+            </key-property>
+            <key-property name="userid" type="string">
+                <column name="USERID" length="12" />
+            </key-property>
+        </composite-id>
+        <property name="autorizadopor" type="string">
+            <column name="AUTORIZADOPOR" length="8" />
+        </property>
+        <property name="fechaautorizacion" type="timestamp">
+            <column name="FECHAAUTORIZACION" length="7" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

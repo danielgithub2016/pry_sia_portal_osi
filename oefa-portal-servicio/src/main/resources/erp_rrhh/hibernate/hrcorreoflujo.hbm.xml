@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrCorreoflujo" table="SGCORESYS.HR_CORREOFLUJO">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrCorreoflujoPk">
+            <key-property name="proceso" type="integer">
+                <column name="PROCESO" length="22" />
+            </key-property>
+            <key-property name="accion" type="integer">
+                <column name="ACCION" length="22" />
+            </key-property>
+            <key-property name="usuario" type="integer">
+                <column name="USUARIO" length="22" />
+            </key-property>
+            <key-property name="flagmotivo" type="string">
+                <column name="FLAGMOTIVO" length="1" />
+            </key-property>
+            <key-property name="flagaccion" type="string">
+                <column name="FLAGACCION" length="1" />
+            </key-property>
+        </composite-id>
+        <property name="motivo" type="string">
+            <column name="MOTIVO" length="3" />
+        </property>
+        <property name="destino" type="string">
+            <column name="DESTINO" length="255" />
+        </property>
+        <property name="copia" type="string">
+            <column name="COPIA" length="255" />
+        </property>
+        <property name="flagusuario" type="string">
+            <column name="FLAGUSUARIO" length="1" />
+        </property>
+        <property name="flagjefe" type="string">
+            <column name="FLAGJEFE" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

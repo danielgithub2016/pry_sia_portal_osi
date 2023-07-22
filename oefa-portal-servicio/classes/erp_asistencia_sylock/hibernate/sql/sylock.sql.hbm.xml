@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : sylock.w_whatsthis
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- sylock.ds_ma_seguridadautorizacion -->
+    <sql-query name="sylock.DsMaSeguridadautorizacion">
+    </sql-query>
+
+    <!-- sylock.ds_ma_seguridadautorizaciondetalle -->
+    <sql-query name="sylock.DsMaSeguridadautorizaciondetalle">
+    </sql-query>
+
+    <!-- sylock.ds_sy_integridad_bd_dependientes -->
+    <sql-query name="sylock.DsSyIntegridadBdDependientes">
+    </sql-query>
+
+    <!-- sylock.ds_sy_integridad_bd_resultado -->
+    <sql-query name="sylock.DsSyIntegridadBdResultado">
+    </sql-query>
+
+    <!-- sylock.dw_ac_monthlyclose_select -->
+    <sql-query name="sylock.DwAcMonthlycloseSelect">
+    </sql-query>
+
+    <!-- sylock.dw_ac_voucher_list_departments_prueba -->
+    <sql-query name="sylock.DwAcVoucherListDepartmentsPrueba">
+    </sql-query>
+
+    <!-- sylock.dw_ma_autorizaciones_x_usuario -->
+    <sql-query name="sylock.DwMaAutorizacionesXUsuario">
+    </sql-query>
+
+    <!-- sylock.dw_ma_companiamast_select -->
+    <sql-query name="sylock.DwMaCompaniamastSelect">
+    </sql-query>
+
+    <!-- sylock.dw_ma_companiamast_select_only_reporting -->
+    <sql-query name="sylock.DwMaCompaniamastSelectOnlyReporting">
+    </sql-query>
+
+    <!-- sylock.dw_ma_companycategoria_select -->
+    <sql-query name="sylock.DwMaCompanycategoriaSelect">
+    </sql-query>
+
+    <!-- sylock.dw_ma_companyowner_select -->
+    <sql-query name="sylock.DwMaCompanyownerSelect">
+    <![CDATA[
+    		SELECT 
+			companyowner.description as "description",   
+			companyowner.companyowner as "companyowner",   
+			SeguridadAutorizacionCompania.Usuario  as "usuario" 
+			FROM 
+			SGCORESYS.companyowner
+			    INNER JOIN SGCORESYS.CompaniaMast
+			        ON (companyowner.company = CompaniaMast.CompaniaCodigo)
+			    INNER JOIN SGCORESYS.SeguridadAutorizacionCompania  
+			        ON (companyowner.companyowner = SeguridadAutorizacionCompania.CompanyOwner)
+			WHERE 
+			( CompaniaMast.Estado = 'A' ) AND  
+			( SeguridadAutorizacionCompania.Estado = 'A' )   
+			ORDER BY 
+			companyowner.companyowner ASC   
+    ]]>
+    </sql-query>
+
+    <!-- sylock.dw_ma_companyowner_select_for_drag -->
+    <sql-query name="sylock.DwMaCompanyownerSelectForDrag">
+    </sql-query>
+
+    <!-- sylock.dw_ma_companyowner_select_security -->
+    <sql-query name="sylock.DwMaCompanyownerSelectSecurity">
+    </sql-query>
+
+    <!-- sylock.dw_ma_companyowner_select_with_repo2 -->
+    <sql-query name="sylock.DwMaCompanyownerSelectWithRepo2">
+    </sql-query>
+
+    <!-- sylock.dw_ma_companyowner_select_with_reporting -->
+    <sql-query name="sylock.DwMaCompanyownerSelectWithReporting">
+    </sql-query>
+
+    <!-- sylock.dw_ma_perfil_cabecera -->
+    <sql-query name="sylock.DwMaPerfilCabecera">
+    </sql-query>
+
+    <!-- sylock.dw_ma_perfil_source -->
+    <sql-query name="sylock.DwMaPerfilSource">
+    </sql-query>
+
+    <!-- sylock.dw_ma_perfil_target -->
+    <sql-query name="sylock.DwMaPerfilTarget">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_app_edit -->
+    <sql-query name="sylock.DwMaSecurityAppEdit">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_app_edit_concepto -->
+    <sql-query name="sylock.DwMaSecurityAppEditConcepto">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_app_list -->
+    <sql-query name="sylock.DwMaSecurityAppList">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_browse_application -->
+    <sql-query name="sylock.DwMaSecurityBrowseApplication">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_browse_position -->
+    <sql-query name="sylock.DwMaSecurityBrowsePosition">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_browse_user_detail -->
+    <sql-query name="sylock.DwMaSecurityBrowseUserDetail">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_browse_users -->
+    <sql-query name="sylock.DwMaSecurityBrowseUsers">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_edit_authorizations -->
+    <sql-query name="sylock.DwMaSecurityEditAuthorizations">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_edit_authorizations_detai -->
+    <sql-query name="sylock.DwMaSecurityEditAuthorizationsDetai">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_edit_authorizations_repor -->
+    <sql-query name="sylock.DwMaSecurityEditAuthorizationsRepor">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_edit_companyowner -->
+    <sql-query name="sylock.DwMaSecurityEditCompanyowner">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_edit_concepts -->
+    <sql-query name="sylock.DwMaSecurityEditConcepts">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_edit_report -->
+    <sql-query name="sylock.DwMaSecurityEditReport">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_edit_report_selectall -->
+    <sql-query name="sylock.DwMaSecurityEditReportSelectall">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_edit_userid -->
+    <sql-query name="sylock.DwMaSecurityEditUserid">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_list_autorizaciones_selec -->
+    <sql-query name="sylock.DwMaSecurityListAutorizacionesSelec">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_list_position -->
+    <sql-query name="sylock.DwMaSecurityListPosition">
+    </sql-query>
+
+    <!-- sylock.dw_ma_security_list_userid -->
+    <sql-query name="sylock.DwMaSecurityListUserid">
+    </sql-query>
+
+    <!-- sylock.dw_ma_seguridadconceptodetalle -->
+    <sql-query name="sylock.DwMaSeguridadconceptodetalle">
+    </sql-query>
+
+    <!-- sylock.dw_ma_seguridadconceptodetalle_select -->
+    <sql-query name="sylock.DwMaSeguridadconceptodetalleSelect">
+    </sql-query>
+
+    <!-- sylock.dw_ma_seguridadperfilusuario_detail -->
+    <sql-query name="sylock.DwMaSeguridadperfilusuarioDetail">
+    </sql-query>
+
+    <!-- sylock.dw_ma_seguridadperfilusuario_select -->
+    <sql-query name="sylock.DwMaSeguridadperfilusuarioSelect">
+    </sql-query>
+
+    <!-- sylock.dw_ma_seguridadusuarioperfil_detail -->
+    <sql-query name="sylock.DwMaSeguridadusuarioperfilDetail">
+    </sql-query>
+
+    <!-- sylock.dw_ma_seguridadusuarioperfil_select -->
+    <sql-query name="sylock.DwMaSeguridadusuarioperfilSelect">
+    </sql-query>
+
+    <!-- sylock.dw_ma_seguridadxcompanyowner_select -->
+    <sql-query name="sylock.DwMaSeguridadxcompanyownerSelect">
+    </sql-query>
+
+    <!-- sylock.dw_ma_seguridadxreporte_edit -->
+    <sql-query name="sylock.DwMaSeguridadxreporteEdit">
+    </sql-query>
+
+    <!-- sylock.dw_ma_sy_preferences_edit -->
+    <sql-query name="sylock.DwMaSyPreferencesEdit">
+    </sql-query>
+
+    <!-- sylock.dw_ma_sy_security_by_user_edit -->
+    <sql-query name="sylock.DwMaSySecurityByUserEdit">
+    </sql-query>
+
+    <!-- sylock.dw_ma_sy_security_by_user_edit_mast2 -->
+    <sql-query name="sylock.DwMaSySecurityByUserEditMast2">
+    </sql-query>
+
+    <!-- sylock.dw_ma_sy_security_by_user_edit_mast3 -->
+    <sql-query name="sylock.DwMaSySecurityByUserEditMast3">
+    </sql-query>
+
+    <!-- sylock.dw_ma_sy_security_by_user_edit_otros -->
+    <sql-query name="sylock.DwMaSySecurityByUserEditOtros">
+    </sql-query>
+
+    <!-- sylock.dw_ma_unidadnegocio_select_prueba -->
+    <sql-query name="sylock.DwMaUnidadnegocioSelectPrueba">
+    </sql-query>
+
+    <!-- sylock.dw_ma_usuario_cabecera -->
+    <sql-query name="sylock.DwMaUsuarioCabecera">
+    </sql-query>
+
+    <!-- sylock.dw_ma_usuario_edit -->
+    <sql-query name="sylock.DwMaUsuarioEdit">
+    </sql-query>
+
+    <!-- sylock.dw_ma_usuario_list -->
+    <sql-query name="sylock.DwMaUsuarioList">
+    </sql-query>
+
+    <!-- sylock.dw_ma_usuario_select -->
+    <sql-query name="sylock.DwMaUsuarioSelect">
+    </sql-query>
+
+    <!-- sylock.dw_ma_usuario_select_by_busqueda -->
+    <sql-query name="sylock.DwMaUsuarioSelectByBusqueda">
+    </sql-query>
+
+    <!-- sylock.dw_ma_usuario_select_filtro -->
+    <sql-query name="sylock.DwMaUsuarioSelectFiltro">
+    </sql-query>
+
+    <!-- sylock.dw_ma_usuario_target -->
+    <sql-query name="sylock.DwMaUsuarioTarget">
+    </sql-query>
+
+    <!-- sylock.dw_ma_usuarioxcompanyowner_edit -->
+    <sql-query name="sylock.DwMaUsuarioxcompanyownerEdit">
+    </sql-query>
+
+    <!-- sylock.dw_ma_wh_almacen_select_security -->
+    <sql-query name="sylock.DwMaWhAlmacenSelectSecurity">
+    </sql-query>
+
+    <!-- sylock.dw_sy_preference_other -->
+    <sql-query name="sylock.DwSyPreferenceOther">
+    </sql-query>
+
+    <!-- sylock.dw_sy_preferences_list -->
+    <sql-query name="sylock.DwSyPreferencesList">
+    </sql-query>
+
+    <!-- sylock.dw_sy_preferences_list_by_useraplication -->
+    <sql-query name="sylock.DwSyPreferencesListByUseraplication">
+    </sql-query>
+
+    <!-- sylock.dw_sy_preferences_sqlca -->
+    <sql-query name="sylock.DwSyPreferencesSqlca">
+    </sql-query>
+
+    <!-- sylock.dw_sy_preferences_system_list -->
+    <sql-query name="sylock.DwSyPreferencesSystemList">
+    </sql-query>
+
+    <!-- sylock.dw_sy_preferences_system_select -->
+    <sql-query name="sylock.DwSyPreferencesSystemSelect">
+    </sql-query>
+
+    <!-- sylock.dw_sy_report_list -->
+    <sql-query name="sylock.DwSyReportList">
+    </sql-query>
+
+    <!-- sylock.dw_sy_report_list_detail -->
+    <sql-query name="sylock.DwSyReportListDetail">
+    </sql-query>
+
+    <!-- sylock.dw_sy_report_list_order_by_codigo -->
+    <sql-query name="sylock.DwSyReportListOrderByCodigo">
+    </sql-query>
+
+    <!-- sylock.dw_sy_report_list_parameters -->
+    <sql-query name="sylock.DwSyReportListParameters">
+    </sql-query>
+
+    <!-- sylock.dw_sy_report_list_position -->
+    <sql-query name="sylock.DwSyReportListPosition">
+    </sql-query>
+
+</hibernate-mapping>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.sistema.dominio.SyCampocalculado" table="SGCORESYS.SY_CAMPOCALCULADO">
+        <composite-id name="pk" class="net.royal.erp.sistema.dominio.SyCampocalculadoPk">
+            <key-property name="registronumero" type="integer">
+                <column name="REGISTRONUMERO" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="monto01" type="integer">
+            <column name="MONTO01" length="22" />
+        </property>
+        <property name="monto02" type="integer">
+            <column name="MONTO02" length="22" />
+        </property>
+        <property name="monto03" type="integer">
+            <column name="MONTO03" length="22" />
+        </property>
+        <property name="monto04" type="integer">
+            <column name="MONTO04" length="22" />
+        </property>
+        <property name="monto05" type="integer">
+            <column name="MONTO05" length="22" />
+        </property>
+        <property name="monto06" type="integer">
+            <column name="MONTO06" length="22" />
+        </property>
+        <property name="monto07" type="integer">
+            <column name="MONTO07" length="22" />
+        </property>
+        <property name="monto08" type="integer">
+            <column name="MONTO08" length="22" />
+        </property>
+        <property name="monto09" type="integer">
+            <column name="MONTO09" length="22" />
+        </property>
+        <property name="monto10" type="integer">
+            <column name="MONTO10" length="22" />
+        </property>
+        <property name="flag01" type="string">
+            <column name="FLAG01" length="1" />
+        </property>
+        <property name="flag02" type="string">
+            <column name="FLAG02" length="1" />
+        </property>
+        <property name="flag03" type="string">
+            <column name="FLAG03" length="1" />
+        </property>
+        <property name="flag04" type="string">
+            <column name="FLAG04" length="1" />
+        </property>
+        <property name="flag05" type="string">
+            <column name="FLAG05" length="1" />
+        </property>
+        <property name="descripcion01" type="string">
+            <column name="DESCRIPCION01" length="50" />
+        </property>
+        <property name="descripcion02" type="string">
+            <column name="DESCRIPCION02" length="50" />
+        </property>
+        <property name="descripcion03" type="string">
+            <column name="DESCRIPCION03" length="50" />
+        </property>
+        <property name="descripcion04" type="string">
+            <column name="DESCRIPCION04" length="50" />
+        </property>
+        <property name="descripcion05" type="string">
+            <column name="DESCRIPCION05" length="10" />
+        </property>
+        <property name="codigo01" type="string">
+            <column name="CODIGO01" length="15" />
+        </property>
+        <property name="codigo02" type="string">
+            <column name="CODIGO02" length="15" />
+        </property>
+        <property name="codigo03" type="string">
+            <column name="CODIGO03" length="15" />
+        </property>
+        <property name="codigo04" type="string">
+            <column name="CODIGO04" length="15" />
+        </property>
+        <property name="codigo05" type="string">
+            <column name="CODIGO05" length="15" />
+        </property>
+        <property name="fecha01" type="timestamp">
+            <column name="FECHA01" length="7" />
+        </property>
+        <property name="fecha02" type="timestamp">
+            <column name="FECHA02" length="7" />
+        </property>
+        <property name="fecha03" type="timestamp">
+            <column name="FECHA03" length="7" />
+        </property>
+        <property name="fecha04" type="timestamp">
+            <column name="FECHA04" length="7" />
+        </property>
+        <property name="fecha05" type="timestamp">
+            <column name="FECHA05" length="7" />
+        </property>
+    </class>
+</hibernate-mapping>

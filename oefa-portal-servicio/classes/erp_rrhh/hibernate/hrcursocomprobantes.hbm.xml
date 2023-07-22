@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrCursocomprobantes" table="SGCORESYS.HR_CURSOCOMPROBANTES">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrCursocomprobantesPk">
+            <key-property name="capacitacion" type="string">
+                <column name="CAPACITACION" length="10" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="numero" type="string">
+            <column name="NUMERO" length="40" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="50" />
+        </property>
+        <property name="fecha" type="timestamp">
+            <column name="FECHA" length="7" />
+        </property>
+        <property name="total" type="integer">
+            <column name="TOTAL" length="22" />
+        </property>
+        <property name="subtotal" type="integer">
+            <column name="SUBTOTAL" length="22" />
+        </property>
+        <property name="totalimpuestos" type="integer">
+            <column name="TOTALIMPUESTOS" length="22" />
+        </property>
+        <property name="moneda" type="string">
+            <column name="MONEDA" length="2" />
+        </property>
+        <property name="unidadnegocio" type="string">
+            <column name="UNIDADNEGOCIO" length="4" />
+        </property>
+        <property name="flagcargar" type="string">
+            <column name="FLAGCARGAR" length="1" />
+        </property>
+        <property name="flaglogistica" type="string">
+            <column name="FLAGLOGISTICA" length="1" />
+        </property>
+        <property name="tipocambio" type="big_decimal">
+            <column name="TIPOCAMBIO" length="22" />
+        </property>
+        <property name="tipodocumento" type="string">
+            <column name="TIPODOCUMENTO" length="2" />
+        </property>
+        <property name="proveedor" type="integer">
+            <column name="PROVEEDOR" length="22" />
+        </property>
+        <property name="numerodocumento" type="string">
+            <column name="NUMERODOCUMENTO" length="14" />
+        </property>
+        <property name="companyowner" type="string">
+            <column name="COMPANYOWNER" length="8" />
+        </property>
+    </class>
+</hibernate-mapping>

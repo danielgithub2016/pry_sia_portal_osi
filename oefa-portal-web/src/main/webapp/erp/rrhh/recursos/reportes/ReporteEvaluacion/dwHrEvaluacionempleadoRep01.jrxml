@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dwHrEvaluacionempleadoRep01" language="groovy" pageWidth="500" pageHeight="842" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="87aa5236-155f-43cf-8131-0fe162d94a29">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parCompany" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEmpleado" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEvaluador" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parSecuencia" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Fabrica\\Desarrollo\\DesarrolloProductos\\OEFAMIGRA\\oefa-portal-web\\src\\main\\webapp\\erp\\rrhh\\recursos\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+	HR_DetalleEvaluacion.Factor,
+	HR_DetalleEvaluacion.Calificacion,
+  hr_factoresevaluacion.descripcion AS descripcionNombre
+
+from 	SGCORESYS.HR_DetalleEvaluacion
+
+INNER JOIN SGCORESYS.hr_factoresevaluacion ON
+	hr_detalleevaluacion.factor 				= hr_factoresevaluacion.factor
+INNER JOIN SGCORESYS.HR_FactorValor ON
+	HR_DetalleEvaluacion.Factor 					= HR_FactorValor.factor
+INNER JOIN SGCORESYS.EmpleadoMast ON
+		( hr_detalleevaluacion.Empleado		=	EmpleadoMast.Empleado )
+INNER JOIN SGCORESYS.HR_EvaluacionPeriodo ON
+		( HR_DetalleEvaluacion.CompanyOwner		=	HR_EvaluacionPeriodo.CompanyOwner) AND
+		( HR_DetalleEvaluacion.SecuenciaEval		=	HR_EvaluacionPeriodo.SecuenciaEval)
+where
+	hr_detalleevaluacion.CompanyOwner = $P{parCompany}			and
+	hr_detalleevaluacion.empleado=$P{parEmpleado} and
+	hr_detalleevaluacion.empleadoevaluador = $P{parEvaluador}	and
+	hr_detalleevaluacion.secuenciaeval 	= $P{parSecuencia} and
+	HR_factoresevaluacion.FlagConcepto		= 'N'						and
+   hr_detalleevaluacion.tipo					= 'N'
+  group by
+  	HR_DetalleEvaluacion.Factor,
+	HR_DetalleEvaluacion.Calificacion,
+  hr_factoresevaluacion.descripcion
+order by hr_factoresevaluacion.descripcion]]>
+	</queryString>
+	<field name="FACTOR" class="java.math.BigDecimal"/>
+	<field name="CALIFICACION" class="java.lang.Double"/>
+	<field name="DESCRIPCIONNOMBRE" class="java.lang.String"/>
+	<detail>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="12" width="413" height="15" uuid="9db3070e-46fb-4a6a-99fb-0d08e0d392f7"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCIONNOMBRE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="454" y="0" width="32" height="12" uuid="a792ec4b-8e55-49ce-8987-2f6c36e64f69"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Puntaje]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="452" y="13" width="37" height="17" uuid="8883c346-e2ae-4c00-9d3a-62d72fcb13dc"/>
+			</rectangle>
+			<textField pattern="###0">
+				<reportElement x="454" y="14" width="32" height="15" uuid="cac1b032-e368-466c-863e-8a0f694dc55a"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CALIFICACION}!=null?$F{CALIFICACION}:""]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="30" width="500" height="49" uuid="0120e2ce-b7a5-4920-9982-67b910cbfb7d"/>
+				<subreportParameter name="parCompany">
+					<subreportParameterExpression><![CDATA[$P{parCompany}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parEmpleado">
+					<subreportParameterExpression><![CDATA[$P{parEmpleado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parEvaluador">
+					<subreportParameterExpression><![CDATA[$P{parEvaluador}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parSecuencia">
+					<subreportParameterExpression><![CDATA[$P{parSecuencia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parFactor">
+					<subreportParameterExpression><![CDATA[$F{FACTOR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["dwHrEvaluacionDetalle.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.sistema.dominio.SySeguridadunidadnegocio" table="SGCORESYS.SY_SEGURIDADUNIDADNEGOCIO">
+        <composite-id name="pk" class="net.royal.erp.sistema.dominio.SySeguridadunidadnegocioPk">
+            <key-property name="tipomst" type="string">
+                <column name="TIPOMST" length="3" />
+            </key-property>
+            <key-property name="codigo" type="string">
+                <column name="CODIGO" length="10" />
+            </key-property>
+            <key-property name="unidadnegocio" type="string">
+                <column name="UNIDADNEGOCIO" length="4" />
+            </key-property>
+        </composite-id>
+        <property name="codigo01" type="string">
+            <column name="CODIGO01" length="20" />
+        </property>
+        <property name="codigo02" type="string">
+            <column name="CODIGO02" length="20" />
+        </property>
+        <property name="codigo03" type="string">
+            <column name="CODIGO03" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

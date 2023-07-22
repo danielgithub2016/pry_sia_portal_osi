@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : rrhh.HrFactorvalor
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    
+    <sql-query name="hrfactorvalor.listarDw1">
+		<![CDATA[
+			  SELECT HR_FactorValor.Factor AS "factor",   
+			         HR_FactorValor.Secuencia AS "secuencia",   
+			         HR_FactorValor.Descripcion AS "descripcion",   
+			         HR_FactorValor.Valor AS "valor",   
+			         HR_FactorValor.Estado AS "estado",   
+			         HR_FactorValor.UltimoUsuario AS "ultimousuario",   
+			         HR_FactorValor.UltimaFechaModif AS "ultimafechamodif",   
+			         HR_FactorValor.Explicacion  "explicacion"  ,
+			         HR_FactorValor.Valorrequerido AS "valorrequerido"  ,
+			         ROWNUM AS "total",
+					 CAST(' ' AS VARCHAR2(30)) as "barra1",
+					 CAST(' ' AS VARCHAR2(30)) as "barra2",
+					 CAST(' ' AS VARCHAR2(30)) as "barra3",
+					 CAST(' ' AS VARCHAR2(30)) as "barra4",
+					 CAST(' ' AS VARCHAR2(30)) as "barra5",
+					 CAST(' ' AS VARCHAR2(30)) as "barra6",
+					 CAST(' ' AS VARCHAR2(30)) as "barra7",
+					 CAST(' ' AS VARCHAR2(30)) as "barra8",
+					 CAST(' ' AS VARCHAR2(30)) as "barra9",
+					 CAST(' ' AS VARCHAR2(30)) as "barra10"
+			    FROM SGCORESYS.HR_FactorValor  
+			   WHERE ( HR_FactorValor.Factor = :par_factor )    
+		]]>
+    </sql-query>
+
+</hibernate-mapping>

@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_as_rep_saldo_feriado" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="18390940-5e15-4563-85e5-e4ae567d081f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Fabrica\\Desarrollo\\DesarrolloProductos\\OEFA\\oefa-portal-web\\src\\main\\webapp\\erp\\asistencia\\recursos\\reportes\\reporte_asistencia\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha_desde" class="java.util.Date"/>
+	<parameter name="p_adicionales" class="java.lang.String"/>
+	<parameter name="p_fecha_hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_FlagFiltroPeriodo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_sid" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_postivos" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_negativos" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_balance" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Logo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+registro.COSTCENTER,
+registro.LocalName,
+registro.DESCRIPCIONCORTA,
+registro.DOCUMENTOFISCAL,
+registro.prueba,
+COUNT(empleado_01) as totalRegistros
+FROM
+(
+select
+        Tablas_01.LocalName,
+        Tablas_01.COSTCENTER,
+        Tablas_01.ConceptoAcceso,
+DESCRIPCIONCORTA,
+DOCUMENTOFISCAL,
+
+        empleado_01,
+SGCORESYS.fn_cantidad_horas_x_feriados(3,to_date('01/01/2016','dd/MM/yyyy'),to_date('01/01/2017','dd/MM/yyyy')) as prueba
+
+from (
+SELECT
+                AC_CostCenterMst.LocalName,
+                AC_COSTCENTERMST.COSTCENTER,
+                AS_AsistenciaDiaria.ConceptoAcceso,
+                EmpleadoMast.empleado as empleado_01,
+                COMPANIAMAST.DESCRIPCIONCORTA,
+                COMPANIAMAST.DOCUMENTOFISCAL
+        FROM    SGCORESYS.AS_AsistenciaDiaria
+                    INNER JOIN  SGCORESYS.PersonaMast
+                         ON  AS_AsistenciaDiaria.Empleado = PersonaMast.Persona
+
+                    INNER JOIN SGCORESYS.EmpleadoMast
+                         ON  AS_AsistenciaDiaria.Empleado = EmpleadoMast.Empleado
+
+                    INNER JOIN  SGCORESYS.AS_CarnetIdentificacion
+                         ON AS_AsistenciaDiaria.Empleado = AS_CarnetIdentificacion.Empleado
+                                AND AS_CarnetIdentificacion.Estado = 'A'
+
+                  INNER JOIN SGCORESYS.AS_ConceptoAcceso
+                         ON AS_AsistenciaDiaria.ConceptoAcceso = AS_ConceptoAcceso.ConceptoAcceso
+
+                    LEFT JOIN SGCORESYS.AC_CostCenterMst
+                         ON EmpleadoMast.CentroCostos = AC_CostCenterMst.CostCenter
+
+                    LEFT JOIN SGCORESYS.AS_Area
+                         ON AS_CarnetIdentificacion.Area = AS_Area.Area
+ LEFT JOIN SGCORESYS.COMPANYOWNER ON COMPANYOWNER.COMPANYOWNER= EmpleadoMast.CompaniaSocio
+                    LEFT JOIN SGCORESYS.COMPANIAMAST ON COMPANIAMAST.COMPANIACODIGO=COMPANYOWNER.COMPANY
+
+        WHERE     (AS_ASISTENCIADIARIA.FlagCompensacion = '+' or AS_ASISTENCIADIARIA.FlagCompensacion = '-')
+                    AND ( AS_ASISTENCIADIARIA.ConceptoAcceso in ('HNAU','33') )
+                    and ((AS_AsistenciaDiaria.Fecha >=  $P{p_fecha_desde} AND AS_AsistenciaDiaria.Fecha <=  $P{p_fecha_hasta}) or $P{p_FlagFiltroPeriodo} = 'N')
+                    and ( AS_ASISTENCIADIARIA.FECHA >= NVL(empleadomast.fechareingreso, empleadomast.fechaingreso ))
+$P!{p_adicionales}
+
+        )  Tablas_01
+where 1 = 1
+AND  ( empleado_01 in (select AS_EMPLEADOS_AUTORIZADOS.empleado
+                                            from SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+                                            where AS_EMPLEADOS_AUTORIZADOS.sid =$P{p_sid}))
+
+
+
+)registro
+ GROUP BY
+registro.COSTCENTER,
+registro.LocalName,
+registro.DESCRIPCIONCORTA,
+registro.DOCUMENTOFISCAL,
+registro.prueba
+ ORDER BY
+ registro.LocalName]]>
+	</queryString>
+	<field name="COSTCENTER" class="java.lang.String"/>
+	<field name="LOCALNAME" class="java.lang.String"/>
+	<field name="DESCRIPCIONCORTA" class="java.lang.String"/>
+	<field name="DOCUMENTOFISCAL" class="java.lang.String"/>
+	<field name="prueba" class="java.math.BigDecimal"/>
+	<field name="TOTALREGISTROS" class="java.math.BigDecimal"/>
+	<variable name="sumRegistros" class="java.math.BigDecimal" calculation="Count">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="variable1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTALREGISTROS}]]></variableExpression>
+	</variable>
+	<title>
+		<band height="163" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="134" width="554" height="28" backcolor="#F0F0F0" uuid="c9a5c172-b590-45a9-85cd-f3be58d45082"/>
+			</rectangle>
+			<line>
+				<reportElement x="268" y="134" width="1" height="28" uuid="11255738-8404-407e-b7b8-95210ce944f5"/>
+			</line>
+			<rectangle>
+				<reportElement x="427" y="107" width="128" height="27" uuid="bb2adf3f-0d15-44d0-b00b-eb1106a7f685"/>
+			</rectangle>
+			<line>
+				<reportElement x="220" y="134" width="1" height="28" uuid="4cbf5d96-c9ec-4289-b011-130e2acc1461"/>
+			</line>
+			<staticText>
+				<reportElement x="7" y="137" width="38" height="23" uuid="1348196b-c271-49c2-814a-60b58a9f3e38"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<line>
+				<reportElement x="47" y="134" width="1" height="28" uuid="11db277f-a079-42ea-af3b-01c9863322f7"/>
+			</line>
+			<staticText>
+				<reportElement x="224" y="137" width="38" height="23" uuid="81595b84-ee0f-4d90-8e62-ad1aae8627af"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<line>
+				<reportElement x="427" y="134" width="1" height="28" uuid="6880315c-d4e7-4445-aa4f-6173debb08f8"/>
+			</line>
+			<staticText>
+				<reportElement x="270" y="137" width="155" height="23" uuid="eec080cf-011e-4927-94a3-4cf397a0081e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Evento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="51" y="137" width="165" height="23" uuid="2d95b771-5337-485f-b4b6-9d6478fdf254"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="113" width="126" height="15" forecolor="#990000" uuid="381e0c91-1931-4511-aaa5-f091f3ae35c9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Balance del Periodo Actual]]></text>
+			</staticText>
+			<line>
+				<reportElement x="483" y="134" width="1" height="28" uuid="c06de2af-55b5-4a42-b8dd-b625decf8863"/>
+			</line>
+			<staticText>
+				<reportElement x="432" y="137" width="48" height="23" uuid="0f7ea566-cfe2-4476-9c9a-b1bbf602c1be"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horas Ganadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="487" y="137" width="65" height="23" uuid="e26e2b64-e727-4408-a459-4ee1c0f9bcfb"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horas Compensadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="67" width="555" height="15" uuid="451420ec-1124-420b-b24b-efbf6f397589"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Feriados Ganados vs. Horas Compensadas]]></text>
+			</staticText>
+			<line>
+				<reportElement x="164" y="81" width="225" height="1" uuid="a2df6df8-e502-436c-a15d-e8a692c82e1e"/>
+			</line>
+			<staticText>
+				<reportElement x="164" y="96" width="225" height="12" uuid="1465d7e7-a215-4bd1-9e24-ec3714fa7ac3"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Expresado en HH:MM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="0" width="29" height="12" uuid="09e54fbd-fb4f-4b04-b80e-ffc0cbdd5d65"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="476" y="0" width="79" height="11" uuid="9cfc982a-7cb1-4031-8c06-12aa0b1711b1"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="444" y="13" width="29" height="12" uuid="1086aed2-0344-4c7a-ab97-9824932e1f07"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Hora   :]]></text>
+			</staticText>
+			<textField pattern="HH.mm.ss">
+				<reportElement x="476" y="13" width="79" height="11" uuid="adab43b5-b94e-48ac-965c-1f7776516c7c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="29" y="54" width="100" height="12" uuid="3800cc90-e67e-4748-baa4-fe0169d07c27"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DOCUMENTOFISCAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-79" y="4" width="0" height="12" uuid="6ccaaf43-1ee9-49bd-bd3c-fdd8e7381439"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[RUC : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="164" y="83" width="225" height="12" uuid="cb19ef5b-3129-4564-be86-cccb4afb1abb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{p_FlagFiltroPeriodo}!="N"? "Desde " +
+new SimpleDateFormat("dd/MM/yyyy").format($P{p_fecha_desde})
++ "  Hasta  " +
+new SimpleDateFormat("dd/MM/yyyy").format($P{p_fecha_hasta})
+:"Todas la Fechas")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="54" width="23" height="12" uuid="4484022e-3f1d-4a0a-9f0e-3103b9e4ba59"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[RUC]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement x="6" y="2" width="150" height="50" uuid="076251e8-649d-4673-aa33-bd15a202cf5d"/>
+				<imageExpression><![CDATA[$P{Logo}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="7" y="1" width="417" height="11" uuid="361ae802-c0ae-4b0e-92e9-34e601d3b785"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOCALNAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="3" width="100" height="11" forecolor="#FFFFFF" uuid="c6a0c784-81bb-46cb-b247-e9a60aa4f8c7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTALREGISTROS}]]></textFieldExpression>
+			</textField>
+			<subreport isUsingCache="false">
+				<reportElement x="1" y="14" width="554" height="31" uuid="e9e1f7eb-472d-4fc3-8570-d41a56cb62e4"/>
+				<subreportParameter name="REPORT_LOCALE">
+					<subreportParameterExpression><![CDATA[new Locale("es","PE")]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_centro_costos">
+					<subreportParameterExpression><![CDATA[$F{COSTCENTER}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_FlagFiltroPeriodo">
+					<subreportParameterExpression><![CDATA[$P{p_FlagFiltroPeriodo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_adicionales">
+					<subreportParameterExpression><![CDATA[$P{p_adicionales}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_hasta">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_hasta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_sid">
+					<subreportParameterExpression><![CDATA[$P{p_sid}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_desde">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_desde}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="REPORT_COUNT" toVariable="sumRegistros" calculation="Sum"/>
+				<subreportExpression><![CDATA["subReporte_saldo_feriado.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="16">
+			<textField>
+				<reportElement x="237" y="3" width="63" height="11" uuid="8df1df4c-aef2-48d9-8df5-4682e0390638"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina  "+$V{PAGE_NUMBER}+"   de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="289" y="3" width="51" height="11" uuid="9fd661aa-1678-4fe1-9948-97bc95b67b9f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="83">
+			<line>
+				<reportElement x="124" y="6" width="431" height="1" uuid="1d905411-067b-4b3a-9867-e989ea4c0f7a"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="123" y="8" width="72" height="14" uuid="aff2ca13-4d04-47a5-81de-4030b5d1fd72"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total General :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="91" y="54" width="33" height="12" uuid="35a3e558-3d1e-4996-bcee-feae066de116"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumRegistros}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="40" width="85" height="12" uuid="b5b0198b-67a8-47fc-a67d-0ff600dc282b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Total Registros         :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="54" width="84" height="12" uuid="ba648999-adb3-4fa4-b383-88132deb6a9b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Total Trabajadores  :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="199" y="8" width="161" height="14" uuid="7b0380fa-10d5-40c4-8019-de0d7bc7282f"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumRegistros} + " Trabajadores"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="91" y="40" width="32" height="12" uuid="baa797de-75ea-4eb3-9246-f597ab16c3b9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{variable1}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="484" y="7" width="1" height="38" uuid="e786cce7-2307-4a6c-98f2-6637af41d7c4"/>
+			</line>
+			<line>
+				<reportElement x="554" y="6" width="1" height="39" uuid="f9cfb019-3e3f-4a83-b136-6120fbd31735"/>
+			</line>
+			<line>
+				<reportElement x="426" y="6" width="1" height="39" uuid="a626a93a-61be-4293-8286-52520a397776"/>
+			</line>
+			<line>
+				<reportElement x="426" y="25" width="129" height="1" uuid="8706d39d-f392-4d25-88f6-988878ac9628"/>
+			</line>
+			<line>
+				<reportElement x="426" y="44" width="129" height="1" uuid="b9490207-4366-4d28-b247-f85d383db19a"/>
+			</line>
+			<textField>
+				<reportElement x="486" y="8" width="68" height="17" forecolor="#CC0000" uuid="69c48a72-3e5e-4024-9ad3-db93aa40a335"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_negativos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="8" width="55" height="17" forecolor="#00CC00" uuid="41fca19b-99bf-4d67-bd57-110e74dc36a1"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_postivos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="328" y="26" width="96" height="16" forecolor="#000000" uuid="56e5bd91-204a-45db-a0ef-1afce816a3c4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_postivos}>$P{p_negativos}?"Horas Ganadas :":"Exceso por Compensar :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="27" width="55" height="16" uuid="0bb348fb-2ba3-4606-a639-4509f1de9a8d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_balance}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

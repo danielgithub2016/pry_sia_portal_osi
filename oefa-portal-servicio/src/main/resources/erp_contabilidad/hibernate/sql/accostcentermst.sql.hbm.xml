@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : contabilidad.AcCostcentermst
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="accostcentermst.obtenerAccount">
+		SELECT 
+			AC_CostCenterMst.Account as "account" 
+		FROM 
+			SGCORESYS.AC_CostCenterMst  
+		WHERE 
+			AC_CostCenterMst.CostCenter = :p_centrocosto 
+    </sql-query>
+    
+      <sql-query name="accostcentermst.obtenerLocalName">
+		SELECT 	
+			LocalName as "localname"
+		FROM
+			SGCORESYS.AC_CostCenterMst
+		WHERE	
+			CostCenter = (SELECT CentroCostos FROM	SGCORESYS.EmpleadoMast 
+			WHERE Empleado = :p_empleado ) 
+    </sql-query>
+    
+    <!-- symast01.dw_ma_ac_costcenter_select_master -->
+	<sql-query name="accostcentermst.DwMaAcCostcenterSelectMaster">
+		SELECT
+		AC_CostCenterMst.CostCenter as
+		"costcenter",
+		AC_CostCenterMst.LocalName as "localname",
+		AC_CostCenterMst.ExpenseFinanceFlag as "expensefinanceflag",
+		AC_CostCenterMst.ExpenseAdministrativeFlag as
+		"expenseadministrativeflag",
+		AC_CostCenterMst.ExpenseSalesFlag as
+		"expensesalesflag",
+		AC_CostCenterMst.ExpenseProductionFlag as
+		"expenseproductionflag",
+		rownum as "rowkey"
+		FROM
+		SGCORESYS.SY_SeguridadAutorizaciones
+		INNER JOIN
+		SGCORESYS.AC_CostCenterMst
+		ON
+		(SGCORESYS.SY_SeguridadAutorizaciones.Concepto =
+		SGCORESYS.AC_CostCenterMst.CostCenter)
+	</sql-query>
+
+	<!-- accostcentermst.dw_ma_ac_costcenter_select_master -->
+	<sql-query name="accostcentermst.DwMaAcCostcenterSelectMasterContar">
+		SELECT
+		count(1)
+		FROM
+		SGCORESYS.SY_SeguridadAutorizaciones
+		INNER JOIN
+		SGCORESYS.AC_CostCenterMst
+		ON
+		(SGCORESYS.SY_SeguridadAutorizaciones.Concepto =
+		SGCORESYS.AC_CostCenterMst.CostCenter)
+
+	</sql-query>
+
+	<!-- accostcentermst.dw_ma_ac_costcenter_select_supervisor -->
+	<sql-query name="accostcentermst.DwMaAcCostcenterSelectSupervisor">
+
+		SELECT
+		AC_CostCenterMst.CostCenter as
+		"costcenter",
+		AC_CostCenterMst.LocalName as "localname",
+		AC_CostCenterMst.ExpenseFinanceFlag as "expensefinanceflag",
+		AC_CostCenterMst.ExpenseAdministrativeFlag as
+		"expenseadministrativeflag",
+		AC_CostCenterMst.ExpenseSalesFlag as
+		"expensesalesflag",
+		AC_CostCenterMst.ExpenseProductionFlag as
+		"expenseproductionflag",
+		rownum as "rowkey"
+		FROM
+		SGCORESYS.AC_CostCenterMst
+
+	</sql-query>
+
+	<!-- accostcentermst.dw_ma_ac_costcenter_select_supervisor -->
+	<sql-query name="accostcentermst.DwMaAcCostcenterSelectSupervisorContar">
+
+		SELECT
+		count(1)
+		FROM
+		SGCORESYS.AC_CostCenterMst
+	</sql-query>
+
+	<!-- accostcentermst.dw_ma_ac_costcenter_select_xpersona -->
+	<sql-query name="accostcentermst.DwMaAcCostcenterSelectXpersona">
+		SELECT
+		AC_CostCenterMst.CostCenter as
+		"costcenter",
+		AC_CostCenterMst.LocalName as "localname",
+		MA_PersonaCentroCostoAutorizac.PreparacionFlag as "preparacionflag",
+		MA_PersonaCentroCostoAutorizac.RevisionFlag as "revisionflag",
+		MA_PersonaCentroCostoAutorizac.AprobacionFlag as "aprobacionflag",
+		rownum as "rowkey"
+		FROM
+		SGCORESYS.AC_CostCenterMst
+		INNER JOIN
+		SGCORESYS.MA_PersonaCentroCostoAutorizac
+		ON
+		(AC_CostCenterMst.CostCenter =
+		MA_PersonaCentroCostoAutorizac.CentroCostos)
+
+	</sql-query>
+
+	<!-- accostcentermst.dw_ma_ac_costcenter_select_xpersona -->
+	<sql-query name="accostcentermst.DwMaAcCostcenterSelectXpersonaContar">
+		SELECT
+		count(1)
+		FROM
+		SGCORESYS.AC_CostCenterMst
+		INNER JOIN SGCORESYS.MA_PersonaCentroCostoAutorizac
+		ON
+		(AC_CostCenterMst.CostCenter =
+		MA_PersonaCentroCostoAutorizac.CentroCostos)
+
+	</sql-query>
+</hibernate-mapping>

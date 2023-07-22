@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : core.Companyowner
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="companyowner.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+    </sql-query>
+    
+    	<!-- symast01.dw_ma_companyowner_select -->
+	<sql-query name="companyowner.DwMaCompanyownerSelect">
+		SELECT DISTINCT
+		companyowner.companyowner as
+		"companyowner",
+		companyowner.description as "description",
+		CompaniaMast.TipoCompania as "tipocompania",
+		CompaniaMast.DescripcionCorta as "descripcioncorta",
+		CompaniaMast.DescripcionLarga as "descripcionlarga",
+		CompaniaMast.DocumentoFiscal as "documentofiscal",
+		CompaniaMast.Telefono1 as "telefono1",
+		CompaniaMast.Fax1 as "fax1",
+		CompaniaMast.DireccionComun as "direccioncomun",
+		companyowner.englishdescription as "englishdescription",
+		CompaniaMast.LogoFile as "logofile"
+		FROM
+		SGCORESYS.companyowner
+		INNER
+		JOIN SGCORESYS.CompaniaMast
+		ON (companyowner.company =
+		CompaniaMast.CompaniaCodigo)
+		WHERE
+		( CompaniaMast.Estado = 'A' )
+		AND
+		companyowner.companyowner=NVL(:par_company,companyowner.companyowner)
+		ORDER BY
+		companyowner.companyowner ASC
+	</sql-query>
+    
+    <sql-query name="companyowner.DwMaCompanyownerSelectSecurity">
+		SELECT
+		companyowner.companyowner as
+		"companyowner",
+		companyowner.description as "description",
+		CompaniaMast.TipoCompania as "tipocompania",
+		CompaniaMast.DescripcionCorta as "descripcioncorta",
+		CompaniaMast.DescripcionLarga as "descripcionlarga",
+		CompaniaMast.DocumentoFiscal as "documentofiscal",
+		CompaniaMast.Telefono1 as "telefono1",
+		CompaniaMast.Fax1 as "fax1",
+		CompaniaMast.DireccionComun as "direccioncomun",
+		companyowner.englishdescription as "englishdescription",
+		CompaniaMast.LogoFile as "logofile"
+		FROM
+		SGCORESYS.companyowner
+		INNER
+		JOIN SGCORESYS.CompaniaMast
+		ON (companyowner.company =
+		CompaniaMast.CompaniaCodigo)
+		INNER JOIN
+		SGCORESYS.SY_SeguridadAutorizaciones
+		ON (companyowner.companyowner =
+		SY_SeguridadAutorizaciones.Concepto)
+		WHERE
+		( CompaniaMast.Estado = 'A' )
+		AND
+		( SY_SeguridadAutorizaciones.AplicacionCodigo = 'SY' ) AND
+		(
+		SY_SeguridadAutorizaciones.Grupo = 'COMPANIASOCIO' ) AND
+		(
+		SY_SeguridadAutorizaciones.Estado = 'A' ) AND
+		(
+		LOWER(SY_SeguridadAutorizaciones.Usuario) = LOWER(:par_usuario))
+		ORDER
+		BY
+		companyowner.companyowner ASC
+	</sql-query>
+    
+    
+    
+</hibernate-mapping>

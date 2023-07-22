@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.presupuesto.dominio.BuComponentecentrocosto" table="SGCORESYS.BU_COMPONENTECENTROCOSTO">
+        <composite-id name="pk" class="net.royal.erp.presupuesto.dominio.BuComponentecentrocostoPk">
+            <key-property name="companiasocio" type="string">
+                <column name="COMPANIASOCIO" length="8" />
+            </key-property>
+            <key-property name="ano" type="string">
+                <column name="ANO" length="4" />
+            </key-property>
+            <key-property name="version" type="integer">
+                <column name="VERSION" length="22" />
+            </key-property>
+            <key-property name="componente" type="string">
+                <column name="COMPONENTE" length="50" />
+            </key-property>
+            <key-property name="centrocosto" type="string">
+                <column name="CENTROCOSTO" length="10" />
+            </key-property>
+        </composite-id>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

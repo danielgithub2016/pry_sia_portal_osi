@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : whtrans.w_wh_transaction_cd_print
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- whtrans.dw_cm_tipoventa_select -->
+    <sql-query name="whtrans.DwCmTipoventaSelect">
+    </sql-query>
+
+    <!-- whtrans.dw_in_sistemaventa_select -->
+    <sql-query name="whtrans.DwInSistemaventaSelect">
+    </sql-query>
+
+    <!-- whtrans.dw_ma_wh_transaccion_select_ajuste -->
+    <sql-query name="whtrans.DwMaWhTransaccionSelectAjuste">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_budget_copy_update -->
+    <sql-query name="whtrans.DwWhBudgetCopyUpdate">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_budget_edit_comodity -->
+    <sql-query name="whtrans.DwWhBudgetEditComodity">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_budget_edit_copy_position -->
+    <sql-query name="whtrans.DwWhBudgetEditCopyPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_budget_edit_item -->
+    <sql-query name="whtrans.DwWhBudgetEditItem">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_budget_edit_position -->
+    <sql-query name="whtrans.DwWhBudgetEditPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_budget_list -->
+    <sql-query name="whtrans.DwWhBudgetList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_budget_list_position -->
+    <sql-query name="whtrans.DwWhBudgetListPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_cierre_list -->
+    <sql-query name="whtrans.DwWhCierreList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_cierre_list_position -->
+    <sql-query name="whtrans.DwWhCierreListPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_cierre_list_review -->
+    <sql-query name="whtrans.DwWhCierreListReview">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_confirmacion_composite_print -->
+    <sql-query name="whtrans.DwWhControlcalidadConfirmacionCompositePrint">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_confirmacion_print -->
+    <sql-query name="whtrans.DwWhControlcalidadConfirmacionPrint">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_confirmacion_print_0 -->
+    <sql-query name="whtrans.DwWhControlcalidadConfirmacionPrint0">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_confirmacion_print_1 -->
+    <sql-query name="whtrans.DwWhControlcalidadConfirmacionPrint1">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_confirmacion_print_1b -->
+    <sql-query name="whtrans.DwWhControlcalidadConfirmacionPrint1b">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_confirmacion_print_2 -->
+    <sql-query name="whtrans.DwWhControlcalidadConfirmacionPrint2">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_confirmacion_print_resumen -->
+    <sql-query name="whtrans.DwWhControlcalidadConfirmacionPrintResumen">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_edit_detail -->
+    <sql-query name="whtrans.DwWhControlcalidadEditDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_edit_header -->
+    <sql-query name="whtrans.DwWhControlcalidadEditHeader">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_edit_transaction -->
+    <sql-query name="whtrans.DwWhControlcalidadEditTransaction">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_list -->
+    <sql-query name="whtrans.DwWhControlcalidadList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_list_position -->
+    <sql-query name="whtrans.DwWhControlcalidadListPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_po_select -->
+    <sql-query name="whtrans.DwWhControlcalidadPoSelect">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_po_select_detail -->
+    <sql-query name="whtrans.DwWhControlcalidadPoSelectDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_po_select_position -->
+    <sql-query name="whtrans.DwWhControlcalidadPoSelectPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_print -->
+    <sql-query name="whtrans.DwWhControlcalidadPrint">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_print_acepatdo -->
+    <sql-query name="whtrans.DwWhControlcalidadPrintAcepatdo">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_controlcalidad_print_completo -->
+    <sql-query name="whtrans.DwWhControlcalidadPrintCompleto">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_browse_cliente -->
+    <sql-query name="whtrans.DwWhDespachoBrowseCliente">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_browse_cliente_item -->
+    <sql-query name="whtrans.DwWhDespachoBrowseClienteItem">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_browse_item -->
+    <sql-query name="whtrans.DwWhDespachoBrowseItem">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_browse_item_cliente -->
+    <sql-query name="whtrans.DwWhDespachoBrowseItemCliente">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_browse_item_position -->
+    <sql-query name="whtrans.DwWhDespachoBrowseItemPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_browse_position -->
+    <sql-query name="whtrans.DwWhDespachoBrowsePosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_edit_detail -->
+    <sql-query name="whtrans.DwWhDespachoEditDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_edit_header -->
+    <sql-query name="whtrans.DwWhDespachoEditHeader">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_edit_pendiente_list -->
+    <sql-query name="whtrans.DwWhDespachoEditPendienteList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_edit_pendiente_position -->
+    <sql-query name="whtrans.DwWhDespachoEditPendientePosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_edit_vendor -->
+    <sql-query name="whtrans.DwWhDespachoEditVendor">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_list_browse -->
+    <sql-query name="whtrans.DwWhDespachoListBrowse">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_list_detail -->
+    <sql-query name="whtrans.DwWhDespachoListDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_list_position -->
+    <sql-query name="whtrans.DwWhDespachoListPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_pendiente_list_cliente -->
+    <sql-query name="whtrans.DwWhDespachoPendienteListCliente">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_pendiente_list_detail -->
+    <sql-query name="whtrans.DwWhDespachoPendienteListDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_pendiente_list_items -->
+    <sql-query name="whtrans.DwWhDespachoPendienteListItems">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despacho_pendiente_list_position -->
+    <sql-query name="whtrans.DwWhDespachoPendienteListPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despachoventa_destino_item -->
+    <sql-query name="whtrans.DwWhDespachoventaDestinoItem">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despachoventa_destino_list -->
+    <sql-query name="whtrans.DwWhDespachoventaDestinoList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despachoventa_destino_position -->
+    <sql-query name="whtrans.DwWhDespachoventaDestinoPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_despachoventa_destino_transacc -->
+    <sql-query name="whtrans.DwWhDespachoventaDestinoTransacc">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_guiaremisionmotivo_list -->
+    <sql-query name="whtrans.DwWhGuiaremisionmotivoList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_carga_masiva -->
+    <sql-query name="whtrans.DwWhInventarioCargaMasiva">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_carga_masiva_linea -->
+    <sql-query name="whtrans.DwWhInventarioCargaMasivaLinea">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_carga_masiva_position -->
+    <sql-query name="whtrans.DwWhInventarioCargaMasivaPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_conteo -->
+    <sql-query name="whtrans.DwWhInventarioConteo">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_conteo_errors -->
+    <sql-query name="whtrans.DwWhInventarioConteoErrors">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_conteo_import -->
+    <sql-query name="whtrans.DwWhInventarioConteoImport">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_corte_docum_position -->
+    <sql-query name="whtrans.DwWhInventarioCorteDocumPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_corte_docum_tabular -->
+    <sql-query name="whtrans.DwWhInventarioCorteDocumTabular">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_list_detail -->
+    <sql-query name="whtrans.DwWhInventarioListDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_list_position -->
+    <sql-query name="whtrans.DwWhInventarioListPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_rotativo -->
+    <sql-query name="whtrans.DwWhInventarioRotativo">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_rotativo_abc -->
+    <sql-query name="whtrans.DwWhInventarioRotativoAbc">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_rotativo_contados -->
+    <sql-query name="whtrans.DwWhInventarioRotativoContados">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_rotativo_linea -->
+    <sql-query name="whtrans.DwWhInventarioRotativoLinea">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_rotativo_position -->
+    <sql-query name="whtrans.DwWhInventarioRotativoPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_summary -->
+    <sql-query name="whtrans.DwWhInventarioSummary">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_transaction_header -->
+    <sql-query name="whtrans.DwWhInventarioTransactionHeader">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_transaction_list -->
+    <sql-query name="whtrans.DwWhInventarioTransactionList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_inventario_transaction_position -->
+    <sql-query name="whtrans.DwWhInventarioTransactionPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_item_serie_browse_filter1 -->
+    <sql-query name="whtrans.DwWhItemSerieBrowseFilter1">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_item_serie_browse_filter2 -->
+    <sql-query name="whtrans.DwWhItemSerieBrowseFilter2">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_item_serie_browse_list -->
+    <sql-query name="whtrans.DwWhItemSerieBrowseList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_item_serie_browse_list_referencia -->
+    <sql-query name="whtrans.DwWhItemSerieBrowseListReferencia">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_item_serie_browse_position -->
+    <sql-query name="whtrans.DwWhItemSerieBrowsePosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_item_serie_browse_serie -->
+    <sql-query name="whtrans.DwWhItemSerieBrowseSerie">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_item_serie_browse_update -->
+    <sql-query name="whtrans.DwWhItemSerieBrowseUpdate">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_kardex_cierremensual -->
+    <sql-query name="whtrans.DwWhKardexCierremensual">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_kardex_detail -->
+    <sql-query name="whtrans.DwWhKardexDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_kardex_position -->
+    <sql-query name="whtrans.DwWhKardexPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_kardex_saldoinicial -->
+    <sql-query name="whtrans.DwWhKardexSaldoinicial">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_liquidaciondespacho_list -->
+    <sql-query name="whtrans.DwWhLiquidaciondespachoList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_balance -->
+    <sql-query name="whtrans.DwWhMonthlyCloseBalance">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_balance_precio -->
+    <sql-query name="whtrans.DwWhMonthlyCloseBalancePrecio">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_balance_work -->
+    <sql-query name="whtrans.DwWhMonthlyCloseBalanceWork">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_costosproduccion -->
+    <sql-query name="whtrans.DwWhMonthlyCloseCostosproduccion">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_guia_pendiente -->
+    <sql-query name="whtrans.DwWhMonthlyCloseGuiaPendiente">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_ingresos -->
+    <sql-query name="whtrans.DwWhMonthlyCloseIngresos">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_items_negative -->
+    <sql-query name="whtrans.DwWhMonthlyCloseItemsNegative">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_items_without_price -->
+    <sql-query name="whtrans.DwWhMonthlyCloseItemsWithoutPrice">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_kardex_input -->
+    <sql-query name="whtrans.DwWhMonthlyCloseKardexInput">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_kardex_mit -->
+    <sql-query name="whtrans.DwWhMonthlyCloseKardexMit">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_position -->
+    <sql-query name="whtrans.DwWhMonthlyClosePosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_position_soporte -->
+    <sql-query name="whtrans.DwWhMonthlyClosePositionSoporte">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_price_support -->
+    <sql-query name="whtrans.DwWhMonthlyClosePriceSupport">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_serviciotercero -->
+    <sql-query name="whtrans.DwWhMonthlyCloseServiciotercero">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_serviciotercero_deta -->
+    <sql-query name="whtrans.DwWhMonthlyCloseServicioterceroDeta">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_serviciotercero_prod -->
+    <sql-query name="whtrans.DwWhMonthlyCloseServicioterceroProd">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_sustento_edit -->
+    <sql-query name="whtrans.DwWhMonthlyCloseSustentoEdit">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_transit_cierre -->
+    <sql-query name="whtrans.DwWhMonthlyCloseTransitCierre">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_transit_kardex -->
+    <sql-query name="whtrans.DwWhMonthlyCloseTransitKardex">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_close_valorizacionpendient -->
+    <sql-query name="whtrans.DwWhMonthlyCloseValorizacionpendient">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_monthly_process_gloria -->
+    <sql-query name="whtrans.DwWhMonthlyProcessGloria">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_movimientoguias_list -->
+    <sql-query name="whtrans.DwWhMovimientoguiasList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_movimientos_detail -->
+    <sql-query name="whtrans.DwWhMovimientosDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_movimientos_position -->
+    <sql-query name="whtrans.DwWhMovimientosPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_persona_select_medico_list -->
+    <sql-query name="whtrans.DwWhPersonaSelectMedicoList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_persona_select_paciente_dependient -->
+    <sql-query name="whtrans.DwWhPersonaSelectPacienteDependient">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_persona_select_paciente_list -->
+    <sql-query name="whtrans.DwWhPersonaSelectPacienteList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_persona_select_paciente_position -->
+    <sql-query name="whtrans.DwWhPersonaSelectPacientePosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_po_detail_entrega_update -->
+    <sql-query name="whtrans.DwWhPoDetailEntregaUpdate">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_po_detail_update -->
+    <sql-query name="whtrans.DwWhPoDetailUpdate">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_po_header_update -->
+    <sql-query name="whtrans.DwWhPoHeaderUpdate">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_stockminimo_list -->
+    <sql-query name="whtrans.DwWhStockminimoList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_stockminimo_position -->
+    <sql-query name="whtrans.DwWhStockminimoPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaccion_select -->
+    <sql-query name="whtrans.DwWhTransaccionSelect">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaccionpendiente_edit -->
+    <sql-query name="whtrans.DwWhTransaccionpendienteEdit">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_change_list_detail -->
+    <sql-query name="whtrans.DwWhTransactionChangeListDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_change_list_kardex -->
+    <sql-query name="whtrans.DwWhTransactionChangeListKardex">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_change_list_position -->
+    <sql-query name="whtrans.DwWhTransactionChangeListPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_change_list_trans -->
+    <sql-query name="whtrans.DwWhTransactionChangeListTrans">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_comercial_list -->
+    <sql-query name="whtrans.DwWhTransactionComercialList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_comercial_list_detail -->
+    <sql-query name="whtrans.DwWhTransactionComercialListDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_comercial_list_positio -->
+    <sql-query name="whtrans.DwWhTransactionComercialListPositio">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_comercial_tipo_select -->
+    <sql-query name="whtrans.DwWhTransactionComercialTipoSelect">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_edit_componente -->
+    <sql-query name="whtrans.DwWhTransactionEditComponente">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_edit_detail_short -->
+    <sql-query name="whtrans.DwWhTransactionEditDetailShort">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_edit_export -->
+    <sql-query name="whtrans.DwWhTransactionEditExport">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_edit_header_short -->
+    <sql-query name="whtrans.DwWhTransactionEditHeaderShort">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_edit_honda_numera -->
+    <sql-query name="whtrans.DwWhTransactionEditHondaNumera">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_edit_honda_select -->
+    <sql-query name="whtrans.DwWhTransactionEditHondaSelect">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_edit_honda_select_moto -->
+    <sql-query name="whtrans.DwWhTransactionEditHondaSelectMoto">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_edit_import -->
+    <sql-query name="whtrans.DwWhTransactionEditImport">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_edit_lote -->
+    <sql-query name="whtrans.DwWhTransactionEditLote">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_edit_modelo -->
+    <sql-query name="whtrans.DwWhTransactionEditModelo">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_edit_numera -->
+    <sql-query name="whtrans.DwWhTransactionEditNumera">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_edit_po_detail -->
+    <sql-query name="whtrans.DwWhTransactionEditPoDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_edit_serie_select -->
+    <sql-query name="whtrans.DwWhTransactionEditSerieSelect">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_edit_serie_short -->
+    <sql-query name="whtrans.DwWhTransactionEditSerieShort">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_intermedios_list -->
+    <sql-query name="whtrans.DwWhTransactionIntermediosList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_intermedios_position -->
+    <sql-query name="whtrans.DwWhTransactionIntermediosPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_list_detail -->
+    <sql-query name="whtrans.DwWhTransactionListDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_list_items_detail -->
+    <sql-query name="whtrans.DwWhTransactionListItemsDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_list_items_position -->
+    <sql-query name="whtrans.DwWhTransactionListItemsPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_list_order -->
+    <sql-query name="whtrans.DwWhTransactionListOrder">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_list_position -->
+    <sql-query name="whtrans.DwWhTransactionListPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_mantenimiento_detail -->
+    <sql-query name="whtrans.DwWhTransactionMantenimientoDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_mantenimiento_header -->
+    <sql-query name="whtrans.DwWhTransactionMantenimientoHeader">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_mantenimiento_list -->
+    <sql-query name="whtrans.DwWhTransactionMantenimientoList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_mantenimiento_position -->
+    <sql-query name="whtrans.DwWhTransactionMantenimientoPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_mantenimiento_selectal -->
+    <sql-query name="whtrans.DwWhTransactionMantenimientoSelectal">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_print -->
+    <sql-query name="whtrans.DwWhTransactionPrint">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_print_activo -->
+    <sql-query name="whtrans.DwWhTransactionPrintActivo">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_print_position -->
+    <sql-query name="whtrans.DwWhTransactionPrintPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_transfer_detail -->
+    <sql-query name="whtrans.DwWhTransactionTransferDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_transfer_header -->
+    <sql-query name="whtrans.DwWhTransactionTransferHeader">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_transfer_item_price -->
+    <sql-query name="whtrans.DwWhTransactionTransferItemPrice">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_transfer_monthly -->
+    <sql-query name="whtrans.DwWhTransactionTransferMonthly">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_transfer_req -->
+    <sql-query name="whtrans.DwWhTransactionTransferReq">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_transfer_serie -->
+    <sql-query name="whtrans.DwWhTransactionTransferSerie">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_transito_list -->
+    <sql-query name="whtrans.DwWhTransactionTransitoList">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transaction_transito_position -->
+    <sql-query name="whtrans.DwWhTransactionTransitoPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transactiondraft_edit_detail -->
+    <sql-query name="whtrans.DwWhTransactiondraftEditDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transactiondraft_edit_header -->
+    <sql-query name="whtrans.DwWhTransactiondraftEditHeader">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transactiondraft_list_detail -->
+    <sql-query name="whtrans.DwWhTransactiondraftListDetail">
+    </sql-query>
+
+    <!-- whtrans.dw_wh_transactiondraft_list_position -->
+    <sql-query name="whtrans.DwWhTransactiondraftListPosition">
+    </sql-query>
+
+    <!-- whtrans.dw_zonadespacho_select -->
+    <sql-query name="whtrans.DwZonadespachoSelect">
+    </sql-query>
+
+</hibernate-mapping>

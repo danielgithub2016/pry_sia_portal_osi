@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dwHrEvaluacionempleadoRep" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="c5a8da38-5f73-45b4-9e8e-421eda9d7960">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="462"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Fabrica\\Desarrollo\\DesarrolloProductos\\OEFAMIGRA\\oefa-portal-web\\src\\main\\webapp\\erp\\rrhh\\recursos\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="empleado" class="java.lang.String"/>
+	<parameter name="puesto" class="java.lang.String"/>
+	<parameter name="evaluacion" class="java.lang.String"/>
+	<parameter name="centrocosto" class="java.lang.String"/>
+	<parameter name="cargoestructural" class="java.lang.String"/>
+	<parameter name="numEvaluaciones" class="java.lang.Integer"/>
+	<parameter name="resultadoEvaluacion" class="java.lang.String"/>
+	<parameter name="parCompany" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEmpleado" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEvaluador" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parSecuencia" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="puntajeTotal" class="java.math.BigDecimal"/>
+	<queryString>
+		<![CDATA[select
+	HR_DetalleEvaluacion.CompanyOwner,
+	HR_DetalleEvaluacion.SecuenciaEval,
+	HR_DetalleEvaluacion.Empleado,
+	hr_factoresevaluacion.Factor,
+          HR_DetalleEvaluacion.EmpleadoEvaluador,
+ HR_DetalleEvaluacion.Calificacion,
+          EmpleadoMast.CentroCostos,
+HR_EvaluacionPeriodo.Descripcion as PeriodoEvalDes,
+EmpleadoMast.Cargo,
+EmpleadoMast.fotografia,
+HR_CargosMast.DescripcionLocal,
+	hr_factoresevaluacion.descripcion AS descripcionNombre
+
+
+from 	SGCORESYS.HR_DetalleEvaluacion
+
+INNER JOIN SGCORESYS.hr_factoresevaluacion ON
+	hr_detalleevaluacion.factor 				= hr_factoresevaluacion.factor
+INNER JOIN SGCORESYS.HR_FactorValor ON
+	HR_DetalleEvaluacion.Factor 					= HR_FactorValor.factor
+INNER JOIN SGCORESYS.EmpleadoMast ON
+		( hr_detalleevaluacion.Empleado		=	EmpleadoMast.Empleado )
+INNER JOIN SGCORESYS.HR_EvaluacionPeriodo ON
+		( HR_DetalleEvaluacion.CompanyOwner		=	HR_EvaluacionPeriodo.CompanyOwner) AND
+		( HR_DetalleEvaluacion.SecuenciaEval		=	HR_EvaluacionPeriodo.SecuenciaEval)
+LEFT JOIN SGCORESYS.HR_CargosMast ON EmpleadoMast.Cargo= HR_CargosMast.Cargo
+
+where
+	hr_detalleevaluacion.CompanyOwner =$P{parCompany} 			and
+	hr_detalleevaluacion.empleado=$P{parEmpleado} and
+	hr_detalleevaluacion.empleadoevaluador = $P{parEvaluador}	and
+	hr_detalleevaluacion.secuenciaeval 	= $P{parSecuencia} and
+	HR_factoresevaluacion.FlagConcepto		= 'N'						and
+   hr_detalleevaluacion.tipo					= 'N' and rownum<=1
+order by hr_factoresevaluacion.descripcion]]>
+	</queryString>
+	<field name="COMPANYOWNER" class="java.lang.String"/>
+	<field name="SECUENCIAEVAL" class="java.math.BigDecimal"/>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="FACTOR" class="java.math.BigDecimal"/>
+	<field name="EMPLEADOEVALUADOR" class="java.math.BigDecimal"/>
+	<field name="CALIFICACION" class="java.lang.Double"/>
+	<field name="CENTROCOSTOS" class="java.lang.String"/>
+	<field name="PERIODOEVALDES" class="java.lang.String"/>
+	<field name="CARGO" class="java.lang.String"/>
+	<field name="FOTOGRAFIA" class="java.awt.Image"/>
+	<field name="DESCRIPCIONLOCAL" class="java.lang.String"/>
+	<field name="DESCRIPCIONNOMBRE" class="java.lang.String"/>
+	<title>
+		<band height="138" splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="69" width="72" height="12" uuid="a206db24-de8e-4de1-84bb-c54234a7c72a"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empleado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="82" width="72" height="12" uuid="d7c59925-50a1-4737-80f0-3859a6e340c7"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Puesto:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="95" width="72" height="12" uuid="39cfe2f5-a607-429c-97c2-206a59db10e6"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Evaluación:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="108" width="72" height="12" uuid="d7a03133-47df-4319-ae20-9a4c00ec677c"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Centro Costo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="122" width="72" height="12" uuid="bc5e2c04-3737-4a73-ad02-05fd6ee9ee37"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cargo Estructural:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="88" y="69" width="266" height="12" uuid="10502159-bbd7-41aa-8fdf-2d773e3ae7a3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{empleado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="88" y="82" width="266" height="12" uuid="9b075258-2e2b-4ec6-af40-bc909f9e2613"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{puesto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="444" y="16" width="55" height="11" uuid="a6dfd5c5-9cf4-46b1-afb3-b3a1f03f3fcb"/>
+				<textElement textAlignment="Left">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina  "+$V{PAGE_NUMBER}+"   de"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="476" y="3" width="79" height="11" uuid="18d46c8b-e131-4dab-ab11-bf5887501d52"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="445" y="3" width="29" height="12" uuid="7723420c-9fe5-4098-b0bd-43ee73e383b7"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Fecha :]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="500" y="16" width="40" height="11" uuid="3f3eb964-714f-4e83-9dcd-bb282126e5fa"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="28" width="555" height="20" uuid="3908e204-6872-4ae5-8d10-34a3ff34b637"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EVALUACIÓN DEL EMPLEADO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="5" y="136" width="535" height="1" uuid="194899b7-fd0f-4a41-8bb7-2a0a38fd6022"/>
+			</line>
+			<textField>
+				<reportElement x="88" y="95" width="266" height="12" uuid="5aa79f86-64be-492f-adef-640bbd7839a3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SECUENCIAEVAL} + "  " + $P{evaluacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="88" y="108" width="266" height="12" uuid="dfad0a86-fae6-4f61-ac82-50cf91bdad65"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CENTROCOSTOS} + "  " + $P{centrocosto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="88" y="122" width="266" height="12" uuid="7e7c1546-853d-4426-ac10-89051370e288"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CARGO} + "  " + $F{DESCRIPCIONLOCAL}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="463" y="48" width="74" height="86" uuid="f7f21601-8f73-4c7d-a5d6-374784d5be2a"/>
+				<imageExpression><![CDATA[$F{FOTOGRAFIA}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="54" splitType="Stretch">
+			<subreport>
+				<reportElement x="9" y="0" width="531" height="40" uuid="f28aae2d-3440-4afd-80c3-c6022de3ba8b"/>
+				<subreportParameter name="parCompany">
+					<subreportParameterExpression><![CDATA[$P{parCompany}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parEmpleado">
+					<subreportParameterExpression><![CDATA[$P{parEmpleado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parEvaluador">
+					<subreportParameterExpression><![CDATA[$P{parEvaluador}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parSecuencia">
+					<subreportParameterExpression><![CDATA[$P{parSecuencia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["dwHrEvaluacionempleadoRep01.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="13">
+			<staticText>
+				<reportElement x="0" y="1" width="60" height="12" uuid="d1220fa2-713a-493c-8897-8eeb10e85507"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Evaluaciones :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="495" y="0" width="36" height="12" uuid="a18c3854-3766-4ddb-87fd-57d2e5362ac2"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{puntajeTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="430" y="1" width="60" height="12" uuid="4a02a8f0-5196-4c17-add1-74cadfe26892"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Puntaje Total :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="235" y="0" width="154" height="12" uuid="1bfba18f-88b9-41d5-ae70-40b57231a2b5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{resultadoEvaluacion}!=null?$P{resultadoEvaluacion}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="1" width="16" height="12" uuid="5c370fa0-f195-41c4-bcce-8a76a8dc43ef"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{numEvaluaciones}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>

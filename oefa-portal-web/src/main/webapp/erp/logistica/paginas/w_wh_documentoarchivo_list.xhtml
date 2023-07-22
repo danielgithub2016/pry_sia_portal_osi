@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<div style="width: 1000px;">
+		<h:form id="wwhdocumentoarchivolist">
+
+			<h:panelGrid columns="4">
+				<p:commandButton value="Nuevo" icon="nuevo"
+					styleClass="botonTextoImagen"
+					disabled="#{!cwWhDocumentoArchivoList.ismodificable}"
+					action="#{cwWhDocumentoArchivoList.nuevo}">
+				</p:commandButton>
+				<p:commandButton value="Aceptar" icon="guardar"
+					styleClass="botonTextoImagen"
+					disabled="#{!cwWhDocumentoArchivoList.ismodificable}"
+					action="#{cwWhDocumentoArchivoList.guardar}">
+				</p:commandButton>
+
+				<p:spacer height="1" width="680" />
+
+				<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+					icon="cancelar" onclick="PF('popSelectorArchivo').hide()" />
+			</h:panelGrid>
+
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				id="tblDocumentosRequisicion" paginator="true"
+				paginatorPosition="bottom" scrollWidth="990"
+				tableStyle="width:980px" scrollable="true" scrollHeight="300"
+				style="margin-top:5px;"
+				value="#{cwWhDocumentoArchivoList.dw_1filtrado}" var="arch"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+				<p:column headerText="#" width="8">
+					<p:outputLabel value="#{arch.secuencia}" />
+				</p:column>
+
+				<p:column headerText="Archivo" width="250">
+					<p:outputLabel value="#{arch.archivo}" />
+				</p:column>
+
+				<p:column headerText="Comentario" width="250">
+					<p:outputLabel value="#{arch.comentario}" />
+				</p:column>
+
+				<p:column headerText="Acciones" width="60">
+					<center>
+						<p:commandButton icon="descargar"
+							action="#{cwWhDocumentoArchivoList.descargar}">
+							<f:setPropertyActionListener
+								target="#{cwWhDocumentoArchivoList.documento}" value="#{arch}" />
+						</p:commandButton>
+
+						<p:commandButton icon="eliminar"
+							rendered="#{cwWhDocumentoArchivoList.ismodificable}"
+							action="#{cwWhDocumentoArchivoList.eliminar}">
+							<f:setPropertyActionListener
+								target="#{cwWhDocumentoArchivoList.documento}" value="#{arch}" />
+						</p:commandButton>
+
+					</center>
+				</p:column>
+
+			</p:dataTable>
+
+			<p:commandLink id="btnDownload" ajax="false" style="display:none">
+				<p:fileDownload value="#{cwWhDocumentoArchivoList.fileDownload}" />
+			</p:commandLink>
+		</h:form>
+	</div>
+</ui:composition>

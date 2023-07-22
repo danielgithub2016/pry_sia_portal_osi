@@ -1,0 +1,149 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>Capacitaciones
+			publicadas</h2>
+	</ui:define>
+	<ui:define name="content">
+	<h:form id="capacitacionespublicadas">
+		<p:growl autoUpdate="true" />
+
+
+		<p:panel header="Filtros de Búsqueda">
+			<p:panelGrid layout="grid" columns="2"
+				styleClass="ui-panelgrid-blank"
+				columnClasses="ui-grid-col-1,ui-grid-col-2">
+
+				<p:outputLabel value="Descripción" />
+				<p:inputText value="#{cHrCapacitacionPublica.curso}" />
+			</p:panelGrid>
+
+		</p:panel>
+
+		<p:panelGrid layout="grid" columns="3" styleClass="ui-panelgrid-blank"
+			columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2">
+			<p:commandButton action="#{cHrCapacitacionPublica.buscar}" icon="buscar"
+				value="Buscar" update="@form"/>
+			<p:spacer></p:spacer>
+			<p:button outcome="pantallaBienvenida" icon="cancelar"
+				value="Cancelar" />
+		</p:panelGrid>
+
+
+		<p:dataGrid value="#{cHrCapacitacionPublica.lstDatos}" var="row"
+			layout="grid" rows="10" columns="2" lazy="true" rendered="false"
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+			emptyMessage="En este momento no existen capacitaciones publicadas."
+			rowsPerPageTemplate="6,12,16">
+			<p:panel header="Capacitación : #{row.auxpkcapacitacion}">
+				<p:panelGrid columns="1" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:panelGrid columns="2" layout="grid">
+						<p:outputLabel value="Curso" />
+						<h:outputText value="#{row.cursodescripcion}" />
+
+						<p:outputLabel value="Centro capacitación" />
+						<h:outputText value="#{row.auxcentrocapacitacion}" />
+
+						<p:outputLabel value="Vacantes" />
+						<h:outputText value="#{row.numerovacantes}" />
+
+						<p:outputLabel value="Duración" />
+						<h:panelGrid columns="3">
+							<h:outputText value="#{row.fechadesde}" style="font-weight:bold;">
+								<f:convertDateTime pattern="#{msg.formato_fecha_fechahora}" />
+							</h:outputText>
+							<h:outputText value="al" />
+							<h:outputText value="#{row.fechahasta}" style="font-weight:bold;">
+								<f:convertDateTime pattern="#{msg.formato_fecha_fechahora}" />
+							</h:outputText>
+						</h:panelGrid>
+
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+		</p:dataGrid>
+
+		<p:dataTable
+			emptyMessage="En este momento no existen capacitaciones publicadas."
+			id="dtCapacitacionPublica" paginator="true" scrollable="true"
+			paginatorPosition="bottom" lazy="true" rows="15" reflow="true"
+			value="#{cHrCapacitacionPublica.lstDatos}" var="row" scrollHeight="350"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+			<p:column headerText="Código" styleClass="columnatablaCentro"
+				width="60">
+				<h:outputText value="#{row.auxpkcapacitacion}" />
+			</p:column>
+
+			<p:column headerText="Tipo Capacitación">
+				<h:outputText value="#{row.auxTipoCapacitacion}" />
+			</p:column>
+
+			<p:column headerText="Area Temática">
+				<h:outputText value="#{row.auxAreaTematica}" />
+			</p:column>
+
+			<p:column headerText="Descripción">
+				<h:outputText value="#{row.cursodescripcion}" />
+			</p:column>
+
+			<p:column headerText="Tipo Registro">
+				<h:outputText value="#{row.auxTipoRegistro}" />
+			</p:column>
+
+
+			<p:column headerText="Centro capacitación">
+				<h:outputText value="#{row.auxcentrocapacitacion}" />
+			</p:column>
+
+			<p:column headerText="Vacantes" styleClass="columnatablaDerecha"
+				width="40">
+				<h:outputText value="#{row.numerovacantes}" />
+			</p:column>
+
+			<p:column headerText="Duración" width="160">
+				<p:panelGrid layout="grid" columns="3"
+					columnClasses="ui-grid-col-7,ui-grid-col-1,ui-grid-col-7"
+					styleClass="ui-panelgrid-blank columnatablaCentro">
+					<h:outputText value="#{row.fechadesde}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha}" />
+					</h:outputText>
+					<h:outputText value="al" />
+					<h:outputText value="#{row.fechahasta}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha}" />
+					</h:outputText>
+				</p:panelGrid>
+			</p:column>
+
+			<p:column headerText="Total Horas" styleClass="columnatablaDerecha"
+				width="40">
+				<h:outputText value="#{row.totalhorasAux}" />
+			</p:column>
+
+			<p:column headerText="Tiempo Permanencia"
+				styleClass="columnatablaDerecha" width="40">
+				<h:outputText value="#{row.auxTiempoPermanencia}" />
+			</p:column>
+
+			<p:column width="20" rendered="false">
+				<p:commandButton type="image" icon="libro" title="Inscribirse"
+					action="#{cHrCapacitacionPublica.guardar}">
+					<f:setPropertyActionListener value="#{row}"
+						target="#{cHrCapacitacionPublica.registroSeleccionado}" />
+					<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+						icon="alerta" message="¿Desea inscribirse a esta capacitación?" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

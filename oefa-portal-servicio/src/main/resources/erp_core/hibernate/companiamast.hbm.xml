@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Companiamast" table="SGCORESYS.COMPANIAMAST">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.CompaniamastPk">
+            <key-property name="companiacodigo" type="string">
+                <column name="COMPANIACODIGO" length="6" />
+            </key-property>
+        </composite-id>
+        <property name="descripcioncorta" type="string">
+            <column name="DESCRIPCIONCORTA" length="30" />
+        </property>
+        <property name="descripcionlarga" type="string">
+            <column name="DESCRIPCIONLARGA" length="60" />
+        </property>
+        <property name="direccioncomun" type="string">
+            <column name="DIRECCIONCOMUN" length="80" />
+        </property>
+        <property name="direccionadicional" type="string">
+            <column name="DIRECCIONADICIONAL" length="80" />
+        </property>
+        <property name="fechafundacion" type="timestamp">
+            <column name="FECHAFUNDACION" length="7" />
+        </property>
+        <property name="telefono1" type="string">
+            <column name="TELEFONO1" length="15" />
+        </property>
+        <property name="telefono2" type="string">
+            <column name="TELEFONO2" length="15" />
+        </property>
+        <property name="telefono3" type="string">
+            <column name="TELEFONO3" length="15" />
+        </property>
+        <property name="fax1" type="string">
+            <column name="FAX1" length="15" />
+        </property>
+        <property name="fax2" type="string">
+            <column name="FAX2" length="15" />
+        </property>
+        <property name="documentofiscal" type="string">
+            <column name="DOCUMENTOFISCAL" length="20" />
+        </property>
+        <property name="propietariopordefecto" type="string">
+            <column name="PROPIETARIOPORDEFECTO" length="2" />
+        </property>
+        <property name="descripcionextranjera" type="string">
+            <column name="DESCRIPCIONEXTRANJERA" length="60" />
+        </property>
+        <property name="monedapordefecto" type="string">
+            <column name="MONEDAPORDEFECTO" length="2" />
+        </property>
+        <property name="tipocompania" type="string">
+            <column name="TIPOCOMPANIA" length="1" />
+        </property>
+        <property name="factorrvalidacion" type="string">
+            <column name="FACTORRVALIDACION" length="1" />
+        </property>
+        <property name="afectoigvflag" type="string">
+            <column name="AFECTOIGVFLAG" length="1" />
+        </property>
+        <property name="creditofiscalfactorflag" type="string">
+            <column name="CREDITOFISCALFACTORFLAG" length="1" />
+        </property>
+        <property name="cuentaprovisionsbsflag" type="string">
+            <column name="CUENTAPROVISIONSBSFLAG" length="1" />
+        </property>
+        <property name="logofile" type="string">
+            <column name="LOGOFILE" length="20" />
+        </property>
+        <property name="persona" type="integer">
+            <column name="PERSONA" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="representantelegal" type="string">
+            <column name="REPRESENTANTELEGAL" length="30" />
+        </property>
+        <property name="paginaweb" type="string">
+            <column name="PAGINAWEB" length="100" />
+        </property>
+        <property name="afectoretencionigvflag" type="string">
+            <column name="AFECTORETENCIONIGVFLAG" length="1" />
+        </property>
+        <property name="grupo" type="string">
+            <column name="GRUPO" length="6" />
+        </property>
+        <property name="certificadoinscripcion" type="string">
+            <column name="CERTIFICADOINSCRIPCION" length="20" />
+        </property>
+        <property name="detraccioncuentabancaria" type="string">
+            <column name="DETRACCIONCUENTABANCARIA" length="20" />
+        </property>
+        <property name="representantelegaldocumento" type="string">
+            <column name="REPRESENTANTELEGALDOCUMENTO" length="20" />
+        </property>
+        <property name="regimenlaboralrtps" type="string">
+            <column name="REGIMENLABORALRTPS" length="2" />
+        </property>
+        <property name="codigoanterior" type="string">
+            <column name="CODIGOANTERIOR" length="10" />
+        </property>
+        <property name="plancontable" type="string">
+            <column name="PLANCONTABLE" length="4" />
+        </property>
+        <property name="pliego" type="string">
+            <column name="PLIEGO" length="4" />
+        </property>
+    </class>
+</hibernate-mapping>

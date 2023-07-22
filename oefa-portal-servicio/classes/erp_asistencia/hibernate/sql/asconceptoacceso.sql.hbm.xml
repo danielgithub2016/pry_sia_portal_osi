@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : asistencia.AsConceptoacceso -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="asconceptoacceso.obtenerExpresadoen">
+		select
+		EXPRESADOEN as "expresadoen"
+		from
+		sgcoresys.as_conceptoacceso
+		where
+		CONCEPTOACCESO = :p_conceptoacceso
+	</sql-query>
+	
+	<sql-query name="asconceptoacceso.obtenerConceptosAccesosSIGED">
+	SELECT as_conceptoacceso.conceptoacceso        AS "conceptoacceso",
+       as_conceptoacceso.descripcionlocal      AS "descripcionlocal",
+       as_conceptoacceso.conceptoaccesosistema AS "conceptoaccesosistema"
+FROM   sgcoresys.as_conceptoacceso
+WHERE  
+       ( as_conceptoacceso.estado = 'A' )
+       AND ( as_conceptoacceso.FLAGSIGED = 'S' )
+ORDER  BY 2 
+	</sql-query>
+
+	<sql-query name="asconceptoacceso.obtenerConceptosAccesos">
+		SELECT
+		AS_ConceptoAcceso.ConceptoAcceso as
+		"conceptoacceso",
+		AS_ConceptoAcceso.DescripcionLocal as
+		"descripcionlocal",
+		AS_ConceptoAcceso.ConceptoAccesoSistema as
+		"conceptoaccesosistema",
+		AS_ConceptoAccesoSistema.Descripcion as
+		"descripcion"
+		FROM SGCORESYS.AS_ConceptoAcceso,
+		SGCORESYS.AS_ConceptoAccesoSistema
+		WHERE
+		(
+		AS_ConceptoAcceso.ConceptoAccesoSistema =
+		AS_ConceptoAccesoSistema.ConceptoSistema )
+		AND (
+		AS_ConceptoAcceso.Estado = 'A' )
+		AND ( as_conceptoacceso.FLAGSIGED IS NULL )
+		AND (
+		AS_ConceptoAcceso.ConceptoAccesoSistema in ('FALT','PERM'))
+		AND
+		(AS_ConceptoAcceso.FlagCompensa = 'S' OR
+		AS_ConceptoAcceso.FlagOtrosPermisos = 'S' OR
+		AS_ConceptoAcceso.FlagVacaciones = 'S')
+		AND ( ( 'S' = (
+		SELECT
+		MAX(AS_Seguridad.valortexto)
+		FROM SGCORESYS.AS_Seguridad
+		WHERE
+		AS_Seguridad.usuario=:p_usuario
+		AND
+		AS_Seguridad.ConceptoSeguridad='ALLCONCEPT'
+		)
+		OR 'S' = (
+		SELECT
+		MAX(AS_Seguridad.valortexto)
+		FROM SGCORESYS.AS_Seguridad
+		WHERE
+		AS_Seguridad.usuario IN (
+		SELECT Perfil
+		FROM
+		SGCORESYS.SeguridadperfilUsuario
+		WHERE Usuario = :p_usuario)
+		AND
+		AS_Seguridad.ConceptoSeguridad='ALLCONCEPT'
+		)
+		)
+		OR (
+		AS_ConceptoAcceso.ConceptoAcceso IN (
+		SELECT AS_Seguridad.valortexto
+		FROM SGCORESYS.AS_Seguridad
+		WHERE AS_Seguridad.usuario=:p_usuario
+		AND
+		AS_Seguridad.ConceptoSeguridad='TIPOCO'
+		)
+		OR
+		AS_ConceptoAcceso.ConceptoAcceso IN (
+		SELECT AS_Seguridad.valortexto
+		FROM SGCORESYS.AS_Seguridad
+		WHERE AS_Seguridad.usuario IN (
+		SELECT
+		Perfil
+		FROM SGCORESYS.SeguridadperfilUsuario
+		WHERE Usuario = :p_usuario)
+		AND AS_Seguridad.ConceptoSeguridad='TIPOCO'
+		)
+		)
+		or ( :p_isadmin = 'S' ) )
+		UNION
+		SELECT AS_ConceptoAcceso.ConceptoAcceso as "conceptoacceso",
+		AS_ConceptoAcceso.DescripcionLocal as "descripcionlocal",
+		AS_ConceptoAcceso.ConceptoAccesoSistema as "conceptoaccesosistema",
+		AS_ConceptoAccesoSistema.Descripcion as "descripcion"
+		FROM
+		SGCORESYS.AS_ConceptoAcceso,
+		SGCORESYS.AS_ConceptoAccesoSistema
+		WHERE (
+		AS_ConceptoAcceso.ConceptoAccesoSistema =
+		AS_ConceptoAccesoSistema.ConceptoSistema )
+		AND (
+		AS_ConceptoAcceso.Estado = 'A' )
+		AND ( AS_ConceptoAcceso.ConceptoAcceso
+		in ('PAHE','OMIS','VACA','OMI2'))
+		ORDER BY 2
+	</sql-query>
+
+
+</hibernate-mapping>

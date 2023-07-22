@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : core.Accountmst -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="accountmst.listarCabecera">
+		SELECT  
+        PR.LOCALNAME AS "localname",
+        PR.PRIME AS "account",
+        CAST(2 AS VARCHAR2(4)) as "flag"
+        FROM SGCORESYS.ACCOUNTMST AC , SGCORESYS.CHARTOFACCOUNTMST CH, SGCORESYS.PRIMEMST PR
+        WHERE ( CH.ACCOUNT (+) = AC.ACCOUNT) and
+        ( AC.status LIKE 'A' ) AND AC.PRIME = PR.PRIME  AND AC.plancontable like 'PCGG'
+        
+	</sql-query>
+	
+	<sql-query name="accountmst.listarCuenta">
+		SELECT AC.ACCOUNT AS "account",
+		AC.LOCALNAME AS "localname" ,
+		AC.PRIME AS "prime1",
+		AC.MULTICOMPANYFLAG AS "multicompanyflag",
+		CH.COMPANYOWNER AS "companyowner",
+		AC.ELEMENT AS "element",
+		CAST(1 AS VARCHAR(4)) as "flag"
+		FROM SGCORESYS.ACCOUNTMST AC , SGCORESYS.CHARTOFACCOUNTMST CH
+		WHERE ( CH.ACCOUNT (+) = AC.ACCOUNT) and
+		( AC.status LIKE :status )
+	</sql-query>
+
+</hibernate-mapping>

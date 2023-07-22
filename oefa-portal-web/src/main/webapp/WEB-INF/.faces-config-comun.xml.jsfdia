@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="prueba01::#prueba#prueba01.xhtml"
+    NAME="output" PATH="/prueba/prueba01.xhtml"
+    TARGET="rules:#prueba#prueba01.xhtml" TITLE="prueba01" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:1" PATH="*" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:1" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="pantallaLogin::#comun#paginas#login.xhtml"
+    NAME="output" PATH="/comun/paginas/login.xhtml"
+    TARGET="rules:#comun#paginas#login.xhtml" TITLE="pantallaLogin" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:2" PATH="*" SHAPE="32,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:2" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="pantallaBienvenida::#comun#plantillas#oefa#bienvenida.xhtml"
+    NAME="output" PATH="/comun/plantillas/oefa/bienvenida.xhtml"
+    TARGET="rules:#comun#plantillas#oefa#bienvenida.xhtml"
+    TITLE="pantallaBienvenida" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:3" PATH="*" SHAPE="32,241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:3" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="pantallaVistaExpirada::#comun#paginas#login.xhtml" NAME="output"
+    PATH="/comun/paginas/login.xhtml"
+    TARGET="rules:#comun#paginas#login.xhtml"
+    TITLE="pantallaVistaExpirada" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:4" PATH="*" SHAPE="32,465,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:4" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="documentos::#comun#plantillas#documentos.xhtml" NAME="output"
+    PATH="/comun/plantillas/documentos.xhtml"
+    TARGET="rules:#comun#plantillas#documentos.xhtml" TITLE="documentos" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:5" PATH="*" SHAPE="32,577,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:5" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="pantallaReporteVistaExterna::#comun#plantillas#reporte_vista_externa.xhtml"
+    NAME="output" PATH="/comun/plantillas/reporte_vista_externa.xhtml"
+    TARGET="rules:#comun#plantillas#reporte_vista_externa.xhtml"
+    TITLE="pantallaReporteVistaExterna" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#prueba#prueba01.xhtml"
+  PATH="/prueba/prueba01.xhtml" SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#comun#paginas#login.xhtml"
+  PATH="/comun/paginas/login.xhtml" SHAPE="256,145,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#comun#plantillas#oefa#bienvenida.xhtml"
+  PATH="/comun/plantillas/oefa/bienvenida.xhtml" SHAPE="240,369,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#comun#plantillas#documentos.xhtml"
+  PATH="/comun/plantillas/documentos.xhtml" SHAPE="240,481,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#comun#plantillas#reporte_vista_externa.xhtml"
+  PATH="/comun/plantillas/reporte_vista_externa.xhtml"
+  SHAPE="240,593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:6" PATH="*" SHAPE="32,689,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:6" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="probandoreporte::#erp#prueba#prueba_reporte.xhtml" NAME="output"
+    PATH="/erp/prueba/prueba_reporte.xhtml"
+    TARGET="rules:#erp#prueba#prueba_reporte.xhtml"
+    TITLE="probandoreporte" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#erp#prueba#prueba_reporte.xhtml"
+  PATH="/erp/prueba/prueba_reporte.xhtml" SHAPE="240,705,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

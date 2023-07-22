@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subReporteAsistencia_balance_vigentes_total" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c7af4320-c1ad-4c59-87fe-b9fde492a83a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_mesesacompensar" class="java.lang.Integer"/>
+	<parameter name="p_empleado" class="java.math.BigDecimal"/>
+	<parameter name="p_fecha_desde" class="java.util.Date"/>
+	<parameter name="p_fecha_hasta" class="java.util.Date"/>
+	<parameter name="p_vigentevencido" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+
+    sum(round(regitros.HorasAprobadas * 60)) AS horasaprobadas,
+    sum(round(regitros.HorasConsumidas * 60)) AS horasconsumidas,
+    sgcoresys.f_cent2sex_texto(sum(round(regitros.HorasAprobadas,2)))AS horasaprobadast,
+    sgcoresys.f_cent2sex_texto(sum(round(regitros.HorasConsumidas,2)))AS horasconsumidast
+from
+(SELECT      AS_HorasAprobabas.Empleado,
+                AS_HorasAprobabas.Fecha,
+                SUM(AS_HorasAprobabas.HorasAprobadas) AS HorasAprobadas,
+                NVL(AS_HorasConsumidas.HorasDeAsistencia, 0.00) AS HorasDeAsistencia,
+                NVL(AS_HorasConsumidas.HorasConsumidas, 0.00) AS HorasConsumidas,
+                AS_HorasAprobabas.VencidoOVigente
+FROM        (
+                    SELECT       AS_SaldoHoras.Empleado As Empleado,
+                                    AS_SaldoHoras.Fecha_Saldo As Fecha,
+                                    AS_SaldoHoras.CantidadAuxiliar As HorasAprobadas,
+                                    CASE
+                                    WHEN     (TO_CHAR(AS_SaldoHoras.Fecha_Saldo,'YYYYMMDD') < TO_CHAR(ADD_MONTHS(SYSDATE,  $P{p_mesesacompensar}), 'YYYYMMDD' ))
+                                    THEN         'VENCIDOS'
+                                    ELSE         'VIGENTES'
+                                    END    AS     VencidoOVigente
+                    FROM         sgcoresys.AS_SaldoHoras
+                    WHERE       AS_SaldoHoras.Tipo = 'M' AND
+                                    AS_SaldoHoras.Empleado = $P{p_empleado} AND
+                                    (to_char(AS_SaldoHoras.Fecha_Saldo,'YYYYMMDD')  >= to_char($P{p_fecha_desde},'YYYYMMDD'))  AND (to_char(AS_SaldoHoras.Fecha_Saldo,'YYYYMMDD') <= to_char($P{p_fecha_hasta},'YYYYMMDD'))
+
+                    UNION ALL
+
+                    SELECT
+                                    AS_AsistenciaDiaria.Empleado As Empleado,
+                                    AS_AsistenciaDiaria.Fecha   As  Fecha,
+                                    AS_AsistenciaDiaria.CantidadReal As HorasAprobadas,
+                                    CASE
+                                    WHEN     (TO_CHAR(AS_AsistenciaDiaria.Fecha,'YYYYMMDD') < TO_CHAR(ADD_MONTHS(SYSDATE, $P{p_mesesacompensar}), 'YYYYMMDD' ))
+                                    THEN         'VENCIDOS'
+                                    ELSE         'VIGENTES'
+                                    END    AS     VencidoOVigente
+                    FROM         sgcoresys.AS_AsistenciaDiaria
+                    WHERE       AS_AsistenciaDiaria.ConceptoAcceso = 'HAUT' AND
+                                    AS_AsistenciaDiaria.Empleado = $P{p_empleado}  AND
+                                    (to_char(AS_AsistenciaDiaria.Fecha,'YYYYMMDD')  >= to_char($P{p_fecha_desde},'YYYYMMDD'))  AND (to_char(AS_AsistenciaDiaria.Fecha,'YYYYMMDD') <= to_char($P{p_fecha_hasta},'YYYYMMDD'))
+                )                               AS_HorasAprobabas
+                        LEFT JOIN
+                                (
+                                 SELECT        AS_AutorizacionFecha.Empleado AS Empleado,
+                                                 AS_AutorizacionFecha.Fecha As Fecha,
+                                                 NVL(SUM(AS_AutorizacionFecha.CantidadReal),0.00) AS HorasDeAsistencia,
+                                                 NVL(SUM(AS_AutorizacionFecha.Cantidad),0.00) AS HorasConsumidas
+                                 FROM         sgcoresys.AS_AutorizacionFecha
+                                 GROUP BY   AS_AutorizacionFecha.Empleado,
+                                                 AS_AutorizacionFecha.Fecha
+                                    )       AS_HorasConsumidas
+                                        ON  (AS_HorasAprobabas.Empleado = AS_HorasConsumidas.Empleado) AND
+                                             (AS_HorasAprobabas.Fecha = AS_HorasConsumidas.Fecha)
+
+where AS_HorasAprobabas.VencidoOVigente = $P{p_vigentevencido}
+GROUP BY
+
+                                               AS_HorasAprobabas.Empleado,
+
+                                               AS_HorasAprobabas.Fecha,
+
+                                               AS_HorasConsumidas.HorasDeAsistencia,
+
+                                               AS_HorasConsumidas.HorasConsumidas,
+
+                                               AS_HorasAprobabas.VencidoOVigente
+ORDER BY   AS_HorasAprobabas.Fecha ASC
+) regitros]]>
+	</queryString>
+	<field name="HORASAPROBADAS" class="java.math.BigDecimal"/>
+	<field name="HORASCONSUMIDAS" class="java.math.BigDecimal"/>
+	<field name="HORASAPROBADAST" class="java.lang.String"/>
+	<field name="HORASCONSUMIDAST" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<rectangle>
+				<reportElement x="58" y="3" width="215" height="20" uuid="8b748fef-9869-4900-a74b-4f474a3d9907"/>
+			</rectangle>
+			<line>
+				<reportElement x="163" y="3" width="1" height="20" uuid="3c7a2020-113e-41a3-9518-4b6f0bb97950"/>
+			</line>
+			<line>
+				<reportElement x="110" y="3" width="1" height="20" uuid="835adbfb-3498-4a74-8331-0e48915550c8"/>
+			</line>
+			<line>
+				<reportElement x="223" y="3" width="1" height="20" uuid="e53c0c86-b4dc-4ffb-9b39-a709a1c35412"/>
+			</line>
+			<textField>
+				<reportElement x="59" y="3" width="42" height="20" forecolor="#990000" uuid="aaa5c51f-f5fb-4924-95d4-7fd1a471444e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORASAPROBADAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="118" y="3" width="41" height="20" forecolor="#990000" uuid="a90fd257-fb4b-474a-8e68-c1a4a7b8e3e6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORASCONSUMIDAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="4" width="58" height="19" forecolor="#990000" uuid="5d947841-4b03-41d3-8345-03ffe36708dc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORASAPROBADAST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="226" y="4" width="47" height="19" forecolor="#990000" uuid="26009b2c-6971-4f64-bf90-13651eebb4b3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORASCONSUMIDAST}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

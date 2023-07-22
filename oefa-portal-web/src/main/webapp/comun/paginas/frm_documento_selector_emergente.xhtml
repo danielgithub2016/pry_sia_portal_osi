@@ -1,0 +1,95 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<div class="ui-fluid">
+		<h:form id="frmDocumentoSelectorEmergente"
+			enctype="multipart/form-data">
+
+			<p:growl life="#{msg.generico_tiempo_growl}" />
+
+			<p:panel>
+				<p:panelGrid columns="2"
+					columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
+					styleClass="ui-panelgrid-blank">
+
+					<p:spacer></p:spacer>
+
+					<div class="ui-messages ui-widget" aria-live="polite"
+						data-global="false" data-summary="data-summary"
+						data-detail="data-detail" data-severity="all,error"
+						data-redisplay="true">
+						<div class="ui-messages-info ui-corner-all">
+							<span class="ui-messages-info-icon"></span>
+							<ul>
+								<li><span class="ui-messages-info-summary"></span><span
+									class="ui-messages-info-detail">Tamaño Max:
+										#{cwWhDocumentoArchivoList.tamanioArchivo} </span></li>
+							</ul>
+						</div>
+					</div>
+
+
+					<p:outputLabel value="Adjuntar" />
+
+					<p:fileUpload value="#{cwWhDocumentoArchivoList.fileUpload}"
+						fileUploadListener="#{cwWhDocumentoArchivoList.handleFileUpload}"
+						label="Seleccionar Archivo" auto="true" id="pnlCargaDocumento"
+						update="txtFile" showButtons="false"
+						sizeLimit="#{cwWhDocumentoArchivoList.tamanioBytes}"
+						invalidFileMessage="Archivo Inválido" mode="advanced"
+						invalidSizeMessage="Tamanio Inválido" uploadLabel="Cargando" />
+
+					<p:outputLabel value="Nombre" />
+					<p:inputTextarea cols="40" id="txtFile" onclick="return false"
+						value="#{cwWhDocumentoArchivoList.documento.archivo}" />
+						
+					<p:outputLabel value="Es Informe Final?" 
+						rendered="#{cwWhDocumentoArchivoList.isIformeFinal}" />
+					<p:selectBooleanCheckbox
+						value="#{cwWhDocumentoArchivoList.documento.esInformeFinal}"
+						rendered="#{cwWhDocumentoArchivoList.isIformeFinal}" />
+
+					<p:outputLabel value="Comentarios"
+						rendered="#{cwWhDocumentoArchivoList.isrequierecomentario}" />
+					<p:inputTextarea id="txtobservacion" style="width:300px"
+						value="#{cwWhDocumentoArchivoList.documento.comentario}"
+						autoResize="false" maxlength="950"
+						rendered="#{cwWhDocumentoArchivoList.isrequierecomentario}">
+					</p:inputTextarea>
+
+
+
+				</p:panelGrid>
+			</p:panel>
+
+			<p:panel>
+				<p:panelGrid columns="3" columnClasses="ui-grid-col-6,ui-grid-col-6"
+					layout="grid" styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Aceptar" process="@form" icon="guardar"
+						styleClass="botonTextoImagenGrande"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+						rendered="#{cwWhDocumentoArchivoList.islistado}"
+						action="#{cwWhDocumentoArchivoList.insertarArchivo}">
+						
+					</p:commandButton>
+
+					<p:commandButton value="Aceptar" process="@form" icon="guardar"
+						styleClass="botonTextoImagenGrande"
+						rendered="#{!cwWhDocumentoArchivoList.islistado}"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+						action="#{cwWhDocumentoArchivoList.insertarArchivoExterno}" />
+
+					<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+						icon="cancelar" onclick="PF('popDocumento').hide()" />
+				</p:panelGrid>
+			</p:panel>
+
+			<p:tooltip for="txtFile" showEffect="clip" />
+		</h:form>
+	</div>
+</ui:composition>
+
+
+

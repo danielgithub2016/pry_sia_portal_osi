@@ -1,0 +1,2383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : whreport.p_wh_intefacesease_tranferir_proceso
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- whreport.dw_ac_300_miscelaneo_select_tipooper -->
+    <sql-query name="whreport.DwAc300MiscelaneoSelectTipooper">
+    </sql-query>
+
+    <!-- whreport.dw_cp_rep_312_cartas_fianza -->
+    <sql-query name="whreport.DwCpRep312CartasFianza">
+    </sql-query>
+
+    <!-- whreport.dw_cp_rep_312_cartas_fianza#2 -->
+    <sql-query name="whreport.DwCpRep312CartasFianza#2">
+    </sql-query>
+
+    <!-- whreport.dw_cp_rep_312_cartas_fianza_data -->
+    <sql-query name="whreport.DwCpRep312CartasFianzaData">
+    </sql-query>
+
+    <!-- whreport.dw_cp_rep_312_cartas_fianza_detalle -->
+    <sql-query name="whreport.DwCpRep312CartasFianzaDetalle">
+    </sql-query>
+
+    <!-- whreport.dw_cp_rep_312_cartas_fianza_pos -->
+    <sql-query name="whreport.DwCpRep312CartasFianzaPos">
+    </sql-query>
+
+    <!-- whreport.dw_cp_rep_312_cartas_fianza_pos4 -->
+    <sql-query name="whreport.DwCpRep312CartasFianzaPos4">
+    </sql-query>
+
+    <!-- whreport.dw_cp_rep_312_cartas_fianza_reporte -->
+    <sql-query name="whreport.DwCpRep312CartasFianzaReporte">
+    </sql-query>
+
+    <!-- whreport.dw_cp_rep_312_cartas_fianza_resumen -->
+    <sql-query name="whreport.DwCpRep312CartasFianzaResumen">
+    </sql-query>
+
+    <!-- whreport.dw_cp_rep_312_cartas_fianza_saldo -->
+    <sql-query name="whreport.DwCpRep312CartasFianzaSaldo">
+    </sql-query>
+
+    <!-- whreport.dw_cp_rep_312_cartas_fianza_saldo_x -->
+    <sql-query name="whreport.DwCpRep312CartasFianzaSaldoX">
+    </sql-query>
+
+    <!-- whreport.dw_cp_rep_312_cartas_fianza_select -->
+    <sql-query name="whreport.DwCpRep312CartasFianzaSelect">
+    </sql-query>
+
+    <!-- whreport.dw_ma_tipodocumentocxp_report -->
+    <sql-query name="whreport.DwMaTipodocumentocxpReport">
+    </sql-query>
+
+    <!-- whreport.dw_wh_licitacioninvitaciondirecta_report -->
+    <sql-query name="whreport.DwWhLicitacioninvitaciondirectaReport">
+    </sql-query>
+
+    <!-- whreport.dw_wh_quotation_vendor_report -->
+    <sql-query name="whreport.DwWhQuotationVendorReport">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_001_detail -->
+    <sql-query name="whreport.DwWhRep001Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_001_items -->
+    <sql-query name="whreport.DwWhRep001Items">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_001_position -->
+    <sql-query name="whreport.DwWhRep001Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_002_detail_ordendecompra -->
+    <sql-query name="whreport.DwWhRep002DetailOrdendecompra">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_002_detail_requisicion -->
+    <sql-query name="whreport.DwWhRep002DetailRequisicion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_002_detail_requisicion_ccosto -->
+    <sql-query name="whreport.DwWhRep002DetailRequisicionCcosto">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_002_detail_sot -->
+    <sql-query name="whreport.DwWhRep002DetailSot">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_002_position -->
+    <sql-query name="whreport.DwWhRep002Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_002_position_1 -->
+    <sql-query name="whreport.DwWhRep002Position1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_002_position_2 -->
+    <sql-query name="whreport.DwWhRep002Position2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_002_position_3 -->
+    <sql-query name="whreport.DwWhRep002Position3">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_003_inv_act_valor_det_linfam -->
+    <sql-query name="whreport.DwWhRep003InvActValorDetLinfam">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_003_inv_act_valor_kar_linfamd -->
+    <sql-query name="whreport.DwWhRep003InvActValorKarLinfamd">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_003_inv_act_valor_kard_linfamd -->
+    <sql-query name="whreport.DwWhRep003InvActValorKardLinfamd">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_003_inv_act_valor_linfamd -->
+    <sql-query name="whreport.DwWhRep003InvActValorLinfamd">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_003_inv_act_valorizado -->
+    <sql-query name="whreport.DwWhRep003InvActValorizado">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_003_inv_act_valorizado_linfam -->
+    <sql-query name="whreport.DwWhRep003InvActValorizadoLinfam">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_003_inv_act_valorizado_linfamd -->
+    <sql-query name="whreport.DwWhRep003InvActValorizadoLinfamd">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_003_inv_kar_valorizado_linfamd -->
+    <sql-query name="whreport.DwWhRep003InvKarValorizadoLinfamd">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_003_items -->
+    <sql-query name="whreport.DwWhRep003Items">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_003_kardex -->
+    <sql-query name="whreport.DwWhRep003Kardex">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_003_position -->
+    <sql-query name="whreport.DwWhRep003Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_003_position_stock -->
+    <sql-query name="whreport.DwWhRep003PositionStock">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_003_position_tab1 -->
+    <sql-query name="whreport.DwWhRep003PositionTab1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_003_saldoinicial -->
+    <sql-query name="whreport.DwWhRep003Saldoinicial">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_003_saldoinicial_agrup -->
+    <sql-query name="whreport.DwWhRep003SaldoinicialAgrup">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_004_cierremensual -->
+    <sql-query name="whreport.DwWhRep004Cierremensual">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_004_detail -->
+    <sql-query name="whreport.DwWhRep004Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_004_kardex -->
+    <sql-query name="whreport.DwWhRep004Kardex">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_004_list -->
+    <sql-query name="whreport.DwWhRep004List">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_004_list_ppm -->
+    <sql-query name="whreport.DwWhRep004ListPpm">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_004_position -->
+    <sql-query name="whreport.DwWhRep004Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_006_detail -->
+    <sql-query name="whreport.DwWhRep006Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_006_detail_item -->
+    <sql-query name="whreport.DwWhRep006DetailItem">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_006_position -->
+    <sql-query name="whreport.DwWhRep006Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_007_balancemensual -->
+    <sql-query name="whreport.DwWhRep007Balancemensual">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_007_detail_retrieve -->
+    <sql-query name="whreport.DwWhRep007DetailRetrieve">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_007_position -->
+    <sql-query name="whreport.DwWhRep007Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_007_resume -->
+    <sql-query name="whreport.DwWhRep007Resume">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_007_resume_detail -->
+    <sql-query name="whreport.DwWhRep007ResumeDetail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_008_detail_area_proveedor -->
+    <sql-query name="whreport.DwWhRep008DetailAreaProveedor">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_008_detail_area_proveedor_det -->
+    <sql-query name="whreport.DwWhRep008DetailAreaProveedorDet">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_008_detail_compania -->
+    <sql-query name="whreport.DwWhRep008DetailCompania">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_008_detail_distribution -->
+    <sql-query name="whreport.DwWhRep008DetailDistribution">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_008_detail_proveedor -->
+    <sql-query name="whreport.DwWhRep008DetailProveedor">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_008_detail_simple -->
+    <sql-query name="whreport.DwWhRep008DetailSimple">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_008_position -->
+    <sql-query name="whreport.DwWhRep008Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_009_po_lineafamilia -->
+    <sql-query name="whreport.DwWhRep009PoLineafamilia">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_009_po_pending_by_proveedor -->
+    <sql-query name="whreport.DwWhRep009PoPendingByProveedor">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_009_po_x_situacion -->
+    <sql-query name="whreport.DwWhRep009PoXSituacion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_009_position -->
+    <sql-query name="whreport.DwWhRep009Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_009_position_1 -->
+    <sql-query name="whreport.DwWhRep009Position1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_009_position_2 -->
+    <sql-query name="whreport.DwWhRep009Position2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_009_position_3 -->
+    <sql-query name="whreport.DwWhRep009Position3">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_009_position_filter -->
+    <sql-query name="whreport.DwWhRep009PositionFilter">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_010_detail_commodity -->
+    <sql-query name="whreport.DwWhRep010DetailCommodity">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_010_detail_item -->
+    <sql-query name="whreport.DwWhRep010DetailItem">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_010_local_commodity -->
+    <sql-query name="whreport.DwWhRep010LocalCommodity">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_010_local_item -->
+    <sql-query name="whreport.DwWhRep010LocalItem">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_010_position -->
+    <sql-query name="whreport.DwWhRep010Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_011_items_mayor_a_maximo -->
+    <sql-query name="whreport.DwWhRep011ItemsMayorAMaximo">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_011_items_pto_reposicion -->
+    <sql-query name="whreport.DwWhRep011ItemsPtoReposicion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_011_position -->
+    <sql-query name="whreport.DwWhRep011Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_012_detail -->
+    <sql-query name="whreport.DwWhRep012Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_012_detail_x_item -->
+    <sql-query name="whreport.DwWhRep012DetailXItem">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_012_position -->
+    <sql-query name="whreport.DwWhRep012Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_012_undneg_item -->
+    <sql-query name="whreport.DwWhRep012UndnegItem">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_012_undneg_linfam -->
+    <sql-query name="whreport.DwWhRep012UndnegLinfam">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_013_abc_compras -->
+    <sql-query name="whreport.DwWhRep013AbcCompras">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_013_detail_compras -->
+    <sql-query name="whreport.DwWhRep013DetailCompras">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_013_detail_compras_bk -->
+    <sql-query name="whreport.DwWhRep013DetailComprasBk">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_013_detail_stock -->
+    <sql-query name="whreport.DwWhRep013DetailStock">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_013_detail_stock_antes -->
+    <sql-query name="whreport.DwWhRep013DetailStockAntes">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_013_position -->
+    <sql-query name="whreport.DwWhRep013Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_014_centrocosto_sustento_gasto -->
+    <sql-query name="whreport.DwWhRep014CentrocostoSustentoGasto">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_014_item_sustento_gasto -->
+    <sql-query name="whreport.DwWhRep014ItemSustentoGasto">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_014_list -->
+    <sql-query name="whreport.DwWhRep014List">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_014_position -->
+    <sql-query name="whreport.DwWhRep014Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_014_position_cc_cuenta -->
+    <sql-query name="whreport.DwWhRep014PositionCcCuenta">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_014_position_criteria -->
+    <sql-query name="whreport.DwWhRep014PositionCriteria">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_014_position_diario -->
+    <sql-query name="whreport.DwWhRep014PositionDiario">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_014_summ_account_cc -->
+    <sql-query name="whreport.DwWhRep014SummAccountCc">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_014_summ_cc_account -->
+    <sql-query name="whreport.DwWhRep014SummCcAccount">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_014_voucherconsumo -->
+    <sql-query name="whreport.DwWhRep014Voucherconsumo">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_014_voucherconsumo_diario -->
+    <sql-query name="whreport.DwWhRep014VoucherconsumoDiario">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_015_almacen_info -->
+    <sql-query name="whreport.DwWhRep015AlmacenInfo">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_015_almacen_info_linfam -->
+    <sql-query name="whreport.DwWhRep015AlmacenInfoLinfam">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_015_position -->
+    <sql-query name="whreport.DwWhRep015Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_015_position_2 -->
+    <sql-query name="whreport.DwWhRep015Position2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_cierremensual -->
+    <sql-query name="whreport.DwWhRep016Cierremensual">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_detail -->
+    <sql-query name="whreport.DwWhRep016Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_form1 -->
+    <sql-query name="whreport.DwWhRep016Form1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_form2 -->
+    <sql-query name="whreport.DwWhRep016Form2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_form3_position -->
+    <sql-query name="whreport.DwWhRep016Form3Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_form3_summary -->
+    <sql-query name="whreport.DwWhRep016Form3Summary">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_form3a -->
+    <sql-query name="whreport.DwWhRep016Form3a">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_form3b -->
+    <sql-query name="whreport.DwWhRep016Form3b">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_form4 -->
+    <sql-query name="whreport.DwWhRep016Form4">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_form5 -->
+    <sql-query name="whreport.DwWhRep016Form5">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_ingreso_salida -->
+    <sql-query name="whreport.DwWhRep016IngresoSalida">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_kardex -->
+    <sql-query name="whreport.DwWhRep016Kardex">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_list -->
+    <sql-query name="whreport.DwWhRep016List">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_operacion -->
+    <sql-query name="whreport.DwWhRep016Operacion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_operacion_position -->
+    <sql-query name="whreport.DwWhRep016OperacionPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_operacion_resumen -->
+    <sql-query name="whreport.DwWhRep016OperacionResumen">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_position_new -->
+    <sql-query name="whreport.DwWhRep016PositionNew">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_precios -->
+    <sql-query name="whreport.DwWhRep016Precios">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_016_saldoinicial -->
+    <sql-query name="whreport.DwWhRep016Saldoinicial">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_017_balancemensual_list -->
+    <sql-query name="whreport.DwWhRep017BalancemensualList">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_017_balancemensual_position -->
+    <sql-query name="whreport.DwWhRep017BalancemensualPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_018_detail -->
+    <sql-query name="whreport.DwWhRep018Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_018_position -->
+    <sql-query name="whreport.DwWhRep018Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_019_detail -->
+    <sql-query name="whreport.DwWhRep019Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_019_position -->
+    <sql-query name="whreport.DwWhRep019Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_020_informecorrel -->
+    <sql-query name="whreport.DwWhRep020Informecorrel">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_020_informecorrel_position -->
+    <sql-query name="whreport.DwWhRep020InformecorrelPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_021_list_guiaremision -->
+    <sql-query name="whreport.DwWhRep021ListGuiaremision">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_021_position -->
+    <sql-query name="whreport.DwWhRep021Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_022_position -->
+    <sql-query name="whreport.DwWhRep022Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_022_position_1 -->
+    <sql-query name="whreport.DwWhRep022Position1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_022_salidainventario_commodity -->
+    <sql-query name="whreport.DwWhRep022SalidainventarioCommodity">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_022_salidainventario_position -->
+    <sql-query name="whreport.DwWhRep022SalidainventarioPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_022_salidainventario_stock -->
+    <sql-query name="whreport.DwWhRep022SalidainventarioStock">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_023_ingreso_salida_position -->
+    <sql-query name="whreport.DwWhRep023IngresoSalidaPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_023_ingreso_salidas -->
+    <sql-query name="whreport.DwWhRep023IngresoSalidas">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_023_ingreso_salidas_serie -->
+    <sql-query name="whreport.DwWhRep023IngresoSalidasSerie">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_024_ordenservicio_cc -->
+    <sql-query name="whreport.DwWhRep024OrdenservicioCc">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_024_ordenservicio_position -->
+    <sql-query name="whreport.DwWhRep024OrdenservicioPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_024_ordenservicio_proveedor -->
+    <sql-query name="whreport.DwWhRep024OrdenservicioProveedor">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_024_ordenservicio_union -->
+    <sql-query name="whreport.DwWhRep024OrdenservicioUnion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_024_por_commodity -->
+    <sql-query name="whreport.DwWhRep024PorCommodity">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_024_por_numero -->
+    <sql-query name="whreport.DwWhRep024PorNumero">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_024_position_auxiliar -->
+    <sql-query name="whreport.DwWhRep024PositionAuxiliar">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_activos -->
+    <sql-query name="whreport.DwWhRep025Activos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_cobertura -->
+    <sql-query name="whreport.DwWhRep025Cobertura">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_commodities -->
+    <sql-query name="whreport.DwWhRep025Commodities">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_compras -->
+    <sql-query name="whreport.DwWhRep025Compras">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_consumo_detallado -->
+    <sql-query name="whreport.DwWhRep025ConsumoDetallado">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_consumos -->
+    <sql-query name="whreport.DwWhRep025Consumos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_etiqueta -->
+    <sql-query name="whreport.DwWhRep025Etiqueta">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_inv_act_valorizado -->
+    <sql-query name="whreport.DwWhRep025InvActValorizado">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_kardex -->
+    <sql-query name="whreport.DwWhRep025Kardex">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_kardex_detail -->
+    <sql-query name="whreport.DwWhRep025KardexDetail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_movimientos -->
+    <sql-query name="whreport.DwWhRep025Movimientos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_parte_diario -->
+    <sql-query name="whreport.DwWhRep025ParteDiario">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_position -->
+    <sql-query name="whreport.DwWhRep025Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_position1 -->
+    <sql-query name="whreport.DwWhRep025Position1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_position2 -->
+    <sql-query name="whreport.DwWhRep025Position2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_position3 -->
+    <sql-query name="whreport.DwWhRep025Position3">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_position42 -->
+    <sql-query name="whreport.DwWhRep025Position42">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_position5 -->
+    <sql-query name="whreport.DwWhRep025Position5">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_position7 -->
+    <sql-query name="whreport.DwWhRep025Position7">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_position8 -->
+    <sql-query name="whreport.DwWhRep025Position8">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_salidainventario_commodity -->
+    <sql-query name="whreport.DwWhRep025SalidainventarioCommodity">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_sin_movimientos -->
+    <sql-query name="whreport.DwWhRep025SinMovimientos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_transacciones_periodo -->
+    <sql-query name="whreport.DwWhRep025TransaccionesPeriodo">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_transfer_clasif_detail -->
+    <sql-query name="whreport.DwWhRep025TransferClasifDetail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_transfer_clasification -->
+    <sql-query name="whreport.DwWhRep025TransferClasification">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_transfer_commodity_operaci -->
+    <sql-query name="whreport.DwWhRep025TransferCommodityOperaci">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_transfer_notransferidos -->
+    <sql-query name="whreport.DwWhRep025TransferNotransferidos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_transferencia -->
+    <sql-query name="whreport.DwWhRep025Transferencia">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_transferencia_activos_pos6 -->
+    <sql-query name="whreport.DwWhRep025TransferenciaActivosPos6">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_025_transferencia_cod_barras -->
+    <sql-query name="whreport.DwWhRep025TransferenciaCodBarras">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_026_detail -->
+    <sql-query name="whreport.DwWhRep026Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_026_detail_b -->
+    <sql-query name="whreport.DwWhRep026DetailB">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_026_detail_c -->
+    <sql-query name="whreport.DwWhRep026DetailC">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_026_detail_d -->
+    <sql-query name="whreport.DwWhRep026DetailD">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_026_position -->
+    <sql-query name="whreport.DwWhRep026Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_027_auxiliar -->
+    <sql-query name="whreport.DwWhRep027Auxiliar">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_027_detail -->
+    <sql-query name="whreport.DwWhRep027Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_027_position -->
+    <sql-query name="whreport.DwWhRep027Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_028_cierre1 -->
+    <sql-query name="whreport.DwWhRep028Cierre1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_028_cierre2 -->
+    <sql-query name="whreport.DwWhRep028Cierre2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_028_cierre3 -->
+    <sql-query name="whreport.DwWhRep028Cierre3">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_028_cierremensual_data -->
+    <sql-query name="whreport.DwWhRep028CierremensualData">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_028_kardex_montos -->
+    <sql-query name="whreport.DwWhRep028KardexMontos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_028_kardex_report -->
+    <sql-query name="whreport.DwWhRep028KardexReport">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_028_position -->
+    <sql-query name="whreport.DwWhRep028Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_028_postion_3 -->
+    <sql-query name="whreport.DwWhRep028Postion3">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_028_postion_5 -->
+    <sql-query name="whreport.DwWhRep028Postion5">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_028_transaccion_voucher -->
+    <sql-query name="whreport.DwWhRep028TransaccionVoucher">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_029_detail_requisition_list -->
+    <sql-query name="whreport.DwWhRep029DetailRequisitionList">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_029_position -->
+    <sql-query name="whreport.DwWhRep029Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_030_partidaitem -->
+    <sql-query name="whreport.DwWhRep030Partidaitem">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_030_position -->
+    <sql-query name="whreport.DwWhRep030Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_031_for -->
+    <sql-query name="whreport.DwWhRep031For">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_031_for_detail -->
+    <sql-query name="whreport.DwWhRep031ForDetail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_031_for_valorizada -->
+    <sql-query name="whreport.DwWhRep031ForValorizada">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_031_position -->
+    <sql-query name="whreport.DwWhRep031Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_031_position2 -->
+    <sql-query name="whreport.DwWhRep031Position2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_031_report -->
+    <sql-query name="whreport.DwWhRep031Report">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_032_position -->
+    <sql-query name="whreport.DwWhRep032Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_032_stockxalmacen -->
+    <sql-query name="whreport.DwWhRep032Stockxalmacen">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_backorder -->
+    <sql-query name="whreport.DwWhRep033Backorder">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_backorder_cantidad -->
+    <sql-query name="whreport.DwWhRep033BackorderCantidad">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_compras_mensuales -->
+    <sql-query name="whreport.DwWhRep033ComprasMensuales">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_control_bl -->
+    <sql-query name="whreport.DwWhRep033ControlBl">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_control_orden -->
+    <sql-query name="whreport.DwWhRep033ControlOrden">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_import_cargotxlinea -->
+    <sql-query name="whreport.DwWhRep033ImportCargotxlinea">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_import_cuenta -->
+    <sql-query name="whreport.DwWhRep033ImportCuenta">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_import_no_valorizado -->
+    <sql-query name="whreport.DwWhRep033ImportNoValorizado">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_import_valorizado -->
+    <sql-query name="whreport.DwWhRep033ImportValorizado">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_kardex -->
+    <sql-query name="whreport.DwWhRep033Kardex">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_kardex_resumen -->
+    <sql-query name="whreport.DwWhRep033KardexResumen">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_mercaderia -->
+    <sql-query name="whreport.DwWhRep033Mercaderia">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_mercaderia_transaccion -->
+    <sql-query name="whreport.DwWhRep033MercaderiaTransaccion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_position -->
+    <sql-query name="whreport.DwWhRep033Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_position1 -->
+    <sql-query name="whreport.DwWhRep033Position1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_position2 -->
+    <sql-query name="whreport.DwWhRep033Position2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_position3 -->
+    <sql-query name="whreport.DwWhRep033Position3">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_position5 -->
+    <sql-query name="whreport.DwWhRep033Position5">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_position6 -->
+    <sql-query name="whreport.DwWhRep033Position6">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_transacciones -->
+    <sql-query name="whreport.DwWhRep033Transacciones">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_033_ventas_mensuales -->
+    <sql-query name="whreport.DwWhRep033VentasMensuales">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_034_consumo_familias -->
+    <sql-query name="whreport.DwWhRep034ConsumoFamilias">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_034_filtro -->
+    <sql-query name="whreport.DwWhRep034Filtro">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_034_item -->
+    <sql-query name="whreport.DwWhRep034Item">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_034_packing_list -->
+    <sql-query name="whreport.DwWhRep034PackingList">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_034_position -->
+    <sql-query name="whreport.DwWhRep034Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_034_position_periodo -->
+    <sql-query name="whreport.DwWhRep034PositionPeriodo">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_034_position_promedio -->
+    <sql-query name="whreport.DwWhRep034PositionPromedio">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_034_promedio -->
+    <sql-query name="whreport.DwWhRep034Promedio">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_034_promedio_detalle -->
+    <sql-query name="whreport.DwWhRep034PromedioDetalle">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_034_prueba -->
+    <sql-query name="whreport.DwWhRep034Prueba">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_034_requisicion -->
+    <sql-query name="whreport.DwWhRep034Requisicion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_035_mora_position -->
+    <sql-query name="whreport.DwWhRep035MoraPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_035_mora_report -->
+    <sql-query name="whreport.DwWhRep035MoraReport">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_036_analizar_reqdeta -->
+    <sql-query name="whreport.DwWhRep036AnalizarReqdeta">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_036_detail -->
+    <sql-query name="whreport.DwWhRep036Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_036_ordencompradetalle -->
+    <sql-query name="whreport.DwWhRep036Ordencompradetalle">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_036_position -->
+    <sql-query name="whreport.DwWhRep036Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_036_position_b -->
+    <sql-query name="whreport.DwWhRep036PositionB">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_036_prod0 -->
+    <sql-query name="whreport.DwWhRep036Prod0">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_036_prodprogramada -->
+    <sql-query name="whreport.DwWhRep036Prodprogramada">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_036_read_ordencompradetail -->
+    <sql-query name="whreport.DwWhRep036ReadOrdencompradetail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_036_read_ordencomprafecha -->
+    <sql-query name="whreport.DwWhRep036ReadOrdencomprafecha">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_036_read_serv_terceros -->
+    <sql-query name="whreport.DwWhRep036ReadServTerceros">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_036_ultimo_reporte -->
+    <sql-query name="whreport.DwWhRep036UltimoReporte">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_036_x_ep_listamaestra -->
+    <sql-query name="whreport.DwWhRep036XEpListamaestra">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_036_x_ord_det -->
+    <sql-query name="whreport.DwWhRep036XOrdDet">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_036_x_req_prod -->
+    <sql-query name="whreport.DwWhRep036XReqProd">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_037_list -->
+    <sql-query name="whreport.DwWhRep037List">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_037_position -->
+    <sql-query name="whreport.DwWhRep037Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_038_list -->
+    <sql-query name="whreport.DwWhRep038List">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_038_position -->
+    <sql-query name="whreport.DwWhRep038Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_039 -->
+    <sql-query name="whreport.DwWhRep039">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_039_modelo2 -->
+    <sql-query name="whreport.DwWhRep039Modelo2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_039_position -->
+    <sql-query name="whreport.DwWhRep039Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_039_position2 -->
+    <sql-query name="whreport.DwWhRep039Position2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_040_ingresos -->
+    <sql-query name="whreport.DwWhRep040Ingresos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_040_ordenes -->
+    <sql-query name="whreport.DwWhRep040Ordenes">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_040_position -->
+    <sql-query name="whreport.DwWhRep040Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_040_position_auxiliar -->
+    <sql-query name="whreport.DwWhRep040PositionAuxiliar">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_040_position_auxiliar1 -->
+    <sql-query name="whreport.DwWhRep040PositionAuxiliar1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_040_position_auxiliar5 -->
+    <sql-query name="whreport.DwWhRep040PositionAuxiliar5">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_040_salidas -->
+    <sql-query name="whreport.DwWhRep040Salidas">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_040_tr_crosstab -->
+    <sql-query name="whreport.DwWhRep040TrCrosstab">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_040_transferencias -->
+    <sql-query name="whreport.DwWhRep040Transferencias">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_041_completadas -->
+    <sql-query name="whreport.DwWhRep041Completadas">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_041_detail -->
+    <sql-query name="whreport.DwWhRep041Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_041_detail_consumo -->
+    <sql-query name="whreport.DwWhRep041DetailConsumo">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_041_position -->
+    <sql-query name="whreport.DwWhRep041Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_043_cierremensual_almacen -->
+    <sql-query name="whreport.DwWhRep043CierremensualAlmacen">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_043_cierremensual_almacen_loc -->
+    <sql-query name="whreport.DwWhRep043CierremensualAlmacenLoc">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_043_cierremensual_clasificador -->
+    <sql-query name="whreport.DwWhRep043CierremensualClasificador">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_043_cierremensual_consolidado -->
+    <sql-query name="whreport.DwWhRep043CierremensualConsolidado">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_043_cierremensual_linea -->
+    <sql-query name="whreport.DwWhRep043CierremensualLinea">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_043_cierremensual_lineafamilia -->
+    <sql-query name="whreport.DwWhRep043CierremensualLineafamilia">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_043_position -->
+    <sql-query name="whreport.DwWhRep043Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_043_position2 -->
+    <sql-query name="whreport.DwWhRep043Position2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_044_cuenta -->
+    <sql-query name="whreport.DwWhRep044Cuenta">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_044_position -->
+    <sql-query name="whreport.DwWhRep044Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_044_report -->
+    <sql-query name="whreport.DwWhRep044Report">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_044_report_almacen -->
+    <sql-query name="whreport.DwWhRep044ReportAlmacen">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_044_report_serie -->
+    <sql-query name="whreport.DwWhRep044ReportSerie">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_044_resumen -->
+    <sql-query name="whreport.DwWhRep044Resumen">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_044_resumen_position -->
+    <sql-query name="whreport.DwWhRep044ResumenPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_045_cierre_mensual -->
+    <sql-query name="whreport.DwWhRep045CierreMensual">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_045_cierre_mensual_sustento -->
+    <sql-query name="whreport.DwWhRep045CierreMensualSustento">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_045_cierre_preciopromedio -->
+    <sql-query name="whreport.DwWhRep045CierrePreciopromedio">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_045_position -->
+    <sql-query name="whreport.DwWhRep045Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_045_report_precio -->
+    <sql-query name="whreport.DwWhRep045ReportPrecio">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_046_detail_stock -->
+    <sql-query name="whreport.DwWhRep046DetailStock">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_046_position -->
+    <sql-query name="whreport.DwWhRep046Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_046_position_2 -->
+    <sql-query name="whreport.DwWhRep046Position2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_046_select -->
+    <sql-query name="whreport.DwWhRep046Select">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_048_detail -->
+    <sql-query name="whreport.DwWhRep048Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_048_position -->
+    <sql-query name="whreport.DwWhRep048Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_048_position2 -->
+    <sql-query name="whreport.DwWhRep048Position2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_048_racionarticulo -->
+    <sql-query name="whreport.DwWhRep048Racionarticulo">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_049_detail_stock -->
+    <sql-query name="whreport.DwWhRep049DetailStock">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_049_position -->
+    <sql-query name="whreport.DwWhRep049Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_050_detail -->
+    <sql-query name="whreport.DwWhRep050Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_050_position -->
+    <sql-query name="whreport.DwWhRep050Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_differences -->
+    <sql-query name="whreport.DwWhRep051Differences">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_differences_valor -->
+    <sql-query name="whreport.DwWhRep051DifferencesValor">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_hojaconteo -->
+    <sql-query name="whreport.DwWhRep051Hojaconteo">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_inv_formato_b -->
+    <sql-query name="whreport.DwWhRep051InvFormatoB">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_inventario_fisico -->
+    <sql-query name="whreport.DwWhRep051InventarioFisico">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_inventario_fisico_2 -->
+    <sql-query name="whreport.DwWhRep051InventarioFisico2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_inventario_realizado -->
+    <sql-query name="whreport.DwWhRep051InventarioRealizado">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_inventario_realizado_2 -->
+    <sql-query name="whreport.DwWhRep051InventarioRealizado2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_inventario_realizado_valor -->
+    <sql-query name="whreport.DwWhRep051InventarioRealizadoValor">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_inventario_valor_b -->
+    <sql-query name="whreport.DwWhRep051InventarioValorB">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_itemretrieve -->
+    <sql-query name="whreport.DwWhRep051Itemretrieve">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_items_by_whse -->
+    <sql-query name="whreport.DwWhRep051ItemsByWhse">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_kardex -->
+    <sql-query name="whreport.DwWhRep051Kardex">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_labels -->
+    <sql-query name="whreport.DwWhRep051Labels">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_por_ubicacion_1 -->
+    <sql-query name="whreport.DwWhRep051PorUbicacion1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_position -->
+    <sql-query name="whreport.DwWhRep051Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_position_cantidad -->
+    <sql-query name="whreport.DwWhRep051PositionCantidad">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_position_ubicacion -->
+    <sql-query name="whreport.DwWhRep051PositionUbicacion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_051_tarjeta_conteo -->
+    <sql-query name="whreport.DwWhRep051TarjetaConteo">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_052_detail -->
+    <sql-query name="whreport.DwWhRep052Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_052_material_excedentario -->
+    <sql-query name="whreport.DwWhRep052MaterialExcedentario">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_052_material_sin_movimiento -->
+    <sql-query name="whreport.DwWhRep052MaterialSinMovimiento">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_052_material_x_estado -->
+    <sql-query name="whreport.DwWhRep052MaterialXEstado">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_052_position -->
+    <sql-query name="whreport.DwWhRep052Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_053_detail -->
+    <sql-query name="whreport.DwWhRep053Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_053_position -->
+    <sql-query name="whreport.DwWhRep053Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_055_itemretrieve -->
+    <sql-query name="whreport.DwWhRep055Itemretrieve">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_055_position -->
+    <sql-query name="whreport.DwWhRep055Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_056_niveles -->
+    <sql-query name="whreport.DwWhRep056Niveles">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_056_position1 -->
+    <sql-query name="whreport.DwWhRep056Position1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_057_mst_lin_fam_sub -->
+    <sql-query name="whreport.DwWhRep057MstLinFamSub">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_057_position -->
+    <sql-query name="whreport.DwWhRep057Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_057_proveedor_item -->
+    <sql-query name="whreport.DwWhRep057ProveedorItem">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_058_detail -->
+    <sql-query name="whreport.DwWhRep058Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_058_position -->
+    <sql-query name="whreport.DwWhRep058Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_058_summary -->
+    <sql-query name="whreport.DwWhRep058Summary">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_059_etiqueta_tesoro -->
+    <sql-query name="whreport.DwWhRep059EtiquetaTesoro">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_059_position -->
+    <sql-query name="whreport.DwWhRep059Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_061_detail -->
+    <sql-query name="whreport.DwWhRep061Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_061_position -->
+    <sql-query name="whreport.DwWhRep061Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_062_position -->
+    <sql-query name="whreport.DwWhRep062Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_062_sustento_valores -->
+    <sql-query name="whreport.DwWhRep062SustentoValores">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_062_transferencias -->
+    <sql-query name="whreport.DwWhRep062Transferencias">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_062_transferencias_item -->
+    <sql-query name="whreport.DwWhRep062TransferenciasItem">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_062_transferencias_periodos -->
+    <sql-query name="whreport.DwWhRep062TransferenciasPeriodos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_063_kardex_tesoro -->
+    <sql-query name="whreport.DwWhRep063KardexTesoro">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_063_kardex_tesoro_rp -->
+    <sql-query name="whreport.DwWhRep063KardexTesoroRp">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_063_position_tesoro -->
+    <sql-query name="whreport.DwWhRep063PositionTesoro">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_063_position_tesoro_rp -->
+    <sql-query name="whreport.DwWhRep063PositionTesoroRp">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_064_compras -->
+    <sql-query name="whreport.DwWhRep064Compras">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_064_consumos -->
+    <sql-query name="whreport.DwWhRep064Consumos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_064_minimo -->
+    <sql-query name="whreport.DwWhRep064Minimo">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_064_position -->
+    <sql-query name="whreport.DwWhRep064Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_064_produccion -->
+    <sql-query name="whreport.DwWhRep064Produccion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_065_ain_sinretorno -->
+    <sql-query name="whreport.DwWhRep065AinSinretorno">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_065_ajp -->
+    <sql-query name="whreport.DwWhRep065Ajp">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_065_diferenciaprecio -->
+    <sql-query name="whreport.DwWhRep065Diferenciaprecio">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_065_familia_retrieve -->
+    <sql-query name="whreport.DwWhRep065FamiliaRetrieve">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_065_familiadet_inicial -->
+    <sql-query name="whreport.DwWhRep065FamiliadetInicial">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_065_familiadet_retrieve -->
+    <sql-query name="whreport.DwWhRep065FamiliadetRetrieve">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_065_familiadet_retrieve_salida -->
+    <sql-query name="whreport.DwWhRep065FamiliadetRetrieveSalida">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_065_lineafamilia -->
+    <sql-query name="whreport.DwWhRep065Lineafamilia">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_065_lineafamilia_det -->
+    <sql-query name="whreport.DwWhRep065LineafamiliaDet">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_065_lineafamilia_x_cta -->
+    <sql-query name="whreport.DwWhRep065LineafamiliaXCta">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_065_sustento_oc -->
+    <sql-query name="whreport.DwWhRep065SustentoOc">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_065_sustento_oc_x_cta -->
+    <sql-query name="whreport.DwWhRep065SustentoOcXCta">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_065_trn_negativa -->
+    <sql-query name="whreport.DwWhRep065TrnNegativa">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_065_trn_positiva -->
+    <sql-query name="whreport.DwWhRep065TrnPositiva">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_065_update -->
+    <sql-query name="whreport.DwWhRep065Update">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_066_detail -->
+    <sql-query name="whreport.DwWhRep066Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_066_position -->
+    <sql-query name="whreport.DwWhRep066Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_070_lap_poxproveedor -->
+    <sql-query name="whreport.DwWhRep070LapPoxproveedor">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_070_position -->
+    <sql-query name="whreport.DwWhRep070Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_071_compras_x_prov -->
+    <sql-query name="whreport.DwWhRep071ComprasXProv">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_071_compras_x_prov_output -->
+    <sql-query name="whreport.DwWhRep071ComprasXProvOutput">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_071_compras_x_prov_tmp -->
+    <sql-query name="whreport.DwWhRep071ComprasXProvTmp">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_071_detail -->
+    <sql-query name="whreport.DwWhRep071Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_071_graph -->
+    <sql-query name="whreport.DwWhRep071Graph">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_071_position -->
+    <sql-query name="whreport.DwWhRep071Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_071_update -->
+    <sql-query name="whreport.DwWhRep071Update">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_072_compras_x_prov -->
+    <sql-query name="whreport.DwWhRep072ComprasXProv">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_072_compras_x_prov_detail -->
+    <sql-query name="whreport.DwWhRep072ComprasXProvDetail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_072_compras_x_prov_lap -->
+    <sql-query name="whreport.DwWhRep072ComprasXProvLap">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_072_lap_material_x_item -->
+    <sql-query name="whreport.DwWhRep072LapMaterialXItem">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_072_mat_x_prov -->
+    <sql-query name="whreport.DwWhRep072MatXProv">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_072_position -->
+    <sql-query name="whreport.DwWhRep072Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_073_detail_stock -->
+    <sql-query name="whreport.DwWhRep073DetailStock">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_073_familias_actual -->
+    <sql-query name="whreport.DwWhRep073FamiliasActual">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_073_familias_anterior -->
+    <sql-query name="whreport.DwWhRep073FamiliasAnterior">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_073_position -->
+    <sql-query name="whreport.DwWhRep073Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_073_position_2 -->
+    <sql-query name="whreport.DwWhRep073Position2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_074_detail -->
+    <sql-query name="whreport.DwWhRep074Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_074_list -->
+    <sql-query name="whreport.DwWhRep074List">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_074_position -->
+    <sql-query name="whreport.DwWhRep074Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_075_list -->
+    <sql-query name="whreport.DwWhRep075List">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_075_position -->
+    <sql-query name="whreport.DwWhRep075Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_076_position -->
+    <sql-query name="whreport.DwWhRep076Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_077_position -->
+    <sql-query name="whreport.DwWhRep077Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_078_list -->
+    <sql-query name="whreport.DwWhRep078List">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_078_position -->
+    <sql-query name="whreport.DwWhRep078Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_079_detail -->
+    <sql-query name="whreport.DwWhRep079Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_079_position -->
+    <sql-query name="whreport.DwWhRep079Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_080_item -->
+    <sql-query name="whreport.DwWhRep080Item">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_080_itemalmacen -->
+    <sql-query name="whreport.DwWhRep080Itemalmacen">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_080_position -->
+    <sql-query name="whreport.DwWhRep080Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_080_proveedor -->
+    <sql-query name="whreport.DwWhRep080Proveedor">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_081_consumo -->
+    <sql-query name="whreport.DwWhRep081Consumo">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_081_consumo_detail -->
+    <sql-query name="whreport.DwWhRep081ConsumoDetail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_081_detail -->
+    <sql-query name="whreport.DwWhRep081Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_081_position -->
+    <sql-query name="whreport.DwWhRep081Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_081_position_a -->
+    <sql-query name="whreport.DwWhRep081PositionA">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_081_position_b -->
+    <sql-query name="whreport.DwWhRep081PositionB">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_082_list -->
+    <sql-query name="whreport.DwWhRep082List">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_082_list_bk -->
+    <sql-query name="whreport.DwWhRep082ListBk">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_082_position -->
+    <sql-query name="whreport.DwWhRep082Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_abono_cargo -->
+    <sql-query name="whreport.DwWhRep083AbonoCargo">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_abono_cargo_imp -->
+    <sql-query name="whreport.DwWhRep083AbonoCargoImp">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_abono_cargo_oc -->
+    <sql-query name="whreport.DwWhRep083AbonoCargoOc">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_abono_cargo_vou -->
+    <sql-query name="whreport.DwWhRep083AbonoCargoVou">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_abono_cargo_vou_detail -->
+    <sql-query name="whreport.DwWhRep083AbonoCargoVouDetail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_abono_cargo_vou_foreig -->
+    <sql-query name="whreport.DwWhRep083AbonoCargoVouForeig">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_costo_oc -->
+    <sql-query name="whreport.DwWhRep083CostoOc">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_costo_position -->
+    <sql-query name="whreport.DwWhRep083CostoPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_cuenta -->
+    <sql-query name="whreport.DwWhRep083Cuenta">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_formato_2 -->
+    <sql-query name="whreport.DwWhRep083Formato2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_formato_3 -->
+    <sql-query name="whreport.DwWhRep083Formato3">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_modelo -->
+    <sql-query name="whreport.DwWhRep083Modelo">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_modelo_detalle -->
+    <sql-query name="whreport.DwWhRep083ModeloDetalle">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_modelo_position -->
+    <sql-query name="whreport.DwWhRep083ModeloPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_modelo_resumen -->
+    <sql-query name="whreport.DwWhRep083ModeloResumen">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_voucher -->
+    <sql-query name="whreport.DwWhRep083Voucher">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_083_voucher_detail -->
+    <sql-query name="whreport.DwWhRep083VoucherDetail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_084_cantidad -->
+    <sql-query name="whreport.DwWhRep084Cantidad">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_084_monto -->
+    <sql-query name="whreport.DwWhRep084Monto">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_084_position -->
+    <sql-query name="whreport.DwWhRep084Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_084_resumen -->
+    <sql-query name="whreport.DwWhRep084Resumen">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_084_transaccion -->
+    <sql-query name="whreport.DwWhRep084Transaccion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_084_transaccion_detalle -->
+    <sql-query name="whreport.DwWhRep084TransaccionDetalle">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_085_position -->
+    <sql-query name="whreport.DwWhRep085Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_085_repor -->
+    <sql-query name="whreport.DwWhRep085Repor">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_085_transaccion -->
+    <sql-query name="whreport.DwWhRep085Transaccion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_085_transaccion_commodity -->
+    <sql-query name="whreport.DwWhRep085TransaccionCommodity">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_086_bill_of_lading -->
+    <sql-query name="whreport.DwWhRep086BillOfLading">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_086_position -->
+    <sql-query name="whreport.DwWhRep086Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_089_detail -->
+    <sql-query name="whreport.DwWhRep089Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_089_inflacion -->
+    <sql-query name="whreport.DwWhRep089Inflacion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_089_inflacion_detail -->
+    <sql-query name="whreport.DwWhRep089InflacionDetail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_089_position -->
+    <sql-query name="whreport.DwWhRep089Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_089_report -->
+    <sql-query name="whreport.DwWhRep089Report">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_090_position -->
+    <sql-query name="whreport.DwWhRep090Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_090_registro_adj -->
+    <sql-query name="whreport.DwWhRep090RegistroAdj">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_090_registro_adj2 -->
+    <sql-query name="whreport.DwWhRep090RegistroAdj2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_090_report -->
+    <sql-query name="whreport.DwWhRep090Report">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_0901_position -->
+    <sql-query name="whreport.DwWhRep0901Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_0901_postores_adj -->
+    <sql-query name="whreport.DwWhRep0901PostoresAdj">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_091_consultas_carta_fianza -->
+    <sql-query name="whreport.DwWhRep091ConsultasCartaFianza">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_091_position -->
+    <sql-query name="whreport.DwWhRep091Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_091_report -->
+    <sql-query name="whreport.DwWhRep091Report">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_091_transaccions -->
+    <sql-query name="whreport.DwWhRep091Transaccions">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_092_consultas_proceso -->
+    <sql-query name="whreport.DwWhRep092ConsultasProceso">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_092_consultas_proceso_position -->
+    <sql-query name="whreport.DwWhRep092ConsultasProcesoPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_093_comparativopostor_position -->
+    <sql-query name="whreport.DwWhRep093ComparativopostorPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_093_cuadro_comparativo1 -->
+    <sql-query name="whreport.DwWhRep093CuadroComparativo1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_093_cuadro_comparativo2 -->
+    <sql-query name="whreport.DwWhRep093CuadroComparativo2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_094_relacion_de_adquirientes -->
+    <sql-query name="whreport.DwWhRep094RelacionDeAdquirientes">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_094_relacion_de_postores -->
+    <sql-query name="whreport.DwWhRep094RelacionDePostores">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_094_relacion_de_postores2 -->
+    <sql-query name="whreport.DwWhRep094RelacionDePostores2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_094_relacion_postores_position -->
+    <sql-query name="whreport.DwWhRep094RelacionPostoresPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_095_contratos -->
+    <sql-query name="whreport.DwWhRep095Contratos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_095_position -->
+    <sql-query name="whreport.DwWhRep095Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_096_activos -->
+    <sql-query name="whreport.DwWhRep096Activos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_096_enapu_requisicion -->
+    <sql-query name="whreport.DwWhRep096EnapuRequisicion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_096_enapu_varios_position -->
+    <sql-query name="whreport.DwWhRep096EnapuVariosPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_096_enapu_varios_position1 -->
+    <sql-query name="whreport.DwWhRep096EnapuVariosPosition1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_096_procesos_atendidos -->
+    <sql-query name="whreport.DwWhRep096ProcesosAtendidos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_096_procesos_atendidos_id -->
+    <sql-query name="whreport.DwWhRep096ProcesosAtendidosId">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_096_servicios -->
+    <sql-query name="whreport.DwWhRep096Servicios">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_097_comparativo -->
+    <sql-query name="whreport.DwWhRep097Comparativo">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_097_detail -->
+    <sql-query name="whreport.DwWhRep097Detail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_097_evaluacion_propuestas -->
+    <sql-query name="whreport.DwWhRep097EvaluacionPropuestas">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_097_kardex_summary -->
+    <sql-query name="whreport.DwWhRep097KardexSummary">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_097_position -->
+    <sql-query name="whreport.DwWhRep097Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_097_position_detail -->
+    <sql-query name="whreport.DwWhRep097PositionDetail">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_097_position2 -->
+    <sql-query name="whreport.DwWhRep097Position2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_097_transac_detalle_comparativ -->
+    <sql-query name="whreport.DwWhRep097TransacDetalleComparativ">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_097_transaccion_detalle -->
+    <sql-query name="whreport.DwWhRep097TransaccionDetalle">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_098_consucode_1 -->
+    <sql-query name="whreport.DwWhRep098Consucode1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_098_procesoseleccion -->
+    <sql-query name="whreport.DwWhRep098Procesoseleccion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_098_procesoseleccion_2 -->
+    <sql-query name="whreport.DwWhRep098Procesoseleccion2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_098_procesoseleccion_3 -->
+    <sql-query name="whreport.DwWhRep098Procesoseleccion3">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_098_procesoseleccion_4 -->
+    <sql-query name="whreport.DwWhRep098Procesoseleccion4">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_098_procesoseleccion_contrato -->
+    <sql-query name="whreport.DwWhRep098ProcesoseleccionContrato">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_098_procesoseleccion_position -->
+    <sql-query name="whreport.DwWhRep098ProcesoseleccionPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_contratos_ejecucion -->
+    <sql-query name="whreport.DwWhRep099ContratosEjecucion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_contratos_ejecucion_vencimiento -->
+    <sql-query name="whreport.DwWhRep099ContratosEjecucionVencimiento">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_contratos_list -->
+    <sql-query name="whreport.DwWhRep099ContratosList">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_contratos_list_rpt -->
+    <sql-query name="whreport.DwWhRep099ContratosListRpt">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_contratos_obligacion -->
+    <sql-query name="whreport.DwWhRep099ContratosObligacion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_contratos_pagados -->
+    <sql-query name="whreport.DwWhRep099ContratosPagados">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_contratos_pagos -->
+    <sql-query name="whreport.DwWhRep099ContratosPagos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_obligaciones_pagos -->
+    <sql-query name="whreport.DwWhRep099ObligacionesPagos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_orden_compra -->
+    <sql-query name="whreport.DwWhRep099OrdenCompra">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_orden_servicio -->
+    <sql-query name="whreport.DwWhRep099OrdenServicio">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_position -->
+    <sql-query name="whreport.DwWhRep099Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_position_estado -->
+    <sql-query name="whreport.DwWhRep099PositionEstado">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_position1 -->
+    <sql-query name="whreport.DwWhRep099Position1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_position2 -->
+    <sql-query name="whreport.DwWhRep099Position2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_position3 -->
+    <sql-query name="whreport.DwWhRep099Position3">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_visitaguiada -->
+    <sql-query name="whreport.DwWhRep099Visitaguiada">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_099_visitaguiada_position -->
+    <sql-query name="whreport.DwWhRep099VisitaguiadaPosition">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_100_procesoseleccion_c0 -->
+    <sql-query name="whreport.DwWhRep100ProcesoseleccionC0">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_100_procesoseleccion_c1 -->
+    <sql-query name="whreport.DwWhRep100ProcesoseleccionC1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_100_procesoseleccion_c2 -->
+    <sql-query name="whreport.DwWhRep100ProcesoseleccionC2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_100_procesoseleccion_c3 -->
+    <sql-query name="whreport.DwWhRep100ProcesoseleccionC3">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_100_procesoseleccion_contralor -->
+    <sql-query name="whreport.DwWhRep100ProcesoseleccionContralor">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_100_procesoseleccion_tab2 -->
+    <sql-query name="whreport.DwWhRep100ProcesoseleccionTab2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_101_procesoseleccion -->
+    <sql-query name="whreport.DwWhRep101Procesoseleccion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_101_procesoseleccion_conv -->
+    <sql-query name="whreport.DwWhRep101ProcesoseleccionConv">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_101_procesoseleccion_pos -->
+    <sql-query name="whreport.DwWhRep101ProcesoseleccionPos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_102_contratos_constancias -->
+    <sql-query name="whreport.DwWhRep102ContratosConstancias">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_102_contratos_constancias_pos -->
+    <sql-query name="whreport.DwWhRep102ContratosConstanciasPos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_103_estudiomercado -->
+    <sql-query name="whreport.DwWhRep103Estudiomercado">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_103_estudiomercado_pos -->
+    <sql-query name="whreport.DwWhRep103EstudiomercadoPos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_190_position -->
+    <sql-query name="whreport.DwWhRep190Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_191_position -->
+    <sql-query name="whreport.DwWhRep191Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_200_paac_list -->
+    <sql-query name="whreport.DwWhRep200PaacList">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_200_paac_list2 -->
+    <sql-query name="whreport.DwWhRep200PaacList2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_200_paac_list3 -->
+    <sql-query name="whreport.DwWhRep200PaacList3">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_200_position -->
+    <sql-query name="whreport.DwWhRep200Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_201_form1 -->
+    <sql-query name="whreport.DwWhRep201Form1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_201_form2 -->
+    <sql-query name="whreport.DwWhRep201Form2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_201_form3 -->
+    <sql-query name="whreport.DwWhRep201Form3">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_201_form4 -->
+    <sql-query name="whreport.DwWhRep201Form4">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_201_paac_data -->
+    <sql-query name="whreport.DwWhRep201PaacData">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_201_position -->
+    <sql-query name="whreport.DwWhRep201Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_301_list -->
+    <sql-query name="whreport.DwWhRep301List">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_301_list2 -->
+    <sql-query name="whreport.DwWhRep301List2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_301_position -->
+    <sql-query name="whreport.DwWhRep301Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_302_documento -->
+    <sql-query name="whreport.DwWhRep302Documento">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_302_position -->
+    <sql-query name="whreport.DwWhRep302Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_303_kardex_demanda -->
+    <sql-query name="whreport.DwWhRep303KardexDemanda">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_303_kardex_rotacion -->
+    <sql-query name="whreport.DwWhRep303KardexRotacion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_303_position -->
+    <sql-query name="whreport.DwWhRep303Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_313_contratos_devolucion -->
+    <sql-query name="whreport.DwWhRep313ContratosDevolucion">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_313_contratos_devolucion_pos -->
+    <sql-query name="whreport.DwWhRep313ContratosDevolucionPos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_314_penalidades -->
+    <sql-query name="whreport.DwWhRep314Penalidades">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_314_penalidades_documento -->
+    <sql-query name="whreport.DwWhRep314PenalidadesDocumento">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_314_penalidades_pos -->
+    <sql-query name="whreport.DwWhRep314PenalidadesPos">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_720_cotizaciones_procesadas -->
+    <sql-query name="whreport.DwWhRep720CotizacionesProcesadas">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_720_cotizaciones_procesadas_id -->
+    <sql-query name="whreport.DwWhRep720CotizacionesProcesadasId">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_730_contrato_adendas_id -->
+    <sql-query name="whreport.DwWhRep730ContratoAdendasId">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_730_contrato_adendas_tab1 -->
+    <sql-query name="whreport.DwWhRep730ContratoAdendasTab1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_735_consolidado -->
+    <sql-query name="whreport.DwWhRep735Consolidado">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_735_consolidado_si_item -->
+    <sql-query name="whreport.DwWhRep735ConsolidadoSiItem">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_735_position -->
+    <sql-query name="whreport.DwWhRep735Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_739_bincard_antes -->
+    <sql-query name="whreport.DwWhRep739BincardAntes">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_739_kardex_valorizado -->
+    <sql-query name="whreport.DwWhRep739KardexValorizado">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_739_kardex_valorizado_bk -->
+    <sql-query name="whreport.DwWhRep739KardexValorizadoBk">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_739_resumen_ingreso -->
+    <sql-query name="whreport.DwWhRep739ResumenIngreso">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_739_resumen_kardex -->
+    <sql-query name="whreport.DwWhRep739ResumenKardex">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_739_resumen_salida -->
+    <sql-query name="whreport.DwWhRep739ResumenSalida">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_739_resumen_salida2 -->
+    <sql-query name="whreport.DwWhRep739ResumenSalida2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_739_resumen_valorizado -->
+    <sql-query name="whreport.DwWhRep739ResumenValorizado">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_739_voucher_consumo -->
+    <sql-query name="whreport.DwWhRep739VoucherConsumo">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_740_afe -->
+    <sql-query name="whreport.DwWhRep740Afe">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_740_bincard -->
+    <sql-query name="whreport.DwWhRep740Bincard">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_740_bincard_antes -->
+    <sql-query name="whreport.DwWhRep740BincardAntes">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_740_bincard_si_item -->
+    <sql-query name="whreport.DwWhRep740BincardSiItem">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_740_bincard2 -->
+    <sql-query name="whreport.DwWhRep740Bincard2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_740_movimiento_almacen -->
+    <sql-query name="whreport.DwWhRep740MovimientoAlmacen">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_740_movimiento_almacen_det -->
+    <sql-query name="whreport.DwWhRep740MovimientoAlmacenDet">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_740_position -->
+    <sql-query name="whreport.DwWhRep740Position">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_740_position_tarjeta -->
+    <sql-query name="whreport.DwWhRep740PositionTarjeta">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_740_tarjeta_control -->
+    <sql-query name="whreport.DwWhRep740TarjetaControl">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_740_tarjeta_control_ni -->
+    <sql-query name="whreport.DwWhRep740TarjetaControlNi">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_740_tarjeta_control_sedalib -->
+    <sql-query name="whreport.DwWhRep740TarjetaControlSedalib">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_741_cierremensual -->
+    <sql-query name="whreport.DwWhRep741Cierremensual">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_741_form1 -->
+    <sql-query name="whreport.DwWhRep741Form1">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_741_form2 -->
+    <sql-query name="whreport.DwWhRep741Form2">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_741_form2_bk -->
+    <sql-query name="whreport.DwWhRep741Form2Bk">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_741_position_new -->
+    <sql-query name="whreport.DwWhRep741PositionNew">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_741_valorizado_linfam -->
+    <sql-query name="whreport.DwWhRep741ValorizadoLinfam">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_742_list -->
+    <sql-query name="whreport.DwWhRep742List">
+    </sql-query>
+
+    <!-- whreport.dw_wh_rep_742_position -->
+    <sql-query name="whreport.DwWhRep742Position">
+    </sql-query>
+
+</hibernate-mapping>

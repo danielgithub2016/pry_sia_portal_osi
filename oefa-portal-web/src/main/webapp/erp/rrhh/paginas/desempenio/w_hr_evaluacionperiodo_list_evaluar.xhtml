@@ -1,0 +1,266 @@
+<!-- 
+@author nunezh
+ * @powerbuilder w_hr_evaluacionperiodo_list_evaluar
+ -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+
+	<ui:define name="content">
+		<h:form id="frmEvaluacionDesempeno">
+			<h:commandLink target="_blank" style="display:none;"
+				action="#{cWHrEvaluacionperiodoListEvaluar.mostrarReporte}"
+				id="lnkVerCedula" />
+
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+			<p:panel>
+				<p:panelGrid columns="6" layout="grid"
+					styleClass="ui-panelgrid-blank"
+					style="background:#95f1d7 !important;">
+					<h:outputLabel value="Entidad"
+						style="color:MidnightBlue;font-weight: bold; " />
+					<h:outputLabel
+						value="#{cWHrEvaluacionperiodoListEvaluar.dw_position.companyownerdesc}"
+						style="width:200px" />
+
+					<h:outputLabel value="Periodo"
+						style="color:MidnightBlue;font-weight: bold; " />
+					<h:panelGrid columns="5">
+						<h:outputLabel
+							value="#{cWHrEvaluacionperiodoListEvaluar.dw_position.periodo}"
+							style="width:80px" />
+						<h:outputLabel value="del"
+							style="color:MidnightBlue;font-weight: bold; " />
+						<h:outputLabel style="width:80px"
+							value="#{cWHrEvaluacionperiodoListEvaluar.dw_position.fechainicio}">
+							<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}" />
+						</h:outputLabel>
+						<h:outputLabel value="al"
+							style="color:MidnightBlue;font-weight: bold; " />
+						<h:outputLabel style="width:80px"
+							value="#{cWHrEvaluacionperiodoListEvaluar.dw_position.fechafin}">
+							<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}" />
+						</h:outputLabel>
+					</h:panelGrid>
+
+					<h:outputLabel value="Estado"
+						style="color:MidnightBlue;font-weight: bold; " />
+					<h:outputLabel
+						value="#{cWHrEvaluacionperiodoListEvaluar.dw_position.estadoproceso eq 'PR' ? 'PREPARACIÓN' : 
+										cWHrEvaluacionperiodoListEvaluar.dw_position.estadoproceso eq 'EV' ? 'EVALUACIÓN' : 
+										cWHrEvaluacionperiodoListEvaluar.dw_position.estadoproceso eq 'CE' ? 'CERRADA' : null }"
+						style="width:80px;color:Maroon;font-weight: bold;" />
+
+					<h:outputLabel value="Descripción"
+						style="color:MidnightBlue;font-weight: bold; " />
+					<h:outputLabel
+						value="#{cWHrEvaluacionperiodoListEvaluar.dw_position.descripcion}"
+						style="width:200px" />
+
+					<h:outputLabel value="Evaluación del"
+						style="color:MidnightBlue;font-weight: bold;" />
+					<h:panelGrid columns="3">
+						<h:outputLabel
+							value="#{cWHrEvaluacionperiodoListEvaluar.dw_position.fechaplaninicio}"
+							style="width:80px">
+							<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}" />
+						</h:outputLabel>
+						<h:outputLabel value="al"
+							style="color:MidnightBlue;font-weight: bold;" />
+						<h:outputLabel
+							value="#{cWHrEvaluacionperiodoListEvaluar.dw_position.fechaplanfin}"
+							style="width:80px">
+							<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}" />
+						</h:outputLabel>
+					</h:panelGrid>
+
+					<h:outputLabel value="Evaluación realizada del"
+						style="color:MidnightBlue;font-weight: bold;" />
+					<h:panelGrid columns="3">
+						<h:outputLabel
+							value="#{cWHrEvaluacionperiodoListEvaluar.dw_position.fecharealinicio}"
+							style="width:80px">
+							<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}" />
+						</h:outputLabel>
+						<h:outputLabel value="al"
+							style="color:MidnightBlue;font-weight: bold;" />
+						<h:outputLabel style="width:80px;"
+							value="#{cWHrEvaluacionperiodoListEvaluar.dw_position.fecharealfin}" />
+					</h:panelGrid>
+				</p:panelGrid>
+
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="ui-panelgrid-blank"
+					columnClasses="ui-grid-col-2,ui-grid-col-2">
+					<h:outputLabel value="Evaluador"
+						style="color:Maroon;font-weight: bold;" />
+					<h:outputLabel
+						value="#{cWHrEvaluacionperiodoListEvaluar.dw_evaluador.nombrecompleto}" />
+
+				</p:panelGrid>
+
+				<f:facet name="footer">
+					<p:panelGrid columns="9" layout="grid" styleClass="ui-panelgrid-blank">
+						<p:commandButton value="Evaluar" styleClass="botonTextoImagen"
+							update="@form" icon="aceptar"
+							action="#{cWHrEvaluacionperiodoListEvaluar.inicializarAcciones}">
+							<f:setPropertyActionListener
+								target="#{cWHrEvaluacionperiodoListEvaluar.eventname}"
+								value="cb_modificar_clicked" />
+						</p:commandButton>
+
+						<p:commandButton value="Ver" styleClass="botonTextoImagen"
+							update="@form"
+							rendered="#{cWHrEvaluacionperiodoListEvaluar.opciones.cbver_visible}"
+							action="#{cWHrEvaluacionperiodoListEvaluar.inicializarAcciones}">
+							<f:setPropertyActionListener
+								target="#{cWHrEvaluacionperiodoListEvaluar.eventname}"
+								value="cb_ver_clicked" />
+						</p:commandButton>
+
+						<p:commandButton type="image" icon="buscar"
+							rendered="#{cWHrEvaluacionperiodoListEvaluar.opciones.cbresponsable_visible}"
+							action="#{cWHrEvaluacionperiodoListEvaluar.inicializarAcciones}">
+							<f:setPropertyActionListener
+								target="#{cWHrEvaluacionperiodoListEvaluar.eventname}"
+								value="cb_responsable_clicked" />
+						</p:commandButton>
+
+						<p:commandButton type="image" icon="buscar"
+							rendered="#{cWHrEvaluacionperiodoListEvaluar.opciones.cbempleado_visible}"
+							action="#{cWHrEvaluacionperiodoListEvaluar.inicializarAcciones}">
+							<f:setPropertyActionListener
+								target="#{cWHrEvaluacionperiodoListEvaluar.eventname}"
+								value="cb_empleado_clicked" />
+						</p:commandButton>
+
+						<p:commandButton value="Agregar" styleClass="botonTextoImagen"
+							update="@form"
+							rendered="#{cWHrEvaluacionperiodoListEvaluar.opciones.cbnuevo_visible}"
+							action="#{cWHrEvaluacionperiodoListEvaluar.inicializarAcciones}">
+							<f:setPropertyActionListener
+								target="#{cWHrEvaluacionperiodoListEvaluar.eventname}"
+								value="cb_nuevo_clicked" />
+						</p:commandButton>
+
+						<p:commandButton value="Eliminar" styleClass="botonTextoImagen"
+							update="@form"
+							rendered="#{cWHrEvaluacionperiodoListEvaluar.opciones.cbeliminar_visible}"
+							action="#{cWHrEvaluacionperiodoListEvaluar.inicializarAcciones}">
+							<f:setPropertyActionListener
+								target="#{cWHrEvaluacionperiodoListEvaluar.eventname}"
+								value="cb_eliminar_clicked" />
+						</p:commandButton>
+
+						<p:commandButton value="Desaprobar" styleClass="botonTextoImagen"
+							update="@form"
+							rendered="#{cWHrEvaluacionperiodoListEvaluar.opciones.cbdesaprobar_visible}"
+							action="#{cWHrEvaluacionperiodoListEvaluar.inicializarAcciones}">
+							<f:setPropertyActionListener
+								target="#{cWHrEvaluacionperiodoListEvaluar.eventname}"
+								value="cb_desaprobar_clicked" />
+						</p:commandButton>
+
+						<p:commandButton value="Ver Cédula" styleClass="botonTextoImagen"
+							 icon="vistaPrevia"
+							action="#{cWHrEvaluacionperiodoListEvaluar.verificarReporte}" />
+
+						<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+							update="@form"
+							rendered="#{cWHrEvaluacionperiodoListEvaluar.opciones.cbbuscar_visible}"
+							action="#{cWHrEvaluacionperiodoListEvaluar.inicializarAcciones}">
+							<f:setPropertyActionListener
+								target="#{cWHrEvaluacionperiodoListEvaluar.eventname}"
+								value="cb_buscar_clicked" />
+						</p:commandButton>
+
+						<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+							icon="cancelar"
+							action="#{cWHrEvaluacionperiodoListEvaluar.salir}"
+							style="float:right">
+						</p:commandButton>
+					</p:panelGrid>
+				</f:facet>
+			</p:panel>
+
+			<p:spacer width="1" height="8" />
+
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				paginator="true" paginatorPosition="bottom"
+				rows="10" reflow="true"
+				selection="#{cWHrEvaluacionperiodoListEvaluar.registroSeleccionado}"
+				selectionMode="single" rowKey="#{lst.empleado}"
+				value="#{cWHrEvaluacionperiodoListEvaluar.dw_list}" var="lst"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+
+				<p:ajax event="rowSelect"
+					listener="#{cWHrEvaluacionperiodoListEvaluar.selectRow}" />
+
+				<p:ajax event="rowDblselect"
+					listener="#{cWHrEvaluacionperiodoListEvaluar.doubleclicked}" />
+
+				<p:column headerText="Empleado" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{lst.empleado}" />
+				</p:column>
+
+				<p:column headerText="Nombre Completo" width="250">
+					<h:outputText value="#{lst.nombrecompleto}" />
+				</p:column>
+
+				<p:column headerText="Periodo" width="70"
+					styleClass="columnatablaCentro">
+					<h:outputText
+						value="#{lst.periodo.substring(0,4)}-#{lst.periodo.substring(4,6)}" />
+				</p:column>
+
+				<p:column headerText="Puntaje" styleClass="columnatablaDerecha"
+					width="50">
+					<h:outputText value="#{lst.totalpuntos}">
+						<f:convertNumber minIntegerDigits="1" maxFractionDigits="2"
+							minFractionDigits="2" locale="#{msg.formato_numeros_punto}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Centro de Costos" width="200">
+					<h:outputText value="#{lst.localname}" />
+				</p:column>
+
+				<p:column headerText="Fecha" width="80"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{lst.fechaevaluacion}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Estado" width="80"
+					styleClass="columnatablaCentro">
+					<h:outputText
+						value="#{lst.estado eq 'PR' ? 'PREPARADO' :
+															lst.estado eq 'EV' ? 'EN EVALUACIÓN' :
+															lst.estado eq 'CE' ? 'EVALUADO' :
+															lst.estado eq 'RV' ? 'REVISADO' : null}" />
+				</p:column>
+
+				<p:column headerText="Tipo Evaluador" width="100">
+					<h:outputText value="#{lst.tipo}" />
+				</p:column>
+
+			</p:dataTable>
+
+			<h:link outcome="whrevaluacionempleadoedit" id="lnkEdicion"
+				style="display:none;" value="no puedes verme..." />
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+
+

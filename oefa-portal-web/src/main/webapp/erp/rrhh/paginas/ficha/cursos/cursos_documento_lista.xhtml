@@ -1,0 +1,115 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>Documentos de la capacitación:
+			#{cEmpCursos.registroSeleccionado.auxCurso}</h2>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="frmCursosDocumentos">
+			<p:growl autoUpdate="true" />
+			<p:panelGrid layout="grid" columns="3"
+				styleClass="ui-panelgrid-blank"
+				columnClasses="ui-grid-col-2,ui-grid-col-10,ui-grid-col-2">
+				<p:commandButton icon="nuevo" action="#{cEmpCursos.nuevoArchivo}"
+					rendered="#{!cEmpCursos.verArchivosPublicos}"
+				 id="nuevo"
+					title="#{cEmpCursos.mensaje}" value="Nuevo">
+
+					<f:setPropertyActionListener
+						target="#{cwWhDocumentoArchivoList.iMantenimientoReferencia}"
+						value="#{cEmpCursos}" />
+					<f:setPropertyActionListener
+						target="#{cwWhDocumentoArchivoList.nombreTipoBusqueda}"
+						value="cargarArchivo" />
+					<f:setPropertyActionListener
+						target="#{cwWhDocumentoArchivoList.nombreContenedorRefrescar}"
+						value="frmCursosDocumentos:dtCursosDocumento" />
+					<f:setPropertyActionListener
+						target="#{cwWhDocumentoArchivoList.isrequierecomentario}"
+						value="false" />
+
+				</p:commandButton>
+				<p:spacer rendered="#{cEmpCursos.verArchivosPublicos}" />
+				<p:spacer />
+				<p:commandButton action="#{cEmpCursos.iniciarControladora}"
+					icon="cancelar" value="Cancelar" />
+
+			</p:panelGrid>
+
+			<p:dataTable id="dtCursosDocumento"
+				emptyMessage="no se encontraron registros" rows="15" reflow="true"
+				paginator="true" paginatorPosition="bottom" sortMode="descending"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+				var="tbl" value="#{cEmpCursos.documentos}">
+				<p:column headerText="N° Documento" styleClass="columnatablaCentro"
+					width="50">
+					<h:outputText value="#{tbl.pk.documento}" />
+				</p:column>
+				<p:column headerText="Nombre de documento" width="600">
+					<h:outputText value="#{tbl.nombrearchivo}" />
+				</p:column>
+
+				<p:column headerText="Informe Final" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{tbl.flgAdjuntoInformFinal=='S'?'Si':''}" />
+				</p:column>
+
+				<p:column headerText="#{msg.generico_accion}" width="80"
+					styleClass="columnatablaCentro">
+					<p:panelGrid columns="2" styleClass="ui-panelgrid-blank"
+						columnClasses="ui-grid-col-5,ui-grid-col-5" layout="grid">
+						<h:commandLink title="Ver" target="_blank" immediate="true"
+							action="#{cEmpCursos.verDocumento}">
+							<f:setPropertyActionListener value="#{tbl}"
+								target="#{cEmpCursos.registroSeleccionadoDocumento}" />
+							<h:graphicImage
+								value="/comun/recursos/imagenes/mantenimiento/btn_download1_16.png" />
+						</h:commandLink>
+
+						<p:commandLink title="Eliminar Archivo"
+							rendered="#{!cEmpCursos.verArchivosPublicos}" update="@form"
+							action="#{cEmpCursos.eliminar}">
+							<f:setPropertyActionListener
+								target="#{cEmpCursos.registroSeleccionadoDocumento}"
+								value="#{tbl}" />
+							<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+								icon="alerta" message="#{msg.generico_listar_preguntaeliminar}" />
+							<h:graphicImage
+								value="/comun/recursos/imagenes/mantenimiento/btn_eliminar1_16.png" />
+						</p:commandLink>
+						
+					</p:panelGrid>
+				</p:column>
+			</p:dataTable>
+
+			<p:commandButton value="Download" ajax="false" id="btndownload"
+				style="display:none;">
+				<p:fileDownload value="#{cEmpCursos.archivodescargar}" />
+			</p:commandButton>
+
+		</h:form>
+
+		<p:dialog id="dgDocumento" widgetVar="popDocumento" modal="true"
+			style="max-width:500px;" width="100%" appendTo="@(Body)"
+			header="Selector de Documento" resizable="false" responsive="true">
+			<ui:include
+				src="/comun/paginas/frm_documento_selector_emergente.xhtml" />
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+
+<!-- <p:commandButton type="image" icon="descargar"
+							onstart="PF('bUI').block()" oncomplete="PF('bUI').unblock()"
+							action="#{cEmpCursos.ejecutar('')}"
+							title="descargar el documento.">
+							<f:setPropertyActionListener
+								target="#{cEmpCursos.registroSeleccionadoDocumento}"
+								value="#{tbl}" />
+						</p:commandButton> -->

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_hr_presentacion_finalistas" language="groovy" pageWidth="650" pageHeight="800" orientation="Landscape" columnWidth="610" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="43af3ab2-a8b6-4709-997b-06ef755dc744">
+	<property name="ireport.zoom" value="1.1"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="requerimiento" class="java.lang.String"/>
+	<parameter name="secuencia" class="java.lang.Integer"/>
+	<parameter name="secuencia2" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select DESCRIPCION
+from HR_PuestoEmpresa, HR_Requerimiento r
+where r.requerimiento = $P{requerimiento} and
+r.codigopuesto=HR_PuestoEmpresa.codigopuesto]]>
+	</queryString>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<pageHeader>
+		<band height="75">
+			<staticText>
+				<reportElement x="146" y="12" width="317" height="24" uuid="2189a2b0-6ce5-46ec-a058-318c7cb2bbe1"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PRESENTACION DE FINALISTAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="46" width="75" height="20" uuid="6aba2439-3154-42f2-a8e7-1c894e4685a6"/>
+				<textElement>
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[AL PUESTO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="269" y="46" width="194" height="20" uuid="6c7e848d-8d2c-4505-8d1c-9ab66423b717"/>
+				<textElement>
+					<font size="12" isBold="true" isUnderline="true" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="52" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="610" height="52" uuid="3389db59-3d13-40b0-974a-1a685569c0b0"/>
+				<subreportParameter name="secuencia">
+					<subreportParameterExpression><![CDATA[$P{secuencia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="secuencia2">
+					<subreportParameterExpression><![CDATA[$P{secuencia2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requerimiento">
+					<subreportParameterExpression><![CDATA[$P{requerimiento}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["w_hr_finalistas_cabecera.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="268">
+			<staticText>
+				<reportElement x="29" y="11" width="99" height="20" uuid="2cf20ee4-1a08-482d-a1cc-5c6db10765c1"/>
+				<text><![CDATA[Fecha de Emisión :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="31" width="200" height="20" uuid="7cf6b563-12be-4b14-b36a-8ca3afb8f5a9"/>
+				<text><![CDATA[Responsable :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="51" width="200" height="20" uuid="bb63426b-f797-4c9e-a880-f1365203bcd9"/>
+				<text><![CDATA[Sede :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="71" width="200" height="21" uuid="6e922677-86cf-4c08-84ff-8b7657c7bc0f"/>
+				<text><![CDATA[Nombre del o los candidato(s) elegido(s) :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="92" width="200" height="20" uuid="27232290-958b-4d14-9f60-b70ca201d61f"/>
+				<text><![CDATA[Fecha de inicio de labores :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="129" y="11" width="100" height="20" uuid="5ca0eb36-51e1-4055-8a5b-472fe7e1968b"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="229" y="50" width="207" height="1" uuid="d4ee4cb7-7f90-4d40-841f-efff4d8c81a1"/>
+			</line>
+			<line>
+				<reportElement x="229" y="71" width="207" height="1" uuid="4896b446-1d64-4b84-a162-6b35a3f63ea3"/>
+			</line>
+			<line>
+				<reportElement x="229" y="92" width="207" height="1" uuid="46161f07-a331-45dd-aaed-842aab8a58db"/>
+			</line>
+			<line>
+				<reportElement x="229" y="111" width="207" height="1" uuid="ffe326be-adf5-4ac5-bc23-507066038aff"/>
+			</line>
+			<line>
+				<reportElement x="337" y="157" width="227" height="1" uuid="19fcec71-8ab2-4eaa-9060-9086362d0a69"/>
+			</line>
+			<staticText>
+				<reportElement x="337" y="158" width="227" height="20" uuid="85ff9df2-a3e1-440f-822f-33d386283726"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sello y  Firma del Responsable]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

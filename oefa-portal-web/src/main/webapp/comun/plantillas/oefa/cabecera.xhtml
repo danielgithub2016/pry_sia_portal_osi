@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<div class="ui-fluid">
+		<h:form id="frmCabecera">
+			<p:panelGrid columns="5" layout="grid"
+				styleClass="ui-panelgrid-blank"
+				columnClasses="ui-grid-col-1,ui-grid-col-5,ui-grid-col-2,ui-grid-col-3,ui-grid-col-1">
+
+				<p:outputLabel rendered="#{cLogin.blMenu}" id="lblMenu"
+					class="menu-btn"
+					style="background-color: transparent; border: none" value="Menú" />
+
+				<p:outputLabel rendered="#{!cLogin.blMenu}" />
+
+				<h:graphicImage style="cursor:pointer;"
+					value="/comun/recursos/imagenes/sistema/oefa-logo-header.png"
+					width="84" />
+
+				<p:outputLabel />
+
+
+				<p:outputLabel
+					value="Usuario: ${usuario.loginUsuario} (	${usuario.nombreCompleto})"
+					style="text-transform:uppercase;" />
+
+				<p:commandLink value="#{msg.sistema_cerrarsesion}"
+					action="#{cLogin.salir}" immediate="true"
+					style="color:blue;text-decoration:underline;" />
+
+			</p:panelGrid>
+		</h:form>
+
+
+	</div>
+</ui:composition>

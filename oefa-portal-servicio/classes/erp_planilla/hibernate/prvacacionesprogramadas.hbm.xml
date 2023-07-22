@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.planilla.dominio.PrVacacionesprogramadas"
+		table="SGCORESYS.PR_VACACIONESPROGRAMADAS">
+		<composite-id name="pk"
+			class="net.royal.erp.planilla.dominio.PrVacacionesprogramadasPk">
+			<key-property name="numeroperiodo" type="big_decimal">
+				<column name="NUMEROPERIODO" length="22" />
+			</key-property>
+			<key-property name="empleado" type="big_decimal">
+				<column name="EMPLEADO" length="22" />
+			</key-property>
+			<key-property name="secuencia" type="big_decimal">
+				<column name="SECUENCIA" length="22" />
+			</key-property>
+			<key-property name="estadovacacion" type="big_decimal">
+				<column name="ESTADOVACACION" length="22" />
+			</key-property>
+			<key-property name="periodo" type="string">
+				<column name="PERIODO" length="8" />
+			</key-property>
+		</composite-id>
+		<property name="periodoasistencia" type="string">
+			<column name="PERIODOASISTENCIA" length="8" />
+		</property>
+		<property name="diaspago" type="integer">
+			<column name="DIASPAGO" length="22" />
+		</property>
+		<property name="fechainicio" type="timestamp">
+			<column name="FECHAINICIO" length="7" />
+		</property>
+		<property name="fechafin" type="timestamp">
+			<column name="FECHAFIN" length="7" />
+		</property>
+		<property name="observacion" type="string">
+			<column name="OBSERVACION" length="255" />
+		</property>
+		<property name="observacionorigen" type="string">
+			<column name="OBSERVACIONORIGEN" length="255" />
+		</property>
+		<property name="anovacacion" type="integer">
+			<column name="ANOVACACION" length="22" />
+		</property>
+		<property name="tipoutilizacion" type="string">
+			<column name="TIPOUTILIZACION" length="1" />
+		</property>
+		<property name="estadoutilizacion" type="string">
+			<column name="ESTADOUTILIZACION" length="1" />
+		</property>
+		<property name="estado" type="string">
+			<column name="ESTADO" length="1" />
+		</property>
+		<property name="ultimaFechaModif" type="timestamp">
+			<column name="ULTIMAFECHAMODIF" />
+		</property>
+		<property name="ultimoUsuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+	</class>
+</hibernate-mapping>

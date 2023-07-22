@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panelGrid columns="2" style="border-spacing:0px;"
+		columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid"
+		styleClass="ui-panelgrid-blank">
+
+		<p:commandButton value="Eliminar" id="btnEliminarObjetivosMetas"
+			icon="eliminar" />
+
+		<p:commandButton value="Agregar" id="btnAgregarObjetivosMetas"
+			icon="nuevo" />
+	</p:panelGrid>
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		paginator="true" paginatorPosition="bottom" reflow="true"
+		scrollable="true" scrollHeight="250" lazy="true" rows="20"
+		id="tblObjetivosMetas"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+		value="#{cwHrPuestosEdit.dw_metas}" var="c">
+
+		<p:column headerText="#" width="50">
+			<p:outputLabel value="#{c.pk.secuencia}" />
+		</p:column>
+
+		<p:column headerText="Meta" width="440">
+			<p:outputLabel value="#{c.descripcion}" />
+		</p:column>
+
+		<p:column headerText="Periodo" width="120">
+			<p:outputLabel value="#{c.periodonombre}" />
+		</p:column>
+
+		<p:column headerText="Peso" width="70">
+			<p:outputLabel value="#{c.factorparticipacion}" />
+		</p:column>
+
+	</p:dataTable>
+
+
+</ui:composition>

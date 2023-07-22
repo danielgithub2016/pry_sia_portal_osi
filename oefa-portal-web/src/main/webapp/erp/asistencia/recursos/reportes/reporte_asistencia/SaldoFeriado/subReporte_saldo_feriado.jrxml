@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subReporte_saldo_feriado" language="groovy" pageWidth="595" pageHeight="600" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="db5557b2-4c85-4cf3-88b9-94f9150224e3">
+	<property name="ireport.zoom" value="5.1874849202000055"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="13"/>
+	<parameter name="p_fecha_desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_centro_costos" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha_hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_FlagFiltroPeriodo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_sid" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_adicionales" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Fabrica\\Desarrollo\\DesarrolloProductos\\OEFA\\oefa-portal-web\\src\\main\\webapp\\erp\\asistencia\\recursos\\reportes\\reporte_asistencia\\SaldoFeriado\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+registro.Persona,
+registro.NombreCompleto,
+registro.area_des,
+registro.fechaingreso,
+total_feriados,
+registro.horas_recuperadas,
+sgcoresys.f_cent2sex_texto(total_recuperadas)  as total_recuperadas,
+sgcoresys.f_cent2sex_texto(c_horas_recuperadas)  as c_horas_recuperadas,
+sgcoresys.f_cent2sex_texto(registro.horas_recuperadas)  as compensadas
+FROM
+(
+select
+        Tablas_01.Persona,
+        Tablas_01.NombreCompleto,
+        Tablas_01.FlagCompensacion,
+        Tablas_01.area_des,
+         empleado_01,
+        fechaingreso,
+        total_feriados,
+        nvl(horas_recuperadas,0) as horas_recuperadas,
+        Tablas_01.total_recuperar as total_recuperadas,
+(Tablas_01.total_recuperar)-  nvl(horas_recuperadas,0) as c_horas_recuperadas,
+        TipoDia
+from ( SELECT
+               PersonaMast.Persona,
+                PersonaMast.NombreCompleto,
+                AS_AsistenciaDiaria.CantidadReal,
+                AS_AsistenciaDiaria.FlagCompensacion,
+                AS_Area.Nombre AREA_DES,
+                EmpleadoMast.empleado as empleado_01,
+                EmpleadoMast.fechaingreso as fechaingreso,
+
+                (
+                            (
+                        SELECT     Count(1)
+                        FROM     SGCORESYS.PR_CalendarioFeriados a
+                        WHERE     a.flagcompensable = 'S'
+                              AND substr(a.fechamesdia,5,4) || substr(a.fechamesdia,3,2) ||substr(a.fechamesdia,1,2)  >= to_char($P{p_fecha_desde},'YYYYMMDD')
+ AND SUBSTR(a.fechamesdia,5,4) || SUBSTR(a.fechamesdia,3,2) ||SUBSTR(a.fechamesdia,1,2)  <= TO_CHAR($P{p_fecha_hasta},'YYYYMMDD')
+                                    AND a.estado = 'A'
+                                    AND substr(a.fechamesdia,5,4) || substr(a.fechamesdia,3,2) ||substr(a.fechamesdia,1,2)  > TO_CHAR(EmpleadoMast.fechaingreso,'YYYYMMDD')
+                        )
+                        -
+                        (
+                        SELECT  Count(1)
+                        FROM  SGCORESYS.AS_EMPLEADOSINASISTENCIA
+                            WHERE   EMPLEADO = PersonaMast.Persona
+                                         AND FechaDesde >= $P{p_fecha_desde}
+                                         AND FechaHasta < =$P{p_fecha_hasta}
+                        )
+                ) total_feriados,
+
+sgcoresys.fn_cantidad_horas_x_feriados(PersonaMast.Persona,$P{p_fecha_desde},$P{p_fecha_hasta}) as total_recuperar,
+
+                (
+                SELECT     SUM(a.CantidadReal)
+                FROM    SGCORESYS.AS_AsistenciaDiaria a
+                WHERE     a.empleado = empleadomast.empleado
+                            AND a.conceptoacceso = 'HNAU'
+AND to_char(a.fecha,'yyyymm') between to_char($P{p_fecha_desde},'yyyymm') and to_char($P{p_fecha_hasta},'yyyymm')
+
+                ) horas_recuperadas,
+                (
+                SELECT    Case  TO_CHAR(sysdate,'D')
+                                WHEN '1' Then LUNES
+                                WHEN '2' Then MARTES
+                                WHEN '3' Then MIERCOLES
+                                WHEN '4' Then JUEVES
+                                WHEN '5' Then VIERNES
+                                WHEN '6' Then SABADO
+                                WHEN '7' Then DOMINGO
+                        END TipoDia
+                   FROM    SGCORESYS.AS_TIPOHORARIO
+                   WHERE   TipoHorario = EmpleadoMast.TipoHorario
+                   )  TipoDia
+
+
+        FROM    SGCORESYS.AS_AsistenciaDiaria
+                    INNER JOIN  SGCORESYS.PersonaMast
+                         ON  AS_AsistenciaDiaria.Empleado = PersonaMast.Persona
+
+                    INNER JOIN SGCORESYS.EmpleadoMast
+                         ON  AS_AsistenciaDiaria.Empleado = EmpleadoMast.Empleado
+
+                    INNER JOIN  SGCORESYS.AS_CarnetIdentificacion
+                         ON AS_AsistenciaDiaria.Empleado = AS_CarnetIdentificacion.Empleado
+                                AND AS_CarnetIdentificacion.Estado = 'A'
+
+                  INNER JOIN SGCORESYS.AS_ConceptoAcceso
+                         ON AS_AsistenciaDiaria.ConceptoAcceso = AS_ConceptoAcceso.ConceptoAcceso
+
+                    LEFT JOIN SGCORESYS.AC_CostCenterMst
+                         ON EmpleadoMast.CentroCostos = AC_CostCenterMst.CostCenter
+
+                    LEFT JOIN SGCORESYS.AS_Area
+                         ON AS_CarnetIdentificacion.Area = AS_Area.Area
+
+        WHERE     (AS_ASISTENCIADIARIA.FlagCompensacion = '+' or AS_ASISTENCIADIARIA.FlagCompensacion = '-')
+ AND ( AS_ASISTENCIADIARIA.ConceptoAcceso in ('HNAU','33') )
+and AC_COSTCENTERMST.COSTCENTER=$P{p_centro_costos}
+        and ((AS_AsistenciaDiaria.Fecha >= $P{p_fecha_desde} AND AS_AsistenciaDiaria.Fecha <=$P{p_fecha_hasta}) or $P{p_FlagFiltroPeriodo}  = 'N')
+  and ( AS_ASISTENCIADIARIA.FECHA >= NVL(empleadomast.fechareingreso, empleadomast.fechaingreso ))
+$P!{p_adicionales}
+        )  Tablas_01
+where 1 = 1
+AND  ( empleado_01 in (select AS_EMPLEADOS_AUTORIZADOS.empleado
+                                            from SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+                                            where AS_EMPLEADOS_AUTORIZADOS.sid =$P{p_sid}))
+
+
+   )registro
+                                           GROUP BY registro.Persona,
+registro.NombreCompleto,
+registro.area_des,
+registro.fechaingreso,
+total_feriados,
+registro.total_recuperadas,
+registro.c_horas_recuperadas,
+registro.horas_recuperadas
+
+order by registro.NombreCompleto]]>
+	</queryString>
+	<field name="PERSONA" class="java.math.BigDecimal"/>
+	<field name="NOMBRECOMPLETO" class="java.lang.String"/>
+	<field name="AREA_DES" class="java.lang.String"/>
+	<field name="FECHAINGRESO" class="java.sql.Timestamp"/>
+	<field name="TOTAL_FERIADOS" class="java.math.BigDecimal"/>
+	<field name="HORAS_RECUPERADAS" class="java.math.BigDecimal"/>
+	<field name="TOTAL_RECUPERADAS" class="java.lang.String"/>
+	<field name="C_HORAS_RECUPERADAS" class="java.lang.String"/>
+	<field name="COMPENSADAS" class="java.lang.String"/>
+	<variable name="totaRegistros" class="java.lang.String" calculation="Count">
+		<variableExpression><![CDATA[$F{PERSONA}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="82" splitType="Stretch">
+			<rectangle>
+				<reportElement x="2" y="32" width="388" height="15" uuid="4d9661ba-0ee9-486a-8c2a-f393c710cc99"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="2" y="17" width="388" height="15" backcolor="#F0F0F0" uuid="a230687d-c360-4584-b86d-b260e9f1cd7d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="4" y="19" width="41" height="11" uuid="027c89cd-7314-4fb1-a9f6-ccc47f8ab951"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[F. Ingreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="19" width="60" height="11" uuid="162de10e-a785-4031-bf0a-c0e4ad586018"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Año Compensar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="19" width="53" height="11" uuid="88e271f8-befe-4e5c-8596-76e00aecb513"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Feriados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="173" y="19" width="73" height="11" uuid="98fd37f7-7fd2-4fb7-92bb-9ccbe872928a"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total por Recuperar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="19" width="63" height="11" uuid="0ebbc830-4458-4fda-b37f-4010bc963997"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[H. Compensadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="19" width="64" height="11" uuid="c8be15cc-79d0-4b98-995b-135b91405377"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[H. por Recuperar]]></text>
+			</staticText>
+			<line>
+				<reportElement x="316" y="17" width="1" height="30" uuid="9794c52e-5a44-48ef-82b3-10e696dd5573"/>
+			</line>
+			<line>
+				<reportElement x="248" y="17" width="1" height="30" uuid="47c64e82-ed11-4aa5-b0b2-88e47fccf0f0"/>
+			</line>
+			<line>
+				<reportElement x="170" y="17" width="1" height="30" uuid="af2ecab1-1a6e-487a-94a0-cd16435aa26d"/>
+			</line>
+			<line>
+				<reportElement x="111" y="17" width="1" height="30" uuid="969d6190-74b0-4277-8140-d9b418b00d89"/>
+			</line>
+			<line>
+				<reportElement x="46" y="17" width="1" height="30" uuid="f07ae732-a6a3-47e5-8072-e7709398e176"/>
+			</line>
+			<textField>
+				<reportElement x="28" y="0" width="45" height="11" uuid="8525a40c-23eb-4def-8217-ee2d218d9a27"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PERSONA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="0" width="190" height="11" uuid="59aaade7-c39a-4aaa-b5ff-8773ed109ff0"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRECOMPLETO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="4" y="34" width="41" height="11" uuid="81ca8aa8-e399-43e0-9289-39849b6120c2"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHAINGRESO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="115" y="34" width="53" height="11" uuid="35064fce-ecdb-42d5-9551-2a5cf251b05d"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_FERIADOS}!=null?$F{TOTAL_FERIADOS}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy">
+				<reportElement x="49" y="34" width="60" height="11" uuid="93d94ffe-4202-4d77-b926-cca3ac81c7c4"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_fecha_desde}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="251" y="34" width="63" height="11" uuid="e6ee25fa-9752-4020-802c-9e52948048e6"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPENSADAS}!=null?$F{COMPENSADAS}:"00:00"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="27" y="11" width="46" height="1" uuid="6f4f9d48-bea3-4ac0-8f82-87a101388604"/>
+			</line>
+			<textField>
+				<reportElement x="173" y="32" width="73" height="13" uuid="f2d3a063-8bd1-4132-a5d2-471a57452ce3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_RECUPERADAS}!=null?$F{TOTAL_RECUPERADAS}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="319" y="34" width="64" height="11" uuid="fdf76f14-9e22-4395-9457-61b10a1d190c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{C_HORAS_RECUPERADAS}!=null?$F{C_HORAS_RECUPERADAS}:""]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="219" y="53" width="242" height="25" uuid="432d41c0-a204-4c0f-8923-4c3714a50347"/>
+				<subreportParameter name="p_centro_costos">
+					<subreportParameterExpression><![CDATA[$P{p_centro_costos}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_empleado">
+					<subreportParameterExpression><![CDATA[$F{PERSONA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_FlagFiltroPeriodo">
+					<subreportParameterExpression><![CDATA[$P{p_FlagFiltroPeriodo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_hasta"/>
+				<subreportParameter name="p_sid">
+					<subreportParameterExpression><![CDATA[$P{p_sid}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_desde">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_desde}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_hasta">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_hasta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["subReporte_feriado_detalles.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

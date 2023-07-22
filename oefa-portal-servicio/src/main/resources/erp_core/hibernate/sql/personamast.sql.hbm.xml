@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : core.Personamast
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+<!-- Usar personamast -->
+
+	<sql-query name="personamast.obtenerDatosParaNuevaBandeja">
+	  <![CDATA[
+	   select 
+       codigocargo "idCargoSIA",
+       DPTOAREAOPERATIVA "idAreaSIA",
+       AS_AREA.NOMBRE "nombreAreaSIA",
+       HR_PUESTOEMPRESA.DESCRIPCION "nombreCargoSIA",
+       FLG_JEFATURAASISTENTE "esJefe",
+       ESTADOEMPLEADO "estadoempleado"
+       
+       from sgcoresys.empleadomast 
+       LEFT JOIN sgcoresys.AS_AREA ON AS_AREA.AREA=DPTOAREAOPERATIVA
+       LEFT JOIN sgcoresys.HR_PUESTOEMPRESA  ON HR_PUESTOEMPRESA.CODIGOPUESTO=codigocargo
+       where codigousuario=:p_usuario
+	  		]]>
+	</sql-query>
+
+<!-- syfinan.dw_wh_importacion_select_bl_detail -->
+	<sql-query name="personamast.DwWhImportacionSelectBlDetail">
+		 SELECT WH_BILLOFLADING.COMPANIASOCIO as "companiasocio",   
+	         WH_BILLOFLADING.BLNUMERO as "blnumero",   
+	         AP_DOCUMENTOS.REFERENCIANUMERODOCUMENTO as "referencianumerodocumento",   
+	         AP_DOCUMENTOS.DOCUMENTOREFERENCIA as "documentoreferencia",   
+	         AP_DOCUMENTOS.MONTOTOTAL as "montototal",   
+	         AP_DOCUMENTOS.OBLIGACIONTIPODOCUMENTO as "obligaciontipodocumento",   
+	         AP_DOCUMENTOS.OBLIGACIONNUMERODOCUMENTO as "obligacionnumerodocumento",   
+	         WH_BILLOFLADINGDETALLE.MONTOFLETE as "montoflete",   
+	         PERSONAMAST.BUSQUEDA as "busqueda",  
+	         AP_DOCUMENTOS.OBLIGACIONTIPODOCUMENTO||' - '|| AP_DOCUMENTOS.OBLIGACIONNUMERODOCUMENTO as "obligacion", 
+	         WH_BILLOFLADINGDETALLE.PROVEEDOR as "proveedor",   
+	         AP_DOCUMENTOS.TRANSACCIONNUMERODOCUMENTO as "transaccionnumerodocumento"  
+	    FROM sgcoresys.WH_BILLOFLADING,   
+	         sgcoresys.WH_BILLOFLADINGDETALLE,   
+	         sgcoresys.AP_DOCUMENTOS,   
+	         sgcoresys.WH_IMPORTACION,   
+	         sgcoresys.PERSONAMAST  
+	   WHERE ( WH_BILLOFLADINGDETALLE.COMPANIASOCIO = WH_BILLOFLADING.COMPANIASOCIO ) and  
+	         ( WH_BILLOFLADINGDETALLE.BLNUMERO = WH_BILLOFLADING.BLNUMERO ) and  
+	         ( WH_BILLOFLADINGDETALLE.DOCUMENTOCLASIFICACION = AP_DOCUMENTOS.DOCUMENTOCLASIFICACION ) and  
+	         ( WH_BILLOFLADINGDETALLE.DOCUMENTOREFERENCIA = AP_DOCUMENTOS.DOCUMENTOREFERENCIA ) and  
+	         ( WH_IMPORTACION.CARPETANUMERO = AP_DOCUMENTOS.REFERENCIANUMERODOCUMENTO ) and  
+	         ( WH_BILLOFLADING.COMPANIASOCIO = WH_IMPORTACION.COMPANIASOCIO ) and  
+	         ( WH_BILLOFLADINGDETALLE.PROVEEDOR = PERSONAMAST.PERSONA ) and  
+	         ( WH_BILLOFLADINGDETALLE.PROVEEDOR = AP_DOCUMENTOS.PROVEEDOR ) and  
+	         ( ( WH_BillofLading.CompaniaSocio =  :companiasocio ) AND  
+	         ( WH_Importacion.Estado = 'AP' ) AND  
+	         ( WH_BillofLading.BLNumero = :blnumero ) )   
+	</sql-query>
+
+	<!-- syfinan.dw_wh_importacion_select -->
+	<sql-query name="personamast.DwWhImportacionSelect">
+	  <![CDATA[
+		     SELECT WH_IMPORTACION.CARPETANUMERO as "carpetanumero",   
+		         WH_IMPORTACION.POLIZAIMPORTACION as "polizaimportacion",   
+		         PERSONAMAST.BUSQUEDA as "busqueda",   
+		         WH_ORDENCOMPRA.CARPETANUMERO as "carpetanumero_1",   
+		         WH_ORDENCOMPRA.PROVEEDOR as "proveedor",   
+		         WH_ORDENCOMPRA.MONTOTOTAL as "montototal",   
+		         SY_CAMPOCALCULADO.MONTO01 as "monto01",
+		         cast('N' as varchar2(1)) as "seleccion",
+		         rownum as "rowkey"
+		    FROM sgcoresys.WH_IMPORTACION,   
+		         sgcoresys.PERSONAMAST,   
+		         sgcoresys.WH_ORDENCOMPRA,   
+		         sgcoresys.SY_CAMPOCALCULADO  
+		   WHERE ( WH_IMPORTACION.COMPANIASOCIO = WH_ORDENCOMPRA.COMPANIASOCIO ) and  
+		         ( WH_IMPORTACION.CARPETANUMERO = WH_ORDENCOMPRA.NUMEROORDEN ) and  
+		         ( WH_ORDENCOMPRA.PROVEEDOR = PERSONAMAST.PERSONA ) and  
+		         ( ( WH_Importacion.CompaniaSocio = :companiasocio ) AND 
+		         ( WH_Importacion.Estado = 'AP' ) AND  
+		         ( WH_Importacion.Situacion <> '0' ) AND  
+		         ( SY_CampoCalculado.RegistroNumero = 1 ) )   
+		    ORDER BY WH_IMPORTACION.CARPETANUMERO ASC   
+ 		]]>
+	</sql-query>
+
+    <!-- apmast.dw_ma_cp_empleadoautorizado_select -->
+	<sql-query name="personamast.empleadoAutorizados">
+		SELECT PersonaMast.Busqueda as "busqueda",
+		AP_GastosAutorizacion.Empleado as "empleado"
+		FROM
+		SGCORESYS.AP_GastosAutorizacion
+		INNER JOIN SGCORESYS.PersonaMast ON
+		(
+		AP_GastosAutorizacion.Empleado = PersonaMast.Persona )
+		WHERE (
+		AP_GastosAutorizacion.Estado = 'A' )
+		ORDER BY PersonaMast.Busqueda ASC
+	</sql-query>
+	
+	<!-- f_sql_validate_persona_unidadnegocio -->
+	<sql-query name="personamast.fsqlvalidatepersonaunidadnegocio">
+		SELECT PersonaMast.Persona as "persona"
+		FROM
+		SGCORESYS.PersonaMast,
+		SGCORESYS.MA_PersonaUnidadNegocio
+		WHERE
+		PersonaMast.Persona = MA_PersonaUnidadNegocio.Persona AND
+		PersonaMast.Persona =:par_persona AND
+		MA_PersonaUnidadNegocio.UnidadNegocio = :par_unidadnegocio
+	</sql-query>
+	
+		<!-- symast01.dw_ma_persona_select_by_busqueda Listar -->
+	<sql-query name="personamast.DwMaPersonaSelectByBusquedaListar">
+		SELECT
+		PersonaMast.Persona as "persona",
+		PersonaMast.Busqueda as "busqueda" ,
+		PersonaMast.EsCliente as
+		"escliente" ,
+		PersonaMast.EsProveedor as "esproveedor" ,
+		PersonaMast.EsEmpleado as "esempleado" ,
+		PersonaMast.EsOtro as
+		"esotro",
+		PersonaMast.Documento as "documento",
+		PersonaMast.PersonaAnt
+		as "personaant",
+		PersonaMast.DocumentoFiscal as "documentofiscal",
+		PersonaMast.DocumentoIdentidad as "documentoidentidad",
+		PersonaMast.Estado as "estado"
+		FROM sgcoresys.PersonaMast
+	</sql-query>
+
+	<!-- symast01.dw_ma_persona_select_by_busqueda Listar -->
+	<sql-query name="personamast.DwMaPersonaSelectByBusquedaContar">
+		SELECT
+		count(1)
+		FROM sgcoresys.PersonaMast
+	</sql-query>
+	
+	<!-- Filtro por Fecha -->
+	<sql-query name="personamast.filtrofecha">
+		<![CDATA[
+			SELECT
+			PersonaMast.NombreCompleto as "nombrecompleto",
+			PersonaMast.Nacionalidad as "nacionalidad" ,
+			PersonaMast.Documento as "documento",
+			PersonaMast.Direccion as "direccion",
+			PersonaMast.FechaNacimiento as "fechanacimiento"
+			FROM sgcoresys.PersonaMast
+			WHERE 
+			PersonaMast.FechaNacimiento BETWEEN :par_fecha AND :par_fecha2
+		]]>
+	</sql-query>
+	
+	<!-- Consultar Todos -->
+	<sql-query name="personamast.filtrotodo">
+		<![CDATA[
+			SELECT
+			PersonaMast.NombreCompleto as "nombrecompleto",
+			PersonaMast.Nacionalidad as "nacionalidad" ,
+			PersonaMast.Documento as "documento",
+			PersonaMast.Direccion as "direccion",
+			PersonaMast.FechaNacimiento as "fechanacimiento"
+			FROM sgcoresys.PersonaMast
+		]]>
+	</sql-query>
+	
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Tiposervicio" table="SGCORESYS.TIPOSERVICIO">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.TiposervicioPk">
+            <key-property name="tiposervicio" type="string">
+                <column name="TIPOSERVICIO" length="6" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="25" />
+        </property>
+        <property name="regimenfiscal" type="string">
+            <column name="REGIMENFISCAL" length="1" />
+        </property>
+        <property name="clasificacionfiscal" type="string">
+            <column name="CLASIFICACIONFISCAL" length="4" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="descripcioningles" type="string">
+            <column name="DESCRIPCIONINGLES" length="30" />
+        </property>
+    </class>
+</hibernate-mapping>

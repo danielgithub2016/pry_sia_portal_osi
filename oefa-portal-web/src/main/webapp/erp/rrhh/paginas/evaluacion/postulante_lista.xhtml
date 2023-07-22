@@ -1,0 +1,178 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+
+	<ui:define name="content">
+
+		<h:form id="frmEvaluacion_lista">
+
+
+			<h:panelGrid columns="2" columnClasses="ui-grid-col-12" layout="grid"
+				styleClass="ui-panelgrid-blank" width="100%"
+				style="border-spacing:0px;">
+				<h:panelGrid layout="grid" styleClass="ui-panelgrid-blank"
+					style="border-spacing:0px;">
+					<h2>Evaluaciones de Conocimientos CAS</h2>
+					<h2>Convocatoria #{cHrEvaluacionesCAS.proceso} -
+						#{cHrEvaluacionesCAS.puesto}</h2>
+				</h:panelGrid>
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" columnClasses="ui-grid-col-10,ui-grid-col-2"
+				layout="grid" styleClass="ui-panelgrid-blank" width="100%"
+				style="border-spacing:0px;">
+				<p:selectBooleanCheckbox id="cbxfoto"
+					value="#{cHrEvaluacionesCAS.blFoto}"
+					itemLabel="Activar para incluir la foto del postulante">
+				</p:selectBooleanCheckbox>
+				<p:commandButton value="Buscar" update="dtPostulante"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					action="#{cHrEvaluacionesCAS.buscarPostulante}" />
+			</h:panelGrid>
+
+			<br />
+
+			<p:growl autoUpdate="true" life="#{msg.generico_tiempo_growl}"
+				widgetVar="growlWV" />
+
+
+			<p:dataTable emptyMessage="Este proceso no contiene Postulantes."
+				id="dtPostulante" paginator="true" paginatorPosition="bottom"
+				rows="10" reflow="true" value="#{cHrEvaluacionesCAS.lstPost}"
+				var="row"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages}"
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+
+				<p:column headerText="Postulante" width="150"
+					styleClass="columnatablaIzquierda">
+					<h:outputText value="#{row.postulante}" />
+				</p:column>
+				<p:column headerText="Documento" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.documento}" />
+				</p:column>
+				<p:column headerText="Foto" width="60"
+					styleClass="columnatablaCentro">
+					<p:panelGrid styleClass="ui-panelgrid-blank"
+						style="border-spacing:0px;"
+						rendered="#{row.fotoPostulante != null and row.fotoPostulante != ''}">
+						<img style="border: solid 2px" title="Foto obtenida de Reniec"
+							src="#{row.fotoPostulante}" width="90" />
+					</p:panelGrid>
+
+					<p:panelGrid styleClass="ui-panelgrid-blank"
+						style="border-spacing:0px;"
+						rendered="#{row.fotoPostulante == null or row.fotoPostulante == ''}">
+						<img
+							src="#{request.contextPath}/comun/recursos/imagenes/icono.png"
+							width="50px" style="border: solid 2px" height="40px" />
+					</p:panelGrid>
+
+
+				</p:column>
+				<p:column headerText="Puntaje" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.puntaje}" />
+				</p:column>
+				<p:column headerText="Asistencia" width="60"
+					styleClass="columnatablaCentro">
+					<p:selectOneMenu id="ListaAsistencia" value="#{row.asistencia}"
+						valueChangeListener="#{cHrEvaluacionesCAS.valueChanged}"
+						required="true">
+						<f:selectItems value="#{cHrEvaluacionesCAS.listaAsistencia}"
+							var="val"
+							itemValue="#{val.valor_n.concat('-').concat(row.idpostulante)}"
+							itemLabel="#{val.valor_s}">
+						</f:selectItems>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="Fin de examen" width="50"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.fechafinexamen}" />
+				</p:column>
+
+				<p:column headerText="Acciones" width="10"
+					styleClass="columnatablaCentro">
+					<p:commandButton icon="editar" 
+						title="Detalles del examen" oncomplete="PF('bUI').unblock();"
+						onstart="PF('bUI').block();" immediate="true"
+						action="#{cHrEvaluacionesCAS.verDetallesEvaluacion}">
+						<f:setPropertyActionListener
+							target="#{cHrEvaluacionesCAS.postulanteSeleccionado}"
+							value="#{row}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+			<BR />
+			<div class="ui-grid-col-3">
+				<p:commandButton value="Ir a Lista de Procesos" update="@form"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					styleClass="botonTextoImagenGrande" id="regresar"
+					action="#{cHrEvaluacionesCAS.retornar}" />
+			</div>
+		</h:form>
+
+
+		<p:dialog id="dgDatosEvaluacion" widgetVar="popDatosEvaluacion"
+			header="Datos de la evaluación: #{cHrEvaluacionesCAS.postulanteSeleccionado.postulante}"
+			responsive="true" modal="true"
+			styleClass="contenedorPrincipalExtraChico" appendTo="@(body)"
+			draggable="false" resizable="false">
+			<h:form id="frmFocus">
+				<h:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6"
+					layout="grid" styleClass="ui-panelgrid-blank" width="100%"
+					style="border-spacing:0px;">
+					<p:outputLabel value="Inicio de examen" />
+					<p:inputText disabled="true"
+						value="#{cHrEvaluacionesCAS.postulanteSeleccionado.fechainicioexamen}" />
+
+					<p:outputLabel value="Fin de examen" />
+					<p:inputText disabled="true"
+						value="#{cHrEvaluacionesCAS.postulanteSeleccionado.fechafinexamen}" />
+
+					<p:outputLabel value="Nro de respuestas" />
+					<p:inputText disabled="true"
+						value="#{cHrEvaluacionesCAS.postulanteSeleccionado.pregRespondidas}" />
+
+					<p:outputLabel value="Nro. de salidas del exámen" />
+					<p:inputText disabled="true"
+						value="#{cHrEvaluacionesCAS.postulanteSeleccionado.cantsalidaexamen}" />
+
+					<p:outputLabel value="Minutos adicionales" />
+					<p:inputText
+						value="#{cHrEvaluacionesCAS.postulanteSeleccionado.minadicionalesexamen}" />
+
+					<p:outputLabel value="Sesiones activas" />
+					<p:inputText type="number"
+						value="#{cHrEvaluacionesCAS.postulanteSeleccionado.cantsession}" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" columnClasses="ui-grid-col-12"
+					layout="grid" styleClass="ui-panelgrid-blank" width="100%"
+					style="border-spacing:0px;">
+					<p:commandButton value="Aceptar" oncomplete="PF('bUI').unblock();"
+						onstart="PF('bUI').block();"
+						action="#{cHrEvaluacionesCAS.actualizarDetalleExamen}"
+						styleClass="botonTextoImagenGrande" />
+				</h:panelGrid>
+
+
+			</h:form>
+
+		</p:dialog>
+
+
+
+
+	</ui:define>
+
+
+</ui:composition>

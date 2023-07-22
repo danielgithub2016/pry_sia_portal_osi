@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : whmast.p_wh_doctor_item_kardex
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!-- whmast.dw_ma_wh_itemtipo_select -->
+    
+
+
+    <!-- whmast.dw_ma_wh_itemtipo-->
+   
+    
+</hibernate-mapping>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.rrhh.dominio.HrActividadparticipante"
+		table="SGCORESYS.HR_ACTIVIDADPARTICIPANTE">
+		<composite-id name="pk"
+			class="net.royal.erp.rrhh.dominio.HrActividadparticipantePk">
+			<key-property name="actividad" type="string">
+				<column name="ACTIVIDAD" length="10" />
+			</key-property>
+			<key-property name="companyowner" type="string">
+				<column name="COMPANYOWNER" length="8" />
+			</key-property>
+			<key-property name="empleado" type="integer">
+				<column name="EMPLEADO" length="22" />
+			</key-property>
+			<key-property name="tipoactividad" type="string">
+				<column name="TIPOACTIVIDAD" length="1" />
+			</key-property>
+		</composite-id>
+		<property name="secuencia" type="integer">
+			<column name="SECUENCIA" length="22" />
+		</property>
+		<property name="flagparticipo" type="string">
+			<column name="FLAGPARTICIPO" length="1" />
+		</property>
+		<property name="flagbeneficio" type="string">
+			<column name="FLAGBENEFICIO" length="1" />
+		</property>
+		<property name="flagasistencia" type="string">
+			<column name="FLAGASISTENCIA" length="1" />
+		</property>
+		<property name="monto" type="big_decimal">
+			<column name="MONTO" length="22" />
+		</property>
+		<property name="creacionUsuario" type="string">
+			<column name="USUARIO_CREACION" length="20" />
+		</property>
+		<property name="creacionFecha" type="timestamp">
+			<column name="FECHA_CREACION" />
+		</property>
+
+	</class>
+</hibernate-mapping>

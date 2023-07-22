@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrMeritosfaltas" table="SGCORESYS.HR_MERITOSFALTAS">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrMeritosfaltasPk">
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+            <key-property name="empleado" type="integer">
+                <column name="EMPLEADO" length="22" />
+            </key-property>
+            <key-property name="tipo" type="string">
+                <column name="TIPO" length="1" />
+            </key-property>
+        </composite-id>
+        <property name="periodo" type="string">
+            <column name="PERIODO" length="6" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="1000" />
+        </property>
+        <property name="fecha" type="timestamp">
+            <column name="FECHA" length="7" />
+        </property>
+        <property name="responsable" type="integer">
+            <column name="RESPONSABLE" length="22" />
+        </property>
+        <property name="unidadnegocio" type="string">
+            <column name="UNIDADNEGOCIO" length="4" />
+        </property>
+        <property name="unidadreplicacion" type="string">
+            <column name="UNIDADREPLICACION" length="4" />
+        </property>
+        <property name="clasificacion" type="string">
+            <column name="CLASIFICACION" length="2" />
+        </property>
+        <property name="documento" type="string">
+            <column name="DOCUMENTO" length="30" />
+        </property>
+        <property name="fechainicio" type="timestamp">
+            <column name="FECHAINICIO" length="7" />
+        </property>
+        <property name="fechafin" type="timestamp">
+            <column name="FECHAFIN" length="7" />
+        </property>
+        <property name="flagsoloenevaluacion" type="string">
+            <column name="FLAGSOLOENEVALUACION" length="1" />
+        </property>
+        <property name="diassuspension" type="integer">
+            <column name="DIASSUSPENSION" length="22" />
+        </property>
+        <property name="tipofalta" type="string">
+            <column name="TIPOFALTA" length="3" />
+        </property>
+        <property name="medidadisciplinaria" type="string">
+            <column name="MEDIDADISCIPLINARIA" length="2" />
+        </property>
+        <property name="rutadocumento" type="string">
+            <column name="RUTADOCUMENTO" length="200" />
+        </property>
+        <property name="ruta" type="binary">
+            <column name="RUTA" length="4000" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Proveedormast" table="SGCORESYS.PROVEEDORMAST">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.ProveedormastPk">
+            <key-property name="proveedor" type="integer">
+                <column name="PROVEEDOR" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="tiposervicio" type="string">
+            <column name="TIPOSERVICIO" length="6" />
+        </property>
+        <property name="tipoproveedor" type="string">
+            <column name="TIPOPROVEEDOR" length="1" />
+        </property>
+        <property name="pagaranombre" type="string">
+            <column name="PAGARANOMBRE" length="70" />
+        </property>
+        <property name="pagarendireccion" type="string">
+            <column name="PAGARENDIRECCION" length="80" />
+        </property>
+        <property name="tipopago" type="string">
+            <column name="TIPOPAGO" length="2" />
+        </property>
+        <property name="monedapago" type="string">
+            <column name="MONEDAPAGO" length="2" />
+        </property>
+        <property name="formadepago" type="string">
+            <column name="FORMADEPAGO" length="3" />
+        </property>
+        <property name="representantelegal" type="string">
+            <column name="REPRESENTANTELEGAL" length="50" />
+        </property>
+        <property name="responsible" type="string">
+            <column name="RESPONSIBLE" length="4" />
+        </property>
+        <property name="cuentacontablegasto" type="string">
+            <column name="CUENTACONTABLEGASTO" length="20" />
+        </property>
+        <property name="chequenonegociableflag" type="string">
+            <column name="CHEQUENONEGOCIABLEFLAG" length="1" />
+        </property>
+        <property name="suspensionrentaflag" type="string">
+            <column name="SUSPENSIONRENTAFLAG" length="1" />
+        </property>
+        <property name="suspensionfonaviflag" type="string">
+            <column name="SUSPENSIONFONAVIFLAG" length="1" />
+        </property>
+        <property name="exoneradodeclaracion" type="string">
+            <column name="EXONERADODECLARACION" length="15" />
+        </property>
+        <property name="exoneradofechainicio" type="timestamp">
+            <column name="EXONERADOFECHAINICIO" length="7" />
+        </property>
+        <property name="exoneradofechafinal" type="timestamp">
+            <column name="EXONERADOFECHAFINAL" length="7" />
+        </property>
+        <property name="numerodiaspago" type="integer">
+            <column name="NUMERODIASPAGO" length="22" />
+        </property>
+        <property name="numerodiasentrega" type="integer">
+            <column name="NUMERODIASENTREGA" length="22" />
+        </property>
+        <property name="tipodocumentodefault" type="string">
+            <column name="TIPODOCUMENTODEFAULT" length="2" />
+        </property>
+        <property name="cobradortipodocumento" type="string">
+            <column name="COBRADORTIPODOCUMENTO" length="1" />
+        </property>
+        <property name="cobradornumerodocumento" type="string">
+            <column name="COBRADORNUMERODOCUMENTO" length="10" />
+        </property>
+        <property name="cobradornombre" type="string">
+            <column name="COBRADORNOMBRE" length="60" />
+        </property>
+        <property name="comentarioservicio" type="string">
+            <column name="COMENTARIOSERVICIO" length="100" />
+        </property>
+        <property name="comentariofecha" type="timestamp">
+            <column name="COMENTARIOFECHA" length="7" />
+        </property>
+        <property name="comentariousuario" type="string">
+            <column name="COMENTARIOUSUARIO" length="20" />
+        </property>
+        <property name="clasificacionfiscal" type="string">
+            <column name="CLASIFICACIONFISCAL" length="4" />
+        </property>
+        <property name="intervencionfiscalflag" type="string">
+            <column name="INTERVENCIONFISCALFLAG" length="1" />
+        </property>
+        <property name="intervencionfiscaldocumento" type="string">
+            <column name="INTERVENCIONFISCALDOCUMENTO" length="15" />
+        </property>
+        <property name="registropublico" type="string">
+            <column name="REGISTROPUBLICO" length="20" />
+        </property>
+        <property name="licenciamunicipal" type="string">
+            <column name="LICENCIAMUNICIPAL" length="20" />
+        </property>
+        <property name="fechaconstitucion" type="timestamp">
+            <column name="FECHACONSTITUCION" length="7" />
+        </property>
+        <property name="personacontacto" type="string">
+            <column name="PERSONACONTACTO" length="50" />
+        </property>
+        <property name="experienciatiempo" type="string">
+            <column name="EXPERIENCIATIEMPO" length="20" />
+        </property>
+        <property name="proveedorrelacionado" type="integer">
+            <column name="PROVEEDORRELACIONADO" length="22" />
+        </property>
+        <property name="exoneradofonavideclaracion" type="string">
+            <column name="EXONERADOFONAVIDECLARACION" length="50" />
+        </property>
+        <property name="exoneradofonavifechainicio" type="timestamp">
+            <column name="EXONERADOFONAVIFECHAINICIO" length="7" />
+        </property>
+        <property name="exoneradofonavifechafinal" type="timestamp">
+            <column name="EXONERADOFONAVIFECHAFINAL" length="7" />
+        </property>
+        <property name="detraccioncodigo" type="string">
+            <column name="DETRACCIONCODIGO" length="4" />
+        </property>
+        <property name="detraccioncodigoflag" type="string">
+            <column name="DETRACCIONCODIGOFLAG" length="1" />
+        </property>
+        <property name="detraccioncuentabancaria" type="string">
+            <column name="DETRACCIONCUENTABANCARIA" length="20" />
+        </property>
+        <property name="retenerpagosflag" type="string">
+            <column name="RETENERPAGOSFLAG" length="1" />
+        </property>
+        <property name="representantelegal2" type="string">
+            <column name="REPRESENTANTELEGAL2" length="50" />
+        </property>
+        <property name="fechaautorizacionfiscal" type="timestamp">
+            <column name="FECHAAUTORIZACIONFISCAL" length="7" />
+        </property>
+        <property name="intervencionfiscalcomentario" type="string">
+            <column name="INTERVENCIONFISCALCOMENTARIO" length="100" />
+        </property>
+        <property name="intervencionfiscalfecha" type="timestamp">
+            <column name="INTERVENCIONFISCALFECHA" length="7" />
+        </property>
+        <property name="exoneradomediopresentacion" type="string">
+            <column name="EXONERADOMEDIOPRESENTACION" length="1" />
+        </property>
+        <property name="regimentributario" type="string">
+            <column name="REGIMENTRIBUTARIO" length="1" />
+        </property>
+        <property name="afpretencionflag" type="string">
+            <column name="AFPRETENCIONFLAG" length="1" />
+        </property>
+        <property name="afpcodigo" type="string">
+            <column name="AFPCODIGO" length="3" />
+        </property>
+        <property name="afpcuspp" type="string">
+            <column name="AFPCUSPP" length="20" />
+        </property>
+        <property name="afptipocomision" type="string">
+            <column name="AFPTIPOCOMISION" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

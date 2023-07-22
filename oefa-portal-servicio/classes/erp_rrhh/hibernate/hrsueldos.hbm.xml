@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrSueldos" table="SGCORESYS.HR_SUELDOS">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrSueldosPk">
+            <key-property name="empleado" type="integer">
+                <column name="EMPLEADO" length="22" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="monedapago" type="string">
+            <column name="MONEDAPAGO" length="2" />
+        </property>
+        <property name="monedapagoant" type="string">
+            <column name="MONEDAPAGOANT" length="2" />
+        </property>
+        <property name="sueldoant" type="integer">
+            <column name="SUELDOANT" length="22" />
+        </property>
+        <property name="sueldo" type="integer">
+            <column name="SUELDO" length="22" />
+        </property>
+        <property name="gradosalario" type="string">
+            <column name="GRADOSALARIO" length="3" />
+        </property>
+        <property name="gradosalarioanterior" type="string">
+            <column name="GRADOSALARIOANTERIOR" length="3" />
+        </property>
+        <property name="codigopuesto" type="integer">
+            <column name="CODIGOPUESTO" length="22" />
+        </property>
+        <property name="codigopuestoanterior" type="integer">
+            <column name="CODIGOPUESTOANTERIOR" length="22" />
+        </property>
+        <property name="responsable" type="integer">
+            <column name="RESPONSABLE" length="22" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="50" />
+        </property>
+        <property name="numerodocumento" type="string">
+            <column name="NUMERODOCUMENTO" length="40" />
+        </property>
+        <property name="fecha" type="timestamp">
+            <column name="FECHA" length="7" />
+        </property>
+        <property name="unidadnegocio" type="string">
+            <column name="UNIDADNEGOCIO" length="4" />
+        </property>
+        <property name="tipoplanilla" type="string">
+            <column name="TIPOPLANILLA" length="2" />
+        </property>
+        <property name="centrocostosanterior" type="string">
+            <column name="CENTROCOSTOSANTERIOR" length="10" />
+        </property>
+        <property name="companiasocio" type="string">
+            <column name="COMPANIASOCIO" length="8" />
+        </property>
+        <property name="companiasocioanterior" type="string">
+            <column name="COMPANIASOCIOANTERIOR" length="8" />
+        </property>
+        <property name="posicionorganigrama" type="integer">
+            <column name="POSICIONORGANIGRAMA" length="22" />
+        </property>
+        <property name="posicionorganigramaanterior" type="integer">
+            <column name="POSICIONORGANIGRAMAANTERIOR" length="22" />
+        </property>
+        <property name="tipoaccion" type="string">
+            <column name="TIPOACCION" length="3" />
+        </property>
+        <property name="centrocostos" type="string">
+            <column name="CENTROCOSTOS" length="10" />
+        </property>
+        <property name="locacion" type="string">
+            <column name="LOCACION" length="4" />
+        </property>
+        <property name="locacionanterior" type="string">
+            <column name="LOCACIONANTERIOR" length="4" />
+        </property>
+        <property name="tipoplanillaanterior" type="string">
+            <column name="TIPOPLANILLAANTERIOR" length="4" />
+        </property>
+        <property name="tipocambio" type="integer">
+            <column name="TIPOCAMBIO" length="22" />
+        </property>
+        <property name="documentofiscal" type="string">
+            <column name="DOCUMENTOFISCAL" length="3" />
+        </property>
+        <property name="flagporcentaje" type="string">
+            <column name="FLAGPORCENTAJE" length="1" />
+        </property>
+        <property name="flagporcentajeanterior" type="string">
+            <column name="FLAGPORCENTAJEANTERIOR" length="1" />
+        </property>
+        <property name="porcentaje" type="integer">
+            <column name="PORCENTAJE" length="22" />
+        </property>
+        <property name="porcentajeanterior" type="integer">
+            <column name="PORCENTAJEANTERIOR" length="22" />
+        </property>
+        <property name="flagjefedepartamento" type="string">
+            <column name="FLAGJEFEDEPARTAMENTO" length="1" />
+        </property>
+        <property name="jefedepartamento" type="integer">
+            <column name="JEFEDEPARTAMENTO" length="22" />
+        </property>
+        <property name="flagjefedepartamentoanterior" type="string">
+            <column name="FLAGJEFEDEPARTAMENTOANTERIOR" length="1" />
+        </property>
+        <property name="jefedepartamentoanterior" type="integer">
+            <column name="JEFEDEPARTAMENTOANTERIOR" length="22" />
+        </property>
+        <property name="sucursal" type="string">
+            <column name="SUCURSAL" length="4" />
+        </property>
+        <property name="sucursalanterior" type="string">
+            <column name="SUCURSALANTERIOR" length="4" />
+        </property>
+        <property name="centrocostotexto" type="string">
+            <column name="CENTROCOSTOTEXTO" length="50" />
+        </property>
+        <property name="puestotexto" type="string">
+            <column name="PUESTOTEXTO" length="50" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="documentointerno" type="string">
+            <column name="DOCUMENTOINTERNO" length="23" />
+        </property>
+        <property name="fecharesolucion" type="timestamp">
+            <column name="FECHARESOLUCION" length="7" />
+        </property>
+        <property name="resolucion" type="integer">
+            <column name="RESOLUCION" length="22" />
+        </property>
+        <property name="costcenterclasification" type="string">
+            <column name="COSTCENTERCLASIFICATION" length="6" />
+        </property>
+        <property name="cargoant" type="string">
+            <column name="CARGOANT" length="3" />
+        </property>
+        <property name="afe" type="string">
+            <column name="AFE" length="15" />
+        </property>
+        <property name="afeanterior" type="string">
+            <column name="AFEANTERIOR" length="15" />
+        </property>
+        <property name="fechacategorizacion" type="timestamp">
+            <column name="FECHACATEGORIZACION" length="7" />
+        </property>
+        <property name="departamentooperacionalant" type="string">
+            <column name="DEPARTAMENTOOPERACIONALANT" length="10" />
+        </property>
+        <property name="departamentooperacional" type="string">
+            <column name="DEPARTAMENTOOPERACIONAL" length="10" />
+        </property>
+        <property name="cargo" type="string">
+            <column name="CARGO" length="3" />
+        </property>
+        <property name="nivelremunerativo" type="string">
+            <column name="NIVELREMUNERATIVO" length="1" />
+        </property>
+        <property name="nivelremunerativoant" type="string">
+            <column name="NIVELREMUNERATIVOANT" length="1" />
+        </property>
+        <property name="tipocargo" type="string">
+            <column name="TIPOCARGO" length="1" />
+        </property>
+        <property name="tipocargoant" type="string">
+            <column name="TIPOCARGOANT" length="1" />
+        </property>
+        <property name="cliente" type="integer">
+            <column name="CLIENTE" length="22" />
+        </property>
+        <property name="clienteant" type="integer">
+            <column name="CLIENTEANT" length="22" />
+        </property>
+        <property name="fechafin" type="timestamp">
+            <column name="FECHAFIN" length="7" />
+        </property>
+        <property name="dptoareaoperativa" type="integer">
+            <column name="DPTOAREAOPERATIVA" length="22" />
+        </property>
+        <property name="dptoareaoperativaant" type="integer">
+            <column name="DPTOAREAOPERATIVAANT" length="22" />
+        </property>
+        <property name="periodomov" type="string">
+            <column name="PERIODOMOV" length="7" />
+        </property>
+        <property name="fechafincontratoanterior" type="timestamp">
+            <column name="FECHAFINCONTRATOANTERIOR" length="7" />
+        </property>
+        <property name="nivel1Ant" type="integer">
+            <column name="NIVEL1_ANT" length="22" />
+        </property>
+        <property name="nivel2Ant" type="integer">
+            <column name="NIVEL2_ANT" length="22" />
+        </property>
+        <property name="nivel3Ant" type="integer">
+            <column name="NIVEL3_ANT" length="22" />
+        </property>
+        <property name="nivel1" type="integer">
+            <column name="NIVEL1" length="22" />
+        </property>
+        <property name="nivel2" type="integer">
+            <column name="NIVEL2" length="22" />
+        </property>
+        <property name="nivel3" type="integer">
+            <column name="NIVEL3" length="22" />
+        </property>
+        <property name="codigoproceso" type="string">
+            <column name="CODIGOPROCESO" length="2" />
+        </property>
+        <property name="numeroproceso" type="integer">
+            <column name="NUMEROPROCESO" length="22" />
+        </property>
+        <property name="motivoRechazo" type="string">
+            <column name="MOTIVO_RECHAZO" length="4000" />
+        </property>
+        <property name="nivelaprobacion" type="integer">
+            <column name="NIVELAPROBACION" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+
+	<application>
+		<resource-bundle>
+			<base-name>erp_planilla.messages</base-name>
+			<var>msgPR</var>
+		</resource-bundle>
+	</application>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consulta_boletas_empleado</from-outcome>
+			<to-view-id>/erp/planilla/paginas/boletas/consulta_boletas_empleado.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>ConsultaRenta5taCategoria</from-outcome>
+			<to-view-id>/erp/planilla/paginas/renta_5ta_categoria.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>ConsultaRenta5taCategoriaAnualizado</from-outcome>
+			<to-view-id>/erp/planilla/paginas/renta_5ta_categoria_anualizado.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>Certificado4ta5ta</from-outcome>
+			<to-view-id>/erp/planilla/paginas/certificado_4ta_5ta.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>wprcertificadolist</from-outcome>
+			<to-view-id>/erp/planilla/paginas/w_pr_cts_certificado_list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>wprvacacionesreporte</from-outcome>
+			<to-view-id>/erp/planilla/paginas/reporte_vacaciones/w_pr_vacaciones_reporte.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+</faces-config>

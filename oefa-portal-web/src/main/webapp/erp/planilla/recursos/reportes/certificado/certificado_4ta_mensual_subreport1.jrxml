@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado_4ta_mensual_subreport1" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="51cab802-07b3-4ede-8e3a-f31b8c6755d3">
+	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#666666"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#666666"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#666666"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#666666"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="0fb2b1bf-a458-4330-8056-875abc25d159"/>
+	<parameter name="COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{COMPANIA}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIPO_PLANILLA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{TIPO_PLANILLA}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EJERCICIO_FISCAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{EJERCICIO_FISCAL}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EMPLEADO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{EMPLEADO}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT CASE WHEN SUBSTR(PERIODO,-2,2)='01' THEN 'ENERO'
+            WHEN SUBSTR(PERIODO,-2,2)='02' THEN 'FEBRERO'
+            WHEN SUBSTR(PERIODO,-2,2)='03' THEN 'MARZO'
+            WHEN SUBSTR(PERIODO,-2,2)='04' THEN 'ABRIL'
+            WHEN SUBSTR(PERIODO,-2,2)='05' THEN 'MAYO'
+            WHEN SUBSTR(PERIODO,-2,2)='06' THEN 'JUNIO'
+            WHEN SUBSTR(PERIODO,-2,2)='07' THEN 'JULIO'
+            WHEN SUBSTR(PERIODO,-2,2)='08' THEN 'AGOSTO'
+            WHEN SUBSTR(PERIODO,-2,2)='09' THEN 'SETIEMBRE'
+            WHEN SUBSTR(PERIODO,-2,2)='10' THEN 'OCTUBRE'
+            WHEN SUBSTR(PERIODO,-2,2)='11' THEN 'NOVIEMBRE'
+            WHEN SUBSTR(PERIODO,-2,2)='12' THEN 'DICIEMBRE' END AS MES
+        ,SUM(MONTO) as INGRESOS
+        ,SUM(MONTO2) as RENTA
+FROM (
+    select substr(x.periodo,1,6) as periodo
+            ,nvl(x.Monto,0) as monto
+            ,0 as monto2
+    from SGCORESYS.Pr_PlanillaEmpleadoConcepto x
+    inner join SGCORESYS.PR_CONCEPTO Z on X.CONCEPTO =Z.CONCEPTO
+    where     x.concepto    Not in  (Select pc.concepto from SGCORESYS.Pr_ConjuntoDetalle pc where Conjunto='INGNAFE4TA')
+        and X.TIPOPROCESO   IN      (select P2.TIPOPROCESO from SGCORESYS.pr_tipoproceso P2 where NVL(P2.flagadelanto,'N')='N')
+        and x.empleado=$P{EMPLEADO}
+        and x.CompaniaSocio=$P{COMPANIA}
+        and x.tipoplanilla=$P{TIPO_PLANILLA}
+        and substr(x.periodo,1,4)=substr( $P{EJERCICIO_FISCAL},1,4)
+        and Z.TIPOCONCEPTO IN ('IN')
+    union all
+    select substr(x.periodo,1,6) as periodo
+            ,nvl(x.Monto,0)*-1 as monto
+            ,0 as monto2
+    from SGCORESYS.Pr_PlanillaEmpleadoConcepto x
+    inner join SGCORESYS.PR_CONCEPTO Z on X.CONCEPTO =Z.CONCEPTO
+    where     x.concepto    in  (Select pc.concepto from SGCORESYS.Pr_ConjuntoDetalle pc where Conjunto='FALTARD4TA')
+        and X.TIPOPROCESO   IN      (select P2.TIPOPROCESO from SGCORESYS.pr_tipoproceso P2 where NVL(P2.flagadelanto,'N')='N')
+        and x.empleado=$P{EMPLEADO}
+        and x.CompaniaSocio=$P{COMPANIA}
+        and x.tipoplanilla=$P{TIPO_PLANILLA}
+        and substr(x.periodo,1,4)=substr($P{EJERCICIO_FISCAL},1,4)
+    union all
+    select substr(x.periodo,1,6) as periodo
+            ,0 as monto
+            ,nvl(x.Monto,0) as monto2
+    from SGCORESYS.Pr_PlanillaEmpleadoConcepto x
+    where     x.concepto    in  (Select pc.concepto from SGCORESYS.Pr_ConjuntoDetalle pc where Conjunto='CONC4TACAT')
+        and X.TIPOPROCESO   IN  (select P2.TIPOPROCESO from SGCORESYS.pr_tipoproceso P2 where NVL(P2.flagadelanto,'N')='N')
+        and x.empleado=$P{EMPLEADO}
+        and x.CompaniaSocio=$P{COMPANIA}
+        and x.tipoplanilla=$P{TIPO_PLANILLA}
+        and substr(x.periodo,1,4)=substr($P{EJERCICIO_FISCAL},1,4)
+
+
+)X
+GROUP BY PERIODO
+ORDER BY PERIODO]]>
+	</queryString>
+	<field name="MES" class="java.lang.String"/>
+	<field name="INGRESOS" class="java.math.BigDecimal"/>
+	<field name="RENTA" class="java.math.BigDecimal"/>
+	<variable name="TotalIngresos" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{INGRESOS}]]></variableExpression>
+	</variable>
+	<variable name="TotalRenta" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{RENTA}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="15">
+			<staticText>
+				<reportElement x="0" y="0" width="76" height="15" forecolor="#333333" uuid="a7159d87-fda6-482b-adcc-be265e1392c5"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="76" y="0" width="79" height="15" forecolor="#333333" uuid="31d413bd-de83-4e52-b256-55e677d55047"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RENTA BRUTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="155" y="0" width="77" height="15" forecolor="#333333" uuid="b92870ff-bcb8-421d-9b4e-71f426c65307"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RETENCIÓN]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16">
+			<textField pattern="#,##0.00">
+				<reportElement x="76" y="0" width="79" height="16" forecolor="#333333" uuid="b0f6a4c6-267d-4443-a17f-e801fa966a24"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INGRESOS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="155" y="0" width="77" height="16" forecolor="#333333" uuid="de5c3802-7167-4966-8cbe-5354ef8d9512"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RENTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="76" height="16" forecolor="#333333" uuid="d6e24307-49f2-405b-8b68-3eac8bb1b8db"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MES}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="16">
+			<staticText>
+				<reportElement x="0" y="0" width="76" height="16" forecolor="#000000" uuid="b8caaf39-43ae-4627-b7d6-f24dcefca4c2"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[TOTAL : ]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="76" y="0" width="79" height="16" forecolor="#333333" uuid="06a35870-a014-4ec5-bb3d-7ac1790e197a"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalIngresos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="155" y="0" width="77" height="16" forecolor="#333333" uuid="14e21efd-3710-447a-8a6b-53206d6ca377"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $V{TotalRenta} == null ? new BigDecimal(0) : $V{TotalRenta})]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

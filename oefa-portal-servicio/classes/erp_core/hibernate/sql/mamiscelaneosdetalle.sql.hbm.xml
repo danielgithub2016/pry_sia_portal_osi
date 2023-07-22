@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : core.MaMiscelaneosdetalle -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="mamiscelaneosdetalle.obtenerdescripcionmiscelaneosxparam">
+		<![CDATA[
+		SELECT 
+		ma_miscelaneosdetalle.codigoelemento "codigoelemento",   
+		CAST(ma_miscelaneosdetalle.descripcionlocal as varchar(200)) "descripcionlocal",   
+		ma_miscelaneosdetalle.valorcodigo5 "valorcodigo5",
+		ma_miscelaneosheader.descripcionlocal "descripcionlocalheader",
+		ma_miscelaneosdetalle.valornumerico "valornumerico",
+		ma_miscelaneosdetalle.valorcodigo1 "valorcodigo1"
+			FROM 
+			SGCORESYS.MA_MiscelaneosDetalle
+				INNER JOIN SGCORESYS.MA_MiscelaneosHeader  
+					ON (MA_MiscelaneosDetalle.AplicacionCodigo = MA_MiscelaneosHeader.AplicacionCodigo AND
+						 MA_MiscelaneosDetalle.CodigoTabla = MA_MiscelaneosHeader.CodigoTabla AND
+						 MA_MiscelaneosDetalle.Compania = MA_MiscelaneosHeader.Compania)
+			WHERE 
+			( MA_MiscelaneosDetalle.AplicacionCodigo = :par_aplicacion ) AND  
+			( MA_MiscelaneosDetalle.CodigoTabla = :par_tabla ) AND  
+			( substr(MA_MiscelaneosDetalle.Compania,6) = substr(:par_companyowner,6) ) AND
+			( MA_MiscelaneosDetalle.CodigoElemento = nvl(:par_codigoelemento,MA_MiscelaneosDetalle.CodigoElemento) )
+		]]>
+	</sql-query>
+</hibernate-mapping>

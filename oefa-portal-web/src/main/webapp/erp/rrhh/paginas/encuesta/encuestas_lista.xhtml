@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>Encuestas</h2>
+	</ui:define>
+	<ui:define name="content">
+
+		<ui:include src="../usuarioActual01.xhtml" />
+
+
+		<h:form id="frmEncuestas_lista">
+			<p:growl autoUpdate="true" life="#{msg.generico_tiempo_growl}"
+				widgetVar="growlWV" />
+			<p:panel header="#{msg.generico_filtros}" rendered="false">
+				<h:panelGrid columns="4" width="50%">
+					<p:outputLabel value="Fecha" />
+					<p:calendar size="15" showOn="button" showButtonPanel="true"
+						value="#{cHrEncuesta.filtro.fechaFiltro}" navigator="true"
+						pattern="#{msg.formato_fecha_fecha}" mask="true" locale="es" />
+
+					<p:outputLabel value="Estado" />
+					<p:selectOneMenu style="width:100px;"
+						value="#{cHrEncuesta.filtro.estado}">
+						<f:selectItem itemLabel="#{msg.generico_listar_todos}" />
+						<f:selectItem itemValue="P" itemLabel="En Preparación" />
+						<f:selectItem itemValue="A" itemLabel="Aprobado" />
+						<f:selectItem itemValue="E" itemLabel="Ejecutado" />
+						<f:selectItem itemValue="T" itemLabel="Terminado" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+			</p:panel>
+			<h:panelGrid columns="2" width="100%" rendered="false"
+				style="padding-top: 5px;padding-bottom: 5px;">
+				<p:commandButton value="Buscar" icon="buscar" style="float:right;"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					styleClass="botonTextoImagen" action="#{cHrEncuesta.buscar}"
+					update="@(form)" />
+			</h:panelGrid>
+			<p:dataTable
+				emptyMessage="En este momento no existen Encuestas para participar."
+				id="dtEncuestas" paginator="true" paginatorPosition="bottom"
+				rows="15" reflow="true" value="#{cHrEncuesta.lstDatos}" var="row"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+				<p:column headerText="Tipo de Encuesta" width="100"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.tipoencuestadesc}" />
+				</p:column>
+				<p:column headerText="Título" width="200">
+					<h:outputText value="#{row.titulo}" />
+				</p:column>
+				<p:column headerText="Fecha Inicio" width="70"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.fechainicio}">
+						<f:convertDateTime
+							pattern="#{msg.formato_fecha_fechahora_estandar}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Fecha Fin" width="70"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.fechafin}">
+						<f:convertDateTime
+							pattern="#{msg.formato_fecha_fechahora_estandar}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Periodo" width="40">
+					<h:outputText
+						value="#{row.periodo.substring(0,4)} - #{row.periodo.substring(4,6)}" />
+				</p:column>
+				<p:column headerText="Observación" width="250">
+					<h:outputText value="#{row.observaciones}" />
+				</p:column>
+				<p:column headerText="Acciones" width="40"
+					styleClass="columnatableCentro">
+					<p:commandButton type="icon" icon="ui-icon-circle-triangle-e"
+						title="Ejecutar Encuesta" rendered="#{row.ejecuto == 0}"
+						action="#{cHrEncuesta.editar}">
+						<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+							icon="alerta" message="¿Está seguro de Ejecutar la encuesta?" />
+						<f:setPropertyActionListener
+							target="#{cHrEncuesta.registroSeleccionado}" value="#{row}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

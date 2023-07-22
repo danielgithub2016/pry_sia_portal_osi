@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Banco" table="SGCORESYS.BANCO">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.BancoPk">
+            <key-property name="banco" type="string">
+                <column name="BANCO" length="3" />
+            </key-property>
+        </composite-id>
+        <property name="descripcioncorta" type="string">
+            <column name="DESCRIPCIONCORTA" length="20" />
+        </property>
+        <property name="descripcionlarga" type="string">
+            <column name="DESCRIPCIONLARGA" length="40" />
+        </property>
+        <property name="banconumero" type="integer">
+            <column name="BANCONUMERO" length="22" />
+        </property>
+        <property name="personacontacto" type="string">
+            <column name="PERSONACONTACTO" length="30" />
+        </property>
+        <property name="conciliacionautomaticaflag" type="string">
+            <column name="CONCILIACIONAUTOMATICAFLAG" length="1" />
+        </property>
+        <property name="formatopropioflag" type="string">
+            <column name="FORMATOPROPIOFLAG" length="1" />
+        </property>
+        <property name="formatodatawindow" type="string">
+            <column name="FORMATODATAWINDOW" length="50" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="conciliacionformatoflag" type="string">
+            <column name="CONCILIACIONFORMATOFLAG" length="1" />
+        </property>
+        <property name="codigointerfaseafp" type="string">
+            <column name="CODIGOINTERFASEAFP" length="3" />
+        </property>
+        <property name="disponibleedflag" type="string">
+            <column name="DISPONIBLEEDFLAG" length="1" />
+        </property>
+        <property name="codigofiscal" type="string">
+            <column name="CODIGOFISCAL" length="2" />
+        </property>
+        <property name="tasaefectivaanual" type="integer">
+            <column name="TASAEFECTIVAANUAL" length="22" />
+        </property>
+        <property name="cuentamatriz" type="string">
+            <column name="CUENTAMATRIZ" length="6" />
+        </property>
+        <property name="codigosiaf" type="string">
+            <column name="CODIGOSIAF" length="3" />
+        </property>
+        <property name="custodiaflag" type="string">
+            <column name="CUSTODIAFLAG" length="1" />
+        </property>
+        <property name="codigobancomcpp" type="string">
+            <column name="CODIGOBANCOMCPP" length="3" />
+        </property>
+        <property name="codigointerno" type="string">
+            <column name="CODIGOINTERNO" length="4" />
+        </property>
+    </class>
+</hibernate-mapping>

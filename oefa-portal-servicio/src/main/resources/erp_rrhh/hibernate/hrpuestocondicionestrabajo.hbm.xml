@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrPuestocondicionestrabajo" table="SGCORESYS.HR_PUESTOCONDICIONESTRABAJO">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrPuestocondicionestrabajoPk">
+            <key-property name="codigopuesto" type="integer">
+                <column name="CODIGOPUESTO" length="22" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="tipocondicion" type="string">
+            <column name="TIPOCONDICION" length="10" />
+        </property>
+        <property name="porcentaje" type="integer">
+            <column name="PORCENTAJE" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

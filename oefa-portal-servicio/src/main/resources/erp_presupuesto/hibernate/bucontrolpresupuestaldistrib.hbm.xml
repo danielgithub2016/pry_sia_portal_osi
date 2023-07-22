@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.presupuesto.dominio.BuControlpresupuestalDistrib" table="SGCORESYS.BU_CONTROLPRESUPUESTAL_DISTRIB">
+        <composite-id name="pk" class="net.royal.erp.presupuesto.dominio.BuControlpresupuestalDistribPk">
+            <key-property name="companiasocio" type="string">
+                <column name="COMPANIASOCIO" length="8" />
+            </key-property>
+            <key-property name="tipodocumento" type="string">
+                <column name="TIPODOCUMENTO" length="2" />
+            </key-property>
+            <key-property name="numerodocumento" type="string">
+                <column name="NUMERODOCUMENTO" length="14" />
+            </key-property>
+            <key-property name="proveedor" type="integer">
+                <column name="PROVEEDOR" length="22" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="centrocosto" type="string">
+            <column name="CENTROCOSTO" length="10" />
+        </property>
+        <property name="centrocostodestino" type="string">
+            <column name="CENTROCOSTODESTINO" length="6" />
+        </property>
+        <property name="cuentacontable" type="string">
+            <column name="CUENTACONTABLE" length="20" />
+        </property>
+        <property name="partidapresupuestal" type="string">
+            <column name="PARTIDAPRESUPUESTAL" length="50" />
+        </property>
+        <property name="proyecto" type="string">
+            <column name="PROYECTO" length="15" />
+        </property>
+        <property name="camporeferencia" type="string">
+            <column name="CAMPOREFERENCIA" length="12" />
+        </property>
+        <property name="monto" type="big_decimal">
+            <column name="MONTO" length="22" />
+        </property>
+        <property name="sucursal" type="string">
+            <column name="SUCURSAL" length="4" />
+        </property>
+        <property name="referenciafiscal01" type="string">
+            <column name="REFERENCIAFISCAL01" length="10" />
+        </property>
+        <property name="referenciafiscal02" type="string">
+            <column name="REFERENCIAFISCAL02" length="20" />
+        </property>
+        <property name="referenciafiscal03" type="string">
+            <column name="REFERENCIAFISCAL03" length="10" />
+        </property>
+        <property name="montodolares" type="integer">
+            <column name="MONTODOLARES" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

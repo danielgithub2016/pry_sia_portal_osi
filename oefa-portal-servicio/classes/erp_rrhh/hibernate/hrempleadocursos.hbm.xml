@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.erp.rrhh.dominio.HrEmpleadocursos" table="SGCORESYS.HR_EMPLEADOCURSOS">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrEmpleadocursosPk">
+            <key-property name="empleado" type="integer">
+                <column name="EMPLEADO" length="22" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="curso" type="integer">
+            <column name="CURSO" length="22" />
+        </property>
+        <property name="tipocurso" type="string">
+            <column name="TIPOCURSO" length="2" />
+        </property>
+        <property name="centroestudios" type="integer">
+            <column name="CENTROESTUDIOS" length="22" />
+        </property>
+        <property name="fechainicio" type="timestamp">
+            <column name="FECHAINICIO" length="7" />
+        </property>
+        <property name="fechafin" type="timestamp">
+            <column name="FECHAFIN" length="7" />
+        </property>
+        <property name="auspicio" type="string">
+            <column name="AUSPICIO" length="1" />
+        </property>
+        <property name="dias" type="integer">
+            <column name="DIAS" length="22" />
+        </property>
+        <property name="grado" type="string">
+            <column name="GRADO" length="50" />
+        </property>
+        <property name="descripcioncurso" type="string">
+            <column name="DESCRIPCIONCURSO" length="200" />
+        </property>
+        <property name="horas" type="big_decimal">
+            <column name="HORAS" length="22" />
+        </property>
+        <property name="speaking" type="string">
+            <column name="SPEAKING" length="20" />
+        </property>
+        <property name="readingwriting" type="string">
+            <column name="READINGWRITING" length="20" />
+        </property>
+        <property name="listening" type="string">
+            <column name="LISTENING" length="20" />
+        </property>
+        <property name="flagcertificacion" type="string">
+            <column name="FLAGCERTIFICACION" length="1" />
+        </property>
+        <property name="flagcurso" type="string">
+            <column name="FLAGCURSO" length="1" />
+        </property>
+        <property name="cursodescripcion" type="string">
+            <column name="CURSODESCRIPCION" length="500" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="OBSERVACIONES" length="100" />
+        </property>
+        <property name="totalhoras" type="integer">
+            <column name="TOTALHORAS" length="22" />
+        </property>
+        <property name="vigencia" type="integer">
+            <column name="VIGENCIA" length="22" />
+        </property>
+        <property name="documento" type="string">
+            <column name="DOCUMENTO" length="2" />
+        </property>
+        <property name="carrera" type="integer">
+            <column name="CARRERA" length="22" />
+        </property>
+        <property name="creditosotorgados" type="integer">
+            <column name="CREDITOSOTORGADOS" length="22" />
+        </property>
+        <property name="otrocentroestudios" type="string">
+            <column name="OTROCENTROESTUDIOS" length="150" />
+        </property>
+        <property name="capacitacion" type="string">
+            <column name="CAPACITACION" length="10" />
+        </property>
+        <property name="lugarEvento" type="string">
+            <column name="LUGAR_EVENTO" length="100" />
+        </property>
+        <property name="areatematica" type="string">
+            <column name="AREATEMATICA" length="10" />
+        </property>
+        <property name="rutadocumento" type="string">
+            <column name="RUTADOCUMENTO" length="200" />
+        </property>
+        <property name="calificacion" type="big_decimal">
+            <column name="CALIFICACION" length="22" />
+        </property>
+        <property name="ruta" type="binary">
+            <column name="RUTA" length="4000" />
+        </property>
+    </class>
+</hibernate-mapping>

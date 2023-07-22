@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : apfeeder.w_ma_tipocambiobancario_list -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+  
+
+	<!-- apfeeder.dw_cp_feeder_transfer_adelanto_pago -->
+	<sql-query name="apfeeder.DwCpFeederTransferAdelantoPago">
+		select ap_gastoadelantopagos.unidadreplicacion as "unidadreplicacion",
+		ap_gastoadelantopagos.tipoadelanto as "tipoadelanto",
+		ap_gastoadelantopagos.numeroadelanto as "numeroadelanto",
+		ap_gastoadelantopagos.secuencia as "secuencia",
+		ap_gastoadelantopagos.obligacionpagoflag as "obligacionpagoflag",
+		ap_gastoadelantopagos.obligacionproveedor as "obligacionproveedor",
+		ap_gastoadelantopagos.obligaciontipodocumento as "obligaciontipodocumento",
+		ap_gastoadelantopagos.obligacionnumerodocumento as 	"obligacionnumerodocumento",
+		ap_gastoadelantopagos.pagounidadreplicacion as "pagounidadreplicacion",
+		ap_gastoadelantopagos.pagonumerotransaccion as "pagonumerotransaccion",
+		ap_gastoadelantopagos.pagosecuencia as "pagosecuencia",
+		ap_gastoadelantopagos.monto as "monto",
+		ap_gastoadelantopagos.estado as "estado",
+		ap_gastoadelantopagos.ultimousuario as "ultimousuario",
+		ap_gastoadelantopagos.ultimafechamodif as "ultimafechamodif",
+		ap_gastoadelantopagos.documentoreferencia as "documentoreferencia"
+		from sgcoresys.ap_gastoadelantopagos
+		WHERE ( AP_GastoAdelantoPagos.ObligacionProveedor = :Proveedor ) AND
+		( AP_GastoAdelantoPagos.ObligacionTipoDocumento = :TipoDocumento ) AND
+		( AP_GastoAdelantoPagos.ObligacionNumeroDocumento = :NumeroDocumento )
+	</sql-query>
+
+	<!-- apfeeder.dw_cp_feeder_transfer_advance_distrib -->
+	<sql-query name="apfeeder.DwCpFeederTransferAdvanceDistrib">
+		SELECT AP_GastoAdelantoSustento.Afe as "afe",
+		sum(AP_GastoAdelantoSustento.MontoTotal) as "monto"
+		FROM SGCORESYS.AP_GastoAdelanto
+		INNER JOIN 	SGCORESYS.AP_GastoAdelantoSustento ON
+		(
+		AP_GastoAdelantoSustento.UnidadReplicacion =
+		AP_GastoAdelanto.UnidadReplicacion and
+		AP_GastoAdelantoSustento.TipoAdelanto = AP_GastoAdelanto.TipoAdelanto
+		and
+		AP_GastoAdelantoSustento.NumeroAdelanto =
+		AP_GastoAdelanto.NumeroAdelanto )
+		WHERE (
+		AP_GastoAdelanto.UnidadReplicacion = :unidadreplicacion ) AND
+		(
+		AP_GastoAdelanto.TipoAdelanto = :tipoadelanto ) AND
+		(
+		AP_GastoAdelanto.NumeroAdelanto = :numeroadelanto )
+		GROUP BY
+		AP_GastoAdelantoSustento.Afe
+	</sql-query>
+
+	<!-- apfeeder.dw_cp_feeder_transfer_obligximpuesto -->
+	<sql-query name="apfeeder.DwCpFeederTransferObligximpuesto">
+		select obligacionesximpuesto.proveedor as
+		"proveedor",
+		obligacionesximpuesto.tipodocumento as "tipodocumento",
+		obligacionesximpuesto.numerodocumento as "numerodocumento",
+		obligacionesximpuesto.impuesto as "impuesto",
+		obligacionesximpuesto.factor as "factor",
+		obligacionesximpuesto.montoimpuesto as "montoimpuesto",
+		obligacionesximpuesto.ultimousuario as "ultimousuario",
+		obligacionesximpuesto.ultimafechamodif as "ultimafechamodif"
+		FROM
+		SGCORESYS.OBLIGACIONESXIMPUESTO
+		WHERE ( ObligacionesXImpuesto.Proveedor
+		= :proveedor ) AND
+		( ObligacionesXImpuesto.TipoDocumento =
+		:tipodocumento ) AND
+		( ObligacionesXImpuesto.NumeroDocumento =
+		:numrodocumento )
+
+	</sql-query>
+
+	<!-- apfeeder.dw_cp_feeder_transfer_pettycash_account -->
+	<sql-query name="apfeeder.DwCpFeederTransferPettycashAccount">
+		select
+		ap_cajachicadistribucion.cuentacontable as "cuentacontable",
+		ap_cajachicadistribucion.monto as "monto",
+		ap_cajachicadistribucion.afe as "afe",
+		ap_cajachicadistribucion.centrocostodestino as "centrocostodestino",
+		ap_cajachicadistribucion.centrocosto as "centrocosto",
+		ap_cajachicadistribucion.sucursal as "sucursal",
+		ap_cajachicadistribucion.camporeferencia as "camporeferencia",
+		ap_cajachicadistribucion.numeroorden as "numeroorden",
+		ap_cajachicadistribucion.destinationcompanyowner as
+		"destinationcompanyowner",
+		ap_cajachicadistribucion.referenciafiscal01
+		as "referenciafiscal01",
+		ap_cajachicadistribucion.referenciafiscal02 as
+		"referenciafiscal02",
+		ap_cajachicadistribucion.referenciafiscal03 as
+		"referenciafiscal03",
+		ap_cajachicadistribucion.nivelservicio as
+		"nivelservicio"
+		from sgcoresys.ap_cajachicadistribucion
+		WHERE ( (
+		AP_CajaChicaDistribucion.UnidadReplicacion = :UnidadReplicacion )
+		AND
+		(
+		AP_CajaChicaDistribucion.CajaChicaNumero = :CajaChicaNumero ) AND
+		(AP_CajaChicaDistribucion.CajaChicaReporteFlag = :CajaChicaReporteFlag
+		) AND
+		( AP_CajaChicaDistribucion.Secuencia = :Secuencia ) )
+	</sql-query>
+
+	<!-- apfeeder.dw_cp_feeder_transfer_pettycash_detail -->
+	<sql-query name="apfeeder.DwCpFeederTransferPettycashDetail">
+		select ap_cajachicadetalle.tipoimpuestoflag
+		as "tipoimpuestoflag",
+		ap_cajachicadetalle.montomonedapago as
+		"montomonedapago",
+		ap_cajachicadetalle.monedadocumento as
+		"monedadocumento",
+		ap_cajachicadetalle.tipodecambio as "tipodecambio",
+		ap_cajachicadetalle.montoafecto as "montoafecto",
+		ap_cajachicadetalle.montonoafecto as "montonoafecto",
+		ap_cajachicadetalle.montoimpuesto as "montoimpuesto",
+		ap_cajachicadetalle.secuencia as "secuencia",
+		ap_cajachicadetalle.montototal as "montototal",
+		ap_cajachicadetalle.tiposervicio as "tiposervicio",
+		ap_cajachicadetalle.partidapresupuestal as "partidapresupuestal",
+		ap_cajachicadetalle.descripcion as "descripcion",
+		ap_cajachicadetalle.proveedor as "proveedor",
+		ap_cajachicadetalle.tipodocumento as "tipodocumento",
+		ap_cajachicadetalle.numerodocumento as "numerodocumento",
+		ap_cajachicadetalle.retencionxcobrarflag as "retencionxcobrarflag",
+		ap_cajachicadetalle.retencionflag as "retencionflag",
+		ap_cajachicadetalle.retencionmonto as "retencionmonto",
+		ap_cajachicadetalle.retenciondetraccioncodigo as
+		"retenciondetraccioncodigo",
+		ap_cajachicadetalle.fechadocumento as
+		"fechadocumento",
+		ap_cajachicadetalle.conceptogasto as "conceptogasto"
+		FROM SGCORESYS.AP_CAJACHICADETALLE
+		WHERE (
+		AP_CajaChicaDetalle.UnidadReplicacion = :UnidadReplicacion ) AND
+		(
+		AP_CajaChicaDetalle.CajaChicaNumero = :CajaChicaNumero ) AND
+		(
+		AP_CajaChicaDetalle.CajaChicaReporteFlag = :CajaChicaReporteFlag )
+		ORDER BY AP_CAJACHICADETALLE.SECUENCIA ASC
+	</sql-query>
+
+	
+
+	<!-- apfeeder.dw_cp_gastoadelanto_edit -->
+	<sql-query name="apfeeder.DwCpGastoadelantoEdit">
+		select ap_gastoadelanto.numeroadelanto as
+		"numeroadelanto",
+		ap_gastoadelanto.companiasocio as "companiasocio",
+		ap_gastoadelanto.responsable as "responsable",
+		ap_gastoadelanto.clasificacion as "clasificacion",
+		ap_gastoadelanto.fechadocumento as "fechadocumento",
+		ap_gastoadelanto.fechapartida as "fechapartida",
+		ap_gastoadelanto.fechallegada as "fechallegada",
+		ap_gastoadelanto.lugardestino as "lugardestino",
+		ap_gastoadelanto.tipopago as "tipopago",
+		ap_gastoadelanto.persona as
+		"persona",
+		ap_gastoadelanto.preparadopor as "preparadopor",
+		ap_gastoadelanto.fechapreparacion as "fechapreparacion",
+		ap_gastoadelanto.aprobadopor as "aprobadopor",
+		ap_gastoadelanto.fechaaprobacion as "fechaaprobacion",
+		ap_gastoadelanto.monedadocumento as "monedadocumento",
+		ap_gastoadelanto.montototal as "montototal",
+		ap_gastoadelanto.saldoadelanto as "saldoadelanto",
+		ap_gastoadelanto.descripcion as "descripcion",
+		ap_gastoadelanto.observaciones as "observaciones",
+		ap_gastoadelanto.estado as "estado",
+		ap_gastoadelanto.ultimousuario as
+		"ultimousuario",
+		ap_gastoadelanto.ultimafechamodif as
+		"ultimafechamodif",
+		ap_gastoadelanto.fechaesperadapago as
+		"fechaesperadapago",
+		ap_gastoadelanto.tipoadelanto as "tipoadelanto",
+		ap_gastoadelanto.compromisotipo as "compromisotipo",
+		ap_gastoadelanto.compromisonumero as "compromisonumero",
+		ap_gastoadelanto.obligaciontipodocumento as "obligaciontipodocumento",
+		ap_gastoadelanto.obligacionnumerodocumento as
+		"obligacionnumerodocumento",
+		ap_gastoadelanto.numerodocumentointerno as
+		"numerodocumentointerno",
+		ap_gastoadelanto.flujodecaja as
+		"flujodecaja",
+		ap_gastoadelanto.unidadreplicacion as
+		"unidadreplicacion",
+		ap_gastoadelanto.partidapresupuestal as
+		"partidapresupuestal",
+		ap_gastoadelanto.personapagara as
+		"personapagara",
+		ap_gastoadelanto.conceptogasto as "conceptogasto",
+		ap_gastoadelanto.centrocostos as "centrocostos",
+		ap_gastoadelanto.proyecto as "proyecto",
+		ap_gastoadelanto.empleadoautorizado as "empleadoautorizado",
+		ap_gastoadelanto.unidadnegocio as "unidadnegocio",
+		ap_gastoadelanto.numeroorden as "numeroorden",
+		ap_gastoadelanto.tiposervicio as "tiposervicio" ,
+		CAST(' ' as
+		varchar(2)) as "numerodosificacion",
+		ap_gastoadelanto.detraccioncodigo
+		as "detraccioncodigo",
+		ap_gastoadelanto.detraccioncodigoflag as
+		"detraccioncodigoflag",
+		ap_gastoadelanto.referenciadatos01 as
+		"referenciadatos01",
+		ap_gastoadelanto.referenciadatos02 as
+		"referenciadatos02",
+		ap_gastoadelanto.counterflag as "counterflag",
+		ap_gastoadelanto.ano as "ano",
+		ap_gastoadelanto.certificacionnumero as
+		"certificacionnumero",
+		ap_gastoadelanto.siaf_expediente as
+		"siaf_expediente",
+		ap_gastoadelanto.mef_estado as "mef_estado",
+		ap_gastoadelanto.personaenvio as "personaenvio"
+		FROM
+		SGCORESYS.AP_GASTOADELANTO
+		WHERE ( AP_GastoAdelanto.UnidadReplicacion =
+		:unidadreplicacion ) AND
+		( AP_GastoAdelanto.NumeroAdelanto =
+		:numeroadelanto ) AND
+		( AP_GastoAdelanto.TipoAdelanto = :tipodelanto )
+	</sql-query>
+
+	
+	<!-- apfeeder.dw_cp_gastoadelanto_retrieve -->
+	<sql-query name="apfeeder.DwCpGastoadelantoRetrieve">
+		select ap_gastoadelanto.unidadreplicacion as "unidadreplicacion",
+		ap_gastoadelanto.tipoadelanto as "tipoadelanto",
+		ap_gastoadelanto.numeroadelanto as "numeroadelanto",
+		ap_gastoadelanto.companiasocio as "companiasocio",
+		ap_gastoadelanto.responsable as "responsable",
+		ap_gastoadelanto.clasificacion as "clasificacion",
+		ap_gastoadelanto.compromisotipo as "compromisotipo",
+		ap_gastoadelanto.compromisonumero as "compromisonumero",
+		ap_gastoadelanto.fechadocumento as "fechadocumento",
+		ap_gastoadelanto.fechaesperadapago as "fechaesperadapago",
+		ap_gastoadelanto.fechapartida as "fechapartida",
+		ap_gastoadelanto.fechallegada as "fechallegada",
+		ap_gastoadelanto.lugardestino as "lugardestino",
+		ap_gastoadelanto.tipopago as "tipopago",
+		ap_gastoadelanto.persona as "persona",
+		ap_gastoadelanto.preparadopor as "preparadopor",
+		ap_gastoadelanto.fechapreparacion as "fechapreparacion",
+		ap_gastoadelanto.aprobadopor as "aprobadopor",
+		ap_gastoadelanto.fechaaprobacion as "fechaaprobacion",
+		ap_gastoadelanto.monedadocumento as "monedadocumento",
+		ap_gastoadelanto.montototal as "montototal",
+		ap_gastoadelanto.saldoadelanto as "saldoadelanto",
+		ap_gastoadelanto.obligaciontipodocumento as "obligaciontipodocumento",
+		ap_gastoadelanto.obligacionnumerodocumento as "obligacionnumerodocumento",
+		ap_gastoadelanto.descripcion as "descripcion",
+		ap_gastoadelanto.observaciones as "observaciones",
+		ap_gastoadelanto.numerodocumentointerno as "numerodocumentointerno",
+		ap_gastoadelanto.centrocostos as "centrocostos",
+		ap_gastoadelanto.partidapresupuestal as "partidapresupuestal",
+		ap_gastoadelanto.proyecto as "proyecto",
+		ap_gastoadelanto.flujodecaja as "flujodecaja",
+		ap_gastoadelanto.estado as "estado",
+		ap_gastoadelanto.ultimousuario as "ultimousuario",
+		ap_gastoadelanto.ultimafechamodif as "ultimafechamodif",
+		ap_gastoadelanto.personapagara as "personapagara",
+		ap_gastoadelanto.conceptogasto as "conceptogasto",
+		ap_gastoadelanto.unidadnegocio as "unidadnegocio",
+		ap_gastoadelanto.tiposervicio as "tiposervicio",
+		ap_gastoadelanto.regcomprasmontoafecto as "regcomprasmontoafecto",
+		ap_gastoadelanto.regcomprasmontonoafecto as "regcomprasmontonoafecto", 
+		ap_gastoadelanto.detraccioncodigo as "detraccioncodigo",
+		ap_gastoadelanto.detraccioncodigoflag as "detraccioncodigoflag",
+		ap_gastoadelanto.siaf_expediente as "siaf_expediente",
+		ap_gastoadelanto.certificacionnumero as "certificacionnumero",
+		ap_gastoadelanto.ano as "ano"
+		FROM
+		SGCORESYS.AP_GASTOADELANTO
+		WHERE ( AP_GastoAdelanto.UnidadReplicacion =
+		:par_und_replicacion ) AND
+		( AP_GastoAdelanto.TipoAdelanto =
+		:par_tipoadelanto ) AND
+		( AP_GastoAdelanto.NumeroAdelanto =
+		:par_numeroadelanto )
+	</sql-query>
+
+	
+
+
+	
+	
+
+
+	<!-- apfeeder.dw_cp_pettycash_retrieve -->
+	<sql-query name="apfeeder.DwCpPettycashRetrieve">
+		select ap_cajachica.cajachicareporteflag AS "cajachicareporteflag",
+		ap_cajachica.unidadreplicacion AS "unidadreplicacion",
+		ap_cajachica.cajachicanumero AS "cajachicanumero",
+		ap_cajachica.companiasocio AS "companiasocio",
+		ap_cajachica.responsablecodigo AS "responsablecodigo",
+		ap_cajachica.monedapago AS "monedapago",
+		ap_cajachica.montototal AS 	"montototal",
+		ap_cajachica.montoadelantos AS "montoadelantos",
+		ap_cajachica.montoneto AS "montoneto",
+		ap_cajachica.numeroadelanto AS "numeroadelanto",
+		ap_cajachica.clasificacion AS "clasificacion",
+		ap_cajachica.defaultprime AS "defaultprime",
+		ap_cajachica.defaultafe AS "defaultafe",
+		ap_cajachica.descripcion AS "descripcion",
+		ap_cajachica.razonrechazo AS "razonrechazo",
+		ap_cajachica.beneficiario AS "beneficiario",
+		ap_cajachica.preparadopor AS "preparadopor",
+		ap_cajachica.fechapreparacion AS "fechapreparacion",
+		ap_cajachica.aprobadopor AS "aprobadopor",
+		ap_cajachica.fechaaprobacion AS "fechaaprobacion",
+		ap_cajachica.obligaciontipodocumento AS "obligaciontipodocumento",
+		ap_cajachica.obligacionnumerodocumento AS "obligacionnumerodocumento",
+		ap_cajachica.numerodocumentointerno AS "numerodocumentointerno",
+		ap_cajachica.estado AS "estado",
+		ap_cajachica.ultimousuario AS "ultimousuario",
+		ap_cajachica.ultimafechamodif AS "ultimafechamodif",
+		ap_cajachica.personapagara AS "personapagara",
+		ap_cajachica.tipopago AS "tipopago",
+		ap_cajachica.flujodecaja AS "flujodecaja",
+		ap_cajachica.unidadnegocio AS "unidadnegocio",
+		ap_cajachica.siaf_expediente AS "siaf_expediente",
+		ap_cajachica.certificacionnumero AS "certificacionnumero",
+		ap_cajachica.compromisonumero AS "compromisonumero",
+		ap_cajachica.ano AS "ano"
+		FROM SGCORESYS.AP_CAJACHICA
+		WHERE (
+		AP_CajaChica.CajaChicaReporteFlag = :par_flag ) AND
+		(
+		AP_CajaChica.UnidadReplicacion = :par_und_replicacion ) AND
+		(
+		AP_CajaChica.CajaChicaNumero = :par_numero )
+	</sql-query>
+</hibernate-mapping>

@@ -1,0 +1,1122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : syfinan. -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- BORRAR
+	syfinan.dw_ma_fa_clasificacion_list_tree 
+	<sql-query name="syfinan.DwMaFaClasificacionListTree">
+		SELECT FA_CLASIFICACION.CLASIFICACION as "clasificacion",
+		FA_CLASIFICACION.DESCRIPCIONLOCAL as "descripcionlocal",
+		FA_CLASIFICACION.NUMERODIGITOS as "numerodigitos",
+		FA_CLASIFICACION.CLASIFICACION || ' ' ||
+		FA_CLASIFICACION.DESCRIPCIONLOCAL as "descripcionCompleto"
+		FROM SGCORESYS.FA_CLASIFICACION
+		WHERE
+		FA_CLASIFICACION.NUMERODIGITOS=:par_digitos
+		AND
+		substr(CLASIFICACION,1,:par_num)=NVL(:par_ubicacion,substr(CLASIFICACION,1,:par_num))
+		ORDER BY FA_CLASIFICACION.CLASIFICACION ASC
+	</sql-query>-->
+
+	<!-- BORRAR
+	syfinan.dw_bu_budget_validation_detail 
+	<sql-query name="syfinan.DwBuBudgetValidationDetail">
+	 select sy_campocalculado.monto01 as "monto01",   
+     sy_campocalculado.monto02 as "monto02",   
+     sy_campocalculado.monto03 as "monto03",   
+     sy_campocalculado.monto04 as "monto04",   
+     sy_campocalculado.monto05 as "monto05",   
+     sy_campocalculado.monto06 as "monto06",   
+     sy_campocalculado.flag01 as "flag01",   
+     sy_campocalculado.monto07 as "monto07",   
+     sy_campocalculado.monto08 as "monto08",   
+     sy_campocalculado.monto09 as "monto09",   
+     sy_campocalculado.monto10 as "monto10",   
+     sy_campocalculado.descripcion01 as "descripcion01",   
+     sy_campocalculado.descripcion02 as "descripcion02",   
+     sy_campocalculado.descripcion03 as "descripcion03",   
+     bu_controlpresupuestal_distrib.centrocosto as "centrocosto",   
+     bu_controlpresupuestal_distrib.cuentacontable as "cuentacontable",   
+     bu_controlpresupuestal_distrib.proyecto as "proyecto",   
+     bu_controlpresupuestal_distrib.camporeferencia as"camporeferencia",   
+     bu_controlpresupuestal_distrib.sucursal as "sucursal",   
+     bu_controlpresupuestal_distrib.monto as "monto",   
+     bu_controlpresupuestal_distrib.companiasocio as "companiasocio",   
+     sy_campocalculado.codigo01 as "codigo01",   
+     bu_controlpresupuestal_distrib.referenciafiscal01 as "referenciafiscal01",   
+     bu_controlpresupuestal_distrib.referenciafiscal02 as "referenciafiscal02",   
+     bu_controlpresupuestal_distrib.referenciafiscal03 as "referenciafiscal03",   
+     sy_campocalculado.codigo02 as "codigo02",   
+     sy_campocalculado.flag02 as "flag02" 
+    FROM SGCORESYS.BU_CONTROLPRESUPUESTAL_DISTRIB,   
+         SGCORESYS.SY_CAMPOCALCULADO  
+   WHERE ( SY_CampoCalculado.RegistroNumero = 1 )    
+	</sql-query>-->
+
+	<!-- BORRAR
+	syfinan.dw_cp_obligacion_retrieve 
+	<sql-query name="syfinan.DwCpObligacionRetrieve">
+		select   
+		    obligaciones.proveedor as "proveedor",   
+		    obligaciones.tipodocumento as "tipodocumento",   
+		    obligaciones.numerodocumento as "numerodocumento",   
+		    obligaciones.cuentabancaria as "cuentabancaria",   
+		    obligaciones.companiacodigo as "companiacodigo",   
+		    obligaciones.responsablecodigo as "responsablecodigo",   
+		    obligaciones.tipopago as "tipopago",   
+		    obligaciones.fecharegistro as "fecharegistro",   
+		    obligaciones.fechavencimiento as "fechavencimiento",   
+		    obligaciones.fechavencimientooriginal as "fechavencimientooriginal",   
+		    obligaciones.fechapago as "fechapago",   
+		    obligaciones.generarpago as "generarpago",   
+		    obligaciones.tiposervicio as "tiposervicio",   
+		    obligaciones.monedadocumento as "monedadocumento",   
+		    obligaciones.conversionrequerida as "conversionrequerida",   
+		    obligaciones.monedapago as "monedapago",   
+		    obligaciones.referenciatipodocumento as "referenciatipodocumento",   
+		    obligaciones.montoobligacion as "montoobligacion",   
+		    obligaciones.montoimpuestoventas as "montoimpuestoventas",   
+		    obligaciones.montonoafecto as "montonoafecto",   
+		    obligaciones.montoimponible as "montoimponible",   
+		    obligaciones.montoadelantos as "montoadelantos",   
+		    obligaciones.montoimpuestos as "montoimpuestos",   
+		    obligaciones.netomonedalocal as "netomonedalocal",   
+		    obligaciones.netomonedaextranjera as "netomonedaextranjera",   
+		    obligaciones.tipodecambio as "tipodecambio",   
+		    obligaciones.aprobadopor as "aprobadopor",   
+		    obligaciones.aprobadocp1 as "aprobadocp1",   
+		    obligaciones.aprobadocp2 as "aprobadocp2",   
+		    obligaciones.ingresadopor as "ingresadopor",   
+		    obligaciones.revisadopor as "revisadopor",   
+		    obligaciones.retenidopor as "retenidopor",   
+		    obligaciones.estadodocumento as "estadodocumento",   
+		    obligaciones.contabilizacionpendiente as "contabilizacionpendiente",   
+		    obligaciones.chequeindividual as "chequeindividual",   
+		    obligaciones.voucher as "voucher",   
+		    obligaciones.fechavoucher as "fechavoucher",   
+		    obligaciones.numeropago as "numeropago",   
+		    obligaciones.numeroproceso as "numeroproceso",   
+		    obligaciones.procesosecuencia as "procesosecuencia",   
+		    obligaciones.registronumero as "registronumero",   
+		    obligaciones.comentarios as "comentarios",   
+		    obligaciones.ultimousuario as "ultimousuario",   
+		    obligaciones.ultimafechamodif as "ultimafechamodif",   
+		    obligaciones.unidadnegocio as "unidadnegocio",   
+		    obligaciones.referenciacodigointerno as "referenciacodigointerno",   
+		    obligaciones.facturaafectasplitflag as "facturaafectasplitflag",   
+		    obligaciones.factorrvalidacion as "factorrvalidacion",   
+		    obligaciones.comentariosadicional as "comentariosadicional",   
+		    obligaciones.razonrechazo as "razonrechazo",   
+		    obligaciones.unidadreplicacion as "unidadreplicacion",   
+		    obligaciones.canjeregistronumero as "canjeregistronumero",   
+		    obligaciones.referencianumerodocumento as "referencianumerodocumento",   
+		    obligaciones.obligacionrelacionadatipo as "obligacionrelacionadatipo",   
+		    obligaciones.obligacionrelacionadanumero as "obligacionrelacionadanumero",   
+		    obligaciones.montopagoparcial as "montopagoparcial" ,   
+		    obligaciones.numerodocumentointerno as "numerodocumentointerno",   
+		    obligaciones.centrocosto as "centrocosto",   
+		    obligaciones.partidapresupuestal as "partidapresupuestal",   
+		    obligaciones.flujodecaja as "flujodecaja",   
+		    obligaciones.centrocostocp as "centrocostocp",   
+		    obligaciones.fecharecepcion as "fecharecepcion",   
+		    obligaciones.proveedorpagara as "proveedorpagara",   
+		    obligaciones.controlpresupuestalflag as "controlpresupuestalflag",   
+		    obligaciones.fechaaprobacion as "fechaaprobacion",   
+		    obligaciones.cargoflag as "cargoflag",   
+		    obligaciones.montocreditofiscal as "montocreditofiscal",   
+		    obligaciones.fechadocumento as "fechadocumento",   
+		    obligaciones.pagaranombre as "pagaranombre",   
+		    obligaciones.tipodecambioprovision as "tipodecambioprovision",   
+		    obligaciones.afectoigvflag as "afectoigvflag",   
+		    obligaciones.diferidoflag as "diferidoflag",   
+		    obligaciones.voucheranulacion as "voucheranulacion",   
+		    obligaciones.adelantoflag as "adelantoflag",   
+		    obligaciones.transferenciaexcluidaflag as "transferenciaexcluidaflag",   
+		    obligaciones.pagocajachicaflag as "pagocajachicaflag",   
+		    obligaciones.pagodiferidoflag as "pagodiferidoflag",   
+		    obligaciones.montoretenidodolares as "montoretenidodolares",   
+		    obligaciones.montoretenidolocal as "montoretenidolocal",   
+		    obligaciones.detraccioncodigoflag as "detraccioncodigoflag",   
+		    obligaciones.detraccioncodigo as "detraccioncodigo",   
+		    obligaciones.defaultcamporeferencia as "defaultcamporeferencia",   
+		    obligaciones.detraccionmontoreferencial as "detraccionmontoreferencial",   
+		    obligaciones.siaf_expediente as "siaf_expediente",   
+		    obligaciones.tiporetencion as "tiporetencion",   
+		    obligaciones.certificacionnumero as "certificacionnumero",   
+		    obligaciones.compromisonumero as "compromisonumero",   
+		    obligaciones.ano as "ano",   
+		    obligaciones.siaf_secuencia as "siaf_secuencia",   
+		    obligaciones.siaf_correlativo as "siaf_correlativo",   
+		    obligaciones.siaf_fechapago as "siaf_fechapago",   
+		    obligaciones.mef_estado as "mef_estado",   
+		    obligaciones.csiaf_expediente as "csiaf_expediente",   
+		    obligaciones.csiaf_secuencia as "csiaf_secuencia",   
+		    obligaciones.csiaf_correlativo as "csiaf_correlativo",   
+		    obligaciones.csiaf_fechapago as "csiaf_fechapago",   
+		    obligaciones.cmef_estado as "cmef_estado",   
+		    obligaciones.cuentaprovision as "cuentaprovision",   
+		    obligaciones.secuenciacp as "secuenciacp",
+		    tipodocumentocxp.cuentacontablelocal as "cuentacontablelocal",   
+		    tipodocumentocxp.cuentacontabledolares as "cuentacontabledolares",   
+		    tipodocumentocxp.adelantocuentalocal as "adelantocuentalocal",   
+		    tipodocumentocxp.adelantocuentadolares as "adelantocuentadolares", 
+		    tipodocumentocxp.normalflag as "normalflag",   
+		    tipodocumentocxp.cuentacontableservlocal as "cuentacontableservlocal",   
+		    tipodocumentocxp.cuentacontableservdolares as "cuentacontableservdolares", 
+		    tipodocumentocxp.vouchertipo as "vouchertipo",
+		    tipodocumentocxp.vouchertipomateriales as "vouchertipomateriales", 
+		    tipodocumentocxp.codigofiscal as "codigofiscal",  
+		    tipodocumentocxp.esadelanto as "esadelanto",   
+		    tipodocumentocxp.generarprovisionflag as "generarprovisionflag",   
+		    tipodocumentocxp.regimenfiscal as "regimenfiscal" 
+		   from sgcoresys.obligaciones,   
+		    sgcoresys.tipodocumentocxp 
+		   WHERE ( OBLIGACIONES.TIPODOCUMENTO = TIPODOCUMENTOCXP.TIPODOCUMENTO ) and  
+		         ( ( Obligaciones.Proveedor = :Proveedor ) AND  
+		         ( Obligaciones.TipoDocumento = :TipoDocumento ) AND  
+		         ( Obligaciones.NumeroDocumento = :NumeroDocumento ) )   
+	</sql-query>-->
+
+	<!-- BORRAR
+	syfinan.dw_cp_ordenpago_retrieve 
+	<sql-query name="syfinan.DwCpOrdenpagoRetrieve">
+	select   ordenpago.sistemafuente as "sistemafuente",   
+    ordenpago.proveedor as "proveedor",   
+    ordenpago.tipodocumento as "tipodocumento",   
+    ordenpago.numerodocumento as "numerodocumento",   
+    ordenpago.pagara as "pagara",   
+    ordenpago.companiacodigo as "companiacodigo",   
+    ordenpago.cuentabancaria as "cuentabancaria",   
+    ordenpago.tipopago as "tipopago",   
+    ordenpago.chequeindividual as "chequeindividual",   
+    ordenpago.fechavencimiento as "fechavencimiento",   
+    ordenpago.monedadocumento as "monedadocumento",   
+    ordenpago.monedapago as "monedapago",   
+    ordenpago.montomoneda as "montomoneda",   
+    ordenpago.tipodecambio as "tipodecambio",   
+    ordenpago.batchnumber as "batchnumber",   
+    ordenpago.fechatransferencia as "fechatransferencia",   
+    ordenpago.estado as "estado",   
+    ordenpago.flujodecaja as "flujodecaja",   
+    ordenpago.cuentacontable as "cuentacontable",   
+    ordenpago.registronumero as "registronumero",   
+    ordenpago.voucher as "voucher",   
+    ordenpago.centrocostodestino as "centrocostodestino",   
+    ordenpago.fechadocumento as "fechadocumento",   
+    ordenpago.voucherdocumento as "voucherdocumento",   
+    ordenpago.suspensionflag as "suspensionflag",   
+    ordenpago.pagodiferidoflag as "pagodiferidoflag",   
+    ordenpago.cuentabancariadestino as "cuentabancariadestino",   
+    ordenpago.unidadreplicacion as "unidadreplicacion",   
+    ordenpago.unidadnegocio as "unidadnegocio" 
+from sgcoresys.ordenpago
+   WHERE ( OrdenPago.Proveedor = :proveedor ) AND  
+         ( OrdenPago.TipoDocumento = :tipodocumento ) AND  
+         ( OrdenPago.NumeroDocumento = :numerodocumento )  
+	</sql-query>-->
+
+	<!-- syfinan.dw_ma_cp_detraccion_select -->
+	<sql-query name="syfinan.DwMaCpDetraccionSelect">
+		select ap_detracciones.detraccioncodigo as "detraccioncodigo",
+		ap_detracciones.descripcion as "descripcion",
+		ap_detracciones.porcentaje as "porcentaje"
+		FROM SGCORESYS.AP_DETRACCIONES
+		WHERE AP_Detracciones.Estado = 'A'
+	</sql-query>
+	
+	<!-- BORRAR
+	syfinan.dw_ma_fa_categoria_select 
+	<sql-query name="syfinan.DwMaFaCategoriaSelect">
+		SELECT FA_Categoria.DescripcionLocal as
+		"descripcionlocal",
+		FA_Categoria.CuentaDepreciacion as
+		"cuentadepreciacion",
+		FA_Categoria.Categoria as "categoria",
+		FA_Categoria.Manejo as "Manejo" ,
+		FA_Categoria.CuentaHistorica as
+		"cuentahistorica",
+		FA_Categoria.IntangibleFlag as "intangibleflag"
+		FROM
+		sgcoresys.FA_Categoria
+		WHERE ( FA_Categoria.Estado = 'A' )
+	</sql-query>-->
+
+	<!-- BORRAR
+	syfinan.dw_ma_fa_ubicaciones_select_normal 
+	<sql-query name="syfinan.DwMaFaUbicacionesSelectNormal">
+		SELECT FA_Ubicaciones.DescripcionLocal as
+		"descripcionlocal",
+		FA_Ubicaciones.Ubicacion as "ubicacion",
+		FA_Ubicaciones.NumeroDigitos as "numerodigitos",
+		FA_Ubicaciones.UnidadNegocio as "unidadnegocio",
+		FA_Ubicaciones.Ubicacion || ' ' ||FA_Ubicaciones.DescripcionLocal as
+		"descripcionCompleta"
+		FROM
+		SGCORESYS.FA_Ubicaciones
+		WHERE
+		FA_Ubicaciones.Estado = 'A' AND
+		NumeroDigitos=:par_digitos
+		AND
+		substr(Ubicacion,1,:par_num)=NVL(:par_ubicacion,substr(Ubicacion,1,:par_num))
+		order by FA_Ubicaciones.Ubicacion asc
+	</sql-query>-->
+
+	<!-- BORRAR 
+	syfinan.dw_ma_itemmast_retrieve 
+	<sql-query name="syfinan.DwMaItemmastRetrieve">
+	SELECT
+		WH_ITEMMAST.ITEM as "item",
+		WH_ITEMMAST.ITEMTIPO as "itemtipo",
+		WH_ITEMMAST.MARCACODIGO as "marcacodigo",
+		WH_ITEMMAST.LINEA as "linea",
+		WH_ITEMMAST.FAMILIA as "familia",
+		WH_ITEMMAST.SUBFAMILIA as "subfamilia",
+		WH_ITEMMAST.DESCRIPCIONLOCAL as "descripcionlocal",
+		WH_ITEMMAST.DESCRIPCIONINGLES as "descripcioningles",
+		WH_ITEMMAST.DESCRIPCIONCOMPLETA as "descripcioncompleta",
+		WH_ITEMMAST.NUMERODEPARTE as "numerodeparte",
+		WH_ITEMMAST.CODIGOINTERNO as "codigointerno",
+		WH_ITEMMAST.UNIDADCODIGO as "unidadcodigo",
+		WH_ITEMMAST.UNIDADCODIGODOBLE as "unidadcodigodoble",
+		WH_ITEMMAST.PARTIDAARANCELARIA as "partidaarancelaria",
+		WH_ITEMMAST.MODELO as "modelo",
+		WH_ITEMMAST.COLOR as "color",
+		WH_ITEMMAST.CODIGOBARRAS as "codigobarras",
+		WH_ITEMMAST.CODIGOBARRASFABRICANTE as "codigobarrasfabricante",
+		WH_ITEMMAST.MONEDACODIGO as "monedacodigo",
+		WH_ITEMMAST.PRECIOCOSTO as "preciocosto",
+		WH_ITEMMAST.PRECIOUNITARIOLOCAL as "preciounitariolocal",
+		WH_ITEMMAST.PRECIOUNITARIODOLARES as "preciounitariodolares",
+		WH_ITEMMAST.ITEMPRECIOFLAG as "itemprecioflag",
+		WH_ITEMMAST.ITEMPRECIOCODIGO as "itempreciocodigo",
+		WH_ITEMMAST.DISPONIBLEVENTAFLAG as "disponibleventaflag",
+		WH_ITEMMAST.ITEMPROCEDENCIA as "itemprocedencia",
+		WH_ITEMMAST.MANEJOXLOTEFLAG as "manejoxloteflag",
+		WH_ITEMMAST.MANEJOXSERIEFLAG as "manejoxserieflag",
+		WH_ITEMMAST.MANEJOXKITFLAG as "manejoxkitflag",
+		WH_ITEMMAST.AFECTOIMPUESTOVENTASFLAG as "afectoimpuestoventasflag",
+		WH_ITEMMAST.AFECTOIMPUESTO2FLAG as "afectoimpuesto2flag",
+		WH_ITEMMAST.REQUISICIONAMIENTOAUTOMATICOFL as "requisicionamientoautomaticofl",
+		WH_ITEMMAST.DISPONIBLETRANSFERENCIAFLAG as
+		"disponibletransferenciaflag",
+		WH_ITEMMAST.DISPONIBLECONSUMOFLAG as "disponibleconsumoflag",
+		WH_ITEMMAST.FORMULARIOFLAG as "formularioflag",
+		WH_ITEMMAST.FORMULARIONROJUEGOS as "formularionrojuegos",
+		WH_ITEMMAST.MANEJOXUNIDADFLAG as "manejoxunidadflag",
+		WH_ITEMMAST.ISOAPLICABLEFLAG as "isoaplicableflag",
+		WH_ITEMMAST.CANTIDADDOBLEFLAG as "cantidaddobleflag",
+		WH_ITEMMAST.ISONORMAINTERNA as "isonormainterna",
+		WH_ITEMMAST.UNIDADREPLICACION as "unidadreplicacion",
+		WH_ITEMMAST.IMAGEFILE as "imagefile",
+		WH_ITEMMAST.MAPAFILE as "mapafile",
+		WH_ITEMMAST.CUENTAINVENTARIO as "cuentainventario",
+		WH_ITEMMAST.CUENTAGASTO as "cuentagasto",
+		WH_ITEMMAST.CUENTAINVERSION as "cuentainversion",
+		WH_ITEMMAST.CUENTASERVICIOTECNICO as "cuentaserviciotecnico",
+		WH_ITEMMAST.CUENTASALIDATERCEROS as "cuentasalidaterceros",
+		WH_ITEMMAST.ELEMENTOGASTO as "elementogasto",
+		WH_ITEMMAST.ELEMENTOINVERSION as "elementoinversion",
+		WH_ITEMMAST.PARTIDAPRESUPUESTAL as "partidapresupuestal",
+		WH_ITEMMAST.FLUJODECAJA as "flujodecaja",
+		WH_ITEMMAST.LOTEDECOMPRA as "lotedecompra",
+		WH_ITEMMAST.LOTEDEDESPACHO as "lotededespacho",
+		WH_ITEMMAST.PERIODICIDADCOMPRAMESES as "periodicidadcomprameses",
+		WH_ITEMMAST.ESPECIFICACIONTECNICA as "especificaciontecnica",
+		WH_ITEMMAST.DIMENSIONES as "dimensiones",
+		WH_ITEMMAST.FACTOREQUIVALENCIACOMERCIAL as "factorequivalenciacomercial",
+		WH_ITEMMAST.ABCCODIGO as "abccodigo",
+		WH_ITEMMAST.INVENTARIOTOLERANCIA as "inventariotolerancia",
+		WH_ITEMMAST.ESTADO as "estado",
+		WH_ITEMMAST.ULTIMAFECHAMODIF as "ultimafechamodif",
+		WH_ITEMMAST.ULTIMOUSUARIO as "ultimousuario",
+		WH_CLASEFAMILIA.DESCRIPCIONLOCAL as "descripcionlocalclasefamilia",
+		WH_CLASEFAMILIA.ELEMENTOGASTO as "elementogastoclasefamilia",
+		WH_CLASEFAMILIA.MEDICINAGRUPOAFLAG as "medicinagrupoaflag",
+		WH_CLASEFAMILIA.MEDICINAGRUPOHFLAG as "medicinagrupohflag",
+		WH_CLASEFAMILIA.MEDICINAGRUPOEFLAG as "medicinagrupoeflag",
+		WH_CLASEFAMILIA.MEDICINAGRUPORFLAG as "medicinagruporflag",
+		WH_ITEMMAST.UNIDADCOMPRA as "unidadcompra",
+		WH_ITEMMAST.CLASIFICACIONCOMERCIAL as "clasificacioncomercial",
+		WH_ITEMMAST.REFERENCIAFISCAL02 as "referenciafiscal02",
+		WH_ITEMMAST.LOTEDECOMPRAKG as "lotedecomprakg",
+		WH_ITEMMAST.ACTIVOFIJOFLAG as "activofijoflag",
+		WH_ITEMMAST.REFERENCIAFISCALINGRESO02 as "referenciafiscalingreso02"
+	FROM SGCORESYS.WH_ITEMMAST,
+		SGCORESYS.WH_CLASEFAMILIA
+		WHERE ( WH_ItemMast.linea = WH_ClaseFamilia.linea (+)) and
+		( WH_ItemMast.familia = WH_ClaseFamilia.familia (+)) and
+		( ( WH_ItemMast.Item = :p_item ) )    
+	</sql-query>-->
+
+	<!-- syfinan.dw_ma_wh_almacen_select -->
+	<sql-query name="syfinan.DwMaWhAlmacenSelect">
+		SELECT
+		WH_ALMACENMAST.ALMACENCODIGO as "almacencodigo",
+		WH_ALMACENMAST.COMPANIASOCIO as "companiasocio",
+		WH_ALMACENMAST.DESCRIPCIONLOCAL as "descripcionlocal",
+		WH_ALMACENMAST.TIPOALMACEN as "tipoalmacen",
+		WH_ALMACENMAST.ALMACENVENTAFLAG as "almacenventaflag",
+		WH_ALMACENMAST.ALMACENPRODUCCIONFLAG as "almacenproduccionflag",
+		WH_ALMACENMAST.UNIDADNEGOCIO as "unidadnegocio",
+		WH_ALMACENMAST.SUCURSAL as "sucursal",
+		WH_ALMACENMAST.ALMACENCOMMODITYFLAG as "almacencommodityflag"
+		FROM
+		SGCORESYS.WH_ALMACENMAST
+		WHERE
+		WH_ALMACENMAST.Estado = 'A' AND
+		WH_ALMACENMAST.COMPANIASOCIO = nvl(:p_companyowner,WH_ALMACENMAST.COMPANIASOCIO)
+	</sql-query>
+
+	
+	<!-- BORRAR 
+	syfinan.dw_ma_wh_clasificacion_requisicio_select 
+	<sql-query name="syfinan.DwMaWhClasificacionRequisicioSelect">
+		SELECT
+		WH_ClasificacionRequOrden.Clasificacion as "clasificacion",
+		WH_ClasificacionRequOrden.DescripcionLocal as "descripcionlocal",
+		WH_ClasificacionRequOrden.RequisicionItemsFlag as
+		"requisicionitemsflag"
+		FROM
+		SGCORESYS.WH_ClasificacionRequOrden
+		WHERE
+		( WH_ClasificacionRequOrden.RequisicionOrdenCompraFlag = 'R' ) AND
+		( WH_ClasificacionRequOrden.Estado = 'A' )
+		ORDER BY
+		WH_ClasificacionRequOrden.Clasificacion ASC
+	</sql-query>-->
+
+	<!-- syfinan.dw_ma_wh_commodity_class_select -->
+	<sql-query name="syfinan.DwMaWhCommodityClassSelect">
+		SELECT 
+        	WH_COMMODITYCLASIFICACION.CLASIFICACION AS "clasificacion",   
+         	WH_COMMODITYCLASIFICACION.DESCRIPCIONLOCAL AS "descripcionlocal"  
+   		FROM 
+        	SGCORESYS.WH_COMMODITYCLASIFICACION  
+  		WHERE 
+  			WH_CommodityClasificacion.Estado = 'A'   
+   		ORDER BY 
+   			WH_COMMODITYCLASIFICACION.CLASIFICACION ASC   
+	</sql-query>
+
+	<!-- BORRAR syfinan.dw_ma_wh_commodity_retrieve 
+	<sql-query name="syfinan.DwMaWhCommodityRetrieve">
+	  SELECT 
+	     WH_COMMODITYSUB.COMMODITY as "commodity",   
+         WH_COMMODITYSUB.DESCRIPCIONLOCAL as "descripcionlocal" ,   
+         WH_COMMODITYSUB.DESCRIPCIONINGLES as "descripcioningles",   
+         WH_COMMODITYSUB.UNIDADPORDEFECTO as "unidadpordefecto",   
+         WH_COMMODITYSUB.CUENTACONTABLEGASTO as "cuentacontablegasto",   
+         WH_COMMODITYSUB.PARTIDAPRESUPUESTAL as "partidapresupuestal",   
+         WH_COMMODITYSUB.FLUJODECAJA as "flujodecaja",   
+         WH_COMMODITYSUB.ESTADO as "estado",   
+         WH_COMMODITYSUB.ELEMENTOGASTO as "elementogasto",   
+         WH_COMMODITYSUB.MONTOREFERENCIAL as "montoreferencial",   
+         WH_COMMODITYSUB.MONTOREFERENCIALMONEDA as "montoreferencialmoneda",   
+         WH_COMMODITY.DESCRIPCIONLOCAL as "descripcionlocalcommodity",   
+         WH_COMMODITY.CLASIFICACION as "clasificacion",   
+         WH_COMMODITYSUB.REFERENCIAFISCAL02 as "referenciafiscal02",   
+         CAST(WH_COMMODITYSUB.IGVEXONERADOFLAG as varchar(1))  as "igvexoneradoflag" 
+    FROM SGCORESYS.WH_COMMODITYSUB,   
+         SGCORESYS.WH_COMMODITY  
+   WHERE ( WH_COMMODITY.COMMODITY01 = WH_COMMODITYSUB.COMMODITY01 ) and  
+         ( ( WH_CommoditySub.Commodity = :p_commodity ) AND  
+         ( WH_CommoditySub.Estado = 'A' ) )    
+	</sql-query>-->
+
+	
+	<!-- BORRAR
+	syfinan.dw_ma_wh_commoditysub_select 
+	<sql-query name="syfinan.DwMaWhCommoditysubSelectCab1">
+	SELECT 
+         WH_CommoditySub.CommodityLinea as "commoditylinea",   
+         WH_CommodityLinea.DescripcionLocal as "descripcionlocalcomlinea",   
+         WH_CommoditySub.CommodityGrupoLinea as "commoditygrupolinea",
+         'C1' as "flagcabecera",
+         'background-color: rgb(230,230,230)' as "css"
+    FROM SGCORESYS.WH_Commodity,   
+         SGCORESYS.WH_CommoditySub,   
+         SGCORESYS.WH_CommodityLinea,   
+         SGCORESYS.WH_CommodityFamilia  
+    WHERE 
+         ( WH_Commodity.Commodity01 = WH_CommoditySub.Commodity01 ) and  
+         ( WH_CommoditySub.CommodityGrupoLinea = WH_CommodityLinea.GrupoLinea ) and  
+         ( WH_CommoditySub.CommodityLinea = WH_CommodityLinea.Linea ) and  
+         ( WH_CommoditySub.CommodityGrupoLinea = WH_CommodityFamilia.GrupoLinea ) and  
+         ( WH_CommoditySub.CommodityLinea = WH_CommodityFamilia.Linea ) and  
+         ( WH_CommoditySub.CommodityFamilia = WH_CommodityFamilia.Familia ) and  
+         ( ( WH_Commodity.Estado = :p_estado ) AND  
+         ( WH_CommoditySub.Estado = :p_estado ) )    
+	</sql-query>-->
+	
+	<!-- BORRAR 
+	syfinan.dw_ma_wh_commoditysub_select 
+	<sql-query name="syfinan.DwMaWhCommoditysubSelectCab2">
+	SELECT 
+         WH_CommoditySub.CommodityLinea as "commoditylinea",   
+         WH_CommoditySub.CommodityFamilia as "commodityfamilia",   
+         WH_CommodityFamilia.DescripcionLocal as "descripcionlocalcomfamilia",   
+         WH_CommoditySub.CommodityGrupoLinea as "commoditygrupolinea",
+         'C2' as "flagcabecera",
+         'background-color: rgb(230,230,230)' as "css"
+    FROM SGCORESYS.WH_Commodity,   
+         SGCORESYS.WH_CommoditySub,   
+         SGCORESYS.WH_CommodityLinea,   
+         SGCORESYS.WH_CommodityFamilia  
+    WHERE 
+         ( WH_Commodity.Commodity01 = WH_CommoditySub.Commodity01 ) and  
+         ( WH_CommoditySub.CommodityGrupoLinea = WH_CommodityLinea.GrupoLinea ) and  
+         ( WH_CommoditySub.CommodityLinea = WH_CommodityLinea.Linea ) and  
+         ( WH_CommoditySub.CommodityGrupoLinea = WH_CommodityFamilia.GrupoLinea ) and  
+         ( WH_CommoditySub.CommodityLinea = WH_CommodityFamilia.Linea ) and  
+         ( WH_CommoditySub.CommodityFamilia = WH_CommodityFamilia.Familia ) and  
+         ( ( WH_Commodity.Estado = :p_estado ) AND  
+         ( WH_CommoditySub.Estado = :p_estado ) )    
+	</sql-query>-->
+	
+	<!-- BORRAR
+	syfinan.dw_ma_wh_commoditysub_select 
+	<sql-query name="syfinan.DwMaWhCommoditysubSelect">
+	SELECT 
+		 row_number() OVER (ORDER BY WH_CommoditySub.Commodity) as "secuencia",
+		 WH_Commodity.DescripcionLocal as "descripcionlocal",   
+         WH_CommoditySub.Commodity01 as "commodity01",   
+         WH_CommoditySub.Commodity02 as "commodity02",   
+         WH_CommoditySub.Commodity as "commodity",   
+         WH_CommoditySub.DescripcionLocal as "descripcionlocalcomsub",   
+         WH_CommoditySub.CodigoInterno as "codigointerno",   
+         WH_CommoditySub.CommodityLinea as "commoditylinea",   
+         WH_CommoditySub.CommodityFamilia as "commodityfamilia",   
+         WH_CommodityLinea.DescripcionLocal as "descripcionlocalcomlinea",   
+         WH_CommodityFamilia.DescripcionLocal as "descripcionlocalcomfamilia",   
+         WH_CommoditySub.CommodityGrupoLinea as "commoditygrupolinea",
+         'C3' as "flagcabecera"
+    FROM SGCORESYS.WH_Commodity,   
+         SGCORESYS.WH_CommoditySub,   
+         SGCORESYS.WH_CommodityLinea,   
+         SGCORESYS.WH_CommodityFamilia  
+    WHERE 
+         ( WH_Commodity.Commodity01 = WH_CommoditySub.Commodity01 ) and  
+         ( WH_CommoditySub.CommodityGrupoLinea = WH_CommodityLinea.GrupoLinea ) and  
+         ( WH_CommoditySub.CommodityLinea = WH_CommodityLinea.Linea ) and  
+         ( WH_CommoditySub.CommodityGrupoLinea = WH_CommodityFamilia.GrupoLinea ) and  
+         ( WH_CommoditySub.CommodityLinea = WH_CommodityFamilia.Linea ) and  
+         ( WH_CommoditySub.CommodityFamilia = WH_CommodityFamilia.Familia ) and  
+         ( ( WH_Commodity.Estado = :p_estado ) AND  
+         ( WH_CommoditySub.Estado = :p_estado ) )    
+	</sql-query>-->
+
+	
+	<!-- BORRAR
+	syfinan.dw_ma_wh_item_procedencia_select 
+	<sql-query name="syfinan.DwMaWhItemProcedenciaSelect">
+		SELECT 
+			WH_ItemProcedencia.DescripcionLocal as "descripcionlocal",   
+			WH_ItemProcedencia.ItemProcedencia as "itemprocedencia" 
+		FROM 
+			SGCORESYS.WH_ItemProcedencia  
+		WHERE 
+			WH_ItemProcedencia.Estado = 'A'   
+		ORDER BY 
+			WH_ItemProcedencia.ItemProcedencia ASC   
+	</sql-query>-->
+
+	<!-- BORRAR 
+	syfinan.dw_ma_wh_item_select_alternativo 
+	<sql-query name="syfinan.DwMaWhItemSelectAlternativo">
+	SELECT 
+		WH_ItemAlternativo.Secuencia as "secuencia",   
+		WH_ItemAlternativo.ItemAlternativo as "itemalternativo",   
+		WH_ItemMast.DescripcionLocal as "descripcionlocal" 
+		FROM 
+		sgcoresys.WH_ItemAlternativo
+			INNER JOIN sgcoresys.WH_ItemMast  
+				ON (WH_ItemAlternativo.ItemAlternativo = WH_ItemMast.Item)
+		WHERE 
+		( WH_ItemAlternativo.Item = :item ) 
+	</sql-query>-->
+	
+	<!-- BORRAR syfinan.dw_ma_wh_item_select_alternativo Contar
+	<sql-query name="syfinan.DwMaWhItemSelectAlternativoConteo">
+		SELECT 
+			count(1)
+			FROM 
+			sgcoresys.WH_ItemAlternativo
+				INNER JOIN sgcoresys.WH_ItemMast  
+					ON (WH_ItemAlternativo.ItemAlternativo = WH_ItemMast.Item)
+			WHERE 
+			( WH_ItemAlternativo.Item = :item ) 
+	</sql-query>-->
+
+	<!-- BORRAR 
+	syfinan.dw_ma_wh_item_select_list 
+	<sql-query name="syfinan.DwMaWhItemSelectList">
+		SELECT 
+			row_number() OVER (ORDER BY WH_ItemMast.Item) as "secuencia",
+			WH_ItemMast.DescripcionLocal as "descripcionlocal",   
+			WH_ItemMast.Item as "item",   
+			WH_ItemMast.UnidadCodigo as "unidadcodigo",   
+			WH_ItemMast.CodigoInterno as "codigointerno",   
+			WH_ItemMast.Dimensiones as "dimensiones",   
+			WH_ItemMast.Linea as "linea",   
+			WH_ItemMast.Familia as "familia",   
+			WH_ItemMast.SubFamilia as "subfamilia",   
+			WH_ItemMast.MarcaCodigo as "marcacodigo",
+			WH_ItemTipo.DescripcionLocal as "descripcionlocaltipo" 
+		FROM 
+			SGCORESYS.WH_ItemMast  
+			LEFT JOIN SGCORESYS.WH_ItemTipo ON
+			(WH_ItemMast.ItemTipo = WH_ItemTipo.ItemTipo)
+	</sql-query>-->
+
+	<!-- BORRAR 
+	syfinan.dw_ma_wh_item_select_list_stock 
+	<sql-query name="syfinan.DwMaWhItemSelectListStock">
+		SELECT 
+			row_number() OVER (ORDER BY WH_ItemMast.Item) as "secuencia",
+			WH_ItemMast.DescripcionLocal as "descripcionlocal",   
+			WH_ItemMast.Item as "item",   
+			WH_ItemMast.UnidadCodigo as "unidadcodigo", 
+			UNIDADESMAST.DESCRIPCIONCORTA  as "unidaddescripcion",
+			WH_ItemMast.CodigoInterno as "codigointerno",   
+			WH_ItemAlmacenLote.Condicion as "condicion",   
+			sum(WH_ItemAlmacenLote.StockActual) as "stockactual",   
+			WH_ItemMast.ItemTipo as "itemtipo",   
+			WH_ItemMast.ItemProcedencia as "itemprocedencia",
+			WH_ItemProcedencia.DescripcionLocal as "itemprocedencianombre",   
+			WH_ItemMast.Linea as "linea",   
+			WH_ItemMast.Familia as "familia",   
+			WH_ItemMast.SubFamilia as "subfamilia",   
+			WH_ItemMast.Dimensiones as "dimensiones",   
+			WH_ItemMast.NumeroDeParte  as "numerodeparte" ,
+			WH_ItemTipo.DescripcionLocal as "descripcionlocaltipo"
+		  FROM 
+            SGCORESYS.WH_ItemMast
+            INNER JOIN SGCORESYS.WH_ItemAlmacenLote  ON 
+            (WH_ItemMast.Item = WH_ItemAlmacenLote.Item)
+            LEFT JOIN SGCORESYS.WH_ItemTipo ON
+            (WH_ItemMast.ItemTipo = WH_ItemTipo.ItemTipo)
+            LEFT JOIN SGCORESYS.WH_ItemProcedencia ON
+            (WH_ItemProcedencia.ItemProcedencia = WH_ItemMast.ItemProcedencia 
+            AND WH_ItemProcedencia.Estado = 'A' )
+            LEFT JOIN SGCORESYS.UnidadesMast ON
+            (UnidadesMast.UNIDADCODIGO = WH_ItemMast.UnidadCodigo 
+            AND UnidadesMast.Estado = 'A')
+	</sql-query>-->
+
+	<!-- syfinan.dw_ma_wh_lineafamilia_sub_retrieve -->
+	<sql-query name="syfinan.DwMaWhLineafamiliaSubRetrieve">
+	SELECT 
+		WH_ClaseLinea.DescripcionLocal as "descripcionlocal",   
+		WH_ClaseSubFamilia.DescripcionLocal as "descripcionlocal_1",   
+		WH_ClaseSubFamilia.Linea as "linea",   
+		WH_ClaseSubFamilia.Familia as "familia",   
+		WH_ClaseFamilia.DescripcionLocal as "descripcionlocal_2",   
+		WH_ClaseSubFamilia.SubFamilia as "subfamilia",
+		WH_ClaseSubFamilia.Linea || ' ' ||WH_ClaseLinea.DescripcionLocal as
+		"lineaCompleta",
+     	WH_ClaseSubFamilia.Familia || ' ' ||WH_ClaseFamilia.DescripcionLocal as
+		"familiaCompleta",
+    	WH_ClaseSubFamilia.SubFamilia || ' ' ||WH_ClaseSubFamilia.DescripcionLocal as
+		"subfamiliaCompleta"
+		FROM SGCORESYS.WH_ClaseFamilia
+			INNER JOIN SGCORESYS.WH_ClaseLinea
+				ON (WH_ClaseFamilia.Linea = WH_ClaseLinea.Linea)
+			INNER JOIN SGCORESYS.WH_ClaseSubFamilia  
+				ON (WH_ClaseFamilia.Linea = WH_ClaseSubFamilia.Linea AND
+					 WH_ClaseFamilia.Familia = WH_ClaseSubFamilia.Familia)
+		WHERE ( WH_ClaseLinea.Estado = 'A' )
+		ORDER BY 
+		WH_ClaseSubFamilia.Linea ASC,   
+		WH_ClaseSubFamilia.Familia ASC,    
+		WH_ClaseSubFamilia.SubFamilia ASC 
+	</sql-query>
+	
+		<!-- BORRAR
+		syfinan.dw_ma_wh_lineafamilia_sub_retrieve FILTRO2 
+	<sql-query name="syfinan.DwMaWhLineafamiliaSubRetrieveFiltro2">
+  SELECT distinct
+   		WH_ClaseLinea.DescripcionLocal as "descripcionlocal",   
+		WH_ClaseSubFamilia.DescripcionLocal as "descripcionlocal_1",   
+		WH_ClaseSubFamilia.Linea as "linea",   
+		WH_ClaseSubFamilia.Familia as "familia",   
+		WH_ClaseFamilia.DescripcionLocal as "descripcionlocal_2",   
+		WH_ClaseSubFamilia.SubFamilia as "subfamilia",
+		WH_ClaseSubFamilia.Linea || ' ' ||WH_ClaseLinea.DescripcionLocal as
+		"lineaCompleta",
+     	WH_ClaseSubFamilia.Familia || ' ' ||WH_ClaseFamilia.DescripcionLocal as
+		"familiaCompleta",
+    	WH_ClaseSubFamilia.SubFamilia || ' ' ||WH_ClaseSubFamilia.DescripcionLocal as
+		"subfamiliaCompleta"
+		FROM SGCORESYS.WH_ClaseFamilia
+			INNER JOIN SGCORESYS.WH_ClaseLinea
+				ON (WH_ClaseFamilia.Linea = WH_ClaseLinea.Linea)
+			INNER JOIN SGCORESYS.WH_ClaseSubFamilia  
+				ON (WH_ClaseFamilia.Linea = WH_ClaseSubFamilia.Linea AND
+					 WH_ClaseFamilia.Familia = WH_ClaseSubFamilia.Familia)
+		WHERE ( WH_ClaseLinea.Estado = 'A' ) and 
+    to_number(WH_ClaseSubFamilia.Linea) = :lineaNumber
+		ORDER BY 
+		WH_ClaseSubFamilia.Familia ASC
+	</sql-query>-->
+	
+	<!-- BORRAR syfinan.dw_ma_wh_lineafamilia_sub_retrieve FILTRO3
+	<sql-query name="syfinan.DwMaWhLineafamiliaSubRetrieveFiltro3">
+    SELECT distinct
+   		WH_ClaseLinea.DescripcionLocal as "descripcionlocal",   
+		WH_ClaseSubFamilia.DescripcionLocal as "descripcionlocal_1",   
+		WH_ClaseSubFamilia.Linea as "linea",   
+		WH_ClaseSubFamilia.Familia as "familia",   
+		WH_ClaseFamilia.DescripcionLocal as "descripcionlocal_2",   
+		WH_ClaseSubFamilia.SubFamilia as "subfamilia",
+		WH_ClaseSubFamilia.Linea || ' ' ||WH_ClaseLinea.DescripcionLocal as
+		"lineaCompleta",
+     	WH_ClaseSubFamilia.Familia || ' ' ||WH_ClaseFamilia.DescripcionLocal as
+		"familiaCompleta",
+    	WH_ClaseSubFamilia.SubFamilia || ' ' ||WH_ClaseSubFamilia.DescripcionLocal as
+		"subfamiliaCompleta"		
+		FROM SGCORESYS.WH_ClaseFamilia
+			INNER JOIN SGCORESYS.WH_ClaseLinea
+				ON (WH_ClaseFamilia.Linea = WH_ClaseLinea.Linea)
+			INNER JOIN SGCORESYS.WH_ClaseSubFamilia  
+				ON (WH_ClaseFamilia.Linea = WH_ClaseSubFamilia.Linea AND
+					 WH_ClaseFamilia.Familia = WH_ClaseSubFamilia.Familia)
+		WHERE ( WH_ClaseLinea.Estado = 'A' ) and 
+    to_number(WH_ClaseSubFamilia.Familia) = :familiaNumber
+    and 
+    to_number(WH_ClaseSubFamilia.Linea) = :lineaNumber  
+      ORDER BY 
+			WH_ClaseSubFamilia.Linea ASC, 
+			WH_ClaseSubFamilia.Familia ASC,    
+			WH_ClaseSubFamilia.SubFamilia ASC  
+	</sql-query>-->
+	
+	<!-- BORRAR
+	 syfinan.dw_wh_documentoarchivo_list 
+	<sql-query name="syfinan.DwWhDocumentoarchivoList">
+	SELECT 
+		WH_DocumentoArchivo.companiasocio,   
+         WH_DocumentoArchivo.tipodocumento,   
+         WH_DocumentoArchivo.numerodocumento,   
+         WH_DocumentoArchivo.linea,   
+         WH_DocumentoArchivo.secuencia,   
+         WH_DocumentoArchivo.archivo,  
+         WH_DocumentoArchivo.comentario
+    FROM 
+    	SGCORESYS.WH_DocumentoArchivo  
+  	 	WHERE ( WH_DocumentoArchivo.CompaniaSocio = :p_compania ) AND  
+        	  ( WH_DocumentoArchivo.TipoDocumento = :p_tipodocumento ) AND  
+         	  ( WH_DocumentoArchivo.NumeroDocumento = :p_numerodocumento ) AND
+         	  ( WH_DocumentoArchivo.LINEA = :p_linea ) AND
+         	  ( WH_DocumentoArchivo.SECUENCIA = :p_secuencia) 
+	</sql-query>-->
+
+	
+	<!-- syfinan.dw_wh_importacion_contrato_select -->
+	<sql-query name="syfinan.DwWhImportacionContratoSelect">
+	  SELECT WH_CONTRATO.NUMEROCONTRATO as "numerocontrato",   
+	         WH_CONTRATO.DESCRIPCION as "descripcion",   
+	         WH_CONTRATO.MONEDADOCUMENTO as "monedadocumento",   
+	         WH_CONTRATO.MONTOTOTAL as "montototal",   
+	         WH_CONTRATO.PROVEEDOR as "proveedor",   
+	         WH_CONTRATO.FECHAAPROBACION as "fechaaprobacion",   
+	         WH_CONTRATO.CONTRATORESPONSABLE  as "contratoresponsable"
+	    FROM sgcoresys.WH_CONTRATO  
+	   WHERE ( WH_Contrato.CompaniaSocio = :companiasocio ) AND  
+	         ( WH_Contrato.Estado = 'AP' )   
+	ORDER BY  WH_CONTRATO.DESCRIPCION ASC   
+	</sql-query>
+
+	<!-- BORRAR 
+	syfinan.dw_wh_importacion_detail_select 
+	<sql-query name="syfinan.DwWhImportacionDetailSelect">
+		  SELECT WH_TRANSACCIONDETALLE.ITEM as "item",   
+	         WH_TRANSACCIONDETALLE.CONDICION as "condicion",   
+	         WH_ITEMMAST.DESCRIPCIONLOCAL as "descripcionlocal",   
+	         WH_TRANSACCIONDETALLE.CANTIDAD as "cantidad",   
+	         WH_TRANSACCIONDETALLE.UNIDADCODIGO as "unidadcodigo",   
+	         WH_TRANSACCIONDETALLE.SECUENCIA as "secuencia",   
+	         WH_TRANSACCIONDETALLE.COMPANIASOCIO as "companiasocio",   
+	         WH_TRANSACCIONDETALLE.NUMERODOCUMENTO as "numerodocumento",   
+	         WH_TRANSACCIONDETALLE.TIPODOCUMENTO as "tipodocumento",   
+	         WH_TRANSACCIONDETALLE.REFERENCIANUMERODOCUMENTO as "referencianumerodocumento",   
+	         WH_TRANSACCIONDETALLE.REFERENCIASECUENCIA as "referenciasecuencia",   
+	         WH_ORDENCOMPRADETALLE.PRECIOUNITARIO as "preciounitario",
+	         round(WH_TRANSACCIONDETALLE.CANTIDAD *  WH_ORDENCOMPRADETALLE.PRECIOUNITARIO,2) as "total"  
+	    FROM sgcoresys.WH_TRANSACCIONDETALLE,   
+	         sgcoresys.WH_ITEMMAST,   
+	         sgcoresys.WH_TRANSACCIONHEADER,   
+	         sgcoresys.WH_ORDENCOMPRADETALLE  
+	   WHERE ( WH_ITEMMAST.ITEM = WH_TRANSACCIONDETALLE.ITEM ) and  
+	         ( WH_TRANSACCIONHEADER.COMPANIASOCIO = WH_TRANSACCIONDETALLE.COMPANIASOCIO ) and  
+	         ( WH_TRANSACCIONHEADER.TIPODOCUMENTO = WH_TRANSACCIONDETALLE.TIPODOCUMENTO ) and  
+	         ( WH_TRANSACCIONHEADER.NUMERODOCUMENTO = WH_TRANSACCIONDETALLE.NUMERODOCUMENTO ) and  
+	         ( WH_TRANSACCIONDETALLE.REFERENCIACOMPANIASOCIO = WH_ORDENCOMPRADETALLE.COMPANIASOCIO ) and  
+	         ( WH_TRANSACCIONDETALLE.REFERENCIANUMERODOCUMENTO = WH_ORDENCOMPRADETALLE.NUMEROORDEN ) and  
+	         ( WH_TRANSACCIONDETALLE.REFERENCIASECUENCIA = WH_ORDENCOMPRADETALLE.SECUENCIA ) and  
+	         ( ( WH_TransaccionDetalle.CompaniaSocio = :companiasocio ) AND  
+	         ( WH_TransaccionHeader.TransaccionCodigo = 'MIT' ) AND  
+	         ( WH_TransaccionHeader.Estado = 'PR' ) AND  
+	         ( WH_TransaccionHeader.ValorizacionPendienteFlag = 'S' ) AND  
+	         ( WH_TransaccionDetalle.ReferenciaNumeroDocumento =  :numeroorden ) AND  
+	         ( WH_TransaccionDetalle.ReferenciaTipoDocumento = 'NS' ) ) 
+	</sql-query>-->
+
+	<!-- BORRAR 
+	syfinan.dw_wh_importacion_select 
+	<sql-query name="syfinan.DwWhImportacionSelect">
+	  <![CDATA[
+		     SELECT WH_IMPORTACION.CARPETANUMERO as "carpetanumero",   
+		         WH_IMPORTACION.POLIZAIMPORTACION as "polizaimportacion",   
+		         PERSONAMAST.BUSQUEDA as "busqueda",   
+		         WH_ORDENCOMPRA.CARPETANUMERO as "carpetanumero_1",   
+		         WH_ORDENCOMPRA.PROVEEDOR as "proveedor",   
+		         WH_ORDENCOMPRA.MONTOTOTAL as "montototal",   
+		         SY_CAMPOCALCULADO.MONTO01 as "monto01",
+		         cast('N' as varchar2(1)) as "seleccion",
+		         rownum as "rowkey"
+		    FROM sgcoresys.WH_IMPORTACION,   
+		         sgcoresys.PERSONAMAST,   
+		         sgcoresys.WH_ORDENCOMPRA,   
+		         sgcoresys.SY_CAMPOCALCULADO  
+		   WHERE ( WH_IMPORTACION.COMPANIASOCIO = WH_ORDENCOMPRA.COMPANIASOCIO ) and  
+		         ( WH_IMPORTACION.CARPETANUMERO = WH_ORDENCOMPRA.NUMEROORDEN ) and  
+		         ( WH_ORDENCOMPRA.PROVEEDOR = PERSONAMAST.PERSONA ) and  
+		         ( ( WH_Importacion.CompaniaSocio = :companiasocio ) AND 
+		         ( WH_Importacion.Estado = 'AP' ) AND  
+		         ( WH_Importacion.Situacion <> '0' ) AND  
+		         ( SY_CampoCalculado.RegistroNumero = 1 ) )   
+		    ORDER BY WH_IMPORTACION.CARPETANUMERO ASC   
+ 		]]>
+	</sql-query>-->
+
+	<!-- BORRAR 
+	syfinan.dw_wh_importacion_select_bl 
+	<sql-query name="syfinan.DwWhImportacionSelectBl">
+			SELECT 
+		         WH_BILLOFLADING.COMPANIASOCIO as "companiasocio",   
+		         WH_BILLOFLADING.BLNUMERO as "blnumero",   
+		         WH_BILLOFLADING.TRANSPORTEDOCUMENTO as "transportedocumento",   
+		         WH_BILLOFLADING.EXPORTADORDOCUMENTO as "exportadordocumento",   
+		         SY_CAMPOCALCULADO.MONTO01 as "monto01",   
+		         SY_CAMPOCALCULADO.MONTO02 as "monto02",  
+		         cast('N' as varchar2(1)) as "seleccion",
+		         sum(AP_Documentos.MontoTotal) as "montototal",   
+		         sum(MontoFlete) as "montoflete",
+        		 sum( MontoFlete + AP_Documentos.MontoTotal) as "sumatotal",
+		         rownum as "rowkey"
+		    FROM sgcoresys.WH_BILLOFLADING,   
+		         sgcoresys.WH_BILLOFLADINGDETALLE,   
+		         sgcoresys.AP_DOCUMENTOS,   
+		         sgcoresys.WH_IMPORTACION,   
+		         sgcoresys.SY_CAMPOCALCULADO  
+		   WHERE ( WH_BILLOFLADINGDETALLE.COMPANIASOCIO = WH_BILLOFLADING.COMPANIASOCIO ) and  
+		         ( WH_BILLOFLADINGDETALLE.BLNUMERO = WH_BILLOFLADING.BLNUMERO )          and  
+		         ( WH_BILLOFLADINGDETALLE.DOCUMENTOCLASIFICACION = AP_DOCUMENTOS.DOCUMENTOCLASIFICACION ) and  
+		         ( WH_BILLOFLADINGDETALLE.DOCUMENTOCLASIFICACION = AP_DOCUMENTOS.DOCUMENTOCLASIFICACION )   and  
+		         ( WH_BILLOFLADINGDETALLE.DOCUMENTOREFERENCIA = AP_DOCUMENTOS.DOCUMENTOREFERENCIA ) and
+		         ( WH_BILLOFLADING.COMPANIASOCIO = WH_IMPORTACION.COMPANIASOCIO )   and
+		         ( WH_BILLOFLADINGDETALLE.PROVEEDOR = AP_DOCUMENTOS.PROVEEDOR ) and
+		         ( WH_BILLOFLADINGDETALLE.PROVEEDOR = AP_DOCUMENTOS.PROVEEDOR ) and  
+		         ( WH_IMPORTACION.CARPETANUMERO = AP_DOCUMENTOS.REFERENCIANUMERODOCUMENTO ) and  
+		         ( ( WH_BillofLading.CompaniaSocio = :companiasocio  ) AND
+		         ( SY_CampoCalculado.RegistroNumero = 1 ) AND  
+		         ( WH_BillofLading.Estado = 'AP' ) AND  
+		         ( WH_Importacion.Estado = 'AP' ) )
+		       GROUP BY WH_BILLOFLADING.COMPANIASOCIO, 
+		         WH_BILLOFLADING.BLNUMERO,   
+		         WH_BILLOFLADING.EXPORTADORDOCUMENTO,   
+		         WH_BILLOFLADING.TRANSPORTEDOCUMENTO,   
+		         SY_CAMPOCALCULADO.MONTO01,   
+		         SY_CAMPOCALCULADO.MONTO02,
+		         rownum
+	</sql-query>-->
+
+	<!--BORRAR
+	 syfinan.dw_wh_importacion_select_bl_detail 
+	<sql-query name="syfinan.DwWhImportacionSelectBlDetail">
+		 SELECT WH_BILLOFLADING.COMPANIASOCIO as "companiasocio",   
+	         WH_BILLOFLADING.BLNUMERO as "blnumero",   
+	         AP_DOCUMENTOS.REFERENCIANUMERODOCUMENTO as "referencianumerodocumento",   
+	         AP_DOCUMENTOS.DOCUMENTOREFERENCIA as "documentoreferencia",   
+	         AP_DOCUMENTOS.MONTOTOTAL as "montototal",   
+	         AP_DOCUMENTOS.OBLIGACIONTIPODOCUMENTO as "obligaciontipodocumento",   
+	         AP_DOCUMENTOS.OBLIGACIONNUMERODOCUMENTO as "obligacionnumerodocumento",   
+	         WH_BILLOFLADINGDETALLE.MONTOFLETE as "montoflete",   
+	         PERSONAMAST.BUSQUEDA as "busqueda",  
+	         AP_DOCUMENTOS.OBLIGACIONTIPODOCUMENTO||' - '|| AP_DOCUMENTOS.OBLIGACIONNUMERODOCUMENTO as "obligacion", 
+	         WH_BILLOFLADINGDETALLE.PROVEEDOR as "proveedor",   
+	         AP_DOCUMENTOS.TRANSACCIONNUMERODOCUMENTO as "transaccionnumerodocumento"  
+	    FROM sgcoresys.WH_BILLOFLADING,   
+	         sgcoresys.WH_BILLOFLADINGDETALLE,   
+	         sgcoresys.AP_DOCUMENTOS,   
+	         sgcoresys.WH_IMPORTACION,   
+	         sgcoresys.PERSONAMAST  
+	   WHERE ( WH_BILLOFLADINGDETALLE.COMPANIASOCIO = WH_BILLOFLADING.COMPANIASOCIO ) and  
+	         ( WH_BILLOFLADINGDETALLE.BLNUMERO = WH_BILLOFLADING.BLNUMERO ) and  
+	         ( WH_BILLOFLADINGDETALLE.DOCUMENTOCLASIFICACION = AP_DOCUMENTOS.DOCUMENTOCLASIFICACION ) and  
+	         ( WH_BILLOFLADINGDETALLE.DOCUMENTOREFERENCIA = AP_DOCUMENTOS.DOCUMENTOREFERENCIA ) and  
+	         ( WH_IMPORTACION.CARPETANUMERO = AP_DOCUMENTOS.REFERENCIANUMERODOCUMENTO ) and  
+	         ( WH_BILLOFLADING.COMPANIASOCIO = WH_IMPORTACION.COMPANIASOCIO ) and  
+	         ( WH_BILLOFLADINGDETALLE.PROVEEDOR = PERSONAMAST.PERSONA ) and  
+	         ( WH_BILLOFLADINGDETALLE.PROVEEDOR = AP_DOCUMENTOS.PROVEEDOR ) and  
+	         ( ( WH_BillofLading.CompaniaSocio =  :companiasocio ) AND  
+	         ( WH_Importacion.Estado = 'AP' ) AND  
+	         ( WH_BillofLading.BLNumero = :blnumero ) )   
+	</sql-query>-->
+
+	
+	<!-- BORRAR 
+	syfinan.dw_wh_item_stock_controlcalidad 
+	<sql-query name="syfinan.DwWhItemStockControlcalidad">
+	SELECT 
+		WH_ControlCalidad.CompaniaSocio as "companiasocio",   
+		WH_ControlCalidad.ControlNumero as "controlnumero",   
+		WH_ControlCalidadDetalle.AreaCodigo as "areacodigo",   
+		WH_ControlCalidad.NumeroOrden as "numeroorden",   
+		WH_ControlCalidadDetalle.Estado as "estado",   
+		WH_ControlCalidadDetalle.CantidadAceptada as "cantidadaceptada",   
+		WH_ControlCalidadDetalle.CantidadRecibida as "cantidadrecibida",   
+		WH_ControlCalidad.FechaPreparacion as "fechapreparacion",
+    	rownum as "rowkey"
+		FROM 
+		sgcoresys.WH_ControlCalidadDetalle
+			INNER JOIN sgcoresys.WH_ControlCalidad
+				ON (WH_ControlCalidadDetalle.CompaniaSocio = WH_ControlCalidad.CompaniaSocio AND 
+					 WH_ControlCalidadDetalle.ControlNumero = WH_ControlCalidad.ControlNumero)
+			INNER JOIN sgcoresys.WH_OrdenCompraDetalle  
+				ON (WH_ControlCalidadDetalle.CompaniaSocio = WH_OrdenCompraDetalle.CompaniaSocio AND
+					 WH_ControlCalidadDetalle.Secuencia = WH_OrdenCompraDetalle.Secuencia AND
+					 WH_OrdenCompraDetalle.NumeroOrden = WH_ControlCalidad.NumeroOrden) 
+	</sql-query>-->
+
+
+	<!-- BORRAR 
+	syfinan.dw_wh_item_stock_controlcalidad 
+	<sql-query name="syfinan.DwWhItemStockControlcalidadConteo">
+	SELECT 
+		count(1)
+		FROM 
+		sgcoresys.WH_ControlCalidadDetalle
+			INNER JOIN sgcoresys.WH_ControlCalidad
+				ON (WH_ControlCalidadDetalle.CompaniaSocio = WH_ControlCalidad.CompaniaSocio AND 
+					 WH_ControlCalidadDetalle.ControlNumero = WH_ControlCalidad.ControlNumero)
+			INNER JOIN sgcoresys.WH_OrdenCompraDetalle  
+				ON (WH_ControlCalidadDetalle.CompaniaSocio = WH_OrdenCompraDetalle.CompaniaSocio AND
+					 WH_ControlCalidadDetalle.Secuencia = WH_OrdenCompraDetalle.Secuencia AND
+					 WH_OrdenCompraDetalle.NumeroOrden = WH_ControlCalidad.NumeroOrden) 
+	</sql-query>-->
+	
+	<!-- BORRAR
+	 syfinan.dw_wh_item_stock_direcciondestino 
+	<sql-query name="syfinan.DwWhItemStockDirecciondestino">
+	SELECT  
+		WH_TransaccionHeader.DireccionDestino as "direcciondestino",           
+		WH_Kardex.Item as "item",           
+		WH_DestinoFinal.DescripcionLocal as "descripcionlocal",           
+		sum(CASE WHEN IngresoEgresoFlag='T' THEN -Cantidad ELSE Cantidad END ) as "sumcantidad"    
+		FROM 
+		sgcoresys.WH_TransaccionHeader
+			INNER JOIN sgcoresys.WH_Kardex
+				ON (WH_TransaccionHeader.CompaniaSocio = WH_Kardex.ReferenciaCompaniaSocio AND
+					 WH_TransaccionHeader.TipoDocumento = WH_Kardex.ReferenciaTipoDocumento AND
+					 WH_TransaccionHeader.NumeroDocumento = WH_Kardex.ReferenciaNumeroDocumento AND
+					 WH_TransaccionHeader.AlmacenCodigo = WH_Kardex.AlmacenCodigo)
+			INNER JOIN sgcoresys.WH_DestinoFinal
+				ON (WH_TransaccionHeader.DireccionDestino = WH_DestinoFinal.CodigoDestino)
+			INNER JOIN sgcoresys.WH_TransaccionMast     
+				ON (WH_TransaccionMast.TransaccionCodigo = WH_Kardex.TransaccionCodigo)
+	</sql-query>-->
+	
+		<!-- BORRAR syfinan.dw_wh_item_stock_direcciondestino Contar
+	<sql-query name="syfinan.DwWhItemStockDirecciondestinoConteo">
+	SELECT  
+		count(1) 
+		FROM 
+		sgcoresys.WH_TransaccionHeader
+			INNER JOIN sgcoresys.WH_Kardex
+				ON (WH_TransaccionHeader.CompaniaSocio = WH_Kardex.ReferenciaCompaniaSocio AND
+					 WH_TransaccionHeader.TipoDocumento = WH_Kardex.ReferenciaTipoDocumento AND
+					 WH_TransaccionHeader.NumeroDocumento = WH_Kardex.ReferenciaNumeroDocumento AND
+					 WH_TransaccionHeader.AlmacenCodigo = WH_Kardex.AlmacenCodigo)
+			INNER JOIN sgcoresys.WH_DestinoFinal
+				ON (WH_TransaccionHeader.DireccionDestino = WH_DestinoFinal.CodigoDestino)
+			INNER JOIN sgcoresys.WH_TransaccionMast     
+				ON (WH_TransaccionMast.TransaccionCodigo = WH_Kardex.TransaccionCodigo)
+	</sql-query> -->
+
+	<!-- BORRAR 
+	syfinan.dw_wh_item_stock_item 
+	<sql-query name="syfinan.DwWhItemStockItem">
+	SELECT 
+		WH_ItemMast.Item as "item",   
+		WH_ItemMast.Linea as "linea",   
+		WH_ItemMast.Familia as "familia",   
+		WH_ItemMast.SubFamilia as "subfamilia",   
+		WH_ItemMast.SubFamiliaInferior as "subfamiliainferior",   
+		WH_ItemMast.DescripcionLocal as "descripcionlocal",   
+		WH_ItemMast.DescripcionIngles as "descripcioningles",   
+		WH_ItemMast.DescripcionCompleta as "descripcioncompleta",   
+		WH_ItemMast.MarcaCodigo as "marcacodigo",   
+		WH_ItemMast.CodigoInterno as "codigointerno",   
+		WH_ItemMast.UnidadCodigo as "unidadcodigo",   
+		WH_ItemMast.Modelo as "modelo",   
+		WH_ItemMast.ItemTipo as "itemtipo" 
+		FROM 
+		sgcoresys.WH_ItemMast  
+		WHERE 
+		WH_ItemMast.Item = :item
+	</sql-query>-->
+
+	<!-- BORRAR 
+	syfinan.dw_wh_item_stock_list 
+	<sql-query name="syfinan.DwWhItemStockList">
+	SELECT 
+		WH_ItemAlmacenLote.AlmacenCodigo as "almacencodigo",   
+		WH_ItemAlmacenLote.Lote as "lote",   
+		NVL(WH_ItemAlmacenLote.StockActual,0) as "stockactual",   
+		WH_AlmacenMast.DescripcionLocal as "descripcionlocal",   
+		WH_ItemAlmacenLote.Condicion as "condicion",   
+		WH_ItemAlmacenLote.Item as "item",   
+		NVL(WH_ItemAlmacenLote.StockActualDoble,0) as "stockactualdoble",   
+		WH_ItemAlmacenLote.FechaIngreso as "fechaingreso",   
+		WH_ItemAlmacenLote.FechaVencimiento as "fechavencimiento",   
+		WH_ItemAlmacenLote.LoteEquivalente as "loteequivalente",  
+		WH_AlmacenMast.AlmacenRegion as "almacenregion",   
+		WH_AlmacenMast.TipoAlmacen as "tipoalmacen",   
+		WH_AlmacenMast.AlmacenVentaFlag as "almacenventaflag",   
+		WH_AlmacenMast.AlmacenProduccionFlag as "almacenproduccionflag",   
+		WH_AlmacenMast.AlmacenConsignacionFlag as "almacenconsignacionflag",
+		WH_AlmacenMast.UnidadNegocio as "unidadnegocio",
+		rownum as "rowkey"
+		FROM 
+		sgcoresys.WH_ItemAlmacenLote
+			INNER JOIN sgcoresys.WH_AlmacenMast 
+				ON (WH_ItemAlmacenLote.AlmacenCodigo = WH_AlmacenMast.AlmacenCodigo)
+	</sql-query>-->
+
+	<!-- BORRAR 
+	syfinan.dw_wh_item_stock_list Conteo 
+	<sql-query name="syfinan.DwWhItemStockListConteo">
+	SELECT 
+		count(1)
+		FROM 
+		sgcoresys.WH_ItemAlmacenLote
+			INNER JOIN sgcoresys.WH_AlmacenMast 
+				ON (WH_ItemAlmacenLote.AlmacenCodigo = WH_AlmacenMast.AlmacenCodigo)
+	</sql-query>-->
+	
+	
+	<!-- BORRAR
+	syfinan.dw_wh_requisition_detail 
+	<sql-query name="syfinan.DwWhRequisitionDetail">
+		SELECT
+		WH_REQUISICIONDETALLE.COMPANIASOCIO as "companiasocio",
+		WH_REQUISICIONDETALLE.REQUISICIONNUMERO as "requisicionnumero",
+		WH_REQUISICIONDETALLE.SECUENCIA as "secuencia",
+		WH_REQUISICIONDETALLE.ITEM as "item",
+		WH_REQUISICIONDETALLE.COMMODITY as "commodity",
+		WH_REQUISICIONDETALLE.UNIDADCODIGO as "unidadcodigo",
+		WH_REQUISICIONDETALLE.DESCRIPCION as "descripcion",
+		WH_REQUISICIONDETALLE.COMPRASALMACENFLAG as "comprasalmacenflag",
+		WH_REQUISICIONDETALLE.REDEFINIDOFLAG as "redefinidoflag",
+		WH_REQUISICIONDETALLE.CANTIDADPEDIDA as "cantidadpedida",
+		WH_REQUISICIONDETALLE.CANTIDADORDENCOMPRA as "cantidadordencompra",
+		WH_REQUISICIONDETALLE.CANTIDADRECIBIDA as "cantidadrecibida",
+		WH_REQUISICIONDETALLE.PRECIOUNITARIO as "preciounitario",
+		WH_REQUISICIONDETALLE.PRECIOXCANTIDAD as "precioxcantidad",
+		WH_REQUISICIONDETALLE.COTIZACIONSECUENCIA as "cotizacionsecuencia",
+		WH_REQUISICIONDETALLE.COTIZACIONCANTIDAD as "cotizacioncantidad",
+		WH_REQUISICIONDETALLE.COTIZACIONPRECIOUNITARIO as
+		"cotizacionpreciounitario",
+		WH_REQUISICIONDETALLE.COTIZACIONPRECIOUNITARIOCONIGV as
+		"cotizacionpreciounitarioconigv",
+		WH_REQUISICIONDETALLE.COTIZACIONPROVEEDOR as "cotizacionproveedor",
+		WH_REQUISICIONDETALLE.COTIZACIONMONEDA as "cotizacionmoneda",
+		WH_REQUISICIONDETALLE.COTIZACIONREGISTROS as "cotizacionregistros",
+		WH_REQUISICIONDETALLE.COTIZACIONFORMADEPAGO as
+		"cotizacionformadepago",
+		WH_REQUISICIONDETALLE.COTIZACIONFECHAASIGNACION as
+		"cotizacionfechaasignacion",
+		WH_REQUISICIONDETALLE.CONTROLPRESUPUESTALFLAG as
+		"controlpresupuestalflag",
+		WH_REQUISICIONDETALLE.PARTIDAPRESUPUESTAL as "partidapresupuestal",
+		WH_REQUISICIONDETALLE.COMENTARIO as "comentario",
+		WH_REQUISICIONDETALLE.RAZONRECHAZO as "razonrechazo",
+		WH_REQUISICIONDETALLE.CENTROCOSTO as "centrocosto",
+		WH_REQUISICIONDETALLE.ESTADO as "estado",
+		WH_REQUISICIONDETALLE.ULTIMOUSUARIO as "ultimousuario",
+		WH_REQUISICIONDETALLE.ULTIMAFECHAMODIF as "ultimafechamodif",
+		WH_REQUISICIONDETALLE.IGVEXONERADOFLAG as "igvexoneradoflag",
+		WH_REQUISICIONDETALLE.GENERARCONTRATOFLAG as "generarcontratoflag",
+		WH_REQUISICIONDETALLE.COMENTARIOADICIONAL as "comentarioadicional",
+		WH_REQUISICIONDETALLE.LICITACIONASIGNADAFLAG as
+		"licitacionasignadaflag"
+		FROM
+		SGCORESYS.WH_REQUISICIONDETALLE
+		WHERE ( WH_RequisicionDetalle.CompaniaSocio = :p_companiasocio ) AND
+		( WH_RequisicionDetalle.RequisicionNumero = :p_numerorequisicion )
+	</sql-query>-->
+
+	<!-- syfinan.dw_wh_requisition_header -->
+	<sql-query name="syfinan.DwWhRequisitionHeader">
+		SELECT
+		WH_REQUISICIONES.COMPANIASOCIO as "companiasocio",
+		WH_REQUISICIONES.REQUISICIONNUMERO as "requisicionnumero",
+		WH_REQUISICIONES.CLASIFICACION as "clasificacion",
+		WH_REQUISICIONES.COMPRASALMACENFLAG as "comprasalmacenflag",
+		WH_REQUISICIONES.ALMACENCODIGO as "almacencodigo",
+		WH_REQUISICIONES.MONEDACODIGO as "monedacodigo",
+		WH_REQUISICIONES.FECHAREQUERIDA as "fecharequerida",
+		WH_REQUISICIONES.FECHAPREPARACION as "fechapreparacion",
+		WH_REQUISICIONES.FECHAREVISION as "fecharevision",
+		WH_REQUISICIONES.FECHAAPROBACION as "fechaaprobacion",
+		WH_REQUISICIONES.PREPARADAPOR as "preparadapor",
+		WH_REQUISICIONES.REVISADAPOR as "revisadapor",
+		WH_REQUISICIONES.APROBADAPOR as "aprobadapor",
+		WH_REQUISICIONES.RESPONSABLE as "responsable",
+		WH_REQUISICIONES.DEPARTAMENTO as "departamento",
+		WH_REQUISICIONES.PRECIOTOTAL as "preciototal",
+		WH_REQUISICIONES.PRIORIDADCODIGO as "prioridadcodigo",
+		WH_REQUISICIONES.DEFAULTPRIME as "defaultprime",
+		WH_REQUISICIONES.DEFAULTAFE as "defaultafe",
+		WH_REQUISICIONES.CUANTIAMONETARIAPENDIENTEFLAG as "cuantiamonetariapendienteflag",
+		WH_REQUISICIONES.ORDENTRABAJO as "ordentrabajo",
+		WH_REQUISICIONES.UNIDADNEGOCIO as "unidadnegocio",
+		WH_REQUISICIONES.UNIDADREPLICACION as "unidadreplicacion",
+		WH_REQUISICIONES.LOCALFOREIGNFLAG as "localforeignflag",
+		WH_REQUISICIONES.DIRECCIONDESTINO as "direcciondestino",
+		WH_REQUISICIONES.COMENTARIOS as "comentarios",
+		WH_REQUISICIONES.RAZONRECHAZO as "razonrechazo",
+		WH_REQUISICIONES.ESTADO as "estado",
+		WH_REQUISICIONES.ULTIMOUSUARIO as "ultimousuario",
+		WH_REQUISICIONES.ULTIMAFECHAMODIF as "ultimafechamodif",
+		WH_REQUISICIONES.ULTIMOUSUARIONUMERO as "ultimousuarionumero",
+		WH_REQUISICIONES.TRANSACCIONOPERACION as "transaccionoperacion",
+		WH_REQUISICIONES.LICITACIONASIGNADAFLAG as "licitacionasignadaflag",
+		WH_REQUISICIONES.REVISIONFLUJOCODIGO as "revisionflujocodigo",
+		WH_REQUISICIONES.REVISIONTECNICAPENDIENTEFLAG as
+		"revisiontecnicapendienteflag",
+		WH_REQUISICIONES.DEFAULTCAMPOREFERENCIA as "defaultcamporeferencia",
+		WH_REQUISICIONES.FECHAREVISIONTECNICA as "fecharevisiontecnica",
+		WH_REQUISICIONES.REVISIONTECNICAPOR as "revisiontecnicapor",
+		WH_REQUISICIONES.NUMEROORDEN as "numeroorden",
+		WH_REQUISICIONES.CLIENTE as "cliente",
+		WH_REQUISICIONES.CLIENTENUMEROPEDIDO as "clientenumeropedido",
+		WH_REQUISICIONES.PROVEEDOR as "proveedor",
+		WH_REQUISICIONES.PROVEEDORDOCUMENTOREFERENCIA as
+		"proveedordocumentoreferencia",
+		WH_REQUISICIONES.ANO as "anio",
+		WH_REQUISICIONES.PAAC as "paac",
+		WH_REQUISICIONES.NIVELSERVICIO as "nivelservicio",
+		WH_REQUISICIONES.ALMACENTRASLADO as "almacentraslado",
+		WH_REQUISICIONES.UNIDADNEGOCIOCOMPRA as "unidadnegociocompra",
+		WH_REQUISICIONES.COTIZADOFLAG as "cotizadoflag" ,
+		WH_REQUISICIONES.REVISIONFLUJONIVEL as "revisionflujonivel",
+		WH_REQUISICIONES.SUCURSAL as "sucursal",
+		WH_REQUISICIONES.CERTIFICACIONNUMERO as "CERTIFICACIONNUMERO"
+		FROM SGCORESYS.WH_REQUISICIONES
+		WHERE ( WH_Requisiciones.CompaniaSocio = :p_companyowner ) AND
+		( WH_Requisiciones.RequisicionNumero = :p_numerorequisicion )
+	</sql-query>
+</hibernate-mapping>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.planilla.dominio.PrProcesoperiodo" table="SGCORESYS.PR_PROCESOPERIODO">
+        <composite-id name="pk" class="net.royal.erp.planilla.dominio.PrProcesoperiodoPk">
+            <key-property name="companiasocio" type="string">
+                <column name="COMPANIASOCIO" length="8" />
+            </key-property>
+            <key-property name="periodo" type="string">
+                <column name="PERIODO" length="8" />
+            </key-property>
+            <key-property name="tipoplanilla" type="string">
+                <column name="TIPOPLANILLA" length="2" />
+            </key-property>
+            <key-property name="tipoproceso" type="string">
+                <column name="TIPOPROCESO" length="3" />
+            </key-property>
+        </composite-id>
+        <property name="flagprocesado" type="string">
+            <column name="FLAGPROCESADO" length="1" />
+        </property>
+        <property name="flagperiodomensual" type="string">
+            <column name="FLAGPERIODOMENSUAL" length="1" />
+        </property>
+        <property name="generador" type="integer">
+            <column name="GENERADOR" length="22" />
+        </property>
+        <property name="fechadesde" type="timestamp">
+            <column name="FECHADESDE" length="7" />
+        </property>
+        <property name="fechahasta" type="timestamp">
+            <column name="FECHAHASTA" length="7" />
+        </property>
+        <property name="fechaproceso" type="timestamp">
+            <column name="FECHAPROCESO" length="7" />
+        </property>
+        <property name="fechapago" type="timestamp">
+            <column name="FECHAPAGO" length="7" />
+        </property>
+        <property name="diasdelmesanterior" type="integer">
+            <column name="DIASDELMESANTERIOR" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="flagaprobado" type="string">
+            <column name="FLAGAPROBADO" length="1" />
+        </property>
+        <property name="fechaaprobacion" type="timestamp">
+            <column name="FECHAAPROBACION" length="7" />
+        </property>
+        <property name="aprobadopor" type="integer">
+            <column name="APROBADOPOR" length="22" />
+        </property>
+        <property name="nrovoucher" type="string">
+            <column name="NROVOUCHER" length="18" />
+        </property>
+        <property name="fechacierre" type="timestamp">
+            <column name="FECHACIERRE" length="7" />
+        </property>
+        <property name="cerradopor" type="integer">
+            <column name="CERRADOPOR" length="22" />
+        </property>
+        <property name="numerosemana" type="integer">
+            <column name="NUMEROSEMANA" length="22" />
+        </property>
+        <property name="numerodocumentoprovision" type="string">
+            <column name="NUMERODOCUMENTOPROVISION" length="14" />
+        </property>
+        <property name="feriados" type="integer">
+            <column name="FERIADOS" length="22" />
+        </property>
+        <property name="finesdesemana" type="integer">
+            <column name="FINESDESEMANA" length="22" />
+        </property>
+        <property name="diferencia" type="integer">
+            <column name="DIFERENCIA" length="22" />
+        </property>
+        <property name="fechainiciodm" type="timestamp">
+            <column name="FECHAINICIODM" length="7" />
+        </property>
+        <property name="fechafindm" type="timestamp">
+            <column name="FECHAFINDM" length="7" />
+        </property>
+    </class>
+</hibernate-mapping>

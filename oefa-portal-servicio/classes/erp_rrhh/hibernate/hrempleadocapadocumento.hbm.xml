@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.rrhh.dominio.HrEmpleadocapaDocumento"
+		table="SGCORESYS.HR_EMPLEADOCAPA_DOCUMENTO">
+		<composite-id name="pk"
+			class="net.royal.erp.rrhh.dominio.HrEmpleadocapaDocumentoPk">
+			<key-property name="capacitacion" type="string">
+				<column name="CAPACITACION" length="10" />
+			</key-property>
+			<key-property name="empleado" type="integer">
+				<column name="EMPLEADO" length="22" />
+			</key-property>
+			<key-property name="secuencia" type="integer">
+				<column name="SECUENCIA" length="22" />
+			</key-property>
+		</composite-id>
+		<property name="creacionFecha" type="timestamp">
+			<column name="CREACION_FECHA" length="7" />
+		</property>
+		<property name="modificacionUsuario" type="string">
+			<column name="MODIFICACION_USUARIO" length="50" />
+		</property>
+		<property name="idtipodocumento" type="string">
+			<column name="ID_TIPO_DOCUMENTO" length="10" />
+		</property>
+		<property name="extension" type="string">
+			<column name="EXTENSION" length="10" />
+		</property>
+		<property name="creacionTerminal" type="string">
+			<column name="CREACION_TERMINAL" length="50" />
+		</property>
+		<property name="modificacionFecha" type="timestamp">
+			<column name="MODIFICACION_FECHA" length="7" />
+		</property>
+		<property name="nombrearchivo" type="string">
+			<column name="NOMBREARCHIVO" length="100" />
+		</property>
+		<property name="creacionUsuario" type="string">
+			<column name="CREACION_USUARIO" length="50" />
+		</property>
+		<property name="modificacionTerminal" type="string">
+			<column name="MODIFICACION_TERMINAL" length="50" />
+		</property>
+		<property name="estado" type="string">
+			<column name="ESTADO" length="2" />
+		</property>
+		<property name="uuidalfresco" type="string">
+			<column name="UUIDALFRESCO" length="1000" />
+		</property>
+		<!-- <property name="archivo" type="binary">
+			<column name="ARCHIVO" />
+		</property> -->
+	</class>
+</hibernate-mapping>

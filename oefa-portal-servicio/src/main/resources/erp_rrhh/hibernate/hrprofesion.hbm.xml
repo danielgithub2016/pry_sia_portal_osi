@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.erp.rrhh.dominio.HrProfesion" table="SGCORESYS.HR_PROFESION">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrProfesionPk">
+            <key-property name="profesion" type="string">
+                <column name="PROFESION" length="10" />
+            </key-property>
+            <key-property name="area" type="string">
+                <column name="AREA" length="10" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="40" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="unidadreplicacion" type="string">
+            <column name="UNIDADREPLICACION" length="4" />
+        </property>
+        <property name="abreviatura" type="string">
+            <column name="ABREVIATURA" length="5" />
+        </property>
+    </class>
+</hibernate-mapping>

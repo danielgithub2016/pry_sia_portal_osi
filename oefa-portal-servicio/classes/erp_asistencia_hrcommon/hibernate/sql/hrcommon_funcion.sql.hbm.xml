@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : hrcommon.w_pr_vacaciones_reporte -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="hrcommon.FSqlGetNombrePuestoComentario">
+	    <![CDATA[
+	    	select 
+	    			CASE WHEN LENGTH(COMENTARIOS) > 0 THEN CODIGOCAP || ' - ' || DESCRIPCION || '    (' || NVL(COMENTARIOS,'')  ||')' 
+	    					ELSE CODIGOCAP || ' - ' || DESCRIPCION END AS "descripcionlocal"
+				from SGCORESYS.HR_PuestoEmpresa
+				where CodigoPuesto = :par_puesto
+	    ]]>
+	</sql-query>
+
+</hibernate-mapping>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : asistencia.AsTipodiamovimiento -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="astipodiamovimiento.obtenerMaxHoraInicioMaxHoraFin">
+		SELECT
+		min(horainicio) as "horainicio",
+		max(horafin) as "horafin"
+		FROM SGCORESYS.as_tipodiamovimiento
+		WHERE tipodia =
+		:p_tipodia
+	</sql-query>
+
+	<sql-query name="astipodiamovimiento.obtenerHoraInicioFlagDiaAnterior">
+		select
+		horainicio as "horainicio",
+		CAST(FlagDiaAnt AS VARCHAR(1)) as "flagdiaant"
+		from SGCORESYS.AS_TipoDiaMovimiento
+		where TIPODIA = :p_tipodia and
+		secuencia = (select min(a.secuencia) from SGCORESYS.AS_TipoDiaMovimiento a
+		where a.tipodia = AS_TipoDiaMovimiento.TIPODIA)
+	</sql-query>
+	<sql-query name="astipodiamovimiento.obtenerHoraFin">
+		select
+		horafin "horafin"
+		from SGCORESYS.AS_TipoDiaMovimiento
+		where TIPODIA =
+		:p_tipodia and
+		secuencia = (select max(a.secuencia) from SGCORESYS.AS_TipoDiaMovimiento a
+		where a.tipodia = AS_TipoDiaMovimiento.TIPODIA)
+	</sql-query>
+	<sql-query name="astipodiamovimiento.obtenerMaxIntervaloAcceso">
+		select max(INTERVALOACCESO) as
+		"intervaloacceso"
+		from SGCORESYS.AS_TipoDiaMovimiento
+		where TIPODIA =
+		:p_tipodia
+	</sql-query>
+
+	<sql-query name="astipodiamovimiento.obtenerIntervaloRefrigerio">
+		select
+		horainicio as "horainicio",
+		horafin as "horafin"
+		from SGCORESYS.AS_TipoDiaMovimiento
+		where TIPODIA = :p_tipodia and
+		INTERVALOACCESO = 'REFR'
+	</sql-query>
+	
+	<sql-query name="astipodiamovimiento.listar">
+		select
+		horainicio as "horainicio",
+		horafin as "horafin",
+		secuencia as "secuencia",
+		flgteletrabajo as "flgteletrabajo"
+		from SGCORESYS.AS_TipoDiaMovimiento
+		where TIPODIA = :p_tipodia and intervaloacceso = 'TRAB'
+    	order by horainicio
+	</sql-query>
+
+</hibernate-mapping>

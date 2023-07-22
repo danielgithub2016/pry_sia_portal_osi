@@ -1,0 +1,371 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+
+	<ui:define name="content">
+		<h:form id="frmEvaluacionCandidatos">
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+			<p:panel>
+				<p:panelGrid columns="3" layout="grid"
+					columnClasses="ui-grid-col-3,ui-grid-col-4,ui-grid-col-4"
+					styleClass="ui-panelgrid-blank">
+
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-4,ui-grid-col-8"
+						styleClass="ui-panelgrid-blank">
+						<h:outputLabel value="Entidad"
+							style="color:MidnightBlue;font-weight: bold; " />
+						<p:selectOneMenu id="cboEntidad"
+							value="#{cwHrRequerimientoCandidatosList.dw_position.compania}">
+							<f:selectItem itemLabel="" />
+							<f:selectItems
+								value="#{cwHrRequerimientoCandidatosList.lst_entidad}" var="co"
+								itemValue="#{co.companyowner}" itemLabel="#{co.description}" />
+						</p:selectOneMenu>
+
+						<h:outputLabel value="Convocatoria"
+							style="color:MidnightBlue;font-weight: bold; " />
+						<p:inputText
+							value="#{cwHrRequerimientoCandidatosList.dw_position.convocatoria}">
+						</p:inputText>
+
+						<h:outputLabel value="Requerimiento>="
+							style="color:MidnightBlue;font-weight: bold; " />
+						<p:inputText
+							value="#{cwHrRequerimientoCandidatosList.dw_position.numero}">
+						</p:inputText>
+
+						<h:outputLabel value="Estado"
+							style="color:MidnightBlue;font-weight: bold; " />
+						<p:selectOneMenu
+							value="#{cwHrRequerimientoCandidatosList.dw_position.estado}">
+							<f:selectItem itemLabel="En Preparación" itemValue="PR" />
+							<f:selectItem itemLabel="En Preparación + Rechazado"
+								itemValue="RP" />
+							<f:selectItem itemLabel="Rechazado" itemValue="RE" />
+							<f:selectItem itemLabel="Revisado" itemValue="RV" />
+							<f:selectItem itemLabel="Aprobado" itemValue="AP" />
+							<f:selectItem itemLabel="Aprobados + En Evaluación"
+								itemValue="AE" />
+							<f:selectItem itemLabel="Enviado" itemValue="OA" />
+							<f:selectItem itemLabel="En Evaluación" itemValue="EV" />
+							<f:selectItem itemLabel="Termiando" itemValue="TE" />
+							<f:selectItem itemLabel="Desierto" itemValue="DE" />
+						</p:selectOneMenu>
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2,ui-grid-col-10"
+						styleClass="ui-panelgrid-blank">
+
+						<h:outputLabel value="Fecha"
+							style="color:MidnightBlue;font-weight: bold; " />
+						<p:panelGrid columns="4">
+							<h:outputLabel value="Desde" for="finicial"
+								style="color:MidnightBlue;font-weight: bold; " />
+							<p:calendar
+								value="#{cwHrRequerimientoCandidatosList.dw_position.fechadesde}"
+								id="finicial" locale="es" pattern="dd/MM/yyyy"
+								styleClass="controlCalendarFecha" navigator="true"
+								effect="fadeIn" effectDuration="100">
+
+								<p:ajax event="dateSelect" update="ffinal" />
+							</p:calendar>
+
+							<h:outputLabel value="Hasta" for="ffinal"
+								style="color:MidnightBlue;font-weight: bold; " />
+							<p:calendar id="ffinal" navigator="true"
+								mindate="#{cwHrRequerimientoCandidatosList.dw_position.fechadesde}"
+								effect="fadeIn" effectDuration="100" pattern="dd/MM/yyyy"
+								styleClass="controlCalendarFecha" locale="es"
+								value="#{cwHrRequerimientoCandidatosList.dw_position.fechahasta}">
+							</p:calendar>
+						</p:panelGrid>
+
+
+						<h:outputLabel value="Consurso"
+							style="color:MidnightBlue;font-weight: bold; " />
+						<p:inputText
+							value="#{cwHrRequerimientoCandidatosList.dw_position.concurso}">
+						</p:inputText>
+
+						<h:outputLabel value="Puesto"
+							style="color:MidnightBlue;font-weight: bold; " />
+						<p:selectOneMenu>
+						</p:selectOneMenu>
+
+						<h:outputLabel value="Desierto"
+							style="color:MidnightBlue;font-weight: bold; " />
+						<p:selectOneRadio
+							value="#{cwHrRequerimientoCandidatosList.dw_position.desierto}">
+							<f:selectItem itemLabel="Si" itemValue="S" />
+							<f:selectItem itemLabel="No" itemValue="N" />
+						</p:selectOneRadio>
+
+					</p:panelGrid>
+
+
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-4,ui-grid-col-6"
+						styleClass="ui-panelgrid-blank">
+
+						<h:outputLabel value="Tipo Planilla"
+							style="color:MidnightBlue;font-weight: bold; " />
+						<p:selectOneMenu
+							value="#{cwHrRequerimientoCandidatosList.tipoplanilla}" var="tp"
+							converter="CtvTipoplanilla" id="cbotipoplanilla">
+							<f:selectItem itemLabel="" />
+							<f:selectItems
+								value="#{cwHrRequerimientoCandidatosList.lstTipoPlanilla}"
+								var="t" itemLabel="#{t.descripcion}" itemValue="#{t}" />
+							<p:column>
+								<p:outputLabel value="#{tp.tipoplanilla}" />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{tp.descripcion}" />
+							</p:column>
+						</p:selectOneMenu>
+
+						<h:outputLabel value="Personal de Reclutam."
+							style="color:MidnightBlue;font-weight: bold; " />
+						<p:selectOneMenu
+							value="#{cwHrRequerimientoCandidatosList.personaReclutamiento}"
+							var="tp" converter="CtvPersonaRecluta">
+							<f:selectItem itemLabel="" />
+							<f:selectItems
+								value="#{cwHrRequerimientoCandidatosList.lstPersonaReclutamiento}"
+								var="t" itemLabel="#{t.nombrecompleto}" itemValue="#{t}" />
+							<p:column>
+								<p:outputLabel value="#{tp.persona}" />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{tp.nombrecompleto}" />
+							</p:column>
+						</p:selectOneMenu>
+
+						<h:outputLabel value="Tipo de Requerimiento"
+							style="color:MidnightBlue;font-weight: bold; " />
+						<p:selectOneMenu
+							value="#{cwHrRequerimientoCandidatosList.dw_position.tiporequer}">
+							<f:selectItem itemLabel="" />
+							<f:selectItem itemLabel="Convocatoria Pública" itemValue="C" />
+							<f:selectItem itemLabel="Designación" itemValue="D" />
+							<f:selectItem itemLabel="Promoción" itemValue="P" />
+						</p:selectOneMenu>
+
+					</p:panelGrid>
+
+				</p:panelGrid>
+
+
+				<f:facet name="footer">
+					<p:panelGrid columns="13" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<p:commandButton value="Nuevo" styleClass="botonTextoImagen"
+							rendered="false">
+						</p:commandButton>
+
+						<p:commandButton value="Ver" styleClass="botonTextoImagen"
+							icon="ver" onstart="PF('bUI').block();"
+							oncomplete="PF('bUI').unblock();"
+							style="float: left; margin-top: 5px; margin-bottom: 5px;"
+							update="@form" action="#{cwHrRequerimientoCandidatosList.ver}">
+						</p:commandButton>
+
+
+						<p:commandButton value="Evaluar" styleClass="botonTextoImagen"
+							icon="aceptar" onstart="PF('bUI').block();"
+							oncomplete="PF('bUI').unblock();"
+							style="float: left; margin-top: 5px; margin-bottom: 5px;"
+							update="@form"
+							action="#{cwHrRequerimientoCandidatosList.evaluar}">
+						</p:commandButton>
+
+						<p:commandButton value="Revisar" styleClass="botonTextoImagen"
+							update="@form" rendered="false">
+
+						</p:commandButton>
+
+						<p:commandButton value="Aprobar" styleClass="botonTextoImagen"
+							update="@form" rendered="false">
+
+						</p:commandButton>
+
+						<p:commandButton value="Contratar" styleClass="botonTextoImagen"
+							update="@form" rendered="false">
+
+						</p:commandButton>
+
+						<p:commandButton value="terminar" styleClass="botonTextoImagen"
+							rendered="false" />
+
+						<p:commandButton value="Eliminar" styleClass="botonTextoImagen"
+							update="@form" rendered="false">
+
+						</p:commandButton>
+
+						<p:commandButton value="Imprimir" styleClass="botonTextoImagen"
+							rendered="false">
+						</p:commandButton>
+
+						<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+							onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+							style="float: left; margin-top: 5px; margin-bottom: 5px;"
+							update="@form" icon="buscar"
+							action="#{cwHrRequerimientoCandidatosList.buscar}">
+
+						</p:commandButton>
+
+						<p:commandButton value="Desierto" styleClass="botonTextoImagen"
+							rendered="false">
+						</p:commandButton>
+
+						<p:commandButton value="Publicar" styleClass="botonTextoImagen"
+							rendered="#{cwHrRequerimientoCandidatosList.cb_publicar}"
+							onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+							style="float: left; margin-top: 5px; margin-bottom: 5px;"
+							action="#{cwHrRequerimientoCandidatosList.ver}">
+						</p:commandButton>
+
+					</p:panelGrid>
+				</f:facet>
+			</p:panel>
+
+			<p:spacer width="1" height="8" />
+
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				paginator="true" paginatorPosition="bottom" rows="8" reflow="true"
+				value="#{cwHrRequerimientoCandidatosList.ltsRequerimientosCandidatos}"
+				rowKey="#{lst.requerimiento}" selectionMode="single" var="lst"
+				selection="#{cwHrRequerimientoCandidatosList.registroseleccionado}"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+				<p:column headerText="Empresa" width="70"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{lst.description}" />
+				</p:column>
+
+				<p:column headerText="Estado" width="70">
+					<h:outputText
+						value="#{lst.estado eq 'PR' ? 'En Preparación' :
+						                                   lst.estado eq 'AP' ? 'Aprobado' :
+															lst.estado eq 'RV' ? 'En Revisión' :
+															lst.estado eq 'TE' ? 'Terminado' :
+															lst.estado eq 'OA' ? 'Enviado' :
+															lst.estado eq 'EV' ? 'En Evaluación' :
+															lst.estado eq 'RE' ? 'Rechazado' :null}" />
+
+				</p:column>
+
+				<p:column headerText="N° Convocatoria" width="70"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{lst.convocatoria}" />
+				</p:column>
+
+				<p:column headerText="N° Código" styleClass="columnatablaDerecha"
+					width="50">
+					<h:outputText value="#{lst.concurso}" />
+
+				</p:column>
+
+				<p:column headerText="#Sol." width="20">
+					<h:outputText value="#{lst.numerosolicitado}" />
+				</p:column>
+
+				<p:column headerText="#Pend." width="20"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{lst.numeropendiente}" />
+
+				</p:column>
+
+				<p:column headerText="Desierto" width="40"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{lst.flagdesierto}" />
+				</p:column>
+
+				<p:column headerText="#Req." width="50"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{lst.requerimiento}" />
+
+				</p:column>
+
+				<p:column headerText="Fecha" width="80">
+					<h:outputText value="#{lst.fechasolicitud}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha}"
+							timeZone="#{msg.formato_fecha_timezone}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Puesto Solicitado" width="100">
+					<h:outputText value="#{lst.descripcion}" />
+				</p:column>
+
+				<p:column headerText="Unidad Organizacional Solicitada" width="130">
+					<h:outputText value="#{lst.descripcionposicion}" />
+				</p:column>
+
+				<p:column headerText="Vigencia(ini)" width="80">
+					<h:outputText value="#{lst.iniciovigencia}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha}"
+							timeZone="#{msg.formato_fecha_timezone}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Vigencia(fin)" width="80">
+					<h:outputText value="#{lst.finvigencia}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha}"
+							timeZone="#{msg.formato_fecha_timezone}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Límite Postulación" width="80">
+					<h:outputText value="#{lst.fechalimite}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha}"
+							timeZone="#{msg.formato_fecha_timezone}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Resultado Final" width="80">
+					<h:outputText value="#{lst.fecharesultado}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha}"
+							timeZone="#{msg.formato_fecha_timezone}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Solicitante" width="170">
+					<h:outputText value="#{lst.nombrecompleto}" />
+				</p:column>
+
+				<p:column headerText="Fecha Envío Mintra" width="80">
+					<h:outputText value="#{lst.fechaenvio}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha}"
+							timeZone="#{msg.formato_fecha_timezone}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Fecha Publicación" width="80">
+					<h:outputText value="#{lst.fechapublicacion}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha}"
+							timeZone="#{msg.formato_fecha_timezone}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Motivo Desierto" width="200">
+					<h:outputText value="#{lst.motivodesierto}" />
+				</p:column>
+			</p:dataTable>
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+
+

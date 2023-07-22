@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.erp.rrhh.dominio.HrPuestosubordinado" table="SGCORESYS.HR_PUESTOSUBORDINADO">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrPuestosubordinadoPk">
+            <key-property name="codigopuesto" type="integer">
+                <column name="CODIGOPUESTO" length="22" />
+            </key-property>
+            <key-property name="puestosubordinado" type="integer">
+                <column name="PUESTOSUBORDINADO" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="cantidad" type="integer">
+            <column name="CANTIDAD" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

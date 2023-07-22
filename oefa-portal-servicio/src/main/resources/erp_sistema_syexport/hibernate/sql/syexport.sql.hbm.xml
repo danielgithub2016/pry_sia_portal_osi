@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : syexport.w_windowbase
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- syexport.d_dw2xls_object_sort -->
+    <sql-query name="syexport.DDw2xlsObjectSort">
+    </sql-query>
+
+    <!-- syexport.d_dw2xls_object_sort_s -->
+    <sql-query name="syexport.DDw2xlsObjectSortS">
+    </sql-query>
+
+</hibernate-mapping>

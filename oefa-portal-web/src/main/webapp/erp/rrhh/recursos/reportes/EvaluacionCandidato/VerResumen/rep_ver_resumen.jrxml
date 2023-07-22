@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_ver_resumen" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b18236e3-da45-4e00-a38e-885ecc68e3e1">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="PAR_COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{PAR_COMPANIA}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_REQUERIMIENTO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{PAR_REQUERIMIENTO}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT SGCORESYS.HR_EvaluacionPostulante.Postulante,
+      ( SELECT Descripcion
+        FROM SGCORESYS.HR_Evaluacion
+           WHERE Evaluacion = HR_EvalRequerimiento.Evaluacion ) Secuencia,
+      (SUM(NVL(HR_EvaluacionPostulante.puntaje, 0) * 1.00) / NVL(( SELECT COUNT(a.Requerimiento)
+                           FROM SGCORESYS.HR_EvaluacionPostulante a
+                                     WHERE a.Requerimiento = HR_EvalRequerimiento.Requerimiento
+                                                AND a.Secuencia = HR_EvalRequerimiento.Secuencia
+                                                AND a.CompanyOwner = HR_EvaluacionPostulante.CompanyOwner
+                                                AND a.Postulante = HR_EvaluacionPostulante.Postulante ), 0) * 1.00) AS  cf_resultado,
+      (CASE
+            WHEN SUBSTR(HR_EvaluacionPostulante.Postulante, 1, 4) = 'INTE' THEN ( SELECT nombrecompleto
+                                                                                  FROM SGCORESYS.Personamast
+                                                                                     WHERE persona = SUBSTR(HR_EvaluacionPostulante.Postulante, 5, 6) )
+      ELSE ( SELECT RTRIM(ApellidoPaterno) || ' ' || RTRIM(ApellidoMaterno) || ' ' || RTRIM(Nombres)
+             FROM SGCORESYS.HR_Postulantes
+                WHERE Postulante = HR_EvaluacionPostulante.Postulante )
+         END) AS nombre,
+      HR_EvalRequerimiento.Secuencia AS orden
+FROM
+       SGCORESYS.HR_EvaluacionPostulante,
+       SGCORESYS.HR_EvalRequerimiento,
+       SGCORESYS.HR_FactoresEvaluacion fe
+WHERE
+( ( HR_EvaluacionPostulante.CompanyOwner = $P{PAR_COMPANIA} ) and
+ ( HR_EvaluacionPostulante.Requerimiento = $P{PAR_REQUERIMIENTO} ) )  and
+      HR_EvaluacionPostulante.factor=fe.factor and
+       HR_EvaluacionPostulante.Requerimiento    = HR_EvalRequerimiento.Requerimiento AND
+       HR_EvaluacionPostulante.Secuencia         = HR_EvalRequerimiento.Secuencia AND
+       HR_EvaluacionPostulante.CompanyOwner    = HR_EvalRequerimiento.CompanyOwner
+Group by HR_EvaluacionPostulante.CompanyOwner, HR_EvalRequerimiento.Requerimiento,
+           HR_EvaluacionPostulante.Postulante, HR_EvalRequerimiento.Evaluacion, HR_EvalRequerimiento.Secuencia
+Order by HR_EvaluacionPostulante.Postulante]]>
+	</queryString>
+	<field name="POSTULANTE" class="java.lang.String"/>
+	<field name="SECUENCIA" class="java.lang.String"/>
+	<field name="CF_RESULTADO" class="java.math.BigDecimal"/>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="ORDEN" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="34" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="25" splitType="Stretch"/>
+	</pageHeader>
+	<summary>
+		<band height="108" splitType="Stretch">
+			<crosstab>
+				<reportElement mode="Transparent" x="0" y="18" width="555" height="74" forecolor="#333333" backcolor="#FFFFFF" uuid="5aacd511-5949-4a93-9da9-f3156b0ea49d"/>
+				<crosstabHeaderCell>
+					<cellContents backcolor="#FFFFFF">
+						<rectangle>
+							<reportElement style="Crosstab Data Text" x="70" y="0" width="118" height="30" backcolor="#F0F8FF" uuid="f8a2827a-761e-4206-bbaf-cab31b464847"/>
+							<graphicElement>
+								<pen lineWidth="0.5"/>
+							</graphicElement>
+						</rectangle>
+						<rectangle>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="30" backcolor="#F0F8FF" uuid="22057099-5bf4-4338-8578-635688de3836"/>
+							<graphicElement>
+								<pen lineWidth="0.5"/>
+							</graphicElement>
+						</rectangle>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="30" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="65184c93-e35b-4e1a-a140-48fce29a033e"/>
+							<textElement verticalAlignment="Middle">
+								<font size="8" isBold="true"/>
+							</textElement>
+							<text><![CDATA[CÓDIGO POSTULANTE]]></text>
+						</staticText>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="70" y="0" width="118" height="30" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="0fbda908-7ff0-49e2-8576-25631cda5d77"/>
+							<textElement verticalAlignment="Middle">
+								<font size="8" isBold="true"/>
+							</textElement>
+							<text><![CDATA[NOMBRE POSTULANTE]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="POSTULANTE" width="70" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{POSTULANTE}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="fdce0d03-8aff-4938-84db-a0e92145f279"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{POSTULANTE}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#005FB3" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="NOMBRE" width="118">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{NOMBRE}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="118" height="25" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="3f20a346-5aa1-4138-9fea-b9b20dac3151"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{NOMBRE}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="ORDEN" height="0" totalPosition="End">
+					<bucket class="java.math.BigDecimal">
+						<bucketExpression><![CDATA[$F{ORDEN}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="30" forecolor="#333333" uuid="d56c9d14-709e-4188-ac26-cf411a6377a4"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[PROMEDIO]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="SECUENCIA" height="30" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{SECUENCIA}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="72" height="30" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="4d9a3d21-3550-4380-8f04-efb6c2485e28"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{SECUENCIA}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="CF_RESULTADOMeasure" class="java.math.BigDecimal">
+					<measureExpression><![CDATA[$F{CF_RESULTADO}]]></measureExpression>
+				</measure>
+				<measure name="PromedioResultado" class="java.math.BigDecimal" calculation="Average">
+					<measureExpression><![CDATA[$F{CF_RESULTADO}]]></measureExpression>
+				</measure>
+				<crosstabCell width="72" height="25">
+					<cellContents backcolor="#FFFFFF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="###0.00">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="72" height="25" forecolor="#333333" uuid="c4c5eb99-4afe-4653-babf-32bd84d72088"/>
+							<textElement verticalAlignment="Middle">
+								<font size="8" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{CF_RESULTADOMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="72" height="0" rowTotalGroup="POSTULANTE">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="70" columnTotalGroup="ORDEN">
+					<cellContents backcolor="#FFFFFF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" forecolor="#333333" uuid="545a9a39-6758-4a9b-b099-2da3e63f4a49"/>
+							<textElement verticalAlignment="Middle">
+								<font size="8" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{PromedioResultado}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="70" height="0" rowTotalGroup="POSTULANTE" columnTotalGroup="ORDEN">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" columnTotalGroup="SECUENCIA">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" height="0" rowTotalGroup="POSTULANTE" columnTotalGroup="SECUENCIA">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="25" rowTotalGroup="NOMBRE">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="NOMBRE" columnTotalGroup="ORDEN">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="NOMBRE" columnTotalGroup="SECUENCIA">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

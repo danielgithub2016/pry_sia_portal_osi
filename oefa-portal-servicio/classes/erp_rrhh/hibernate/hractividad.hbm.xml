@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrActividad" table="SGCORESYS.HR_ACTIVIDAD">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrActividadPk">
+            <key-property name="actividad" type="string">
+                <column name="ACTIVIDAD" length="10" />
+            </key-property>
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+        </composite-id>
+        <property name="unidadreplicacion" type="string">
+            <column name="UNIDADREPLICACION" length="4" />
+        </property>
+        <property name="archivoparticipantes" type="string">
+            <column name="ARCHIVOPARTICIPANTES" length="100" />
+        </property>
+        <property name="periodo" type="string">
+            <column name="PERIODO" length="6" />
+        </property>
+        <property name="fechadesde" type="timestamp">
+            <column name="FECHADESDE" length="7" />
+        </property>
+        <property name="fechahasta" type="timestamp">
+            <column name="FECHAHASTA" length="7" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="4000" />
+        </property>
+        <property name="requisitos" type="string">
+            <column name="REQUISITOS" length="150" />
+        </property>
+        <property name="costoactividad" type="integer">
+            <column name="COSTOACTIVIDAD" length="22" />
+        </property>
+        <property name="costoactividadigv" type="integer">
+            <column name="COSTOACTIVIDADIGV" length="22" />
+        </property>
+        <property name="costoext" type="integer">
+            <column name="COSTOEXT" length="22" />
+        </property>
+        <property name="costoigvext" type="integer">
+            <column name="COSTOIGVEXT" length="22" />
+        </property>
+        <property name="presupuesto" type="integer">
+            <column name="PRESUPUESTO" length="22" />
+        </property>
+        <property name="saldo" type="integer">
+            <column name="SALDO" length="22" />
+        </property>
+        <property name="unidadnegocio" type="string">
+            <column name="UNIDADNEGOCIO" length="4" />
+        </property>
+        <property name="actdefinicion" type="string">
+            <column name="ACTDEFINICION" length="10" />
+        </property>
+        <property name="numeroparticipantes" type="integer">
+            <column name="NUMEROPARTICIPANTES" length="22" />
+        </property>
+        <property name="lugar" type="string">
+            <column name="LUGAR" length="250" />
+        </property>
+        <property name="responsable" type="integer">
+            <column name="RESPONSABLE" length="22" />
+        </property>
+        <property name="resumen" type="string">
+            <column name="RESUMEN" length="4000" />
+        </property>
+        <property name="resultados" type="string">
+            <column name="RESULTADOS" length="4000" />
+        </property>
+        <property name="incidencias" type="string">
+            <column name="INCIDENCIAS" length="4000" />
+        </property>
+        <property name="recomendaciones" type="string">
+            <column name="RECOMENDACIONES" length="4000" />
+        </property>
+        <property name="tipoparticipante" type="string">
+            <column name="TIPOPARTICIPANTE" length="50" />
+        </property>
+        <property name="colaboracionexterna" type="string">
+            <column name="COLABORACIONEXTERNA" length="200" />
+        </property>
+        <property name="resultadoexcelente" type="integer">
+            <column name="RESULTADOEXCELENTE" length="22" />
+        </property>
+        <property name="resultadobueno" type="integer">
+            <column name="RESULTADOBUENO" length="22" />
+        </property>
+        <property name="resultadoregular" type="integer">
+            <column name="RESULTADOREGULAR" length="22" />
+        </property>
+        <property name="resultadomalo" type="integer">
+            <column name="RESULTADOMALO" length="22" />
+        </property>
+        <property name="fecharegistro" type="timestamp">
+            <column name="FECHAREGISTRO" length="7" />
+        </property>
+        <property name="fechaaprobacion" type="timestamp">
+            <column name="FECHAAPROBACION" length="7" />
+        </property>
+        <property name="registradopor" type="integer">
+            <column name="REGISTRADOPOR" length="22" />
+        </property>
+        <property name="aprobadopor" type="integer">
+            <column name="APROBADOPOR" length="22" />
+        </property>
+        <property name="propuestopor" type="string">
+            <column name="PROPUESTOPOR" length="150" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="departamentorespon" type="string">
+            <column name="DEPARTAMENTORESPON" length="10" />
+        </property>
+        <property name="codigometa" type="integer">
+            <column name="CODIGOMETA" length="22" />
+        </property>
+        <property name="codigolineaaccion" type="integer">
+            <column name="CODIGOLINEAACCION" length="22" />
+        </property>
+        <property name="codigoestrategia" type="string">
+            <column name="CODIGOESTRATEGIA" length="3" />
+        </property>
+        <property name="objetivo" type="string">
+            <column name="OBJETIVO" length="4000" />
+        </property>
+        <property name="otrosparticipantes" type="integer">
+            <column name="OTROSPARTICIPANTES" length="22" />
+        </property>
+        <property name="tipoactividad" type="string">
+            <column name="TIPOACTIVIDAD" length="1" />
+        </property>
+        <property name="flagtipoplan" type="string">
+            <column name="FLAGTIPOPLAN" length="1" />
+        </property>
+        <property name="costopresupuesto" type="integer">
+            <column name="COSTOPRESUPUESTO" length="22" />
+        </property>
+        <property name="costoreal" type="integer">
+            <column name="COSTOREAL" length="22" />
+        </property>
+        <property name="situacionactual" type="string">
+            <column name="SITUACIONACTUAL" length="4000" />
+        </property>
+        <property name="resumenactividad" type="string">
+            <column name="RESUMENACTIVIDAD" length="4000" />
+        </property>
+        <property name="solicitante" type="integer">
+            <column name="SOLICITANTE" length="22" />
+        </property>
+        <property name="observacion" type="string">
+            <column name="OBSERVACION" length="4000" />
+        </property>
+        <property name="codigoproceso" type="string">
+            <column name="CODIGOPROCESO" length="2" />
+        </property>
+        <property name="numeroproceso" type="integer">
+            <column name="NUMEROPROCESO" length="22" />
+        </property>
+        <property name="motivoRechazo" type="string">
+            <column name="MOTIVO_RECHAZO" length="4000" />
+        </property>
+        <property name="nivelaprobacion" type="integer">
+            <column name="NIVELAPROBACION" length="22" />
+        </property>
+        <property name="costoadicional" type="integer">
+            <column name="COSTOADICIONAL" length="22" />
+        </property>
+        <property name="fechadesdepublicacion" type="timestamp">
+            <column name="FECHADESDEPUBLICACION" length="7" />
+        </property>
+        <property name="fechahastapublicacion" type="timestamp">
+            <column name="FECHAHASTAPUBLICACION" length="7" />
+        </property>
+        <property name="flagpublicacion" type="string">
+            <column name="FLAGPUBLICACION" length="1" />
+        </property>
+        <property name="flagapoyosocial" type="string">
+            <column name="FLAGAPOYOSOCIAL" length="1" />
+        </property>
+        <property name="conceptoapoyosocial" type="string">
+            <column name="CONCEPTOAPOYOSOCIAL" length="4" />
+        </property>
+    </class>
+</hibernate-mapping>

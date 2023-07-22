@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : syclass.w_ma_primetype_list
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- syclass.d_dw_filter_dialog -->
+    <sql-query name="syclass.DDwFilterDialog">
+    </sql-query>
+
+    <!-- syclass.d_dw_sort_dialog -->
+    <sql-query name="syclass.DDwSortDialog">
+    </sql-query>
+
+    <!-- syclass.dw_cp_feeder_transfer_advance_distrib -->
+    <sql-query name="syclass.DwCpFeederTransferAdvanceDistrib">
+    </sql-query>
+
+    <!-- syclass.dw_filter_values -->
+    <sql-query name="syclass.DwFilterValues">
+    </sql-query>
+
+    <!-- syclass.dw_source -->
+    <sql-query name="syclass.DwSource">
+    </sql-query>
+
+</hibernate-mapping>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dw_hr_rep_desempeno_cedula_pie" language="groovy" pageWidth="550" pageHeight="190" columnWidth="550" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9671bb73-d362-4e76-9739-e36f01c79ae7">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PAR_COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_SECUENCIA" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_EVALUADO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_EVALUADOR" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_nombreEvaluado" class="java.lang.String"/>
+	<parameter name="par_nombreEvaluador" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT AVG(A.CALIFICACION) AS COMPETENCIA,
+(Select Descripcion
+from SGCORESYS.HR_EvaluacionesRango
+where Desde <= (
+SELECT NVL(AVG(A.CALIFICACION),0) AS COMPETENCIA FROM  SGCORESYS.HR_DETALLEEVALUACION A
+WHERE
+A.COMPANYOWNER = $P{PAR_COMPANIA}
+AND A.SECUENCIAEVAL = $P{PAR_SECUENCIA}
+AND A.EMPLEADO = $P{PAR_EVALUADO}
+AND A.EMPLEADOEVALUADOR = $P{PAR_EVALUADOR}
+) and hasta >= (
+SELECT NVL(AVG(A.CALIFICACION),0) AS COMPETENCIA FROM  SGCORESYS.HR_DETALLEEVALUACION A
+WHERE
+A.COMPANYOWNER = $P{PAR_COMPANIA}
+AND A.SECUENCIAEVAL = $P{PAR_SECUENCIA}
+AND A.EMPLEADO = $P{PAR_EVALUADO}
+AND A.EMPLEADOEVALUADOR = $P{PAR_EVALUADOR}
+)
+
+) AS COMPUTE_1,
+(SELECT SUM(CALIFICACION) FROM  SGCORESYS.HR_EMPLEADOMETAS WHERE COMPANYOWNER = A.COMPANYOWNER AND SECUENCIAEVAL = A.SECUENCIAEVAL AND EMPLEADO = A.EMPLEADO AND EMPLEADOEVALUADOR = A.EMPLEADOEVALUADOR) AS METAS
+FROM  SGCORESYS.HR_DETALLEEVALUACION A
+WHERE
+A.COMPANYOWNER = $P{PAR_COMPANIA}
+AND A.SECUENCIAEVAL = $P{PAR_SECUENCIA}
+AND A.EMPLEADO = $P{PAR_EVALUADO}
+AND A.EMPLEADOEVALUADOR = $P{PAR_EVALUADOR}
+GROUP BY A.COMPANYOWNER, A.SECUENCIAEVAL, A.EMPLEADO, A.EMPLEADOEVALUADOR]]>
+	</queryString>
+	<field name="COMPETENCIA" class="java.math.BigDecimal"/>
+	<field name="COMPUTE_1" class="java.lang.String"/>
+	<field name="METAS" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="190" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="101" height="20" uuid="dcbaccde-c919-4da6-a016-09d9cfd506cb"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="101" height="20" uuid="c2482c9d-92e7-4434-b6cd-3bb681ce296d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[OBSERVACIONES]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="24" width="101" height="30" uuid="5a2e05bd-e250-4580-a249-6442f014a26e"/>
+			</rectangle>
+			<textField pattern="###0.00">
+				<reportElement x="0" y="29" width="101" height="20" uuid="e03e134e-f2ec-4c39-ae60-6703fe6e094d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPETENCIA}==null?BigDecimal.ZERO:$F{COMPETENCIA}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="54" width="101" height="20" uuid="a75e8bea-3c11-48c1-93cd-eea213f99cb8"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="54" width="101" height="20" uuid="8a66fa2d-e111-4f5c-a825-bae55ac145e5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL COMPET.]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="84" width="100" height="84" uuid="ed29cf36-2d9c-4142-8dd6-099beac78c41"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="168" width="100" height="20" uuid="9c054144-a892-4983-a364-f0024b6e1edd"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="168" width="100" height="20" uuid="933871e8-c4c6-46b3-aa7a-1604a1dac248"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CALIFICACIÓN]]></text>
+			</staticText>
+			<line>
+				<reportElement x="125" y="154" width="150" height="1" uuid="f4778640-7c82-4b56-ace5-39c9bdf70235"/>
+			</line>
+			<line>
+				<reportElement x="313" y="153" width="150" height="1" uuid="5da6fd16-92ea-42e5-93b6-1597be9e6bd1"/>
+			</line>
+			<staticText>
+				<reportElement positionType="Float" x="125" y="170" width="150" height="11" isPrintWhenDetailOverflows="true" uuid="26007a81-7b0e-478e-a4b2-4f9bf4d3893a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[FIRMA DEL EVALUADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="313" y="170" width="150" height="11" isPrintWhenDetailOverflows="true" uuid="d8222a2a-be1f-46a5-bb8f-ba654ad13336"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[FIRMA DEL EVALUADOR]]></text>
+			</staticText>
+			<textField pattern="###0.00">
+				<reportElement x="1" y="84" width="100" height="84" uuid="4d064298-65e3-44cb-940d-e62446589601"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPUTE_1}!=null?$F{COMPUTE_1}:""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="125" y="157" width="150" height="11" isPrintWhenDetailOverflows="true" uuid="e58be7aa-c76a-4b30-aef3-64c5bd5fcba0"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{par_nombreEvaluado}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="313" y="157" width="150" height="11" isPrintWhenDetailOverflows="true" uuid="66a8a143-4f76-4e92-bbaf-5c1db6bc0bd4"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{par_nombreEvaluador}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.asistencia.dominio.AsEvento" table="SGCORESYS.AS_EVENTO">
+		<composite-id name="pk"
+			class="net.royal.erp.asistencia.dominio.AsEventoPk">
+			<key-property name="idevento" type="integer">
+				<column name="IDEVENTO" length="22" />
+			</key-property>
+		</composite-id>
+		<property name="nombreCorto" type="string">
+			<column name="NOMBRE_CORTO" length="25" />
+		</property>
+		<property name="nombreLargo" type="string">
+			<column name="NOMBRE_LARGO" length="50" />
+		</property>
+		<property name="estado" type="string">
+			<column name="ESTADO" length="1" />
+		</property>
+		<property name="orden" type="integer">
+			<column name="ORDEN" length="22" />
+		</property>
+		<property name="conceptoacceso" type="string">
+			<column name="CONCEPTOACCESO" length="4" />
+		</property>
+
+	</class>
+</hibernate-mapping>

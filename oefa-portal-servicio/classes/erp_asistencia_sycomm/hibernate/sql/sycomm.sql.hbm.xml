@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : sycomm.w_windowbase
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- sycomm.dw_ac_rep_007_account_balance_position -->
+    <sql-query name="sycomm.DwAcRep007AccountBalancePosition">
+    </sql-query>
+
+    <!-- sycomm.dw_ac_rep_703_account_balance_position -->
+    <sql-query name="sycomm.DwAcRep703AccountBalancePosition">
+    </sql-query>
+
+    <!-- sycomm.dw_account_chart_check -->
+    <sql-query name="sycomm.DwAccountChartCheck">
+    </sql-query>
+
+    <!-- sycomm.dw_compania_periodo_aplicacion_external -->
+    <sql-query name="sycomm.DwCompaniaPeriodoAplicacionExternal">
+    </sql-query>
+
+    <!-- sycomm.dw_ma_cliente_request -->
+    <sql-query name="sycomm.DwMaClienteRequest">
+    </sql-query>
+
+    <!-- sycomm.dw_ma_parametrosmast_select -->
+    <sql-query name="sycomm.DwMaParametrosmastSelect">
+    </sql-query>
+
+    <!-- sycomm.dw_mdlvouch_generacion_external -->
+    <sql-query name="sycomm.DwMdlvouchGeneracionExternal">
+    </sql-query>
+
+    <!-- sycomm.dw_re_aplica_grupo_concepto -->
+    <sql-query name="sycomm.DwReAplicaGrupoConcepto">
+    </sql-query>
+
+    <!-- sycomm.dw_re_plan_clase9_clase2 -->
+    <sql-query name="sycomm.DwRePlanClase9Clase2">
+    </sql-query>
+
+    <!-- sycomm.dw_sc_aplicaxconcep_cabecera_rpt -->
+    <sql-query name="sycomm.DwScAplicaxconcepCabeceraRpt">
+    </sql-query>
+
+    <!-- sycomm.dw_sc_aplicaxconcep_detalle_rpt -->
+    <sql-query name="sycomm.DwScAplicaxconcepDetalleRpt">
+    </sql-query>
+
+    <!-- sycomm.dw_sc_aplicaxusuarpt -->
+    <sql-query name="sycomm.DwScAplicaxusuarpt">
+    </sql-query>
+
+    <!-- sycomm.dw_sc_userxaplicacion_detalle_rpt -->
+    <sql-query name="sycomm.DwScUserxaplicacionDetalleRpt">
+    </sql-query>
+
+    <!-- sycomm.dw_sc_userxaplicacion_reporte -->
+    <sql-query name="sycomm.DwScUserxaplicacionReporte">
+    </sql-query>
+
+    <!-- sycomm.dw_sy_utility -->
+    <sql-query name="sycomm.DwSyUtility">
+    </sql-query>
+
+    <!-- sycomm.dw_sy_utility_empresa -->
+    <sql-query name="sycomm.DwSyUtilityEmpresa">
+    </sql-query>
+
+    <!-- sycomm.dw_sy_utility_rep_empresa -->
+    <sql-query name="sycomm.DwSyUtilityRepEmpresa">
+    </sql-query>
+
+    <!-- sycomm.dw_sy_utility_reporte -->
+    <sql-query name="sycomm.DwSyUtilityReporte">
+    </sql-query>
+
+    <!-- sycomm.dw_sy_utility_seg_concepto -->
+    <sql-query name="sycomm.DwSyUtilitySegConcepto">
+    </sql-query>
+
+    <!-- sycomm.dw_sy_utility_seg_grupo -->
+    <sql-query name="sycomm.DwSyUtilitySegGrupo">
+    </sql-query>
+
+    <!-- sycomm.dw_sy_utility_topico -->
+    <sql-query name="sycomm.DwSyUtilityTopico">
+    </sql-query>
+
+</hibernate-mapping>

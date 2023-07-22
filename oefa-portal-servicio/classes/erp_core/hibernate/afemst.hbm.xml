@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Afemst" table="SGCORESYS.AFEMST">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.AfemstPk">
+            <key-property name="afe" type="string">
+                <column name="AFE" length="15" />
+            </key-property>
+        </composite-id>
+        <property name="companyowner" type="string">
+            <column name="COMPANYOWNER" length="8" />
+        </property>
+        <property name="localname" type="string">
+            <column name="LOCALNAME" length="100" />
+        </property>
+        <property name="englishname" type="string">
+            <column name="ENGLISHNAME" length="40" />
+        </property>
+        <property name="approveddate" type="timestamp">
+            <column name="APPROVEDDATE" length="7" />
+        </property>
+        <property name="startdate" type="timestamp">
+            <column name="STARTDATE" length="7" />
+        </property>
+        <property name="completeddate" type="timestamp">
+            <column name="COMPLETEDDATE" length="7" />
+        </property>
+        <property name="responsible" type="string">
+            <column name="RESPONSIBLE" length="4" />
+        </property>
+        <property name="appropriationamount" type="big_decimal">
+            <column name="APPROPRIATIONAMOUNT" length="22" />
+        </property>
+        <property name="account" type="string">
+            <column name="ACCOUNT" length="20" />
+        </property>
+        <property name="accountclearing" type="string">
+            <column name="ACCOUNTCLEARING" length="20" />
+        </property>
+        <property name="afetype" type="string">
+            <column name="AFETYPE" length="2" />
+        </property>
+        <property name="afegroup" type="string">
+            <column name="AFEGROUP" length="2" />
+        </property>
+        <property name="elementdefault" type="string">
+            <column name="ELEMENTDEFAULT" length="6" />
+        </property>
+        <property name="costcenter" type="string">
+            <column name="COSTCENTER" length="10" />
+        </property>
+        <property name="group01" type="string">
+            <column name="GROUP01" length="6" />
+        </property>
+        <property name="group02" type="string">
+            <column name="GROUP02" length="6" />
+        </property>
+        <property name="group03" type="string">
+            <column name="GROUP03" length="6" />
+        </property>
+        <property name="group04" type="string">
+            <column name="GROUP04" length="6" />
+        </property>
+        <property name="status" type="string">
+            <column name="STATUS" length="1" />
+        </property>
+        <property name="lastuser" type="string">
+            <column name="LASTUSER" length="20" />
+        </property>
+        <property name="lastdate" type="timestamp">
+            <column name="LASTDATE" length="7" />
+        </property>
+        <property name="appropriationcurrency" type="string">
+            <column name="APPROPRIATIONCURRENCY" length="2" />
+        </property>
+        <property name="userstatus" type="string">
+            <column name="USERSTATUS" length="2" />
+        </property>
+        <property name="internalnumber" type="string">
+            <column name="INTERNALNUMBER" length="15" />
+        </property>
+        <property name="group05" type="string">
+            <column name="GROUP05" length="6" />
+        </property>
+        <property name="group06" type="string">
+            <column name="GROUP06" length="6" />
+        </property>
+        <property name="prime" type="string">
+            <column name="PRIME" length="6" />
+        </property>
+        <property name="codigosnip" type="string">
+            <column name="CODIGOSNIP" length="10" />
+        </property>
+        <property name="codigodnpp" type="string">
+            <column name="CODIGODNPP" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

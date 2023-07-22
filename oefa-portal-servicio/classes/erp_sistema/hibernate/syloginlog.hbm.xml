@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.sistema.dominio.SyLoginlog" table="SGCORESYS.SY_LOGINLOG">
+        <composite-id name="pk" class="net.royal.erp.sistema.dominio.SyLoginlogPk">
+            <key-property name="usuario" type="string">
+                <column name="USUARIO" length="20" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="aplicacioncodigo" type="string">
+            <column name="APLICACIONCODIGO" length="2" />
+        </property>
+        <property name="estacion" type="string">
+            <column name="ESTACION" length="20" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

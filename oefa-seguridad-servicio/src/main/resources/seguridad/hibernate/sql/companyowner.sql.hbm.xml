@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : core.Companyowner
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+   
+      <sql-query name="seguridad.companyowner.listarsocios">
+			SELECT CO.COMPANYOWNER as "companyowner"
+     			 ,CO.DESCRIPTION as "description"
+     			 ,co.percentage  as "percentage"
+ 			 	FROM SGCORESYS.COMPANYOWNER CO
+				WHERE COMPANY = :p_compania
+    </sql-query>
+    
+      <sql-query name="seguridad.companyowner.contarsocios">
+			SELECT COUNT(1)
+ 			 	FROM SGCORESYS.COMPANYOWNER CO
+				WHERE COMPANY = :p_compania	
+    </sql-query>
+</hibernate-mapping>

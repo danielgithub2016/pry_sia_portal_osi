@@ -1,0 +1,1143 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+
+	<ui:define name="content">
+
+		<script>
+   		function obtenerSecuenciaSel(secuencia,opcion,tag){
+   			document.getElementById('frmAutorizaciones:hdnsecuenciasel').value = secuencia ;
+   			document.getElementById('frmAutorizaciones:hdnvalorsel').value = opcion ;
+   			
+   			if(tag.checked){
+   				document.getElementById('frmAutorizaciones:btnCambiarSeleccion').click();
+   			}
+   			
+   		}
+   </script>
+
+		<p:outputLabel value="Autorizaciones" styleClass="tituloSubrayado"
+			rendered="#{cwAsAutorizacionPreprocesoAprobacion.flagOrigenSolicitud == 'A'}" />
+		<p:outputLabel value="Solicitudes" styleClass="tituloSubrayado"
+			rendered="#{cwAsAutorizacionPreprocesoAprobacion.flagOrigenSolicitud == 'S'}" />
+		<br />
+		<h:form id="frmAutorizaciones">
+
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+			<h:inputHidden id="hdnsecuenciasel"
+				value="#{cwAsAutorizacionPreprocesoAprobacion.secuenciaseleccion}" />
+			<h:inputHidden id="hdnvalorsel"
+				value="#{cwAsAutorizacionPreprocesoAprobacion.valorseleccion}" />
+			<p:panel>
+				<p:panelGrid columns="2" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-12,ui-grid-col-4" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:panelGrid columns="2" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-12,ui-grid-col-12" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<p:panelGrid columns="5"
+							columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-5,ui-grid-col-1,ui-grid-col-1"
+							layout="grid" styleClass="ui-panelgrid-blank">
+							<h:outputLabel value="Entidad" />
+							<p:outputLabel value="Seleccionados"
+								rendered="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvarioscompania}" />
+							<p:inputText readonly="true"
+								rendered="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvarioscompania}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codCompania}" />
+
+							<p:inputText onkeypress="return validarIngreso(event,'N');"
+								rendered="#{!cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvarioscompania}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codCompania}" />
+							<p:inputText readonly="true"
+								rendered="#{!cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvarioscompania}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.desCompania}" />
+
+							<p:commandButton icon="buscar"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.listarPopGenericos}"
+								styleClass="botonTextoImagenChico">
+								<f:setPropertyActionListener value="compania"
+									target="#{cwAsAutorizacionPreprocesoAprobacion.tipo}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener
+									target="#{cUFiltros.iMantenimientoReferencia}"
+									value="#{cwAsAutorizacionPreprocesoAprobacion}" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreContenedorRefrescar}"
+									value="frmAutorizaciones" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreVentanaEmergente}"
+									value="w_as_compania_select" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.pantallaReferencia}"
+									value="wasautorizacionpreprocesoaprobacion" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.isseleccionmultiple}" value="true" />
+								<f:setPropertyActionListener target="#{cUFiltros.conjunto}"
+									value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codCompania}" />
+							</p:commandButton>
+
+							<p:commandButton icon="limpiar"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.limpieza}"
+								styleClass="botonTextoImagenChico" update="@form">
+
+								<f:setPropertyActionListener value="compania"
+									target="#{cwAsAutorizacionPreprocesoAprobacion.tipo}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreContenedorRefrescar}"
+									value="frmAutorizaciones" />
+							</p:commandButton>
+
+
+							<h:outputLabel value="Centro Costo" />
+							<p:outputLabel value="Seleccionados"
+								rendered="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvarioscentrocosto}" />
+							<p:inputText readonly="true"
+								rendered="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvarioscentrocosto}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codCentroCosto}" />
+							<p:inputText onkeypress="return validarIngreso(event,'N');"
+								rendered="#{!cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvarioscentrocosto}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codCentroCosto}" />
+							<p:inputText readonly="true"
+								rendered="#{!cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvarioscentrocosto}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.desCentroCosto}" />
+							<p:commandButton icon="buscar"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.listarPopGenericos}"
+								styleClass="botonTextoImagenChico">
+								<f:setPropertyActionListener value="costos"
+									target="#{cwAsAutorizacionPreprocesoAprobacion.tipo}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener
+									target="#{cUFiltros.iMantenimientoReferencia}"
+									value="#{cwAsAutorizacionPreprocesoAprobacion}" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreContenedorRefrescar}"
+									value="frmAutorizaciones" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreVentanaEmergente}"
+									value="w_as_compania_select" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.pantallaReferencia}"
+									value="wasautorizacionpreprocesoaprobacion" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.isseleccionmultiple}" value="true" />
+								<f:setPropertyActionListener target="#{cUFiltros.conjunto}"
+									value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codCentroCosto}" />
+							</p:commandButton>
+
+							<p:commandButton icon="limpiar"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.limpieza}"
+								styleClass="botonTextoImagenChico" update="@form">
+
+								<f:setPropertyActionListener value="costos"
+									target="#{cwAsAutorizacionPreprocesoAprobacion.tipo}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreContenedorRefrescar}"
+									value="frmAutorizaciones" />
+							</p:commandButton>
+
+							<h:outputLabel value="Sucursal" />
+							<p:outputLabel value="Seleccionados"
+								rendered="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariossucursal}" />
+							<p:inputText readonly="true"
+								rendered="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariossucursal}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codSucursal}" />
+							<p:inputText onkeypress="return validarIngreso(event,'N');"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codSucursal}"
+								rendered="#{!cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariossucursal}" />
+							<p:inputText readonly="true"
+								rendered="#{!cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariossucursal}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.desSucursal}" />
+							<p:commandButton icon="buscar"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.listarPopGenericos}"
+								styleClass="botonTextoImagenChico">
+								<f:setPropertyActionListener value="sucursal"
+									target="#{cwAsAutorizacionPreprocesoAprobacion.tipo}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener
+									target="#{cUFiltros.iMantenimientoReferencia}"
+									value="#{cwAsAutorizacionPreprocesoAprobacion}" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreContenedorRefrescar}"
+									value="frmAutorizaciones" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreVentanaEmergente}"
+									value="w_as_compania_select" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.pantallaReferencia}"
+									value="wasautorizacionpreprocesoaprobacion" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.isseleccionmultiple}" value="true" />
+								<f:setPropertyActionListener target="#{cUFiltros.conjunto}"
+									value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codSucursal}" />
+							</p:commandButton>
+
+							<p:commandButton icon="limpiar"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.limpieza}"
+								styleClass="botonTextoImagenChico" update="@form">
+
+								<f:setPropertyActionListener value="sucursal"
+									target="#{cwAsAutorizacionPreprocesoAprobacion.tipo}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreContenedorRefrescar}"
+									value="frmAutorizaciones" />
+							</p:commandButton>
+
+							<h:outputLabel value="Empleado" />
+							<h:outputText value="Seleccionados"
+								onkeypress="return validarIngreso(event,'N');" id="grdEmpleado"
+								rendered="#{!cwAsAutorizacionPreprocesoAprobacion.verSeleccionados}" />
+							<h:outputLabel
+								rendered="#{!cwAsAutorizacionPreprocesoAprobacion.verSeleccionados}" />
+							<p:inputText onkeypress="return validarIngreso(event,'N');"
+								rendered="#{cwAsAutorizacionPreprocesoAprobacion.verSeleccionados}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codEmpleado}" />
+							<p:inputText readonly="true"
+								rendered="#{cwAsAutorizacionPreprocesoAprobacion.verSeleccionados}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.nombreCompleto}" />
+							<p:commandButton icon="buscar" styleClass="botonTextoImagenChico"
+								update="@form"
+								action="#{cwAsEmpleadoSelectMultiple.listarTodos}">
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelectMultiple.nombreContenedorRefrescar}"
+									value="frmAutorizaciones" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelectMultiple.iMantenimientoReferencia}"
+									value="#{cwAsAutorizacionPreprocesoAprobacion}" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelectMultiple.nombreVentanaEmergente}"
+									value="w_as_empleado_select_multiple" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelectMultiple.pantallaReferencia}"
+									value="wasautorizacionpreprocesoaprobacion" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelectMultiple.conjunto}"
+									value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codEmpleado}" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelectMultiple.flgTodos}"
+									value="#{cwAsAutorizacionPreprocesoAprobacion.flgperfilas09}" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelectMultiple.flgReporteTodo}" value="N" />
+							</p:commandButton>
+
+							<p:commandButton icon="limpiar"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.limpiezaEmpleado}"
+								styleClass="botonTextoImagenChico" update="@form">
+							</p:commandButton>
+						</p:panelGrid>
+
+
+						<p:panelGrid columns="5"
+							columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-5,ui-grid-col-1,ui-grid-col-1"
+							layout="grid" styleClass="ui-panelgrid-blank">
+							<h:outputLabel value="Tipo de Planilla" />
+							<p:outputLabel value="Seleccionados"
+								rendered="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariostipoplanilla}" />
+							<p:inputText readonly="true"
+								rendered="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariostipoplanilla}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codPlantilla}" />
+							<p:inputText onkeypress="return validarIngreso(event,'N');"
+								rendered="#{!cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariostipoplanilla}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codPlantilla}" />
+							<p:inputText readonly="true"
+								rendered="#{!cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariostipoplanilla}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.desPlantilla}" />
+							<p:commandButton icon="buscar" update="@form"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.listarPopGenericos}"
+								styleClass="botonTextoImagenChico">
+								<f:setPropertyActionListener value="planilla"
+									target="#{cwAsAutorizacionPreprocesoAprobacion.tipo}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener
+									target="#{cUFiltros.iMantenimientoReferencia}"
+									value="#{cwAsAutorizacionPreprocesoAprobacion}" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreContenedorRefrescar}"
+									value="frmAutorizaciones" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreVentanaEmergente}"
+									value="w_as_compania_select" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.pantallaReferencia}"
+									value="wasautorizacionpreprocesoaprobacion" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.isseleccionmultiple}" value="true" />
+								<f:setPropertyActionListener target="#{cUFiltros.conjunto}"
+									value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codPlantilla}" />
+							</p:commandButton>
+							<p:commandButton icon="limpiar"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.limpieza}"
+								styleClass="botonTextoImagenChico" update="@form">
+
+								<f:setPropertyActionListener value="planilla"
+									target="#{cwAsAutorizacionPreprocesoAprobacion.tipo}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreContenedorRefrescar}"
+									value="frmAutorizaciones" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreVentanaEmergente}"
+									value="w_as_compania_select" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.pantallaReferencia}"
+									value="wasautorizacionpreprocesoaprobacion" />
+							</p:commandButton>
+
+
+							<h:outputLabel value="Área Operativa" />
+							<p:outputLabel value="Seleccionados"
+								rendered="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariosareaoperativa}" />
+							<p:inputText readonly="true"
+								rendered="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariosareaoperativa}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codAreaOperativa}" />
+							<p:inputText onkeypress="return validarIngreso(event,'N');"
+								rendered="#{!cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariosareaoperativa}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codAreaOperativa}" />
+							<p:inputText readonly="true"
+								rendered="#{!cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariosareaoperativa}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.desAreaOperativa}" />
+							<p:commandButton icon="buscar" update="@form"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.listarPopGenericos}"
+								styleClass="botonTextoImagenChico">
+								<f:setPropertyActionListener value="operaria"
+									target="#{cwAsAutorizacionPreprocesoAprobacion.tipo}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener
+									target="#{cUFiltros.iMantenimientoReferencia}"
+									value="#{cwAsAutorizacionPreprocesoAprobacion}" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreContenedorRefrescar}"
+									value="frmAutorizaciones" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreVentanaEmergente}"
+									value="w_as_compania_select" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.pantallaReferencia}"
+									value="wasautorizacionpreprocesoaprobacion" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.isseleccionmultiple}" value="true" />
+								<f:setPropertyActionListener target="#{cUFiltros.conjunto}"
+									value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codAreaOperativa}" />
+							</p:commandButton>
+							<p:commandButton icon="limpiar"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.limpieza}"
+								styleClass="botonTextoImagenChico" update="@form">
+
+								<f:setPropertyActionListener value="operaria"
+									target="#{cwAsAutorizacionPreprocesoAprobacion.tipo}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreContenedorRefrescar}"
+									value="frmAutorizaciones" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreVentanaEmergente}"
+									value="w_as_compania_select" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.pantallaReferencia}"
+									value="wasautorizacionpreprocesoaprobacion" />
+							</p:commandButton>
+
+							<h:outputLabel value="Puesto" />
+							<p:outputLabel value="Seleccionados"
+								rendered="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariospuesto}" />
+							<p:inputText readonly="true"
+								rendered="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariospuesto}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codPuesto}" />
+							<p:inputText onkeypress="return validarIngreso(event,'N');"
+								rendered="#{!cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariospuesto}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codPuesto}" />
+							<p:inputText readonly="true"
+								rendered="#{!cwAsAutorizacionPreprocesoAprobacion.datosgenerico.isvariospuesto}"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.desPuesto}" />
+							<p:commandButton icon="buscar" update="@form"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.listarPopGenericos}"
+								styleClass="botonTextoImagenChico">
+								<f:setPropertyActionListener value="puestos"
+									target="#{cwAsAutorizacionPreprocesoAprobacion.tipo}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener
+									target="#{cUFiltros.iMantenimientoReferencia}"
+									value="#{cwAsAutorizacionPreprocesoAprobacion}" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreContenedorRefrescar}"
+									value="frmAutorizaciones" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreVentanaEmergente}"
+									value="w_as_compania_select" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.pantallaReferencia}"
+									value="wasautorizacionpreprocesoaprobacion" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.isseleccionmultiple}" value="true" />
+								<f:setPropertyActionListener target="#{cUFiltros.conjunto}"
+									value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.codPuesto}" />
+							</p:commandButton>
+							<p:commandButton icon="limpiar"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.limpieza}"
+								styleClass="botonTextoImagenChico" update="@form">
+
+								<f:setPropertyActionListener value="puestos"
+									target="#{cwAsAutorizacionPreprocesoAprobacion.tipo}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreContenedorRefrescar}"
+									value="frmAutorizaciones" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.nombreVentanaEmergente}"
+									value="w_as_compania_select" />
+								<f:setPropertyActionListener
+									target="#{cUFiltros.pantallaReferencia}"
+									value="wasautorizacionpreprocesoaprobacion" />
+							</p:commandButton>
+						</p:panelGrid>
+					</p:panelGrid>
+					<p:panel header="Datos del Empleado"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.ismostrarDatosResponsable}">
+						<p:panelGrid columns="2"
+							columnClasses="ui-grid-col-3,ui-grid-col-10" layout="grid"
+							styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Empleado:" />
+							<p:outputLabel
+								value="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.empleado}" />
+							<p:outputLabel value="Centro Costo:" />
+							<p:outputLabel
+								value="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.centrocosto}" />
+							<p:outputLabel value="Puesto:" />
+							<p:outputLabel
+								value="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.puesto}" />
+						</p:panelGrid>
+					</p:panel>
+				</p:panelGrid>
+			</p:panel>
+
+			<p:panel>
+				<p:panelGrid columns="13" id="grdFechas" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-1,ui-grid-col-1,ui-grid-col-1,ui-grid-col-1.5,ui-grid-col-1,ui-grid-col-1.5,ui-grid-col-1,ui-grid-col-1.5,ui-grid-col-1,ui-grid-col-1,ui-grid-col-1,ui-grid-col-2,ui-grid-col-1"
+					layout="grid" styleClass="ui-panelgrid-blank">
+
+					<p:outputLabel value="Fechas" />
+					<p:selectOneMenu
+						valueChangeListener="#{cwAsAutorizacionPreprocesoAprobacion.cambiaropcionFecha}"
+						value="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.fechas}"
+						immediate="true">
+						<f:selectItem itemLabel="Periodo" itemValue="1" />
+						<f:selectItem itemLabel="Fecha" itemValue="2" />
+						<f:selectItem itemLabel="Todos" itemValue="3" />
+						<p:ajax update="grdFechas" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Desde"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.isfecha}" />
+					<p:calendar pattern="dd/MM/yyyy" locale="es" navigator="true"
+						showButtonPanel="true" mask="true"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.isfecha}"
+						value="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.fechadesde}">
+					</p:calendar>
+
+					<p:outputLabel value="Hasta"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.isfecha}" />
+					<p:calendar pattern="dd/MM/yyyy" locale="es" navigator="true"
+						showButtonPanel="true" mask="true"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.isfecha}"
+						value="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.fechaHasta}">
+					</p:calendar>
+
+					<p:inputText id="txtPeriodo"
+						onkeypress="return validarIngreso(event,'N');"
+						value="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.periodo}"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.isperiodo}" />
+
+					<p:outputLabel value="N° de Resolución" />
+					<p:inputText
+						value="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.nroresolucion}">
+						<p:ajax event="keyup" update="tblAutorizaciones"
+							listener="#{cwAsAutorizacionPreprocesoAprobacion.filtrarPorResolucion}" />
+					</p:inputText>
+					<h:outputLabel value="Estado" />
+					<p:selectOneMenu
+						value="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.estado}">
+						<f:selectItem itemLabel="Solicitado" itemValue="S" />
+						<f:selectItem itemLabel="Aprobado" itemValue="A" />
+						<f:selectItem itemLabel="Rechazado" itemValue="R" />
+						<f:selectItem itemLabel="TODOS" itemValue="T" />
+					</p:selectOneMenu>
+					<p:outputLabel value="Concepto" />
+					<p:selectOneMenu
+						value="#{cwAsAutorizacionPreprocesoAprobacion.datosgenerico.conceptoacceso}"
+						filter="true" filterMatchMode="contains">
+						<f:selectItem itemLabel="TODOS" />
+						<f:selectItems
+							value="#{cwAsAutorizacionPreprocesoAprobacion.dw_conceptoaccesofiltro}"
+							var="conac" itemValue="#{conac.conceptoacceso}"
+							itemLabel="#{conac.conceptoacceso} - #{conac.descripcionlocal}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+			</p:panel>
+
+			<p:panel>
+				<p:panelGrid columns="8"
+					columnClasses="ui-grid-col-0.5,ui-grid-col-1.5,ui-grid-col-0.5,ui-grid-col-1.5,ui-grid-col-0.5,ui-grid-col-1,ui-grid-col-0.5,ui-grid-col-1"
+					layout="grid" styleClass="ui-panelgrid-blank">
+
+					<p:selectBooleanCheckbox id="cbxaprobar"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.flagOrigenSolicitud == 'A'}"
+						value="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.isseltodosaprobados}"
+						valueChangeListener="#{cwAsAutorizacionPreprocesoAprobacion.seleccionarTodosAprobados}">
+						<p:ajax update="tblAutorizaciones,cbxrechazar" />
+					</p:selectBooleanCheckbox>
+					<p:outputLabel value="Sel. Todos Aprobados"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.flagOrigenSolicitud == 'A'}" />
+
+					<p:selectBooleanCheckbox id="cbxrechazar"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.flagOrigenSolicitud == 'A'}"
+						value="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.isseltodosrechazados}"
+						valueChangeListener="#{cwAsAutorizacionPreprocesoAprobacion.seleccionarTodosRechazados}">
+						<p:ajax update="tblAutorizaciones,cbxaprobar" />
+					</p:selectBooleanCheckbox>
+					<p:outputLabel value="Sel. Todos Rechazados"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.flagOrigenSolicitud == 'A'}" />
+
+					<p:selectBooleanCheckbox
+						value="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.iscesados}">
+					</p:selectBooleanCheckbox>
+					<p:outputLabel value="+ Cesados" />
+
+					<p:selectBooleanCheckbox
+						value="#{cwAsAutorizacionPreprocesoAprobacion.dwFiltros.isinactivos}">
+					</p:selectBooleanCheckbox>
+					<p:outputLabel value="+ Inactivos" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="9" id="grdBotones"
+					columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+					layout="grid" styleClass="ui-panelgrid-blank">
+
+					<p:commandButton value="Procesar" icon="procesar" process="@form"
+						action="#{cwAsAutorizacionPreprocesoAprobacion.guardar}"
+						styleClass="botonTextoImagen" style="float:right"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.flagOrigenSolicitud == 'A'}"
+						title="Aprueba o desaprueba los registros seleccionados" />
+
+					<p:commandButton value="Nuevo" styleClass="botonTextoImagen"
+						icon="nuevo" immediate="true" style="float:right"
+						action="#{cwAsAutorizacionPreprocesoAprobacion.nuevo}"
+						disabled="#{!cwAsAutorizacionPreprocesoAprobacion.opciones.ishabilitarnuevo}"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.visibleNuevo}" />
+
+					<p:commandButton value="Modificar" styleClass="botonTextoImagen"
+						action="#{cwAsAutorizacionPreprocesoAprobacion.editar}"
+						icon="editar" style="float:right" onstart="PF('bUI').block();"
+						oncomplete="PF('bUI').unblock();"
+						disabled="#{!cwAsAutorizacionPreprocesoAprobacion.opciones.ishabilitarmodificar}"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.visibleModificar}" />
+					<p:commandButton value="Eliminar" styleClass="botonTextoImagen"
+						icon="eliminar" style="float:right" onstart="PF('bUI').block();"
+						oncomplete="PF('bUI').unblock();"
+						disabled="#{!cwAsAutorizacionPreprocesoAprobacion.opciones.ishabilitareliminar}"
+						action="#{cwAsAutorizacionPreprocesoAprobacion.eliminar}"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.visibleEliminar}">
+					</p:commandButton>
+
+					<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+						icon="buscar" update="tblAutorizaciones,grdBotones"
+						style="float:right" onstart="PF('bUI').block();"
+						oncomplete="PF('bUI').unblock();"
+						action="#{cwAsAutorizacionPreprocesoAprobacion.buscar}" />
+
+					<p:commandButton value="Imprimir" styleClass="botonTextoImagen"
+						icon="imprimir" style="float:right"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.visibleImprimir}"
+						onclick="document.getElementById('frmAutorizaciones:lnkreporte').click()" />
+
+					<p:commandButton value="Exportar" styleClass="botonTextoImagen"
+						icon="exportar_excel" style="float:right"
+						onclick="document.getElementById('frmAutorizaciones:lnkExportar').click()" />
+
+					<h:commandLink id="lnkreporte"
+						action="#{cwAsAutorizacionPreprocesoAprobacion.imprimirAutorizacion}"
+						style="display:none;float:right" target="_blank" immediate="true" />
+
+					<p:commandButton id="btnCambiarSeleccion" process="@form"
+						style="display:none;float:right" update="tblAutorizaciones"
+						action="#{cwAsAutorizacionPreprocesoAprobacion.cambiarSeleccion}" />
+
+					<h:commandLink id="lnkExportar" style="display:none;float:right"
+						action="#{cwAsAutorizacionPreprocesoAprobacion.exportar}">
+					</h:commandLink>
+
+				</p:panelGrid>
+			</p:panel>
+
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				id="tblAutorizaciones" paginator="true" paginatorPosition="bottom"
+				scrollable="true" scrollHeight="260" reflow="true"
+				rowKey="#{autoriza.secuencia}" rows="10" rowIndexVar="index"
+				selection="#{cwAsAutorizacionPreprocesoAprobacion.registroSeleccionado}"
+				selectionMode="single" sortBy="#{msg.generico_tabla_sinregistros}"
+				value="#{cwAsAutorizacionPreprocesoAprobacion.lstAutorizacionPreProcesoAprobacion}"
+				var="autoriza"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+				<p:ajax event="rowSelect"
+					listener="#{cwAsAutorizacionPreprocesoAprobacion.onRowSelect}" />
+
+				<p:ajax event="rowDblselect"
+					oncomplete="document.getElementById('frmAutorizaciones:btnVer').click();"
+					listener="#{cwAsAutorizacionPreprocesoAprobacion.onRowDblSelect}" />
+
+				<p:columnGroup type="header">
+					<p:column width="15" headerText="Lin.">
+					</p:column>
+
+					<p:column width="20" styleClass="aprobaricon"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.flagOrigenSolicitud == 'A'}">
+					</p:column>
+					<p:column width="20" styleClass="desaprobaricon"
+						rendered="#{cwAsAutorizacionPreprocesoAprobacion.flagOrigenSolicitud == 'A'}">
+					</p:column>
+
+					<p:column headerText="Est." width="30"
+						styleClass="columnatablaCentro">
+					</p:column>
+
+					<p:column headerText="¿Requiere Autorización Final de URH?"
+						width="90" styleClass="columnatablaCentro">
+					</p:column>
+
+					<p:column headerText="¿Requiere Autorización Final de SST?"
+						width="90" styleClass="columnatablaCentro">
+					</p:column>
+
+					<p:column headerText="¿Se realizó la Autorización 1?" width="70"
+						styleClass="columnatablaCentro">
+					</p:column>
+
+					<p:column headerText="Inicio" width="80"
+						styleClass="columnatablaCentro">
+					</p:column>
+
+					<p:column headerText="Fin" width="80"
+						styleClass="columnatablaCentro">
+					</p:column>
+
+					<p:column width="70" headerText="Código"
+						styleClass="columnatablaDerecha">
+					</p:column>
+
+					<p:column width="260" headerText="Nombre">
+					</p:column>
+
+					<p:column headerText="Concepto" width="160">
+					</p:column>
+
+					<p:column headerText="Desde" width="60"
+						styleClass="columnatablaCentro">
+					</p:column>
+
+					<p:column headerText="Hasta" width="60"
+						styleClass="columnatablaCentro">
+					</p:column>
+
+					<p:column headerText="Solicitado por" width="70">
+					</p:column>
+
+					<p:column headerText="Fecha Solicitado" width="80">
+					</p:column>
+
+					<p:column headerText="Autorización 1" width="70">
+					</p:column>
+
+					<p:column headerText="Fecha Autorización 1" width="80">
+					</p:column>
+
+					<p:column headerText="Autorización Final" width="70">
+					</p:column>
+
+					<p:column headerText="Fecha Autorización Final" width="80">
+					</p:column>
+
+
+					<p:column headerText="Lugar" width="90"
+						styleClass="columnatablaCentro">
+					</p:column>
+
+					<p:column headerText="N° Resolución" width="120">
+					</p:column>
+
+					<p:column headerText="Fecha Resolución" width="90">
+					</p:column>
+
+					<p:column headerText="¿Tiene Archivo?" width="54"
+						styleClass="columnatablaCentro">
+					</p:column>
+
+					<p:column headerText="Observación del Trabajador" width="200">
+					</p:column>
+
+					<p:column headerText="Entidad" width="90"
+						styleClass="columnatablaCentro">
+					</p:column>
+
+
+
+					<p:column headerText="Centro Costo" width="260">
+					</p:column>
+
+					<p:column headerText="Sucursal" width="180">
+					</p:column>
+
+					<p:column headerText="Tipo Planilla" width="100">
+					</p:column>
+
+					<p:column headerText="Area Operativa" width="260">
+					</p:column>
+
+					<p:column headerText="Puesto" width="170">
+					</p:column>
+				</p:columnGroup>
+
+				<p:column width="15" styleClass="columnatablaCentro">
+					<p:outputLabel value="#{index + 1}" />
+				</p:column>
+
+				<p:column width="20"
+					rendered="#{cwAsAutorizacionPreprocesoAprobacion.flagOrigenSolicitud == 'A'}">
+					<p:selectBooleanCheckbox
+						disabled="#{autoriza.estado == 'R' or autoriza.empleado == cwAsAutorizacionPreprocesoAprobacion.empleado or autoriza.isadminapro == 'S'}"
+						value="#{autoriza.isseleccionaprobado}"
+						onchange="return obtenerSecuenciaSel(#{autoriza.secuencia},'A',this);" />
+				</p:column>
+
+				<p:column width="20"
+					rendered="#{cwAsAutorizacionPreprocesoAprobacion.flagOrigenSolicitud == 'A'}">
+					<p:selectBooleanCheckbox value="#{autoriza.isseleccionrechazado}"
+						disabled="#{autoriza.estado == 'R' or autoriza.empleado == cwAsAutorizacionPreprocesoAprobacion.empleado or autoriza.isadminapro == 'S'}"
+						onchange="return obtenerSecuenciaSel(#{autoriza.secuencia},'R',this);" />
+				</p:column>
+
+				<p:column width="30" styleClass="columnatablaCentro">
+					<h:graphicImage title="Solicitado"
+						value="/comun/recursos/imagenes/mantenimiento/SC_abie.png"
+						rendered="#{autoriza.estado == 'S'}" />
+					<h:graphicImage title="Rechazado"
+						value="/comun/recursos/imagenes/mantenimiento/SC_anul.png"
+						rendered="#{autoriza.estado == 'R'}" />
+					<h:graphicImage title="Aprobado"
+						value="/comun/recursos/imagenes/mantenimiento/SC_apro.png"
+						rendered="#{autoriza.estado == 'A'}" />
+				</p:column>
+
+				<p:column headerText="¿Requiere aprobación URH?"
+					styleClass="columnatablaCentro" width="160">
+					<h:outputText value="Si"
+						rendered="#{autoriza.flagAprobacionURH=='S'}" />
+					<h:outputText value="No"
+						rendered="#{autoriza.flagAprobacionURH!='S'}" />
+				</p:column>
+
+				<p:column headerText="¿Requiere aprobación SST?"
+					styleClass="columnatablaCentro" width="160">
+					<h:outputText value="Si"
+						rendered="#{autoriza.flagaprobacionsst=='S'}" />
+					<h:outputText value="No"
+						rendered="#{autoriza.flagaprobacionsst!='S'}" />
+				</p:column>
+
+				<p:column headerText="¿Aprobó jefe?" width="160"
+					styleClass="columnatablaCentro">
+					<h:outputText value="Si"
+						rendered="#{autoriza.flagAprobadoJefe=='S' and (autoriza.flagAprobacionURH=='S' || autoriza.flagaprobacionsst=='S')}" />
+					<h:outputText value="No"
+						rendered="#{autoriza.flagAprobadoJefe!='S' and (autoriza.flagAprobacionURH=='S' || autoriza.flagaprobacionsst=='S')}" />
+				</p:column>
+
+				<p:column width="80" styleClass="columnatablaCentro">
+					<h:outputText value="#{autoriza.fecha}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Fin" width="80"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{autoriza.fechafin}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column width="70" headerText="Código"
+					styleClass="columnatablaDerecha">
+					<h:outputText value="#{autoriza.empleado}" />
+				</p:column>
+
+				<p:column width="260" headerText="Nombre">
+					<h:outputText value="#{autoriza.nombrecompleto}" />
+				</p:column>
+
+				<p:column headerText="Concepto" width="160">
+					<h:outputText value="#{autoriza.conceptoaccesonombre}" />
+				</p:column>
+
+				<p:column headerText="Desde" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{autoriza.desde1}">
+						<f:convertDateTime pattern="HH:mm" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Hasta" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{autoriza.hasta1}">
+						<f:convertDateTime pattern="HH:mm:ss" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Solicitado por" width="70">
+					<h:outputText value="#{autoriza.solicitadoPor}" />
+				</p:column>
+
+				<p:column headerText="Fecha Solicitado" width="80">
+					<h:outputText value="#{autoriza.fechaSolicitud}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha}" />
+					</h:outputText>
+				</p:column>
+
+
+				<p:column headerText="Autorizado jefe por" width="70">
+					<h:outputText value="#{autoriza.aprobadoJefePor}" />
+				</p:column>
+
+				<p:column headerText="Fecha Autorizado jefe" width="80">
+					<h:outputText value="#{autoriza.fechaAprobadoJefe}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Autorizado por" width="70">
+					<h:outputText value="#{autoriza.autorizadoPor}" />
+				</p:column>
+
+				<p:column headerText="Fecha Autorizado" width="80">
+					<h:outputText value="#{autoriza.fechaAutorizado}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha}" />
+					</h:outputText>
+				</p:column>
+
+
+				<p:column headerText="Lugar" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="Dentro de la Institución"
+						rendered="#{autoriza.tipoautorizacion == 'D'}" />
+					<h:outputText value="Fuera de la Institución"
+						rendered="#{autoriza.tipoautorizacion == 'F'}" />
+				</p:column>
+
+				<p:column headerText="N° Resolución" width="120">
+					<h:outputText value="#{autoriza.nroresolucion}" />
+				</p:column>
+
+				<p:column width="90">
+					<h:outputText value="#{autoriza.fecharesolucion}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column width="54" styleClass="columnatablaCentro">
+					<p:selectBooleanCheckbox value="#{autoriza.istrue}" disabled="true"
+						rendered="#{autoriza.flagtienearchivo != NULL}" />
+					<p:selectBooleanCheckbox value="#{autoriza.isfalse}"
+						disabled="true" rendered="#{autoriza.flagtienearchivo == NULL}" />
+				</p:column>
+
+				<p:column headerText="Observación del Trabajador" width="200">
+					<h:outputText value="#{autoriza.observacion}" />
+				</p:column>
+
+				<p:column headerText="Entidad">
+					<h:outputText value="#{autoriza.companiaSocio}" />
+				</p:column>
+
+
+
+				<p:column headerText="Centro Costo" width="260">
+					<h:outputText value="#{autoriza.centrocostodes}" />
+				</p:column>
+
+				<p:column headerText="Sucursal" width="180">
+					<h:outputText value="#{autoriza.oficinades}" />
+				</p:column>
+
+				<p:column headerText="Tipo Planilla" width="100">
+					<h:outputText value="#{autoriza.tipoplanillades}" />
+				</p:column>
+
+				<p:column headerText="Area Operativa" width="260">
+					<h:outputText value="#{autoriza.areaNombre}" />
+				</p:column>
+
+				<p:column headerText="Puesto" width="170">
+					<h:outputText value="#{autoriza.puestodes}" />
+				</p:column>
+
+			</p:dataTable>
+
+			<p:commandButton action="w_as_autorizacion_preproceso_hextra_edit"
+				style="display:none" id="btnVer" />
+
+		</h:form>
+
+		<p:confirmDialog id="dgProcesarSeleccion" closable="false"
+			widgetVar="popProcesarSeleccion" header="Confirmación"
+			resizable="false" severity="info" appendTo="@(body)"
+			message="¿Está seguro de procesar la selección?" responsive="true">
+			<div class="ui-fluid">
+				<h:form>
+					<p:panelGrid columns="2" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<p:commandButton value="Si" onstart="PF('bUI').block();"
+							oncomplete="PF('bUI').unblock();"
+							action="#{cwAsAutorizacionPreprocesoAprobacion.ingresoMotivoRechazo}" />
+						<p:commandButton value="No"
+							onclick="PF('popProcesarSeleccion').hide();" />
+					</p:panelGrid>
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+		<p:dialog id="dgMotivoRechazo" widgetVar="popMotivoRechazo"
+			modal="true" appendTo="@(Body)" header="Motivo de Rechazo"
+			resizable="false" responsive="true" dynamic="true">
+			<ui:include src="w_as_autorizacion_preproceso_aprob_dlg.xhtml" />
+		</p:dialog>
+
+		<p:dialog id="dgConfiguracionPerfiles" style="min-width:700px"
+			closable="false" widgetVar="popConfiguracionPerfiles" modal="true"
+			appendTo="@(Body)" header="Configuración de Perfiles"
+			resizable="false" responsive="true" dynamic="true">
+			<div class="ui-fluid">
+				<h:form id="frmConfiguracionPerfiles">
+					<p:growl life="#{msg.generico_tiempo_growl}" />
+					<p:focus for="lblNombrePerfil" />
+
+					<p:panelGrid columns="1" columnClasses="ui-grid-col-20"
+						layout="grid" styleClass="ui-panelgrid-blank">
+						<p:outputLabel id="lblNombrePerfil"
+							value="Empleado: #{cwAsAutorizacionPreprocesoAprobacion.empleadoNombre}" />
+					</p:panelGrid>
+
+
+					<p:panel header="DATOS SIGED">
+						<ui:repeat
+							value="#{cwAsAutorizacionPreprocesoAprobacion.listaPerfilesSIGED}"
+							var="perfil">
+
+							<p:panelGrid columns="1" id="grAsignacionPerfilesAprobacion"
+								style="border-spacing:0px;" columnClasses="ui-grid-col-12"
+								layout="grid" styleClass="ui-panelgrid-blank">
+
+								<p:panelGrid columns="2" cellpadding="1">
+									<p:selectBooleanCheckbox itemIndex="#{perfil.idPerfil}"
+										disabled="#{perfil.perfilSeleccionadoLectura}"
+										value="#{perfil.perfilSeleccionado}" />
+									<p:outputLabel value="#{perfil.nombre}" />
+								</p:panelGrid>
+
+							</p:panelGrid>
+
+						</ui:repeat>
+					</p:panel>
+
+					<p:panel>
+						<p:panelGrid columns="3" style="border-spacing:0px;"
+							columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
+							layout="grid" styleClass="ui-panelgrid-blank">
+
+							<p:spacer></p:spacer>
+
+							<p:commandButton value="Aceptar" icon="aceptar" process="@form"
+								update="@form" onstart="PF('bUI').block();"
+								oncomplete="PF('bUI').unblock();"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.ingresoMotivoRechazo}" />
+
+							<p:spacer></p:spacer>
+
+						</p:panelGrid>
+					</p:panel>
+				</h:form>
+			</div>
+
+		</p:dialog>
+
+
+		<p:dialog id="dgRecuperacionPermiso" style="min-width:700px"
+			closable="false" widgetVar="popRecuperacionPermiso" modal="true"
+			appendTo="@(Body)" header="Recuperación de Permiso" resizable="false"
+			responsive="true" dynamic="true">
+			<div class="ui-fluid">
+				<h:form id="frmRecuperacionPermiso">
+					<p:growl life="#{msg.generico_tiempo_growl}" />
+					<p:panel>
+						<p:focus for="lblNombre" />
+						<p:panelGrid columns="1" columnClasses="ui-grid-col-20"
+							layout="grid" styleClass="ui-panelgrid-blank">
+							<p:outputLabel id="lblNombre"
+								value="Empleado: #{cwAsAutorizacionPreprocesoAprobacion.empleadoNombre}" />
+						</p:panelGrid>
+						<p:panelGrid columns="2"
+							columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid"
+							styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Fecha Inicio" />
+							<p:calendar required="true" locale="es" navigator="true"
+								showButtonPanel="true" mask="true"
+								requiredMessage="El campo Fecha Inicio del es requerida"
+								converterMessage="El formato de fecha debe ser dd/MM/yyyy Ejem: 01/01/1900"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.fechaRecuperacionIni}"
+								pattern="dd/MM/yyyy">
+								<p:ajax event="blur"
+									listener="#{cwAsAutorizacionPreprocesoAprobacion.keyfechainicio}"
+									update="cldFechaFin" />
+								<p:ajax event="dateSelect"
+									listener="#{cwAsAutorizacionPreprocesoAprobacion.valuechangeFecha}"
+									update="cldFechaFin" />
+							</p:calendar>
+
+							<p:outputLabel value="Fecha Fin" />
+							<p:calendar locale="es" navigator="true" showButtonPanel="true"
+								requiredMessage="El campo Fecha Fin al es requerida" mask="true"
+								required="true" id="cldFechaFin" disabled="true"
+								converterMessage="El formato de fecha debe ser dd/MM/yyyy Ejem: 01/01/1900"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.fechaRecuperacionFin}"
+								pattern="dd/MM/yyyy">
+							</p:calendar>
+
+							<p:outputLabel value="Periodo Recuperación" />
+							<p:selectOneMenu
+								requiredMessage="El campo Periodo Recuperación es obligatorio."
+								filter="true" filterMatchMode="contains" required="true"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.periodoDescontar}">
+								<f:selectItem itemLabel="--Seleccione--" />
+								<f:selectItems
+									value="#{cwAsAutorizacionPreprocesoAprobacion.lstPeriodosPlanilla}"
+									var="perio" itemValue="#{perio.pk.periodo}"
+									itemLabel="#{perio.pk.periodo}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Archivo Adjunto" />
+							<p:panelGrid columns="2"
+								columnClasses="ui-grid-col-12,ui-grid-col-2" layout="grid"
+								styleClass="ui-panelgrid-blank" style="border-spacing:0px;"
+								id="grdArchivo">
+								<p:inputText disabled="true"
+									value="#{cwAsAutorizacionPreprocesoAprobacion.rutaDocumento}">
+								</p:inputText>
+
+								<h:commandLink title="Ver" immediate="true"
+									action="#{cwAsAutorizacionPreprocesoAprobacion.verDocumento}">
+									<h:graphicImage
+										value="/comun/recursos/imagenes/mantenimiento/btn_preview1_16.png" />
+								</h:commandLink>
+							</p:panelGrid>
+
+
+						</p:panelGrid>
+					</p:panel>
+
+					<p:panel>
+						<p:panelGrid columns="2" style="border-spacing:0px;"
+							columnClasses="ui-grid-col-8,ui-grid-col-8" layout="grid"
+							styleClass="ui-panelgrid-blank">
+							<p:commandButton value="Aceptar" icon="aceptar" process="@form"
+								update="@form" onstart="PF('bUI').block();"
+								oncomplete="PF('bUI').unblock();"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.ingresoMotivoRechazo}" />
+							<p:commandButton value="Cancelar" icon="cancelar"
+								immediate="true"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.cancelarMotivoRechazo}" />
+						</p:panelGrid>
+					</p:panel>
+				</h:form>
+			</div>
+		</p:dialog>
+
+
+		<p:dialog id="dgRecuperacionPermisoCuponeras" style="min-width:700px"
+			closable="false" widgetVar="popRecuperacionPermisoCuponeras"
+			modal="true" appendTo="@(Body)" header="Recuperación de Permiso"
+			resizable="false" responsive="true" dynamic="true">
+			<div class="ui-fluid">
+				<h:form id="frmRecuperacionPermisoCuponeras">
+					<p:growl life="#{msg.generico_tiempo_growl}" />
+					<p:panel>
+						<p:focus for="lblNombre" />
+						<p:panelGrid columns="1" columnClasses="ui-grid-col-20"
+							layout="grid" styleClass="ui-panelgrid-blank">
+							<p:outputLabel id="lblNombre"
+								value="Empleado: #{cwAsAutorizacionPreprocesoAprobacion.empleadoNombre}" />
+						</p:panelGrid>
+						<p:panelGrid columns="2"
+							columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid"
+							styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Fecha Inicio" />
+							<p:calendar required="true" locale="es" navigator="true"
+								showButtonPanel="true" mask="true" disabled="true"
+								requiredMessage="El campo Fecha Inicio del es requerida"
+								converterMessage="El formato de fecha debe ser dd/MM/yyyy Ejem: 01/01/1900"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.fechaRecuperacionIni}"
+								pattern="dd/MM/yyyy">
+								<p:ajax event="blur"
+									listener="#{cwAsAutorizacionPreprocesoAprobacion.keyfechainicio}"
+									update="cldFechaFin" />
+								<p:ajax event="dateSelect"
+									listener="#{cwAsAutorizacionPreprocesoAprobacion.valuechangeFecha}"
+									update="cldFechaFin" />
+							</p:calendar>
+
+							<p:outputLabel value="Fecha Fin" />
+							<p:calendar locale="es" navigator="true" showButtonPanel="true"
+								requiredMessage="El campo Fecha Fin al es requerida" mask="true"
+								required="true" id="cldFechaFin" disabled="true"
+								converterMessage="El formato de fecha debe ser dd/MM/yyyy Ejem: 01/01/1900"
+								value="#{cwAsAutorizacionPreprocesoAprobacion.fechaRecuperacionFin}"
+								pattern="dd/MM/yyyy">
+							</p:calendar>
+
+							<p:outputLabel value="Archivo Adjunto" />
+							<p:panelGrid columns="2"
+								columnClasses="ui-grid-col-12,ui-grid-col-2" layout="grid"
+								styleClass="ui-panelgrid-blank" style="border-spacing:0px;"
+								id="grdArchivo">
+								<p:inputText disabled="true"
+									value="#{cwAsAutorizacionPreprocesoAprobacion.rutaDocumento}">
+								</p:inputText>
+
+								<h:commandLink title="Ver" immediate="true"
+									action="#{cwAsAutorizacionPreprocesoAprobacion.verDocumento}">
+									<h:graphicImage
+										value="/comun/recursos/imagenes/mantenimiento/btn_preview1_16.png" />
+								</h:commandLink>
+							</p:panelGrid>
+
+
+						</p:panelGrid>
+					</p:panel>
+
+					<p:panel>
+						<p:panelGrid columns="2" style="border-spacing:0px;"
+							columnClasses="ui-grid-col-8,ui-grid-col-8" layout="grid"
+							styleClass="ui-panelgrid-blank">
+							<p:commandButton value="Aceptar" icon="aceptar" process="@form"
+								update="@form" onstart="PF('bUI').block();"
+								oncomplete="PF('bUI').unblock();"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.ingresoMotivoRechazo}" />
+							<p:commandButton value="Cancelar" icon="cancelar"
+								immediate="true"
+								action="#{cwAsAutorizacionPreprocesoAprobacion.cancelarMotivoRechazoCuponeras}" />
+						</p:panelGrid>
+					</p:panel>
+				</h:form>
+			</div>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>
+

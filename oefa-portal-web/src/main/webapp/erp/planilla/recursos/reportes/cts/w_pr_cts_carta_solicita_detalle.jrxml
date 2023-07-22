@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_pr_cts_carta_solicita_detalle" language="groovy" pageWidth="595" pageHeight="100" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2c91ad7d-2804-471f-8cc6-eabf3dbceafb">
+	<property name="ireport.zoom" value="2.1435888100000025"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="compania" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="empleado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="periodoinicio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="periodofin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+PersonaMast.Persona,
+SUBSTR(PR_PlanillaEmpleadoConcepto.Periodo,1,6) AS MES,
+SUM(PR_PlanillaEmpleadoConcepto.Monto) AS MONTO
+FROM
+sgcoresys.PR_PlanillaEmpleado
+    INNER JOIN sgcoresys.PersonaMast
+        ON (PR_PlanillaEmpleado.Empleado = PersonaMast.Persona)
+    INNER JOIN sgcoresys.EmpleadoMast
+        ON (PR_PlanillaEmpleado.Empleado = EmpleadoMast.Empleado and PR_PlanillaEmpleado.CompaniaSocio = EmpleadoMast.CompaniaSocio)
+    INNER JOIN sgcoresys.PR_PlanillaEmpleadoConcepto
+        ON (PR_PlanillaEmpleado.Periodo = PR_PlanillaEmpleadoConcepto.Periodo AND
+             PR_PlanillaEmpleado.TipoPlanilla = PR_PlanillaEmpleadoConcepto.TipoPlanilla AND
+             PR_PlanillaEmpleado.TipoProceso = PR_PlanillaEmpleadoConcepto.TipoProceso AND
+             PR_PlanillaEmpleado.Empleado = PR_PlanillaEmpleadoConcepto.Empleado AND
+             PR_PlanillaEmpleado.CompaniaSocio = PR_PlanillaEmpleadoConcepto.CompaniaSocio)
+    INNER JOIN sgcoresys.PR_Concepto
+        ON (PR_PlanillaEmpleadoConcepto.Concepto = PR_Concepto.Concepto)
+    INNER JOIN sgcoresys.PR_TipoProceso
+        ON (PR_PlanillaEmpleadoConcepto.TipoProceso = PR_TipoProceso.TipoProceso)
+WHERE (not exists (select 1 from sgcoresys.PR_ConjuntoDetalle a  where a.conjunto = 'INGNAFECTS' and a.concepto = PR_PlanillaEmpleadoConcepto.Concepto))
+ and (PR_PlanillaEmpleado.companiasocio = $P{compania})
+ and (PR_PlanillaEmpleado.tipoplanilla in ('EX','EM','EC','PR'))
+ and (PR_TipoProceso.FlagAdelanto = 'N')
+ and EmpleadoMast.estadoempleado = '0'
+ and (EmpleadoMast.CodigoUsuario =$P{empleado} )
+ AND ( PR_Concepto.TipoConcepto = 'IN')
+ AND substr( PR_PlanillaEmpleado.Periodo , 1,6) between $P{periodoinicio} AND $P{periodofin}
+ GROUP BY   PersonaMast.Persona, SUBSTR(PR_PlanillaEmpleadoConcepto.Periodo,1,6)
+order by PersonaMast.Persona, SUBSTR(PR_PlanillaEmpleadoConcepto.Periodo,1,6)]]>
+	</queryString>
+	<field name="PERSONA" class="java.math.BigDecimal"/>
+	<field name="MES" class="java.lang.String"/>
+	<field name="MONTO" class="java.math.BigDecimal"/>
+	<variable name="CONTARMONTO" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{MONTO}]]></variableExpression>
+	</variable>
+	<variable name="SUMAMONTO" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{MONTO}]]></variableExpression>
+	</variable>
+	<variable name="MES" class="java.lang.String"/>
+	<detail>
+		<band height="20">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement stretchType="RelativeToTallestObject" x="166" y="0" width="100" height="20" isPrintWhenDetailOverflows="true" uuid="cffdaf62-ffcf-43ec-b0fb-ae4b02363e18"/>
+				<textFieldExpression><![CDATA[$F{MONTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="0" width="100" height="20" uuid="14183f71-bd17-485a-b896-57f4361b8579"/>
+				<textFieldExpression><![CDATA[$F{MES}.substring(4)=="01"?"ENERO":
+$F{MES}.substring(4)=="02"?"FEBRERO":
+$F{MES}.substring(4)=="03"?"MARZO":
+$F{MES}.substring(4)=="04"?"ABRIL":
+$F{MES}.substring(4)=="05"?"MAYO":
+$F{MES}.substring(4)=="06"?"JUNIO":
+$F{MES}.substring(4)=="07"?"JULIO":
+$F{MES}.substring(4)=="08"?"AGOSTO":
+$F{MES}.substring(4)=="09"?"SETIEMBRE":
+$F{MES}.substring(4)=="10"?"OCTUBRE":
+$F{MES}.substring(4)=="11"?"NOVIEMBRE":"DICIEMBRE"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="152" y="0" width="14" height="20" uuid="0d515133-a1f1-4525-a8f1-1e943fd98f38"/>
+				<text><![CDATA[S/.]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20">
+			<staticText>
+				<reportElement x="22" y="0" width="69" height="20" uuid="b3240e5e-5953-430d-b824-c10baa871683"/>
+				<text><![CDATA[Suma de seis]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="118" y="0" width="118" height="20" uuid="e9488478-0944-453b-a639-874e43363d00"/>
+				<text><![CDATA[últimas remuneraciones]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement stretchType="RelativeToTallestObject" x="253" y="0" width="83" height="20" isPrintWhenDetailOverflows="true" uuid="1c9c166d-cca7-430b-a3c5-b5873b6db4d1"/>
+				<textFieldExpression><![CDATA[$V{SUMAMONTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="91" y="0" width="27" height="20" uuid="dca35ff2-303a-44d7-9d21-351df55182b2"/>
+				<textFieldExpression><![CDATA["("+$V{CONTARMONTO}+")"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="236" y="0" width="17" height="20" uuid="41c9a66d-ac46-40b5-b9fc-fb79ef05ff95"/>
+				<text><![CDATA[S/.]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>

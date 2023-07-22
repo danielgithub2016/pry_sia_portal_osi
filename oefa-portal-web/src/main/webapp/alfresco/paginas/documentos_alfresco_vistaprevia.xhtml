@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<script>
+		window.onload = setearcant;
+
+		function setearcant() {
+			document.getElementById('frmDocumentoDescargar:btndescarga')
+					.click();
+
+		}
+	</script>
+	<div class="ui-fluid">
+		<h:form id="frmDocumentoDescargar">
+			<p:outputLabel value="#{cDocumentoAlfrescoDescarga.nombre}" />
+			<h:panelGrid>
+				<h:graphicImage style="cursor:pointer;"
+					value="/alfresco/recursos/imagenes/logo_alfresco.PNG" width="120" />
+				<p:outputLabel value="La Vista Previa puede tardar varios minutos según el tamaño del contenido..." />
+			</h:panelGrid>
+			<h:commandButton id="btndescarga" style="display:none"
+				action="#{cDocumentoAlfrescoDescarga.ver}">
+			</h:commandButton>
+		</h:form>
+
+	</div>
+</ui:composition>
+
+
+
+<!--/>
+
+
+
+<img src="tuimagen.gif"> 
+		<h:graphicImage value="/comun/recursos/imagenes/loading.gif"
+					style="vertical-align: middle;width:15em;" /> -->
+
+
+
+
+
+

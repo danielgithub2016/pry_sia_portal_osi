@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.sistema.dominio.SyOpcionloghistory" table="SGCORESYS.SY_OPCIONLOGHISTORY">
+        <composite-id name="pk" class="net.royal.erp.sistema.dominio.SyOpcionloghistoryPk">
+            <key-property name="aplicacionlog" type="string">
+                <column name="APLICACIONLOG" length="2" />
+            </key-property>
+            <key-property name="usuariolog" type="string">
+                <column name="USUARIOLOG" length="15" />
+            </key-property>
+            <key-property name="fechalog" type="timestamp">
+                <column name="FECHALOG" length="7" />
+            </key-property>
+        </composite-id>
+        <property name="aplicacioncodigo" type="string">
+            <column name="APLICACIONCODIGO" length="2" />
+        </property>
+        <property name="objetocodigo" type="string">
+            <column name="OBJETOCODIGO" length="50" />
+        </property>
+        <property name="objetoventana" type="string">
+            <column name="OBJETOVENTANA" length="150" />
+        </property>
+        <property name="descripcionventana" type="string">
+            <column name="DESCRIPCIONVENTANA" length="150" />
+        </property>
+        <property name="direccionip" type="string">
+            <column name="DIRECCIONIP" length="15" />
+        </property>
+        <property name="dispositivopc" type="string">
+            <column name="DISPOSITIVOPC" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

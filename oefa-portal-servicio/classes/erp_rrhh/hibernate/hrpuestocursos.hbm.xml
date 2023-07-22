@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrPuestocursos" table="SGCORESYS.HR_PUESTOCURSOS">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrPuestocursosPk">
+            <key-property name="codigopuesto" type="integer">
+                <column name="CODIGOPUESTO" length="22" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="curso" type="integer">
+            <column name="CURSO" length="22" />
+        </property>
+        <property name="tipocurso" type="string">
+            <column name="TIPOCURSO" length="1" />
+        </property>
+        <property name="centroestudios" type="integer">
+            <column name="CENTROESTUDIOS" length="22" />
+        </property>
+        <property name="fechainicio" type="timestamp">
+            <column name="FECHAINICIO" length="7" />
+        </property>
+        <property name="fechafin" type="timestamp">
+            <column name="FECHAFIN" length="7" />
+        </property>
+        <property name="auspicio" type="string">
+            <column name="AUSPICIO" length="1" />
+        </property>
+        <property name="dias" type="integer">
+            <column name="DIAS" length="22" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="OBSERVACIONES" length="100" />
+        </property>
+        <property name="totalhoras" type="integer">
+            <column name="TOTALHORAS" length="22" />
+        </property>
+        <property name="cursodescripcion" type="string">
+            <column name="CURSODESCRIPCION" length="50" />
+        </property>
+        <property name="vigencia" type="integer">
+            <column name="VIGENCIA" length="22" />
+        </property>
+        <property name="gradocuantitativo" type="string">
+            <column name="GRADOCUANTITATIVO" length="2" />
+        </property>
+        <property name="puntosgrado" type="integer">
+            <column name="PUNTOSGRADO" length="22" />
+        </property>
+        <property name="porcentajegrado" type="integer">
+            <column name="PORCENTAJEGRADO" length="22" />
+        </property>
+        <property name="flagconocimiento" type="string">
+            <column name="FLAGCONOCIMIENTO" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

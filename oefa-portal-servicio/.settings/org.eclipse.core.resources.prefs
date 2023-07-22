@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//src/main/java/pe/gob/oefa/interoperabilidad/ws/reniec/service/DatosPersona.java=UTF-8
+encoding//src/main/java/pe/gob/oefa/interoperabilidad/ws/reniec/service/PeticionActualizarCredencial.java=UTF-8
+encoding//src/main/java/pe/gob/oefa/interoperabilidad/ws/reniec/service/PeticionConsulta.java=UTF-8
+encoding//src/main/java/pe/gob/oefa/interoperabilidad/ws/reniec/service/Reniec.java=UTF-8
+encoding//src/main/java/pe/gob/oefa/interoperabilidad/ws/reniec/service/ReniecImplService.java=UTF-8
+encoding//src/main/java/pe/gob/oefa/interoperabilidad/ws/reniec/service/ReniecImplServiceLocator.java=UTF-8
+encoding//src/main/java/pe/gob/oefa/interoperabilidad/ws/reniec/service/ResultadoActualizacionCredencial.java=UTF-8
+encoding//src/main/java/pe/gob/oefa/interoperabilidad/ws/reniec/service/ResultadoConsulta.java=UTF-8

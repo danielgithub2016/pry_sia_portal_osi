@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.presupuesto.dominio.BuUnidades" table="SGCORESYS.BU_UNIDADES">
+        <composite-id name="pk" class="net.royal.erp.presupuesto.dominio.BuUnidadesPk">
+            <key-property name="companiasocio" type="string">
+                <column name="COMPANIASOCIO" length="8" />
+            </key-property>
+            <key-property name="ano" type="string">
+                <column name="ANO" length="4" />
+            </key-property>
+            <key-property name="ejercicio" type="string">
+                <column name="EJERCICIO" length="6" />
+            </key-property>
+            <key-property name="centrocosto" type="string">
+                <column name="CENTROCOSTO" length="10" />
+            </key-property>
+            <key-property name="proyecto" type="string">
+                <column name="PROYECTO" length="15" />
+            </key-property>
+            <key-property name="sucursal" type="string">
+                <column name="SUCURSAL" length="4" />
+            </key-property>
+            <key-property name="referencia01" type="string">
+                <column name="REFERENCIA01" length="15" />
+            </key-property>
+            <key-property name="referencia02" type="string">
+                <column name="REFERENCIA02" length="15" />
+            </key-property>
+            <key-property name="areacliente" type="string">
+                <column name="AREACLIENTE" length="4" />
+            </key-property>
+            <key-property name="cliente" type="string">
+                <column name="CLIENTE" length="10" />
+            </key-property>
+            <key-property name="itemcodigo" type="string">
+                <column name="ITEMCODIGO" length="20" />
+            </key-property>
+        </composite-id>
+        <property name="preciounitario" type="integer">
+            <column name="PRECIOUNITARIO" length="22" />
+        </property>
+        <property name="presupuesto01" type="integer">
+            <column name="PRESUPUESTO01" length="22" />
+        </property>
+        <property name="presupuesto02" type="integer">
+            <column name="PRESUPUESTO02" length="22" />
+        </property>
+        <property name="presupuesto03" type="integer">
+            <column name="PRESUPUESTO03" length="22" />
+        </property>
+        <property name="presupuesto04" type="integer">
+            <column name="PRESUPUESTO04" length="22" />
+        </property>
+        <property name="presupuesto05" type="integer">
+            <column name="PRESUPUESTO05" length="22" />
+        </property>
+        <property name="presupuesto06" type="integer">
+            <column name="PRESUPUESTO06" length="22" />
+        </property>
+        <property name="presupuesto07" type="integer">
+            <column name="PRESUPUESTO07" length="22" />
+        </property>
+        <property name="presupuesto08" type="integer">
+            <column name="PRESUPUESTO08" length="22" />
+        </property>
+        <property name="presupuesto09" type="integer">
+            <column name="PRESUPUESTO09" length="22" />
+        </property>
+        <property name="presupuesto10" type="integer">
+            <column name="PRESUPUESTO10" length="22" />
+        </property>
+        <property name="presupuesto11" type="integer">
+            <column name="PRESUPUESTO11" length="22" />
+        </property>
+        <property name="presupuesto12" type="integer">
+            <column name="PRESUPUESTO12" length="22" />
+        </property>
+        <property name="real01" type="integer">
+            <column name="REAL01" length="22" />
+        </property>
+        <property name="real02" type="integer">
+            <column name="REAL02" length="22" />
+        </property>
+        <property name="real03" type="integer">
+            <column name="REAL03" length="22" />
+        </property>
+        <property name="real04" type="integer">
+            <column name="REAL04" length="22" />
+        </property>
+        <property name="real05" type="integer">
+            <column name="REAL05" length="22" />
+        </property>
+        <property name="real06" type="integer">
+            <column name="REAL06" length="22" />
+        </property>
+        <property name="real07" type="integer">
+            <column name="REAL07" length="22" />
+        </property>
+        <property name="real08" type="integer">
+            <column name="REAL08" length="22" />
+        </property>
+        <property name="real09" type="integer">
+            <column name="REAL09" length="22" />
+        </property>
+        <property name="real10" type="integer">
+            <column name="REAL10" length="22" />
+        </property>
+        <property name="real11" type="integer">
+            <column name="REAL11" length="22" />
+        </property>
+        <property name="real12" type="integer">
+            <column name="REAL12" length="22" />
+        </property>
+        <property name="comprometido" type="integer">
+            <column name="COMPROMETIDO" length="22" />
+        </property>
+        <property name="cuentacontable" type="string">
+            <column name="CUENTACONTABLE" length="20" />
+        </property>
+        <property name="itemcodigonombre" type="string">
+            <column name="ITEMCODIGONOMBRE" length="255" />
+        </property>
+        <property name="fechaprecioreferencial" type="timestamp">
+            <column name="FECHAPRECIOREFERENCIAL" length="7" />
+        </property>
+        <property name="referenciafiscal01" type="string">
+            <column name="REFERENCIAFISCAL01" length="10" />
+        </property>
+        <property name="referenciafiscal03" type="string">
+            <column name="REFERENCIAFISCAL03" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

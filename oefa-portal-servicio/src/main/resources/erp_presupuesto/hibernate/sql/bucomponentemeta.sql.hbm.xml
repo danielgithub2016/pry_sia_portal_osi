@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : presupuesto.BuComponentemeta
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="bucomponentemeta.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+    </sql-query> 
+    <!-- sycommon.sycommon.f_sql_find_meta -->
+	<sql-query name="bucomponentemeta.FSqlFindMeta">
+		SELECT
+		    Max( BU_ComponenteMeta.Componente) as "componente"
+		FROM sgcoresys.BU_ComponenteMeta,
+		     sgcoresys.BU_Meta
+		WHERE ( BU_ComponenteMeta.Ano = BU_Meta.Ano ) and
+		( BU_ComponenteMeta.CompaniaSocio = BU_Meta.CompaniaSocio ) and
+		( BU_ComponenteMeta.Meta = BU_Meta.Meta ) and
+		( ( BU_ComponenteMeta.CompaniaSocio = :w_companiasocio ) AND
+		( BU_ComponenteMeta.Ano = :w_ano ) AND
+		( BU_Meta.MetaAux = :w_meta ))
+	</sql-query>   
+	
+	
+	<!-- symast01.dw_ma_ac_referenciafiscal_select_meta_x_ref01 -->
+	<sql-query name="bucomponentemeta.DwMaAcReferenciafiscalSelectMetaXRef01">
+		  SELECT BU_META.METAAUX as "metaaux",   
+		         BU_META.DESCRIPCION as "descripcion",   
+		         BU_COMPONENTEMETA.FINALIDAD as "finalidad"  
+		    FROM sgcoresys.BU_COMPONENTEMETA,   
+		         sgcoresys.BU_META
+		   WHERE ( BU_COMPONENTEMETA.META = BU_META.META ) and  
+		         ( BU_COMPONENTEMETA.ANO = BU_META.ANO ) and  
+		         ( BU_COMPONENTEMETA.COMPANIASOCIO = BU_META.COMPANIASOCIO ) and  
+		         ( ( BU_ComponenteMeta.CompaniaSocio = :companiasocio ) AND  
+		         ( BU_ComponenteMeta.Version = :version ) AND  
+		         ( BU_ComponenteMeta.Ano = :anio ) AND  
+		         ( BU_ComponenteMeta.Componente = :componente ) ) 
+	</sql-query>
+</hibernate-mapping>

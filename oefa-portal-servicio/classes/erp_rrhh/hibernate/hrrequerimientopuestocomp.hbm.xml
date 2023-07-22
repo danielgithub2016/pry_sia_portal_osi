@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrRequerimientopuestocomp" table="SGCORESYS.HR_REQUERIMIENTOPUESTOCOMP">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrRequerimientopuestocompPk">
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+            <key-property name="requerimiento" type="string">
+                <column name="REQUERIMIENTO" length="10" />
+            </key-property>
+            <key-property name="codigopuesto" type="integer">
+                <column name="CODIGOPUESTO" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="secuencia" type="integer">
+            <column name="SECUENCIA" length="22" />
+        </property>
+        <property name="descripcion1" type="string">
+            <column name="DESCRIPCION1" length="100" />
+        </property>
+        <property name="descripcion2" type="big_decimal">
+            <column name="DESCRIPCION2" length="22" />
+        </property>
+        <property name="descripcion3" type="big_decimal">
+            <column name="DESCRIPCION3" length="22" />
+        </property>
+        <property name="tipocompetencia" type="string">
+            <column name="TIPOCOMPETENCIA" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

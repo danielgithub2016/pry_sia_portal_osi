@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrEmpleadoconsiderapotencial" table="SGCORESYS.HR_EMPLEADOCONSIDERAPOTENCIAL">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrEmpleadoconsiderapotencialPk">
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+            <key-property name="secuenciaeval" type="integer">
+                <column name="SECUENCIAEVAL" length="22" />
+            </key-property>
+            <key-property name="empleado" type="integer">
+                <column name="EMPLEADO" length="22" />
+            </key-property>
+            <key-property name="empleadoevaluador" type="integer">
+                <column name="EMPLEADOEVALUADOR" length="22" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="consideracion" type="string">
+            <column name="CONSIDERACION" length="10" />
+        </property>
+        <property name="flagconclusion" type="string">
+            <column name="FLAGCONCLUSION" length="1" />
+        </property>
+        <property name="comentario" type="string">
+            <column name="COMENTARIO" length="100" />
+        </property>
+    </class>
+</hibernate-mapping>

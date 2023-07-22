@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dw_hr_reporte_funcas_1" language="groovy" pageWidth="500" pageHeight="842" whenNoDataType="BlankPage" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="e0061cc2-b2c9-420c-9085-c7d523e517e4">
+	<property name="ireport.zoom" value="1.6105100000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PAR_REQUERIMIENTO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+CHR(secuencia+96) as SECUENCIA,
+FUNCIONDESCRIPCION FROM SGCORESYS.HR_REQUERIMIENTOFUNCASDET
+WHERE REQUERIMIENTO =$P{PAR_REQUERIMIENTO}
+ AND COMPANYOWNER = $P{PAR_COMPANIA}]]>
+	</queryString>
+	<field name="SECUENCIA" class="java.lang.String"/>
+	<field name="FUNCIONDESCRIPCION" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="3" width="500" height="14" uuid="730a05fd-b9e6-481b-8fb9-8151cddccf54"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[III CARACTERÍSTICAS DEL PUESTO Y/O CARGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="500" height="15" uuid="a6f34e3d-4877-4eca-b061-9d7e74c61a11"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[Principales funciones a desarrollar:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="6" y="0" width="15" height="15" isPrintWhenDetailOverflows="true" uuid="f810425c-6a70-4c1b-b6f4-32bfb9f54780"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SECUENCIA}+") "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="26" y="0" width="464" height="15" isPrintWhenDetailOverflows="true" uuid="1bee7777-a0db-439e-9614-b7408d3fc1e1"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FUNCIONDESCRIPCION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

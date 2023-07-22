@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_as_aistencia_balance_compensacion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d0bb88d8-084b-4445-ba92-62b4dae545fb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Fabrica\\Desarrollo\\DesarrolloProductos\\OEFA\\oefa-portal-web\\src\\main\\webapp\\erp\\asistencia\\recursos\\reportes\\reporte_asistencia\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_FlagFiltroPeriodo" class="java.lang.String"/>
+	<parameter name="p_fecha_desde" class="java.util.Date"/>
+	<parameter name="p_fecha_hasta" class="java.util.Date"/>
+	<parameter name="p_sid" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_adicionalesFeriados" class="java.lang.String"/>
+	<parameter name="Logo" class="java.lang.String"/>
+	<parameter name="p_userid" class="java.lang.String"/>
+	<parameter name="p_mesesacompensar" class="java.lang.Integer"/>
+	<parameter name="p_companianombre" class="java.lang.String"/>
+	<parameter name="p_companiaruc" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+                    EmpleadoMast.Empleado,
+                    PersonaMast.NombreCompleto,
+                    AS_CarnetIdentificacion.CodigoCarnet,
+                    EmpleadoMast.EstadoEmpleado
+FROM                sgcoresys.PersonaMast
+                     JOIN sgcoresys.EmpleadoMast
+                              ON  (PersonaMast.Persona = EmpleadoMast.Empleado)
+                     JOIN SGCORESYS.AC_CostCenterMst ON
+                                EmpleadoMast.CentroCostos = AC_CostCenterMst.CostCenter
+                     JOIN sgcoresys.AS_CarnetIdentificacion
+                              ON  (AS_CarnetIdentificacion.Empleado = EmpleadoMast.Empleado)
+
+
+
+WHERE               (
+                    EXISTS (
+                                SELECT     (1)
+                                FROM     sgcoresys.AS_AsistenciaDiaria
+                                WHERE    (AS_AsistenciaDiaria.ConceptoAcceso = 'HAUT')  AND
+                                            (
+                                            (to_char(AS_AsistenciaDiaria.Fecha,'YYYYMMDD')  >= to_char($P{p_fecha_desde},'YYYYMMDD'))  AND (to_char(AS_AsistenciaDiaria.Fecha,'YYYYMMDD') <= to_char($P{p_fecha_hasta},'YYYYMMDD'))
+                                            )  AND
+                                            (AS_AsistenciaDiaria.Empleado = EmpleadoMast.Empleado)
+                                ) OR
+                    EXISTS     (
+                                SELECT     (1)
+                                FROM     sgcoresys.AS_SaldoHoras
+                                WHERE    (AS_SaldoHoras.Tipo = 'M')  AND
+                                            (
+                                            (to_char(AS_SaldoHoras.Fecha_Saldo,'YYYYMMDD')  >= to_char($P{p_fecha_desde},'YYYYMMDD'))  AND (to_char(AS_SaldoHoras.Fecha_Saldo,'YYYYMMDD') <= to_char($P{p_fecha_hasta},'YYYYMMDD'))
+                                            )  AND
+                                            (AS_SaldoHoras.Empleado = EmpleadoMast.Empleado)
+                                )
+                         )    AND
+                    EXISTS (        SELECT (1)
+                                    FROM     sgcoresys.AS_EMPLEADOS_AUTORIZADOS
+                                    WHERE     AS_EMPLEADOS_AUTORIZADOS.SID =$P{p_sid}
+
+                                                and  AS_EMPLEADOS_AUTORIZADOS.empleado = EmpleadoMast.empleado )  $P!{p_adicionalesFeriados}]]>
+	</queryString>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="NOMBRECOMPLETO" class="java.lang.String"/>
+	<field name="CODIGOCARNET" class="java.lang.String"/>
+	<field name="ESTADOEMPLEADO" class="java.lang.String"/>
+	<variable name="sumRegistros" class="java.math.BigDecimal" calculation="Count"/>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="163">
+			<rectangle>
+				<reportElement x="25" y="138" width="528" height="20" uuid="c6ef7876-9fad-4815-9395-04e46eebca05"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="60" width="555" height="15" uuid="f286fe26-b2e4-496e-a53c-67321b75412d"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horas Ganadas vs. Horas Compensadas]]></text>
+			</staticText>
+			<line>
+				<reportElement x="183" y="77" width="189" height="1" uuid="e816e1a9-bedf-4731-a8fb-5963885b51a7"/>
+			</line>
+			<rectangle>
+				<reportElement x="25" y="118" width="528" height="20" backcolor="#DCE0E0" uuid="930adfe4-7319-4ad7-bcae-f69398f3c642"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="33" y="118" width="49" height="20" uuid="ab77ff17-d982-4aac-9945-586247057053"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="118" width="342" height="20" uuid="f76059a5-2a5e-4364-ab04-84fcae247808"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[EMPLEADO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="90" y="118" width="1" height="40" uuid="fb09030a-8958-48e2-bde1-bc77dbac3f88"/>
+			</line>
+			<line>
+				<reportElement x="211" y="118" width="1" height="40" uuid="dfdcc093-d9a9-4768-8ba8-32d2ff448121"/>
+			</line>
+			<staticText>
+				<reportElement x="115" y="94" width="317" height="12" uuid="972ac108-85df-4bbc-ab44-a19c6a215546"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Expresado en HH:MM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="49" width="24" height="12" uuid="39fe596f-0068-4a0b-ad85-c73513b53744"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[RUC : ]]></text>
+			</staticText>
+			<textField pattern="HH.mm.ss">
+				<reportElement x="474" y="15" width="79" height="11" uuid="42e37dad-d591-4950-99e9-820517f66471"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="442" y="15" width="29" height="12" uuid="8b35f7e4-eec7-40b8-aaa8-6e55e2ecd00b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Hora   :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="2" width="29" height="12" uuid="a03386df-8bd4-4f6e-b6f9-1718ce78e5d4"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="474" y="2" width="79" height="11" uuid="1d7102de-1c06-4373-a7cf-444e029c16e1"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="115" y="80" width="317" height="12" uuid="2f47695c-b6d7-4470-80f1-4e96074bf519"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{p_FlagFiltroPeriodo}!="N"? "Desde " +
+new SimpleDateFormat("dd/MM/yyyy").format($P{p_fecha_desde})
++ "  Hasta  " +
+new SimpleDateFormat("dd/MM/yyyy").format($P{p_fecha_hasta})
+:"Todas la Fechas")]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="3" y="0" width="150" height="50" uuid="c3661067-7544-4a94-9105-d7ff6e6c30ff"/>
+				<imageExpression><![CDATA[$P{Logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="91" y="118" width="120" height="20" uuid="9708d3ee-869c-4d96-a05a-a1a028ee1192"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO CARNET]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="223" y="138" width="316" height="20" uuid="aefe735c-ad58-499c-a174-f9ea0d851dd2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRECOMPLETO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="25" y="138" width="65" height="20" uuid="bbc25597-3772-4150-9ca3-35718cadbd1f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMPLEADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="91" y="138" width="120" height="20" uuid="eed257a4-a30a-4c21-90b2-d10d0495becd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CODIGOCARNET}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="29" y="49" width="100" height="11" uuid="2126afa2-d397-4e39-9712-1a34822f689f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_companiaruc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="57">
+			<subreport>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="3" y="0" width="552" height="56" uuid="55865839-0980-4ca6-ae69-26e89f637523"/>
+				<subreportParameter name="p_mesesacompensar">
+					<subreportParameterExpression><![CDATA[$P{p_mesesacompensar}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_empleado">
+					<subreportParameterExpression><![CDATA[$F{EMPLEADO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_hasta">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_hasta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_desde">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_desde}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["subReporteAsistencia_balance.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="58">
+			<subreport>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="3" y="1" width="552" height="56" uuid="82189795-b48f-45a9-ab6f-cc6abf5fd77b"/>
+				<subreportParameter name="p_empleado">
+					<subreportParameterExpression><![CDATA[$F{EMPLEADO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_hasta">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_hasta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_desde">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_desde}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["subReporteAsistencia_balance2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="209"/>
+	</columnFooter>
+	<pageFooter>
+		<band>
+			<textField evaluationTime="Report">
+				<reportElement x="300" y="-15" width="40" height="11" uuid="623600c3-2145-40d5-adc3-9dc612a843a9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="237" y="-15" width="63" height="11" uuid="dd75456c-3710-4b2b-b196-7162eb13f772"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina  "+$V{PAGE_NUMBER}+"   de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

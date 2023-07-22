@@ -1,0 +1,84 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form id="whrmiscelaneoselectorvarios">
+		<p:panel>
+			<h:panelGrid columns="1" width="100%">
+
+				<h:panelGrid columns="5" width="100%">
+					<h:outputLabel value="Criterio" />
+					<p:selectOneMenu style="width:100px;"
+						value="#{cwHrMiscelaneoSelectorVarios.dw_position.tipobusqueda}">
+						<f:selectItem itemLabel="Descripcion" itemValue="A" />
+						<f:selectItem itemLabel="Código" itemValue="C" />
+					</p:selectOneMenu>
+
+					<h:outputLabel value="Buscar" />
+					<p:focus for="txtbusca" />
+					<p:inputText style="width:200px;" id="txtbusca"
+						value="#{cwHrMiscelaneoSelectorVarios.dw_position.slebuscar}"
+						onkeypress="return noAcepto(event);" />
+				</h:panelGrid>
+
+			</h:panelGrid>
+
+		</p:panel>
+
+
+		<h:outputLabel value="Seleccione los misceláneos con un Click"
+			style="font-size:11px; font-family:Open sans,sans-serif; font-weight: bold;color:#800000" />
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			paginator="true" paginatorPosition="bottom" rows="20"
+			scrollHeight="250" scrollWidth="570" tableStyle="width:560px;"
+			lazy="true"
+			selection="#{cwHrMiscelaneoSelectorVarios.registroSeleccionado}"
+			rowKey="#{a.pk.codigoelemento}" scrollable="true"
+			rowStyleClass="#{list.estilo}"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+			value="#{cwHrMiscelaneoSelectorVarios.dw_1list}" var="a">
+
+
+			<p:column selectionMode="multiple" width="10"
+				styleClass="columnatablaCentro" />
+
+			<p:column headerText="Código" width="50">
+				<h:outputText value="#{a.pk.codigoelemento}" />
+			</p:column>
+
+			<p:column headerText="Descripción" width="200">
+				<h:outputText value="#{a.descripcionlocal}" />
+			</p:column>
+
+		</p:dataTable>
+
+		<h:panelGrid columns="2" width="100%">
+			<h:panelGrid columns="2">
+				<p:selectBooleanCheckbox
+					value="#{cwHrMiscelaneoSelectorVarios.dw_position.boolseleccionados}"
+					disabled="#{cwHrMiscelaneoSelectorVarios.inactivar}">
+				</p:selectBooleanCheckbox>
+				<h:outputText value="Solo Seleccionados" />
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="3" style="float:right">
+				<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+					action="#{cwHrMiscelaneoSelectorVarios.buscar}" process="@form"
+					update="@form" icon="buscar" />
+				<p:commandButton value="Aceptar" styleClass="botonTextoImagen"
+					action="#{cwHrMiscelaneoSelectorVarios.prepararDatosMantenimiento}"
+					process="@form" update="@form" icon="aceptar" />
+				<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+					icon="cancelar"
+					onclick="PF('popSelectorMiscelaneoSelectorVarios').hide()" />
+			</h:panelGrid>
+		</h:panelGrid>
+
+	</h:form>
+</ui:composition>

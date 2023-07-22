@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrContratos" table="SGCORESYS.HR_CONTRATOS">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrContratosPk">
+            <key-property name="empleado" type="integer">
+                <column name="EMPLEADO" length="22" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+            <key-property name="companiasocio" type="string">
+                <column name="COMPANIASOCIO" length="8" />
+            </key-property>
+        </composite-id>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="tipocontrato" type="string">
+            <column name="TIPOCONTRATO" length="2" />
+        </property>
+        <property name="fechadesde" type="timestamp">
+            <column name="FECHADESDE" length="7" />
+        </property>
+        <property name="fechahasta" type="timestamp">
+            <column name="FECHAHASTA" length="7" />
+        </property>
+        <property name="fechatermino" type="timestamp">
+            <column name="FECHATERMINO" length="7" />
+        </property>
+        <property name="responsable" type="integer">
+            <column name="RESPONSABLE" length="22" />
+        </property>
+        <property name="comentarios" type="string">
+            <column name="COMENTARIOS" length="4000" />
+        </property>
+        <property name="sueldo" type="integer">
+            <column name="SUELDO" length="22" />
+        </property>
+        <property name="codigopuesto" type="integer">
+            <column name="CODIGOPUESTO" length="22" />
+        </property>
+        <property name="compania" type="string">
+            <column name="COMPANIA" length="8" />
+        </property>
+        <property name="cliente" type="integer">
+            <column name="CLIENTE" length="22" />
+        </property>
+        <property name="formato" type="string">
+            <column name="FORMATO" length="6" />
+        </property>
+        <property name="sueldotexto" type="string">
+            <column name="SUELDOTEXTO" length="60" />
+        </property>
+        <property name="resolucion" type="integer">
+            <column name="RESOLUCION" length="22" />
+        </property>
+        <property name="fecharesolucion" type="timestamp">
+            <column name="FECHARESOLUCION" length="7" />
+        </property>
+        <property name="fechacontrato" type="timestamp">
+            <column name="FECHACONTRATO" length="7" />
+        </property>
+        <property name="porcentajesueldo" type="integer">
+            <column name="PORCENTAJESUELDO" length="22" />
+        </property>
+        <property name="sueldototal" type="integer">
+            <column name="SUELDOTOTAL" length="22" />
+        </property>
+        <property name="documentointerno" type="string">
+            <column name="DOCUMENTOINTERNO" length="100" />
+        </property>
+        <property name="cargo" type="string">
+            <column name="CARGO" length="200" />
+        </property>
+        <property name="universidad" type="integer">
+            <column name="UNIVERSIDAD" length="22" />
+        </property>
+        <property name="facultad" type="string">
+            <column name="FACULTAD" length="200" />
+        </property>
+        <property name="fechacomunicacion" type="timestamp">
+            <column name="FECHACOMUNICACION" length="7" />
+        </property>
+        <property name="periodolegislativo" type="string">
+            <column name="PERIODOLEGISLATIVO" length="4" />
+        </property>
+        <property name="flagfirma" type="string">
+            <column name="FLAGFIRMA" length="1" />
+        </property>
+        <property name="flagnuevocontrato" type="string">
+            <column name="FLAGNUEVOCONTRATO" length="1" />
+        </property>
+        <property name="fechafirma" type="timestamp">
+            <column name="FECHAFIRMA" length="7" />
+        </property>
+        <property name="gradosalarial" type="string">
+            <column name="GRADOSALARIAL" length="3" />
+        </property>
+        <property name="tipoorgano" type="string">
+            <column name="TIPOORGANO" length="3" />
+        </property>
+        <property name="resoluciontext" type="string">
+            <column name="RESOLUCIONTEXT" length="20" />
+        </property>
+        <property name="flagsolicitudnorenovacion" type="string">
+            <column name="FLAGSOLICITUDNORENOVACION" length="1" />
+        </property>
+        <property name="ubicacion" type="string">
+            <column name="UBICACION" length="50" />
+        </property>
+        <property name="motivocese" type="integer">
+            <column name="MOTIVOCESE" length="22" />
+        </property>
+        <property name="razoncese" type="string">
+            <column name="RAZONCESE" length="100" />
+        </property>
+        <property name="formato2" type="string">
+            <column name="FORMATO_2" length="3" />
+        </property>
+        <property name="prestacionalimentaria" type="string">
+            <column name="PRESTACIONALIMENTARIA" length="1" />
+        </property>
+        <property name="funcionario" type="integer">
+            <column name="FUNCIONARIO" length="22" />
+        </property>
+        <property name="codigoproveedor" type="integer">
+            <column name="CODIGOPROVEEDOR" length="22" />
+        </property>
+        <property name="centrocostos" type="string">
+            <column name="CENTROCOSTOS" length="10" />
+        </property>
+        <property name="nivel" type="string">
+            <column name="NIVEL" length="3" />
+        </property>
+        <property name="fechainicioprueba" type="timestamp">
+            <column name="FECHAINICIOPRUEBA" length="7" />
+        </property>
+        <property name="fechafinprueba" type="timestamp">
+            <column name="FECHAFINPRUEBA" length="7" />
+        </property>
+        <property name="crazonnvocontrato" type="string">
+            <column name="CRAZONNVOCONTRATO" length="255" />
+        </property>
+        <property name="practCentroformacion" type="string">
+            <column name="PRACT_CENTROFORMACION" length="200" />
+        </property>
+        <property name="practDomicilio" type="string">
+            <column name="PRACT_DOMICILIO" length="200" />
+        </property>
+        <property name="practEspecialidad" type="string">
+            <column name="PRACT_ESPECIALIDAD" length="200" />
+        </property>
+        <property name="practHorario" type="string">
+            <column name="PRACT_HORARIO" length="200" />
+        </property>
+        <property name="practRepresentante" type="string">
+            <column name="PRACT_REPRESENTANTE" length="200" />
+        </property>
+        <property name="practRepresentantedni" type="string">
+            <column name="PRACT_REPRESENTANTEDNI" length="20" />
+        </property>
+        <property name="practRuc" type="string">
+            <column name="PRACT_RUC" length="20" />
+        </property>
+        <property name="practSituacion" type="string">
+            <column name="PRACT_SITUACION" length="200" />
+        </property>
+        <property name="situacion" type="string">
+            <column name="SITUACION" length="50" />
+        </property>
+        <property name="semestre" type="string">
+            <column name="SEMESTRE" length="10" />
+        </property>
+        <property name="area" type="string">
+            <column name="AREA" length="100" />
+        </property>
+        <property name="comentarios1" type="string">
+            <column name="COMENTARIOS1" length="300" />
+        </property>
+        <property name="departamentooperacional" type="string">
+            <column name="DEPARTAMENTOOPERACIONAL" length="10" />
+        </property>
+        <property name="sustento" type="string">
+            <column name="SUSTENTO" length="1000" />
+        </property>
+        <property name="empleadosuplencia" type="integer">
+            <column name="EMPLEADOSUPLENCIA" length="22" />
+        </property>
+        <property name="cargosuplencia" type="integer">
+            <column name="CARGOSUPLENCIA" length="22" />
+        </property>
+        <property name="locacionpagosuplencia" type="string">
+            <column name="LOCACIONPAGOSUPLENCIA" length="4" />
+        </property>
+        <property name="motivosuplencia" type="string">
+            <column name="MOTIVOSUPLENCIA" length="2" />
+        </property>
+        <property name="resolucionsuplencia" type="string">
+            <column name="RESOLUCIONSUPLENCIA" length="100" />
+        </property>
+        <property name="fechasuplencia" type="timestamp">
+            <column name="FECHASUPLENCIA" length="7" />
+        </property>
+        <property name="fecharesoluciontex" type="timestamp">
+            <column name="FECHARESOLUCIONTEX" length="7" />
+        </property>
+        <property name="resoluciondesig" type="string">
+            <column name="RESOLUCIONDESIG" length="50" />
+        </property>
+        <property name="fechadesig" type="timestamp">
+            <column name="FECHADESIG" length="7" />
+        </property>
+        <property name="periodo" type="string">
+            <column name="PERIODO" length="2" />
+        </property>
+        <property name="numeromemo" type="string">
+            <column name="NUMEROMEMO" length="50" />
+        </property>
+        <property name="fechamemo" type="timestamp">
+            <column name="FECHAMEMO" length="7" />
+        </property>
+        <property name="jefeofiadm" type="integer">
+            <column name="JEFEOFIADM" length="22" />
+        </property>
+        <property name="centrocostojefe" type="string">
+            <column name="CENTROCOSTOJEFE" length="10" />
+        </property>
+        <property name="fechacontratoant" type="timestamp">
+            <column name="FECHACONTRATOANT" length="7" />
+        </property>
+        <property name="fechaproveido" type="timestamp">
+            <column name="FECHAPROVEIDO" length="7" />
+        </property>
+        <property name="centrocostoanterior" type="string">
+            <column name="CENTROCOSTOANTERIOR" length="10" />
+        </property>
+        <property name="resolucionjefat" type="string">
+            <column name="RESOLUCIONJEFAT" length="50" />
+        </property>
+        <property name="fechafacultado" type="timestamp">
+            <column name="FECHAFACULTADO" length="7" />
+        </property>
+        <property name="fechacartapresent" type="timestamp">
+            <column name="FECHACARTAPRESENT" length="7" />
+        </property>
+        <property name="reprelegalRleg" type="integer">
+            <column name="REPRELEGAL_RLEG" length="22" />
+        </property>
+        <property name="resoluciondesigRleg" type="string">
+            <column name="RESOLUCIONDESIG_RLEG" length="50" />
+        </property>
+        <property name="fechadesigRleg" type="timestamp">
+            <column name="FECHADESIG_RLEG" length="7" />
+        </property>
+        <property name="resolucionjefatRleg" type="string">
+            <column name="RESOLUCIONJEFAT_RLEG" length="50" />
+        </property>
+        <property name="fechafacultadoRleg" type="timestamp">
+            <column name="FECHAFACULTADO_RLEG" length="7" />
+        </property>
+        <property name="mesesadicionales" type="integer">
+            <column name="MESESADICIONALES" length="22" />
+        </property>
+        <property name="practRepresentantecargo" type="string">
+            <column name="PRACT_REPRESENTANTECARGO" length="100" />
+        </property>
+        <property name="practDiaspractica" type="string">
+            <column name="PRACT_DIASPRACTICA" length="100" />
+        </property>
+        <property name="cargoant" type="string">
+            <column name="CARGOANT" length="100" />
+        </property>
+        <property name="fechainicioadicional" type="timestamp">
+            <column name="FECHAINICIOADICIONAL" length="7" />
+        </property>
+        <property name="periodoadicional" type="string">
+            <column name="PERIODOADICIONAL" length="2" />
+        </property>
+        <property name="numerosecuencia" type="integer">
+            <column name="NUMEROSECUENCIA" length="22" />
+        </property>
+        <property name="numerosecuenciaaddemdum" type="integer">
+            <column name="NUMEROSECUENCIAADDEMDUM" length="22" />
+        </property>
+        <property name="codigoproceso" type="string">
+            <column name="CODIGOPROCESO" length="2" />
+        </property>
+        <property name="numeroproceso" type="integer">
+            <column name="NUMEROPROCESO" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

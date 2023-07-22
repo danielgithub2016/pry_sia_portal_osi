@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Unidadesmast" table="SGCORESYS.UNIDADESMAST">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.UnidadesmastPk">
+            <key-property name="unidadcodigo" type="string">
+                <column name="UNIDADCODIGO" length="3" />
+            </key-property>
+        </composite-id>
+        <property name="descripcioncorta" type="string">
+            <column name="DESCRIPCIONCORTA" length="20" />
+        </property>
+        <property name="descripcionextranjera" type="string">
+            <column name="DESCRIPCIONEXTRANJERA" length="40" />
+        </property>
+        <property name="unidadtipo" type="string">
+            <column name="UNIDADTIPO" length="1" />
+        </property>
+        <property name="numerodecimales" type="integer">
+            <column name="NUMERODECIMALES" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="codigofiscal" type="string">
+            <column name="CODIGOFISCAL" length="2" />
+        </property>
+    </class>
+</hibernate-mapping>

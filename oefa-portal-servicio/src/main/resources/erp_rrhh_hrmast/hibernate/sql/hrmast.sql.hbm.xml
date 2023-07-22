@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="hrmast.dwHrEvaluacionperiodoListEvaluar">
+    <![CDATA[
+    	SELECT HR_EvaluacionEmpleado.Empleado as "empleado" ,
+			           PersonaMast.NombreCompleto  as "nombrecompleto",           
+			          HR_EvaluacionPeriodo.SecuenciaEval  as "secuenciaeval",
+			           HR_EvaluacionPeriodo.Periodo as "periodo" ,
+			           HR_EvaluacionEmpleado.TotalPuntos  as "totalpuntos",
+			           HR_EvaluacionPeriodo.CompanyOwner  as "companyowner",
+			           HR_EvaluacionEmpleado.FechaEvaluacion  as "fechaevaluacion",
+			           HR_EvaluacionEmpleado.Estado  as "estado",
+			           EmpleadoMast.CentroCostos  as "centrocostos",
+			           AC_CostCenterMst.LocalName  as "localname",
+			           PersonaMast.PersonaAnt as "personaant",
+			               (SELECT COUNT(*) FROM SGCORESYS.HR_DetalleEvaluacion
+			                                WHERE ( ( HR_DetalleEvaluacion.Empleado = HR_EvaluacionEmpleado.Empleado ) AND  
+			                                ( HR_DetalleEvaluacion.CompanyOwner = HR_EvaluacionEmpleado.CompanyOwner ) AND  
+			                                ( HR_DetalleEvaluacion.SecuenciaEval = HR_EvaluacionEmpleado.SecuenciaEval ) AND  
+			                                ( HR_DetalleEvaluacion.Tipo = 'N' ) )   AND
+			                                (HR_DetalleEvaluacion.CALIFICACION >0)) as "contador",
+			        (SELECT te.Descripcion FROM SGCORESYS.HR_EvaluacionTipoEvaluador ete, SGCORESYS.HR_TipoEvaluador te
+			            WHERE ete.CompanyOwner = :companyowner AND ete.SecuenciaEval = :secuenciaeval AND 
+			            ete.tipoEvaluador = HR_EvaluacionEmpleado.tipoevaluador AND ete.tipoEvaluador = te.TipoEvaluador) as "tipo"
+			,
+			HR_EvaluacionEmpleado.empleadoevaluador as "empleadoevaluador",
+			HR_EvaluacionEmpleado.TipoEvaluador as "tipoevaluador"
+			         FROM 
+			          SGCORESYS.HR_EvaluacionEmpleado inner join SGCORESYS.PersonaMast 
+			        on (HR_EvaluacionEmpleado.Empleado=PersonaMast.Persona)
+			        inner join SGCORESYS.EmpleadoMast 
+			        on (HR_EvaluacionEmpleado.Empleado = EmpleadoMast.Empleado )
+			         left join  SGCORESYS.AC_CostCenterMst     
+			        on (EmpleadoMast.CentroCostos = AC_CostCenterMst.CostCenter )
+			        , SGCORESYS.HR_EvaluacionPeriodo
+			        
+			        WHERE 
+			         HR_EvaluacionPeriodo.Companyowner = :companyowner AND
+			         HR_EvaluacionPeriodo.SecuenciaEval = :secuenciaeval AND 
+			          HR_EvaluacionPeriodo.Companyowner =   HR_EvaluacionEmpleado.Companyowner  AND
+			          HR_EvaluacionPeriodo.SecuenciaEval = HR_EvaluacionEmpleado.SecuenciaEval AND
+			         HR_EvaluacionEmpleado.EmpleadoEvaluador = :evaluador 
+			         ORDER BY PersonaMast.NombreCompleto
+    ]]>
+	</sql-query>
+
+	<sql-query name="hrmast.dwHrEmpleadoReclutamientoSelect">
+    <![CDATA[
+    	SELECT	
+    		Persona as "persona",
+			NombreCompleto as "nombrecompleto" 
+		FROM
+		    SGCORESYS.EmpleadoMast,
+			SGCORESYS.PersonaMast
+		WHERE	EmpleadoMast.Empleado = PersonaMast.Persona
+			AND EmpleadoMast.EstadoEmpleado = '0'
+			AND EmpleadoMast.Estado = 'A'
+			AND EmpleadoMast.CodigoCargo IN (
+			SELECT CodigoPuesto FROM SGCORESYS.HR_PersonalCargoReclutamiento)
+      ]]>
+	</sql-query>
+
+	<sql-query name="hrmast.dSeleccionEvaluacion">
+		  SELECT    
+		         HR_FactoresEvaluacion.Area as "area",    
+		         HR_FactoresEvaluacion.Descripcion as "descripcion",         
+		         HR_FactoresEvaluacion.valorrequerido as "valorequerido",   
+		         (select min(a.Valor) from sgcoresys.hr_factorvalor a where a.factor = HR_FactoresEvaluacion.Factor) as "valor", 
+		         (select max(a.Valorhasta) from sgcoresys.hr_factorvalor a where a.factor = HR_FactoresEvaluacion.Factor) as "valorhasta",
+		         HR_FactoresEvaluacion.flagcalificacion as "flagcalificacion", HR_FactoresEvaluacion.factor as "factor"
+		    FROM sgcoresys.HR_FactoresEvaluacion,
+		         sgcoresys.HR_FactoresEvaluacionPlantilla
+			WHERE HR_FactoresEvaluacion.PLANTILLA  = HR_FactoresEvaluacionPlantilla.PLANTILLA  	
+				  AND HR_FactoresEvaluacionPlantilla.TipoPlantilla =:p_tipo 
+				  AND HR_FactoresEvaluacionPlantilla.CodigoPuesto =:p_puesto 
+	</sql-query>
+	
+		<sql-query name="hrmast.dwHrPuestoFuncionesList">
+		  SELECT   
+				 HR_FuncionesPuesto.CodigoFuncion as "codigofuncion",   
+		         HR_FuncionesPuesto.CodigoPuesto as "codigopuesto",    
+		         HR_FuncionesPuesto.Funcion as "puesto",   
+		         HR_FuncionesPuesto.Descripcion as "descripcion",   
+		         HR_FuncionesPuesto.DescripcionIngles as "descripcioningles",   
+		         HR_FuncionesPuesto.Comentarios as "comentarios",   
+		         HR_FuncionesPuesto.Estado as "estado",   
+		         HR_FuncionesPuesto.UltimoUsuario as "ultimousuario",   
+		         HR_FuncionesPuesto.UltimaFechaModif as "ultimofechamodif",   
+		         HR_FuncionesPuesto.UnidadReplicacion as "unidadreplicacion",     
+		         HR_FuncionesPuesto.FactorParticipacion as "factorparticipacion"
+		FROM sgcoresys.HR_PuestoFunciones HR_FuncionesPuesto
+		WHERE 
+		HR_FuncionesPuesto.CodigoPuesto = :p_codigopuesto   
+	</sql-query>
+
+</hibernate-mapping>

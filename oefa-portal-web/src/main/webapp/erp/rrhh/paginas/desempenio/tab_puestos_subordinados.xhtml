@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panelGrid columns="2" style="border-spacing:0px;"
+		columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid"
+		styleClass="ui-panelgrid-blank">
+		<p:commandButton value="Elimina Puesto Sub." id="btnEliminar"
+			icon="eliminar" />
+		<p:commandButton value="Agregar Puesto Sub." id="btnAgregar"
+			icon="nuevo" />
+	</p:panelGrid>
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		paginator="true" paginatorPosition="bottom" reflow="true"
+		scrollable="true" scrollHeight="250" rows="20"
+		id="tblPuestosSubordinados"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+		value="#{cwHrPuestosEdit.dw_subordinado}" var="s">
+
+		<p:column headerText="Puestos Subordinados" width="400">
+			<p:outputLabel value="#{s.auxPuestoDescripcion}" />
+		</p:column>
+
+		<p:column headerText="Cantidad" width="200">
+			<p:outputLabel value="#{s.cantidad}" />
+		</p:column>
+
+	</p:dataTable>
+
+
+</ui:composition>

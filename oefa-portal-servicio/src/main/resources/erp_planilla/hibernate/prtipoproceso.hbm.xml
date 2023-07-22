@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.planilla.dominio.PrTipoProceso" table="SGCORESYS.PR_TIPOPROCESO">
+        <composite-id name="pk" class="net.royal.erp.planilla.dominio.PrTipoProcesoPk">
+            <key-property name="tipoproceso" type="string">
+                <column name="TIPOPROCESO" length="3" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="50" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="ultimousuario" type="string">
+            <column name="ULTIMOUSUARIO" length="20" />
+        </property>
+        <property name="ultimafechamodif" type="date">
+            <column name="ULTIMAFECHAMODIF"  />
+        </property>
+        <property name="descripcionextranjera" type="string">
+            <column name="DESCRIPCIONEXTRANJERA" length="50" />
+        </property>
+        <property name="flagadelanto" type="string">
+            <column name="FLAGADELANTO" length="1" />
+        </property>
+        <property name="fechapago" type="date">
+            <column name="FECHAPAGO"  />
+        </property>
+        <property name="fechaproceso" type="date">
+            <column name="FECHAPROCESO"  />
+        </property>
+        <property name="piedeboleta" type="string">
+            <column name="PIEDEBOLETA" length="4000" />
+        </property>
+        <property name="subtitulodeboleta" type="string">
+            <column name="SUBTITULODEBOLETA" length="60" />
+        </property>
+        <property name="titulodeboleta" type="string">
+            <column name="TITULODEBOLETA" length="60" />
+        </property>
+        <property name="flagrequierecierre" type="string">
+            <column name="FLAGREQUIERECIERRE" length="1" />
+        </property>
+        <property name="flagcheque" type="string">
+            <column name="FLAGCHEQUE" length="1" />
+        </property>
+        
+        
+    </class>
+</hibernate-mapping>

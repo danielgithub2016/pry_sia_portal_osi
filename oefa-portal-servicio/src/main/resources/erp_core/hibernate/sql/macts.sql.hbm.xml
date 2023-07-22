@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : core.MaCts
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="macts.listaperiodos">
+		SELECT
+		MA_CTS.numerocts as "numerocts",
+		MA_CTS.regimen as "regimen",
+		MA_CTS.descripcion "descripcion"
+		FROM sgcoresys.MA_CTS
+		ORDER BY MA_CTS.numerocts desc
+    </sql-query>
+</hibernate-mapping>

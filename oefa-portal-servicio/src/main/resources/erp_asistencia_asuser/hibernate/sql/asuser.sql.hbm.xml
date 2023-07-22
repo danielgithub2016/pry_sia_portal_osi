@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : asuser.w_ma_persona_list
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	
+	<sql-query name="asuser.obtenerContadorLicencias">
+		<![CDATA[
+		select count(1) 
+		from SGCORESYS.hr_licencias 
+		where empleado = :par_empleado
+		and (
+		 (FechaInicio <= :par_desde and FechaFinal >= :par_desde) or
+		 (FechaInicio >= :par_desde and FechaInicio <= :par_hasta)
+		)
+		]]>
+	</sql-query>
+
+	<sql-query name="asuser.obtenerContador">
+		<![CDATA[
+		select count(1) 
+		from SGCORESYS.PR_VacacionUtilizacion 
+		where empleado = :par_empleado
+		and (
+		 (FechaInicio <= to_date(:par_desde,'dd/MM/yyyy') and FechaFin >= to_date(:par_desde,'dd/MM/yyyy')) or
+		 (FechaInicio >= to_date(:par_desde,'dd/MM/yyyy') and FechaInicio <= to_date(:par_hasta,'dd/MM/yyyy'))
+		) and TipoUtilizacion = 'GOC' and numeroperiodo > 0
+		]]>
+	</sql-query>
+
+    <!-- asuser.dw_as_asis_balance_compensacion_cli_1_1 -->
+    <sql-query name="asuser.DwAsAsisBalanceCompensacionCli11">
+    </sql-query>
+
+    <!-- asuser.dw_as_costcenter_padre_select -->
+    <sql-query name="asuser.DwAsCostcenterPadreSelect">
+    </sql-query>
+
+    <!-- asuser.dw_as_vacacionespendientes_reporte -->
+    <sql-query name="asuser.DwAsVacacionespendientesReporte">
+    </sql-query>
+
+    <!-- asuser.dw_ma_parametrosmast_edit -->
+    <sql-query name="asuser.DwMaParametrosmastEdit">
+    </sql-query>
+
+    <!-- asuser.dw_ma_pr_controldedatos_external -->
+    <sql-query name="asuser.DwMaPrControldedatosExternal">
+    </sql-query>
+
+    <!-- asuser.dw_pr_control_datos_external -->
+    <sql-query name="asuser.DwPrControlDatosExternal">
+    </sql-query>
+
+    <!-- asuser.dw_pr_control_datos_utilidades_external -->
+    <sql-query name="asuser.DwPrControlDatosUtilidadesExternal">
+    </sql-query>
+
+    <!-- asuser.dw_pr_vacaciones_resumen_reporte_otro -->
+    <sql-query name="asuser.DwPrVacacionesResumenReporteOtro">
+    </sql-query>
+
+    <!-- asuser.dw_pr_vacaciones_utilizacion_reporte_otr -->
+    <sql-query name="asuser.DwPrVacacionesUtilizacionReporteOtr">
+    </sql-query>
+
+</hibernate-mapping>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dDesempenocomparativocompromiso01" language="groovy" pageWidth="305" pageHeight="842" columnWidth="305" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e7529e2c-2544-4962-86af-8be5ba26aba7">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parCompany" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEmpleado" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parSecuencia" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEvaluador" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parArea" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    a.empleado,
+    a.secuencia ,
+    a.companyowner,
+    a.secuenciaeval ,
+    a.factor ,
+    a.descripcion ,
+    a.calificacion as valor,
+    a.tipo ,
+    c.descripcion as nombrearea,
+    b.area,
+    NVL(b.valorrequerido,0) as valorrequerido,
+    NVL(b.valorminimoesperado,0) as valorminimoesperado,
+    b.descripcion,
+    b.tipocompetencia,
+    b.OrdenPlantilla,
+    b.OrdenPlantilla,
+    A.CALIFICACION,
+    A.VALORREQUERIDO,
+	A.COMENTARIOS
+FROM
+    SGCORESYS.HR_DETALLEEVALUACIONMEJORA a
+        inner join SGCORESYS.hr_factoresevaluacion b on (b.factor = a.factor)
+        left join SGCORESYS.hr_evaluacionarea c on (b.area = c.area)
+        left join SGCORESYS.HR_EvaluacionPeriodo d on (d.SecuenciaEval = a.SecuenciaEval and d.CompanyOwner = a.CompanyOwner)
+WHERE
+	b.FlagConcepto = 'N' and
+	a.Tipo = 'N' and
+	a.companyowner =$P{parCompany}  and
+	a.Empleado	=$P{parEmpleado}  and
+	a.SecuenciaEval	 = $P{parSecuencia}  and
+	a.EmpleadoEvaluador= $P{parEvaluador}
+ and b.area=$P{parArea}]]>
+	</queryString>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="COMPANYOWNER" class="java.lang.String"/>
+	<field name="SECUENCIAEVAL" class="java.math.BigDecimal"/>
+	<field name="FACTOR" class="java.math.BigDecimal"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="VALOR" class="java.lang.Double"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="NOMBREAREA" class="java.lang.String"/>
+	<field name="AREA" class="java.lang.String"/>
+	<field name="VALORREQUERIDO" class="java.math.BigDecimal"/>
+	<field name="VALORMINIMOESPERADO" class="java.math.BigDecimal"/>
+	<field name="TIPOCOMPETENCIA" class="java.lang.String"/>
+	<field name="ORDENPLANTILLA" class="java.math.BigDecimal"/>
+	<field name="CALIFICACION" class="java.lang.Double"/>
+	<field name="COMENTARIOS" class="java.lang.String"/>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="42798f25-edca-470d-b5a2-f894a948569c" x="3" y="2" width="100" height="24"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}!=null?$F{DESCRIPCION}:""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="dd22bf57-94a6-4824-b113-613ea4d4a613" x="163" y="2" width="100" height="24"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMENTARIOS}!=null?$F{COMENTARIOS}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="90248f3c-06b1-437b-83f8-841dbde159da" x="113" y="2" width="17" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Obt.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c3ce9621-4438-41f3-83ff-f458007402cd" x="139" y="2" width="17" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Req.]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f62a33a3-2e2b-4798-94e0-6d0a52313f6a" x="113" y="14" width="17" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CALIFICACION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b02f17b9-8c2b-4867-8d86-414ed2a78ba0" x="139" y="14" width="17" height="12"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VALORREQUERIDO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="f696f311-597e-4f1c-b8df-bf89583d792b" x="107" y="0" width="1" height="26"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

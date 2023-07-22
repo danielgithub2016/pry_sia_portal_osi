@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+
+	<class name="net.royal.erp.asistencia.dominio.AsDetallesiged"
+		table="SGCORESYS.AS_DETALLE_SIGED">
+		<composite-id name="pk"
+			class="net.royal.erp.asistencia.dominio.AsDetallesigedPk">
+			<key-property name="empleado" type="big_decimal">
+				<column name="EMPLEADO" length="10" />
+			</key-property>
+			<key-property name="secuencia" type="big_decimal">
+				<column name="SECUENCIA" length="10" />
+			</key-property>
+			<key-property name="fechadesde" type="timestamp">
+				<column name="FECHADESDE" />
+			</key-property>
+			<key-property name="conceptoacceso" type="string">
+				<column name="CONCEPTOACCESO" length="5" />
+			</key-property>
+			<key-property name="fechahasta" type="timestamp">
+				<column name="FECHAHASTA" />
+			</key-property>
+		</composite-id>
+
+		<property name="idempleadosia" type="big_decimal">
+			<column name="IDEMPLEADO_SIA" length="38" />
+		</property>
+		<property name="idempleadosia2" type="big_decimal">
+			<column name="IDEMPLEADO_SIA_2" length="38" />
+		</property>
+
+		<property name="idpersona" type="big_decimal">
+			<column name="IDPERSONA_SIGED" length="38" />
+		</property>
+		<property name="idarea" type="big_decimal">
+			<column name="IDAREA_SIGED" length="38" />
+		</property>
+		<property name="idcargo" type="big_decimal">
+			<column name="IDCARGO_SIGED" length="38" />
+		</property>
+
+		<property name="idperfil" type="big_decimal">
+			<column name="IDPERFIL_SIGED" length="38" />
+		</property>
+
+		<property name="flgjefe" type="string">
+			<column name="FLG_JEFE" length="1" />
+		</property>
+
+		<property name="flgasistente" type="string">
+			<column name="FLG_ASISTENTE" length="1" />
+		</property>
+
+		<property name="estado" type="string">
+			<column name="ESTADO" length="1" />
+		</property>
+
+		<property name="flgestadosiged" type="string">
+			<column name="FLG_ESTADOSIGED" length="1" />
+		</property>
+
+		<property name="flgasistentepermanente" type="string">
+			<column name="FLG_ASISTENTE_PERMANENTE" length="1" />
+		</property>
+
+		<property name="idpersona2" type="big_decimal">
+			<column name="IDPERSONA_SIGED_2" length="38" />
+		</property>
+
+		<property name="idpersona3" type="big_decimal">
+			<column name="IDPERSONA_SIGED_3" length="38" />
+		</property>
+
+		<property name="idcargonuevo" type="big_decimal">
+			<column name="IDCARGO_NUEVO_SIGED" length="38" />
+		</property>
+
+		<property name="idcargonuevo2" type="big_decimal">
+			<column name="IDCARGO_NUEVO_SIGED_2" length="38" />
+		</property>
+
+		<property name="ultimoUsuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+		<property name="ultimaFechaModif" type="timestamp">
+			<column name="ULTIMAFECHAMODIF" />
+		</property>
+
+		<property name="ultimoUsuarioSiged" type="string">
+			<column name="ULTIMOUSUARIOSIGED" length="20" />
+		</property>
+		<property name="ultimaFechaModifSiged" type="timestamp">
+			<column name="ULTIMOFECHASIGED" />
+		</property>
+
+	</class>
+</hibernate-mapping>

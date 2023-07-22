@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : rrhh.HrEncuestapreguntavalores
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="hrencuestapreguntavalores.listarValores">
+		<![CDATA[
+				SELECT 
+				   H.PREGUNTA as "pregunta", 
+				   CAST(H.TIPOENCUESTA AS VARCHAR2(1)) as "tipoencuesta", 
+				   H.VALOR as "valor", 
+				   H.DESCRIPCION as "descripcion"
+				FROM SGCORESYS.HR_ENCUESTAPREGUNTAVALORES H INNER JOIN SGCORESYS.HR_ENCUESTADETALLE ED
+				ON ED.PREGUNTA = H.PREGUNTA
+				WHERE ED.SECUENCIA = :secuencia AND H.TIPOENCUESTA =  :tipo_encuesta
+		]]>
+    </sql-query>
+</hibernate-mapping>

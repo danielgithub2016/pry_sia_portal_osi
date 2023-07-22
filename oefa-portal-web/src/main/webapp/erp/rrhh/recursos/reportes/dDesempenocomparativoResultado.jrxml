@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dDesempenocomparativoResultado" language="groovy" pageWidth="320" pageHeight="400" columnWidth="320" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="69f9c676-b57b-41ee-8c23-34b0b0dd6944">
+	<property name="ireport.zoom" value="6.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parCompanyowner" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEmpleado" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parSecuencia" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEvaluador" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parTipoEvaluador" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+
+                (SELECT
+
+                               (ROUND(AVG(CALIFICACION),2) * (CASE WHEN MAX(PESODESEMPENO2) = 0 THEN 100 ELSE MAX(PESODESEMPENO2) END)) / 100 AS COMPENTENCIA
+
+                               FROM SGCORESYS.HR_DETALLEEVALUACION
+
+         LEFT JOIN SGCORESYS.HR_EVALUACIONPERIODOCRITERIO
+
+              ON HR_DETALLEEVALUACION.COMPANYOWNER =  HR_EVALUACIONPERIODOCRITERIO.COMPANYOWNER
+
+                  AND HR_DETALLEEVALUACION.SECUENCIAEVAL =  HR_EVALUACIONPERIODOCRITERIO.SECUENCIAEVAL
+
+                  AND TIPOEVALUADOR = $P{parTipoEvaluador}
+
+                               WHERE
+
+                               HR_DETALLEEVALUACION.companyowner                        = $P{parCompanyowner}  and
+
+                               HR_DETALLEEVALUACION.Empleado                                   =  $P{parEmpleado} and
+
+                               HR_DETALLEEVALUACION.SecuenciaEval            =  $P{parSecuencia} and
+
+                               HR_DETALLEEVALUACION.EmpleadoEvaluador= $P{parEvaluador}
+
+                ) AS COMPETENCIA,
+
+                (SELECT
+
+                               (ROUND(AVG(CALIFICACION),2) * (CASE WHEN MAX(PESOMETAS) = 0 THEN 100 ELSE MAX(PESOMETAS) END)) / 100 AS META
+
+                               FROM SGCORESYS.HR_EMPLEADOMETAS
+
+                               LEFT JOIN SGCORESYS.HR_EVALUACIONPERIODOCRITERIO
+
+            ON HR_EMPLEADOMETAS.COMPANYOWNER =  HR_EVALUACIONPERIODOCRITERIO.COMPANYOWNER
+
+                  AND HR_EMPLEADOMETAS.SECUENCIAEVAL =  HR_EVALUACIONPERIODOCRITERIO.SECUENCIAEVAL
+
+                                                               AND TIPOEVALUADOR = $P{parTipoEvaluador}
+
+                               WHERE
+
+                               HR_EMPLEADOMETAS.companyowner                               = $P{parCompanyowner}  and
+
+                               HR_EMPLEADOMETAS.Empleado                                          = $P{parEmpleado}  and
+
+                               HR_EMPLEADOMETAS.SecuenciaEval   = $P{parSecuencia}  and
+
+                               HR_EMPLEADOMETAS.EmpleadoEvaluador= $P{parEvaluador}
+
+                ) AS METAS
+
+FROM
+
+                DUAL]]>
+	</queryString>
+	<field name="COMPETENCIA" class="java.math.BigDecimal"/>
+	<field name="METAS" class="java.math.BigDecimal"/>
+	<columnHeader>
+		<band height="18">
+			<rectangle>
+				<reportElement x="152" y="5" width="103" height="12" forecolor="#CCCCCC" uuid="3dd470e3-0711-4ff9-b807-a236d08be93d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="72" y="5" width="68" height="12" forecolor="#CCCCCC" uuid="a83952b2-7f95-4f6f-a4a6-cfda7bf1e18c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="2" y="5" width="60" height="12" forecolor="#CCCCCC" uuid="8ddf62fb-0f66-45f8-af1c-01834cbe5820"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="4" y="5" width="58" height="12" forecolor="#000000" uuid="72d26b01-28bd-4b83-9b94-75c4ddbe37fe"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Competencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="5" width="66" height="12" uuid="e6538375-c7a8-41af-a55a-084d49ace7d0"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Logros de Metas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="155" y="5" width="100" height="12" uuid="940cde80-75be-4e88-b2e8-8d008aede9c2"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resultado de Desempeño]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="320" height="1" uuid="eabf14b7-a3ee-4a78-9be2-72ca69d56d41"/>
+			</line>
+			<line>
+				<reportElement x="319" y="1" width="1" height="17" uuid="b4f7aaf6-27ad-4c74-bfcc-5493528eecba"/>
+			</line>
+			<line>
+				<reportElement x="0" y="1" width="1" height="17" uuid="ba2814ab-675e-4d55-aa58-157d876eaac0"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17">
+			<textField pattern="###0.00">
+				<reportElement x="5" y="3" width="57" height="12" uuid="bdcc0c47-1e05-4113-be88-d02f5f9c4d97"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPETENCIA}!=null?$F{COMPETENCIA}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="74" y="3" width="66" height="12" uuid="e091f314-84c8-471e-bd8c-1d6c88f24a34"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{METAS}!=null?$F{METAS}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="155" y="3" width="100" height="12" uuid="73c8af18-3057-4935-b31e-54410a4f826a"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{COMPETENCIA}!=null?$F{COMPETENCIA}:0)  +($F{METAS}!=null?$F{METAS}:0)]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="319" y="0" width="1" height="17" uuid="20dbed5d-0836-4422-bf93-0507b3756efe"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="17" uuid="0ab17e64-54ce-4921-b6aa-40c9d8e74c40"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="1">
+			<line>
+				<reportElement x="0" y="0" width="320" height="1" uuid="3626dc75-2819-40c1-a94a-9b944997973c"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

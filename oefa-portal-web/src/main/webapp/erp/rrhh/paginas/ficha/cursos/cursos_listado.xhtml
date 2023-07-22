@@ -1,0 +1,107 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>#{cEmpCursos.titulo}</h2>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="frmDocumentoEmpleado">
+			<p:growl autoUpdate="true" life="#{msg.generico_tiempo_growl}" />
+
+			<p:panel header="Filtros de Búsqueda">
+				<p:panelGrid layout="grid" columns="2"
+					styleClass="ui-panelgrid-blank"
+					columnClasses="ui-grid-col-1,ui-grid-col-2">
+
+					<p:outputLabel value="Descripción" />
+					<p:inputText value="#{cEmpCursos.curso}"/>
+				</p:panelGrid>
+
+			</p:panel>
+
+			<p:panelGrid layout="grid" columns="3"
+				styleClass="ui-panelgrid-blank"
+				columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2">
+				<p:commandButton action="#{cEmpCursos.buscar}" icon="buscar" value="Buscar" update="@form"/>
+				<p:spacer></p:spacer>
+				<p:button outcome="pantallaBienvenida" icon="cancelar"
+					value="Cancelar" />
+			</p:panelGrid>
+
+
+			<p:dataTable id="dtCursosEmpleado"
+				emptyMessage="no se encontraron registros" rows="20"
+				scrollable="true" reflow="true" paginator="true"
+				paginatorPosition="bottom" 
+				sortMode="descending" scrollHeight="400"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+				var="tbl" value="#{cEmpCursos.lista}">
+
+				<p:column headerText="Capacitacion" width="30">
+					<h:outputText value="#{tbl.capacitacion}" />
+				</p:column>
+
+				<p:column headerText="Descripción" width="170">
+					<h:outputText value="#{tbl.auxCurso}" />
+				</p:column>
+
+				<p:column headerText="Tipo Capacitación" width="50"
+					rendered="#{cEmpCursos.verArchivosPublicos}">
+					<h:outputText value="#{tbl.auxTipoCapacitacion}" />
+				</p:column>
+
+				<p:column headerText="Tipo Registro" width="150"
+					rendered="#{!cEmpCursos.verArchivosPublicos}">
+					<h:outputText value="#{tbl.auxTipoRegistro}"/>
+				</p:column>
+				<p:column headerText="Centro de Capacitación" width="205">
+					<h:outputText value="#{tbl.auxCentroestudios}" />
+				</p:column>
+				<p:column headerText="Fecha Inicio" styleClass="columnatablaCentro"
+					width="50">
+					<h:outputText value="#{tbl.fechainicio}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha}"
+							timeZone="#{msg.formato_fecha_timezone}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Fecha Fin" styleClass="columnatablaCentro"
+					width="50">
+					<h:outputText value="#{tbl.fechafin}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha}"
+							timeZone="#{msg.formato_fecha_timezone}" />
+					</h:outputText>
+				</p:column>
+
+
+				<p:column headerText="Total horas" styleClass="columnatablaDerecha"
+					width="50" rendered="#{!cEmpCursos.verArchivosPublicos}">
+					<h:outputText value="#{tbl.totalhoras}" />
+				</p:column>
+
+				<p:column headerText="Tiempo de Permanencia"
+					styleClass="columnatablaDerecha" width="50"
+					rendered="#{!cEmpCursos.verArchivosPublicos}">
+					 <h:outputText value="#{tbl.auxTiempoPermanencia}"/>
+				</p:column>
+
+				<p:column headerText="#{msg.generico_accion}" width="60"
+					styleClass="columnatablaCentro">
+					<p:commandButton type="image"
+						icon="#{tbl.cantidadDoc gt 0 ? 'siguiente' : 'siguiente' }"
+						title="ver/adjuntar documentos." action="#{cEmpCursos.ver}">
+						<f:setPropertyActionListener
+							target="#{cEmpCursos.registroSeleccionado}" value="#{tbl}" />
+					</p:commandButton>
+
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<div class="estiloSolicitudCapacitacion">
+		<h:form id="frmwhrSolicitudCapacitacion">
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+			<h:panelGrid columns="4" width="100%">
+				<p:outputLabel value="Solicitud" id="lblSolicitud" style="margin-right: 30px;"/>
+
+				<p:inputText
+					value="#{cwHrSolicitudCapacitacionSelect.solicitudBuscar}" id="txtSolicitud" style=" width: 170px;"/>
+
+				<p:commandButton value="Seleccionar" styleClass="botonTextoImagen" id="btnSeleccionar"
+					icon="aceptar" />
+
+				<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+					icon="cancelar" onclick="PF('popSolicitudCapacitacion').hide()" id="btnCancelar" />
+
+			</h:panelGrid>
+
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				paginator="true" paginatorPosition="bottom" scrollable="true"
+				scrollHeight="200" rows="20" 
+				tableStyle="width:500px" lazy="true" id="tblCentroEstudios"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+							           
+
+				<p:column headerText="# Solicitud" width="80">
+					<h:outputText />
+				</p:column>
+
+				<p:column headerText="Empleado" width="140">
+					<h:outputText  />
+				</p:column>
+				
+				<p:column headerText="Curso" width="140">
+					<h:outputText />
+				</p:column>
+				
+				<p:column headerText="Estado" width="140">
+					<h:outputText  />
+				</p:column>
+				
+			</p:dataTable>
+			
+			<p:outputLabel value="Haga un click sobre la(s) solicitud(es) que desea seleccionar. " />
+
+		</h:form>
+	</div>
+</ui:composition>

@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<div class="ui-fluid">
+		<h:form id="frmCabezara">
+			<p:panelGrid columns="1" layout="grid"
+				styleClass="ui-panelgrid-blank">
+				<p:panelGrid columns="4"
+					columnClasses="ui-grid-col-1,ui-grid-col-10,ui-grid-col-1,ui-grid-col-1"
+					layout="grid" styleClass="ui-panelgrid-blank">
+
+					<p:commandLink action="pantallaBienvenida" immediate="true"
+						style="color:blue;">
+						<h:graphicImage
+							value="/comun/recursos/imagenes/sistema/oefa-logo-header.png" width="100" />
+					</p:commandLink>
+
+					<h:panelGrid columns="3">
+						<p:outputLabel
+							value="Periodo : ${usuario.periodoContableActual}  |" />
+						<p:outputLabel
+							value="Usuario: ${usuario.loginUsuario} (${usuario.nombreCompleto})" />
+					</h:panelGrid>
+					
+					<p:commandLink value="Ver Videos"
+						action="#{cVideos.iniciarControladora}" immediate="true"
+						style="color:blue;">
+					</p:commandLink>
+					
+					<p:commandLink value="#{msg.sistema_cerrarsesion}"
+						action="#{cLogin.salir}" immediate="true" style="color:blue;" />
+
+				</p:panelGrid>
+			</p:panelGrid>
+		</h:form>
+	</div>
+
+
+</ui:composition>
+
+
+<!--   -->

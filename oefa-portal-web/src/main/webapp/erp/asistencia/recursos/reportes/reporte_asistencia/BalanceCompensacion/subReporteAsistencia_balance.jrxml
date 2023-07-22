@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subReporteAsistencia_balance" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b065eb2a-1f18-41e6-9b10-ad7c10478ca2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_centro_costos" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Fabrica\\Desarrollo\\DesarrolloProductos\\OEFA\\oefa-portal-web\\src\\main\\webapp\\erp\\asistencia\\recursos\\reportes\\reporte_asistencia\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_sid" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_FlagFiltroPeriodo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha_desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha_hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_adicionalesFeriados" class="java.lang.String"/>
+	<parameter name="balancePersonal" class="java.lang.String"/>
+	<parameter name="p_mesesacompensar" class="java.lang.Integer"/>
+	<parameter name="p_empleado" class="java.math.BigDecimal"/>
+	<queryString>
+		<![CDATA[SELECT
+
+    sum(round(regitros.HorasAprobadas * 60)) AS horasaprobadas,
+    sum(round(regitros.HorasConsumidas * 60)) AS horasconsumidas,
+    sgcoresys.f_cent2sex_texto(sum(round(regitros.HorasAprobadas,2)))AS horasaprobadast,
+    sgcoresys.f_cent2sex_texto(sum(round(regitros.HorasConsumidas,2)))AS horasconsumidast,
+    sum(case when VencidoOVigente = 'VIGENTES' THEN (round((regitros.HorasAprobadas - regitros.HorasConsumidas) * 60)) ELSE 0 END) as saldovigente,
+    sgcoresys.f_cent2sex_texto( sum(case when VencidoOVigente = 'VIGENTES' THEN (round((regitros.HorasAprobadas - regitros.HorasConsumidas),2)) ELSE 0 END)) as saldovigentet
+
+from
+(SELECT      AS_HorasAprobabas.Empleado,
+				AS_HorasAprobabas.Fecha,
+				SUM(AS_HorasAprobabas.HorasAprobadas) AS HorasAprobadas,
+				NVL(AS_HorasConsumidas.HorasDeAsistencia, 0.00) AS HorasDeAsistencia,
+				NVL(AS_HorasConsumidas.HorasConsumidas, 0.00) AS HorasConsumidas,
+				AS_HorasAprobabas.VencidoOVigente
+FROM        (
+					SELECT       AS_SaldoHoras.Empleado As Empleado,
+									AS_SaldoHoras.Fecha_Saldo As Fecha,
+									AS_SaldoHoras.CantidadAuxiliar As HorasAprobadas,
+									CASE
+									WHEN 	(TO_CHAR(AS_SaldoHoras.Fecha_Saldo,'YYYYMMDD') < TO_CHAR(ADD_MONTHS(SYSDATE,  $P{p_mesesacompensar}), 'YYYYMMDD' ))
+									THEN 		'VENCIDOS'
+									ELSE 		'VIGENTES'
+									END	AS	 VencidoOVigente
+					FROM         sgcoresys.AS_SaldoHoras
+					WHERE       AS_SaldoHoras.Tipo = 'M' AND
+									AS_SaldoHoras.Empleado = $P{p_empleado} AND
+									(to_char(AS_SaldoHoras.Fecha_Saldo,'YYYYMMDD')  >= to_char($P{p_fecha_desde},'YYYYMMDD'))  AND (to_char(AS_SaldoHoras.Fecha_Saldo,'YYYYMMDD') <= to_char($P{p_fecha_hasta},'YYYYMMDD'))
+
+					UNION ALL
+
+					SELECT
+									AS_AsistenciaDiaria.Empleado As Empleado,
+									AS_AsistenciaDiaria.Fecha   As  Fecha,
+									AS_AsistenciaDiaria.CantidadReal As HorasAprobadas,
+									CASE
+									WHEN 	(TO_CHAR(AS_AsistenciaDiaria.Fecha,'YYYYMMDD') < TO_CHAR(ADD_MONTHS(SYSDATE, $P{p_mesesacompensar}), 'YYYYMMDD' ))
+									THEN 		'VENCIDOS'
+									ELSE 		'VIGENTES'
+									END	AS	 VencidoOVigente
+					FROM         sgcoresys.AS_AsistenciaDiaria
+					WHERE       AS_AsistenciaDiaria.ConceptoAcceso = 'HAUT' AND
+									AS_AsistenciaDiaria.Empleado = $P{p_empleado}  AND
+									(to_char(AS_AsistenciaDiaria.Fecha,'YYYYMMDD')  >= to_char($P{p_fecha_desde},'YYYYMMDD'))  AND (to_char(AS_AsistenciaDiaria.Fecha,'YYYYMMDD') <= to_char($P{p_fecha_hasta},'YYYYMMDD'))
+                )           AS_HorasAprobabas
+                        LEFT JOIN
+                                (
+                                 SELECT        AS_AutorizacionFecha.Empleado AS Empleado,
+                                                 AS_AutorizacionFecha.Fecha As Fecha,
+												 --agregue SUM
+                                                 NVL(SUM(AS_AutorizacionFecha.CantidadReal),0.00) AS HorasDeAsistencia,
+                                                 NVL(SUM(AS_AutorizacionFecha.Cantidad),0.00) AS HorasConsumidas
+                                 FROM         sgcoresys.AS_AutorizacionFecha
+                                 GROUP BY   AS_AutorizacionFecha.Empleado,
+                                                 AS_AutorizacionFecha.Fecha
+                                                 --,AS_AutorizacionFecha.CantidadReal
+                                    )       AS_HorasConsumidas
+                                        ON  (AS_HorasAprobabas.Empleado = AS_HorasConsumidas.Empleado) AND
+                                             (AS_HorasAprobabas.Fecha = AS_HorasConsumidas.Fecha)
+
+  GROUP BY
+
+                                               AS_HorasAprobabas.Empleado,
+
+                                               AS_HorasAprobabas.Fecha,
+
+                                               AS_HorasConsumidas.HorasDeAsistencia,
+
+                                               AS_HorasConsumidas.HorasConsumidas,
+
+                                               AS_HorasAprobabas.VencidoOVigente
+ORDER BY   AS_HorasAprobabas.Fecha ASC
+) regitros]]>
+	</queryString>
+	<field name="HORASAPROBADAS" class="java.math.BigDecimal"/>
+	<field name="HORASCONSUMIDAS" class="java.math.BigDecimal"/>
+	<field name="HORASAPROBADAST" class="java.lang.String"/>
+	<field name="HORASCONSUMIDAST" class="java.lang.String"/>
+	<field name="SALDOVIGENTE" class="java.math.BigDecimal"/>
+	<field name="SALDOVIGENTET" class="java.lang.String"/>
+	<title>
+		<band height="136">
+			<staticText>
+				<reportElement x="4" y="3" width="275" height="20" forecolor="#000099" uuid="32e6f2b4-fb80-46b0-a2a5-20b8c7880868"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horas Extras Aprobadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="28" width="50" height="34" uuid="9d73ebd4-f2a0-4e0c-b7c2-3f3d76eca77c"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Asistencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="64" y="28" width="49" height="34" uuid="680bb78a-0f2f-447c-8018-498cb6b75cf3"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Min. Extras Aprobado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="176" y="28" width="49" height="34" uuid="b28a3ce4-36be-49bf-bb7b-233191d6159f"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Horas Extras Aprobado (HH:MM)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="28" width="48" height="34" uuid="b550be72-2357-435c-bc74-5e1c697ba70e"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Minutos Compens.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="25" width="531" height="1" uuid="da9583c6-7b1b-4d90-8a17-a721bda76663"/>
+			</line>
+			<line>
+				<reportElement x="4" y="62" width="531" height="1" uuid="27ff907e-3252-4e6e-8ab7-b2ca82404f0c"/>
+			</line>
+			<staticText>
+				<reportElement x="233" y="28" width="50" height="34" uuid="aabfde0e-5a3d-4255-b8ce-bf435b1a4e7f"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Horas Compens (HH:MM)]]></text>
+			</staticText>
+			<subreport>
+				<reportElement isPrintRepeatedValues="false" x="4" y="65" width="486" height="70" uuid="45331a28-eb7a-49af-b368-d9ef2d08e265"/>
+				<subreportParameter name="p_mesesacompensar">
+					<subreportParameterExpression><![CDATA[$P{p_mesesacompensar}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_empleado">
+					<subreportParameterExpression><![CDATA[$P{p_empleado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_hasta">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_hasta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_desde">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_desde}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["subReporteAsistencia_balance_vigentes.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<summary>
+		<band height="52">
+			<rectangle>
+				<reportElement x="65" y="9" width="216" height="20" uuid="487225b0-bb5a-4be7-9a66-5594537143cc"/>
+			</rectangle>
+			<line>
+				<reportElement x="231" y="9" width="1" height="20" uuid="efad6a04-273a-4307-b881-6d78b5657b4e"/>
+			</line>
+			<line>
+				<reportElement x="171" y="9" width="1" height="20" uuid="c00d4d93-fc3c-421d-82f5-a10fcf9a068b"/>
+			</line>
+			<line>
+				<reportElement x="118" y="9" width="1" height="20" uuid="24af213f-d181-48cd-a515-528232eeef87"/>
+			</line>
+			<rectangle>
+				<reportElement x="118" y="29" width="53" height="20" uuid="ee0e7890-53da-4480-b9c5-0b7cb10c1988"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="231" y="29" width="50" height="20" uuid="c49dc565-3357-4183-ab79-0a3f3289ce43"/>
+			</rectangle>
+			<line>
+				<reportElement x="12" y="4" width="531" height="1" uuid="a8f2fa9e-fa79-4686-9ff8-7eb198c8c511"/>
+			</line>
+			<staticText>
+				<reportElement x="9" y="10" width="53" height="20" forecolor="#990000" uuid="c71f1ce2-cb5d-4728-a156-d6ecb8a84799"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Min.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="31" width="102" height="18" forecolor="#000099" uuid="8482bf9b-25c2-404e-8910-15b9d00feb0d"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Minutos Disponibles]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="65" y="11" width="46" height="18" forecolor="#990000" uuid="6aaf0c13-eb0e-4154-bc9e-1be95e093f14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORASAPROBADAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="11" width="46" height="18" forecolor="#990000" uuid="f0fc6869-04d8-4549-89d1-f6dc15cc8a66"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORASCONSUMIDAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="232" y="11" width="49" height="18" forecolor="#990000" uuid="384aaf83-be32-4b5e-aa32-895cfa18886f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORASCONSUMIDAST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="176" y="11" width="50" height="18" forecolor="#990000" uuid="f7e416ab-0ac1-40cd-b05a-5d46a56d34b4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORASAPROBADAST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="31" width="46" height="18" forecolor="#000099" uuid="458cb954-c25a-4466-9739-a620a48c1948"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SALDOVIGENTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="232" y="29" width="49" height="19" forecolor="#000099" uuid="35b4398f-515d-48d8-93de-75db5412b573"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SALDOVIGENTET}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

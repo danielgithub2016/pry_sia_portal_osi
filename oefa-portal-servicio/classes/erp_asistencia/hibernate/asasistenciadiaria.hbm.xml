@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.asistencia.dominio.AsAsistenciadiaria" table="SGCORESYS.AS_ASISTENCIADIARIA">
+        <composite-id name="pk" class="net.royal.erp.asistencia.dominio.AsAsistenciadiariaPk">
+            <key-property name="empleado" type="integer">
+                <column name="EMPLEADO" length="22" />
+            </key-property>
+            <key-property name="fecha" type="timestamp">
+                <column name="FECHA" length="7" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="desde" type="timestamp">
+            <column name="DESDE" length="7" />
+        </property>
+        <property name="hasta" type="timestamp">
+            <column name="HASTA" length="7" />
+        </property>
+        <property name="periodo" type="string">
+            <column name="PERIODO" length="8" />
+        </property>
+        <property name="hora" type="timestamp">
+            <column name="HORA" length="7" />
+        </property>
+        <property name="conceptoacceso" type="string">
+            <column name="CONCEPTOACCESO" length="5" />
+        </property>
+        <property name="conjustificacion" type="string">
+            <column name="CONJUSTIFICACION" length="1" />
+        </property>
+        <property name="conceptojustificacion" type="string">
+            <column name="CONCEPTOJUSTIFICACION" length="5" />
+        </property>
+        <property name="tipojustificacion" type="string">
+            <column name="TIPOJUSTIFICACION" length="3" />
+        </property>
+        <property name="cantidadhoras" type="big_decimal">
+            <column name="CANTIDADHORAS" length="22" />
+        </property>
+        <property name="horaoficial" type="timestamp">
+            <column name="HORAOFICIAL" length="7" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="OBSERVACIONES" length="255" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="cantidad" type="big_decimal">
+            <column name="CANTIDAD" length="22" />
+        </property>
+        <property name="conceptoaccesosistema" type="string">
+            <column name="CONCEPTOACCESOSISTEMA" length="4" />
+        </property>
+        <property name="justificacion" type="string">
+            <column name="JUSTIFICACION" length="1" />
+        </property>
+        <property name="conceptosistema" type="string">
+            <column name="CONCEPTOSISTEMA" length="4" />
+        </property>
+        <property name="horainiciodia" type="timestamp">
+            <column name="HORAINICIODIA" length="7" />
+        </property>
+        <property name="horafindia" type="timestamp">
+            <column name="HORAFINDIA" length="7" />
+        </property>
+        <property name="tipodia" type="integer">
+            <column name="TIPODIA" length="22" />
+        </property>
+        <property name="cantidadreal" type="big_decimal">
+            <column name="CANTIDADREAL" length="22" />
+        </property>
+        <property name="origen" type="string">
+            <column name="ORIGEN" length="3" />
+        </property>
+        <property name="flagcompensacion" type="string">
+            <column name="FLAGCOMPENSACION" length="1" />
+        </property>
+        <property name="horariohasta" type="timestamp">
+            <column name="HORARIOHASTA" length="7" />
+        </property>
+        <property name="horariodesde" type="timestamp">
+            <column name="HORARIODESDE" length="7" />
+        </property>
+        <property name="flaganteshorario" type="string">
+            <column name="FLAGANTESHORARIO" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

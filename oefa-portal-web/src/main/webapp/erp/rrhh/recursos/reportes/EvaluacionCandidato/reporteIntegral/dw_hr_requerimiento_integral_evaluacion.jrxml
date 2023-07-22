@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dw_hr_requerimiento_integral_evaluacion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="959a9e8f-5ef8-4a92-be2e-12121094fc86">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="par_requerimiento" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_postulante" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_compania" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_compania_nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_postulante_nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_puesto_postula" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\valenzuelad\\Desktop\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT  HR_EvaluacionPostulante.Requerimiento ,
+        HR_EvaluacionPostulante.CompanyOwner ,
+        HR_EvaluacionPostulante.Postulante,
+        hr_evalrequerimiento.plantillaevaluacion
+FROM    HR_EvaluacionPostulante
+        LEFT JOIN HR_FactoresEvaluacion
+            ON    HR_EvaluacionPostulante.Factor = HR_FactoresEvaluacion.Factor
+        LEFT JOIN HR_EvaluacionArea
+            ON  HR_FactoresEvaluacion.Area = HR_EvaluacionArea.Area
+        LEFT JOIN HR_Requerimiento
+            ON   HR_EvaluacionPostulante.Requerimiento = HR_Requerimiento.Requerimiento
+
+        LEFT JOIN HR_EvalRequerimiento
+            ON    ( HR_EvaluacionPostulante.Requerimiento    = HR_EvalRequerimiento.Requerimiento ) AND
+                ( HR_EvaluacionPostulante.Secuencia     = HR_EvalRequerimiento.Secuencia ) AND
+                ( HR_EvaluacionPostulante.CompanyOwner    = HR_EvalRequerimiento.CompanyOwner )
+
+WHERE         ( HR_EvaluacionPostulante.CompanyOwner    = $P{par_compania} ) AND
+                  ( HR_EvaluacionPostulante.Requerimiento    = $P{par_requerimiento}) AND
+                  ( HR_EvaluacionPostulante.Postulante         = $P{par_postulante}) AND
+                HR_FactoresEvaluacion.FlagCalificacion         IN (1,2)
+
+GROUP BY     HR_EvaluacionPostulante.Requerimiento ,
+                HR_EvaluacionPostulante.CompanyOwner ,
+                HR_EvaluacionPostulante.Postulante ,
+                 hr_evalrequerimiento.plantillaevaluacion]]>
+	</queryString>
+	<field name="REQUERIMIENTO" class="java.lang.String"/>
+	<field name="COMPANYOWNER" class="java.lang.String"/>
+	<field name="POSTULANTE" class="java.lang.String"/>
+	<field name="PLANTILLAEVALUACION" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="154" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="121" width="555" height="33" uuid="f74221ca-6e80-4ee0-ae42-b6818556542d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="193" y="126" width="175" height="20" uuid="38e52fa6-5736-4911-8d81-75cb44ac856a"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[RESUMEN DE PUNTUACIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="448" y="142" width="100" height="12" uuid="2ae50acb-5458-4e3c-95e5-9cbb57d496b1"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PROMEDIO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="114" y="54" width="276" height="20" uuid="60fb31cb-4c0d-448b-83eb-195166593cd3"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{par_requerimiento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="172" y="26" width="216" height="20" uuid="0c8836f7-42da-4332-ad25-20b3d08fcb81"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE INTEGRAL DE EVALUACIÓN]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="114" y="76" width="276" height="20" uuid="99159b4c-91c7-46d0-9048-5de7ba690128"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{par_postulante_nombre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="114" y="98" width="276" height="20" uuid="375532f8-cd9b-46d6-aade-882b670c0ab5"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{par_puesto_postula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="3" width="100" height="20" uuid="e1aa2931-0d70-4447-bc30-23e3e2083e53"/>
+				<textFieldExpression><![CDATA[$P{par_compania}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="113" y="3" width="275" height="20" uuid="e43f1b72-5126-4375-850a-07f630df6d8b"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{par_compania_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="54" width="100" height="20" uuid="017dc6b6-da01-42e5-ae54-44d25ef0dec0"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[N* Requerimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="76" width="100" height="20" uuid="db0cd2d4-64a8-4953-a2da-ef2eca6aff1a"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Postulante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="99" width="106" height="20" uuid="199def27-2343-481f-92b5-861d7dc031e9"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Puesto al que Postula]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="66" splitType="Stretch">
+			<break>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="63" width="100" height="1" uuid="49a9ae7d-4f16-4f21-a3ab-e0c41c61e4c7"/>
+			</break>
+			<subreport>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="1" width="555" height="60" uuid="c4f8f945-55ea-41db-a457-0c3163dbefa2"/>
+				<subreportParameter name="par_requerimiento">
+					<subreportParameterExpression><![CDATA[$P{par_requerimiento}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="par_plantilla">
+					<subreportParameterExpression><![CDATA[$F{PLANTILLAEVALUACION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="par_compania">
+					<subreportParameterExpression><![CDATA[$P{par_compania}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="par_postulante">
+					<subreportParameterExpression><![CDATA[$P{par_postulante}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["dw_hr_requerimiento_integral_evaluacion_grupo.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

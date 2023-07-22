@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : presupuesto.BuMeta -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="bumeta.obtenerMeta">
+		SELECT Max(BU_Meta.MetaAux) as "metaaux"
+		FROM
+		SGCORESYS.BU_ComponenteMeta,
+		SGCORESYS.BU_Meta
+		WHERE (
+		BU_ComponenteMeta.Ano = BU_Meta.Ano ) and
+		(
+		BU_ComponenteMeta.CompaniaSocio = BU_Meta.CompaniaSocio ) and
+		(
+		BU_ComponenteMeta.Meta = BU_Meta.Meta ) and
+		( (
+		BU_ComponenteMeta.CompaniaSocio = :p_compania ) AND
+		(
+		BU_ComponenteMeta.Ano = :p_anio ) AND
+		( BU_ComponenteMeta.Componente =
+		:p_referenciarelacionada ) )
+	</sql-query>
+
+	<sql-query name="bumeta.obtenerMetaRequerimiento">
+		select
+		BU_Meta.Meta as "meta2",
+		BU_Meta.MetaAux as "metaaux",
+		BU_Meta.Descripcion as "descripcion"
+		from
+		SGCORESYS.BU_ComponenteCentroCosto,SGCORESYS.BU_ComponenteMeta,
+		SGCORESYS.BU_Meta
+		Where
+		BU_ComponenteCentroCosto.CompaniaSocio =
+		BU_ComponenteMeta.CompaniaSocio and
+		BU_ComponenteCentroCosto.Ano =
+		BU_ComponenteMeta.Ano and
+		BU_ComponenteCentroCosto.Version =
+		BU_ComponenteMeta.Version and
+		BU_ComponenteCentroCosto.Componente =
+		BU_ComponenteMeta.Componente and
+		BU_ComponenteMeta.CompaniaSocio =
+		BU_Meta.CompaniaSocio And
+		BU_ComponenteMeta.Ano = BU_Meta.Ano and
+		BU_ComponenteMeta.Meta = BU_Meta.Meta and
+		BU_ComponenteCentroCosto.CompaniaSocio = :p_compania and
+		BU_ComponenteCentroCosto.Ano = :p_anio and
+		BU_ComponenteCentroCosto.Version = :p_version and
+		BU_ComponenteCentroCosto.CentroCosto = :p_centrocosto and
+		BU_Meta.MetaAux = NVL(:p_meta,BU_Meta.MetaAux)
+	</sql-query>
+
+
+	<sql-query name="bumeta.obtenerMetaPlantillaItem">
+		SELECT
+		row_number() OVER (ORDER BY WH_ItemMast.Item) as "secuencia",
+		BU_MetaPlantillaDetalle.Item as "item",
+		WH_ItemMast.DescripcionLocal as "descripcion",
+		BU_MetaPlantillaDetalle.cantidad as "cantidad",
+		UnidadesMast.UNIDADCODIGO as "unidad",
+		UnidadesMast.DESCRIPCIONCORTA as "unidadnombre"
+		FROM
+		SGCORESYS.BU_MetaPlantilla,
+		SGCORESYS.BU_MetaPlantillaDetalle,
+		SGCORESYS.WH_ItemMast,
+		SGCORESYS.UnidadesMast
+		WHERE
+		BU_MetaPlantilla.PLANTILLA = BU_MetaPlantillaDetalle.PLANTILLA and
+		BU_MetaPlantilla.COMPANIASOCIO = BU_MetaPlantillaDetalle.COMPANIASOCIO
+		and
+		BU_MetaPlantilla.ANO = BU_MetaPlantillaDetalle.ANO and
+		BU_MetaPlantillaDetalle.ITEM = wh_ItemMast.item and
+		BU_MetaPlantilla.COMPANIASOCIO = :p_compania and
+		BU_MetaPlantilla.ANO = :p_anio and
+		BU_MetaPlantilla.META = :p_meta and
+		BU_MetaPlantillaDetalle.ITEMCOMMODITYFLAG='I' and
+		wh_ItemMast.ActivoFijoFlag = isnull(:p_activofijo,wh_ItemMast.ActivoFijoFlag) and
+		(UnidadesMast.UNIDADCODIGO = WH_ItemMast.UnidadCodigo
+		AND UnidadesMast.Estado = 'A')
+	</sql-query>
+
+	<sql-query name="bumeta.obtenerMetaPlantillaCommodity">
+		SELECT
+		row_number() OVER (ORDER BY WH_CommoditySub.Commodity) as "secuencia",
+		BU_MetaPlantillaDetalle.Item as "item",
+		WH_Commoditysub.DescripcionLocal as "descripcion",
+		BU_MetaPlantillaDetalle.cantidad as "cantidad"
+		FROM
+		SGCORESYS.BU_MetaPlantilla,
+		SGCORESYS.BU_MetaPlantillaDetalle,
+		SGCORESYS.WH_Commoditysub
+		WHERE
+		BU_MetaPlantilla.PLANTILLA = BU_MetaPlantillaDetalle.PLANTILLA and
+		BU_MetaPlantilla.COMPANIASOCIO = BU_MetaPlantillaDetalle.COMPANIASOCIO
+		and
+		BU_MetaPlantilla.ANO = BU_MetaPlantillaDetalle.ANO and
+		BU_MetaPlantillaDetalle.ITEM = WH_Commoditysub.COMMODITY and
+		BU_MetaPlantilla.COMPANIASOCIO = :p_compania and
+		BU_MetaPlantilla.ANO = :p_anio and
+		BU_MetaPlantilla.META = :p_meta and
+		BU_MetaPlantillaDetalle.ITEMCOMMODITYFLAG='C'
+	</sql-query>
+
+</hibernate-mapping>

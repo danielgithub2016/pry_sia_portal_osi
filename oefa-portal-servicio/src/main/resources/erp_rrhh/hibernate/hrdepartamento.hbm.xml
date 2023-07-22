@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrDepartamento" table="SGCORESYS.HR_DEPARTAMENTO">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrDepartamentoPk">
+            <key-property name="departamento" type="string">
+                <column name="DEPARTAMENTO" length="10" />
+            </key-property>
+            <key-property name="department" type="string">
+                <column name="DEPARTMENT" length="3" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="80" />
+        </property>
+        <property name="abreviacion" type="string">
+            <column name="ABREVIACION" length="10" />
+        </property>
+        <property name="orden" type="integer">
+            <column name="ORDEN" length="22" />
+        </property>
+        <property name="flagriesgo" type="string">
+            <column name="FLAGRIESGO" length="1" />
+        </property>
+        <property name="telefono1" type="string">
+            <column name="TELEFONO1" length="12" />
+        </property>
+        <property name="telefono2" type="string">
+            <column name="TELEFONO2" length="12" />
+        </property>
+        <property name="anexo1" type="string">
+            <column name="ANEXO1" length="12" />
+        </property>
+        <property name="anexo2" type="string">
+            <column name="ANEXO2" length="12" />
+        </property>
+        <property name="anexo3" type="string">
+            <column name="ANEXO3" length="12" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

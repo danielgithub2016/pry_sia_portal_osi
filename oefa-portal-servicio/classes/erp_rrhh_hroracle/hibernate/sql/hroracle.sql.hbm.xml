@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="hroracle.DwOrganigramaOcupados">
+    <![CDATA[
+    	select 
+    		a.codigoempleado as "codigoempleado", 
+    		c.nombrecompleto as "nombrecompleto", 
+    		count(*) as "cantidad" 
+		FROM 
+			SGCORESYS.hr_organigrama_puestos a join 
+			SGCORESYS.hr_organigrama b on a.ano = b.ano and 
+			a.codigoorg = b.codigoorg join 
+			SGCORESYS.personamast c on a.codigoempleado = c.persona join SGCORESYS.empleadomast d on c.persona = d.empleado
+			where 
+				b.codigopuesto = :p_puesto and 
+				a.ano = :p_anio and 
+				b.companyowner = :p_compania and d.estadoempleado = '0'
+			group by 
+				a.codigoempleado, c.nombrecompleto
+      ]]>
+	</sql-query>
+
+
+
+</hibernate-mapping>

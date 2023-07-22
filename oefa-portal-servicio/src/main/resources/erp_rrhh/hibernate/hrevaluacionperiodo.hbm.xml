@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.rrhh.dominio.HrEvaluacionperiodo"
+		table="SGCORESYS.HR_EVALUACIONPERIODO">
+		<composite-id name="pk"
+			class="net.royal.erp.rrhh.dominio.HrEvaluacionperiodoPk">
+			<key-property name="companyowner" type="string">
+				<column name="COMPANYOWNER" length="8" />
+			</key-property>
+			<key-property name="secuenciaeval" type="integer">
+				<column name="SECUENCIAEVAL" length="22" />
+			</key-property>
+		</composite-id>
+		<property name="periodo" type="string">
+			<column name="PERIODO" length="6" />
+		</property>
+		<property name="descripcion" type="string">
+			<column name="DESCRIPCION" length="255" />
+		</property>
+		<property name="fechainicio" type="timestamp">
+			<column name="FECHAINICIO" length="7" />
+		</property>
+		<property name="fechafin" type="timestamp">
+			<column name="FECHAFIN" length="7" />
+		</property>
+		<property name="estado" type="string">
+			<column name="ESTADO" length="1" />
+		</property>
+		<property name="flagevaluacionintegral" type="string">
+			<column name="FLAGEVALUACIONINTEGRAL" length="1" />
+		</property>
+		<property name="flagdesempeno" type="string">
+			<column name="FLAGDESEMPENO" length="1" />
+		</property>
+		<property name="flagmetas" type="string">
+			<column name="FLAGMETAS" length="1" />
+		</property>
+		<property name="flagnecesidadcapacita" type="string">
+			<column name="FLAGNECESIDADCAPACITA" length="1" />
+		</property>
+		<property name="flagrevisionmetas" type="string">
+			<column name="FLAGREVISIONMETAS" length="1" />
+		</property>
+		<property name="flagpotencial" type="string">
+			<column name="FLAGPOTENCIAL" length="1" />
+		</property>
+		<property name="flagrevisionpotencial" type="string">
+			<column name="FLAGREVISIONPOTENCIAL" length="1" />
+		</property>
+		<property name="secuenciaevalant" type="integer">
+			<column name="SECUENCIAEVALANT" length="22" />
+		</property>
+		<property name="flagconceptual" type="string">
+			<column name="FLAGCONCEPTUAL" length="1" />
+		</property>
+		<property name="flagincidentescriticos" type="string">
+			<column name="FLAGINCIDENTESCRITICOS" length="1" />
+		</property>
+		<property name="flagdesempenio" type="string">
+			<column name="FLAGDESEMPENIO" length="1" />
+		</property>
+		<property name="flagfunciones" type="string">
+			<column name="FLAGFUNCIONES" length="1" />
+		</property>
+		<property name="tipoevaluacion" type="string">
+			<column name="TIPOEVALUACION" length="1" />
+		</property>
+		<property name="flagdesempeno2" type="string">
+			<column name="FLAGDESEMPENO2" length="1" />
+		</property>
+		<property name="claseperiodo" type="string">
+			<column name="CLASEPERIODO" length="3" />
+		</property>
+		<property name="tipoeval" type="string">
+			<column name="TIPOEVAL" length="1" />
+		</property>
+		<property name="plantillaeval" type="string">
+			<column name="PLANTILLAEVAL" length="3" />
+		</property>
+		<property name="flagdespersonal" type="string">
+			<column name="FLAGDESPERSONAL" length="1" />
+		</property>
+		<property name="flagmedicion" type="string">
+			<column name="FLAGMEDICION" length="1" />
+		</property>
+		<property name="flagnecesidadcapacita2" type="string">
+			<column name="FLAGNECESIDADCAPACITA2" length="1" />
+		</property>
+		<property name="estadoproceso" type="string">
+			<column name="ESTADOPROCESO" length="2" />
+		</property>
+		<property name="fechaplaninicio" type="timestamp">
+			<column name="FECHAPLANINICIO" length="7" />
+		</property>
+		<property name="fechaplanfin" type="timestamp">
+			<column name="FECHAPLANFIN" length="7" />
+		</property>
+		<property name="fecharealinicio" type="timestamp">
+			<column name="FECHAREALINICIO" length="7" />
+		</property>
+		<property name="fecharealfin" type="timestamp">
+			<column name="FECHAREALFIN" length="7" />
+		</property>
+		<property name="tipocodigo" type="string">
+			<column name="TIPOCODIGO" length="2" />
+		</property>
+		<property name="plantillaevaluacion" type="string">
+			<column name="PLANTILLAEVALUACION" length="3" />
+		</property>
+		<property name="flagdecampo" type="string">
+			<column name="FLAGDECAMPO" length="1" />
+		</property>
+		<property name="flagrevision" type="string">
+			<column name="FLAGREVISION" length="1" />
+		</property>
+		<property name="fechaevalinicio" type="timestamp">
+			<column name="FECHAEVALINICIO" />
+		</property>
+		<property name="fechaevalfin" type="timestamp">
+			<column name="FECHAEVALFIN" />
+		</property>
+		<property name="fechacierreeval" type="timestamp">
+			<column name="FECHACIERREEVAL" />
+		</property>
+	</class>
+</hibernate-mapping>

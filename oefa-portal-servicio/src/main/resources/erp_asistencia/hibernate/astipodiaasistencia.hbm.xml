@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.asistencia.dominio.AsTipodiaasistencia"
+		table="SGCORESYS.AS_TIPODIAASISTENCIA">
+		<composite-id name="pk"
+			class="net.royal.erp.asistencia.dominio.AsTipodiaasistenciaPk">
+			<key-property name="tipodia" type="integer">
+				<column name="TIPODIA" length="22" />
+			</key-property>
+		</composite-id>
+		<property name="descripcionlocal" type="string">
+			<column name="DESCRIPCIONLOCAL" length="100" />
+		</property>
+		<property name="cantidadhoras" type="big_decimal">
+			<column name="CANTIDADHORAS" length="22" />
+		</property>
+		<property name="descripcionextranjera" type="string">
+			<column name="DESCRIPCIONEXTRANJERA" length="100" />
+		</property>
+		<property name="estado" type="string">
+			<column name="ESTADO" length="1" />
+		</property>
+		<property name="tipodiaanterior" type="string">
+			<column name="TIPODIAANTERIOR" length="3" />
+		</property>
+		<property name="horacortemixto" type="timestamp">
+			<column name="HORACORTEMIXTO" length="7" />
+		</property>
+		<property name="minsobrett" type="integer">
+			<column name="MINSOBRETT" length="22" />
+		</property>
+		<property name="maxtempran" type="integer">
+			<column name="MAXTEMPRAN" length="22" />
+		</property>
+		<property name="flgTeletrabajo" type="string">
+			<column name="flgTeletrabajo" length="1" />
+		</property>
+	</class>
+</hibernate-mapping>

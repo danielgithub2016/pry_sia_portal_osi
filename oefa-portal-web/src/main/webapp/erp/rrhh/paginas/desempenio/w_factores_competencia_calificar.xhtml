@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form id="selectormodelos">
+		<p:growl life="#{msg.generico_tiempo_growl}" />
+		<p:panel>
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank"
+				layout="grid" columnClasses="ui-grid-col-2,ui-grid-col-8">
+				<h:outputLabel value="Descripción" />
+				<p:inputTextarea disabled="true" style="width:100%"
+					value="#{cwFactoresCompetenciaCalificar.dw_factores.descripcion}" />
+				<h:outputLabel value="Explicación" />
+				<p:inputTextarea style="width:100%" disabled="true"
+					value="#{cwFactoresCompetenciaCalificar.dw_factores.explicacion}" />
+
+				<h:outputLabel value="Calificación" rendered="false" />
+				<p:inputText id="idCalificacion" disabled="true" rendered="false"
+					value="#{cwFactoresCompetenciaCalificar.em_calificacion}">
+
+					<f:convertNumber minIntegerDigits="1" maxFractionDigits="0" />
+				</p:inputText>
+			</p:panelGrid>
+
+		</p:panel>
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			rendered="#{cwFactoresCompetenciaCalificar.opciones.dw_1visible}"
+			selectionMode="single" reflow="true"
+			selection="#{cwFactoresCompetenciaCalificar.registroSeleccionado}"
+			value="#{cwFactoresCompetenciaCalificar.dw_1}" var="lst"
+			rowKey="#{lst.pk.secuencia}"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+			<p:ajax event="rowDblselect"
+				listener="#{cwFactoresCompetenciaCalificar.doubleclicked}" />
+
+			<p:ajax event="rowSelect"
+				listener="#{cwFactoresCompetenciaCalificar.selectRow}"
+				update="selectormodelos:idCalificacion" />
+
+			<p:column headerText="Sec." width="17" rendered="false"
+				styleClass="columnatablaCentro">
+				<h:outputText value="#{lst.pk.secuencia}" />
+			</p:column>
+
+			<p:column headerText="Calificación" width="100" rendered="false">
+				<h:outputText value="#{lst.descripcion}" />
+			</p:column>
+
+			<p:column headerText="Explicación" width="390">
+				<h:outputText value="#{lst.explicacion}" />
+			</p:column>
+
+			<p:column headerText="Desde" width="40" rendered="false"
+				styleClass="columnatablaCentro">
+				<h:outputText value="#{lst.valor}" />
+			</p:column>
+
+			<p:column headerText="Hasta" width="40" rendered="false"
+				styleClass="columnatablaCentro">
+				<h:outputText value="#{lst.valorhasta}" />
+			</p:column>
+
+		</p:dataTable>
+
+		<p:panelGrid columns="1" styleClass="ui-panelgrid-blank" layout="grid">
+			<h:outputLabel value="Comentario"
+				rendered="#{cwFactoresCompetenciaCalificar.opciones.st_comentario}" />
+			<p:inputTextarea
+				rows="#{cwFactoresCompetenciaCalificar.comentariorows}"
+				rendered="#{cwFactoresCompetenciaCalificar.opciones.mle_comentario}"
+				value="#{cwFactoresCompetenciaCalificar.mle_comentario}" />
+		</p:panelGrid>
+
+		<p:panelGrid columns="4" styleClass="ui-panelgrid-blank" layout="grid" 
+			columnClasses="ui-grid-col-4,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3">
+			<p:commandButton value="Historial de Compromiso de Mejora" style="width:100%"
+				update="@form"
+				action="#{cwFactoresCompetenciaCalificar.inicializarAcciones}"
+				rendered="#{cwFactoresCompetenciaCalificar.opciones.cb_compromiso}">
+				<f:setPropertyActionListener
+					target="#{cwFactoresCompetenciaCalificar.eventname}"
+					value="cb_compromiso_clicked" />
+			</p:commandButton>
+
+			<p:spacer />
+
+			<p:commandButton value="Aceptar" style="width:100%"
+				action="#{cwFactoresCompetenciaCalificar.inicializarAcciones}">
+				<f:setPropertyActionListener
+					target="#{cwFactoresCompetenciaCalificar.eventname}"
+					value="cb_aceptar_clicked" />
+			</p:commandButton>
+
+			<p:commandButton value="Cancelar"  style="width:100%"
+				onclick="PF('popComptencias').hide();">
+			</p:commandButton>
+
+		</p:panelGrid>
+	</h:form>
+</ui:composition>

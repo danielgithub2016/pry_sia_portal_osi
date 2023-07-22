@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/comun/plantillas/main_alfresco.xhtml">
+
+	<ui:define name="content">
+
+		<h:form id="frmDocumentosAlfrescoListado">
+
+
+			<p:panelGrid columns="3" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid"
+				styleClass="ui-panelgrid-blank">
+
+				<p:commandButton icon="archivo" value="Agregar"
+					onclick="#{empty cDocumentoAlfrescoListado.documentos ? '' : 'return window.confirm(\'El archivo existente será reemplazado ¿Continuar?\');'}"
+					title="Adjuntar Archivo" immediate="true"
+					action="#{cDocumentoAlfrescoMantenimiento.nuevo}">
+					<f:setPropertyActionListener
+						target="#{cDocumentoAlfrescoMantenimiento.paramurl}"
+						value="#{cDocumentoAlfrescoListado.paramurl}" />
+				</p:commandButton>
+
+			</p:panelGrid>
+
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				id="dtArchivos" paginator="false" rows="50" reflow="true" var="row"
+				value="#{cDocumentoAlfrescoListado.documentos}">
+
+				<p:column headerText="Nombre" width="120">
+					<h:outputLabel value="#{row.nombre}" />
+				</p:column>
+
+				<p:column headerText="Acción" width="10"
+					styleClass="columnatablaCentro">
+					<p:panelGrid columns="2">
+
+						<h:commandButton title="Ver"
+							image="/comun/recursos/imagenes/mantenimiento/btn_preview1_16.png"
+							immediate="true" action="#{cDocumentoAlfrescoDescarga.ver}">
+							<f:setPropertyActionListener value="#{row.uuidalfresco}"
+								target="#{cDocumentoAlfrescoDescarga.uuid}" />
+							<f:setPropertyActionListener value="#{row.nombre}"
+								target="#{cDocumentoAlfrescoDescarga.nombre}" />
+						</h:commandButton>
+
+						<p:commandLink title="Eliminar Archivo"
+							action="#{cDocumentoAlfrescoListado.eliminar}">
+							<f:setPropertyActionListener value="#{row}"
+								target="#{cDocumentoAlfrescoListado.documento}" />
+							<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+								icon="alerta" message="#{msg.generico_listar_preguntaeliminar}" />
+							<h:graphicImage
+								value="/comun/recursos/imagenes/mantenimiento/btn_eliminar1_16.png" />
+						</p:commandLink>
+					</p:panelGrid>
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+
+
+		<p:dialog id="dgDocumentoMantenimiento"
+			widgetVar="popDocumentoMantenimiento" dynamic="true"
+			styleClass="contenedorPrincipalExtraChico" resizable="false"
+			modal="true" appendTo="@(body)" header="Adjuntar Archivo"
+			responsive="true">
+			<ui:include src="documentos_alfresco_mantenimiento.xhtml" />
+		</p:dialog>
+
+
+
+
+	</ui:define>
+
+
+</ui:composition>
+

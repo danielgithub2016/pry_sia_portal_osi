@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : logistica.WhClaselinea
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+        
+    <sql-query name="whclaselinea.obtenerManejoColorSerieFlag">
+		 SELECT 
+		 	WH_ClaseLinea.ManejoColorSerieFlag as "manejocolorserieflag"
+    	FROM 
+    		SGCORESYS.WH_ItemMast,   
+         	SGCORESYS.WH_ClaseLinea  
+   		WHERE 
+   			( WH_ItemMast.Linea = WH_ClaseLinea.Linea ) and  
+       	  	( ( WH_ItemMast.Item = :p_item ) ) 
+    </sql-query>
+    
+    <sql-query name="whclaselinea.obtenerDescripcionLocal">
+		 SELECT 
+		 	WH_ClaseLinea.DescripcionLocal as "descripcionlocal"
+    	 FROM 
+    	 	SGCORESYS.WH_ClaseLinea  
+   	     WHERE 
+   	     	WH_ClaseLinea.Linea = :p_linea 
+    </sql-query>
+    
+</hibernate-mapping>

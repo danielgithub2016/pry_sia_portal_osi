@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.rrhh.dominio.HrEvaluacionetapa" table="SGCORESYS.HR_EVALUACIONEMPLEADO">
+		<composite-id name="pk"
+			class="net.royal.erp.rrhh.dominio.HrEvaluacionetapaPk">
+			<key-property name="requerimiento" type="string">
+				<column name="REQUERIMIENTO" length="10" />
+			</key-property>
+			<key-property name="secuencia" type="integer">
+				<column name="SECUENCIA" length="38" />
+			</key-property>
+			<key-property name="secuencia2" type="integer">
+				<column name="SECUENCIA_2" length="38" />
+			</key-property>
+			<key-property name="companyowner" type="string">
+				<column name="COMPANYOWNER" length="8" />
+			</key-property>
+			<key-property name="postulante" type="string">
+				<column name="POSTULANTE" length="10" />
+			</key-property>
+		</composite-id>
+		<property name="estado" type="string">
+			<column name="ESTADO" length="1" />
+		</property>
+		<property name="flagincorporacion" type="string">
+			<column name="FLAGINCORPORACION" length="1" />
+		</property>
+		<property name="observaciones" type="string">
+			<column name="OBSERVACIONES" length="3000" />
+		</property>
+		<property name="observacionfinetapa" type="string">
+			<column name="OBSERVACIONFINETAPA" length="3000" />
+		</property>
+		<property name="ultimoUsuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+		<property name="ultimaFechaModif" type="timestamp">
+			<column name="ULTIMAFECHAMODIF" />
+		</property>
+	</class>
+</hibernate-mapping>

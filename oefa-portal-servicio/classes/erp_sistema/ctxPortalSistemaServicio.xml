@@ -1,0 +1,63 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+	xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
+	xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans 
+    	http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://jax-ws.dev.java.net/spring/core 
+        http://jax-ws.dev.java.net/spring/core.xsd
+		http://jax-ws.dev.java.net/spring/servlet 
+		http://jax-ws.dev.java.net/spring/servlet.xsd">
+	
+	<bean id="BeanFactoryErpSy" class="net.royal.erp.sistema.factory.FactoryErpSyImpl"
+		scope="singleton">		
+		<property name="sycommonFuncion">
+			<ref bean="BeanServicioSycommonFuncion" />
+		</property>
+		<property name="syfinanDatawindow">
+			<ref bean="BeanServicioSyfinanDatawindow" />
+		</property>
+		<property name="syfinanFuncion">
+			<ref bean="BeanServicioSyfinanFuncion" />
+		</property>		
+		<property name="symast01Datawindow">
+			<ref bean="BeanServicioSymast01Datawindow" />
+		</property>		
+		
+	</bean>
+	
+	<bean id="BeanFactoryErpSistema" class="net.royal.erp.sistema.factory.FactoryErpSistemaImpl"
+		scope="singleton">
+		<property name="sY">
+			<ref bean="BeanFactoryErpSy" />
+		</property>
+		
+		<property name="syCampocalculadoServicio">
+			<ref bean="BeanServicioSyCampocalculado" />
+		</property>
+
+		<property name="sySeguridadautorizacionesServicio">
+			<ref bean="BeanServicioSySeguridadautorizaciones" />
+		</property>
+
+		<property name="syUnidadreplicacionServicio">
+			<ref bean="BeanServicioSyUnidadreplicacion" />
+		</property>		
+		<property name="sySeguridadrangoServicio">
+			<ref bean="BeanServicioSySeguridadrango"/>
+		</property>
+	</bean>
+	
+</beans>

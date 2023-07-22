@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dw_pr_vacaciones_utilizacion" language="groovy" pageWidth="950" pageHeight="842" columnWidth="910" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="da110fe9-3c35-47df-8695-44420d637e93">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="764"/>
+	<property name="ireport.y" value="22"/>
+	<parameter name="fechadesde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechahasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="compania" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipoplanilla" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="centrocosto" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sucursal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="afe" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="empleado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT      PR_VacacionPeriodo.empleado as "empleado",
+            PersonaMast.NombreCompleto as "nombrecompleto",
+            PersonaMast.PersonaAnt as "personanat",
+            DiasUtilizacion as "diasutilizacion",
+            to_char(FechaInicio,'dd/mm/yyyy') as "fechainicio",
+            to_char(FechaFin,'dd/mm/yyyy') as "fechafin",
+            TipoUtilizacion as "tipoutilizacion",
+            to_char(FechaIngreso,'dd/mm/yyyy') as "fechaIngreso",
+            TipoPlanilla as "tipoplanilla",
+            PR_VacacionPeriodo.Ano as "año",
+            (PR_VacacionPeriodo.Ano + 1) as "anofin",
+            AC_COSTCENTERMST.LocalName as "centrocostos" ,
+            case when PR_VacacionUtilizacion.tipoutilizacion in ('GOC') then  (PR_VacacionUtilizacion.diasutilizacion) else 0 end "pendientes"
+
+FROM     SGCORESYS.PersonaMast
+            INNER JOIN SGCORESYS.EmpleadoMast
+                ON (EmpleadoMast.Empleado = PersonaMast.Persona)
+            INNER JOIN SGCORESYS.AC_COSTCENTERMST
+                ON (EmpleadoMast.CentroCostos = AC_COSTCENTERMST.CostCenter)
+            INNER JOIN SGCORESYS.PR_VacacionPeriodo
+                ON (PersonaMast.Persona = PR_VacacionPeriodo.empleado)
+            LEFT JOIN SGCORESYS.PR_VacacionUtilizacion
+                ON (PR_VacacionPeriodo.Empleado = PR_VacacionUtilizacion.Empleado AND
+                     PR_VacacionPeriodo.NumeroPeriodo = PR_VacacionUtilizacion.NumeroPeriodo)
+WHERE
+((FechaInicio between $P{fechadesde} AND $P{fechahasta} ) or ( FechaFin between $P{fechadesde} AND $P{fechahasta} )) AND
+ EMPLEADOMAST.COMPANIASOCIO = NVL($P{compania},EMPLEADOMAST.COMPANIASOCIO) AND
+ EMPLEADOMAST.TIPOPLANILLA = NVL($P{tipoplanilla},EMPLEADOMAST.TIPOPLANILLA) AND
+ EMPLEADOMAST.CENTROCOSTOS = NVL($P{centrocosto},EMPLEADOMAST.CENTROCOSTOS) AND
+ NVL(EMPLEADOMAST.AFE,'XXX') = NVL($P{afe},NVL(EMPLEADOMAST.AFE,'XXX') ) AND
+ NVL(EMPLEADOMAST.SUCURSAL,'XXX') = NVL($P{sucursal},NVL(EMPLEADOMAST.SUCURSAL,'XXX') ) AND
+ EMPLEADOMAST.EMPLEADO = NVL($P{empleado}, EMPLEADOMAST.EMPLEADO ) AND
+ EMPLEADOMAST.ESTADO = 'A' AND
+ EMPLEADOMAST.ESTADOEMPLEADO = '0' AND
+ PR_VacacionUtilizacion.tipoutilizacion IN ('GOC','REP')
+ ORDER BY PERSONAMAST.NOMBRECOMPLETO ASC]]>
+	</queryString>
+	<field name="empleado" class="java.math.BigDecimal"/>
+	<field name="nombrecompleto" class="java.lang.String"/>
+	<field name="personanat" class="java.lang.String"/>
+	<field name="diasutilizacion" class="java.lang.Double"/>
+	<field name="fechainicio" class="java.lang.String"/>
+	<field name="fechafin" class="java.lang.String"/>
+	<field name="tipoutilizacion" class="java.lang.String"/>
+	<field name="fechaIngreso" class="java.lang.String"/>
+	<field name="tipoplanilla" class="java.lang.String"/>
+	<field name="año" class="java.lang.String"/>
+	<field name="anofin" class="java.math.BigDecimal"/>
+	<field name="centrocostos" class="java.lang.String"/>
+	<field name="pendientes" class="java.math.BigDecimal"/>
+	<variable name="TOTALEMP" class="java.lang.Integer" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{empleado}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<pageHeader>
+		<band height="98" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="20" width="910" height="23" uuid="b4c34e0f-80aa-4e12-b615-84382c791e53"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Utilización de Vacaciones]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="723" y="20" width="80" height="20" uuid="450acdaa-9cc9-4193-9c70-a69832462655"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="803" y="20" width="35" height="20" uuid="9173eadb-1fda-4f3c-b4be-88a25ad7545d"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="723" y="0" width="62" height="20" uuid="30dd28d6-3f2f-4cd7-81fe-980d716d11be"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Fecha : ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="785" y="0" width="53" height="20" uuid="4cb6d500-8c49-4873-b8e3-8c0bf670e2ce"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="45" width="910" height="20" uuid="ab1c6eff-f7f6-459a-a9cb-070f2c5a3ab0"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($P{fechadesde})+" - "+
+new SimpleDateFormat("dd/MM/yyyy").format($P{fechahasta})]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="19" width="910" height="1" uuid="c72dc072-ea3b-4de7-ae4a-dc9f9dde64ce"/>
+			</line>
+			<staticText>
+				<reportElement x="27" y="0" width="58" height="20" uuid="1c5bd251-b318-4ae4-a917-f476d9a3a964"/>
+				<text><![CDATA[Empleado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="144" y="0" width="41" height="20" uuid="6c501d03-d102-4302-b52c-d3674bc5047d"/>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="574" y="0" width="70" height="20" uuid="b63f6b5b-46c0-45e9-b465-eb79c2790244"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Desde]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="650" y="0" width="70" height="20" uuid="261891af-712b-4f51-a3c7-cb5724f5e57d"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Hasta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="741" y="0" width="25" height="20" uuid="b4709b24-9557-4739-8d11-df175b6fbb06"/>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="14" height="20" uuid="ed1fa2c1-d839-4c12-a1f8-bb77287e6399"/>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="810" y="0" width="100" height="20" uuid="0b5b9143-57bf-44a0-9d01-a4626f67eb86"/>
+				<text><![CDATA[Periodo Vacacional]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="70" height="20" uuid="e92c17f1-5f71-495c-bbc3-5445602888ab"/>
+				<text><![CDATA[Fec.Ingreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="538" y="0" width="23" height="20" uuid="3eebe8d3-d5fb-4327-8677-21ec8dedb3e6"/>
+				<text><![CDATA[Dias]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="306" y="0" width="100" height="20" uuid="02b6f4b0-4305-4eba-a0c1-59fb84497f01"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Area Operativa]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="27" y="0" width="37" height="20" uuid="34b6822b-d37f-42e4-a251-a0739f0a89a5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empleado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="85" y="0" width="166" height="20" uuid="f1b127a2-060a-4ed7-9ee9-80153c9a01ee"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="574" y="0" width="70" height="20" uuid="0fbb4a61-cb56-4ebe-856e-8594843b9c5f"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechainicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="723" y="0" width="62" height="20" uuid="dfb3f93b-cdda-435e-a415-f4ca26fd2e8d"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoutilizacion}=="REP"?"Programadas":
+$F{tipoutilizacion}=="GOC"?"Goce":$F{tipoutilizacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="810" y="0" width="100" height="20" uuid="03a65561-6aa1-4942-a6a8-e5b27a5348ea"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{año}+" - "+$F{anofin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="14" height="20" uuid="26c6a0ae-8bec-4681-89b5-d3e76402814e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="262" y="0" width="193" height="20" uuid="10b003d8-e2fa-4477-912d-13c9f3cbac2f"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{centrocostos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="650" y="0" width="70" height="20" uuid="e54ff31e-37cb-446f-842b-a765f357da35"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechafin}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement x="538" y="0" width="23" height="20" uuid="51938224-719d-4a82-9f43-57c63047a2ef"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diasutilizacion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="455" y="0" width="70" height="20" uuid="1f4977e1-ed01-415b-98b4-d8e85f95d1dd"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaIngreso}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="50" splitType="Prevent">
+			<textField isBlankWhenNull="true">
+				<reportElement x="85" y="8" width="100" height="20" uuid="3f77267f-b8b3-4429-83e0-239070ca89cd"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTALEMP}.equals(null)?
+" 0 ":
+$V{TOTALEMP}+" trabajador"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="27" y="7" width="42" height="20" uuid="8325bfc1-b130-44e0-8666-2909c2937e2e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="7" width="910" height="1" uuid="d6bb0772-4d53-4653-b712-3f327f5e7aa7"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

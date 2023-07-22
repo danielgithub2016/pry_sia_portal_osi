@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="consulta_boletas_empleado::#erp#planilla#paginas#boletas#consulta_boletas_empleado.xhtml"
+    NAME="output"
+    PATH="/erp/planilla/paginas/boletas/consulta_boletas_empleado.xhtml"
+    TARGET="rules:#erp#planilla#paginas#boletas#consulta_boletas_empleado.xhtml"
+    TITLE="consulta_boletas_empleado" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:1" PATH="*" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:1" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="ConsultaRenta5taCategoria::#erp#planilla#paginas#renta_5ta_categoria.xhtml"
+    NAME="output" PATH="/erp/planilla/paginas/renta_5ta_categoria.xhtml"
+    TARGET="rules:#erp#planilla#paginas#renta_5ta_categoria.xhtml"
+    TITLE="ConsultaRenta5taCategoria" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:2" PATH="*" SHAPE="32,241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:2" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="ConsultaRenta5taCategoriaAnualizado::#erp#planilla#paginas#renta_5ta_categoria_anualizado.xhtml"
+    NAME="output"
+    PATH="/erp/planilla/paginas/renta_5ta_categoria_anualizado.xhtml"
+    TARGET="rules:#erp#planilla#paginas#renta_5ta_categoria_anualizado.xhtml"
+    TITLE="ConsultaRenta5taCategoriaAnualizado" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:3" PATH="*" SHAPE="32,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:3" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="Certificado4ta5ta::#erp#planilla#paginas#certificado_4ta_5ta.xhtml"
+    NAME="output" PATH="/erp/planilla/paginas/certificado_4ta_5ta.xhtml"
+    TARGET="rules:#erp#planilla#paginas#certificado_4ta_5ta.xhtml"
+    TITLE="Certificado4ta5ta" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#erp#planilla#paginas#certificado_4ta_5ta.xhtml"
+  PATH="/erp/planilla/paginas/certificado_4ta_5ta.xhtml"
+  SHAPE="240,369,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#planilla#paginas#renta_5ta_categoria.xhtml"
+  PATH="/erp/planilla/paginas/renta_5ta_categoria.xhtml"
+  SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#planilla#paginas#renta_5ta_categoria_anualizado.xhtml"
+  PATH="/erp/planilla/paginas/renta_5ta_categoria_anualizado.xhtml"
+  SHAPE="240,257,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:4" PATH="*" SHAPE="32,465,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:4" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="wprcertificadolist::#erp#planilla#paginas#w_pr_cts_certificado_list.xhtml"
+    NAME="output"
+    PATH="/erp/planilla/paginas/w_pr_cts_certificado_list.xhtml"
+    TARGET="rules:#erp#planilla#paginas#w_pr_cts_certificado_list.xhtml"
+    TITLE="wprcertificadolist" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:5" PATH="*" SHAPE="32,577,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:5" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="wprvacacionesreporte::#erp#planilla#paginas#reporte_vacaciones#w_pr_vacaciones_reporte.xhtml"
+    NAME="output"
+    PATH="/erp/planilla/paginas/reporte_vacaciones/w_pr_vacaciones_reporte.xhtml"
+    TARGET="rules:#erp#planilla#paginas#reporte_vacaciones#w_pr_vacaciones_reporte.xhtml"
+    TITLE="wprvacacionesreporte" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#erp#planilla#paginas#reporte_vacaciones#w_pr_vacaciones_reporte.xhtml"
+  PATH="/erp/planilla/paginas/reporte_vacaciones/w_pr_vacaciones_reporte.xhtml"
+  SHAPE="240,593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#planilla#paginas#w_pr_cts_certificado_list.xhtml"
+  PATH="/erp/planilla/paginas/w_pr_cts_certificado_list.xhtml"
+  SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#planilla#paginas#boletas#consulta_boletas_empleado.xhtml"
+  PATH="/erp/planilla/paginas/boletas/consulta_boletas_empleado.xhtml"
+  SHAPE="240,145,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

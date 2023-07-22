@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.erp.sistema.dominio.SyPreferences" table="SGCORESYS.SY_PREFERENCES">
+        <composite-id name="pk" class="net.royal.erp.sistema.dominio.SyPreferencesPk">
+            <key-property name="usuario" type="string">
+                <column name="USUARIO" length="20" />
+            </key-property>
+            <key-property name="preference" type="string">
+                <column name="PREFERENCE" length="10" />
+            </key-property>
+            <key-property name="aplicacioncodigo" type="string">
+                <column name="APLICACIONCODIGO" length="2" />
+            </key-property>
+        </composite-id>
+        <property name="tipovalor" type="string">
+            <column name="TIPOVALOR" length="1" />
+        </property>
+        <property name="valorstring" type="string">
+            <column name="VALORSTRING" length="15" />
+        </property>
+        <property name="valornumero" type="integer">
+            <column name="VALORNUMERO" length="22" />
+        </property>
+        <property name="valorfecha" type="timestamp">
+            <column name="VALORFECHA" length="7" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		id="dtCompromiso"
+		style="#{cwHrEvaluacionempleadoEdit.opciones.dwcompromisomejora_disable ? 'pointer-events:none' : null}"
+		 rowIndexVar="indice" reflow="true"
+		value="#{cwHrCompromisoMejora.dwcompromisomejora}" var="row"
+		rowKey="#{row.pk.secuencia}"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+		<p:column headerText="" width="5">
+			<h:outputText value="#{indice + 1}" />
+		</p:column>
+		<p:column headerText="Descripción">
+			<h:outputText value="#{row.descripcion}" />
+		</p:column>
+		<p:column headerText="Obtenido" width="70"
+			styleClass="columnatablaDerecha">
+			<h:outputText value="#{row.calificacion}" />
+		</p:column>
+		<p:column headerText="Requerido" width="70"
+			styleClass="columnatablaDerecha">
+			<h:outputText value="#{row.valorrequerido}">
+			 <f:convertNumber minIntegerDigits="1" maxFractionDigits="0" />
+			</h:outputText>
+		</p:column>
+		<p:column headerText="Comentarios">
+			<h:outputText value="#{row.comentarios}" />
+		</p:column>
+		<p:column headerText="Acción" width="40"
+			styleClass="columnatablaCentro">
+			<p:commandButton type="image" icon="editar"
+				oncomplete="PF('popCompromisoEdicion').show()"
+				update=":dgCompromisoEdicion">
+				<f:setPropertyActionListener
+					target="#{cwHrCompromisoMejora.registroSeleccionado}"
+					value="#{row}" />
+			</p:commandButton>
+		</p:column>
+
+	</p:dataTable>
+
+</ui:composition>

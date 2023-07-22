@@ -1,0 +1,934 @@
+
+<!-- 
+ @author  nunezh
+ @powerbuilder w_hr_evaluacionempleado_edit.xhtml
+  -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+
+	<ui:define name="content">
+		<style>
+.ui-panel .ui-panel-content {
+	border: 0 !important;
+	background: none !important;
+	padding: -5px 1px -5px 1px !important;
+}
+
+.ui-tabs .ui-tabs-nav li a {
+	float: left;
+	padding: 0.1em;
+	text-decoration: none;
+}
+</style>
+
+		<h:form id="frmEvaluacionEmpleado">
+			<p:growl life="40000" autoUpdate="true" />
+			<p:panel>
+				<p:panelGrid layout="grid" columns="4"
+					columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-8,ui-grid-col-2"
+					styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Salvar" icon="salvar"
+						styleClass="botonTextoImagen"
+						rendered="#{cwHrEvaluacionempleadoEdit.verSalvar}"
+						action="#{cwHrEvaluacionempleadoEdit.wfPending}" />
+
+					<p:commandButton value="Completar" icon="ok"
+						styleClass="botonTextoImagen"
+						rendered="#{cwHrEvaluacionempleadoEdit.verCompletar}"
+						action="#{cwHrEvaluacionempleadoEdit.wfUpdateCompletar}" />
+
+					<p:spacer />
+					<p:commandButton value="Cancelar" icon="cancelar"
+						styleClass="botonTextoImagen"
+						action="#{cwHrEvaluacionempleadoEdit.salir}" />
+				</p:panelGrid>
+			</p:panel>
+
+			<p:panel id="toggleable" header="Información de la Evaluación"
+				toggleable="true" toggleSpeed="500" closeSpeed="500"
+				widgetVar="panel"
+				style="#{cwHrEvaluacionempleadoEdit.opciones.dwevaluacion_disable ? 'pointer-events:none;':''}">
+
+				<p:ajax event="toggle"
+					listener="#{cwHrEvaluacionempleadoEdit.cambiarTamano}" />
+
+				<p:panelGrid columns="4" layout="grid"
+					columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-3,ui-grid-col-3"
+					styleClass="ui-panelgrid-blank">
+
+
+					<p:panelGrid columns="1" layout="grid"
+						styleClass="columnGridMiddle">
+						<p:panelGrid columns="1" layout="grid"
+							rendered="#{cwHrEvaluacionempleadoEdit.fotografiaBase64 != null}">
+							<img
+								title="FOTO DE #{cwHrEvaluacionempleadoEdit.dw_evaluacion.empleadonombre}"
+								alt="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.empleadonombre}"
+								width="100%" height="auto" style="max-width: 150px;"
+								src="data:image/png;base64,#{cwHrEvaluacionempleadoEdit.fotografiaBase64}" />
+						</p:panelGrid>
+						<p:graphicImage width="100%" height="auto"
+							value="/temporal/sinfoto.png" style="max-width: 150px;"
+							title="FOTO DE #{cwHrEvaluacionempleadoEdit.dw_evaluacion.empleadonombre}"
+							alt="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.empleadonombre}"
+							rendered="#{cwHrEvaluacionempleadoEdit.fotografiaBase64 == null}" />
+
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2,ui-grid-col-10">
+							<h:commandButton type="button"
+								style="background-color:LightSkyBlue; border:1px solid black; width:20px; height:20px" />
+							<h:outputLabel value="Valor Obtenido" />
+						</p:panelGrid>
+
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-4,ui-grid-col-8"
+						styleClass="columnGridMiddle ui-panelgrid-blank">
+						<h:outputLabel value="Empleado" />
+
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-4,ui-grid-col-8"
+							styleClass="ui-panelgrid-blank">
+							<p:inputText
+								disabled="#{cwHrEvaluacionempleadoEdit.opciones.dwevaluacioncodigoempleado_disable}"
+								value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.codigoempleado}" />
+							<p:inputText disabled="true"
+								value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.empleadonombre}" />
+						</p:panelGrid>
+
+						<h:outputLabel value="Comentario" />
+						<p:inputTextarea maxlength="255"
+							value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.comentario}"
+							rows="2" />
+
+						<h:outputLabel value="Puesto Emp." />
+						<p:inputText disabled="true"
+							value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.puestonombre}" />
+
+						<h:outputLabel value="# Eval" />
+						<p:inputText disabled="true"
+							value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.descripcion}" />
+
+						<h:outputLabel value="Evaluador" />
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-4,ui-grid-col-8"
+							styleClass="ui-panelgrid-blank">
+							<p:inputText
+								disabled="#{cwHrEvaluacionempleadoEdit.opciones.dwevaluacioncodigosupervisor_disable}"
+								value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.codigoevaluador}" />
+							<p:inputText disabled="true"
+								value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.evaluadornombre}" />
+						</p:panelGrid>
+
+						<h:outputLabel value="Comentario" />
+						<p:inputTextarea maxlength="255"
+							value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.comentarioevaluado}"
+							rows="2" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="1" layout="grid"
+						styleClass="columnGridMiddle">
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2,ui-grid-col-10"
+							styleClass="ui-panelgrid-blank">
+							<h:outputLabel value="Entidad" />
+							<p:inputText disabled="true"
+								value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.entidadnombre}" />
+						</p:panelGrid>
+
+
+						<p:panelGrid columns="4" layout="grid"
+							columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+							styleClass="ui-panelgrid-blank">
+							<h:outputLabel value="Desde" />
+							<p:inputText disabled="true"
+								value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.fechainicio}">
+								<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}" />
+							</p:inputText>
+							<h:outputLabel value="Hasta" />
+							<p:inputText disabled="true"
+								value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.fechafin}">
+								<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}" />
+							</p:inputText>
+						</p:panelGrid>
+
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2,ui-grid-col-10"
+							styleClass="ui-panelgrid-blank">
+							<h:outputLabel value="Presentó" />
+							<p:selectBooleanCheckbox
+								value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.flagpresentoboolean}" />
+						</p:panelGrid>
+
+						<p:fieldset legend="Conformidad">
+							<p:panelGrid columns="2" layout="grid"
+								styleClass="ui-panelgrid-blank">
+								<p:panelGrid columns="2" layout="grid"
+									columnClasses="ui-grid-col-10,ui-grid-col-2"
+									styleClass="ui-panelgrid-blank">
+									<h:outputLabel value="Evaluado" />
+									<p:selectBooleanCheckbox
+										value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.evaluadoboolean}" />
+								</p:panelGrid>
+								<p:panelGrid columns="2" layout="grid"
+									columnClasses="ui-grid-col-10,ui-grid-col-2"
+									styleClass="ui-panelgrid-blank">
+									<h:outputLabel value="Evaluador" />
+									<p:selectBooleanCheckbox
+										value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.evaluadorboolean}" />
+								</p:panelGrid>
+							</p:panelGrid>
+						</p:fieldset>
+
+					</p:panelGrid>
+
+
+
+					<p:panelGrid columns="1" layout="grid"
+						styleClass="columnGridMiddle">
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2,ui-grid-col-10"
+							styleClass="ui-panelgrid-blank">
+							<h:outputLabel value="Tipo Eval" />
+							<p:inputText disabled="true"
+								value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.tipoevaluadornombre}" />
+						</p:panelGrid>
+
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2,ui-grid-col-10"
+							styleClass="ui-panelgrid-blank">
+							<h:outputLabel value="Puesto Eval" />
+							<p:inputText disabled="true"
+								value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.puestoevalnombre}" />
+						</p:panelGrid>
+
+						<p:fieldset legend="Calificación" style="pointer-events:none;">
+							<p:panelGrid columns="2" layout="grid"
+								columnClasses="ui-grid-col-4,ui-grid-col-8"
+								styleClass="ui-panelgrid-blank">
+								<h:outputLabel value="Desempeño" />
+								<p:inputText readonly="true"
+									style="background-color:LightSkyBlue;color: black;font-weight: bold;"
+									value="#{cwHrEvaluacionempleadoEdit.dw_evaluacion.totalpuntos}"
+									styleClass="columnatablaDerecha">
+									<f:convertNumber minIntegerDigits="1" maxFractionDigits="2"
+										minFractionDigits="2" locale="en-US" />
+								</p:inputText>
+							</p:panelGrid>
+						</p:fieldset>
+
+						<p:commandButton value="Histórico" update=":dgHistoricoEval"
+							rendered="#{cwHrEvaluacionempleadoEdit.opciones.cbseguimiento_visible}"
+							oncomplete="PF('popHistoricoEval').show()" />
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+
+			<p:tabView id="tvDatos" scrollable="true" dynamic="true"
+				activeIndex="#{cwHrEvaluacionempleadoEdit.indiceActivoTabMantenimiento}">
+
+				<p:ajax event="tabChange" update="frmEvaluacionEmpleado:tvDatos"
+					listener="#{cwHrEvaluacionempleadoEdit.selectionChanged}" />
+
+				<p:tab rendered="#{cwHrEvaluacionempleadoEdit.opciones.p3_visible}">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1052.bmp" />
+							<h:outputText value="Incidentes Críticos" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="/erp/rrhh/paginas/desempenio/tab_incidentes.xhtml" />
+				</p:tab>
+
+				<p:tab rendered="#{cwHrEvaluacionempleadoEdit.opciones.p1_visible}">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1690.bmp" />
+							<h:outputText value="Competencia" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include
+						src="/erp/rrhh/paginas/desempenio/tab_compentencias.xhtml" />
+				</p:tab>
+
+				<p:tab rendered="#{cwHrEvaluacionempleadoEdit.opciones.p11_visible}">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1456.bmp" />
+							<h:outputText value="Funciones" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="/erp/rrhh/paginas/desempenio/tab_funciones.xhtml" />
+				</p:tab>
+
+				<p:tab rendered="#{cwHrEvaluacionempleadoEdit.opciones.p5_visible}">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2130.bmp" />
+							<h:outputText value="Fortalezas y debilidades" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="/erp/rrhh/paginas/desempenio/tab_fortalezas.xhtml" />
+				</p:tab>
+
+
+				<p:tab rendered="#{cwHrEvaluacionempleadoEdit.opciones.p6_visible}">
+
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2702.bmp" />
+							<h:outputText value="Revisión de Metas y Objetivos " />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include
+						src="/erp/rrhh/paginas/desempenio/tab_rev_metas_objetivos.xhtml" />
+				</p:tab>
+
+				<p:tab rendered="#{cwHrEvaluacionempleadoEdit.opciones.p8_visible}">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1048.bmp" />
+							<h:outputText value="Revisión de Metas" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="/erp/rrhh/paginas/desempenio/tab_rev_metas.xhtml" />
+				</p:tab>
+
+				<p:tab rendered="#{cwHrEvaluacionempleadoEdit.opciones.p7_visible}" >
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2552.bmp" />
+							<h:outputText value="Necesidades de Capacitación" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include
+						src="/erp/rrhh/paginas/desempenio/tab_necesidades.xhtml" />
+
+				</p:tab>
+
+				<p:tab rendered="#{cwHrEvaluacionempleadoEdit.opciones.p9_visible}">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1444.bmp" />
+							<h:outputText value="Potencial" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="/erp/rrhh/paginas/desempenio/tab_potencial.xhtml" />
+				</p:tab>
+
+				<p:tab rendered="#{cwHrEvaluacionempleadoEdit.opciones.p10_visible}">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1012.bmp" />
+							<h:outputText value="Consideraciones del Potencial" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include
+						src="/erp/rrhh/paginas/desempenio/tab_consideraciones_potencial.xhtml" />
+				</p:tab>
+
+				<p:tab rendered="#{cwHrEvaluacionempleadoEdit.opciones.p2_visible}">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2684.bmp" />
+							<h:outputText value="Evaluación Conceptual" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include
+						src="/erp/rrhh/paginas/desempenio/tab_evaluacion_conceptual.xhtml" />
+				</p:tab>
+
+
+				<p:tab rendered="#{cwHrEvaluacionempleadoEdit.opciones.p12_visible}">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1080.bmp" />
+							<h:outputText value="Evaluación de Campo" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include
+						src="/erp/rrhh/paginas/desempenio/tab_evaluacion_campo.xhtml" />
+				</p:tab>
+				<p:tab id="p16"
+					rendered="#{cwHrEvaluacionempleadoEdit.opciones.p16_visible}">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1024.bmp" />
+							<h:outputText
+								value="Revisión del Avance del compromiso de Mejora" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include
+						src="/erp/rrhh/paginas/desempenio/tab_revision_avance_compromiso_mejora.xhtml" />
+				</p:tab>
+
+				<p:tab rendered="false">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1006.bmp" />
+							<h:outputText value="Comentarios" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include
+						src="/erp/rrhh/paginas/desempenio/tab_comentarios.xhtml" />
+				</p:tab>
+
+				<p:tab id="tab15"
+					rendered="#{cwHrEvaluacionempleadoEdit.opciones.p18_visible}">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1630.bmp" />
+							<h:outputText value="Compromiso de Mejora" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="/erp/rrhh/paginas/desempenio/tab_compromiso.xhtml" />
+				</p:tab>
+
+				<p:tab rendered="#{cwHrEvaluacionempleadoEdit.opciones.p19_visible}">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/chart_bar.png" />
+							<h:outputText value="Resultados" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include
+						src="/erp/rrhh/paginas/desempenio/tab_compentencias_grafico.xhtml" />
+				</p:tab>
+
+
+			</p:tabView>
+		</h:form>
+
+		<p:dialog id="gdComptencias" widgetVar="popComptencias" modal="true"
+			responsive="true" style="max-width:700px;" height="auto"
+			appendTo="@(Body)" resizable="false" fitViewport="true"
+			header="Factor de Competencia - Calificación">
+			<ui:include src="w_factores_competencia_calificar.xhtml" />
+		</p:dialog>
+
+		<p:dialog id="dgSelectorCurso" widgetVar="popSelectorCurso"
+			responsive="true" fitViewport="true" width="100%"
+			header="Seleccione el Curso" modal="true" style="max-width:600px;"
+			appendTo="@(Body)" resizable="false">
+			<ui:include
+				src="/erp/rrhh/paginas/requerimiento/w_hr_curso_selector.xhtml" />
+		</p:dialog>
+
+		<p:dialog id="dgCalificativos" widgetVar="popCalificativos"
+			header="Calificativos" modal="true" width="560" appendTo="@(Body)"
+			resizable="false">
+			<ui:include
+				src="/erp/rrhh/paginas/desempenio/w_hr_factoresvalor_list_x_periodo.xhtml" />
+		</p:dialog>
+
+		<p:dialog id="dgHistoricoEval" widgetVar="popHistoricoEval"
+			header="--------" modal="true" width="1200" appendTo="@(Body)"
+			resizable="false">
+			<ui:include
+				src="/erp/rrhh/paginas/desempenio/w_hr_competencias_list.xhtml" />
+		</p:dialog>
+
+		<p:dialog id="dgCapacitacionEdit" widgetVar="popCapacitacionEdit"
+			header="--------" modal="true" appendTo="@(Body)" resizable="false">
+			<ui:include
+				src="/erp/rrhh/paginas/capacitacion/capacitacion_edit.xhtml" />
+		</p:dialog>
+
+		<p:dialog id="dgCompetenciasHistorial"
+			widgetVar="popCompetenciasHistorial"
+			header="Historial de Compromisos de Mejora" modal="true"
+			appendTo="@(Body)" resizable="false">
+			<ui:include
+				src="/erp/rrhh/paginas/requerimiento/w_factores_competencia_historial.xhtml" />
+		</p:dialog>
+
+
+
+		<p:dialog id="dgCompromisoEdicion" widgetVar="popCompromisoEdicion"
+			header="Edición - Compromiso de Mejora" modal="true" dynamic="true"
+			appendTo="@(Body)" resizable="false" responsive="true"
+			fitViewport="true" width="100%" style="max-width:450px;">
+			<div class="ui-fluid">
+				<h:form id="frmCompromisoEdicion">
+					<p:panel>
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2,ui-grid-col-10"
+							styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Descripción" />
+
+							<p:inputTextarea style="width:100%;"
+								value="#{cwHrCompromisoMejora.registroSeleccionado.descripcion}"
+								disabled="true" maxlength="200" />
+
+							<p:outputLabel value="Obtenido" />
+							<p:inputText style="width:100%;" disabled="true"
+								styleClass="columnatablaDerecha" maxlength="5"
+								value="#{cwHrCompromisoMejora.registroSeleccionado.calificacion}" />
+
+							<p:outputLabel value="Requerido" />
+							<p:inputText style="width:100%;" disabled="true" id="itRequerido"
+								styleClass="columnatablaDerecha" maxlength="5"
+								value="#{cwHrCompromisoMejora.registroSeleccionado.valorrequerido}" />
+
+
+							<p:outputLabel value="Comentarios" />
+							<p:inputTextarea style="width:100%;" maxlength="900"
+								autoResize="false"
+								value="#{cwHrCompromisoMejora.registroSeleccionado.comentarios}" />
+
+						</p:panelGrid>
+						<p:separator />
+						<p:panelGrid columns="1" layout="grid"
+							columnClasses="ui-grid-col-4" styleClass="ui-panelgrid-blank">
+							<p:commandButton value="Guardar"
+								oncomplete="PF('popCompromisoEdicion').hide()"
+								action="#{cwHrCompromisoMejora.guardar}" icon="guardar" />
+						</p:panelGrid>
+					</p:panel>
+				</h:form>
+			</div>
+		</p:dialog>
+
+		<p:dialog id="dgRevisionMetasObj" widgetVar="popRevisionMetasObj"
+			style="max-width:400px;"
+			header="Edición - Revisión de Objetivos y Metas" modal="true"
+			responsive="true" width="100%" dynamic="true" appendTo="@(Body)"
+			resizable="false">
+			<div class="ui-fluid">
+				<h:form id="frmRevisionMetasObj">
+					<p:panel>
+						<p:panelGrid columns="1" layout="grid"
+							columnClasses="ui-grid-col-12" styleClass="ui-panelgrid-blank">
+
+							<p:panelGrid columns="2" layout="grid"
+								columnClasses="ui-grid-col-4,ui-grid-col-4"
+								styleClass="ui-panelgrid-blank">
+								<p:outputLabel value="Periodo" />
+								<p:inputMask mask="9999-99" disabled="true" style="width:100%;"
+									value="#{cwHrRevisionMetasObjetivosSelector.registroSeleccionadoExterno.periodo}" />
+							</p:panelGrid>
+
+
+							<p:panelGrid columns="3" layout="grid"
+								columnClasses="ui-grid-col-4,ui-grid-col-2,ui-grid-col-2"
+								styleClass="ui-panelgrid-blank">
+
+								<p:outputLabel value="Calificación" />
+
+								<p:inputText disabled="true" style="width:50px;"
+									id="itCalificacion" maxlength="20"
+									value="#{cwHrRevisionMetasObjetivosSelector.registroSeleccionadoExterno.calificacion}"
+									styleClass="columnatablaDerecha" />
+								<p:commandButton title="Calificación" type="image" icon="buscar"
+									action="#{cwHrRevisionMetasObjetivosSelector.calificar}"
+									update=":dgCalificativos" immediate="true">
+									<f:setPropertyActionListener
+										target="#{cwHrFactoresvalorListXperiodo.iMantenimientoReferencia}"
+										value="#{cwHrRevisionMetasObjetivosSelector}" />
+									<f:setPropertyActionListener
+										target="#{cwHrFactoresvalorListXperiodo.nombreVentanaEmergente}"
+										value="popCalificativos" />
+									<f:setPropertyActionListener
+										target="#{cwHrFactoresvalorListXperiodo.nombreContenedorRefrescar}"
+										value="frmRevisionMetasObj:itCalificacion" />
+								</p:commandButton>
+							</p:panelGrid>
+
+
+							<p:panelGrid columns="2" layout="grid"
+								columnClasses="ui-grid-col-4,ui-grid-col-6"
+								styleClass="ui-panelgrid-blank">
+
+								<p:outputLabel value="Metas y/o Compromisos" />
+								<p:inputTextarea style="width:100%;" required="true"
+									disabled="true" maxlength="100"
+									requiredMessage="El campo Metas y/o Compromisos es un campo obligatorio"
+									value="#{cwHrRevisionMetasObjetivosSelector.registroSeleccionadoExterno.descripcion}" />
+
+								<p:outputLabel value="Plazo" />
+								<p:inputTextarea style="width:100%;" maxlength="50"
+									value="#{cwHrRevisionMetasObjetivosSelector.registroSeleccionadoExterno.plazo}" />
+
+							</p:panelGrid>
+
+						</p:panelGrid>
+						<p:separator />
+						<p:commandButton styleClass="botonTextoImagen" value="Guardar"
+							update="@(form)" icon="guardar"
+							oncomplete="PF('popRevisionMetasObj').hide();"
+							action="#{cwHrRevisionMetasObjetivosSelector.guardar}" />
+					</p:panel>
+				</h:form>
+			</div>
+		</p:dialog>
+
+
+		<p:dialog id="dgFunciones" widgetVar="popFunciones"
+			header="Edición - Funciones" modal="true" dynamic="true"
+			appendTo="@(Body)" resizable="false">
+			<h:form id="frmFunciones">
+				<p:panel>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Función" />
+						<p:inputTextarea style="width:200px;" id="idFuncion"
+							disabled="true"
+							value="#{cwHrFunciones.registroSelecionado.funcion}" />
+
+						<p:outputLabel value="Calificación" />
+						<h:panelGrid columns="2" style="border-spacing:0px;">
+							<p:inputText disabled="true" style="width:50px;"
+								id="itCalificaciones"
+								value="#{cwHrFunciones.registroSelecionado.calificacion}"
+								styleClass="columnatablaDerecha" />
+							<p:commandButton title="Calificación" type="image" icon="buscar"
+								action="#{cwHrFunciones.calificar}" update=":dgCalificativos">
+								<f:setPropertyActionListener
+									target="#{cwHrFactoresvalorListXperiodo.iMantenimientoReferencia}"
+									value="#{cwHrFunciones}" />
+								<f:setPropertyActionListener
+									target="#{cwHrFactoresvalorListXperiodo.nombreVentanaEmergente}"
+									value="popCalificativos" />
+								<f:setPropertyActionListener
+									target="#{cwHrFactoresvalorListXperiodo.nombreContenedorRefrescar}"
+									value="frmFunciones:itCalificaciones" />
+							</p:commandButton>
+						</h:panelGrid>
+
+						<p:outputLabel value="Peso" />
+						<p:inputText style="width:50px;" disabled="true"
+							styleClass="columnatablaDerecha"
+							value="#{cwHrFunciones.registroSelecionado.factorparticipacion}" />
+
+						<p:outputLabel value="Comentario" />
+						<p:inputTextarea style="width:200px;" autoResize="false" rows="2"
+							maxlength="90"
+							value="#{cwHrFunciones.registroSelecionado.comentarios}" />
+					</h:panelGrid>
+					<p:separator />
+
+					<p:commandButton styleClass="botonTextoImagen" value="Guardar"
+						oncomplete="PF('popFunciones').hide()" icon="guardar"
+						action="#{cwHrFunciones.guardar}" />
+				</p:panel>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="dgRevisionAvanceCompMejora"
+			widgetVar="popRevisionAvanceCompMejora" responsive="true"
+			fitViewport="true" width="100%" style="max-width:500px;"
+			header="Edición - Revisión del Avance del Compromiso de Mejora"
+			modal="true" dynamic="true" appendTo="@(Body)" resizable="false">
+			<div class="ui-fluid">
+				<h:form>
+					<p:panel>
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-4,ui-grid-col-8"
+							styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Periodo" />
+							<p:inputMask mask="9999-99" disabled="true" style="width:100%;"
+								value="#{cwHrRevisionAvanceSelector.registroSeleccionadoExterno.periodo}" />
+
+							<p:outputLabel value="Rev. del avance del comp. de mejora" />
+							<p:inputTextarea style="width:100%;"
+								value="#{cwHrRevisionAvanceSelector.registroSeleccionadoExterno.descripcion}" />
+
+							<p:outputLabel value="Observación" />
+							<p:inputTextarea style="width:100%;"
+								value="#{cwHrRevisionAvanceSelector.registroSeleccionadoExterno.observacion}" />
+
+						</p:panelGrid>
+						<p:separator />
+						<p:panelGrid columns="1" layout="grid"
+							columnClasses="ui-grid-col-4" styleClass="ui-panelgrid-blank">
+							<p:commandButton value="Guardar"
+								oncomplete="PF('popRevisionAvanceCompMejora').hide()"
+								icon="guardar" action="#{cwHrRevisionAvanceSelector.guardar}" />
+						</p:panelGrid>
+					</p:panel>
+				</h:form>
+			</div>
+		</p:dialog>
+
+		<p:dialog id="dgIncidentesCriticos" widgetVar="popIncidentesCriticos"
+			responsive="true" fitViewport="true" width="100%"
+			style="max-width:400px;" header="Edición - Incidentes Críticos"
+			modal="true" dynamic="true" appendTo="@(Body)" resizable="false">
+			<div class="ui-fluid">
+				<h:form id="formincidentes">
+					<p:panel id="pnldatos1">
+						<p:panelGrid columns="2" layout="grid" id="pnldatos"
+							columnClasses="ui-grid-col-2,ui-grid-col-10"
+							styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Secuencia" />
+							<p:inputText style="width:100%;" styleClass="columnatablaDerecha"
+								disabled="true"
+								value="#{cwHrIncidentesCriticosSelector.registroSeleccionadoExterno.secuencia}" />
+
+							<p:outputLabel value="Tipo" />
+							<p:selectOneMenu style="width:100%;"
+								value="#{cwHrIncidentesCriticosSelector.registroSeleccionadoExterno.tipo}"
+								valueChangeListener="#{cwHrIncidentesCriticosSelector.verMeritos}">
+
+								<f:selectItem itemValue="M" itemLabel="Mérito" />
+								<f:selectItem itemValue="F" itemLabel="Demérito" />
+
+								<p:ajax update="@form" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Documento" id="documento"
+								rendered="#{cwHrIncidentesCriticosSelector.verMerito}" />
+							<p:inputText maxlength="30"
+								rendered="#{cwHrIncidentesCriticosSelector.verMerito}"
+								value="#{cwHrIncidentesCriticosSelector.registroSeleccionadoExterno.documento}" />
+
+							<p:outputLabel
+								value="#{cwHrIncidentesCriticosSelector.nombreTipo} " />
+
+							<p:selectOneMenu style="width:100%;"
+								value="#{cwHrIncidentesCriticosSelector.registroSeleccionadoExterno.clasificacion}">
+								<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}" />
+								<f:selectItems
+									value="#{cwHrIncidentesCriticosSelector.lstmeritos}" var="ch"
+									itemValue="#{ch.pk.codigoelemento}"
+									itemLabel="#{ch.descripcionlocal}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Fecha Inicio"
+								rendered="#{!cwHrIncidentesCriticosSelector.verMerito}" />
+							<p:calendar locale="es" mask="true" showButtonPanel="true"
+								rendered="#{!cwHrIncidentesCriticosSelector.verMerito}"
+								size="15" navigator="true" required="true" style="width:100%;"
+								validator="#{cwHrIncidentesCriticosSelector.validarFechaActual}"
+								requiredMessage="El campo fecha inicio es obligatorio"
+								value="#{cwHrIncidentesCriticosSelector.registroSeleccionadoExterno.fechainicio}"
+								pattern="#{msg.formato_fecha_fecha_2}">
+								<p:ajax event="dateSelect"
+									listener="#{cwHrIncidentesCriticosSelector.onDateSelectFechaInicio}" />
+							</p:calendar>
+
+
+							<p:outputLabel value="Fecha Fin"
+								rendered="#{!cwHrIncidentesCriticosSelector.verMerito}" />
+							<p:calendar locale="es" mask="true" showButtonPanel="true"
+								rendered="#{!cwHrIncidentesCriticosSelector.verMerito}"
+								size="15" navigator="true" required="true" style="width:100%;"
+								validator="#{cwHrIncidentesCriticosSelector.validarFechaFin}"
+								requiredMessage="El campo fecha fin es obligatorio"
+								value="#{cwHrIncidentesCriticosSelector.registroSeleccionadoExterno.fechafin}"
+								pattern="#{msg.formato_fecha_fecha_2}">
+
+								<p:ajax event="dateSelect" update="formincidentes:dias"
+									listener="#{cwHrIncidentesCriticosSelector.onDateSelectFechaFin}" />
+
+							</p:calendar>
+
+							<p:outputLabel value="Dias Suspensión"
+								rendered="#{!cwHrIncidentesCriticosSelector.verMerito}" />
+							<p:inputText disabled="true" id="dias"
+								styleClass="columnatablaDerecha" maxlength="10"
+								rendered="#{!cwHrIncidentesCriticosSelector.verMerito}"
+								value="#{cwHrIncidentesCriticosSelector.registroSeleccionadoExterno.diasSuspension}" />
+
+							<p:outputLabel value="Medida Disciplinaria"
+								rendered="#{!cwHrIncidentesCriticosSelector.verMerito}" />
+							<p:selectOneMenu style="width:100%;"
+								rendered="#{!cwHrIncidentesCriticosSelector.verMerito}"
+								value="#{cwHrIncidentesCriticosSelector.registroSeleccionadoExterno.medidaDisciplinaria}">
+								<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}" />
+								<f:selectItems
+									value="#{cwHrIncidentesCriticosSelector.lstmedidas}" var="ch"
+									itemValue="#{ch.pk.codigoelemento}"
+									itemLabel="#{ch.descripcionlocal}" />
+
+							</p:selectOneMenu>
+
+
+							<p:outputLabel value="Fecha" />
+							<p:calendar locale="es" mask="true" showButtonPanel="true"
+								size="15" navigator="true" required="true" style="width:100%;"
+								requiredMessage="El campo fecha es obligatorio"
+								validator="#{cwHrIncidentesCriticosSelector.validarFechaActual}"
+								value="#{cwHrIncidentesCriticosSelector.registroSeleccionadoExterno.fecha}"
+								pattern="#{msg.formato_fecha_fecha_2}" />
+
+							<p:outputLabel value="Descripción" />
+							<p:inputTextarea maxlength="900" autoResize="false" rows="2"
+								value="#{cwHrIncidentesCriticosSelector.registroSeleccionadoExterno.descripcion}"
+								style="width:100%;" />
+
+						</p:panelGrid>
+						<p:separator style="width:100%" />
+						<p:panelGrid columns="1" layout="grid"
+							columnClasses="ui-grid-col-4" styleClass="ui-panelgrid-blank">
+							<p:commandButton value="Guardar" update="@form" icon="guardar"
+								action="#{cwHrIncidentesCriticosSelector.guardar}" />
+						</p:panelGrid>
+					</p:panel>
+				</h:form>
+			</div>
+		</p:dialog>
+
+		<p:dialog id="dgEvaluacionCampo" widgetVar="popEvaluacionCampo"
+			header="Edición - Evaluación de Campo" modal="true" dynamic="true"
+			appendTo="@(Body)" resizable="false">
+			<h:form>
+				<p:panel>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Tipo" />
+						<p:selectOneMenu style="width:150px;"
+							value="#{cwHrEvaluacionCampo.registroSeleccionado.plantilla}">
+							<f:selectItem />
+							<f:selectItems value="#{cwHrEvaluacionCampo.dwcampo_child}"
+								var="ch" itemValue="#{ch.codigoelemento}"
+								itemLabel="#{ch.descripcionlocal}" />
+						</p:selectOneMenu>
+
+
+						<p:outputLabel value="Observaciones" />
+						<p:inputTextarea
+							value="#{cwHrEvaluacionCampo.registroSeleccionado.descripcion}"
+							style="width:200px;max-width:200px;min-width:200px;height:50px;max-height:50px;min-height:50px;" />
+
+					</h:panelGrid>
+					<p:separator />
+					<p:commandButton styleClass="botonTextoImagen" value="Guardar"
+						oncomplete="PF('popEvaluacionCampo').hide()" icon="guardar"
+						action="#{cwHrEvaluacionCampo.guardar}" />
+				</p:panel>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="dgFortalezasDebilidades"
+			widgetVar="popFortalezasDebilidades" width="100%"
+			style="max-width:400px;" responsive="true" fitViewport="true"
+			header="Edición - Fortalezas y Debilidades" modal="true"
+			dynamic="true" appendTo="@(Body)" resizable="false">
+			<div class="ui-fluid">
+				<h:form>
+					<p:panel>
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2,ui-grid-col-10"
+							styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Tipo" />
+							<p:selectOneMenu style="width:100%;" id="idtipo"
+								value="#{cwHrFortalezasDebilidadesSelector.registroSeleccionadoExterno.tipo}">
+								<f:selectItem itemLabel="" />
+								<f:selectItems
+									value="#{cwHrFortalezasDebilidadesSelector.lstTipo}" var="m"
+									itemLabel="#{m.descripcionlocal}"
+									itemValue="#{m.codigoelemento}" />
+								<p:ajax update="idtipo"
+									listener="#{cwHrFortalezasDebilidadesSelector.cargarTipo}"
+									event="change" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Descripción" />
+							<p:inputTextarea style="width:100%;" maxlength="90"
+								autoResize="false" rows="2"
+								value="#{cwHrFortalezasDebilidadesSelector.registroSeleccionadoExterno.descripcion}" />
+
+						</p:panelGrid>
+						<p:separator />
+						<p:panelGrid columns="1" layout="grid"
+							columnClasses="ui-grid-col-4" styleClass="ui-panelgrid-blank">
+							<p:commandButton value="Guardar" update="@form" icon="guardar"
+								action="#{cwHrFortalezasDebilidadesSelector.guardar}" />
+						</p:panelGrid>
+					</p:panel>
+				</h:form>
+			</div>
+		</p:dialog>
+
+		<p:dialog id="dgNecesidadEdicion" widgetVar="popNecesidadEdicion"
+			header="Edición - Necesidad de Capacitación" modal="true"
+			width="100%" style="max-width:500px;" responsive="true"
+			fitViewport="true" appendTo="@(Body)" resizable="false">
+			<h:form id="frmNecesidadEdicion">
+				<p:panel>
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2,ui-grid-col-10"
+						styleClass="ui-panelgrid-blank">
+						<p:outputLabel value="Prioridad" />
+						<p:inputText style="width:100%" styleClass="columnatablaDerecha"
+							maxlength="2"
+							validator="#{cwHrCapacitacionSelector.validatorPrioridad}"
+							onkeypress="return validarIngreso(event,'N');"
+							value="#{cwHrCapacitacionSelector.registroSeleccionadoExterno.bean.prioridad}" />
+
+						<p:outputLabel value="Curso de Capacitación" />
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-10,ui-grid-col-2"
+							styleClass="ui-panelgrid-blank columnGrid">
+							<p:inputTextarea style="width:100%;pointer-events:none"
+								required="true"
+								requiredMessage="El campo Curso de Capacitación es Obligatorio"
+								id="itaCurso" styleClass="ui-state-disabled"
+								value="#{cwHrCapacitacionSelector.registroSeleccionadoExterno.cursonombre}" />
+							<p:commandButton title="Seleccionar Curso" type="image"
+								icon="buscar" update=":dgSelectorCurso" immediate="true"
+								style="width:100%;"
+								action="#{cwHrCapacitacionSelector.seleccionarCurso}"
+								disabled="#{cwHrEvaluacionempleadoEdit.opciones.p7cbseleccionar}">
+								<f:setPropertyActionListener
+									target="#{cwHrCursoSelector.iMantenimientoReferencia}"
+									value="#{cwHrCapacitacionSelector}" />
+								<f:setPropertyActionListener
+									target="#{cwHrCursoSelector.nombreContenedorRefrescar}"
+									value="frmNecesidadEdicion:itaCurso" />
+								<f:setPropertyActionListener
+									target="#{cwHrCursoSelector.nombreVentanaEmergente}"
+									value="popSelectorCurso" />
+							</p:commandButton>
+						</p:panelGrid>
+						<p:outputLabel value="Necesidad de Capacitación" />
+						<p:inputTextarea style="width:100%;" required="true"
+							maxlength="80" autoResize="false"
+							requiredMessage="El campo Necesidades de Capacitación es Obligatorio"
+							rows="3"
+							value="#{cwHrCapacitacionSelector.registroSeleccionadoExterno.bean.necesidad}" />
+
+						<p:outputLabel value="Objetivo de Mejora" />
+						<p:inputTextarea style="width:100%;" required="true"
+							maxlength="80" rows="3"
+							requiredMessage="El campo Objetivo de Mejora es Obligatorio"
+							autoResize="false"
+							value="#{cwHrCapacitacionSelector.registroSeleccionadoExterno.bean.objetivo}" />
+					</p:panelGrid>
+					<p:separator />
+					<p:panelGrid columns="1" layout="grid"
+						columnClasses="ui-grid-col-4" styleClass="ui-panelgrid-blank">
+						<p:commandButton value="Guardar" icon="guardar" update="@form"
+							style="width:100%;"
+							action="#{cwHrCapacitacionSelector.grabarNecesidad}" />
+					</p:panelGrid>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+
+
+
+

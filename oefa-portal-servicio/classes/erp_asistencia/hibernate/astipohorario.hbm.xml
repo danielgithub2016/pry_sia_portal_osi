@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.asistencia.dominio.AsTipohorario" table="SGCORESYS.AS_TIPOHORARIO">
+        <composite-id name="pk" class="net.royal.erp.asistencia.dominio.AsTipohorarioPk">
+            <key-property name="tipohorario" type="integer">
+                <column name="TIPOHORARIO" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="descripcionlocal" type="string">
+            <column name="DESCRIPCIONLOCAL" length="100" />
+        </property>
+        <property name="descripcionextranjera" type="string">
+            <column name="DESCRIPCIONEXTRANJERA" length="100" />
+        </property>
+        <property name="tipoturno" type="integer">
+            <column name="TIPOTURNO" length="22" />
+        </property>
+        <property name="lunes" type="integer">
+            <column name="LUNES" length="22" />
+        </property>
+        <property name="martes" type="integer">
+            <column name="MARTES" length="22" />
+        </property>
+        <property name="miercoles" type="integer">
+            <column name="MIERCOLES" length="22" />
+        </property>
+        <property name="jueves" type="integer">
+            <column name="JUEVES" length="22" />
+        </property>
+        <property name="viernes" type="integer">
+            <column name="VIERNES" length="22" />
+        </property>
+        <property name="sabado" type="integer">
+            <column name="SABADO" length="22" />
+        </property>
+        <property name="domingo" type="integer">
+            <column name="DOMINGO" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

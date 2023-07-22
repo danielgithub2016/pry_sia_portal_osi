@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : planilla.PrProcesoperiodo
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="prprocesoperiodo.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+    </sql-query>
+    
+    <sql-query name="prprocesoperiodo.listarprocesoXPlanillaPeriodo">
+    	SELECT COMPANIASOCIO,
+    	 	   PERIODO,
+    	 	   TIPOPLANILLA,
+    	 	   PR_TIPOPROCESO.TIPOPROCESO,
+    	 	   PR_TIPOPROCESO.DESCRIPCION PROCESODESCRIPCION
+    	FROM   sgcoresys.PR_PROCESOPERIODO
+    	INNER  JOIN sgcoresys.PR_TIPOPROCESO ON PR_PROCESOPERIODO.TIPOPROCESO = PR_TIPOPROCESO.TIPOPROCESO
+    	WHERE  TIPOPLANILLA = :p_tipoplanilla AND PERIODO = :p_periodo
+    </sql-query>
+    
+    <sql-query name="prprocesoperiodo.obtenerFechaPagoBoleta">
+    	<![CDATA[
+    		SELECT FECHAPAGO AS "fechaPago"
+    		FROM   SGCORESYS.PR_PROCESOPERIODO
+    		WHERE  PERIODO = :p_periodo AND
+    			   TIPOPLANILLA = :p_tipoplanilla AND
+    			   TIPOPROCESO = :p_tipoproceso
+    	]]>
+    </sql-query>
+    
+</hibernate-mapping>

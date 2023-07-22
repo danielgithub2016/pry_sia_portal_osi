@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Ordenpago" table="SGCORESYS.ORDENPAGO">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.OrdenpagoPk">
+            <key-property name="sistemafuente" type="string">
+                <column name="SISTEMAFUENTE" length="2" />
+            </key-property>
+            <key-property name="proveedor" type="big_decimal">
+                <column name="PROVEEDOR" length="22" />
+            </key-property>
+            <key-property name="tipodocumento" type="string">
+                <column name="TIPODOCUMENTO" length="2" />
+            </key-property>
+            <key-property name="numerodocumento" type="string">
+                <column name="NUMERODOCUMENTO" length="14" />
+            </key-property>            
+        </composite-id>
+        <property name="tipopago" type="string">
+                <column name="TIPOPAGO" length="2" />
+        </property>
+        <property name="pagara" type="string">
+            <column name="PAGARA" length="80" />
+        </property>
+        <property name="companiacodigo" type="string">
+            <column name="COMPANIACODIGO" length="6" />
+        </property>
+        <property name="cuentabancaria" type="string">
+            <column name="CUENTABANCARIA" length="15" />
+        </property>
+        <property name="chequeindividual" type="string">
+            <column name="CHEQUEINDIVIDUAL" length="1" />
+        </property>
+        <property name="fechavencimiento" type="timestamp">
+            <column name="FECHAVENCIMIENTO" length="7" />
+        </property>
+        <property name="monedadocumento" type="string">
+            <column name="MONEDADOCUMENTO" length="2" />
+        </property>
+        <property name="monedapago" type="string">
+            <column name="MONEDAPAGO" length="2" />
+        </property>
+        <property name="montomoneda" type="integer">
+            <column name="MONTOMONEDA" length="22" />
+        </property>
+        <property name="tipodecambio" type="big_decimal">
+            <column name="TIPODECAMBIO" length="22" />
+        </property>
+        <property name="letraproveedor" type="big_decimal">
+            <column name="LETRAPROVEEDOR" length="22" />
+        </property>
+        <property name="letrasecuencia" type="big_decimal">
+            <column name="LETRASECUENCIA" length="22" />
+        </property>
+        <property name="batchnumber" type="big_decimal">
+            <column name="BATCHNUMBER" length="22" />
+        </property>
+        <property name="fechatransferencia" type="timestamp">
+            <column name="FECHATRANSFERENCIA" length="7" />
+        </property>
+        <property name="cuentacontable" type="string">
+            <column name="CUENTACONTABLE" length="20" />
+        </property>
+        <property name="flujodecaja" type="string">
+            <column name="FLUJODECAJA" length="4" />
+        </property>
+        <property name="centrocostodestino" type="string">
+            <column name="CENTROCOSTODESTINO" length="6" />
+        </property>
+        <property name="registronumero" type="big_decimal">
+            <column name="REGISTRONUMERO" length="22" />
+        </property>
+        <property name="voucher" type="string">
+            <column name="VOUCHER" length="18" />
+        </property>
+        <property name="fechadocumento" type="timestamp">
+            <column name="FECHADOCUMENTO" length="7" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="2" />
+        </property>
+        <property name="voucherdocumento" type="string">
+            <column name="VOUCHERDOCUMENTO" length="20" />
+        </property>
+        <property name="suspensionflag" type="string">
+            <column name="SUSPENSIONFLAG" length="1" />
+        </property>
+        <property name="pagodiferidoflag" type="string">
+            <column name="PAGODIFERIDOFLAG" length="1" />
+        </property>
+        <property name="unidadnegocio" type="string">
+            <column name="UNIDADNEGOCIO" length="4" />
+        </property>
+        <property name="proveedorinterfase" type="string">
+            <column name="PROVEEDORINTERFASE" length="80" />
+        </property>
+        <property name="interfaseflag" type="string">
+            <column name="INTERFASEFLAG" length="1" />
+        </property>
+        <property name="unidadreplicacion" type="string">
+            <column name="UNIDADREPLICACION" length="4" />
+        </property>
+        <property name="prioridad" type="string">
+            <column name="PRIORIDAD" length="4" />
+        </property>
+        <property name="conceptogasto" type="string">
+            <column name="CONCEPTOGASTO" length="4" />
+        </property>
+        <property name="observacion" type="string">
+            <column name="OBSERVACION" length="100" />
+        </property>
+        <property name="cuentabancariadestino" type="string">
+            <column name="CUENTABANCARIADESTINO" length="15" />
+        </property>
+    </class>
+</hibernate-mapping>

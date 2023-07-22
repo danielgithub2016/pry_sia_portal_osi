@@ -1,0 +1,30 @@
+<f:subview xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" id="svHerramientasLista">
+
+	<div style="width: 60px; float: right; text-align: right; ">
+	</div>
+	           
+	<p:dialog id="dgFlujoEmergente" widgetVar="popFlujoEmergente" 
+		closable="true" maximizable="true" appendToBody="true"
+		header="#{msg.sistema_diagrama_flujos} : #{cBindingController.nombreProcesoActual}"
+		width="900" height="550" resizable="true">
+		<div style="width: 100%; height: 100%;">
+			<h:graphicImage
+				value="/comun/flujos/flujo#{cBindingController.idProcesoActual}.jpg"
+				    style="width: 100%; height: 100%;" />
+		</div>
+	</p:dialog>
+	
+	<p:dialog id="dgAyudaEmergente" widgetVar="popAyudaEmergente" 
+		closable="true" appendToBody="true" width="520" height="420"
+		header="#{msg.generico_ayuda_emergente} : #{cBindingController.nombreSeguridadConceptoActual}">
+		<h:form id="frmAyudaEmergente">
+  			<p:editor value="#{cBindingController.archivoAyudaHtml}" height="400"  ></p:editor>
+		</h:form>
+	</p:dialog>
+	
+</f:subview>

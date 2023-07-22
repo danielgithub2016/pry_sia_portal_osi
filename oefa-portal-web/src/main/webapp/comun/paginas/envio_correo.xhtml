@@ -1,0 +1,129 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+	<h:form id="frmEnvioCorreo">
+		<p:panel>
+			<p:panelGrid style="width:100%">
+				<p:row>
+					<p:column styleClass="ui-widget-header">
+						<h:outputText value="Para: " />
+						<p:commandLink oncomplete="PF('popAgregaCorreo').show();"
+							immediate="true" action="#{cEnvioCorreo.nuevoDestino(1)}"
+							update=":dgAgregaCorreo">
+							<p:graphicImage
+								value="/comun/recursos/imagenes/mantenimiento/agregar10.png" />
+						</p:commandLink>
+					</p:column>
+					<p:column colspan="10">
+						<h:panelGrid columns="5" id="pnlDestino">
+							<ui:repeat var="c"
+								value="#{cEnvioCorreo.correo.listaCorreoDestino}">
+								<h:outputText value="#{c.correoDestino}"
+									rendered="#{c.destino eq 'TO'}" />
+								<p:commandLink action="#{cEnvioCorreo.eliminarDestino}"
+									immediate="true" rendered="#{c.destino eq 'TO'}"
+									update=":frmEnvioCorreo:pnlDestino">
+									<p:graphicImage
+										value="/comun/recursos/imagenes/mantenimiento/eliminar10.png" />
+									<f:setPropertyActionListener
+										target="#{cEnvioCorreo.seleccionado}" value="#{c}" />
+								</p:commandLink>
+							</ui:repeat>
+						</h:panelGrid>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="ui-widget-header">
+						<h:outputText value="Asunto: " />
+					</p:column>
+					<p:column colspan="10">
+						<p:inputText styleClass="input-invisible" required="true"
+							requiredMessage="Ingrese el asunto"
+							value="#{cEnvioCorreo.correo.asunto}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="ui-widget-header">
+						<h:outputText value="CC: " />
+						<p:commandLink oncomplete="PF('popAgregaCorreo').show();"
+							immediate="true" action="#{cEnvioCorreo.nuevoDestino(2)}"
+							update=":dgAgregaCorreo">
+							<p:graphicImage
+								value="/comun/recursos/imagenes/mantenimiento/agregar10.png" />
+						</p:commandLink>
+					</p:column>
+					<p:column colspan="10">
+						<h:panelGrid columns="5" id="pnlCC">
+							<ui:repeat var="c"
+								value="#{cEnvioCorreo.correo.listaCorreoDestino}">
+								<h:outputText value="#{c.correoDestino}"
+									rendered="#{c.destino eq 'CC'}" />
+								<p:commandLink action="#{cEnvioCorreo.eliminarDestino}"
+									immediate="true" rendered="#{c.destino eq 'CC'}"
+									update=":frmEnvioCorreo:pnlCC">
+									<p:graphicImage
+										value="/comun/recursos/imagenes/mantenimiento/eliminar10.png" />
+									<f:setPropertyActionListener
+										target="#{cEnvioCorreo.seleccionado}" value="#{c}" />
+								</p:commandLink>
+							</ui:repeat>
+						</h:panelGrid>
+					</p:column>
+				</p:row>
+				<p:row style="border:transparent">
+					<p:column>
+						<p:spacer />
+					</p:column>
+					<p:column>
+						<p:spacer />
+					</p:column>
+					<p:column>
+						<p:spacer />
+					</p:column>
+					<p:column>
+						<p:spacer />
+					</p:column>
+					<p:column>
+						<p:spacer />
+					</p:column>
+					<p:column>
+						<p:spacer />
+					</p:column>
+					<p:column>
+						<p:spacer />
+					</p:column>
+					<p:column>
+						<p:spacer />
+					</p:column>
+					<p:column>
+						<p:spacer />
+					</p:column>
+					<p:column>
+						<p:spacer />
+					</p:column>
+					<p:column>
+						<p:spacer />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<p:editor height="360" value="#{cEnvioCorreo.cuerpo}" />
+
+			<f:facet name="footer">
+				<h:panelGrid columns="2" width="100%">
+					<p:commandButton value="Enviar" icon="correo" update="@form"
+						action="#{cEnvioCorreo.enviarCorreo}" onstart="PF('bUI').block();"
+						oncomplete="PF('bUI').unblock();" styleClass="botonTextoImagen" />
+					<p:commandButton value="Cancelar" icon="cancelar" immediate="true"
+						oncomplete="PF('popEnvioCorreo').hide();" style="float:right;"
+						styleClass="botonTextoImagen" />
+				</h:panelGrid>
+			</f:facet>
+
+		</p:panel>
+	</h:form>
+</ui:composition>

@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_pr_cts_carta_solicita" language="groovy" pageWidth="550" pageHeight="650" columnWidth="510" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9291ce68-8ccb-41bf-908f-015286ae1728">
+	<property name="ireport.zoom" value="1.1000000000000025"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="117"/>
+	<parameter name="empleado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cts" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Logo" class="java.lang.String"/>
+	<parameter name="remuLetra" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT     EmpleadoMast.Empleado as Empleado,
+            PersonaMast.Nombres || ' ' || PersonaMast.ApellidoPaterno  || ' ' || PersonaMast.ApellidoMaterno as NombreCompleto,
+            PersonaMast.PersonaAnt,
+            EmpleadoMast.FechaInicioContrato,
+            PR_CTS.FechaInicio as FechaInicio,
+            PR_CTS.FechaFin as FechaFin,
+            PR_CTS.Remuneracion,
+            PR_CTS.IML,
+            PR_CTS.IndemnizacionAnual,
+            PR_CTS.TiempoaCancelar as TiempoACancelar,
+            PR_CTS.TiempoValorizado as Tiempovalorizado,
+            PR_CTS.TipoCambio as TipoCambio ,
+            PR_CTS.MontoLocal,
+            PR_CTS.MontoDolar as MontoDolar,
+            (case when substr(PR_CTSDetalle.Descripcion, -1) ='*' then Substr (PR_CTSDetalle.Descripcion, 2,30) else PR_CTSDetalle.Descripcion end) as Descripcion,
+            PR_CTSDetalle.MontoLocal as detallemontolocal,
+            PR_CTS.MonedaCuentaCTS,
+            PR_CTS.Banco,
+            PR_CTS.NumeroCTS,
+            PR_CTS.EstadoCTS as EstadoCTS,
+            PR_CTS.FechaPago as PR_FechaPago,
+            MA_CTS.FechaPago  as MA_FechaPago,
+            EmpleadoMast.FechaIngreso as FechaIngreso,
+            EmpleadoMast.UnidadNegocioAsignada as Area,
+            EmpleadoMast.FechaCese as FechaCese,
+            EmpleadoMast.EstadoEmpleado  as EstadoEmpleado,
+            PR_CTS.TipoCancelacion,
+            PR_CTS.NumeroCuentaCTS as numerocuentacts,
+            EmpleadoMast.CentroCostos,
+            EmpleadoMast.Cargo,
+            MA_UnidadNegocio.RegistroPatronalPlanilla,
+            Secuencia,
+            Banco.Descripcioncorta as banco,
+            PersonaMast.documento as Documento,
+            NVL(upper(CompaniaMast.DescripcionLarga),'XXXXXXXXXXXXXXXXXX') as Empleador,
+            NVL(CompaniaMast.DocumentoFiscal,'XXXXXXXXXX') as Ruc,
+            NVL(CompaniaMast.DireccionComun,'XXXXXXXXXXXXXXXXXXXXXX') as Direccion,
+            NVL(CompaniaMast.descripcionlarga,'XXXXXXXXXXXXXXXXXXXXXX') as descripcionlarga,
+            NVL(EmpleadoMast.CodigoCargo,0) as Cargo,
+            NVL(PR_CTS.MontoInteres,0) as MontoInteres,
+            NVL(PR_CTS.retencionjudicial,0) as retencionjudicial,
+            personaMast.TipoDocumento as TipoDocumento,
+            (Select NVL(rtrim(x.descripcionlocal),'XXXXXXXXXXX') from sgcoresys.ma_miscelaneosdetalle x where x.codigotabla='TIPODOCI' and x.aplicacioncodigo='HR' and x.codigoelemento=personaMast.TipoDocumento)
+            as DesTipoDocumento,
+            PersonaMast.sexo   ,
+            to_char(PR_CTS.FechaPago, 'dd')||' de '||to_char(PR_CTS.FechaPago, 'Month') as fechades,
+            NVL(Banco.DescripcionLarga,'XXXXXXXXXXXXXXXXXXXXX') AS BancoDescripcion,
+            (select NVL(x.direccion,'XXXXXXXXXXXXXXXXXXXXXXXXX') from sgcoresys.personamast x where x.persona=Banco.banconumero) as direccionbanco,
+            PR_CTSDetalle.CompaniaSocio ,
+            to_char(PR_CTS.FechaInicio,'yyyymm') as Per_Inicio,
+            to_char(PR_CTS.FechaFin,'yyyymm') as Per_Fin,
+            NVL(Upper(CompaniaMast.representantelegal),'XXXXXXXXXXXXXXXXXXXXXXXXX') as representante,
+            (select nvl(nombrecompleto,'XXXXXXXXXXXXXXXXXXXX') from sgcoresys.personamast where persona = (SELECT ParametrosMast.Numero FROM sgcoresys.ParametrosMast WHERE ( ParametrosMast.CompaniaCodigo = '999999' ) AND
+           ( ParametrosMast.AplicacionCodigo = 'PR' ) AND  ( ParametrosMast.ParametroClave = 'RESPRRHH' ))) as jefe_rrhh,
+            (select nvl(documento,'XXXXXXXXXXXXXXXXXXXX') from sgcoresys.personamast where persona = (SELECT ParametrosMast.Numero FROM sgcoresys.ParametrosMast WHERE ( ParametrosMast.CompaniaCodigo = '999999' ) AND
+           ( ParametrosMast.AplicacionCodigo = 'PR' ) AND  ( ParametrosMast.ParametroClave = 'RESPRRHH' ))) as jefe_documento,
+            (select nvl(sexo,'M') from sgcoresys.personamast where persona = (SELECT ParametrosMast.Numero FROM sgcoresys.ParametrosMast WHERE ( ParametrosMast.CompaniaCodigo = '999999' ) AND
+           ( ParametrosMast.AplicacionCodigo = 'PR' ) AND  ( ParametrosMast.ParametroClave = 'RESPRRHH' ))) as jefe_sexo,
+            (select (SELECT Y.DESCRIPCION FROM sgcoresys.hr_PuestoEmpresa Y WHERE Y.CodigoPuesto=  X.CodigoCargo )
+             from sgcoresys.empleadomast X where  X.empleado = (SELECT ParametrosMast.Numero FROM sgcoresys.ParametrosMast WHERE ( ParametrosMast.CompaniaCodigo = '999999' ) AND
+           ( ParametrosMast.AplicacionCodigo = 'PR' ) AND  ( ParametrosMast.ParametroClave = 'RESPRRHH' ))) as jefe_cargo,
+            DirBanco.Direccion DireccionBanco,
+(SELECT ParametrosMast.Explicacion FROM sgcoresys.ParametrosMast WHERE ( ParametrosMast.CompaniaCodigo = 999999 ) AND
+         ( ParametrosMast.AplicacionCodigo = 'PR' ) AND  ( ParametrosMast.ParametroClave = (SELECT 'ANIOTI'||TO_CHAR(SYSDATE,'YYYY')  FROM DUAL))) as titulo
+FROM     sgcoresys.PR_CTS
+            INNER JOIN sgcoresys.PR_CTSDetalle
+                ON (    PR_CTS.Empleado = PR_CTSDetalle.Empleado
+                    AND PR_CTS.CompaniaSocio = PR_CTSDetalle.CompaniaSocio
+                    AND PR_CTS.NumeroCTS = PR_CTSDetalle.NumeroCTS )
+
+            INNER JOIN sgcoresys.EmpleadoMast
+                ON (     PR_CTS.Empleado = EmpleadoMast.Empleado
+                    AND PR_CTS.CompaniaSocio = EmpleadoMast.CompaniaSocio )
+
+            INNER JOIN sgcoresys.PersonaMast
+                ON ( EmpleadoMast.Empleado = PersonaMast.Persona )
+
+            INNER JOIN sgcoresys.CompaniaMast
+                ON ( substr(PR_CTS.CompaniaSocio,1,6) = CompaniaMast.companiacodigo )
+
+            LEFT JOIN sgcoresys.Banco
+                ON ( Banco.Banco = PR_CTS.Banco )
+
+            LEFT JOIN sgcoresys.PersonaMast DirBanco
+                ON ( Banco.BancoNumero = DirBanco.Persona)
+
+            LEFT JOIN sgcoresys.MA_UnidadNegocio
+                ON ( EmpleadoMast.LocaciondePago = MA_UnidadNegocio.UnidadNegocio )
+
+            LEFT JOIN sgcoresys.MA_CTS
+                ON ( PR_CTS.NumeroCTS = MA_CTS.NumeroCTS)
+
+WHERE     ( PR_CTS.NumeroCTS = $P{cts})  and (EmpleadoMast.CodigoUsuario=$P{empleado}) and
+            ( pr_ctsdetalle.montolocal <> 0  OR substr(PR_CTSDetalle.Descripcion,-1) = '*')]]>
+	</queryString>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="NOMBRECOMPLETO" class="java.lang.String"/>
+	<field name="PERSONAANT" class="java.lang.String"/>
+	<field name="FECHAINICIOCONTRATO" class="java.sql.Timestamp"/>
+	<field name="FECHAINICIO" class="java.sql.Timestamp"/>
+	<field name="FECHAFIN" class="java.sql.Timestamp"/>
+	<field name="REMUNERACION" class="java.math.BigDecimal"/>
+	<field name="IML" class="java.math.BigDecimal"/>
+	<field name="INDEMNIZACIONANUAL" class="java.math.BigDecimal"/>
+	<field name="TIEMPOACANCELAR" class="java.lang.String"/>
+	<field name="TIEMPOVALORIZADO" class="java.math.BigDecimal"/>
+	<field name="TIPOCAMBIO" class="java.lang.Double"/>
+	<field name="MONTOLOCAL" class="java.math.BigDecimal"/>
+	<field name="MONTODOLAR" class="java.math.BigDecimal"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="DETALLEMONTOLOCAL" class="java.math.BigDecimal"/>
+	<field name="MONEDACUENTACTS" class="java.lang.String"/>
+	<field name="BANCO" class="java.lang.String"/>
+	<field name="NUMEROCTS" class="java.math.BigDecimal"/>
+	<field name="ESTADOCTS" class="java.lang.String"/>
+	<field name="PR_FECHAPAGO" class="java.sql.Timestamp"/>
+	<field name="MA_FECHAPAGO" class="java.sql.Timestamp"/>
+	<field name="FECHAINGRESO" class="java.sql.Timestamp"/>
+	<field name="AREA" class="java.lang.String"/>
+	<field name="FECHACESE" class="java.sql.Timestamp"/>
+	<field name="ESTADOEMPLEADO" class="java.lang.String"/>
+	<field name="TIPOCANCELACION" class="java.lang.String"/>
+	<field name="NUMEROCUENTACTS" class="java.lang.String"/>
+	<field name="CENTROCOSTOS" class="java.lang.String"/>
+	<field name="CARGO" class="java.lang.String"/>
+	<field name="REGISTROPATRONALPLANILLA" class="java.lang.String"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="DOCUMENTO" class="java.lang.String"/>
+	<field name="EMPLEADOR" class="java.lang.String"/>
+	<field name="RUC" class="java.lang.String"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="DESCRIPCIONLARGA" class="java.lang.String"/>
+	<field name="MONTOINTERES" class="java.math.BigDecimal"/>
+	<field name="RETENCIONJUDICIAL" class="java.math.BigDecimal"/>
+	<field name="TIPODOCUMENTO" class="java.lang.String"/>
+	<field name="DESTIPODOCUMENTO" class="java.lang.String"/>
+	<field name="SEXO" class="java.lang.String"/>
+	<field name="FECHADES" class="java.lang.String"/>
+	<field name="BANCODESCRIPCION" class="java.lang.String"/>
+	<field name="DIRECCIONBANCO" class="java.lang.String"/>
+	<field name="COMPANIASOCIO" class="java.lang.String"/>
+	<field name="PER_INICIO" class="java.lang.String"/>
+	<field name="PER_FIN" class="java.lang.String"/>
+	<field name="REPRESENTANTE" class="java.lang.String"/>
+	<field name="JEFE_RRHH" class="java.lang.String"/>
+	<field name="JEFE_DOCUMENTO" class="java.lang.String"/>
+	<field name="JEFE_SEXO" class="java.lang.String"/>
+	<field name="JEFE_CARGO" class="java.lang.String"/>
+	<field name="TITULO" class="java.lang.String"/>
+	<variable name="Sexo" class="java.lang.String">
+		<initialValueExpression><![CDATA[$F{SEXO}=="M"?"el Sr..":"la Sr(a)."]]></initialValueExpression>
+	</variable>
+	<variable name="documento" class="java.lang.String">
+		<initialValueExpression><![CDATA[$F{DOCUMENTO}==""?"XXXXXXXXXXXX":$F{DOCUMENTO}]]></initialValueExpression>
+	</variable>
+	<variable name="cuenta" class="java.lang.String">
+		<initialValueExpression><![CDATA[$F{NUMEROCUENTACTS}==""?"XXXXXXXXX":$F{NUMEROCUENTACTS}]]></initialValueExpression>
+	</variable>
+	<variable name="mesfin" class="java.lang.String">
+		<initialValueExpression><![CDATA[$F{FECHAFIN}.getMonth()+1==1?"Enero":
+$F{FECHAFIN}.getMonth()+1==2?"Febrero":
+$F{FECHAFIN}.getMonth()+1==3?"Marzo":
+$F{FECHAFIN}.getMonth()+1==4?"Abril":
+$F{FECHAFIN}.getMonth()+1==5?"Mayo":
+$F{FECHAFIN}.getMonth()+1==6?"Junio":
+$F{FECHAFIN}.getMonth()+1==7?"Julio":
+$F{FECHAFIN}.getMonth()+1==8?"Agosto":
+$F{FECHAFIN}.getMonth()+1==9?"Setiembre":
+$F{FECHAFIN}.getMonth()+1==10?"Octubre":
+$F{FECHAFIN}.getMonth()+1==11?"Noviembre":"Diciembre"]]></initialValueExpression>
+	</variable>
+	<variable name="fechafin" class="java.lang.String">
+		<initialValueExpression><![CDATA[$F{FECHAFIN}]]></initialValueExpression>
+	</variable>
+	<variable name="remuneracion" class="java.lang.String">
+		<initialValueExpression><![CDATA[$F{REMUNERACION}]]></initialValueExpression>
+	</variable>
+	<variable name="mesinicio" class="java.lang.String">
+		<initialValueExpression><![CDATA[$F{FECHAINICIO}.getMonth()+1==1?"Enero":
+$F{FECHAINICIO}.getMonth()+1==2?"Febrero":
+$F{FECHAINICIO}.getMonth()+1==3?"Marzo":
+$F{FECHAINICIO}.getMonth()+1==4?"Abril":
+$F{FECHAINICIO}.getMonth()+1==5?"Mayo":
+$F{FECHAINICIO}.getMonth()+1==6?"Junio":
+$F{FECHAINICIO}.getMonth()+1==7?"Julio":
+$F{FECHAINICIO}.getMonth()+1==8?"Agosto":
+$F{FECHAINICIO}.getMonth()+1==9?"Setiembre":
+$F{FECHAINICIO}.getMonth()+1==10?"Octubre":
+$F{FECHAINICIO}.getMonth()+1==11?"Noviembre":"Diciembre"]]></initialValueExpression>
+	</variable>
+	<variable name="fechainicio" class="java.lang.String">
+		<initialValueExpression><![CDATA[$F{FECHAINICIO}]]></initialValueExpression>
+	</variable>
+	<variable name="mes" class="java.lang.String">
+		<initialValueExpression><![CDATA[new java.util.Date().getMonth()==1?"Enero"
+:new java.util.Date().getMonth()+1==2?"Febrero"
+:new java.util.Date().getMonth()+1==3?"Marzo"
+:new java.util.Date().getMonth()+1==4?"Abril"
+:new java.util.Date().getMonth()+1==5?"Mayo"
+:new java.util.Date().getMonth()+1==6?"Junio"
+:new java.util.Date().getMonth()+1==7?"Julio"
+:new java.util.Date().getMonth()+1==8?"Agosto"
+:new java.util.Date().getMonth()+1==9?"Setiembre"
+:new java.util.Date().getMonth()+1==10?"Octubre"
+:new java.util.Date().getMonth()+1==11?"Noviembre":"Diciembre"]]></initialValueExpression>
+	</variable>
+	<title>
+		<band height="174" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="146" width="78" height="20" uuid="b558436d-1dd2-4d08-903d-a7b04d638a94"/>
+				<textElement>
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CARTA N°]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="78" y="146" width="169" height="20" uuid="7ee1733e-9f0d-488b-9874-4188306edb74"/>
+				<textElement>
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["   "+$V{fechafin}.substring( 0, 5 )+"/OEFA/OA"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="116" width="25" height="20" uuid="2ed5d251-5c8f-45ad-9ebf-42782155db37"/>
+				<text><![CDATA[Lima]]></text>
+			</staticText>
+			<textField pattern="dd ">
+				<reportElement x="37" y="116" width="15" height="20" uuid="ec581df1-038d-4aac-9dcd-64e2d0a0b131"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="52" y="116" width="14" height="20" uuid="c805ae5b-2308-4c04-b77a-266bf53571b0"/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="116" width="15" height="20" uuid="fa16b6fc-3de6-4aa8-b8dd-1581de8cca4e"/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<textField pattern="yyyy">
+				<reportElement x="115" y="116" width="36" height="20" uuid="069cf973-723b-43df-b186-98516c183cc3"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="15" y="15" width="465" height="50" uuid="c95b611c-1a61-4018-98f2-6c76971ffaab"/>
+				<imageExpression><![CDATA[$P{Logo}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="66" y="116" width="34" height="20" uuid="64dde8f8-249a-4132-9d17-ddb0a21ca1dc"/>
+				<textFieldExpression><![CDATA[$V{mes}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="37" y="76" width="443" height="20" uuid="7623a240-6053-442e-aa8d-d8ce1defa19d"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TITULO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="18" width="100" height="20" uuid="0bbd2256-bda5-47f6-b5e5-b25c7650881f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Señores:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="78" width="100" height="20" uuid="71b6f68a-097f-42e7-a9d2-fcccc90e5430"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Presente.-]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="11" y="38" width="246" height="20" uuid="9a11cd78-3da7-456d-876c-07b48de56eb5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BANCODESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="11" y="58" width="246" height="20" uuid="f813a5fb-5e8f-49f3-a3dd-d6be55a893bd"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIRECCIONBANCO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="135" splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="14" width="136" height="20" uuid="0af4d4ae-b783-446a-905f-30e3a3c8bf00"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ASUNTO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="12" y="50" width="481" height="78" uuid="307c6c23-6c4b-45bc-add4-d871cf0f07c6"/>
+				<textElement textAlignment="Justified">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Por medio de la presente, me dirijo a ustedes, a fin de solicitarles el depósito de Compensación de Tiempo de Servicios,"+
+" según Decreto Legislativo, de nuestro trabajador "+$V{Sexo}+" "+$F{NOMBRECOMPLETO}+" identificado con DNI N° "+$V{documento}+
+", por el monto de S/."+$V{remuneracion}+" ("+$P{remuLetra}+")"+", correspondiente al semestre de "+$V{mesinicio}+" "+$V{fechainicio}.substring(0,4)+
+" a "+$V{mesfin}+" "+$V{fechafin}.substring(0,4)+", en la cuenta de CTS N° "+$V{cuenta}+", en moneda nacional."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="148" y="14" width="362" height="20" uuid="ca21a927-2a75-4fa0-89b0-a48a271c17a9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Depósito de CTS semestre "+$V{mesinicio}+" "+$V{fechainicio}.substring(0,4)+
+" a "+$V{mesfin}+" "+$V{fechafin}.substring(0,4)]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<summary>
+		<band height="92">
+			<staticText>
+				<reportElement x="11" y="20" width="100" height="20" uuid="5a848479-f275-4110-a573-0362a3a97ce2"/>
+				<text><![CDATA[Atentamente,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="0" width="316" height="20" uuid="f8971214-9d58-43e7-835e-ee4f8e58f903"/>
+				<text><![CDATA[Agradeciéndoles la atención a la presente, me suscribo de ustedes.]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

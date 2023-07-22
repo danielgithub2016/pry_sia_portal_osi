@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<div class="estiloSuspension">
+		<h:form id="frmWHrRequerimientoMotivoSuspension">
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+			<h:panelGrid columns="1" width="100%" id="idRequerimiento">
+				<p:outputLabel
+					value="#{cwHrRequerimientoMotivoSuspension.st_pregunta}" />
+				<p:inputTextarea
+					value="#{cwHrRequerimientoMotivoSuspension.mle_motivo}" style="width:480px; height:50px;" />
+				<h:panelGrid columns="2" style="float:right;">
+					<p:commandButton value="Aceptar" styleClass="botonTextoImagen"
+						icon="aceptar"
+						action="#{cwHrRequerimientoMotivoSuspension.aceptar}" />
+					<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+						icon="cancelar"
+						onclick="PF('popRequerimientoMotivoSuspension').hide()" />
+				</h:panelGrid>
+			</h:panelGrid>
+		</h:form>
+	</div>
+</ui:composition>

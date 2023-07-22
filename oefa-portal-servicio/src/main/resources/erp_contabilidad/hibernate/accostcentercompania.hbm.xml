@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.contabilidad.dominio.AcCostcenterCompania"
+		table="SGCORESYS.AC_COSTCENTER_COMPANIA">
+		<composite-id name="pk"
+			class="net.royal.erp.contabilidad.dominio.AcCostcenterCompaniaPk">
+			<key-property name="companiasocio" type="string">
+				<column name="COMPANIASOCIO" length="8" />
+			</key-property>
+			<key-property name="ano" type="string">
+				<column name="ANO" length="4" />
+			</key-property>
+			<key-property name="version" type="integer">
+				<column name="VERSION" />
+			</key-property>
+			<key-property name="costcenter" type="string">
+				<column name="COSTCENTER" length="10" />
+			</key-property>
+		</composite-id>
+		<property name="descripcion" type="string">
+			<column name="DESCRIPCION" length="100" />
+		</property>
+		<property name="estado" type="string">
+			<column name="ESTADO" length="1" />
+		</property>
+		<property name="flgingsrv" type="string">
+			<column name="FLGINGSRV" length="1" />
+		</property>
+		<property name="flgingbie" type="string">
+			<column name="FLGINGBIE" length="1" />
+		</property>
+		<property name="flgingsum" type="string">
+			<column name="FLGINGSUM" length="1" />
+		</property>
+		<property name="flgingpas" type="string">
+			<column name="FLGINGPAS" length="1" />
+		</property>
+		<property name="flgingvia" type="string">
+			<column name="FLGINGVIA" length="1" />
+		</property>
+		<property name="flgingcaj" type="string">
+			<column name="FLGINGCAJ" length="1" />
+		</property>
+		<property name="flggenns" type="string">
+			<column name="FLGGENNS" length="1" />
+		</property>
+		<property name="flgconsrv" type="string">
+			<column name="FLGCONSRV" length="1" />
+		</property>
+		<property name="flgconbie" type="string">
+			<column name="FLGCONBIE" length="1" />
+		</property>
+		<property name="flgconsum" type="string">
+			<column name="FLGCONSUM" length="1" />
+		</property>
+		<property name="flgconpas" type="string">
+			<column name="FLGCONPAS" length="1" />
+		</property>
+		<property name="flgconvia" type="string">
+			<column name="FLGCONVIA" length="1" />
+		</property>
+		<property name="flgconcaj" type="string">
+			<column name="FLGCONCAJ" length="1" />
+		</property>
+		<property name="flgconplp" type="string">
+			<column name="FLGCONPLP" length="1" />
+		</property>
+		<property name="flgconrh" type="string">
+			<column name="FLGCONRH" length="1" />
+		</property>
+		<property name="ultimoUsuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+		<property name="ultimaFechaModif" type="timestamp">
+			<column name="ULTIMAFECHAMODIF" />
+		</property>
+		<property name="mandato" type="string">
+			<column name="MANDATO" length="4000" />
+		</property>
+		<property name="mision" type="string">
+			<column name="MISION" length="4000" />
+		</property>
+		<property name="vision" type="string">
+			<column name="VISION" length="4000" />
+		</property>
+		<property name="montoautorizado" type="big_decimal">
+			<column name="MONTOAUTORIZADO" />
+		</property>
+		<property name="fechainicio" type="timestamp">
+			<column name="FECHAINICIO" />
+		</property>
+		<property name="fechafin" type="timestamp">
+			<column name="FECHAFIN" />
+		</property>
+		<property name="fechainicio2" type="timestamp">
+			<column name="FECHAINICIO2" />
+		</property>
+		<property name="fechafin2" type="timestamp">
+			<column name="FECHAFIN2" />
+		</property>
+		<property name="facilitador" type="integer">
+			<column name="FACILITADOR" />
+		</property>
+		<property name="periodoingresopoa" type="string">
+			<column name="PERIODOINGRESOPOA" length="2" />
+		</property>
+		<property name="fecini01" type="timestamp">
+			<column name="FECINI01" />
+		</property>
+		<property name="fecfin01" type="timestamp">
+			<column name="FECFIN01" />
+		</property>
+		<property name="fecini02" type="timestamp">
+			<column name="FECINI02" />
+		</property>
+		<property name="fecfin02" type="timestamp">
+			<column name="FECFIN02" />
+		</property>
+		<property name="fecini03" type="timestamp">
+			<column name="FECINI03" />
+		</property>
+		<property name="fecfin03" type="timestamp">
+			<column name="FECFIN03" />
+		</property>
+		<property name="fecini04" type="timestamp">
+			<column name="FECINI04" />
+		</property>
+		<property name="fecfin04" type="timestamp">
+			<column name="FECFIN04" />
+		</property>
+		<property name="fecinifor" type="timestamp">
+			<column name="FECINIFOR" />
+		</property>
+		<property name="fecfinfor" type="timestamp">
+			<column name="FECFINFOR" />
+		</property>
+		<property name="fecinirefor" type="timestamp">
+			<column name="FECINIREFOR" />
+		</property>
+		<property name="fecfinrefor" type="timestamp">
+			<column name="FECFINREFOR" />
+		</property>
+		<property name="flgreqfilepoa01" type="string">
+			<column name="FLGREQFILEPOA01" length="1" />
+		</property>
+		<property name="flgcumevapoa01" type="string">
+			<column name="FLGCUMEVAPOA01" length="1" />
+		</property>
+		<property name="flgreqfilepoa02" type="string">
+			<column name="FLGREQFILEPOA02" length="1" />
+		</property>
+		<property name="flgcumevapoa02" type="string">
+			<column name="FLGCUMEVAPOA02" length="1" />
+		</property>
+		<property name="flgreqfilepoa03" type="string">
+			<column name="FLGREQFILEPOA03" length="1" />
+		</property>
+		<property name="flgcumevapoa03" type="string">
+			<column name="FLGCUMEVAPOA03" length="1" />
+		</property>
+		<property name="flgreqfilepoa04" type="string">
+			<column name="FLGREQFILEPOA04" length="1" />
+		</property>
+		<property name="flgcumevapoa04" type="string">
+			<column name="FLGCUMEVAPOA04" length="1" />
+		</property>
+	</class>
+</hibernate-mapping>

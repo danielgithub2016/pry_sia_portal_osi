@@ -1,0 +1,354 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/comun/plantillas/main.xhtml">
+
+	<ui:define name="title">
+		<h2>Requerimientos de Personal</h2>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="whrrequerimientolist">
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+			<p:panel>
+				<p:panelGrid columns="6"
+					columnClasses="ui-grid-col-1,ui-grid-col-0.5,ui-grid-col-2,ui-grid-col-1,ui-grid-col-0.5,ui-grid-col-8"
+					layout="grid" styleClass="ui-panelgrid-blank">
+
+					<p:outputLabel value="Entidad" id="lblEntidad" />
+					<p:selectBooleanCheckbox id="chkEntidad"
+						value="#{cwHrRequerimientoList.dw_position.all_companyowner}">
+						<p:ajax update=":whrrequerimientolist:cboEntidad" />
+					</p:selectBooleanCheckbox>
+					<p:selectOneMenu id="cboEntidad"
+						disabled="#{cwHrRequerimientoList.dw_position.all_companyowner}"
+						value="#{cwHrRequerimientoList.dw_position.compania}">
+						<f:selectItem itemLabel="" />
+						<f:selectItems value="#{cwHrRequerimientoList.lst_entidad}"
+							var="co" itemValue="#{co.companyowner}"
+							itemLabel="#{co.description}" />
+					</p:selectOneMenu>
+					<p:outputLabel value="Fecha de Registro" id="lblFecha" />
+					<p:selectBooleanCheckbox id="chkFechaRegistro"
+						value="#{cwHrRequerimientoList.dw_position.all_fecha}">
+						<p:ajax
+							update=":whrrequerimientolist:txtDesde,:whrrequerimientolist:txtHasta" />
+					</p:selectBooleanCheckbox>
+					<p:panelGrid columns="4"
+						columnClasses="ui-grid-col-1,ui-grid-col-2,ui-grid-col-1,ui-grid-col-2"
+						layout="grid" styleClass="ui-panelgrid-blank">
+						<p:outputLabel value="Desde" id="lblDesde" />
+						<p:calendar pattern="dd/MM/yyyy" id="txtDesde" locale="es"
+							navigator="true" showButtonPanel="true"
+							value="#{cwHrRequerimientoList.dw_position.fechadesde}"
+							disabled="#{cwHrRequerimientoList.dw_position.all_fecha}" />
+						<p:outputLabel value="Hasta" id="lblHasta" />
+						<p:calendar pattern="dd/MM/yyyy" id="txtHasta" locale="es"
+							navigator="true" showButtonPanel="true"
+							value="#{cwHrRequerimientoList.dw_position.fechahasta}"
+							disabled="#{cwHrRequerimientoList.dw_position.all_fecha}" />
+					</p:panelGrid>
+
+					<p:outputLabel value="Convocatoria" id="lblConvocatoria" />
+					<p:selectBooleanCheckbox id="chkConvocatoria"
+						value="#{cwHrRequerimientoList.dw_position.all_convocatoria}">
+						<p:ajax update=":whrrequerimientolist:txtConvocatoria" />
+					</p:selectBooleanCheckbox>
+					<p:inputText id="txtConvocatoria"
+						value="#{cwHrRequerimientoList.dw_position.convocatoria}"
+						disabled="#{cwHrRequerimientoList.dw_position.all_convocatoria}" />
+					<p:outputLabel value="Concurso" id="lblConcurso" />
+					<p:selectBooleanCheckbox id="chkConcurso"
+						value="#{cwHrRequerimientoList.dw_position.all_concurso}">
+						<p:ajax update=":whrrequerimientolist:txtConcurso" />
+					</p:selectBooleanCheckbox>
+
+					<p:panelGrid columns="4"
+						columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-1,ui-grid-col-2"
+						layout="grid" styleClass="ui-panelgrid-blank">
+						<p:inputText id="txtConcurso"
+							onkeypress="return validarIngreso(event,'N');"
+							style="text-align: center;"
+							value="#{cwHrRequerimientoList.dw_position.concurso}"
+							disabled="#{cwHrRequerimientoList.dw_position.all_concurso}" />
+						<p:outputLabel id="lblRequerimiento" value="Requerimiento" />
+						<p:selectBooleanCheckbox id="chkRequerimiento"
+							value="#{cwHrRequerimientoList.dw_position.all_numero}">
+							<p:ajax update=":whrrequerimientolist:txtRequerimiento" />
+						</p:selectBooleanCheckbox>
+						<p:inputText id="txtRequerimiento"
+							onkeypress="return noAcepto(event,'NL');"
+							value="#{cwHrRequerimientoList.dw_position.numero}"
+							disabled="#{cwHrRequerimientoList.dw_position.all_numero}" />
+					</p:panelGrid>
+
+
+					<p:outputLabel id="lblPuesto" value="Puesto" />
+					<p:selectBooleanCheckbox id="chkPuesto"
+						value="#{cwHrRequerimientoList.dw_position.all_codigopuesto}">
+						<p:ajax update=":whrrequerimientolist:cboPuesto" />
+					</p:selectBooleanCheckbox>
+					<p:selectOneMenu id="cboPuesto" filter="true"
+						filterMatchMode="contains"
+						disabled="#{cwHrRequerimientoList.dw_position.all_codigopuesto}"
+						value="#{cwHrRequerimientoList.dw_position.codigopuesto.pk.codigopuesto}">
+						<f:selectItem itemLabel="" />
+						<f:selectItems value="#{cwHrRequerimientoList.lst_codigopuesto}"
+							var="a" itemLabel="#{a.descripcion}"
+							itemValue="#{a.pk.codigopuesto}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel id="lblEstado" value="Estado" />
+					<p:selectBooleanCheckbox id="chkEstado"
+						value="#{cwHrRequerimientoList.dw_position.all_estado}">
+						<p:ajax update=":whrrequerimientolist:cboEstado" />
+					</p:selectBooleanCheckbox>
+
+					<p:panelGrid columns="4"
+						columnClasses="ui-grid-col-2,ui-grid-col-1,ui-grid-col-1,ui-grid-col-2"
+						layout="grid" styleClass="ui-panelgrid-blank">
+						<p:selectOneMenu id="cboEstado"
+							disabled="#{cwHrRequerimientoList.dw_position.all_estado}"
+							value="#{cwHrRequerimientoList.dw_position.estado}">
+							<f:selectItem itemLabel="" />
+							<f:selectItem itemLabel="En preparación" itemValue="PR" />
+							<f:selectItem itemLabel="Aprobado" itemValue="AP" />
+							<f:selectItem itemLabel="Enviado" itemValue="OA" />
+							<f:selectItem itemLabel="Revisado" itemValue="RV" />
+							<f:selectItem itemLabel="Rechazado" itemValue="RE" />
+							<f:selectItem itemLabel="En evaluacion" itemValue="EV" />
+							<f:selectItem itemLabel="Terminado" itemValue="TE" />
+							<f:selectItem itemLabel="Aprobados + En evaluación"
+								itemValue="AE" />
+							<f:selectItem itemLabel="En preparación + Rechazado"
+								itemValue="RP" />
+							<f:selectItem itemLabel="Desierto" itemValue="DE" />
+
+						</p:selectOneMenu>
+						<p:outputLabel value="Desierto" id="lblDesierto" />
+						<p:selectBooleanCheckbox id="chkDesierto"
+							value="#{cwHrRequerimientoList.dw_position.all_desierto}">
+							<p:ajax update=":whrrequerimientolist:rbnDesierto" />
+						</p:selectBooleanCheckbox>
+						<p:selectOneRadio id="rbnDesierto"
+							value="#{cwHrRequerimientoList.dw_position.desierto}"
+							disabled="#{cwHrRequerimientoList.dw_position.all_desierto}">
+							<f:selectItem itemLabel="Sí" itemValue="S" />
+							<f:selectItem itemLabel="No" itemValue="N" />
+						</p:selectOneRadio>
+					</p:panelGrid>
+
+				</p:panelGrid>
+			</p:panel>
+
+			<p:panelGrid layout="grid" columns="7"
+				styleClass="ui-panelgrid-blank"
+				columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2">
+
+				<p:commandButton value="Nuevo" styleClass="botonTextoImagen"
+					icon="nuevo" immediate="true" onstart="PF('bUI').block();"
+					oncomplete="PF('bUI').unblock();"
+					style="float: left; margin-top: 5px; margin-bottom: 5px;"
+					action="#{cwHrRequerimientoList.nuevo}" />
+				<p:commandButton value="Modificar" styleClass="botonTextoImagen"
+					style="float: left; margin-top: 5px; margin-bottom: 5px;"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					action="#{cwHrRequerimientoList.editar}" icon="editar" />
+
+				<p:commandButton value="Enviar" styleClass="botonTextoImagen"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					style="float: left; margin-top: 5px; margin-bottom: 5px;"
+					action="#{cwHrRequerimientoList.enviar}" icon="condicion" />
+
+				<p:commandButton value="Ver" styleClass="botonTextoImagen"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					style="float: left; margin-top: 5px; margin-bottom: 5px;"
+					action="#{cwHrRequerimientoList.ver}" icon="ver" />
+
+				<p:commandButton value="Eliminar" styleClass="botonTextoImagen"
+					style="float: left; margin-top: 5px; margin-bottom: 5px;"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					update=":whrrequerimientolist:idTablaRequerimiento,:whrrequerimientolist:btnImprimir"
+					action="#{cwHrRequerimientoList.eliminar}" icon="eliminar">
+					<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+						icon="alerta" message="¿Desea eliminar la información?" />
+				</p:commandButton>
+
+				<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					icon="buscar" action="#{cwHrRequerimientoList.buscar}"
+					style="float: right; margin-top: 5px; margin-bottom: 5px;"
+					update="whrrequerimientolist" />
+
+				<p:commandButton value="Imprimir" id="btnImprimir"
+					styleClass="botonTextoImagen" icon="imprimir"
+					disabled="#{cwHrRequerimientoList.boolImprimir}"
+					style="float: right; margin-top: 5px; margin-bottom: 5px;"
+					onclick="document.getElementById('whrrequerimientolist:lnkreporteRequerimiento').click()" />
+			</p:panelGrid>
+			<h:commandLink id="lnkreporteRequerimiento"
+				action="#{cwHrRequerimientoList.wf_imprimir}" style="display:none"
+				target="_blank" immediate="true" />
+
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				paginator="true" paginatorPosition="bottom" scrollHeight="300"
+				scrollable="true" rowKey="#{c.requerimiento}" reflow="true"
+				selection="#{cwHrRequerimientoList.registroseleccionado}"
+				id="idTablaRequerimiento" selectionMode="single"
+				value="#{cwHrRequerimientoList.dw_listlist}" var="c"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+				<p:ajax event="rowSelect"
+					listener="#{cwHrRequerimientoList.onRowSelect}" />
+
+
+
+				<!-- 	<p:column headerText="Archivo" width="70" style="#{c.estilo}">
+
+					<p:commandButton icon="archivo" title="Adjuntar Archivo"
+						immediate="true" action="#{cWHrRequerimientoList.cambiarArchivo}">
+						<f:setPropertyActionListener
+							target="#{cWHrRequerimientoList.registroseleccionado}"
+							value="#{c}" />
+					</p:commandButton>
+				</p:column> -->
+
+
+				<p:column headerText="Empresa" width="70" style="#{c.estilo}">
+					<h:outputText value="#{c.description}" />
+				</p:column>
+				<p:column headerText="¿Enviado?" width="50" style="#{c.estilo}"
+					styleClass="columnatablaCentro">
+					<h:outputText value="SI" rendered="#{c.flagEnviado=='S'}" />
+				</p:column>
+				<p:column headerText="Fecha Envío" width="100" style="#{c.estilo}"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{c.fechaEnviado}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Estado" width="120" style="#{c.estilo}">
+					<h:outputText value="#{c.nombreEstado}" />
+				</p:column>
+				<p:column headerText="N° Convocatoria" width="120"
+					styleClass="columnatablaCentro" style="#{c.estilo}">
+					<h:outputText value="#{c.convocatoria}" />
+				</p:column>
+				<p:column headerText="N° Proceso" width="70" style="#{c.estilo}"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{c.proceso}" />
+				</p:column>
+				<p:column headerText="# Sol." width="40" style="#{c.estilo}"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{c.numerosolicitado}" />
+				</p:column>
+				<p:column headerText="# Pend." width="50" style="#{c.estilo}">
+					<h:outputText value="#{c.numeropendiente}" />
+				</p:column>
+				<p:column headerText="Desierto" width="60" style="#{c.estilo}">
+					<h:outputText value="#{c.flagdesierto.equals('S')?'Si':''}" />
+				</p:column>
+				<p:column headerText="# Req." width="70" style="#{c.estilo}">
+					<h:outputText value="#{c.requerimiento}" />
+				</p:column>
+				<p:column headerText="Fecha" width="60" style="#{c.estilo}"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{c.fechasolicitud}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Puesto Solicitado" width="180"
+					style="#{c.estilo}">
+					<h:outputText
+						value="#{c.descripcion} #{c.descripcionpuestoinformativo}" />
+				</p:column>
+				<p:column headerText="Unidad. Organizacional solicitada" width="250"
+					style="#{c.estilo}">
+					<h:outputText value="#{c.descripcionposicion}" />
+				</p:column>
+				<p:column headerText="Vigencia(ini)" width="70"
+					styleClass="columnatablaCentro" style="#{c.estilo}">
+					<h:outputText value="#{c.iniciovigencia}" style="">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Vigencia(fin)" width="70" style="#{c.estilo}"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{c.finvigencia}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Límite Postulación" width="110"
+					styleClass="columnatablaCentro" style="#{c.estilo}">
+					<h:outputText value="#{c.fechalimite}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Resultado Final" width="75"
+					styleClass="columnatablaCentro" style="#{c.estilo}">
+					<h:outputText value="#{c.fecharesultado}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Solicitante" width="200" style="#{c.estilo}">
+					<h:outputText value="#{c.nombrecompleto}" />
+				</p:column>
+				<p:column headerText="Fecha Envío MinTra" width="80"
+					styleClass="columnatablaCentro" style="#{c.estilo}">
+					<h:outputText value="#{c.fechaenvio}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Fecha Envío al Portal" width="80"
+					styleClass="columnatablaCentro" style="#{c.estilo}">
+					<h:outputText value="#{c.fechaquiebre}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Motivo Desierto" width="220"
+					style="#{c.estilo}">
+					<h:outputText value="#{c.motivodesierto}" />
+				</p:column>
+			</p:dataTable>
+			<p:commandButton value="Miscelaneo" icon="ui-icon-arrow-1-n"
+				action="#{cwHrMiscelaneoSelectorVarios.iniciarControladora}"
+				rendered="false">
+				<f:setPropertyActionListener value="SELECCION"
+					target="#{cwHrMiscelaneoSelectorVarios.actionButton}" />
+			</p:commandButton>
+
+			<p:commandButton value="Ver" icon="ver"
+				action="#{cwHrMiscelaneoSelectorVarios.iniciarControladora}"
+				rendered="false">
+				<f:setPropertyActionListener value="VER"
+					target="#{cwHrMiscelaneoSelectorVarios.actionButton}" />
+			</p:commandButton>
+
+
+		</h:form>
+
+		<p:dialog id="dgMiscelaneoSelectorVarios" dynamic="true"
+			resizable="false" draggable="false"
+			styleClass="contenedorPrincipalChico"
+			widgetVar="popSelectorMiscelaneoSelectorVarios" appendTo="@(body)"
+			modal="true" header="Seleccione el Misceláneo">
+			<ui:include
+				src="/erp/rrhh/paginas/desempenio/w_hr_miscelaneo_selector_varios.xhtml" />
+		</p:dialog>
+
+		<p:dialog id="dgDocumento" widgetVar="popDocumento" modal="true"
+			style="max-width:500px;" width="100%" appendTo="@(Body)"
+			header="Selector de Documento" resizable="false" responsive="true">
+			<ui:include
+				src="/comun/paginas/frm_documento_selector_emergente.xhtml" />
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

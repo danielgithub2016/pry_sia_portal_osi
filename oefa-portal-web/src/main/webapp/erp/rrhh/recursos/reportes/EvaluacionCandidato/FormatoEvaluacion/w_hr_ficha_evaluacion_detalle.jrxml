@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_hr_ficha_evaluacion_entrevista" language="groovy" pageWidth="595" pageHeight="300" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="354a392c-7d66-4e18-889b-139ff63f94a2">
+	<property name="ireport.zoom" value="1.100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="requerimiento" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="compania" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="postulante" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="secuencia" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+    b.factor as factor,
+--   replicate(chr(32),LENGTH(trim(b.explicacion))-LENGTH(trim(b.descripcion))/2    )||trim(b.descripcion)||replicate(chr(32),LENGTH(trim(b.explicacion))-LENGTH(trim(b.descripcion))/2) as desc_evaluacion,
+    b.descripcion as desc_evaluacion,
+    trim(b.explicacion)||replicate(' ',150)||'.' as explicacion,
+    a.puntaje AS PUNTAJE,
+     b.valorrequerido
+from
+    HR_EvaluacionPostulante a
+right JOIN HR_FactoresEvaluacion b  ON a.factor = b.factor
+where a.requerimiento = $P{requerimiento}
+    and a.companyowner = $P{compania}
+    and a.secuencia = $P{secuencia}
+    and a.postulante = $P{postulante}]]>
+	</queryString>
+	<field name="FACTOR" class="java.math.BigDecimal"/>
+	<field name="DESC_EVALUACION" class="java.lang.String"/>
+	<field name="EXPLICACION" class="java.lang.String"/>
+	<field name="PUNTAJE" class="java.math.BigDecimal"/>
+	<field name="VALORREQUERIDO" class="java.math.BigDecimal"/>
+	<variable name="TOTAL" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{PUNTAJE}]]></variableExpression>
+	</variable>
+	<variable name="TOTALREQ" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALORREQUERIDO}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="MINIMO" class="java.lang.Integer" incrementType="Report">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="32" backcolor="#F0F0F0" uuid="e9097632-7e8a-41e2-b781-273ec83288ec"/>
+			</rectangle>
+			<line>
+				<reportElement x="473" y="0" width="1" height="32" uuid="49dbea0f-f54c-45a2-ad6b-344f455077b7"/>
+			</line>
+			<staticText>
+				<reportElement x="41" y="5" width="100" height="20" uuid="3f77f82a-72b7-4320-a4d8-158b3331ddbf"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[COMPETENCIAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="268" y="3" width="100" height="20" uuid="da05b478-5d4f-427b-b8d2-25ad60691f34"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="0" width="80" height="28" uuid="09322910-20c2-4382-b24c-c5e1cef63c13"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[PUNTAJE OBTENIDO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="184" y="0" width="1" height="32" uuid="3001566d-a782-4b4a-afae-3e215ac5f01d"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<rectangle>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="555" height="26" isPrintWhenDetailOverflows="true" uuid="c3f11ec7-c510-43eb-9c39-68170295539a"/>
+			</rectangle>
+			<line>
+				<reportElement stretchType="RelativeToTallestObject" x="184" y="0" width="1" height="26" isPrintWhenDetailOverflows="true" uuid="0cbb78d2-fe23-45cd-82a3-48d126d67beb"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="5" y="0" width="169" height="26" isPrintWhenDetailOverflows="true" uuid="551a13f4-a45b-45dc-bb06-2dda8f3ba9fa"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESC_EVALUACION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="187" y="0" width="283" height="26" isPrintWhenDetailOverflows="true" uuid="495d73f2-a3b3-4d55-ad05-e786a4b8fd0f"/>
+				<textElement textAlignment="Justified">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXPLICACION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="476" y="0" width="80" height="20" uuid="91405e8b-70dc-419c-8dd0-8d4e89c86f5c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{PUNTAJE}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToTallestObject" x="473" y="0" width="1" height="26" isPrintWhenDetailOverflows="true" uuid="20578688-0bef-40c5-ba4f-96d4d8ad6819"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="91">
+			<staticText>
+				<reportElement x="5" y="65" width="536" height="22" uuid="e04042ac-7027-4b23-8843-0075a26df5c1"/>
+				<text><![CDATA[Califique al candidato, según el nivel de desarollo de la competencia evaluada, 1 (nivel bajo) a 5 (nivel muy superior)]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="65" backcolor="#F0F0F0" uuid="8e292a89-df85-4d25-b020-583d0c29116a"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="14" y="0" width="100" height="20" uuid="e182764c-5dfa-4f63-a04d-5da7a9616c9a"/>
+				<text><![CDATA[Puntaje Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="20" width="100" height="20" uuid="b4bd3df5-0535-4879-95a6-4c701acc62f7"/>
+				<text><![CDATA[Puntaje Máximo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="40" width="100" height="20" uuid="f3c6ab27-66b5-4f0d-8118-518e0f17559b"/>
+				<text><![CDATA[Puntaje Minimo]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="476" y="0" width="76" height="20" uuid="02bbfb2c-814a-421b-8c4b-78fc14e38d2b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="114" y="40" width="100" height="20" uuid="3bd02ed3-cff3-45c4-b41f-87f372ce3642"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new BigDecimal(14).multiply($V{TOTALREQ}).divide(20).compareTo(new BigDecimal(17.5))==-1?
+  new BigDecimal(14).multiply($V{TOTALREQ}).divide(20):
+ new BigDecimal(14).multiply($V{TOTALREQ}).divide(20).setScale(0, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="473" y="20" width="82" height="1" uuid="e5a0aef5-60f0-4be3-8b8f-0e832f7c293e"/>
+			</line>
+			<textField>
+				<reportElement x="114" y="20" width="100" height="20" uuid="5d8c5a53-3f34-48ef-bc56-a0adf7f1ca64"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTALREQ}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="473" y="0" width="1" height="20" uuid="a99745cc-917c-409f-bc2a-d1fe5e9e2a6e"/>
+			</line>
+		</band>
+	</columnFooter>
+</jasperReport>

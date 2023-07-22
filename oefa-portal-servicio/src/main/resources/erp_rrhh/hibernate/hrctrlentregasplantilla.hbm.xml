@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrCtrlentregasplantilla" table="SGCORESYS.HR_CTRLENTREGASPLANTILLA">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrCtrlentregasplantillaPk">
+            <key-property name="plantilla" type="string">
+                <column name="PLANTILLA" length="3" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="255" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : hrcommon.w_pr_vacaciones_reporte -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="hrcommon.listarEmpleadoSelectEval">
+		<![CDATA[
+			SELECT 
+			PersonaMast.Persona as "persona",   
+			PersonaMast.NombreCompleto as "nombrecompleto",   
+			EmpleadoMast.TipoContrato as "tipocontrato",   
+			EmpleadoMast.Empleado as "empleado",   
+			PersonaMast.PersonaAnt  as "personaant",
+			EmpleadoMast.EstadoEmpleado as "estadoempleado",
+			EmpleadoMast.Estado as "estado",
+			EmpleadoMast.CentroCostos as "centrocostos",
+			EmpleadoMast.CompaniaSocio as "companiasocio",
+			EmpleadoMast.TipoPlanilla as "tipoplanilla"
+			FROM 
+			SGCORESYS.EmpleadoMast 
+			Left JOIN Personamast
+				ON (PersonaMast.Persona = EmpleadoMast.Empleado)
+			WHERE
+			( PersonaMast.EsEmpleado = :p_esempleado )
+		]]>
+	</sql-query>
+
+	<!-- hrcommon.dddw_ma_hr_inasistencia_select -->
+	<sql-query name="hrcommon.DddwMaHrInasistenciaSelect">
+	</sql-query>
+
+	<!-- hrcommon.dddw_ma_pr_concepto_select -->
+	<sql-query name="hrcommon.DddwMaPrConceptoSelect">
+	</sql-query>
+
+	<!-- hrcommon.dw_ma_hr_persona_retrieve -->
+	<sql-query name="hrcommon.DwMaHrPersonaRetrieve">
+	</sql-query>
+
+	<!-- hrcommon.dw_ma_hr_tipo_empleado -->
+	<sql-query name="hrcommon.DwMaHrTipoEmpleado">
+	</sql-query>
+
+	<!-- hrcommon.dw_ma_hr_tipo_empleado_select -->
+	<sql-query name="hrcommon.DwMaHrTipoEmpleadoSelect">
+	</sql-query>
+
+	<!-- hrcommon.dw_ma_hr_tipo_planilla -->
+	<sql-query name="hrcommon.DwMaHrTipoPlanilla">
+	</sql-query>
+
+	<!-- hrcommon.dw_ma_pr_concepto_select -->
+	<sql-query name="hrcommon.DwMaPrConceptoSelect">
+	</sql-query>
+
+	<!-- hrcommon.dw_ma_pr_sucursal_select_seguridad -->
+	<sql-query name="hrcommon.DwMaPrSucursalSelectSeguridad">
+	</sql-query>
+
+	<!-- hrcommon.dw_ma_pr_tipodocumento_select -->
+	<sql-query name="hrcommon.DwMaPrTipodocumentoSelect">
+	</sql-query>
+
+	<!-- hrcommon.dw_ma_pr_tipoproceso_edit -->
+	<sql-query name="hrcommon.DwMaPrTipoprocesoEdit">
+	</sql-query>
+
+	<!-- hrcommon.dw_ma_pr_tipoproceso_list -->
+	<sql-query name="hrcommon.DwMaPrTipoprocesoList">
+	</sql-query>
+
+	<!-- hrcommon.dw_ma_pr_tipoproceso_select -->
+	<sql-query name="hrcommon.DwMaPrTipoprocesoSelect">
+	</sql-query>
+
+	<!-- hrcommon.dw_ma_pr_tipoproceso_select_by_all -->
+	<sql-query name="hrcommon.DwMaPrTipoprocesoSelectByAll">
+	</sql-query>
+
+	<!-- hrcommon.dw_sy_diccionariodetalle_list -->
+	<sql-query name="hrcommon.DwSyDiccionariodetalleList">
+	</sql-query>
+
+	<!-- -->
+
+</hibernate-mapping>

@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<div class="ui-fluid">
+		<h:form id="wasautorizacionpreprocesohextramsg">
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				paginator="true" paginatorPosition="bottom" scrollable="true"
+				value="#{cwAsAutorizacionPreprocesoHextraMsgSIGED.dw_detalle}"
+				var="interva" reflow="true" style="max-width:600px"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+				scrollHeight="200">
+
+				<f:facet name="header">
+					<h:outputText
+						value="La Solicitud abarcará las siguientes ocurrencias" />
+				</f:facet>
+
+				<p:column headerText="Desde" width="150"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{interva.fechadesde}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Hasta" width="150"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{interva.fechahasta}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+					</h:outputText>
+				</p:column>
+			</p:dataTable>
+
+			<p:panelGrid columns="2" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid"
+				styleClass="ui-panelgrid-blank">
+				<p:commandButton value="Continuar" icon="siguiente" immediate="true"
+					process="@this" onstart="PF('bUI').block();"
+					oncomplete="PF('bUI').unblock();"
+					action="#{cwAsAutorizacionPreprocesoHextraEditSIGED.guardarDesdeIntervalos}" />
+				<p:commandButton value="Cancelar" icon="cancelar"
+					onclick="PF('popIntervalosAutorizacionSIGED').hide()" />
+			</p:panelGrid>
+		</h:form>
+	</div>
+</ui:composition>
+
+

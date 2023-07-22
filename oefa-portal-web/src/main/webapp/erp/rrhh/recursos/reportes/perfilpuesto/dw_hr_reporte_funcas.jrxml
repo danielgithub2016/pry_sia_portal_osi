@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dw_hr_reporte_funcas" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="b706f518-0e51-4050-aa2f-ee676baea4e2">
+	<property name="ireport.zoom" value="1.9965000000000006"/>
+	<property name="ireport.x" value="415"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PAR_REQUERIMIENTO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\nunezh\\Desktop\\temp\\INDEPOQUI\\PUBLICACIONWEB\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_UNIDAD" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_TIPOPLANILLA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DETALLE" class="java.lang.String"/>
+	<parameter name="CONVOCATORIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+REQ.CODIGOPOSICIONSOLICITANTE,
+POSEMP.DESCRIPCION,
+(select CASE WHEN LENGTH(COMENTARIOS) > 0 THEN CODIGOCAP || ' - ' || DESCRIPCION || '    (' || NVL(COMENTARIOS,'')  ||')' ELSE CODIGOCAP || ' - ' || DESCRIPCION END AS DESCRIPCION
+from SGCORESYS.HR_PuestoEmpresa
+where CodigoPuesto = REQ.CODIGOPUESTO) as puesto,
+
+ (SELECT ParametrosMast.EXPLICACIONADICIONAL
+    FROM SGCORESYS.ParametrosMast
+   WHERE ( ParametrosMast.CompaniaCodigo = '999999'  ) AND
+         ( ParametrosMast.AplicacionCodigo = 'HR' ) AND
+         ( ParametrosMast.ParametroClave ='CONBASLEG' ))as baseLegal,
+
+     (SELECT ParametrosMast.Texto
+    FROM SGCORESYS.ParametrosMast
+   WHERE ( ParametrosMast.CompaniaCodigo = '999999' ) AND
+         ( ParametrosMast.AplicacionCodigo = 'HR' ) AND
+         ( ParametrosMast.ParametroClave = 'CONVCORR' ) ) as correlativo,
+    (Select Description
+from SGCORESYS.companyowner
+where companyowner = $P{PAR_COMPANIA})AS compania
+
+FROM SGCORESYS.HR_Requerimiento REQ
+LEFT JOIN SGCORESYS.HR_PosicionEmpresa POSEMP ON POSEMP.CODIGOPOSICION=REQ.CODIGOPOSICIONSOLICITANTE
+WHERE ( REQ.CompanyOwner =$P{PAR_COMPANIA}  ) and
+( REQ.Requerimiento = $P{PAR_REQUERIMIENTO} )]]>
+	</queryString>
+	<field name="CODIGOPOSICIONSOLICITANTE" class="java.math.BigDecimal"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="PUESTO" class="java.lang.String"/>
+	<field name="BASELEGAL" class="java.lang.String"/>
+	<field name="CORRELATIVO" class="java.lang.String"/>
+	<field name="COMPANIA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="245" splitType="Stretch">
+			<subreport>
+				<reportElement positionType="Float" x="30" y="206" width="565" height="10" isPrintWhenDetailOverflows="true" uuid="72bc7160-45cd-47dc-a65e-0bd5991558a5"/>
+				<subreportParameter name="PAR_REQUERIMIENTO">
+					<subreportParameterExpression><![CDATA[$P{PAR_REQUERIMIENTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_COMPANIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_COMPANIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["dw_hr_reporte_funcas_1.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="30" y="219" width="565" height="12" isPrintWhenDetailOverflows="true" uuid="49fb78b7-1847-44b3-b3d7-e96de0ea3b0e"/>
+				<subreportParameter name="PAR_REQUERIMIENTO">
+					<subreportParameterExpression><![CDATA[$P{PAR_REQUERIMIENTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_COMPANIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_COMPANIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["dw_hr_reporte_funcas_2.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="30" y="234" width="565" height="10" isPrintWhenDetailOverflows="true" uuid="b7a57436-1fb5-4bc6-8810-5247ba71979d"/>
+				<subreportParameter name="PAR_REQUERIMIENTO">
+					<subreportParameterExpression><![CDATA[$P{PAR_REQUERIMIENTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_COMPANIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_COMPANIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["dw_hr_reporte_funcas_3.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="0" y="43" width="595" height="13" uuid="29688b78-89e3-4de8-b3db-2efdf13acd04"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONVOCATORIA PARA LA CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE UN ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="57" width="595" height="13" uuid="9c860c14-d42e-4ca5-89c6-941325a3efe2"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PUESTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="76" width="538" height="13" uuid="20641124-d230-427b-94f1-8909ea31f254"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[I GENERALIDADES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="92" width="538" height="11" uuid="6d206d6a-71e1-4334-ba05-b99ea738c570"/>
+				<textElement>
+					<font size="8" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[1.- Objeto de la convocatoria:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="104" width="102" height="11" uuid="e2505709-63db-4d12-b1ff-9f4a13b1e528"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Contratar los servicios de un]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="119" width="538" height="11" uuid="60b04388-1ed2-406d-89b0-53e675e4004f"/>
+				<textElement>
+					<font size="8" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[2.- Dependencia, unidad orgánica y/o área solicitante:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="30" y="147" width="421" height="11" uuid="171fd2a6-40cb-4eae-acc5-b69468adefa3"/>
+				<textElement>
+					<font size="8" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[3.- Dependencia encargada de realizar el proceso de contratación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="43" y="158" width="303" height="11" uuid="8137e42f-b52c-432a-b3da-69583e130101"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Oficina de Administración – Recursos Humanos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="30" y="174" width="57" height="11" uuid="07f745b6-f64b-4d95-8177-19b77719ce96"/>
+				<textElement>
+					<font size="8" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[4.- Base legal:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="145" y="104" width="201" height="11" uuid="f6b88529-2728-4859-b390-30ef40c88fc2"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PUESTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="15" width="595" height="13" uuid="4462469e-aba3-47e3-959f-c59d8e8cf253"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPANIA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="41" y="186" width="546" height="15" uuid="11003e04-6708-4855-b1bd-625092d60571"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BASELEGAL}.replace("~r~n~r~n","\n \n")]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="41" y="103" width="92" height="1" uuid="a07027bb-f604-4e98-a3a7-a130621b399e"/>
+			</line>
+			<line>
+				<reportElement x="41" y="130" width="180" height="1" uuid="b7883fa4-8a21-4955-acf4-12b8d6895060"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="41" y="157" width="225" height="1" uuid="c8058d68-0390-42e5-ac46-f3f407607ee7"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="41" y="183" width="40" height="1" uuid="d39cd734-6af1-47f3-ad65-19b82332404a"/>
+			</line>
+			<textField>
+				<reportElement x="41" y="132" width="408" height="12" uuid="ecf8c252-022b-4618-a433-0673356a209c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DETALLE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="28" width="296" height="15" uuid="514cef21-2a00-47b4-838a-48bb04abc297"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROCESO CAS N° ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="301" y="28" width="293" height="15" uuid="1692b7b0-c7c1-4f56-adad-449c759bfb43"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CONVOCATORIA}!=null?$P{CONVOCATORIA}:""]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

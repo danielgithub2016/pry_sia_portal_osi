@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : rrhh.HrFactoresevaluacionplantilla -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="hrfactoresevaluacionplantilla.obtenerPlantilla">
+		SELECT CAST(MAX(HR_EvaluacionCodigo.Plantilla) as varchar(10)) as "plantilla"
+		FROM
+		 SGCORESYS.HR_EvaluacionPeriodo
+		,  SGCORESYS.HR_FactoresEvaluacionPlantilla
+		, SGCORESYS.HR_EvaluacionCodigo
+		,  SGCORESYS.EmpleadoMast
+		WHERE
+		HR_EvaluacionPeriodo.CompanyOwner = :as_companyowner
+		AND HR_EvaluacionPeriodo.SecuenciaEval = :al_secuenciaeval
+		AND HR_EvaluacionPeriodo.TipoCodigo = :is_TipoCodigo
+		AND HR_EvaluacionPeriodo.CompanyOwner =	HR_FactoresEvaluacionPlantilla.CompanyOwner
+		AND HR_EvaluacionPeriodo.SecuenciaEval =HR_FactoresEvaluacionPlantilla.SecuenciaEval
+		AND HR_FactoresEvaluacionPlantilla.TipoPlantilla = :as_tipoplantilla
+		AND HR_FactoresEvaluacionPlantilla.Plantilla =HR_EvaluacionCodigo.Plantilla
+		AND HR_EvaluacionCodigo.Codigo =:ls_codigo
+	</sql-query>
+</hibernate-mapping>

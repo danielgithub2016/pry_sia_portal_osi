@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<div class="ui-fluid">
+
+		<h:form id="horariomantenimiento">
+			<p:growl life="#{msg.generico_tiempo_growl}" />
+			<p:panelGrid columns="2" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-8,ui-grid-col-12" layout="grid"
+				styleClass="ui-panelgrid-blank">
+				<p:outputLabel value="Fecha" />
+				<p:calendar required="true" locale="es" navigator="true"
+					showButtonPanel="true"
+					mindate="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.fecha}"
+					maxdate="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.fechafin}"
+					requiredMessage="El campo fecha es obligatorio"
+					value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_horarioregistro.fecha}"
+					pattern="dd/MM/yyyy" />
+
+				<p:outputLabel value="Horario" />
+				<p:selectOneMenu required="true" filter="true"
+					filterMatchMode="contains"
+					requiredMessage="El campo horario es obligatorio"
+					value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_horarioregistro.tipodia}"
+					valueChangeListener="#{cwAsAutorizacionPreprocesoHextraEdit.valuechangedHorarioTipoDia}">
+					<f:selectItem itemValue="0" itemLabel="(Ninguno)" />
+					<f:selectItems var="tipdia" itemValue="#{tipdia.tipodia}"
+						itemLabel="#{tipdia.tipodia} - #{tipdia.descripcionlocal}"
+						value="#{cwAsAutorizacionPreprocesoHextraEdit.lstTipoDia}" />
+					<p:ajax update="txtHoras,txtHorasRef" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Horas Trabajo" />
+				<p:inputText disabled="true" id="txtHoras"
+					value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_horarioregistro.horasdescripcion}" />
+
+				<p:outputLabel value="Horas Refrigerio" />
+				<p:inputText disabled="true" id="txtHorasRef"
+					value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_horarioregistro.horasrefrigeriodescripcion}" />
+
+			</p:panelGrid>
+			<p:panel>
+				<p:panelGrid columns="2" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-8,ui-grid-col-8" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Aceptar" icon="guardar"
+						action="#{cwAsAutorizacionPreprocesoHextraEdit.insertarHorario}"
+						update="@form" />
+					<p:commandButton value="Cancelar" icon="cancelar" immediate="true"
+						onclick="PF('popHorarioMantenimiento').hide()" />
+				</p:panelGrid>
+			</p:panel>
+
+		</h:form>
+	</div>
+</ui:composition>
+
+

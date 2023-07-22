@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : rrhh.HrCentroestudios -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="hrcentroestudios.listarCentroEstudios">
+		<![CDATA[
+			SELECT 
+			A.Centro AS "centro",   
+			A.Descripcion  AS "descripcion"
+			FROM 
+			SGCORESYS.HR_CentroEstudios  A
+		]]>
+	</sql-query>
+
+</hibernate-mapping>

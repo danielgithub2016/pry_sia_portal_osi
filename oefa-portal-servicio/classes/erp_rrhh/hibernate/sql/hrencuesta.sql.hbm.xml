@@ -1,0 +1,1941 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : rrhh.HrEncuesta -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="hrencuesta.listarHrEncuesta">
+		<![CDATA[
+	SELECT 
+       CAST(H.TIPOENCUESTA AS VARCHAR2(1)) as "tipoencuesta",
+       CASE H.TIPOENCUESTA WHEN 'A' THEN 'Actividad'
+                                           WHEN 'C' THEN 'Clima Laboral'
+                                           WHEN 'P' THEN 'Capacitación'
+                                           WHEN 'B' THEN 'Bienestar Social'
+                                           ELSE '' END as "tipoencuestadesc",
+       H.TITULO as "titulo",
+       (SELECT COUNT(1) FROM SGCORESYS.HR_ENCUESTASUJETO S WHERE S.SECUENCIA = H.SECUENCIA AND S.ENCUESTADO = :sujeto) as "ejecuto",
+       H.FECHAINICIO as "fechainicio",
+       H.ACTIVIDAD as "actividad",
+       H.CAPACITACION as "capacitacion",
+                   H.COMPANYOWNER as "companyowner",
+       H.FECHAFIN as "fechafin",
+       H.PERIODO as "periodo",
+       H.SECUENCIA as "secuencia",
+       H.OBSERVACIONES "observaciones" 
+FROM SGCORESYS.HR_ENCUESTA H
+WHERE NVL(H.ESTADO,'X') = NVL(:estado,NVL(H.ESTADO,'X')) 
+AND (SELECT COUNT(1) FROM SGCORESYS.HR_ENCUESTASUJETO S WHERE S.SECUENCIA = H.SECUENCIA AND S.ENCUESTADO = :sujeto) < 1
+		]]>
+	</sql-query>
+
+	<sql-query name="hrencuesta.listarTipoPlanilla">
+		<![CDATA[
+			SELECT 
+					PR_TipoPlanilla.TipoPlanilla as "tipoplanilla",   
+					PR_TipoPlanilla.Descripcion as "descripcion",   
+					PR_TipoPlanilla.ClasePago  as "clasepago" 
+					FROM 
+					SGCORESYS.PR_TipoPlanilla  
+					ORDER BY 
+					PR_TipoPlanilla.Descripcion ASC   
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.listarHrEvalCas">
+		<![CDATA[
+			SELECT 
+			   CAST(A.ID_EVALCAS AS VARCHAR2(5)) as "id_evalcas"
+			  ,B.REQUERIMIENTO as "requerimiento"
+			  ,CASE B.PROCESO 
+				  WHEN 1 THEN 
+				  B.CONVOCATORIA
+				  WHEN 2 THEN 
+				  B.CONVOCATORIA||' (Segunda Convocatoria)'
+				  WHEN 3 THEN 
+				  B.CONVOCATORIA||' (Tercera Convocatoria)'
+				  WHEN 4 THEN 
+				  B.CONVOCATORIA||' (Cuarta Convocatoria)'
+				  WHEN 5 THEN 
+				  B.CONVOCATORIA||' (Quinta Convocatoria)'
+				  ELSE B.CONVOCATORIA||'-'||B.PROCESO
+			   END as "nro_requerimiento",
+			   CAST(D.FLAGTIPOPUESTO AS VARCHAR(1))as "flgtipopuesto"
+			  ,D.DESCRIPCION as "puesto"
+			  ,C.DESCRIPCION as "unidad"
+			  ,CASE WHEN A.FLG_ESTADO = 1 THEN 'POR EVALUAR'
+			        WHEN A.FLG_ESTADO = 2 THEN 'EVALUANDO'
+			   END as "estado"
+			  ,CAST(A.flg_estado AS VARCHAR2(1)) as "n_estado"
+			  ,CAST((SELECT SUM(N_PARTICIPANTES) FROM SGCORESYS.HR_EVALCASGRUPOS WHERE REQUERIMIENTO = A.REQUERIMIENTO) AS VARCHAR2(4)) as "n_partotal"
+			  ,MIN(A.N_GRUPO) OVER (PARTITION BY A.REQUERIMIENTO)||' de '||(SELECT COUNT(N_GRUPO) FROM SGCORESYS.HR_EVALCASGRUPOS WHERE REQUERIMIENTO = A.REQUERIMIENTO) as "n_grupo"
+			  ,CAST(A.N_PARTICIPANTES AS VARCHAR2(4)) as "n_partgrupo"
+			  ,CAST((SELECT COUNT(*) 
+			    FROM SGCORESYS.HR_EVALCASPOSTULANTE 
+			    WHERE ID_EVALCAS = A.ID_EVALCAS
+			          AND FECHA_INICIO IS NOT NULL) AS VARCHAR2(4)) as "n_partgrupoini"
+			  ,CAST((SELECT COUNT(*) 
+			    FROM SGCORESYS.HR_EVALCASPOSTULANTE 
+			    WHERE FECHA_FIN IS NOT NULL 
+			          AND ID_EVALCAS IN (SELECT ID_EVALCAS 
+			                             FROM SGCORESYS.HR_EVALCASGRUPOS 
+			                             WHERE REQUERIMIENTO = A.REQUERIMIENTO)) AS VARCHAR2(4)) as "n_partotaleval"
+		        ,CAST(
+		           NVL(
+		             (SELECT SUM(Z.FLAGASISTIO) 
+		              FROM SGCORESYS.HR_POSREQUER Z
+			              inner join
+	                      SGCORESYS.HR_EVALREQUERIMIENTO er
+	                      on Z.Requerimiento = er.requerimiento 
+	                      and Z.Secuencia = er.secuencia and
+	                      er.evaluacion = 3
+		                    WHERE Z.REQUERIMIENTO = A.REQUERIMIENTO 
+		                    AND TO_CHAR(A.FECHA_EVALUACION, 'DD/MM/YYYY HH:MI:SS A.M.') = 
+		                    TO_CHAR(Z.FECHAGRUPOCONOC, 'DD/MM/YYYY HH:MI:SS A.M.'))
+		               ,'0') AS VARCHAR2(4)) as "valor_n"                            
+			FROM SGCORESYS.HR_EVALCASGRUPOS A
+			INNER JOIN SGCORESYS.HR_REQUERIMIENTO B ON B.REQUERIMIENTO = A.REQUERIMIENTO AND B.ESTADO <> 'TE'
+			INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = B.CODIGOPUESTO
+			INNER JOIN SGCORESYS.HR_POSICIONEMPRESA C ON C.CODIGOPOSICION = D.CODIGOPOSICION
+			INNER JOIN (SELECT DISTINCT
+			              MIN(E2.FECHA_EVALUACION) OVER (PARTITION BY E2.REQUERIMIENTO) FECHA_EVALUACION,
+			              MAX(E2.FLG_ESTADO) OVER (PARTITION BY E2.REQUERIMIENTO) FLG_ESTADO
+			            FROM SGCORESYS.HR_EVALCASGRUPOS E2
+			            INNER JOIN SGCORESYS.HR_POSREQUER B ON B.REQUERIMIENTO = E2.REQUERIMIENTO AND TO_CHAR(E2.FECHA_EVALUACION, 'DD/MM/YYYY HH:MI:SS A.M.') = TO_CHAR(B.FECHAGRUPOCONOC, 'DD/MM/YYYY HH:MI:SS A.M.') 
+			            WHERE FLG_ESTADO>0) E ON E.FECHA_EVALUACION = A.FECHA_EVALUACION AND E.FLG_ESTADO = A.FLG_ESTADO
+			WHERE A.FLG_ESTADO > 0
+			ORDER BY 3            
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.listarHrEvalCas2">
+		<![CDATA[
+			SELECT 
+			   CAST(A.ID_EVALCAS AS VARCHAR2(5)) as "id_evalcas"
+			  ,B.REQUERIMIENTO as "requerimiento"
+			  ,CASE B.PROCESO 
+				  WHEN 1 THEN 
+				  B.CONVOCATORIA
+				  WHEN 2 THEN 
+				  B.CONVOCATORIA||' (Segunda Convocatoria)'
+				  WHEN 3 THEN 
+				  B.CONVOCATORIA||' (Tercera Convocatoria)'
+				  WHEN 4 THEN 
+				  B.CONVOCATORIA||' (Cuarta Convocatoria)'
+				  WHEN 5 THEN 
+				  B.CONVOCATORIA||' (Quinta Convocatoria)'
+				  ELSE B.CONVOCATORIA||'-'||B.PROCESO
+			   END as "nro_requerimiento"
+			  ,D.DESCRIPCION as "puesto"
+			  ,C.DESCRIPCION as "unidad"
+			  ,CASE WHEN A.FLG_ESTADO = 1 THEN 'POR EVALUAR'
+			        WHEN A.FLG_ESTADO = 2 THEN 'EVALUANDO'
+			   END as "estado"
+			  ,CAST(A.flg_estado AS VARCHAR2(1)) as "n_estado"
+			  ,CAST((SELECT SUM(N_PARTICIPANTES) FROM SGCORESYS.HR_EVALCASGRUPOS WHERE REQUERIMIENTO = A.REQUERIMIENTO) AS VARCHAR2(4)) as "n_partotal"
+			  ,MIN(A.N_GRUPO) OVER (PARTITION BY A.REQUERIMIENTO)||' de '||(SELECT COUNT(N_GRUPO) FROM SGCORESYS.HR_EVALCASGRUPOS WHERE REQUERIMIENTO = A.REQUERIMIENTO) as "n_grupo"
+			  ,CAST(A.N_PARTICIPANTES AS VARCHAR2(4)) as "n_partgrupo"
+			  ,CAST((SELECT COUNT(*) 
+			    FROM SGCORESYS.HR_EVALCASPOSTULANTE 
+			    WHERE ID_EVALCAS = A.ID_EVALCAS
+			          AND FECHA_INICIO IS NOT NULL) AS VARCHAR2(4)) as "n_partgrupoini"
+			  ,CAST((SELECT COUNT(*) 
+			    FROM SGCORESYS.HR_EVALCASPOSTULANTE 
+			    WHERE FECHA_FIN IS NOT NULL 
+			          AND ID_EVALCAS IN (SELECT ID_EVALCAS 
+			                             FROM SGCORESYS.HR_EVALCASGRUPOS 
+			                             WHERE REQUERIMIENTO = A.REQUERIMIENTO)) AS VARCHAR2(4)) as "n_partotaleval"
+		        ,CAST(
+		           NVL(
+		             (SELECT SUM(Z.FLAGASISTIO) 
+		              FROM SGCORESYS.HR_POSREQUER Z WHERE Z.REQUERIMIENTO = A.REQUERIMIENTO 
+		                    AND Z.SECUENCIA = 2 
+		                    AND TO_CHAR(A.FECHA_EVALUACION, 'DD/MM/YYYY HH:MI:SS A.M.') = 
+		                    TO_CHAR(Z.FECHAGRUPOCONOC, 'DD/MM/YYYY HH:MI:SS A.M.'))
+		               ,'0') AS VARCHAR2(4)) as "valor_n"                            
+			FROM SGCORESYS.HR_EVALCASGRUPOS A
+			INNER JOIN SGCORESYS.HR_REQUERIMIENTO B ON B.REQUERIMIENTO = A.REQUERIMIENTO AND B.ESTADO <> 'TE'
+			INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = B.CODIGOPUESTO
+			INNER JOIN SGCORESYS.HR_POSICIONEMPRESA C ON C.CODIGOPOSICION = D.CODIGOPOSICION
+			INNER JOIN (SELECT DISTINCT
+			              MIN(E2.FECHA_EVALUACION) OVER (PARTITION BY E2.REQUERIMIENTO) FECHA_EVALUACION,
+			              MAX(E2.FLG_ESTADO) OVER (PARTITION BY E2.REQUERIMIENTO) FLG_ESTADO
+			            FROM SGCORESYS.HR_EVALCASGRUPOS E2
+			            INNER JOIN SGCORESYS.HR_POSREQUER B ON B.REQUERIMIENTO = E2.REQUERIMIENTO AND TO_CHAR(E2.FECHA_EVALUACION, 'DD/MM/YYYY HH:MI:SS A.M.') = TO_CHAR(B.FECHAGRUPOCONOC, 'DD/MM/YYYY HH:MI:SS A.M.') 
+			            WHERE FLG_ESTADO>0) E ON E.FECHA_EVALUACION = A.FECHA_EVALUACION AND E.FLG_ESTADO = A.FLG_ESTADO
+			WHERE A.FLG_ESTADO > 0 
+			      AND (UPPER(B.CONVOCATORIA) LIKE UPPER('%' || NVL(:pid_convocatoria,:pid_puesto) || '%')
+            	  		OR UPPER(D.DESCRIPCION) LIKE UPPER('%' || NVL(:pid_puesto,:pid_convocatoria) || '%'))
+			ORDER BY 3            
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.valInicioHrEvalCas">
+		<![CDATA[
+			SELECT 
+			   CAST(SGCORESYS.FN_HR_EVALCAS_VALINICIO(:pid_evalcas) AS VARCHAR2(1)) as "estado"
+			FROM SGCORESYS.HR_EVALCASGRUPOS A
+      		WHERE A.ID_EVALCAS = :pid_evalcas
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.valCierreHrEvalCas">
+		<![CDATA[
+			SELECT 
+			   CAST(A.FLG_ESTADO AS VARCHAR2(4)) as "estado"
+			FROM SGCORESYS.HR_EVALCASGRUPOS A
+			WHERE A.ID_EVALCAS = :pid_evalcas
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.editarHrEvalCas">
+		{ CALL
+		SGCORESYS.SP_HR_INICIAREXAMEN(:pid_requerimiento, :pid_evalcas)
+		}
+	</sql-query>
+	<sql-query name="hrencuesta.finalizarHrEvalCas">
+		{ CALL
+		SGCORESYS.SP_HR_FINALIZAREXAMEN(:pid_requerimiento,
+		:pid_evalcas) }
+	</sql-query>
+	<sql-query name="hrencuesta.verPostulanteHrEvalCas">
+		<![CDATA[
+    		SELECT 
+    			 CAST(C.APELLIDOPATERNO||' '||C.APELLIDOMATERNO||' '||C.NOMBRES AS VARCHAR2(300)) as "postulante",
+    			 C.POSTULANTE AS "idpostulante",
+    			 CAST('00' AS VARCHAR2(4)) as "puntaje",
+    			 CAST(NVL(B.FLAGASISTIO,1)||'-'||C.POSTULANTE AS VARCHAR2(15)) as "asistencia",
+    			 NVL(C.DOCUMENTO,C.CARNETEXTRANJERIA) as "documento",
+    			 C.TIPODOCUMENTO as "tipodocumento"
+    		FROM SGCORESYS.HR_EVALCASGRUPOS A
+    		INNER JOIN SGCORESYS.HR_POSREQUER B ON B.REQUERIMIENTO = A.REQUERIMIENTO AND TO_CHAR(A.FECHA_EVALUACION, 'DD/MM/YYYY HH:MI:SS A.M.') = TO_CHAR(B.FECHAGRUPOCONOC, 'DD/MM/YYYY HH:MI:SS A.M.') 
+    		INNER JOIN SGCORESYS.HR_POSTULANTES C ON B.POSTULANTE = C.POSTULANTE
+    		   inner join sgcoresys.hr_evalrequerimiento ER on
+         ER.REQUERIMIENTO = B.REQUERIMIENTO AND 
+         ER.SECUENCIA = B.SECUENCIA
+            WHERE ER.EVALUACION = 3
+                AND A.ID_EVALCAS = :pid_evalcas
+            order by 1
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.verPostulanteHrEvalCas2">
+		<![CDATA[
+             	SELECT 	
+    			 CAST(C.APELLIDOPATERNO||' '||C.APELLIDOMATERNO||' '||C.NOMBRES AS VARCHAR2(300)) as "postulante", 
+    			 C.POSTULANTE AS "idpostulante",
+    			 CAST(NVL((SELECT SUM(FLG_CORRECTA)*( md.valorcodigo4 ) FROM SGCORESYS.HR_EVALCASPOSRESPUESTA T WHERE POSTULANTE = A.POSTULANTE AND ID_EVALCAS = :pid_evalcas),'00') AS VARCHAR2(4)) as "puntaje",
+    			 CAST(NVL(A.FLG_ASISTENCIA,0)||'-'||C.POSTULANTE AS VARCHAR2(15)) as "asistencia",
+    			 NVL(C.DOCUMENTO,C.CARNETEXTRANJERIA) as "documento",
+    			 C.TIPODOCUMENTO as "tipodocumento",
+    			 TO_CHAR(A.FECHA_FIN,'dd/MM/yyyy HH24:MI:SS') as "fechafinexamen",
+    			 TO_CHAR(A.FECHA_INICIO,'dd/MM/yyyy HH24:MI:SS') as "fechainicioexamen",
+    			 CANT_SALIDA_EVAL as "cantsalidaexamen"
+    		FROM SGCORESYS.HR_EVALCASPOSTULANTE A
+    		INNER JOIN SGCORESYS.HR_POSTULANTES C ON A.POSTULANTE = C.POSTULANTE 
+        INNER JOIN sgcoresys.HR_EVALCASGRUPOS eg ON eg.ID_EVALCAS = A.ID_EVALCAS
+        inner join sgcoresys.hr_requerimiento r on eg.requerimiento = r.requerimiento 
+        inner join sgcoresys.hr_puestoempresa e on e.codigopuesto = r.codigopuesto
+        inner join sgcoresys.ma_miscelaneosdetalle md
+              on md.codigotabla = 'CONVMAESTR' AND md.CODIGOELEMENTO = nvl(e.flagtipopuesto,'C')
+            WHERE A.ID_EVALCAS = :pid_evalcas
+            order by 1
+            
+		]]>
+	</sql-query>
+
+	<sql-query name="hrencuesta.datosPostulanteExamen">
+		<![CDATA[
+    		SELECT 
+    			 CAST(C.APELLIDOPATERNO||' '||C.APELLIDOMATERNO||' '||C.NOMBRES AS VARCHAR2(300)) as "postulante",
+    			 C.POSTULANTE AS "idpostulante",
+    			 NVL(C.DOCUMENTO,C.CARNETEXTRANJERIA) as "documento",
+    			 C.TIPODOCUMENTO as "tipodocumento",
+    			 TO_CHAR(A.FECHA_FIN,'dd/MM/yyyy HH24:MI:SS') as "fechafinexamen",
+    			 TO_CHAR(A.FECHA_INICIO,'dd/MM/yyyy HH24:MI:SS') as "fechainicioexamen",
+    			 CANT_SALIDA_EVAL as "cantsalidaexamen",
+    			 (SELECT COUNT(*) FROM sgcoresys.seguridadsession SS WHERE C.POSTULANTE = SS.USUARIOCREACION and estado = '1') as "cantsession",
+    			 (SELECT COUNT(*) FROM sgcoresys.hr_evalcasposrespuesta SS WHERE SS.POSTULANTE=C.POSTULANTE AND SS.ID_EVALCAS=A.ID_EVALCAS) as "pregRespondidas"
+    			FROM SGCORESYS.HR_EVALCASPOSTULANTE A
+    		INNER JOIN SGCORESYS.HR_POSTULANTES C ON A.POSTULANTE = C.POSTULANTE 
+	        INNER JOIN sgcoresys.HR_EVALCASGRUPOS eg ON eg.ID_EVALCAS = A.ID_EVALCAS
+	        inner join sgcoresys.hr_requerimiento r on eg.requerimiento = r.requerimiento 
+	        inner join sgcoresys.hr_puestoempresa e on e.codigopuesto = r.codigopuesto
+	        inner join sgcoresys.ma_miscelaneosdetalle md
+              on md.codigotabla = 'CONVMAESTR' AND md.CODIGOELEMENTO = nvl(e.flagtipopuesto,'C')
+            WHERE A.ID_EVALCAS = :pid_evalcas and A.POSTULANTE = :pid_postulante
+		]]>
+	</sql-query>
+
+	<sql-query name="hrencuesta.datosPostulanteExamenCEU">
+		<![CDATA[
+    		SELECT 
+    			 CAST(C.APELLIDOPATERNO||' '||C.APELLIDOMATERNO||' '||C.NOMBRES AS VARCHAR2(300)) as "postulante",
+    			 C.POSTULANTE AS "idpostulante",
+    			 NVL(C.DOCUMENTO,C.CARNETEXTRANJERIA) as "documento",
+    			 C.TIPODOCUMENTO as "tipodocumento",
+    			 TO_CHAR(A.FECHA_FIN,'dd/MM/yyyy HH24:MI:SS') as "fechafinexamen",
+    			 TO_CHAR(A.FECHA_INICIO,'dd/MM/yyyy HH24:MI:SS') as "fechainicioexamen",
+    			 A.CANT_SALIDA_EVAL as "cantsalidaexamen",
+    			 (SELECT COUNT(*) FROM sgcoresys.seguridadsession SS WHERE C.POSTULANTE = SS.USUARIOCREACION and estado = '1') as "cantsession",
+    			 (SELECT COUNT(*) FROM sgcoresys.hr_evalcasposrespuesta_ceu SS WHERE SS.POSTULANTE=C.POSTULANTE AND SS.ID_EVALCAS=A.ID_EVALCAS) as "pregRespondidas",
+    			 TO_CHAR(pr.inicio_sala,'dd/MM/yyyy HH24:MI:SS') as "inicio_sala",
+    			 TO_CHAR(pr.fin_sala,'dd/MM/yyyy HH24:MI:SS') as "fin_sala"
+    			FROM SGCORESYS.HR_EVALCASPOSTULANTE_CEU A
+    		INNER JOIN SGCORESYS.HR_POSTULANTES_CEU C ON A.POSTULANTE = C.POSTULANTE 
+	        INNER JOIN sgcoresys.HR_EVALCASGRUPOS_CEU eg ON eg.ID_EVALCAS = A.ID_EVALCAS
+	        inner join sgcoresys.hr_requerimiento_CEU r on eg.requerimiento = r.requerimiento 
+	        inner join sgcoresys.hr_posrequer_ceu pr 
+	        	ON pr.postulante = C.postulante and pr.requerimiento = r.requerimiento
+	        inner join sgcoresys.hr_puestoempresa e on e.codigopuesto = r.codigopuesto
+	        inner join sgcoresys.ma_miscelaneosdetalle md
+              on md.codigotabla = 'CONVMAESTR' AND md.CODIGOELEMENTO = nvl(e.flagtipopuesto,'C')
+            WHERE A.ID_EVALCAS = :pid_evalcas and A.POSTULANTE = :pid_postulante
+		]]>
+	</sql-query>
+
+
+	<sql-query name="hrencuesta.datosProceso">
+		<![CDATA[
+	      SELECT
+	          CASE B.PROCESO 
+				  WHEN 1 THEN 
+				  B.CONVOCATORIA
+				  WHEN 2 THEN 
+				  B.CONVOCATORIA||' (Segunda Convocatoria)'
+				  WHEN 3 THEN 
+				  B.CONVOCATORIA||' (Tercera Convocatoria)'
+				  WHEN 4 THEN 
+				  B.CONVOCATORIA||' (Cuarta Convocatoria)'
+				  WHEN 5 THEN 
+				  B.CONVOCATORIA||' (Quinta Convocatoria)'
+				  ELSE B.CONVOCATORIA||'-'||B.PROCESO
+			  END as "convocatoria",
+			  D.DESCRIPCION as "puesto"
+	      FROM SGCORESYS.HR_REQUERIMIENTO B 
+   		  INNER JOIN SGCORESYS.HR_EVALCASGRUPOS C ON B.REQUERIMIENTO = C.REQUERIMIENTO
+		  INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = B.CODIGOPUESTO
+		  WHERE B.REQUERIMIENTO = :pid_requerimiento
+	      ]]>
+	</sql-query>
+	<sql-query name="hrencuesta.listarHrEntrCas">
+		<![CDATA[
+			SELECT 
+				REQUERIMIENTO as "requerimiento",
+				NRO_REQUERIMIENTO as "nro_requerimiento",
+				PUESTO as "puesto",
+				UNIDAD as "unidad",
+				ESTADO as "estado",
+				N_ESTADO as "n_estado",
+				CAST(N_PARTAPTOS AS VARCHAR2(4)) as "n_partaptos",
+				CAST(N_PARTENTREVISTADOS AS VARCHAR2(4))	as "n_partentrevistados",
+				TO_CHAR(FECHA_ENTREVISTA, 'DD-MM-YYYY HH24:MI:SS')	as "fecha"
+			FROM (	SELECT 
+					 B.REQUERIMIENTO
+				    ,CASE B.PROCESO 
+						  WHEN 1 THEN 
+						  B.CONVOCATORIA
+						  WHEN 2 THEN 
+						  B.CONVOCATORIA||' (Segunda Convocatoria)'
+						  WHEN 3 THEN 
+						  B.CONVOCATORIA||' (Tercera Convocatoria)'
+						  WHEN 4 THEN 
+						  B.CONVOCATORIA||' (Cuarta Convocatoria)'
+						  WHEN 5 THEN 
+						  B.CONVOCATORIA||' (Quinta Convocatoria)'
+						  ELSE B.CONVOCATORIA||'-'||B.PROCESO
+				     END as NRO_REQUERIMIENTO
+				    ,D.DESCRIPCION as PUESTO
+				    ,C.DESCRIPCION as UNIDAD
+				    ,CASE WHEN SGCORESYS.FN_HR_ENTRCASLSTSTDN(B.REQUERIMIENTO) = '1' THEN 'POR INICIAR'
+				          WHEN SGCORESYS.FN_HR_ENTRCASLSTSTDN(B.REQUERIMIENTO) = '2' THEN 'EN PROCESO'
+				          WHEN SGCORESYS.FN_HR_ENTRCASLSTSTDN(B.REQUERIMIENTO) = '3' THEN 'CONCLUIDO'
+				          WHEN SGCORESYS.FN_HR_ENTRCASLSTSTDN(B.REQUERIMIENTO) = '4' THEN 'POR CERRAR'
+				     END	as ESTADO
+				    ,CAST(SGCORESYS.FN_HR_ENTRCASLSTSTDN(B.REQUERIMIENTO) AS VARCHAR2(1))  as N_ESTADO
+				    ,A.N_PARTAPTOS
+					,A.N_PARTENTREVISTADOS
+					,A.FECHA_ENTREVISTA
+					,(SELECT TRUNC(MAX(Z.FECHA_ENTREVISTA))+1 FROM SGCORESYS.HR_ENTRCASPOSTULANTE Z WHERE Z.REQUERIMIENTO = B.REQUERIMIENTO) AS LAST_FECHA_ENTREVISTA
+				FROM SGCORESYS.HR_ENTRCASGRUPOS A
+				INNER JOIN SGCORESYS.HR_EVALREQUERIMIENTO_2 R ON R.REQUERIMIENTO = A.REQUERIMIENTO AND R.EMPLEADOSUPLENTE = :pid_usuario			
+				INNER JOIN SGCORESYS.HR_REQUERIMIENTO B ON B.REQUERIMIENTO = A.REQUERIMIENTO
+				INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = B.CODIGOPUESTO
+				INNER JOIN SGCORESYS.HR_POSICIONEMPRESA C ON C.CODIGOPOSICION = D.CODIGOPOSICION )
+			WHERE ESTADO != 'CONCLUIDO' OR SYSDATE < LAST_FECHA_ENTREVISTA
+			  group by
+     		REQUERIMIENTO ,
+			NRO_REQUERIMIENTO,
+			PUESTO,
+			UNIDAD,
+			ESTADO,
+			N_ESTADO,
+			CAST(N_PARTAPTOS AS VARCHAR2(4)) ,
+			CAST(N_PARTENTREVISTADOS AS VARCHAR2(4)),
+			TO_CHAR(FECHA_ENTREVISTA, 'DD-MM-YYYY HH24:MI:SS')
+			ORDER BY TO_CHAR(FECHA_ENTREVISTA, 'DD-MM-YYYY HH24:MI:SS') DESC
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.ingresarHrEntrCas">
+		<![CDATA[
+	      SELECT 
+	           A.REQUERIMIENTO as "requerimiento"
+	          ,CAST(B.ORDEN AS VARCHAR2(4)) as "orden"
+	          ,C.POSTULANTE as "idpostulante"
+	          ,C.APELLIDOPATERNO||' '||C.APELLIDOMATERNO||' '||C.NOMBRES as "postulante"
+	          ,CAST( SGCORESYS.FN_HR_ENTRCASESTADOS(:pid_requerimiento,:pid_usuario,B.POSTULANTE) AS VARCHAR2(20)) as "estado"
+	          ,CAST( SGCORESYS.FN_HR_ENTRCASESTADON(:pid_requerimiento,:pid_usuario,B.POSTULANTE) AS VARCHAR2(2))  as "n_estado"
+	          ,CAST( SGCORESYS.FN_HR_ENTRCASPUNTAJE(:pid_requerimiento,:pid_usuario,B.POSTULANTE) AS VARCHAR2(3))  as "puntaje"
+	      FROM SGCORESYS.HR_ENTRCASGRUPOS A
+	      INNER JOIN SGCORESYS.HR_ENTRCASPOSTULANTE B ON A.REQUERIMIENTO = B.REQUERIMIENTO
+	      INNER JOIN SGCORESYS.HR_POSTULANTES C ON B.POSTULANTE = C.POSTULANTE
+	      INNER JOIN SGCORESYS.HR_POSREQUER PR ON C.POSTULANTE = PR.POSTULANTE AND
+          B.REQUERIMIENTO = PR.REQUERIMIENTO
+	      WHERE B.REQUERIMIENTO = :pid_requerimiento AND
+                PR.FLAGPASOETAPA = 'S'
+	      ORDER BY B.ORDEN
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.listarAsistencia">
+		<![CDATA[
+			SELECT 
+				valor_n as "valor_n",
+				valor_s as "valor_s"
+			FROM SGCORESYS.HR_EVALCASASISTENCIA
+			WHERE FLG_ESTADO = 1
+			ORDER BY 1 ASC
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.listarPuntaje">
+		<![CDATA[
+			SELECT 
+				valor_n as "valor_n",
+				valor_s as "valor_s"
+			FROM SGCORESYS.HR_ENTRCASPUNTOS
+			 INNER JOIN SGCORESYS.HR_REQUERIMIENTO
+			     ON HR_ENTRCASPUNTOS.TIPORECLUTAMIENTO = 
+			     HR_REQUERIMIENTO.TIPORECLUTAMIENTO
+			WHERE FLG_ESTADO = 1 and 
+			FLAGTIPOPUESTO = :pid_tipo_puesto and
+			REQUERIMIENTO = :pid_requerimiento
+			ORDER BY 1 ASC
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.listarPuntajeEscala">
+		<![CDATA[
+			SELECT 
+				valor_n as "valor_n",
+				valor_s as "valor_s"
+			FROM SGCORESYS.HR_ENTRCASPUNTOS
+			     INNER JOIN SGCORESYS.HR_REQUERIMIENTO
+			     ON HR_ENTRCASPUNTOS.TIPORECLUTAMIENTO = 
+			     HR_REQUERIMIENTO.TIPORECLUTAMIENTO
+			WHERE FLG_ESTADO = 1 and valor_n > 0 and 
+			FLAGTIPOPUESTO = :pid_tipo_puesto and
+			REQUERIMIENTO = :pid_requerimiento
+			ORDER BY 1 ASC
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.listarAptitud">
+		<![CDATA[
+			SELECT 
+				CAST(ID_APTITUD AS VARCHAR2(2)) as "idaptitud"
+				,APTITUD as "aptitud"
+				,PESO as "peso"
+				,PUNTAJE_MAXIMO as "puntajemaximo"
+				,(SGCORESYS.FN_HR_ENTRCASPOSAPTPNT(:pid_requerimiento,:pid_usuario,:pid_postulante,id_aptitud))  as "puntaje"
+			FROM SGCORESYS.HR_ENTRCASAPTITUD inner join
+			     SGCORESYS.HR_REQUERIMIENTO
+			     ON HR_ENTRCASAPTITUD.TIPORECLUTAMIENTO = 
+			     HR_REQUERIMIENTO.TIPORECLUTAMIENTO
+			WHERE FLG_ESTADO = 1 AND
+			      FLAGTIPOPUESTO = :pid_tipo_puesto and
+			      REQUERIMIENTO = :pid_requerimiento
+			ORDER BY ID_APTITUD
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.listarConducta">
+		<![CDATA[
+			SELECT
+                ROWNUM AS "secuencia",
+                CAST(REC.ID_CONDUCTA AS VARCHAR2(2)) as "idconducta"
+                ,REC.CONDUCTA as "conducta",
+                REC.puntaje as "puntaje"
+            FROM(
+            SELECT 
+				E.ID_CONDUCTA,
+				E.CONDUCTA,
+				(SELECT DET.N_PUNTUACION || '-' || DET.ID_APTITUD || '-' || DET.ID_CONDUCTA FROM SGCORESYS.HR_ENTRCASPOSPUNTUACION_DET DET
+				 WHERE 
+				       DET.REQUERIMIENTO = :pid_requerimiento AND
+				       DET.POSTULANTE = :pid_postulante AND
+				       DET.USUARIO = :pid_usuario AND
+				       DET.ID_APTITUD = E.ID_APTITUD AND
+				       DET.ID_CONDUCTA = E.ID_CONDUCTA)  puntaje
+			FROM SGCORESYS.HR_ENTRCASCONDUCTA E
+			WHERE E.FLG_ESTADO = 1 AND
+			      E.ID_APTITUD = :pid_aptitud
+			ORDER BY E.ID_CONDUCTA) REC
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.validaPuntos">
+		<![CDATA[
+	      SELECT 
+	          CAST( SGCORESYS.FN_HR_ENTRCASLSTSTDNXENT2(:pid_requerimiento,:pid_usuario) AS VARCHAR2(2))  as "n_estado",
+	          CASE B.PROCESO 
+				  WHEN 1 THEN 
+				  B.CONVOCATORIA
+				  WHEN 2 THEN 
+				  B.CONVOCATORIA||' (Segunda Convocatoria)'
+				  WHEN 3 THEN 
+				  B.CONVOCATORIA||' (Tercera Convocatoria)'
+				  WHEN 4 THEN 
+				  B.CONVOCATORIA||' (Cuarta Convocatoria)'
+				  WHEN 5 THEN 
+				  B.CONVOCATORIA||' (Quinta Convocatoria)'
+				  ELSE B.CONVOCATORIA||'-'||B.PROCESO
+			  END as "convocatoria",
+			  D.DESCRIPCION as "puesto",
+			  CAST(C.FLG_ESTADO AS VARCHAR2(2)) as "estado",
+			  NVL(D.FLAGTIPOPUESTO,'C') as "flagtipopuesto"
+	      FROM SGCORESYS.HR_REQUERIMIENTO B 
+   		  INNER JOIN SGCORESYS.HR_ENTRCASGRUPOS C ON B.REQUERIMIENTO = C.REQUERIMIENTO
+		  INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = B.CODIGOPUESTO
+		  WHERE B.REQUERIMIENTO = :pid_requerimiento
+	      ]]>
+	</sql-query>
+	<sql-query name="hrencuesta.validaCierre">
+		<![CDATA[
+	      SELECT 
+	          CAST( SGCORESYS.FN_HR_VALIDACIERRE(:pid_requerimiento) AS VARCHAR2(2))  as "n_estado"
+	      FROM DUAL		
+	      ]]>
+	</sql-query>
+	<sql-query name="hrencuesta.validarIngreso">
+		<![CDATA[
+	      SELECT 
+	          CAST( SGCORESYS.FN_HR_VALIDAINGRESO(:pid_requerimiento) AS VARCHAR2(2))  as "estado"
+	      FROM DUAL		
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.cerrarHrEntrCas">
+		{ CALL
+		SGCORESYS.SP_HR_CERRARENTREVISTA(:pid_requerimiento) }
+	</sql-query>
+	<sql-query name="hrencuesta.nspHrEntrCasPost">
+		{ CALL
+		SGCORESYS.SP_HR_ENTRCASPOSTNSP(:pid_requerimiento,
+		:pid_postulante) }
+	</sql-query>
+	<sql-query name="hrencuesta.nspHrEntrCasPost2">
+		{ CALL
+		SGCORESYS.SP_HR_ENTRCASPOSTSSP(:pid_requerimiento,
+		:pid_postulante) }
+	</sql-query>
+	<sql-query name="hrencuesta.enviarPuntaje">
+		{ CALL
+		SGCORESYS.SP_HR_ENTRCASFLGCIERRE(:pid_requerimiento,
+		:pid_usuario) }
+	</sql-query>
+	<sql-query name="hrencuesta.verBotones">
+		<![CDATA[
+	      	SELECT   
+	          CAST( FLG_ESTADO AS VARCHAR2(2))  as "n_estado",
+	          CAST( SGCORESYS.FN_HR_ENTRCASLSTSTDNXENT(:pid_requerimiento,:pid_usuario) AS VARCHAR2(2))  as "estado",
+	          CAST(CASE 
+	          	  WHEN FLG_ESTADO = 0 OR SGCORESYS.FN_HR_ENTRCASLSTSTDNXENT(:pid_requerimiento,:pid_usuario) = 0 THEN 1
+	          	  ELSE 0 END AS VARCHAR(2)) as "visible",
+	      	  CAST( NVL(FLG_NSP,0) AS VARCHAR2(2))  as "flg_nsp",    
+	      	  CAST( NVL(SGCORESYS.FN_HR_NEXTPOST(:pid_requerimiento,:pid_postulante),0) AS VARCHAR2(10))  as "next_po",
+	      	  CASE C.PROCESO 
+				  WHEN 1 THEN 
+				  C.CONVOCATORIA
+				  WHEN 2 THEN 
+				  C.CONVOCATORIA||' (Segunda Convocatoria)'
+				  WHEN 3 THEN 
+				  C.CONVOCATORIA||' (Tercera Convocatoria)'
+				  WHEN 4 THEN 
+				  C.CONVOCATORIA||' (Cuarta Convocatoria)'
+				  WHEN 5 THEN 
+				  C.CONVOCATORIA||' (Quinta Convocatoria)'
+				  ELSE C.CONVOCATORIA||'-'||C.PROCESO
+			  END as "convocatoria",
+			  D.DESCRIPCION as "puesto",
+			  E.APELLIDOPATERNO||' '||E.APELLIDOMATERNO||' '||E.NOMBRES as "nompostulante",
+			  CAST( SGCORESYS.FN_HR_ENTRCASPUNTAJE(:pid_requerimiento,:pid_usuario,:pid_postulante) AS VARCHAR2(3))  as "puntaje",
+			  NVL(D.FLAGTIPOPUESTO,'C') as "flagtipopuesto"
+			FROM SGCORESYS.HR_ENTRCASGRUPOS A
+			INNER JOIN SGCORESYS.HR_ENTRCASPOSTULANTE B ON A.REQUERIMIENTO = B.REQUERIMIENTO
+			INNER JOIN SGCORESYS.HR_REQUERIMIENTO C ON C.REQUERIMIENTO = A.REQUERIMIENTO
+		  	INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = C.CODIGOPUESTO
+		  	INNER JOIN SGCORESYS.HR_POSICIONEMPRESA F ON F.CODIGOPOSICION = D.CODIGOPOSICION
+			INNER JOIN SGCORESYS.HR_POSTULANTES E ON E.POSTULANTE = B.POSTULANTE
+		  	WHERE 
+			     A.REQUERIMIENTO = :pid_requerimiento
+			     AND B.POSTULANTE  = :pid_postulante		
+	      ]]>
+	</sql-query>
+	<sql-query name="hrencuesta.verDatosReportePost">
+		<![CDATA[
+	      	SELECT   
+			  E.APELLIDOPATERNO||' '||E.APELLIDOMATERNO||' '||E.NOMBRES as "nompostulante",	
+			  D.DESCRIPCION as "puesto",
+			  F.DESCRIPCION as "unidad",
+			  TO_CHAR(B.FECHA_ENTREVISTA, 'DD-MM-YYYY') as "fecha", 
+	      	  CASE C.PROCESO 
+				  WHEN 1 THEN 
+				  C.CONVOCATORIA
+				  WHEN 2 THEN 
+				  C.CONVOCATORIA||' (Segunda Convocatoria)'
+				  WHEN 3 THEN 
+				  C.CONVOCATORIA||' (Tercera Convocatoria)'
+				  WHEN 4 THEN 
+				  C.CONVOCATORIA||' (Cuarta Convocatoria)'
+				  WHEN 5 THEN 
+				  C.CONVOCATORIA||' (Quinta Convocatoria)'
+				  ELSE C.CONVOCATORIA||'-'||C.PROCESO
+			  END as "convocatoria",			  
+			  TO_CHAR(B.FECHA_ENTREVISTA, 'HH24:MI:SS') as "hora",
+			  CAST(B.N_PUNTAJE AS VARCHAR2(3)) as "puntaje"
+			FROM SGCORESYS.HR_ENTRCASGRUPOS A
+			INNER JOIN SGCORESYS.HR_ENTRCASPOSTULANTE B ON A.REQUERIMIENTO = B.REQUERIMIENTO
+			INNER JOIN SGCORESYS.HR_REQUERIMIENTO C ON C.REQUERIMIENTO = A.REQUERIMIENTO
+		  	INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = C.CODIGOPUESTO
+		  	INNER JOIN SGCORESYS.HR_POSICIONEMPRESA F ON F.CODIGOPOSICION = D.CODIGOPOSICION
+			INNER JOIN SGCORESYS.HR_POSTULANTES E ON E.POSTULANTE = B.POSTULANTE
+		  	WHERE 
+			     A.REQUERIMIENTO = :pid_requerimiento
+			     AND B.POSTULANTE  = :pid_postulante		
+	      ]]>
+	</sql-query>
+	<sql-query name="hrencuesta.verDatosReporteProc">
+		<![CDATA[
+			SELECT   
+			D.DESCRIPCION as "puesto",
+			F.DESCRIPCION as "unidad",
+			TO_CHAR(A.FECHA_FIN, 'DD-MM-YYYY') as "fecha", 
+			CASE C.PROCESO 
+				  WHEN 1 THEN 
+				  C.CONVOCATORIA
+				  WHEN 2 THEN 
+				  C.CONVOCATORIA||' (Segunda Convocatoria)'
+				  WHEN 3 THEN 
+				  C.CONVOCATORIA||' (Tercera Convocatoria)'
+				  WHEN 4 THEN 
+				  C.CONVOCATORIA||' (Cuarta Convocatoria)'
+				  WHEN 5 THEN 
+				  C.CONVOCATORIA||' (Quinta Convocatoria)'
+				  ELSE C.CONVOCATORIA||'-'||C.PROCESO
+			  END as "convocatoria",
+			TO_CHAR(A.FECHA_FIN, 'HH24:MI:SS') as "hora"
+			FROM SGCORESYS.HR_ENTRCASGRUPOS A
+			INNER JOIN SGCORESYS.HR_REQUERIMIENTO C ON C.REQUERIMIENTO = A.REQUERIMIENTO
+			INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = C.CODIGOPUESTO
+			INNER JOIN SGCORESYS.HR_POSICIONEMPRESA F ON F.CODIGOPOSICION = D.CODIGOPOSICION
+			WHERE 
+			   A.REQUERIMIENTO = :pid_requerimiento
+	      ]]>
+	</sql-query>
+	<sql-query name="hrencuesta.verEntrevistadores">
+		<![CDATA[
+		  
+      	SELECT REQUERIMIENTO as "requerimiento", 
+          nombreCOMPLETO as "nombreevaluadores",
+	      	CAST( SG AS VARCHAR2(2)) as "tipo_sg", 
+	      	CAST( AU AS VARCHAR2(2)) as "tipo_au", 
+	      	CAST( RH AS VARCHAR2(2)) as "tipo_rh", 
+	      	CAST( OA AS VARCHAR2(2)) as "tipo_oa", 
+	      	CAST( PD AS VARCHAR2(2)) as "tipo_pd"
+	      	FROM (
+			  SELECT REQUERIMIENTO, TIPOEVALUADOR, P.NOMBRECOMPLETO
+			  FROM SGCORESYS.HR_EVALREQUERIMIENTO_2 inner join
+             SGCORESYS.PERSONAMAST p
+             ON HR_EVALREQUERIMIENTO_2.EMPLEADOSUPLENTE = p.persona
+			  WHERE REQUERIMIENTO = :pid_requerimiento 
+			  	AND SECUENCIA = :pid_secuencia
+			  	AND EMPLEADOSUPLENTE IS NOT NULL
+			)
+			PIVOT 
+			(
+			  COUNT(TIPOEVALUADOR)
+			  FOR TIPOEVALUADOR IN ('03' AS SG,'02' AS AU,'05' AS RH,'01' AS OA,'04' AS PD)
+			)
+			ORDER BY REQUERIMIENTO		
+	      ]]>
+	</sql-query>
+	<sql-query name="hrencuesta.verPuntosReportePost">
+		<![CDATA[
+			SELECT 
+			  APTITUD as "aptitud",
+			  CAST( NVL(SGCORESYS.FN_HR_PUNTOS(:pid_requerimiento, :pid_postulante, e.ID_APTITUD, '01'),0) AS VARCHAR2(2)) as "ptipo_oa",
+			  CAST( NVL(SGCORESYS.FN_HR_PUNTOS(:pid_requerimiento, :pid_postulante, e.ID_APTITUD, '02'),0) AS VARCHAR2(2)) as "ptipo_au",
+			  CAST( NVL(SGCORESYS.FN_HR_PUNTOS(:pid_requerimiento, :pid_postulante, e.ID_APTITUD, '03'),0) AS VARCHAR2(2)) as "ptipo_sg",
+			  CAST( NVL(SGCORESYS.FN_HR_PUNTOS(:pid_requerimiento, :pid_postulante, e.ID_APTITUD, '04'),0) AS VARCHAR2(2)) as "ptipo_pd",
+			  CAST( NVL(SGCORESYS.FN_HR_PUNTOS(:pid_requerimiento, :pid_postulante, e.ID_APTITUD, '05'),0) AS VARCHAR2(2)) as "ptipo_rh"
+			FROM  SGCORESYS.HR_ENTRCASAPTITUD e
+			      inner join sgcoresys.HR_REQUERIMIENTO r
+			      on e.TIPORECLUTAMIENTO = r.TIPORECLUTAMIENTO
+			WHERE FLAGTIPOPUESTO = NVL(:pid_tipopuesto,'C') and
+			      r.requerimiento = :pid_requerimiento
+			ORDER BY ID_APTITUD
+	      ]]>
+	</sql-query>
+	<sql-query name="hrencuesta.verSumPuntosReportePost">
+		<![CDATA[
+			SELECT 
+				CAST( NVL(SGCORESYS.FN_HR_SUMPUNTOS(:pid_requerimiento, :pid_postulante, '01'),0) AS VARCHAR2(2)) as "sumtipo_oa",
+				CAST( NVL(SGCORESYS.FN_HR_SUMPUNTOS(:pid_requerimiento, :pid_postulante, '02'),0) AS VARCHAR2(2)) as "sumtipo_au",
+				CAST( NVL(SGCORESYS.FN_HR_SUMPUNTOS(:pid_requerimiento, :pid_postulante, '03'),0) AS VARCHAR2(2)) as "sumtipo_sg",
+				CAST( NVL(SGCORESYS.FN_HR_SUMPUNTOS(:pid_requerimiento, :pid_postulante, '04'),0) AS VARCHAR2(2)) as "sumtipo_pd",
+				CAST( NVL(SGCORESYS.FN_HR_SUMPUNTOS(:pid_requerimiento, :pid_postulante, '05'),0) AS VARCHAR2(2)) as "sumtipo_rh",				
+				CAST( NVL(SGCORESYS.FN_HR_AVGSUMPUNTOS(:pid_requerimiento, :pid_postulante),0) AS VARCHAR2(6)) as "promedio"			
+			FROM  DUAL
+	      ]]>
+	</sql-query>
+	<sql-query name="hrencuesta.verPuntosReporteProc">
+		<![CDATA[
+			SELECT 
+			B.APELLIDOPATERNO||' '||B.APELLIDOMATERNO||' '||B.NOMBRES as "nompostulante",
+			CAST(A.FLG_NSP AS VARCHAR2(2)) as "flg_nsp", 
+			CAST( NVL(SGCORESYS.FN_HR_SUMPUNTOS(:pid_requerimiento, A.POSTULANTE, '01'),0) AS VARCHAR2(2)) as "ptipo_oa",
+			CAST( NVL(SGCORESYS.FN_HR_SUMPUNTOS(:pid_requerimiento, A.POSTULANTE, '02'),0) AS VARCHAR2(2)) as "ptipo_au",
+			CAST( NVL(SGCORESYS.FN_HR_SUMPUNTOS(:pid_requerimiento, A.POSTULANTE, '03'),0) AS VARCHAR2(2)) as "ptipo_sg",
+			CAST( NVL(SGCORESYS.FN_HR_SUMPUNTOS(:pid_requerimiento, A.POSTULANTE, '04'),0) AS VARCHAR2(2)) as "ptipo_pd",
+			CAST( NVL(SGCORESYS.FN_HR_SUMPUNTOS(:pid_requerimiento, A.POSTULANTE, '05'),0) AS VARCHAR2(2)) as "ptipo_rh",
+			CAST( NVL(SGCORESYS.FN_HR_AVGSUMPUNTOS(:pid_requerimiento, A.POSTULANTE),0) AS VARCHAR2(6)) as "puntaje"
+			FROM  SGCORESYS.HR_ENTRCASPOSTULANTE A
+			INNER JOIN SGCORESYS.HR_POSTULANTES B ON A.POSTULANTE = B.POSTULANTE
+			WHERE A.REQUERIMIENTO = :pid_requerimiento
+			ORDER BY ORDEN	      
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.registrarPunto">
+		{ CALL
+		SGCORESYS.SP_HR_ENTRCASREGPUNTO(:pid_requerimiento,
+		:pid_usuario,
+		:pid_postulante, :pid_aptitud, :pid_punto) }
+	</sql-query>
+
+	<sql-query name="hrencuesta.registrarPuntoConducta">
+		{ CALL
+		SGCORESYS.SP_HR_ENTRCASREGPUNTOCONDUCTA(:pid_requerimiento,
+		:pid_usuario,
+		:pid_postulante, :pid_aptitud, :pid_conducta, :pid_punto)
+		}
+	</sql-query>
+
+	<sql-query name="hrencuesta.registrarAsistencia">
+		{ CALL
+		SGCORESYS.SP_HR_EVALASREGASISTENCIA(:pid_requerimiento,
+		:pid_postulante, :pid_asistencia) }
+	</sql-query>
+	<sql-query name="hrencuesta.registrarAsistencia2">
+		{ CALL
+		SGCORESYS.SP_HR_EVALASREGASISTENCIA2(:pid_requerimiento, :pid_evalcas)
+		}
+	</sql-query>
+	<sql-query name="hrencuesta.validarClose">
+		<![CDATA[
+			SELECT 
+			    CAST(SGCORESYS.FN_HR_ENTRCASLSTSTDN(A.REQUERIMIENTO) AS VARCHAR2(1))  as "n_estado"
+			FROM SGCORESYS.HR_ENTRCASGRUPOS A
+			WHERE A.REQUERIMIENTO = :pid_requerimiento
+		]]>
+	</sql-query>
+
+
+
+
+
+	<sql-query name="hrencuesta.listarHrEvalFIFA">
+		<![CDATA[
+			 SELECT 
+         CAST(A.ID_EVALCAS AS VARCHAR2(5)) as "id_evalcas"
+        ,B.REQUERIMIENTO as "requerimiento"
+        ,CASE B.PROCESO 
+          WHEN 1 THEN 
+          B.CONVOCATORIA
+          WHEN 2 THEN 
+          B.CONVOCATORIA||' (Segunda Convocatoria)'
+          WHEN 3 THEN 
+          B.CONVOCATORIA||' (Tercera Convocatoria)'
+          WHEN 4 THEN 
+          B.CONVOCATORIA||' (Cuarta Convocatoria)'
+          WHEN 5 THEN 
+          B.CONVOCATORIA||' (Quinta Convocatoria)'
+          ELSE B.CONVOCATORIA||'-'||B.PROCESO
+         END as "nro_requerimiento"
+        ,D.DESCRIPCION as "puesto"
+        ,C.DESCRIPCION as "unidad"
+        ,CASE WHEN A.FLG_ESTADO = 1 THEN 'POR EVALUAR'
+              WHEN A.FLG_ESTADO = 2 THEN 'EVALUANDO'
+         END as "estado"
+        ,CAST(A.flg_estado AS VARCHAR2(1)) as "n_estado"
+        ,CAST((SELECT SUM(N_PARTICIPANTES) FROM SGCORESYS.HR_EVALCASGRUPOS_CEU WHERE REQUERIMIENTO = A.REQUERIMIENTO 
+        and CIUDAD = A.CIUDAD AND ESPECIALIDAD = A.ESPECIALIDAD AND CODIGOGRUPO = A.CODIGOGRUPO 
+        AND FECHA_EVALUACION = A.FECHA_EVALUACION) AS VARCHAR2(4)) as "n_partotal"
+        ,MIN(A.N_GRUPO) OVER (PARTITION BY A.REQUERIMIENTO,A.CODIGOGRUPO,A.ESPECIALIDAD, A.CIUDAD)||' de '||(SELECT COUNT(N_GRUPO) FROM SGCORESYS.HR_EVALCASGRUPOS_CEU 
+        WHERE REQUERIMIENTO = A.REQUERIMIENTO  and CIUDAD = A.CIUDAD AND ESPECIALIDAD = A.ESPECIALIDAD  AND CODIGOGRUPO = A.CODIGOGRUPO
+               AND FECHA_EVALUACION = A.FECHA_EVALUACION) as "n_grupo"
+        ,CAST(A.N_PARTICIPANTES AS VARCHAR2(4)) as "n_partgrupo"
+        ,CAST((SELECT COUNT(*) 
+          FROM SGCORESYS.HR_EVALCASPOSTULANTE_CEU 
+          WHERE ID_EVALCAS = A.ID_EVALCAS AND
+                ESPECIALIDAD = A.ESPECIALIDAD AND
+                GRUPOEXAMEN = A.CODIGOGRUPO
+                AND FECHA_INICIO IS NOT NULL) AS VARCHAR2(4)) as "n_partgrupoini"
+        ,CAST((SELECT COUNT(*) 
+          FROM SGCORESYS.HR_EVALCASPOSTULANTE_CEU 
+          WHERE FECHA_FIN IS NOT NULL AND 
+                 ESPECIALIDAD = A.ESPECIALIDAD AND
+                GRUPOEXAMEN = A.CODIGOGRUPO
+                AND ID_EVALCAS IN (SELECT ID_EVALCAS 
+                                   FROM SGCORESYS.HR_EVALCASGRUPOS_CEU 
+                                   WHERE REQUERIMIENTO = A.REQUERIMIENTO AND ESPECIALIDAD = A.ESPECIALIDAD AND
+                                    GRUPOEXAMEN = A.CODIGOGRUPO AND CIUDAD = A.CIUDAD)) AS VARCHAR2(4)) as "n_partotaleval"
+            ,CAST(
+               NVL(
+                 (SELECT SUM(Z.FLAGASISTIO)
+                        FROM
+                        SGCORESYS.HR_POSREQUER_CEU Z
+                        INNER JOIN      SGCORESYS.HR_POSTULANTES_RQ_CEU Z3
+                        ON (Z.REQUERIMIENTO=Z3.REQUERIMIENTO AND Z.POSTULANTE=Z3.POSTULANTE)            
+                        INNER JOIN
+                        SGCORESYS.HR_CARRERA Z2
+                        ON (Z3.REQUERIMIENTO=Z.REQUERIMIENTO AND Z3.POSTULANTE=Z.POSTULANTE 
+                        -- AND Z3.CODIGO_CIUDAD=A.CIUDAD 
+                        )
+                        INNER JOIN
+                        SGCORESYS.hr_postulanteinstruc_rq_ceU Z1            
+                        ON (Z2.CARRERA=Z1.CARRERA AND Z2.ESPECIALIDAD=A.ESPECIALIDAD AND Z2.CODIGOGRUPO=A.CODIGOGRUPO AND Z1.REQUERIMIENTO = Z3.REQUERIMIENTO AND Z1.POSTULANTE=Z3.POSTULANTE)            
+                        inner join           
+                        SGCORESYS.HR_EVALREQUERIMIENTO_CEU er
+                        on Z.Requerimiento = er.requerimiento
+                        and Z.Secuencia = er.secuencia and
+                        er.evaluacion = 3
+                        WHERE Z.REQUERIMIENTO = A.REQUERIMIENTO 
+                        AND TO_CHAR(A.FECHA_EVALUACION, 'DD/MM/YYYY HH:MI:SS A.M.') = 
+                        TO_CHAR(Z.FECHAGRUPOCONOC, 'DD/MM/YYYY HH:MI:SS A.M.'))
+                   ,'0') AS VARCHAR2(4)) as "valor_n",
+           A.CODIGOGRUPO as "codigogrupo",
+           A.ESPECIALIDAD as "especialidad",
+           cast(A.CIUDAD as varchar(10)) as "ciudad",
+           GE.DESCRIPCION AS "nombregrupo",
+           CIU.NOMBRECIUDAD || '  ' || CIU.DIRECCIONEXAMEN as "nombreciudad",
+             ec.descripcion as "nombreespecialidad",
+            TO_CHAR(A.fecha_evaluacion, 'DD/MM/YYYY HH:MI A.M.') AS "fecha_evaluacion"    
+      FROM SGCORESYS.HR_EVALCASGRUPOS_CEU A
+      INNER JOIN SGCORESYS.HR_REQUERIMIENTO_CEU B ON B.REQUERIMIENTO = A.REQUERIMIENTO AND B.ESTADO <> 'TE'
+      INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = B.CODIGOPUESTO
+      INNER JOIN SGCORESYS.HR_POSICIONEMPRESA C ON C.CODIGOPOSICION = D.CODIGOPOSICION
+      INNER JOIN SGCORESYS.HR_MA_GRUPOXEXAMEN_CEU GE 
+      ON GE.CODIGOGRUPO =  A.CODIGOGRUPO AND GE.ESPECIALIDAD = A.ESPECIALIDAD
+                                                       
+      INNER JOIN (SELECT DISTINCT
+                    MIN(FECHA_EVALUACION) OVER (PARTITION BY REQUERIMIENTO,CODIGOGRUPO,ESPECIALIDAD, CIUDAD,FECHA_EVALUACION) FECHA_EVALUACION,
+                    MAX(FLG_ESTADO) OVER (PARTITION BY REQUERIMIENTO,CODIGOGRUPO,ESPECIALIDAD, CIUDAD) FLG_ESTADO
+                  FROM SGCORESYS.HR_EVALCASGRUPOS_CEU WHERE FLG_ESTADO>0) E ON E.FECHA_EVALUACION = A.FECHA_EVALUACION AND E.FLG_ESTADO = A.FLG_ESTADO
+      INNER JOIN SGCORESYS.HR_MA_CIUDADES_CEU CIU on A.CIUDAD = CIU.SECUENCIAL AND NVL(CIU.FLAGEXAMEN,'N')='S'
+         LEFT JOIN SGCORESYS.HR_MA_ESPECIALIDAD_CEU EC 
+        ON A.ESPECIALIDAD = EC.ESPECIALIDAD AND EC.ORIGEN='F'
+      WHERE B.ORIGEN = 'F' and 
+            A.FLG_ESTADO > 0 AND
+            (CIU.RESPONSABLE01 = :pid_empleado or CIU.RESPONSABLE02 = :pid_empleado or CIU.RESPONSABLE03 = :pid_empleado or
+             CIU.RESPONSABLE04 = :pid_empleado or CIU.RESPONSABLE05 = :pid_empleado)
+			ORDER BY 3, TO_CHAR(A.fecha_evaluacion, 'DD/MM/YYYY HH:MI A.M.') ASC         
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.listarHrEvalFIFA2">
+		<![CDATA[
+			SELECT 
+         CAST(A.ID_EVALCAS AS VARCHAR2(5)) as "id_evalcas"
+        ,B.REQUERIMIENTO as "requerimiento"
+        ,CASE B.PROCESO 
+          WHEN 1 THEN 
+          B.CONVOCATORIA
+          WHEN 2 THEN 
+          B.CONVOCATORIA||' (Segunda Convocatoria)'
+          WHEN 3 THEN 
+          B.CONVOCATORIA||' (Tercera Convocatoria)'
+          WHEN 4 THEN 
+          B.CONVOCATORIA||' (Cuarta Convocatoria)'
+          WHEN 5 THEN 
+          B.CONVOCATORIA||' (Quinta Convocatoria)'
+          ELSE B.CONVOCATORIA||'-'||B.PROCESO
+         END as "nro_requerimiento"
+        ,D.DESCRIPCION as "puesto"
+        ,C.DESCRIPCION as "unidad"
+        ,CASE WHEN A.FLG_ESTADO = 1 THEN 'POR EVALUAR'
+              WHEN A.FLG_ESTADO = 2 THEN 'EVALUANDO'
+         END as "estado"
+        ,CAST(A.flg_estado AS VARCHAR2(1)) as "n_estado"
+        ,CAST((SELECT SUM(N_PARTICIPANTES) FROM SGCORESYS.HR_EVALCASGRUPOS_CEU X1 WHERE X1.REQUERIMIENTO = A.REQUERIMIENTO 
+        and  X1.CIUDAD = A.CIUDAD AND  X1.ESPECIALIDAD = A.ESPECIALIDAD AND  X1.CODIGOGRUPO = A.CODIGOGRUPO
+        AND X1.FECHA_EVALUACION=A.FECHA_EVALUACION) AS VARCHAR2(4)) as "n_partotal"
+        ,MIN(A.N_GRUPO) OVER (PARTITION BY A.REQUERIMIENTO,A.CODIGOGRUPO,A.ESPECIALIDAD, A.CIUDAD)||' de '||(SELECT COUNT(N_GRUPO) FROM SGCORESYS.HR_EVALCASGRUPOS_CEU 
+        WHERE REQUERIMIENTO = A.REQUERIMIENTO  and CIUDAD = A.CIUDAD AND ESPECIALIDAD = A.ESPECIALIDAD  AND CODIGOGRUPO = A.CODIGOGRUPO) as "n_grupo"
+        ,CAST(A.N_PARTICIPANTES AS VARCHAR2(4)) as "n_partgrupo"
+        ,CAST((SELECT COUNT(*) 
+          FROM SGCORESYS.HR_EVALCASPOSTULANTE_CEU 
+          WHERE ID_EVALCAS = A.ID_EVALCAS AND
+                ESPECIALIDAD = A.ESPECIALIDAD AND
+                GRUPOEXAMEN = A.CODIGOGRUPO
+                AND FECHA_INICIO IS NOT NULL) AS VARCHAR2(4)) as "n_partgrupoini"
+        ,CAST((SELECT COUNT(*) 
+          FROM SGCORESYS.HR_EVALCASPOSTULANTE_CEU 
+          WHERE FECHA_FIN IS NOT NULL AND 
+                 ESPECIALIDAD = A.ESPECIALIDAD AND
+                GRUPOEXAMEN = A.CODIGOGRUPO
+                AND ID_EVALCAS IN (SELECT ID_EVALCAS 
+                                   FROM SGCORESYS.HR_EVALCASGRUPOS_CEU 
+                                   WHERE REQUERIMIENTO = A.REQUERIMIENTO AND ESPECIALIDAD = A.ESPECIALIDAD AND
+                                    GRUPOEXAMEN = A.CODIGOGRUPO AND CIUDAD = A.CIUDAD)) AS VARCHAR2(4)) as "n_partotaleval"
+            ,CAST(
+               NVL(
+                 (SELECT SUM(Z.FLAGASISTIO) 
+                  FROM SGCORESYS.HR_POSREQUER_CEU Z
+                    inner join
+                        SGCORESYS.HR_EVALREQUERIMIENTO_CEU er
+                        on Z.Requerimiento = er.requerimiento 
+                        and Z.Secuencia = er.secuencia and
+                        er.evaluacion = 3
+                        WHERE Z.REQUERIMIENTO = A.REQUERIMIENTO 
+                        AND TO_CHAR(A.FECHA_EVALUACION, 'DD/MM/YYYY HH:MI:SS A.M.') = 
+                        TO_CHAR(Z.FECHAGRUPOCONOC, 'DD/MM/YYYY HH:MI:SS A.M.'))
+                   ,'0') AS VARCHAR2(4)) as "valor_n",
+           A.CODIGOGRUPO as "codigogrupo",
+             A.ESPECIALIDAD as "especialidad",
+               cast(A.CIUDAD as varchar(10)) as "ciudad",
+           GE.DESCRIPCION AS "nombregrupo",
+           CIU.NOMBRECIUDAD || '  ' || CIU.DIRECCIONEXAMEN as "nombreciudad",
+            ec.descripcion as "nombreespecialidad",
+            TO_CHAR(A.fecha_evaluacion, 'DD/MM/YYYY HH:MI A.M.') AS "fecha_evaluacion"
+
+      FROM SGCORESYS.HR_EVALCASGRUPOS_CEU A
+      INNER JOIN SGCORESYS.HR_REQUERIMIENTO_CEU B ON B.REQUERIMIENTO = A.REQUERIMIENTO AND B.ESTADO <> 'TE'
+      INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = B.CODIGOPUESTO
+      INNER JOIN SGCORESYS.HR_POSICIONEMPRESA C ON C.CODIGOPOSICION = D.CODIGOPOSICION
+      INNER JOIN SGCORESYS.HR_MA_GRUPOXEXAMEN_CEU GE ON (GE.CODIGOGRUPO =  A.CODIGOGRUPO AND GE.ESPECIALIDAD = A.ESPECIALIDAD)
+                                                       
+      INNER JOIN (SELECT DISTINCT
+                    MIN(FECHA_EVALUACION) OVER (PARTITION BY REQUERIMIENTO,CODIGOGRUPO,ESPECIALIDAD, CIUDAD,FECHA_EVALUACION) FECHA_EVALUACION,
+                    MAX(FLG_ESTADO) OVER (PARTITION BY REQUERIMIENTO,CODIGOGRUPO,ESPECIALIDAD, CIUDAD) FLG_ESTADO
+                  FROM SGCORESYS.HR_EVALCASGRUPOS_CEU WHERE FLG_ESTADO>0) E 
+                  ON (E.FECHA_EVALUACION = A.FECHA_EVALUACION AND E.FLG_ESTADO = A.FLG_ESTADO)
+      INNER JOIN SGCORESYS.HR_MA_CIUDADES_CEU CIU on A.CIUDAD = CIU.SECUENCIAL AND NVL(CIU.FLAGEXAMEN,'N')='S'
+       LEFT JOIN SGCORESYS.HR_MA_ESPECIALIDAD_CEU EC 
+        ON A.ESPECIALIDAD = EC.ESPECIALIDAD AND EC.ORIGEN='F'
+       WHERE B.ORIGEN = 'F' and
+             A.FLG_ESTADO > 0
+             AND CIU.estado = 'A'
+			      AND (UPPER(B.CONVOCATORIA) LIKE UPPER('%' || NVL(:pid_convocatoria,:pid_puesto) || '%')
+            	  		OR UPPER(D.DESCRIPCION) LIKE UPPER('%' || NVL(:pid_puesto,:pid_convocatoria) || '%'))
+            	 AND
+	            (CIU.RESPONSABLE01 = :pid_empleado or CIU.RESPONSABLE02 = :pid_empleado or CIU.RESPONSABLE03 = :pid_empleado or
+	             CIU.RESPONSABLE04 = :pid_empleado or CIU.RESPONSABLE05 = :pid_empleado)
+			ORDER BY 3, TO_CHAR(A.fecha_evaluacion, 'DD/MM/YYYY HH:MI A.M.') ASC         
+		]]>
+	</sql-query>
+
+
+
+
+
+
+	<sql-query name="hrencuesta.listarHrEvalCeu">
+		<![CDATA[
+			 SELECT 
+         CAST(A.ID_EVALCAS AS VARCHAR2(5)) as "id_evalcas"
+        ,B.REQUERIMIENTO as "requerimiento"
+        ,CASE B.PROCESO 
+          WHEN 1 THEN 
+          B.CONVOCATORIA
+          WHEN 2 THEN 
+          B.CONVOCATORIA||' (Segunda Convocatoria)'
+          WHEN 3 THEN 
+          B.CONVOCATORIA||' (Tercera Convocatoria)'
+          WHEN 4 THEN 
+          B.CONVOCATORIA||' (Cuarta Convocatoria)'
+          WHEN 5 THEN 
+          B.CONVOCATORIA||' (Quinta Convocatoria)'
+          ELSE B.CONVOCATORIA||'-'||B.PROCESO
+         END as "nro_requerimiento"
+        ,D.DESCRIPCION as "puesto"
+        ,C.DESCRIPCION as "unidad"
+        ,CASE WHEN A.FLG_ESTADO = 1 THEN 'POR EVALUAR'
+              WHEN A.FLG_ESTADO = 2 THEN 'EVALUANDO'
+         END as "estado"
+        ,CAST(A.flg_estado AS VARCHAR2(1)) as "n_estado"
+        ,CAST((SELECT SUM(N_PARTICIPANTES) FROM SGCORESYS.HR_EVALCASGRUPOS_CEU WHERE REQUERIMIENTO = A.REQUERIMIENTO 
+        and CIUDAD = A.CIUDAD AND ESPECIALIDAD = A.ESPECIALIDAD AND CODIGOGRUPO = A.CODIGOGRUPO 
+        AND FECHA_EVALUACION = A.FECHA_EVALUACION) AS VARCHAR2(4)) as "n_partotal"
+        ,MIN(A.N_GRUPO) OVER (PARTITION BY A.REQUERIMIENTO,A.CODIGOGRUPO,A.ESPECIALIDAD, A.CIUDAD)||' de '||(SELECT COUNT(N_GRUPO) FROM SGCORESYS.HR_EVALCASGRUPOS_CEU 
+        WHERE REQUERIMIENTO = A.REQUERIMIENTO  and CIUDAD = A.CIUDAD AND ESPECIALIDAD = A.ESPECIALIDAD  AND CODIGOGRUPO = A.CODIGOGRUPO
+               AND FECHA_EVALUACION = A.FECHA_EVALUACION) as "n_grupo"
+        ,CAST(A.N_PARTICIPANTES AS VARCHAR2(4)) as "n_partgrupo"
+        ,CAST((SELECT COUNT(*) 
+          FROM SGCORESYS.HR_EVALCASPOSTULANTE_CEU 
+          WHERE ID_EVALCAS = A.ID_EVALCAS AND
+                ESPECIALIDAD = A.ESPECIALIDAD AND
+                GRUPOEXAMEN = A.CODIGOGRUPO
+                AND FECHA_INICIO IS NOT NULL) AS VARCHAR2(4)) as "n_partgrupoini"
+        ,CAST((SELECT COUNT(*) 
+          FROM SGCORESYS.HR_EVALCASPOSTULANTE_CEU 
+          WHERE FECHA_FIN IS NOT NULL AND 
+                 ESPECIALIDAD = A.ESPECIALIDAD AND
+                GRUPOEXAMEN = A.CODIGOGRUPO
+                AND ID_EVALCAS IN (SELECT ID_EVALCAS 
+                                   FROM SGCORESYS.HR_EVALCASGRUPOS_CEU 
+                                   WHERE REQUERIMIENTO = A.REQUERIMIENTO AND ESPECIALIDAD = A.ESPECIALIDAD AND
+                                    GRUPOEXAMEN = A.CODIGOGRUPO AND CIUDAD = A.CIUDAD)) AS VARCHAR2(4)) as "n_partotaleval"
+            ,CAST(
+               NVL(
+                 (SELECT SUM(Z.FLAGASISTIO)
+                        FROM
+                        SGCORESYS.HR_POSREQUER_CEU Z
+                        INNER JOIN      SGCORESYS.HR_POSTULANTES_RQ_CEU Z3
+                        ON (Z.REQUERIMIENTO=Z3.REQUERIMIENTO AND Z.POSTULANTE=Z3.POSTULANTE)            
+                        INNER JOIN
+                        SGCORESYS.HR_CARRERA Z2
+                        ON (Z3.REQUERIMIENTO=Z.REQUERIMIENTO AND Z3.POSTULANTE=Z.POSTULANTE 
+                        -- AND Z3.CODIGO_CIUDAD=A.CIUDAD 
+                        )
+                        INNER JOIN
+                        SGCORESYS.hr_postulanteinstruc_rq_ceU Z1            
+                        ON (Z2.CARRERA=Z1.CARRERA AND Z2.ESPECIALIDAD=A.ESPECIALIDAD AND Z2.CODIGOGRUPO=A.CODIGOGRUPO AND Z1.REQUERIMIENTO = Z3.REQUERIMIENTO AND Z1.POSTULANTE=Z3.POSTULANTE)            
+                        inner join           
+                        SGCORESYS.HR_EVALREQUERIMIENTO_CEU er
+                        on Z.Requerimiento = er.requerimiento
+                        and Z.Secuencia = er.secuencia and
+                        er.evaluacion = 3
+                        WHERE Z.REQUERIMIENTO = A.REQUERIMIENTO 
+                        AND TO_CHAR(A.FECHA_EVALUACION, 'DD/MM/YYYY HH:MI:SS A.M.') = 
+                        TO_CHAR(Z.FECHAGRUPOCONOC, 'DD/MM/YYYY HH:MI:SS A.M.'))
+                   ,'0') AS VARCHAR2(4)) as "valor_n",
+           A.CODIGOGRUPO as "codigogrupo",
+           A.ESPECIALIDAD as "especialidad",
+           cast(A.CIUDAD as varchar(10)) as "ciudad",
+           GE.DESCRIPCION AS "nombregrupo",
+           CIU.NOMBRECIUDAD || '  ' || CIU.DIRECCIONEXAMEN as "nombreciudad",
+             ec.descripcion as "nombreespecialidad",
+            TO_CHAR(A.fecha_evaluacion, 'DD/MM/YYYY HH:MI A.M.') AS "fecha_evaluacion"    
+      FROM SGCORESYS.HR_EVALCASGRUPOS_CEU A
+      INNER JOIN SGCORESYS.HR_REQUERIMIENTO_CEU B ON B.REQUERIMIENTO = A.REQUERIMIENTO AND B.ESTADO <> 'TE'
+      INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = B.CODIGOPUESTO
+      INNER JOIN SGCORESYS.HR_POSICIONEMPRESA C ON C.CODIGOPOSICION = D.CODIGOPOSICION
+      INNER JOIN SGCORESYS.HR_MA_GRUPOXEXAMEN_CEU GE 
+      ON GE.CODIGOGRUPO =  A.CODIGOGRUPO AND GE.ESPECIALIDAD = A.ESPECIALIDAD
+      INNER JOIN (SELECT DISTINCT
+                    MIN(FECHA_EVALUACION) OVER (PARTITION BY REQUERIMIENTO,CODIGOGRUPO,ESPECIALIDAD, CIUDAD,FECHA_EVALUACION) FECHA_EVALUACION,
+                    MAX(FLG_ESTADO) OVER (PARTITION BY REQUERIMIENTO,CODIGOGRUPO,ESPECIALIDAD, CIUDAD) FLG_ESTADO
+                  FROM SGCORESYS.HR_EVALCASGRUPOS_CEU WHERE FLG_ESTADO>0) E ON E.FECHA_EVALUACION = A.FECHA_EVALUACION AND E.FLG_ESTADO = A.FLG_ESTADO
+      INNER JOIN SGCORESYS.HR_MA_CIUDADES_CEU CIU on A.CIUDAD = CIU.SECUENCIAL AND NVL(CIU.FLAGEXAMEN,'N')='S'
+         LEFT JOIN SGCORESYS.HR_MA_ESPECIALIDAD_CEU EC 
+        ON A.ESPECIALIDAD = EC.ESPECIALIDAD
+      WHERE A.FLG_ESTADO > 0 AND
+            CIU.ESTADO = 'A' AND
+            B.ORIGEN = 'C' AND
+            (CIU.RESPONSABLE01 = :pid_empleado or CIU.RESPONSABLE02 = :pid_empleado or CIU.RESPONSABLE03 = :pid_empleado or
+             CIU.RESPONSABLE04 = :pid_empleado or CIU.RESPONSABLE05 = :pid_empleado)
+			ORDER BY 3, TO_CHAR(A.fecha_evaluacion, 'DD/MM/YYYY HH:MI A.M.') ASC         
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.listarHrEvalCeu2">
+		<![CDATA[
+			SELECT 
+         CAST(A.ID_EVALCAS AS VARCHAR2(5)) as "id_evalcas"
+        ,B.REQUERIMIENTO as "requerimiento"
+        ,CASE B.PROCESO 
+          WHEN 1 THEN 
+          B.CONVOCATORIA
+          WHEN 2 THEN 
+          B.CONVOCATORIA||' (Segunda Convocatoria)'
+          WHEN 3 THEN 
+          B.CONVOCATORIA||' (Tercera Convocatoria)'
+          WHEN 4 THEN 
+          B.CONVOCATORIA||' (Cuarta Convocatoria)'
+          WHEN 5 THEN 
+          B.CONVOCATORIA||' (Quinta Convocatoria)'
+          ELSE B.CONVOCATORIA||'-'||B.PROCESO
+         END as "nro_requerimiento"
+        ,D.DESCRIPCION as "puesto"
+        ,C.DESCRIPCION as "unidad"
+        ,CASE WHEN A.FLG_ESTADO = 1 THEN 'POR EVALUAR'
+              WHEN A.FLG_ESTADO = 2 THEN 'EVALUANDO'
+         END as "estado"
+        ,CAST(A.flg_estado AS VARCHAR2(1)) as "n_estado"
+        ,CAST((SELECT SUM(N_PARTICIPANTES) FROM SGCORESYS.HR_EVALCASGRUPOS_CEU X1 WHERE X1.REQUERIMIENTO = A.REQUERIMIENTO 
+        and  X1.CIUDAD = A.CIUDAD AND  X1.ESPECIALIDAD = A.ESPECIALIDAD AND  X1.CODIGOGRUPO = A.CODIGOGRUPO
+        AND X1.FECHA_EVALUACION=A.FECHA_EVALUACION) AS VARCHAR2(4)) as "n_partotal"
+        ,MIN(A.N_GRUPO) OVER (PARTITION BY A.REQUERIMIENTO,A.CODIGOGRUPO,A.ESPECIALIDAD, A.CIUDAD)||' de '||(SELECT COUNT(N_GRUPO) FROM SGCORESYS.HR_EVALCASGRUPOS_CEU 
+        WHERE REQUERIMIENTO = A.REQUERIMIENTO  and CIUDAD = A.CIUDAD AND ESPECIALIDAD = A.ESPECIALIDAD  AND CODIGOGRUPO = A.CODIGOGRUPO) as "n_grupo"
+        ,CAST(A.N_PARTICIPANTES AS VARCHAR2(4)) as "n_partgrupo"
+        ,CAST((SELECT COUNT(*) 
+          FROM SGCORESYS.HR_EVALCASPOSTULANTE_CEU 
+          WHERE ID_EVALCAS = A.ID_EVALCAS AND
+                ESPECIALIDAD = A.ESPECIALIDAD AND
+                GRUPOEXAMEN = A.CODIGOGRUPO
+                AND FECHA_INICIO IS NOT NULL) AS VARCHAR2(4)) as "n_partgrupoini"
+        ,CAST((SELECT COUNT(*) 
+          FROM SGCORESYS.HR_EVALCASPOSTULANTE_CEU 
+          WHERE FECHA_FIN IS NOT NULL AND 
+                 ESPECIALIDAD = A.ESPECIALIDAD AND
+                GRUPOEXAMEN = A.CODIGOGRUPO
+                AND ID_EVALCAS IN (SELECT ID_EVALCAS 
+                                   FROM SGCORESYS.HR_EVALCASGRUPOS_CEU 
+                                   WHERE REQUERIMIENTO = A.REQUERIMIENTO AND ESPECIALIDAD = A.ESPECIALIDAD AND
+                                    GRUPOEXAMEN = A.CODIGOGRUPO AND CIUDAD = A.CIUDAD)) AS VARCHAR2(4)) as "n_partotaleval"
+            ,CAST(
+               NVL(
+                 (SELECT SUM(Z.FLAGASISTIO) 
+                  FROM SGCORESYS.HR_POSREQUER_CEU Z
+                    inner join
+                        SGCORESYS.HR_EVALREQUERIMIENTO_CEU er
+                        on Z.Requerimiento = er.requerimiento 
+                        and Z.Secuencia = er.secuencia and
+                        er.evaluacion = 3
+                        WHERE Z.REQUERIMIENTO = A.REQUERIMIENTO 
+                        AND TO_CHAR(A.FECHA_EVALUACION, 'DD/MM/YYYY HH:MI:SS A.M.') = 
+                        TO_CHAR(Z.FECHAGRUPOCONOC, 'DD/MM/YYYY HH:MI:SS A.M.'))
+                   ,'0') AS VARCHAR2(4)) as "valor_n",
+           A.CODIGOGRUPO as "codigogrupo",
+             A.ESPECIALIDAD as "especialidad",
+               cast(A.CIUDAD as varchar(10)) as "ciudad",
+           GE.DESCRIPCION AS "nombregrupo",
+           CIU.NOMBRECIUDAD || '  ' || CIU.DIRECCIONEXAMEN as "nombreciudad",
+            ec.descripcion as "nombreespecialidad",
+            TO_CHAR(A.fecha_evaluacion, 'DD/MM/YYYY HH:MI A.M.') AS "fecha_evaluacion"
+
+      FROM SGCORESYS.HR_EVALCASGRUPOS_CEU A
+      INNER JOIN SGCORESYS.HR_REQUERIMIENTO_CEU B ON B.REQUERIMIENTO = A.REQUERIMIENTO AND B.ESTADO <> 'TE'
+      INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = B.CODIGOPUESTO
+      INNER JOIN SGCORESYS.HR_POSICIONEMPRESA C ON C.CODIGOPOSICION = D.CODIGOPOSICION
+      INNER JOIN SGCORESYS.HR_MA_GRUPOXEXAMEN_CEU GE ON (GE.CODIGOGRUPO =  A.CODIGOGRUPO AND GE.ESPECIALIDAD = A.ESPECIALIDAD)
+                                                       
+      INNER JOIN (SELECT DISTINCT
+                    MIN(FECHA_EVALUACION) OVER (PARTITION BY REQUERIMIENTO,CODIGOGRUPO,ESPECIALIDAD, CIUDAD,FECHA_EVALUACION) FECHA_EVALUACION,
+                    MAX(FLG_ESTADO) OVER (PARTITION BY REQUERIMIENTO,CODIGOGRUPO,ESPECIALIDAD, CIUDAD) FLG_ESTADO
+                  FROM SGCORESYS.HR_EVALCASGRUPOS_CEU WHERE FLG_ESTADO>0) E 
+                  ON (E.FECHA_EVALUACION = A.FECHA_EVALUACION AND E.FLG_ESTADO = A.FLG_ESTADO)
+      INNER JOIN SGCORESYS.HR_MA_CIUDADES_CEU CIU on A.CIUDAD = CIU.SECUENCIAL AND NVL(CIU.FLAGEXAMEN,'N')='S'
+       LEFT JOIN SGCORESYS.HR_MA_ESPECIALIDAD_CEU EC 
+        ON A.ESPECIALIDAD = EC.ESPECIALIDAD
+       WHERE A.FLG_ESTADO > 0 AND
+        	B.ORIGEN = 'C'
+             AND CIU.estado = 'A'
+			      AND (UPPER(B.CONVOCATORIA) LIKE UPPER('%' || NVL(:pid_convocatoria,:pid_puesto) || '%')
+            	  		OR UPPER(D.DESCRIPCION) LIKE UPPER('%' || NVL(:pid_puesto,:pid_convocatoria) || '%'))
+            	 AND
+	            (CIU.RESPONSABLE01 = :pid_empleado or CIU.RESPONSABLE02 = :pid_empleado or CIU.RESPONSABLE03 = :pid_empleado or
+	             CIU.RESPONSABLE04 = :pid_empleado or CIU.RESPONSABLE05 = :pid_empleado)
+			ORDER BY 3, TO_CHAR(A.fecha_evaluacion, 'DD/MM/YYYY HH:MI A.M.') ASC         
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.valInicioHrEvalCeu">
+		<![CDATA[
+			SELECT 
+			   CAST(SGCORESYS.FN_HR_EVALCAS_VALINICIO_CEU(:pid_evalcas) AS VARCHAR2(1)) as "estado"
+			FROM SGCORESYS.HR_EVALCASGRUPOS_CEU A
+      		WHERE A.ID_EVALCAS = :pid_evalcas	
+		]]>
+	</sql-query>
+
+	<sql-query name="hrencuesta.valInicioHrEvalFIFA">
+		<![CDATA[
+			SELECT 
+			   CAST(SGCORESYS.FN_HR_EVALCAS_VALINICIO_FIFA(:pid_evalcas) AS VARCHAR2(1)) as "estado"
+			FROM SGCORESYS.HR_EVALCASGRUPOS_CEU A
+      		WHERE A.ID_EVALCAS = :pid_evalcas	
+		]]>
+	</sql-query>
+
+	<sql-query name="hrencuesta.valCierreHrEvalCeu">
+		<![CDATA[
+			SELECT 
+			   CAST(A.FLG_ESTADO AS VARCHAR2(4)) as "estado"
+			FROM SGCORESYS.HR_EVALCASGRUPOS_CEU A
+			WHERE A.ID_EVALCAS = :pid_evalcas
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.editarHrEvalCeu">
+		{ CALL
+		SGCORESYS.SP_HR_INICIAREXAMEN_CEU(:pid_requerimiento, :pid_evalcas,
+		:pid_grupo, :pid_especialidad)
+		}
+	</sql-query>
+	<sql-query name="hrencuesta.editarHrEvalFIFA">
+		{ CALL
+		SGCORESYS.SP_HR_INICIAREXAMEN_PFIFA(:pid_requerimiento, :pid_evalcas,
+		:pid_grupo, :pid_especialidad)
+		}
+	</sql-query>
+
+
+	<sql-query name="hrencuesta.finalizarHrEvalCeu">
+		{ CALL
+		SGCORESYS.SP_HR_FINALIZAREXAMEN_CEU(:pid_requerimiento,
+		:pid_evalcas) }
+	</sql-query>
+
+	<sql-query name="hrencuesta.finalizarHrEvalFIFA">
+		{ CALL
+		SGCORESYS.SP_HR_FINALIZAREXAMEN_FIFA(:pid_requerimiento,:pid_evalcas)
+		}
+	</sql-query>
+
+
+
+	<sql-query name="hrencuesta.verPostulanteHrEvalCeu">
+		<![CDATA[
+    		SELECT CAST(C.APELLIDOPATERNO||' '||C.APELLIDOMATERNO||' '||C.NOMBRES AS VARCHAR2(300)) as "postulante",
+                   C.POSTULANTE AS "idpostulante",
+                   C.DOCUMENTO AS "documento", 
+                   CAST('00' AS VARCHAR2(4)) as "puntaje",
+                   CAST(NVL(B.FLAGASISTIO,1)||'-'||C.POSTULANTE AS VARCHAR2(15)) as "asistencia",
+                   'Sin Iniciar' as "estado"
+                FROM SGCORESYS.HR_EVALCASGRUPOS_CEU A
+                INNER JOIN SGCORESYS.HR_POSREQUER_CEU B ON (B.REQUERIMIENTO = A.REQUERIMIENTO)
+                AND TO_CHAR(A.FECHA_EVALUACION, 'DD/MM/YYYY HH:MI:SS A.M.') = TO_CHAR(B.FECHAGRUPOCONOC, 'DD/MM/YYYY HH:MI:SS A.M.')
+                INNER JOIN SGCORESYS.HR_POSTULANTES_RQ_CEU C ON (B.POSTULANTE = C.POSTULANTE and B.requerimiento = C.requerimiento 
+                -- and C.codigo_ciudad= A.ciudad 
+                AND C.REQUERIMIENTO=A.REQUERIMIENTO)
+                inner join sgcoresys.hr_evalrequerimiento_CEU ER on (ER.REQUERIMIENTO = B.REQUERIMIENTO AND ER.SECUENCIA = B.SECUENCIA)
+                  inner join  sgcoresys.hr_postulanteinstruccion_ceu PIR
+                 on (PIR.especialidadceu = A.especialidad AND PIR.postulante = B.postulante  )
+                 inner join sgcoresys.hr_carrera hrc on (hrc.carrera=pir.carrera)
+                    WHERE ER.EVALUACION = 3 and a.CODIGOGRUPO=hrc.codigogrupo  
+                    -- and a.ciudad=C.codigo_ciudad
+                AND A.ID_EVALCAS = :pid_evalcas
+                 AND A.CIUDAD = :pid_cuidad 
+                AND A.CODIGOGRUPO =  :pid_grupo
+            order by 1
+		]]>
+	</sql-query>
+	<sql-query name="hrencuesta.verPostulanteHrEvalCeu2">
+		<![CDATA[
+             	SELECT 	 CAST(C.APELLIDOPATERNO||' '||C.APELLIDOMATERNO||' '||C.NOMBRES AS VARCHAR2(300)) as "postulante", 
+    			 C.POSTULANTE AS "idpostulante",
+    			  C.DOCUMENTO AS "documento", 
+    			 CAST(NVL((SELECT SUM(FLG_CORRECTA)*( md.valorcodigo4 ) FROM SGCORESYS.HR_EVALCASPOSRESPUESTA_CEU T WHERE POSTULANTE = A.POSTULANTE AND ID_EVALCAS = :pid_evalcas),'00') AS VARCHAR2(4)) as "puntaje",
+    			 CAST(A.FLG_ASISTENCIA||'-'||C.POSTULANTE AS VARCHAR2(15)) as "asistencia",
+    			 C.TIPODOCUMENTO as "tipodocumento",
+    			 TO_CHAR(A.FECHA_FIN,'dd/MM/yyyy HH24:MI:SS') as "fechafinexamen",
+    			 TO_CHAR(A.FECHA_INICIO,'dd/MM/yyyy HH24:MI:SS') as "fechainicioexamen",
+    			 CASE WHEN A.FECHA_INICIO IS NULL THEN 'Sin Iniciar'
+    			      WHEN A.FECHA_INICIO IS NOT NULL AND A.FECHA_FIN IS NULL THEN 'En Proceso'
+    			      WHEN A.FECHA_FIN IS NOT NULL THEN 'Terminado' ELSE '' END as "estado"
+    		FROM SGCORESYS.HR_EVALCASPOSTULANTE_CEU A 
+        INNER JOIN sgcoresys.HR_EVALCASGRUPOS_CEU eg ON (eg.ID_EVALCAS = A.ID_EVALCAS )
+        INNER JOIN SGCORESYS.HR_POSTULANTES_RQ_CEU C ON (a.POSTULANTE = C.POSTULANTE and eg.REQUERIMIENTO = C.REQUERIMIENTO 
+        --and C.codigo_ciudad= eg.ciudad
+        )
+        inner join sgcoresys.hr_requerimiento_CEU r on (eg.requerimiento = r.requerimiento )
+        inner join sgcoresys.hr_puestoempresa e on e.codigopuesto = r.codigopuesto
+        inner join sgcoresys.ma_miscelaneosdetalle md
+              on md.codigotabla = 'CEUBALEXAM' AND md.CODIGOELEMENTO = '2021'
+        inner join  sgcoresys.hr_postulanteinstruccion_ceu PIR
+                 on (PIR.especialidadceu = A.especialidad AND PIR.postulante = a.postulante  )              
+        inner join sgcoresys.hr_carrera hrc on (hrc.carrera=pir.carrera)
+            WHERE    eg.CODIGOGRUPO=hrc.codigogrupo and
+            --  eg.ciudad=C.codigo_ciudad  and 
+            A.ID_EVALCAS = :pid_evalcas  
+                AND eg.CIUDAD = :pid_cuidad 
+                AND eg.CODIGOGRUPO = :pid_grupo
+            order by 1
+		]]>
+	</sql-query>
+
+
+	<sql-query name="hrencuesta.verPostulanteHrEvalFIFA">
+		<![CDATA[
+    		SELECT CAST(C.APELLIDOPATERNO||' '||C.APELLIDOMATERNO||' '||C.NOMBRES AS VARCHAR2(300)) as "postulante",
+                   C.POSTULANTE AS "idpostulante",
+                   C.DOCUMENTO AS "documento", 
+                   CAST('00' AS VARCHAR2(4)) as "puntaje",
+                   CAST(NVL(B.FLAGASISTIO,1)||'-'||C.POSTULANTE AS VARCHAR2(15)) as "asistencia",
+                   'Sin Iniciar' as "estado"
+                FROM SGCORESYS.HR_EVALCASGRUPOS_CEU A
+                INNER JOIN SGCORESYS.HR_POSREQUER_CEU B ON (B.REQUERIMIENTO = A.REQUERIMIENTO)
+                AND TO_CHAR(A.FECHA_EVALUACION, 'DD/MM/YYYY HH:MI:SS A.M.') = TO_CHAR(B.FECHAGRUPOCONOC, 'DD/MM/YYYY HH:MI:SS A.M.')
+                INNER JOIN SGCORESYS.HR_POSTULANTES_RQ_CEU C ON (B.POSTULANTE = C.POSTULANTE and B.requerimiento = C.requerimiento 
+                -- and C.codigo_ciudad= A.ciudad 
+                AND C.REQUERIMIENTO=A.REQUERIMIENTO)
+                inner join sgcoresys.hr_evalrequerimiento_CEU ER on (ER.REQUERIMIENTO = B.REQUERIMIENTO AND ER.SECUENCIA = B.SECUENCIA)
+                    WHERE ER.EVALUACION = 3 
+                    -- and a.CODIGOGRUPO=hrc.codigogrupo  
+                    -- and a.ciudad=C.codigo_ciudad
+                AND A.ID_EVALCAS = :pid_evalcas
+                 AND A.CIUDAD = :pid_cuidad 
+                AND A.CODIGOGRUPO =  :pid_grupo
+            order by 1
+		]]>
+	</sql-query>
+
+	<sql-query name="hrencuesta.verPostulanteHrEvalFIFA2">
+		<![CDATA[
+             	SELECT 	 CAST(C.APELLIDOPATERNO||' '||C.APELLIDOMATERNO||' '||C.NOMBRES AS VARCHAR2(300)) as "postulante", 
+    			 C.POSTULANTE AS "idpostulante",
+    			  C.DOCUMENTO AS "documento", 
+    			 CAST(NVL((SELECT SUM(FLG_CORRECTA)*( md.valorcodigo4 ) FROM SGCORESYS.HR_EVALCASPOSRESPUESTA_CEU T WHERE POSTULANTE = A.POSTULANTE AND ID_EVALCAS = :pid_evalcas),'00') AS VARCHAR2(4)) as "puntaje",
+    			 CAST(A.FLG_ASISTENCIA||'-'||C.POSTULANTE AS VARCHAR2(15)) as "asistencia",
+    			 C.TIPODOCUMENTO as "tipodocumento",
+    			 TO_CHAR(A.FECHA_FIN,'dd/MM/yyyy HH24:MI:SS') as "fechafinexamen",
+    			 TO_CHAR(A.FECHA_INICIO,'dd/MM/yyyy HH24:MI:SS') as "fechainicioexamen",
+    			 CASE WHEN A.FECHA_INICIO IS NULL THEN 'Sin Iniciar'
+    			      WHEN A.FECHA_INICIO IS NOT NULL AND A.FECHA_FIN IS NULL THEN 'En Proceso'
+    			      WHEN A.FECHA_FIN IS NOT NULL THEN 'Terminado' ELSE '' END as "estado"
+    		FROM SGCORESYS.HR_EVALCASPOSTULANTE_CEU A 
+        INNER JOIN sgcoresys.HR_EVALCASGRUPOS_CEU eg ON (eg.ID_EVALCAS = A.ID_EVALCAS )
+        INNER JOIN SGCORESYS.HR_POSTULANTES_RQ_CEU C ON (a.POSTULANTE = C.POSTULANTE and eg.REQUERIMIENTO = C.REQUERIMIENTO 
+        --and C.codigo_ciudad= eg.ciudad
+        )
+        inner join sgcoresys.hr_requerimiento_CEU r on (eg.requerimiento = r.requerimiento )
+        inner join sgcoresys.hr_puestoempresa e on e.codigopuesto = r.codigopuesto
+        inner join sgcoresys.ma_miscelaneosdetalle md
+              on md.codigotabla = 'FIFABALEXA' AND md.CODIGOELEMENTO = '2021'
+            WHERE    
+            -- eg.CODIGOGRUPO=hrc.codigogrupo and
+            --  eg.ciudad=C.codigo_ciudad  and 
+            A.ID_EVALCAS = :pid_evalcas  
+                AND eg.CIUDAD = :pid_cuidad 
+                AND eg.CODIGOGRUPO = :pid_grupo
+            order by 1
+		]]>
+	</sql-query>
+
+	<sql-query name="hrencuesta.datosProcesoCeu">
+		<![CDATA[
+	      SELECT DISTINCT
+	          CASE B.PROCESO 
+				  WHEN 1 THEN 
+				  B.CONVOCATORIA
+				  WHEN 2 THEN 
+				  B.CONVOCATORIA||' (Segunda Convocatoria)'
+				  WHEN 3 THEN 
+				  B.CONVOCATORIA||' (Tercera Convocatoria)'
+				  WHEN 4 THEN 
+				  B.CONVOCATORIA||' (Cuarta Convocatoria)'
+				  WHEN 5 THEN 
+				  B.CONVOCATORIA||' (Quinta Convocatoria)'
+				  ELSE B.CONVOCATORIA||'-'||B.PROCESO
+			  END as "convocatoria",
+			  D.DESCRIPCION as "puesto"
+	      FROM SGCORESYS.HR_REQUERIMIENTO_CEU B 
+   		  INNER JOIN SGCORESYS.HR_EVALCASGRUPOS_CEU C ON B.REQUERIMIENTO = C.REQUERIMIENTO
+		  INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = B.CODIGOPUESTO
+		  WHERE B.REQUERIMIENTO = :pid_requerimiento and
+		        C.codigogrupo = :pid_codigogrupo and
+            	C.ciudad = :pid_ciudad
+	      ]]>
+	</sql-query>
+
+
+	<sql-query name="hrencuesta.registrarAsistenciaCeu">
+		{ CALL
+		SGCORESYS.SP_HR_EVALASREGASISTENCIA_CEU(:pid_requerimiento,
+		:pid_postulante, :pid_asistencia) }
+	</sql-query>
+	<sql-query name="hrencuesta.registrarAsistencia2Ceu">
+		{ CALL
+		SGCORESYS.SP_HR_EVALASREGASISTENCIA2_CEU(:pid_requerimiento,
+		:pid_evalcas)
+		}
+	</sql-query>
+
+
+	<sql-query name="hrencuesta.actualizarMinutos">
+		<![CDATA[
+		UPDATE SGCORESYS.HR_EVALCASPOSTULANTE
+		SET
+		FECHA_INICIO = case when LPAD(
+   		 TRUNC(((FECHA_INICIO + (
+   		 ( select TO_NUMBER(VALORCODIGO3) 
+		  from 
+		  sgcoresys.MA_MISCELANEOSDETALLE 
+		  WHERE 
+		  CODIGOTABLA= 'CONVMAESTR'
+		  AND APLICACIONCODIGO='HR'
+		  AND CODIGOELEMENTO='C')
+   		 /60/24
+         )) - SYSDATE)*24*60),2,0) < 0 then (SYSDATE - (
+         (select TO_NUMBER(VALORCODIGO3) 
+		  from 
+		  sgcoresys.MA_MISCELANEOSDETALLE 
+		  WHERE 
+		  CODIGOTABLA= 'CONVMAESTR'
+		  AND APLICACIONCODIGO='HR'
+		  AND CODIGOELEMENTO='C')
+         /1440)) + (:pid_minutos / 1440 )
+		else FECHA_INICIO + ( :pid_minutos / 1440 ) end 
+		, FECHA_FIN = NULL
+		WHERE
+		ID_EVALCAS = :pid_idevalcas
+		AND POSTULANTE = :pid_postulante
+		]]>
+	</sql-query>
+
+	<sql-query name="hrencuesta.actualizarMinutosCEU">
+		<![CDATA[
+		UPDATE SGCORESYS.HR_EVALCASPOSTULANTE_CEU
+		SET
+		FECHA_INICIO = case when LPAD(
+   		 TRUNC(((FECHA_INICIO + (60/60/24
+         )) - SYSDATE)*24*60),2,0) < 0 then SYSDATE - (0.000694444* :pid_minutos )  
+		else FECHA_INICIO + (0.000694444* :pid_minutos ) end 
+		, FECHA_FIN = NULL
+		WHERE
+		ID_EVALCAS = :pid_idevalcas
+		AND POSTULANTE = :pid_postulante
+		]]>
+	</sql-query>
+
+	<sql-query name="hrencuesta.actualizarSession">
+		update SGCORESYS.SEGURIDADSESSION
+		set estado =
+		:p_estado, ULTIMOUSUARIO = :p_ultimousuario, ULTIMAFECHAMODIF =
+		sysdate
+		where APLICACIONCODIGO = :p_aplicacioncodigo and
+		CODIGO1 =
+		:p_codigo1 and
+		CODIGO2 = :p_codigo2
+	</sql-query>
+
+	<sql-query name="hrencuesta.listarSession">
+		SELECT
+		TO_CHAR(fechacreacion,'dd/MM/yyyy HH24:MI') as "ingresoexamen",
+		TO_CHAR(fechatermino,'dd/MM/yyyy HH24:MI') as "salidaexamen",
+		estado as "estado"
+		FROM SGCORESYS.SEGURIDADSESSION
+		where APLICACIONCODIGO =
+		:p_aplicacioncodigo and
+		CODIGO1 =
+		:p_codigo1 and
+		CODIGO2 = :p_codigo2
+		and PROCESO = :p_proceso
+	</sql-query>
+
+	<sql-query name="hrencuesta.getListaParametros1">
+			<![CDATA[
+			  select CAST(valorcodigo3 AS VARCHAR(2)) AS "nombres"	     
+			  from sgcoresys.ma_miscelaneosdetalle
+              where codigotabla = 'CONVMAESTR'
+              AND CODIGOELEMENTO = :pid_codigoelemento 
+			]]>
+	</sql-query>
+
+	<sql-query name="hrencuesta.actualizarIntentosEvaluacionPostulanteCeu">
+		UPDATE
+		SGCORESYS.HR_EVALCASPOSTULANTE_CEU A
+		SET CANT_SALIDA_EVAL =
+		:pid_intentos
+		WHERE
+		A.ID_EVALCAS = :pid_evalcas
+		AND
+		A.POSTULANTE =
+		:pid_postulante
+	</sql-query>
+
+
+	<sql-query name="hrencuesta.listarSalaPorPersonaCeu">
+		<![CDATA[
+	          SELECT DISTINCT
+	          CASE B.PROCESO 
+				  WHEN 1 THEN 
+				  B.CONVOCATORIA
+				  WHEN 2 THEN 
+				  B.CONVOCATORIA||' (Segunda Convocatoria)'
+				  WHEN 3 THEN 
+				  B.CONVOCATORIA||' (Tercera Convocatoria)'
+				  WHEN 4 THEN 
+				  B.CONVOCATORIA||' (Cuarta Convocatoria)'
+				  WHEN 5 THEN 
+				  B.CONVOCATORIA||' (Quinta Convocatoria)'
+				  ELSE B.CONVOCATORIA||'-'||B.PROCESO
+			  END as "convocatoria",
+			  D.DESCRIPCION as "puesto",
+			  GE.DESCRIPCION as "nombregrupo",
+			  CIU.NOMBRECIUDAD as "nombreciudad",
+			  EC.DESCRIPCION as "nombreespecialidad",
+			  S.DESCRIPCION as "nombresala",
+			  P1.NOMBRECOMPLETO as "nombresupervisor01",
+			  P3.NOMBRECOMPLETO as "nombresupervisor02",
+			  CASE WHEN P1.NOMBRECOMPLETO is not null then P1.NOMBRECOMPLETO else '' end || 
+			  CASE WHEN P3.NOMBRECOMPLETO is not null then ' - ' || P3.NOMBRECOMPLETO else '' end as "nombresupervisor",
+			  P2.NOMBRECOMPLETO as "nombrecoordinador01",
+			  P4.NOMBRECOMPLETO as "nombrecoordinador02",
+			  CASE WHEN P2.NOMBRECOMPLETO is not null then P2.NOMBRECOMPLETO else '' end || 
+			  CASE WHEN P4.NOMBRECOMPLETO is not null then ' - ' || P4.NOMBRECOMPLETO else '' end as "nombrecoordinador",
+			  S.CODIGOSALA as "id_sala",
+			  cast(S.ID_EVALCAS as varchar(10)) as "id_evalcas",
+			  S.EVALUADOR01 as "id_evaluador01",
+			  S.EVALUADOR02 as "id_evaluador02",
+			  S.EVALUADOR03 as "id_evaluador03",
+			  S.EVALUADOR04 as "id_evaluador04",
+			  S.EVALUADOR05 as "id_evaluador05",
+			  S.SUPERVISOR01 as "id_supervisor01",
+			  S.SUPERVISOR02 as "id_supervisor02",
+			  S.COORDINADOR01 as "id_coordinador01",
+			  S.COORDINADOR02 as "id_coordinador02",
+			  CASE WHEN P5.NOMBRECOMPLETO IS NOT NULL THEN P5.NOMBRECOMPLETO ELSE '' END ||
+			  CASE WHEN P6.NOMBRECOMPLETO IS NOT NULL THEN ' - ' || P6.NOMBRECOMPLETO ELSE '' END ||
+			  CASE WHEN P7.NOMBRECOMPLETO IS NOT NULL THEN ' - ' || P7.NOMBRECOMPLETO ELSE '' END ||
+			  CASE WHEN P8.NOMBRECOMPLETO IS NOT NULL THEN ' - ' || P8.NOMBRECOMPLETO ELSE '' END ||
+			  CASE WHEN P9.NOMBRECOMPLETO IS NOT NULL THEN ' - ' || P9.NOMBRECOMPLETO ELSE '' END as "nombreevaluador",
+			  CAST(f.CANT AS VARCHAR(10)) as "n_postsala"
+	      FROM SGCORESYS.HR_EVALCASGRUPOS_CEU C inner join
+	      SGCORESYS.HR_SALAS_CAB_CEU S on C.ID_EVALCAS = S.ID_EVALCAS
+	      INNER JOIN SGCORESYS.HR_MA_GRUPOXEXAMEN_CEU GE ON 
+	      (GE.CODIGOGRUPO =  C.CODIGOGRUPO AND GE.ESPECIALIDAD = C.ESPECIALIDAD)
+	      INNER JOIN SGCORESYS.HR_MA_CIUDADES_CEU CIU on C.CIUDAD = CIU.SECUENCIAL AND NVL(CIU.FLAGEXAMEN,'N')='S'
+          LEFT JOIN SGCORESYS.HR_MA_ESPECIALIDAD_CEU EC 
+          ON C.ESPECIALIDAD = EC.ESPECIALIDAD
+	      INNER JOIN SGCORESYS.HR_REQUERIMIENTO_CEU B 
+   		  ON B.REQUERIMIENTO = C.REQUERIMIENTO
+		  INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = B.CODIGOPUESTO
+		  LEFT JOIN SGCORESYS.PERSONAMAST P1 ON P1.PERSONA =  S.SUPERVISOR01
+		  LEFT JOIN SGCORESYS.PERSONAMAST P2 ON P2.PERSONA =  S.COORDINADOR01
+		  LEFT JOIN SGCORESYS.PERSONAMAST P3 ON P3.PERSONA =  S.SUPERVISOR02
+		  LEFT JOIN SGCORESYS.PERSONAMAST P4 ON P4.PERSONA =  S.COORDINADOR02
+		  LEFT JOIN SGCORESYS.PERSONAMAST P5 ON P5.PERSONA =  S.EVALUADOR01
+		  LEFT JOIN SGCORESYS.PERSONAMAST P6 ON P6.PERSONA =  S.EVALUADOR02
+		  LEFT JOIN SGCORESYS.PERSONAMAST P7 ON P7.PERSONA =  S.EVALUADOR03
+		  LEFT JOIN SGCORESYS.PERSONAMAST P8 ON P8.PERSONA =  S.EVALUADOR04
+		  LEFT JOIN SGCORESYS.PERSONAMAST P9 ON P9.PERSONA =  S.EVALUADOR05
+		  left join (SELECT
+		  SD2.CODIGOSALA,SD2.ID_EVALCAS,
+            count(*) as cant
+            FROM  SGCORESYS.HR_SALAS_DET_CEU SD2
+            group by  SD2.CODIGOSALA,SD2.ID_EVALCAS
+            ) f
+		on f.CODIGOSALA = S.CODIGOSALA and
+            f.ID_EVALCAS = S.ID_EVALCAS
+		  WHERE 
+		  C.FLG_ESTADO > 0
+          AND CIU.estado = 'A'
+		  AND S.ID_EVALCAS = :pid_evalcas
+		  AND (S.SUPERVISOR01 = :pid_empleado or S.SUPERVISOR02 = :pid_empleado or S.COORDINADOR01 = :pid_empleado or
+	             S.COORDINADOR02 = :pid_empleado or S.EVALUADOR01 = :pid_empleado or S.EVALUADOR02 = :pid_empleado or
+	             S.EVALUADOR03 = :pid_empleado or S.EVALUADOR04 = :pid_empleado or S.EVALUADOR05 = :pid_empleado)
+	     ORDER BY S.CODIGOSALA ASC
+	      ]]>
+	</sql-query>
+
+	<sql-query name="hrencuesta.listarHrEvalSalaCeu">
+		<![CDATA[
+			SELECT DISTINCT
+         CAST(A.ID_EVALCAS AS VARCHAR2(5)) as "id_evalcas"
+        ,B.REQUERIMIENTO as "requerimiento"
+        ,CASE B.PROCESO 
+          WHEN 1 THEN 
+          B.CONVOCATORIA
+          WHEN 2 THEN 
+          B.CONVOCATORIA||' (Segunda Convocatoria)'
+          WHEN 3 THEN 
+          B.CONVOCATORIA||' (Tercera Convocatoria)'
+          WHEN 4 THEN 
+          B.CONVOCATORIA||' (Cuarta Convocatoria)'
+          WHEN 5 THEN 
+          B.CONVOCATORIA||' (Quinta Convocatoria)'
+          ELSE B.CONVOCATORIA||'-'||B.PROCESO
+         END as "nro_requerimiento"
+        ,D.DESCRIPCION as "puesto"
+        ,C.DESCRIPCION as "unidad"
+        ,CASE WHEN A.FLG_ESTADO = 1 THEN 'POR EVALUAR'
+              WHEN A.FLG_ESTADO = 2 THEN 'EVALUANDO'
+         END as "estado"
+        ,CAST(A.flg_estado AS VARCHAR2(1)) as "n_estado"
+        ,CAST((SELECT SUM(N_PARTICIPANTES) FROM SGCORESYS.HR_EVALCASGRUPOS_CEU X1 WHERE X1.REQUERIMIENTO = A.REQUERIMIENTO 
+        and  X1.CIUDAD = A.CIUDAD AND  X1.ESPECIALIDAD = A.ESPECIALIDAD AND  X1.CODIGOGRUPO = A.CODIGOGRUPO
+        AND X1.FECHA_EVALUACION=A.FECHA_EVALUACION) AS VARCHAR2(4)) as "n_partotal"
+        ,MIN(A.N_GRUPO) OVER (PARTITION BY A.REQUERIMIENTO,A.CODIGOGRUPO,A.ESPECIALIDAD, A.CIUDAD)||' de '||(SELECT COUNT(N_GRUPO) FROM SGCORESYS.HR_EVALCASGRUPOS_CEU 
+        WHERE REQUERIMIENTO = A.REQUERIMIENTO  and CIUDAD = A.CIUDAD AND ESPECIALIDAD = A.ESPECIALIDAD  AND CODIGOGRUPO = A.CODIGOGRUPO) as "n_grupo"
+        ,CAST(A.N_PARTICIPANTES AS VARCHAR2(4)) as "n_partgrupo"
+        ,CAST((SELECT COUNT(*) 
+          FROM SGCORESYS.HR_EVALCASPOSTULANTE_CEU 
+          WHERE ID_EVALCAS = A.ID_EVALCAS AND
+                ESPECIALIDAD = A.ESPECIALIDAD AND
+                GRUPOEXAMEN = A.CODIGOGRUPO
+                AND FECHA_INICIO IS NOT NULL) AS VARCHAR2(4)) as "n_partgrupoini"
+        ,CAST((SELECT COUNT(*) 
+          FROM SGCORESYS.HR_EVALCASPOSTULANTE_CEU 
+          WHERE FECHA_FIN IS NOT NULL AND 
+                 ESPECIALIDAD = A.ESPECIALIDAD AND
+                GRUPOEXAMEN = A.CODIGOGRUPO
+                AND ID_EVALCAS IN (SELECT ID_EVALCAS 
+                                   FROM SGCORESYS.HR_EVALCASGRUPOS_CEU 
+                                   WHERE REQUERIMIENTO = A.REQUERIMIENTO AND ESPECIALIDAD = A.ESPECIALIDAD AND
+                                    GRUPOEXAMEN = A.CODIGOGRUPO AND CIUDAD = A.CIUDAD)) AS VARCHAR2(4)) as "n_partotaleval"
+            ,CAST(
+               NVL(
+                 (SELECT SUM(Z.FLAGASISTIO) 
+                  FROM SGCORESYS.HR_POSREQUER_CEU Z
+                    inner join
+                        SGCORESYS.HR_EVALREQUERIMIENTO_CEU er
+                        on Z.Requerimiento = er.requerimiento 
+                        and Z.Secuencia = er.secuencia and
+                        er.evaluacion = 3
+                        WHERE Z.REQUERIMIENTO = A.REQUERIMIENTO 
+                        AND TO_CHAR(A.FECHA_EVALUACION, 'DD/MM/YYYY HH:MI:SS A.M.') = 
+                        TO_CHAR(Z.FECHAGRUPOCONOC, 'DD/MM/YYYY HH:MI:SS A.M.'))
+                   ,'0') AS VARCHAR2(4)) as "valor_n",
+           A.CODIGOGRUPO as "codigogrupo",
+             A.ESPECIALIDAD as "especialidad",
+               cast(A.CIUDAD as varchar(10)) as "ciudad",
+           GE.DESCRIPCION AS "nombregrupo",
+           CIU.NOMBRECIUDAD || '  ' || CIU.DIRECCIONEXAMEN as "nombreciudad",
+            ec.descripcion as "nombreespecialidad",
+            TO_CHAR(A.fecha_evaluacion, 'DD/MM/YYYY HH:MI A.M.') AS "fecha_evaluacion"
+
+      FROM SGCORESYS.HR_EVALCASGRUPOS_CEU A
+      INNER JOIN SGCORESYS.HR_SALAS_CAB_CEU S ON A.ID_EVALCAS = S.ID_EVALCAS
+      INNER JOIN SGCORESYS.HR_REQUERIMIENTO_CEU B ON B.REQUERIMIENTO = A.REQUERIMIENTO AND B.ESTADO <> 'TE'
+      INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = B.CODIGOPUESTO
+      INNER JOIN SGCORESYS.HR_POSICIONEMPRESA C ON C.CODIGOPOSICION = D.CODIGOPOSICION
+      INNER JOIN SGCORESYS.HR_MA_GRUPOXEXAMEN_CEU GE ON (GE.CODIGOGRUPO =  A.CODIGOGRUPO AND GE.ESPECIALIDAD = A.ESPECIALIDAD)
+                                                       
+      INNER JOIN (SELECT DISTINCT
+                    MIN(FECHA_EVALUACION) OVER (PARTITION BY REQUERIMIENTO,CODIGOGRUPO,ESPECIALIDAD, CIUDAD,FECHA_EVALUACION) FECHA_EVALUACION,
+                    MAX(FLG_ESTADO) OVER (PARTITION BY REQUERIMIENTO,CODIGOGRUPO,ESPECIALIDAD, CIUDAD) FLG_ESTADO
+                  FROM SGCORESYS.HR_EVALCASGRUPOS_CEU WHERE FLG_ESTADO>0) E 
+                  ON (E.FECHA_EVALUACION = A.FECHA_EVALUACION AND E.FLG_ESTADO = A.FLG_ESTADO)
+      INNER JOIN SGCORESYS.HR_MA_CIUDADES_CEU CIU on A.CIUDAD = CIU.SECUENCIAL AND NVL(CIU.FLAGEXAMEN,'N')='S'
+       LEFT JOIN SGCORESYS.HR_MA_ESPECIALIDAD_CEU EC 
+        ON A.ESPECIALIDAD = EC.ESPECIALIDAD
+       WHERE A.FLG_ESTADO > 0
+             AND B.ORIGEN = 'C' 
+             AND CIU.estado = 'A'
+			      AND (UPPER(B.CONVOCATORIA) LIKE UPPER('%' || NVL(:pid_convocatoria,:pid_puesto) || '%')
+            	  		OR UPPER(D.DESCRIPCION) LIKE UPPER('%' || NVL(:pid_puesto,:pid_convocatoria) || '%'))
+            	 AND
+	            (S.SUPERVISOR01 = :pid_empleado or S.SUPERVISOR02 = :pid_empleado or S.COORDINADOR01 = :pid_empleado or
+	             S.COORDINADOR02 = :pid_empleado or S.EVALUADOR01 = :pid_empleado or S.EVALUADOR02 = :pid_empleado or
+	             S.EVALUADOR03 = :pid_empleado or S.EVALUADOR04 = :pid_empleado or S.EVALUADOR05 = :pid_empleado)
+			ORDER BY TO_CHAR(A.fecha_evaluacion, 'DD/MM/YYYY HH:MI A.M.') DESC, GE.DESCRIPCION          
+		]]>
+	</sql-query>
+
+	<sql-query name="hrencuesta.listarHrEvalSalaFIFA">
+		<![CDATA[
+			SELECT DISTINCT
+         CAST(A.ID_EVALCAS AS VARCHAR2(5)) as "id_evalcas"
+        ,B.REQUERIMIENTO as "requerimiento"
+        ,CASE B.PROCESO 
+          WHEN 1 THEN 
+          B.CONVOCATORIA
+          WHEN 2 THEN 
+          B.CONVOCATORIA||' (Segunda Convocatoria)'
+          WHEN 3 THEN 
+          B.CONVOCATORIA||' (Tercera Convocatoria)'
+          WHEN 4 THEN 
+          B.CONVOCATORIA||' (Cuarta Convocatoria)'
+          WHEN 5 THEN 
+          B.CONVOCATORIA||' (Quinta Convocatoria)'
+          ELSE B.CONVOCATORIA||'-'||B.PROCESO
+         END as "nro_requerimiento"
+        ,D.DESCRIPCION as "puesto"
+        ,C.DESCRIPCION as "unidad"
+        ,CASE WHEN A.FLG_ESTADO = 1 THEN 'POR EVALUAR'
+              WHEN A.FLG_ESTADO = 2 THEN 'EVALUANDO'
+         END as "estado"
+        ,CAST(A.flg_estado AS VARCHAR2(1)) as "n_estado"
+        ,CAST((SELECT SUM(N_PARTICIPANTES) FROM SGCORESYS.HR_EVALCASGRUPOS_CEU X1 WHERE X1.REQUERIMIENTO = A.REQUERIMIENTO 
+        and  X1.CIUDAD = A.CIUDAD AND  X1.ESPECIALIDAD = A.ESPECIALIDAD AND  X1.CODIGOGRUPO = A.CODIGOGRUPO
+        AND X1.FECHA_EVALUACION=A.FECHA_EVALUACION) AS VARCHAR2(4)) as "n_partotal"
+        ,MIN(A.N_GRUPO) OVER (PARTITION BY A.REQUERIMIENTO,A.CODIGOGRUPO,A.ESPECIALIDAD, A.CIUDAD)||' de '||(SELECT COUNT(N_GRUPO) FROM SGCORESYS.HR_EVALCASGRUPOS_CEU 
+        WHERE REQUERIMIENTO = A.REQUERIMIENTO  and CIUDAD = A.CIUDAD AND ESPECIALIDAD = A.ESPECIALIDAD  AND CODIGOGRUPO = A.CODIGOGRUPO) as "n_grupo"
+        ,CAST(A.N_PARTICIPANTES AS VARCHAR2(4)) as "n_partgrupo"
+        ,CAST((SELECT COUNT(*) 
+          FROM SGCORESYS.HR_EVALCASPOSTULANTE_CEU 
+          WHERE ID_EVALCAS = A.ID_EVALCAS AND
+                ESPECIALIDAD = A.ESPECIALIDAD AND
+                GRUPOEXAMEN = A.CODIGOGRUPO
+                AND FECHA_INICIO IS NOT NULL) AS VARCHAR2(4)) as "n_partgrupoini"
+        ,CAST((SELECT COUNT(*) 
+          FROM SGCORESYS.HR_EVALCASPOSTULANTE_CEU 
+          WHERE FECHA_FIN IS NOT NULL AND 
+                 ESPECIALIDAD = A.ESPECIALIDAD AND
+                GRUPOEXAMEN = A.CODIGOGRUPO
+                AND ID_EVALCAS IN (SELECT ID_EVALCAS 
+                                   FROM SGCORESYS.HR_EVALCASGRUPOS_CEU 
+                                   WHERE REQUERIMIENTO = A.REQUERIMIENTO AND ESPECIALIDAD = A.ESPECIALIDAD AND
+                                    GRUPOEXAMEN = A.CODIGOGRUPO AND CIUDAD = A.CIUDAD)) AS VARCHAR2(4)) as "n_partotaleval"
+            ,CAST(
+               NVL(
+                 (SELECT SUM(Z.FLAGASISTIO) 
+                  FROM SGCORESYS.HR_POSREQUER_CEU Z
+                    inner join
+                        SGCORESYS.HR_EVALREQUERIMIENTO_CEU er
+                        on Z.Requerimiento = er.requerimiento 
+                        and Z.Secuencia = er.secuencia and
+                        er.evaluacion = 3
+                        WHERE Z.REQUERIMIENTO = A.REQUERIMIENTO 
+                        AND TO_CHAR(A.FECHA_EVALUACION, 'DD/MM/YYYY HH:MI:SS A.M.') = 
+                        TO_CHAR(Z.FECHAGRUPOCONOC, 'DD/MM/YYYY HH:MI:SS A.M.'))
+                   ,'0') AS VARCHAR2(4)) as "valor_n",
+           A.CODIGOGRUPO as "codigogrupo",
+             A.ESPECIALIDAD as "especialidad",
+               cast(A.CIUDAD as varchar(10)) as "ciudad",
+           GE.DESCRIPCION AS "nombregrupo",
+           CIU.NOMBRECIUDAD || '  ' || CIU.DIRECCIONEXAMEN as "nombreciudad",
+            ec.descripcion as "nombreespecialidad",
+            TO_CHAR(A.fecha_evaluacion, 'DD/MM/YYYY HH:MI A.M.') AS "fecha_evaluacion"
+
+      FROM SGCORESYS.HR_EVALCASGRUPOS_CEU A
+      INNER JOIN SGCORESYS.HR_SALAS_CAB_CEU S ON A.ID_EVALCAS = S.ID_EVALCAS
+      INNER JOIN SGCORESYS.HR_REQUERIMIENTO_CEU B ON B.REQUERIMIENTO = A.REQUERIMIENTO AND B.ESTADO <> 'TE'
+      INNER JOIN SGCORESYS.HR_PUESTOEMPRESA D ON D.CODIGOPUESTO = B.CODIGOPUESTO
+      INNER JOIN SGCORESYS.HR_POSICIONEMPRESA C ON C.CODIGOPOSICION = D.CODIGOPOSICION
+      INNER JOIN SGCORESYS.HR_MA_GRUPOXEXAMEN_CEU GE ON (GE.CODIGOGRUPO =  A.CODIGOGRUPO AND GE.ESPECIALIDAD = A.ESPECIALIDAD)
+                                                       
+      INNER JOIN (SELECT DISTINCT
+                    MIN(FECHA_EVALUACION) OVER (PARTITION BY REQUERIMIENTO,CODIGOGRUPO,ESPECIALIDAD, CIUDAD,FECHA_EVALUACION) FECHA_EVALUACION,
+                    MAX(FLG_ESTADO) OVER (PARTITION BY REQUERIMIENTO,CODIGOGRUPO,ESPECIALIDAD, CIUDAD) FLG_ESTADO
+                  FROM SGCORESYS.HR_EVALCASGRUPOS_CEU WHERE FLG_ESTADO>0) E 
+                  ON (E.FECHA_EVALUACION = A.FECHA_EVALUACION AND E.FLG_ESTADO = A.FLG_ESTADO)
+      INNER JOIN SGCORESYS.HR_MA_CIUDADES_CEU CIU on A.CIUDAD = CIU.SECUENCIAL AND NVL(CIU.FLAGEXAMEN,'N')='S'
+       LEFT JOIN SGCORESYS.HR_MA_ESPECIALIDAD_CEU EC 
+        ON A.ESPECIALIDAD = EC.ESPECIALIDAD
+       WHERE A.FLG_ESTADO > 0 AND
+              B.ORIGEN = 'F' 
+             AND CIU.estado = 'A'
+			      AND (UPPER(B.CONVOCATORIA) LIKE UPPER('%' || NVL(:pid_convocatoria,:pid_puesto) || '%')
+            	  		OR UPPER(D.DESCRIPCION) LIKE UPPER('%' || NVL(:pid_puesto,:pid_convocatoria) || '%'))
+            	 AND
+	            (S.SUPERVISOR01 = :pid_empleado or S.SUPERVISOR02 = :pid_empleado or S.COORDINADOR01 = :pid_empleado or
+	             S.COORDINADOR02 = :pid_empleado or S.EVALUADOR01 = :pid_empleado or S.EVALUADOR02 = :pid_empleado or
+	             S.EVALUADOR03 = :pid_empleado or S.EVALUADOR04 = :pid_empleado or S.EVALUADOR05 = :pid_empleado)
+			ORDER BY TO_CHAR(A.fecha_evaluacion, 'DD/MM/YYYY HH:MI A.M.') DESC, GE.DESCRIPCION          
+		]]>
+	</sql-query>
+
+
+	<sql-query name="hrencuesta.verPostulanteSalaHrEvalCeu">
+		SELECT
+		CAST(C.APELLIDOPATERNO||'
+		'||C.APELLIDOMATERNO||' '||C.NOMBRES AS VARCHAR2(300)) as
+		"postulante",
+		C.POSTULANTE AS "idpostulante",
+		NVL(C.DOCUMENTO,C.CARNETEXTRANJERIA) as "documento",
+		C.TIPODOCUMENTO as
+		"tipodocumento",
+		TO_CHAR(C.FECHANACIMIENTO, 'DD/MM/YYYY') AS
+		"fechanacimiento",
+		C.CELULARLOCAL as "celularlocal",
+		CAST('00' AS
+		VARCHAR2(4)) as "puntaje",
+		CAST(NVL(B.FLAGASISTIO,1)||'-'||C.POSTULANTE AS VARCHAR2(15)) as
+		"asistencia",
+		'Sin Iniciar' as "estado"
+		FROM SGCORESYS.HR_SALAS_CAB_CEU
+		S JOIN
+		SGCORESYS.HR_SALAS_DET_CEU SD
+		ON
+		S.CODIGOSALA = SD.CODIGOSALA AND
+		S.ID_EVALCAS = SD.ID_EVALCAS inner join
+		SGCORESYS.HR_EVALCASGRUPOS_CEU
+		A on A.ID_EVALCAS = S.ID_EVALCAS
+		INNER JOIN SGCORESYS.HR_POSREQUER_CEU
+		B ON (B.REQUERIMIENTO =
+		A.REQUERIMIENTO) and B.POSTULANTE =
+		SD.POSTULANTE
+		AND TO_CHAR(A.FECHA_EVALUACION, 'DD/MM/YYYY HH:MI:SS A.M.') =
+		TO_CHAR(B.FECHAGRUPOCONOC, 'DD/MM/YYYY HH:MI:SS A.M.')
+		INNER
+		JOIN SGCORESYS.HR_POSTULANTES_RQ_CEU C ON (B.POSTULANTE =
+		C.POSTULANTE
+		and B.requerimiento = C.requerimiento
+		-- and C.codigo_ciudad= A.ciudad
+		AND C.REQUERIMIENTO=A.REQUERIMIENTO)
+		inner join
+		sgcoresys.hr_evalrequerimiento_CEU ER on (ER.REQUERIMIENTO =
+		B.REQUERIMIENTO AND ER.SECUENCIA = B.SECUENCIA)
+		WHERE ER.EVALUACION = 3
+		-- and a.CODIGOGRUPO=hrc.codigogrupo
+		-- and a.ciudad=C.codigo_ciudad
+		AND A.ID_EVALCAS = :pid_evalcas
+		AND A.CIUDAD = :pid_cuidad
+		AND
+		A.CODIGOGRUPO = :pid_grupo
+		AND S.CODIGOSALA = :pid_sala
+		AND C.DOCUMENTO
+		=
+		NVL(:pid_documento,C.DOCUMENTO)
+		order by 1
+	</sql-query>
+
+
+	<sql-query name="hrencuesta.verPostulanteSalaHrEvalCeu2">
+		SELECT
+		CAST(C.APELLIDOPATERNO||'
+		'||C.APELLIDOMATERNO||' '||C.NOMBRES AS VARCHAR2(300)) as
+		"postulante",
+		C.POSTULANTE AS "idpostulante",
+		TO_CHAR(C.FECHANACIMIENTO, 'DD/MM/YYYY') AS "fechanacimiento",
+		C.CELULARLOCAL as "celularlocal",
+		CAST(NVL((SELECT SUM(FLG_CORRECTA)*(
+		md.valorcodigo4 ) FROM SGCORESYS.HR_EVALCASPOSRESPUESTA_CEU T WHERE
+		POSTULANTE = A.POSTULANTE AND ID_EVALCAS = :pid_evalcas),'00') AS
+		VARCHAR2(4)) as "puntaje",
+		CAST(NVL(A.FLG_ASISTENCIA,0)||'-'||C.POSTULANTE AS VARCHAR2(15)) as
+		"asistencia",
+		NVL(C.DOCUMENTO,C.CARNETEXTRANJERIA) as "documento",
+		C.TIPODOCUMENTO as "tipodocumento",
+		TO_CHAR(A.FECHA_FIN,'dd/MM/yyyy HH24:MI:SS') as "fechafinexamen",
+		TO_CHAR(A.FECHA_INICIO,'dd/MM/yyyy HH24:MI:SS') as "fechainicioexamen",
+		A.CANT_SALIDA_EVAL as
+		"cantsalidaexamen",
+		CASE WHEN A.FECHA_INICIO IS NULL THEN 'Sin Iniciar'
+		WHEN A.FECHA_INICIO IS NOT NULL AND A.FECHA_FIN IS NULL THEN 'En
+		Proceso'
+		WHEN A.FECHA_FIN IS NOT NULL THEN 'Terminado' ELSE '' END as
+		"estado"
+		FROM SGCORESYS.HR_SALAS_CAB_CEU S JOIN
+		SGCORESYS.HR_SALAS_DET_CEU SD
+		ON
+		S.CODIGOSALA = SD.CODIGOSALA AND
+		S.ID_EVALCAS = SD.ID_EVALCAS
+		INNER
+		JOIN
+		SGCORESYS.HR_EVALCASPOSTULANTE_CEU A
+		ON SD.POSTULANTE =
+		A.POSTULANTE and
+		SD.ID_EVALCAS = A.ID_EVALCAS
+		INNER JOIN
+		SGCORESYS.HR_POSTULANTES_CEU C
+		ON SD.POSTULANTE = C.POSTULANTE
+		inner
+		join
+		sgcoresys.hr_requerimiento_CEU r on S.requerimiento =
+		r.requerimiento
+		inner join sgcoresys.hr_puestoempresa e on
+		e.codigopuesto =
+		r.codigopuesto
+		inner join
+		sgcoresys.ma_miscelaneosdetalle md
+		on
+		md.codigotabla = 'CEUBALEXAM' AND
+		md.CODIGOELEMENTO = '2021'
+		WHERE
+		A.ID_EVALCAS =
+		:pid_evalcas AND
+		S.CODIGOSALA = :pid_sala
+		AND C.DOCUMENTO
+		=
+		NVL(:pid_documento,C.DOCUMENTO)
+		order by 1
+	</sql-query>
+
+
+
+	<sql-query name="hrencuesta.verPostulanteSalaHrEvalFIFA">
+		SELECT
+		CAST(C.APELLIDOPATERNO||'
+		'||C.APELLIDOMATERNO||' '||C.NOMBRES AS VARCHAR2(300)) as
+		"postulante",
+		C.POSTULANTE AS "idpostulante",
+		NVL(C.DOCUMENTO,C.CARNETEXTRANJERIA) as "documento",
+		C.TIPODOCUMENTO as
+		"tipodocumento",
+		TO_CHAR(C.FECHANACIMIENTO, 'DD/MM/YYYY') AS
+		"fechanacimiento",
+		C.CELULARLOCAL as "celularlocal",
+		CAST('00' AS
+		VARCHAR2(4)) as "puntaje",
+		CAST(NVL(B.FLAGASISTIO,1)||'-'||C.POSTULANTE AS VARCHAR2(15)) as
+		"asistencia",
+		'Sin Iniciar' as "estado"
+		FROM SGCORESYS.HR_SALAS_CAB_CEU
+		S JOIN
+		SGCORESYS.HR_SALAS_DET_CEU SD
+		ON
+		S.CODIGOSALA = SD.CODIGOSALA AND
+		S.ID_EVALCAS = SD.ID_EVALCAS inner join
+		SGCORESYS.HR_EVALCASGRUPOS_CEU
+		A on A.ID_EVALCAS = S.ID_EVALCAS
+		INNER JOIN SGCORESYS.HR_POSREQUER_CEU
+		B ON (B.REQUERIMIENTO =
+		A.REQUERIMIENTO) and B.POSTULANTE =
+		SD.POSTULANTE
+		AND TO_CHAR(A.FECHA_EVALUACION, 'DD/MM/YYYY HH:MI:SS
+		A.M.') =
+		TO_CHAR(B.FECHAGRUPOCONOC, 'DD/MM/YYYY HH:MI:SS A.M.')
+		INNER
+		JOIN SGCORESYS.HR_POSTULANTES_RQ_CEU C ON (B.POSTULANTE =
+		C.POSTULANTE
+		and B.requerimiento = C.requerimiento
+		-- and C.codigo_ciudad= A.ciudad
+		AND C.REQUERIMIENTO=A.REQUERIMIENTO)
+		inner join
+		sgcoresys.hr_evalrequerimiento_CEU ER on (ER.REQUERIMIENTO =
+		B.REQUERIMIENTO AND ER.SECUENCIA = B.SECUENCIA)
+		WHERE ER.EVALUACION = 3
+		-- and a.CODIGOGRUPO=hrc.codigogrupo
+		-- and a.ciudad=C.codigo_ciudad
+		AND A.ID_EVALCAS = :pid_evalcas
+		AND A.CIUDAD = :pid_cuidad
+		AND
+		A.CODIGOGRUPO = :pid_grupo
+		AND S.CODIGOSALA = :pid_sala
+		AND C.DOCUMENTO
+		=
+		NVL(:pid_documento,C.DOCUMENTO)
+		order by 1
+	</sql-query>
+
+
+	<sql-query name="hrencuesta.verPostulanteSalaHrEvalFIFA2">
+		SELECT
+		CAST(C.APELLIDOPATERNO||'
+		'||C.APELLIDOMATERNO||' '||C.NOMBRES AS VARCHAR2(300)) as
+		"postulante",
+		C.POSTULANTE AS "idpostulante",
+		TO_CHAR(C.FECHANACIMIENTO, 'DD/MM/YYYY') AS "fechanacimiento",
+		C.CELULARLOCAL as "celularlocal",
+		CAST(NVL((SELECT SUM(FLG_CORRECTA)*(
+		md.valorcodigo4 ) FROM SGCORESYS.HR_EVALCASPOSRESPUESTA_CEU T WHERE
+		POSTULANTE = A.POSTULANTE AND ID_EVALCAS = :pid_evalcas),'00') AS
+		VARCHAR2(4)) as "puntaje",
+		CAST(NVL(A.FLG_ASISTENCIA,0)||'-'||C.POSTULANTE AS VARCHAR2(15)) as
+		"asistencia",
+		NVL(C.DOCUMENTO,C.CARNETEXTRANJERIA) as "documento",
+		C.TIPODOCUMENTO as "tipodocumento",
+		TO_CHAR(A.FECHA_FIN,'dd/MM/yyyy HH24:MI:SS') as "fechafinexamen",
+		TO_CHAR(A.FECHA_INICIO,'dd/MM/yyyy HH24:MI:SS') as "fechainicioexamen",
+		A.CANT_SALIDA_EVAL as
+		"cantsalidaexamen",
+		CASE WHEN A.FECHA_INICIO IS NULL THEN 'Sin Iniciar'
+		WHEN A.FECHA_INICIO IS NOT NULL AND A.FECHA_FIN IS NULL THEN 'En
+		Proceso'
+		WHEN A.FECHA_FIN IS NOT NULL THEN 'Terminado' ELSE '' END as
+		"estado"
+		FROM SGCORESYS.HR_SALAS_CAB_CEU S JOIN
+		SGCORESYS.HR_SALAS_DET_CEU SD
+		ON
+		S.CODIGOSALA = SD.CODIGOSALA AND
+		S.ID_EVALCAS = SD.ID_EVALCAS
+		INNER
+		JOIN
+		SGCORESYS.HR_EVALCASPOSTULANTE_CEU A
+		ON SD.POSTULANTE =
+		A.POSTULANTE and
+		SD.ID_EVALCAS = A.ID_EVALCAS
+		INNER JOIN
+		SGCORESYS.HR_POSTULANTES_CEU C
+		ON SD.POSTULANTE = C.POSTULANTE
+		inner
+		join
+		sgcoresys.hr_requerimiento_CEU r on S.requerimiento =
+		r.requerimiento
+		inner join sgcoresys.hr_puestoempresa e on
+		e.codigopuesto =
+		r.codigopuesto
+		inner join
+		sgcoresys.ma_miscelaneosdetalle md
+		on
+		md.codigotabla = 'FIFABALEXA' AND
+		md.CODIGOELEMENTO = '2021'
+		WHERE
+		A.ID_EVALCAS =
+		:pid_evalcas AND
+		S.CODIGOSALA = :pid_sala
+		AND C.DOCUMENTO
+		=
+		NVL(:pid_documento,C.DOCUMENTO)
+		order by 1
+	</sql-query>
+
+
+</hibernate-mapping>

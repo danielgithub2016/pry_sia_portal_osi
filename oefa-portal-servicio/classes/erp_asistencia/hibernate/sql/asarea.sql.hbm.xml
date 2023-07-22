@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : asistencia.AsArea
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="asarea.obtenerEmpleadoResponsable">
+		select b.EMPLEADORESPONSABLE 
+		from 
+			SGCORESYS.as_carnetidentificacion a, SGCORESYS.as_Area b
+		where a.empleado = :p_empleado and
+            a.area = b.area
+    </sql-query>
+</hibernate-mapping>

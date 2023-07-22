@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.sistema.dominio.SyOpcionlog" table="SGCORESYS.SY_OPCIONLOG">
+        <composite-id name="pk" class="net.royal.erp.sistema.dominio.SyOpcionlogPk">
+            <key-property name="aplicacioncodigo" type="string">
+                <column name="APLICACIONCODIGO" length="2" />
+            </key-property>
+            <key-property name="objetocodigo" type="string">
+                <column name="OBJETOCODIGO" length="50" />
+            </key-property>
+        </composite-id>
+        <property name="objetoventana" type="string">
+            <column name="OBJETOVENTANA" length="150" />
+        </property>
+        <property name="descripcionventana" type="string">
+            <column name="DESCRIPCIONVENTANA" length="150" />
+        </property>
+        <property name="descripcionlocal" type="string">
+            <column name="DESCRIPCIONLOCAL" length="150" />
+        </property>
+        <property name="objetotipo" type="string">
+            <column name="OBJETOTIPO" length="1" />
+        </property>
+        <property name="visibleflag" type="string">
+            <column name="VISIBLEFLAG" length="1" />
+        </property>
+        <property name="enabledflag" type="string">
+            <column name="ENABLEDFLAG" length="1" />
+        </property>
+        <property name="grupo01" type="string">
+            <column name="GRUPO01" length="4" />
+        </property>
+        <property name="grupo02" type="string">
+            <column name="GRUPO02" length="4" />
+        </property>
+        <property name="grupo03" type="string">
+            <column name="GRUPO03" length="4" />
+        </property>
+        <property name="grupo04" type="string">
+            <column name="GRUPO04" length="4" />
+        </property>
+        <property name="grupo05" type="string">
+            <column name="GRUPO05" length="4" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

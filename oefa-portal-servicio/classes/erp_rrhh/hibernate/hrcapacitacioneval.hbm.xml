@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrCapacitacioneval" table="SGCORESYS.HR_CAPACITACIONEVAL">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrCapacitacionevalPk">
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+            <key-property name="capacitacion" type="string">
+                <column name="CAPACITACION" length="10" />
+            </key-property>
+            <key-property name="evaluacion" type="integer">
+                <column name="EVALUACION" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dDesempenocomparativoCompromiso" language="groovy" pageWidth="320" pageHeight="400" columnWidth="320" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="be6f62cf-366a-41c4-98c8-399b6b537200">
+	<property name="ireport.zoom" value="6.0"/>
+	<property name="ireport.x" value="1053"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parCompany" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEmpleado" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parSecuencia" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEvaluador" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Fabrica\\Desarrollo\\DesarrolloProductos\\OEFAMIGRA\\oefa-portal-web\\src\\main\\webapp\\erp\\rrhh\\recursos\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+    a.empleado,
+    a.EmpleadoEvaluador,
+    a.companyowner,
+    a.secuenciaeval ,
+    c.descripcion as nombrearea,
+    b.area
+
+FROM
+    SGCORESYS.HR_DETALLEEVALUACIONMEJORA a
+        inner join SGCORESYS.hr_factoresevaluacion b on (b.factor = a.factor)
+        left join SGCORESYS.hr_evaluacionarea c on (b.area = c.area)
+        left join SGCORESYS.HR_EvaluacionPeriodo d on (d.SecuenciaEval = a.SecuenciaEval and d.CompanyOwner = a.CompanyOwner)
+WHERE
+	b.FlagConcepto = 'N' and
+	a.Tipo = 'N' and
+	a.companyowner =$P{parCompany}  and
+	a.Empleado	= $P{parEmpleado}  and
+	a.SecuenciaEval= $P{parSecuencia}  and
+	a.EmpleadoEvaluador=$P{parEvaluador}]]>
+	</queryString>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="EMPLEADOEVALUADOR" class="java.math.BigDecimal"/>
+	<field name="COMPANYOWNER" class="java.lang.String"/>
+	<field name="SECUENCIAEVAL" class="java.math.BigDecimal"/>
+	<field name="NOMBREAREA" class="java.lang.String"/>
+	<field name="AREA" class="java.lang.String"/>
+	<title>
+		<band height="18">
+			<staticText>
+				<reportElement x="4" y="4" width="112" height="12" uuid="9228d9db-f011-47a3-aca6-93e10c2dc1c3"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPROMISO DE MEJORA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="15" width="112" height="1" uuid="56e370f3-3a56-4189-9c68-ba2b05d50d56"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="320" height="1" uuid="a62b18a9-6e37-4857-a4ed-545d75c5941e"/>
+			</line>
+			<line>
+				<reportElement x="0" y="1" width="1" height="17" uuid="19a9b114-e81a-49fb-8b9b-aa65fddb34ab"/>
+			</line>
+			<line>
+				<reportElement x="319" y="1" width="1" height="17" uuid="1c91bec3-3d4f-4869-a7d2-d021df8beb67"/>
+			</line>
+		</band>
+	</title>
+	<detail>
+		<band height="47" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="3" width="244" height="12" uuid="e1a0e5ff-fb7c-4e10-bab1-3669af1d3efa"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBREAREA}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="2" y="15" width="263" height="31" uuid="44df8625-e5b4-4bae-9bce-1b83d11937ba"/>
+				<subreportParameter name="parArea">
+					<subreportParameterExpression><![CDATA[$F{AREA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parEvaluador">
+					<subreportParameterExpression><![CDATA[$P{parEvaluador}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parCompany">
+					<subreportParameterExpression><![CDATA[$P{parCompany}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parSecuencia">
+					<subreportParameterExpression><![CDATA[$P{parSecuencia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parEmpleado">
+					<subreportParameterExpression><![CDATA[$P{parEmpleado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["dDesempenocomparativocompromiso01.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="319" y="0" width="1" height="47" uuid="c6ac9026-82ab-4910-9647-8ff12c455213"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="46" uuid="197750dc-3a61-433a-ba2a-c9ee5b230945"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band>
+			<line>
+				<reportElement x="0" y="-1" width="319" height="1" uuid="4eef4c88-6903-45f6-879c-284b8e4433fd"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

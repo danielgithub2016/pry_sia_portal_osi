@@ -1,0 +1,93 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:remoteCommand autoRun="true" name="filtrarTable"
+		oncomplete="PF('tableNecesidades').filter()" />
+
+	<p:panelGrid columns="1" styleClass="ui-panelgrid-blank" layout="grid"
+		columnClasses="ui-grid-col-2">
+		<p:commandButton value="Agregar" oncomplete="filtrarTable();"
+			icon="nuevo"
+			disabled="#{cwHrEvaluacionempleadoEdit.opciones.p7cbagregacapacita_disable}"
+			update=":frmEvaluacionEmpleado:tvDatos:dtNecesidades"
+			action="#{cwHrNecesidadesCapacitacion.nuevo}" style="float:right">
+			<f:setPropertyActionListener
+				target="#{cwHrCapacitacionSelector.nombreContenedorRefrescar}"
+				value="frmNecesidadEdicion:itaCurso" />
+
+			<f:setPropertyActionListener
+				target="#{cwHrCapacitacionSelector.nombreVentanaEmergente}"
+				value="popNecesidadEdicion" />
+		</p:commandButton>
+
+	</p:panelGrid>
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		style="#{cwHrEvaluacionempleadoEdit.opciones.dw7_disable ? 'pointer-events:none' : null}"
+		widgetVar="tableNecesidades" id="dtNecesidades" rows="4"
+		value="#{cwHrNecesidadesCapacitacion.dw7}" reflow="true" paginator="true" paginatorPosition="bottom"
+		rowKey="#{row.bean.pk.secuencia}" var="row"
+		selection="#{cwHrNecesidadesCapacitacion.registroSeleccionado}"
+		selectionMode="single"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+		<p:ajax event="rowSelect" />
+
+
+		<p:column headerText="Necesidad de Capacitación">
+			<h:outputText value="#{row.bean.necesidad}" />
+		</p:column>
+
+		<p:column headerText="Curso de Capacitación">
+			<h:outputText value="#{row.cursonombre}" />
+		</p:column>
+
+		<p:column headerText="Objetivo de Mejora">
+			<h:outputText value="#{row.bean.objetivo}" />
+		</p:column>
+
+		<p:column headerText="Prioridad" width="50"
+			styleClass="columnatablaCentro">
+			<h:outputText value="#{row.bean.prioridad}" />
+		</p:column>
+
+		<p:column headerText="Acción" width="70"
+			styleClass="columnatablaCentro">
+			<p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-7,ui-grid-col-7" styleClass="ui-panelgrid-blank">
+				<p:commandButton type="image" icon="editar" title="Editar Registro"
+					action="#{cwHrNecesidadesCapacitacion.editar}">
+					<f:setPropertyActionListener
+						target="#{cwHrNecesidadesCapacitacion.registroSeleccionado}"
+						value="#{row}" />
+				</p:commandButton>
+				<p:commandButton type="image" icon="eliminar"
+					action="#{cwHrNecesidadesCapacitacion.eliminar}"
+					oncomplete="filtrarTable();" title="Eliminar Registro"
+					disabled="#{cwHrEvaluacionempleadoEdit.opciones.p7cbeliminacapacita_disable}"
+					update=":frmEvaluacionEmpleado:tvDatos:dtNecesidades">
+
+					<f:setPropertyActionListener
+						target="#{cwHrNecesidadesCapacitacion.registroSeleccionado}"
+						value="#{row}" />
+				</p:commandButton>
+
+			</p:panelGrid>
+		</p:column>
+
+		<p:column headerText="" id="filtro" width="0"
+			filterBy="#{row.eliminado}">
+			<f:facet name="filter">
+				<p:inputText value="N" style="height:1px;width:1px;" />
+			</f:facet>
+		</p:column>
+
+	</p:dataTable>
+</ui:composition>
+
+

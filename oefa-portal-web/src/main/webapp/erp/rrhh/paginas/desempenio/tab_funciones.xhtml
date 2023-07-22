@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<p:panelGrid columns="3" layout="grid"
+		columnClasses="ui-grid-col-4,ui-grid-col-2,ui-grid-col-2"
+		styleClass="ui-panelgrid-blank">
+		<p:spacer />
+		<p:commandButton value="Agregar" rendered="false"
+			disabled="#{cwHrEvaluacionempleadoEdit.opciones.p11cbagregarfuncion_disable}" />
+		<p:commandButton value="Eliminar" rendered="false"
+			disabled="#{cwHrEvaluacionempleadoEdit.opciones.p11cbeliminarfuncion_disable}" />
+		<p:commandButton value="Calificación" rendered="false"
+			disabled="#{cwHrEvaluacionempleadoEdit.opciones.p11cbcalificacionfunciones_disable}" />
+	</p:panelGrid>
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		style="#{cwHrEvaluacionempleadoEdit.opciones.dw11_disable ? 'pointer-events:none' : null}"
+		value="#{cwHrFunciones.dw11}" var="row" selectionMode="single"
+		rowKey="#{row.pk.secuencia}" id="dtFunciones"
+		selection="#{cwHrFunciones.registroSelecionado}" reflow="true"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+		<p:column headerText="Función" width="300">
+			<h:outputText value="#{row.funcion}" />
+		</p:column>
+		<p:column headerText="Calificación" width="70"
+			styleClass="columnatablaDerecha">
+			<h:outputText value="#{row.calificacion}" />
+		</p:column>
+		<p:column headerText="Peso" width="40"
+			styleClass="columnatablaDerecha">
+			<h:outputText value="#{row.factorparticipacion}" />
+		</p:column>
+		<p:column headerText="Comentario" width="300">
+			<h:outputText value="#{row.comentarios}" />
+		</p:column>
+
+		<p:column width="40" styleClass="columnatablaCentro"
+			headerText="Acción">
+			<p:commandButton type="image" icon="editar"
+				oncomplete="PF('popFunciones').show()" update=":dgFunciones">
+				<f:setPropertyActionListener
+					target="#{cwHrFunciones.registroSelecionado}" value="#{row}" />
+			</p:commandButton>
+		</p:column>
+
+		<f:facet name="footer">
+			<table style="border-color: transparent;">
+				<tr>
+					<td align="right"><h:outputText value="Total:" /></td>
+					<td align="right"><h:outputText
+							value="#{cwHrFunciones.dw11totalcalificacion}">
+							<f:convertNumber minIntegerDigits="1" maxFractionDigits="2"
+								minFractionDigits="2" locale="#{msg.formato_numeros_punto}" />
+						</h:outputText></td>
+
+					<td align="right"><h:outputText
+							value="#{cwHrFunciones.dw11totalsuma}">
+							<f:convertNumber minIntegerDigits="1" maxFractionDigits="2"
+								minFractionDigits="2" locale="#{msg.formato_numeros_punto}" />
+						</h:outputText></td>
+				</tr>
+			</table>
+		</f:facet>
+
+	</p:dataTable>
+
+</ui:composition>

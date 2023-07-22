@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panelGrid columns="2" style="border-spacing:0px;"
+		columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid"
+		styleClass="ui-panelgrid-blank">
+
+		<p:commandButton value="Eliminar" id="btnEliminarFormatosEvaluacion"
+			icon="eliminar" />
+
+		<p:commandButton value="Agregar" id="btnAgregarFormatosEvaluacion"
+			icon="nuevo" />
+	</p:panelGrid>
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		paginator="true" paginatorPosition="bottom" scrollable="true"
+		scrollHeight="250" lazy="true" rows="20" var="p" reflow="true"
+		id="tblFormatosEvaluacion" value="#{cwHrPuestosEdit.dw_puestodoc}"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+		<p:column headerText="Código" width="120">
+			<h:outputLabel value="#{p.pk.codigopuesto}" />
+		</p:column>
+
+		<p:column headerText="Orden" width="80">
+			<h:outputLabel value="#{p.pk.secuencia}" />
+		</p:column>
+
+		<p:column headerText="Ruta Documento" width="420">
+			<h:outputLabel value="#{p.rutadocumento}" />
+		</p:column>
+
+		<p:column headerText="Acciones" width="80">
+			<p:commandButton icon="buscar" id="btnBuscar" />
+			<p:commandButton value="Ver" id="btnLupa" />
+		</p:column>
+
+	</p:dataTable>
+
+
+</ui:composition>

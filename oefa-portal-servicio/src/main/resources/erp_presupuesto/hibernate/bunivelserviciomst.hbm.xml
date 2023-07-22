@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.presupuesto.dominio.BuNivelserviciomst" table="SGCORESYS.BU_NIVELSERVICIOMST">
+        <composite-id name="pk" class="net.royal.erp.presupuesto.dominio.BuNivelserviciomstPk">
+            <key-property name="companiasocio" type="string">
+                <column name="COMPANIASOCIO" length="8" />
+            </key-property>
+            <key-property name="nivelservicio" type="integer">
+                <column name="NIVELSERVICIO" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="tipobasedatos" type="string">
+            <column name="TIPOBASEDATOS" length="10" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="500" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="terminal" type="string">
+            <column name="TERMINAL" length="15" />
+        </property>
+        <property name="tiposervicio" type="string">
+            <column name="TIPOSERVICIO" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.MaUnidadnegocio" table="SGCORESYS.MA_UNIDADNEGOCIO">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.MaUnidadnegocioPk">
+            <key-property name="unidadnegocio" type="string">
+                <column name="UNIDADNEGOCIO" length="4" />
+            </key-property>
+        </composite-id>
+        <property name="zona" type="string">
+            <column name="ZONA" length="4" />
+        </property>
+        <property name="descripcionlocal" type="string">
+            <column name="DESCRIPCIONLOCAL" length="60" />
+        </property>
+        <property name="descripcioningles" type="string">
+            <column name="DESCRIPCIONINGLES" length="120" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="DIRECCION" length="4000" />
+        </property>
+        <property name="telefonos" type="string">
+            <column name="TELEFONOS" length="50" />
+        </property>
+        <property name="registropatronalplanilla" type="string">
+            <column name="REGISTROPATRONALPLANILLA" length="20" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="representante" type="string">
+            <column name="REPRESENTANTE" length="60" />
+        </property>
+        <property name="representantedocumento" type="string">
+            <column name="REPRESENTANTEDOCUMENTO" length="20" />
+        </property>
+        <property name="representantecargo" type="string">
+            <column name="REPRESENTANTECARGO" length="30" />
+        </property>
+        <property name="representante2" type="string">
+            <column name="REPRESENTANTE2" length="60" />
+        </property>
+        <property name="representantedocumento2" type="string">
+            <column name="REPRESENTANTEDOCUMENTO2" length="20" />
+        </property>
+        <property name="representantecargo2" type="string">
+            <column name="REPRESENTANTECARGO2" length="30" />
+        </property>
+        <property name="representante3" type="string">
+            <column name="REPRESENTANTE3" length="60" />
+        </property>
+        <property name="representantedocumento3" type="string">
+            <column name="REPRESENTANTEDOCUMENTO3" length="20" />
+        </property>
+        <property name="representantecargo3" type="string">
+            <column name="REPRESENTANTECARGO3" length="30" />
+        </property>
+        <property name="companiasocio" type="string">
+            <column name="COMPANIASOCIO" length="8" />
+        </property>
+        <property name="ledger" type="string">
+            <column name="LEDGER" length="2" />
+        </property>
+        <property name="persona" type="integer">
+            <column name="PERSONA" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

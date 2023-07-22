@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.rrhh.dominio.HrEmpleadocapacitacion"
+		table="SGCORESYS.HR_EMPLEADOCAPACITACION">
+		<composite-id name="pk"
+			class="net.royal.erp.rrhh.dominio.HrEmpleadocapacitacionPk">
+			<key-property name="capacitacion" type="string">
+				<column name="CAPACITACION" length="10" />
+			</key-property>
+			<key-property name="empleado" type="integer">
+				<column name="EMPLEADO" length="38" />
+			</key-property>
+		</composite-id>
+		<property name="solicitudcapacitacion" type="string">
+			<column name="SOLICITUDCAPACITACION" length="10" />
+		</property>
+		<property name="centroresponsabilidad" type="string">
+			<column name="CENTRORESPONSABILIDAD" length="10" />
+		</property>
+		<property name="numeroconstancia" type="string">
+			<column name="NUMEROCONSTANCIA" length="20" />
+		</property>
+		<property name="numeroasistencias" type="integer">
+			<column name="NUMEROASISTENCIAS" length="38" />
+		</property>
+		<property name="horasasistencia" type="integer">
+			<column name="HORASASISTENCIA" length="38" />
+		</property>
+		<property name="calificacion" type="string">
+			<column name="CALIFICACION" length="20" />
+		</property>
+		<property name="costoindividual" type="big_decimal">
+			<column name="COSTOINDIVIDUAL" />
+		</property>
+		<property name="numeroperiodos" type="integer">
+			<column name="NUMEROPERIODOS" length="38" />
+		</property>
+		<property name="unidadnegocio" type="string">
+			<column name="UNIDADNEGOCIO" length="4" />
+		</property>
+		<property name="ultimoUsuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+		<property name="interfaceinstruccion" type="string">
+			<column name="INTERFACEINSTRUCCION" length="1" />
+		</property>
+		<property name="ultimaFechaModif" type="timestamp">
+			<column name="ULTIMAFECHAMODIF" />
+		</property>
+		<property name="nota" type="big_decimal">
+			<column name="NOTA" />
+		</property>
+		<property name="diasasistidos" type="integer">
+			<column name="DIASASISTIDOS" length="38" />
+		</property>
+		<property name="importegastoemp" type="big_decimal">
+			<column name="IMPORTEGASTOEMP" />
+		</property>
+		<property name="comentario" type="string">
+			<column name="COMENTARIO" length="150" />
+		</property>
+		<property name="deptoorganizacion" type="string">
+			<column name="DEPTOORGANIZACION" length="3" />
+		</property>
+		<property name="horario" type="string">
+			<column name="HORARIO" length="255" />
+		</property>
+		<property name="horainicio" type="timestamp">
+			<column name="HORAINICIO" />
+		</property>
+		<property name="horafin" type="timestamp">
+			<column name="HORAFIN" />
+		</property>
+		<property name="viaticos" type="big_decimal">
+			<column name="VIATICOS" />
+		</property>
+		<property name="fecha" type="timestamp">
+			<column name="FECHA" />
+		</property>
+		<property name="saldoinstitucional" type="big_decimal">
+			<column name="SALDOINSTITUCIONAL" />
+		</property>
+		<property name="cartacompromiso" type="string">
+			<column name="CARTACOMPROMISO" length="1" />
+		</property>
+		<property name="flagnodescuentacapacitacion" type="string">
+			<column name="FLAGNODESCUENTACAPACITACION" length="1" />
+		</property>
+		<property name="nivelcolaborador" type="string">
+			<column name="NIVEL_COLABORADOR" length="10" />
+		</property>
+		<property name="funcion" type="integer">
+			<column name="FUNCION" length="10" />
+		</property>
+		<property name="tipoaprueba" type="string">
+			<column name="TIPO_APRUEBA" length="10" />
+		</property>
+		<property name="observacionempleado" type="string">
+			<column name="OBSERVACIONEMPLEADO" length="500" />
+		</property>
+		
+		<property name="flgadjuntosolicitud" type="string">
+			<column name="FLG_ADJUNTO_SOLICITUD" length="1" />
+		</property>
+		<property name="flgadjuntoinformfinal" type="string">
+			<column name="FLG_ADJUNTO_INFORM_FINAL" length="1" />
+		</property>
+	</class>
+</hibernate-mapping>

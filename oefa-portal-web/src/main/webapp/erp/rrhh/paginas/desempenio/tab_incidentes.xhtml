@@ -1,0 +1,97 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+	<p:panelGrid columns="1" layout="grid" columnClasses="ui-grid-col-2"
+		styleClass="ui-panelgrid-blank">
+		<p:commandButton value="Agregar" oncomplete="filtrarTableIncidentes()"
+			icon="nuevo" action="#{cwHrIncidentesCriticos.nuevo}">
+
+			<f:setPropertyActionListener
+				target="#{cwHrIncidentesCriticosSelector.nombreContenedorRefrescar}"
+				value="frmEvaluacionEmpleado:tvDatos:dtIncidentes" />
+
+			<f:setPropertyActionListener
+				target="#{cwHrIncidentesCriticosSelector.nombreVentanaEmergente}"
+				value="popIncidentesCriticos" />
+
+		</p:commandButton>
+
+	</p:panelGrid>
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		id="dtIncidentes" widgetVar="tableIncidentes"
+		value="#{cwHrIncidentesCriticos.dw3}" reflow="true"
+		selection="#{cwHrIncidentesCriticos.registroSeleccionado}" var="row"
+		selectionMode="single" rowKey="#{row.secuencia}"
+		tableStyle="#{cwHrEvaluacionempleadoEdit.opciones.dw3_disable ? 'pointer-events:none' : null}"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+		<p:ajax event="rowSelect"
+			listener="#{cwHrIncidentesCriticos.cargarRegistro}" />
+
+		<p:column headerText="#" width="10">
+			<h:outputText value="#{row.secuencia}" />
+		</p:column>
+		<p:column headerText="Tipo" styleClass="columnatablaCentro">
+			<h:outputText
+				value="#{row.tipo eq 'M' ? 'Mérito' : row.tipo eq 'F' ?'Demérito' : null}" />
+		</p:column>
+		<p:column headerText="Fecha" width="90"
+			styleClass="columnatablaCentro">
+			<h:outputText value="#{row.fecha}">
+				<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}" />
+			</h:outputText>
+		</p:column>
+		<p:column headerText="Descripción" width="400">
+			<h:outputText value="#{row.descripcion}" />
+		</p:column>
+		<p:column headerText="" width="100" style="background-color:yellow;">
+			<h:outputText value="Sólo en evaluación"
+				style="font-weight:bold;font-size: 11px;" />
+		</p:column>
+		<p:column headerText="Acción" width="70"
+			styleClass="columnatablaCentro">
+			<p:commandButton type="image" icon="editar" update="@form"
+				rendered="#{row.mostrarEditar}" title="Editar Registro"
+				action="#{cwHrIncidentesCriticos.editar}">
+				<f:setPropertyActionListener
+					target="#{cwHrIncidentesCriticos.registroSeleccionado}"
+					value="#{row}" />
+			</p:commandButton>
+
+
+			<p:commandButton type="image" icon="eliminar"
+				action="#{cwHrIncidentesCriticos.eliminar}"
+				oncomplete="filtrarTableIncidentes();" title="Eliminar Registro"
+				disabled="#{cwHrIncidentesCriticos.mostraEliminar}"
+				update=":frmEvaluacionEmpleado:tvDatos:dtIncidentes">
+
+				<f:setPropertyActionListener
+					target="#{cwHrIncidentesCriticos.registroSeleccionado}"
+					value="#{row}" />
+			</p:commandButton>
+
+		</p:column>
+
+		<p:column filterBy="#{row.eliminado}" width="0">
+			<f:facet name="filter">
+				<p:inputText value="N" style="height:1px;"/>
+			</f:facet>
+		</p:column>
+
+		<f:facet name="footer">
+			<table style="background-color: transparent; height: 10px;"></table>
+		</f:facet>
+
+	</p:dataTable>
+
+	<p:remoteCommand autoRun="true"
+		oncomplete="PF('tableIncidentes').filter()"
+		name="filtrarTableIncidentes" />
+
+</ui:composition>

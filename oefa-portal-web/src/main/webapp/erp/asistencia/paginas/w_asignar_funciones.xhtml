@@ -1,0 +1,117 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:outputLabel value="Asignación de Funciones"
+		style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+	<p:panel header="DATOS SIGED" id="asignaFuncion">
+		<ui:repeat
+			value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.empleadoNuevaBandeja.bandejas}"
+			var="bandeja" varStatus="status">
+
+			<p:panelGrid columns="2" id="grdEmpleadoFuncion"
+				style="border-spacing:0px;"
+				columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
+				styleClass="ui-panelgrid-blank">
+
+				<h:outputLabel value="Area"
+					style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+				<h:outputLabel value="#{bandeja.area}" />
+
+				<h:outputLabel value="Cargo"
+					style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+				<h:outputLabel value="#{bandeja.cargo}" />
+
+				<h:outputLabel value="Asignar a"
+					style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+				<p:panelGrid columns="2" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-10,ui-grid-col-3" layout="grid"
+					styleClass="ui-panelgrid-blank">
+
+					<p:inputText disabled="true" value="#{bandeja.nombrePersonaSIA}" />
+
+					<p:commandButton icon="buscar" immediate="true"
+						title="Buscar Empleado" onstart="PF('bUI').block();"
+						oncomplete="PF('bUI').unblock();"
+						disabled="#{cwAsAutorizacionPreprocesoHextraEditSIGED.puedeEditarPermisosSIGED}"
+						action="#{cwAsEmpleadoSelect.iniciarControladora}" update="@form">
+						<f:setPropertyActionListener
+							target="#{cwAsEmpleadoSelect.nombreContenedorRefrescar}"
+							value="wasautorizacionpreprocesohextraedit:grdEmpleadoFuncion" />
+						<f:setPropertyActionListener
+							target="#{cwAsEmpleadoSelect.iMantenimientoReferencia}"
+							value="#{cwAsAutorizacionPreprocesoHextraEditSIGED}" />
+
+						<f:setPropertyActionListener
+							target="#{cwAsEmpleadoSelect.nombreTipoBusqueda}"
+							value="agregarEmpleado" />
+
+						<f:setPropertyActionListener
+							target="#{cwAsEmpleadoSelect.nombreVentanaEmergente}"
+							value="w_as_empleado_select" />
+
+						<f:setPropertyActionListener
+							target="#{cwAsEmpleadoSelect.pantallaReferencia}"
+							value="w_as_autorizacion_preproceso_hextra_edit_siged" />
+						<f:setPropertyActionListener
+							target="#{cwAsEmpleadoSelect.flgTodos}"
+							value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.flgAllEmpleado}" />
+
+
+
+						<f:setPropertyActionListener
+							target="#{cwAsEmpleadoSelect.nombreTipoBusqueda}"
+							value="cargarEmpleadoFuncionSIGED" />
+
+						<f:setPropertyActionListener
+							target="#{cwAsEmpleadoSelect.indiceModificado}"
+							value="#{status.index}" />
+
+						<f:setPropertyActionListener
+							target="#{cwAsEmpleadoSelect.mostraAsignarTodos}" value="true" />
+
+						<f:setPropertyActionListener
+							target="#{cwAsEmpleadoSelect.esPermisoSIGED}" value="true" />
+
+						<f:setPropertyActionListener
+							target="#{cwAsEmpleadoSelect.usuarioRed}"
+							value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.usuarioRed}" />
+
+
+					</p:commandButton>
+
+				</p:panelGrid>
+
+				<h:outputLabel value="Rol jefe de area"
+					rendered="#{bandeja.esJefe == 1}"
+					style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;" />
+
+				<p:selectBooleanCheckbox value="#{bandeja.blJefe}"
+					rendered="#{bandeja.esJefe == 1}"
+					onchange="return obtenerEmpleadoJefeSel(#{bandeja.idPersonaSIA},this);" />
+
+				<h:outputLabel value="Cargo del asignado"
+					rendered="#{bandeja.esJefe == 1}"
+					style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;" />
+
+				<h:outputLabel value="#{bandeja.cargonombreaux}"
+					rendered="#{bandeja.esJefe == 1}"
+					style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;" />
+
+
+			</p:panelGrid>
+
+			<br />
+
+		</ui:repeat>
+	</p:panel>
+
+
+</ui:composition>

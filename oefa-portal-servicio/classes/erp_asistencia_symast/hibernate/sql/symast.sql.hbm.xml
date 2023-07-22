@@ -1,0 +1,1159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : symast.w_sy_report_list -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="symast.obtenerFecha">
+		SELECT SYSDATE as "sysdate"
+		FROM	DUAL
+	</sql-query>
+
+	<!-- symast.ds_sy_security_responsable -->
+	<sql-query name="symast.DsSySecurityResponsable">
+	</sql-query>
+
+	<!-- symast.dw_ac_costcenter_list -->
+	<sql-query name="symast.DwAcCostcenterList">
+	</sql-query>
+
+	<!-- symast.dw_ac_costcenter_list_all -->
+	<sql-query name="symast.DwAcCostcenterListAll">
+	</sql-query>
+
+	<!-- symast.dw_ac_monthlyclose_select -->
+	<sql-query name="symast.DwAcMonthlycloseSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_afemst_group_edit_afe -->
+	<sql-query name="symast.DwMaAcAfemstGroupEditAfe">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_afemst_group_edit_level -->
+	<sql-query name="symast.DwMaAcAfemstGroupEditLevel">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_autorizacion_list -->
+	<sql-query name="symast.DwMaAcCostcenterAutorizacionList">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_clasification_list -->
+	<sql-query name="symast.DwMaAcCostcenterClasificationList">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_clasification_select -->
+	<sql-query name="symast.DwMaAcCostcenterClasificationSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_edit -->
+	<sql-query name="symast.DwMaAcCostcenterEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_edit_account -->
+	<sql-query name="symast.DwMaAcCostcenterEditAccount">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_edit_costcenterdest -->
+	<sql-query name="symast.DwMaAcCostcenterEditCostcenterdest">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_edit_cta_disponible -->
+	<sql-query name="symast.DwMaAcCostcenterEditCtaDisponible">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_edit_cta_list -->
+	<sql-query name="symast.DwMaAcCostcenterEditCtaList">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_edit_empleado_posit -->
+	<sql-query name="symast.DwMaAcCostcenterEditEmpleadoPosit">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_edit_position -->
+	<sql-query name="symast.DwMaAcCostcenterEditPosition">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_edit_sup_disponible -->
+	<sql-query name="symast.DwMaAcCostcenterEditSupDisponible">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_edit_superv_list -->
+	<sql-query name="symast.DwMaAcCostcenterEditSupervList">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_edit_supervisor -->
+	<sql-query name="symast.DwMaAcCostcenterEditSupervisor">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_list -->
+	<sql-query name="symast.DwMaAcCostcenterList">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_list_gloria -->
+	<sql-query name="symast.DwMaAcCostcenterListGloria">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_list_gloria_position -->
+	<sql-query name="symast.DwMaAcCostcenterListGloriaPosition">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_list_rows -->
+	<sql-query name="symast.DwMaAcCostcenterListRows">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_partida_select_posit -->
+	<sql-query name="symast.DwMaAcCostcenterPartidaSelectPosit">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_select -->
+	<sql-query name="symast.DwMaAcCostcenterSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_select_completo -->
+	<sql-query name="symast.DwMaAcCostcenterSelectCompleto">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_select_gloria -->
+	<sql-query name="symast.DwMaAcCostcenterSelectGloria">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_select_gloria_detail -->
+	<sql-query name="symast.DwMaAcCostcenterSelectGloriaDetail">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_select_gloria_pos -->
+	<sql-query name="symast.DwMaAcCostcenterSelectGloriaPos">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_select_location -->
+	<sql-query name="symast.DwMaAcCostcenterSelectLocation">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_select_location_pos -->
+	<sql-query name="symast.DwMaAcCostcenterSelectLocationPos">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_select_master -->
+	<sql-query name="symast.DwMaAcCostcenterSelectMaster">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_select_position -->
+	<sql-query name="symast.DwMaAcCostcenterSelectPosition">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_select_retrieve_cc -->
+	<sql-query name="symast.DwMaAcCostcenterSelectRetrieveCc">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_select_retrv_cc_all -->
+	<sql-query name="symast.DwMaAcCostcenterSelectRetrvCcAll">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_select_supervisor -->
+	<sql-query name="symast.DwMaAcCostcenterSelectSupervisor">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenter_select_xpersona -->
+	<sql-query name="symast.DwMaAcCostcenterSelectXpersona">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcenterdistribution_copy -->
+	<sql-query name="symast.DwMaAcCostcenterdistributionCopy">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcentergroup_edit -->
+	<sql-query name="symast.DwMaAcCostcentergroupEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcentergroup_edit_detail -->
+	<sql-query name="symast.DwMaAcCostcentergroupEditDetail">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcentergroup_list -->
+	<sql-query name="symast.DwMaAcCostcentergroupList">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcentergroup_select -->
+	<sql-query name="symast.DwMaAcCostcentergroupSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcentermajor_select -->
+	<sql-query name="symast.DwMaAcCostcentermajorSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_costcentermajorgroup_list -->
+	<sql-query name="symast.DwMaAcCostcentermajorgroupList">
+	</sql-query>
+
+	<!-- symast.dw_ma_ac_sucursal_select -->
+	<sql-query name="symast.DwMaAcSucursalSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_account_edit -->
+	<sql-query name="symast.DwMaAccountEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_account_edit_companyowner -->
+	<sql-query name="symast.DwMaAccountEditCompanyowner">
+	</sql-query>
+
+	<!-- symast.dw_ma_account_edit_element -->
+	<sql-query name="symast.DwMaAccountEditElement">
+	</sql-query>
+
+	<!-- symast.dw_ma_account_edit_element_update -->
+	<sql-query name="symast.DwMaAccountEditElementUpdate">
+	</sql-query>
+
+	<!-- symast.dw_ma_account_edit_reference -->
+	<sql-query name="symast.DwMaAccountEditReference">
+	</sql-query>
+
+	<!-- symast.dw_ma_account_list -->
+	<sql-query name="symast.DwMaAccountList">
+	</sql-query>
+
+	<!-- symast.dw_ma_account_list_all -->
+	<sql-query name="symast.DwMaAccountListAll">
+	</sql-query>
+
+	<!-- symast.dw_ma_account_list_for_a_companyowner -->
+	<sql-query name="symast.DwMaAccountListForACompanyowner">
+	</sql-query>
+
+	<!-- symast.dw_ma_account_list_position -->
+	<sql-query name="symast.DwMaAccountListPosition">
+	</sql-query>
+
+	<!-- symast.dw_ma_account_list_select -->
+	<sql-query name="symast.DwMaAccountListSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_account_list_select_position -->
+	<sql-query name="symast.DwMaAccountListSelectPosition">
+	</sql-query>
+
+	<!-- symast.dw_ma_account_list_select_security -->
+	<sql-query name="symast.DwMaAccountListSelectSecurity">
+	</sql-query>
+
+	<!-- symast.dw_ma_account_retrieve -->
+	<sql-query name="symast.DwMaAccountRetrieve">
+	</sql-query>
+
+	<!-- symast.dw_ma_account_select -->
+	<sql-query name="symast.DwMaAccountSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_account_select_position -->
+	<sql-query name="symast.DwMaAccountSelectPosition">
+	</sql-query>
+
+	<!-- symast.dw_ma_afe_companyowner_edit -->
+	<sql-query name="symast.DwMaAfeCompanyownerEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_afe_edit -->
+	<sql-query name="symast.DwMaAfeEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_afe_list -->
+	<sql-query name="symast.DwMaAfeList">
+	</sql-query>
+
+	<!-- symast.dw_ma_afe_select -->
+	<sql-query name="symast.DwMaAfeSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_afegroup_edit -->
+	<sql-query name="symast.DwMaAfegroupEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_afegroup_list -->
+	<sql-query name="symast.DwMaAfegroupList">
+	</sql-query>
+
+	<!-- symast.dw_ma_aplicacionesmast_edit -->
+	<sql-query name="symast.DwMaAplicacionesmastEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_aplicacionesmast_list -->
+	<sql-query name="symast.DwMaAplicacionesmastList">
+	</sql-query>
+
+	<!-- symast.dw_ma_aplicacionesmast_retrieve -->
+	<sql-query name="symast.DwMaAplicacionesmastRetrieve">
+	</sql-query>
+
+	<!-- symast.dw_ma_aplicacionmast_select -->
+	<sql-query name="symast.DwMaAplicacionmastSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_banco_edit -->
+	<sql-query name="symast.DwMaBancoEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_banco_list -->
+	<sql-query name="symast.DwMaBancoList">
+	</sql-query>
+
+	<!-- symast.dw_ma_banco_select -->
+	<sql-query name="symast.DwMaBancoSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_cliente_select -->
+	<sql-query name="symast.DwMaClienteSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_clientemast_retrieve -->
+	<sql-query name="symast.DwMaClientemastRetrieve">
+	</sql-query>
+
+	<!-- symast.dw_ma_colomast_list -->
+	<sql-query name="symast.DwMaColomastList">
+	</sql-query>
+
+	<!-- symast.dw_ma_colomast_select -->
+	<sql-query name="symast.DwMaColomastSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_companiamast_edit -->
+	<sql-query name="symast.DwMaCompaniamastEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_companiamast_list -->
+	<sql-query name="symast.DwMaCompaniamastList">
+	</sql-query>
+
+	<!-- symast.dw_ma_companiamast_select -->
+	<sql-query name="symast.DwMaCompaniamastSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_companiamast_select_only_reporting -->
+	<sql-query name="symast.DwMaCompaniamastSelectOnlyReporting">
+	</sql-query>
+
+	<!-- symast.dw_ma_company_edit_owner -->
+	<sql-query name="symast.DwMaCompanyEditOwner">
+	</sql-query>
+
+	<!-- symast.dw_ma_company_edit_reporting -->
+	<sql-query name="symast.DwMaCompanyEditReporting">
+	</sql-query>
+
+	<!-- symast.dw_ma_companycategoria_select -->
+	<sql-query name="symast.DwMaCompanycategoriaSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_companyowner_retrieve -->
+	<sql-query name="symast.DwMaCompanyownerRetrieve">
+	</sql-query>
+
+	<!-- symast.dw_ma_convenio -->
+	<sql-query name="symast.DwMaConvenio">
+	</sql-query>
+
+	<!-- symast.dw_ma_convenio_edit -->
+	<sql-query name="symast.DwMaConvenioEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_correlativosmast_edit -->
+	<sql-query name="symast.DwMaCorrelativosmastEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_correlativosmast_list -->
+	<sql-query name="symast.DwMaCorrelativosmastList">
+	</sql-query>
+
+	<!-- symast.dw_ma_correlativosmast_list_position -->
+	<sql-query name="symast.DwMaCorrelativosmastListPosition">
+	</sql-query>
+
+	<!-- symast.dw_ma_costcenter_tree_cc -->
+	<sql-query name="symast.DwMaCostcenterTreeCc">
+	</sql-query>
+
+	<!-- symast.dw_ma_costcenter_tree_input -->
+	<sql-query name="symast.DwMaCostcenterTreeInput">
+	</sql-query>
+
+	<!-- symast.dw_ma_costcenter_tree_ouput -->
+	<sql-query name="symast.DwMaCostcenterTreeOuput">
+	</sql-query>
+
+	<!-- symast.dw_ma_costcentergroup_list_for_select -->
+	<sql-query name="symast.DwMaCostcentergroupListForSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_costcentersubgroup_list_for_select -->
+	<sql-query name="symast.DwMaCostcentersubgroupListForSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_cuentabancaria_edit -->
+	<sql-query name="symast.DwMaCuentabancariaEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_cuentabancaria_edit_balance -->
+	<sql-query name="symast.DwMaCuentabancariaEditBalance">
+	</sql-query>
+
+	<!-- symast.dw_ma_cuentabancaria_edit_tipopago -->
+	<sql-query name="symast.DwMaCuentabancariaEditTipopago">
+	</sql-query>
+
+	<!-- symast.dw_ma_cuentabancaria_list -->
+	<sql-query name="symast.DwMaCuentabancariaList">
+	</sql-query>
+
+	<!-- symast.dw_ma_cuentabancaria_select -->
+	<sql-query name="symast.DwMaCuentabancariaSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_departamento_edit -->
+	<sql-query name="symast.DwMaDepartamentoEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_departamento_edit_auxiliar -->
+	<sql-query name="symast.DwMaDepartamentoEditAuxiliar">
+	</sql-query>
+
+	<!-- symast.dw_ma_departamento_edit_zonapostal -->
+	<sql-query name="symast.DwMaDepartamentoEditZonapostal">
+	</sql-query>
+
+	<!-- symast.dw_ma_departamento_list -->
+	<sql-query name="symast.DwMaDepartamentoList">
+	</sql-query>
+
+	<!-- symast.dw_ma_departamento_list_detail -->
+	<sql-query name="symast.DwMaDepartamentoListDetail">
+	</sql-query>
+
+	<!-- symast.dw_ma_departamento_select -->
+	<sql-query name="symast.DwMaDepartamentoSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_departamento_select_tree -->
+	<sql-query name="symast.DwMaDepartamentoSelectTree">
+	</sql-query>
+
+	<!-- symast.dw_ma_departament_edit -->
+	<sql-query name="symast.DwMaDepartamentEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_departament_list -->
+	<sql-query name="symast.DwMaDepartamentList">
+	</sql-query>
+
+	<!-- symast.dw_ma_departament_select -->
+	<sql-query name="symast.DwMaDepartamentSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_departament_select_accounting -->
+	<sql-query name="symast.DwMaDepartamentSelectAccounting">
+	</sql-query>
+
+	<!-- symast.dw_ma_departament_select_whse -->
+	<sql-query name="symast.DwMaDepartamentSelectWhse">
+	</sql-query>
+
+	<!-- symast.dw_ma_direccion_edit -->
+	<sql-query name="symast.DwMaDireccionEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_direcciones_list -->
+	<sql-query name="symast.DwMaDireccionesList">
+	</sql-query>
+
+	<!-- symast.dw_ma_element_list -->
+	<sql-query name="symast.DwMaElementList">
+	</sql-query>
+
+	<!-- symast.dw_ma_element_retrieve -->
+	<sql-query name="symast.DwMaElementRetrieve">
+	</sql-query>
+
+	<!-- symast.dw_ma_element_select -->
+	<sql-query name="symast.DwMaElementSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_elementgroup_edit -->
+	<sql-query name="symast.DwMaElementgroupEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_elementgroup_list -->
+	<sql-query name="symast.DwMaElementgroupList">
+	</sql-query>
+
+	<!-- symast.dw_ma_elementgroup_select -->
+	<sql-query name="symast.DwMaElementgroupSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_empleado_retrieve_by_userid -->
+	<sql-query name="symast.DwMaEmpleadoRetrieveByUserid">
+	</sql-query>
+
+	<!-- symast.dw_ma_empleado_retrieve_by_userid_backup -->
+	<sql-query name="symast.DwMaEmpleadoRetrieveByUseridBackup">
+	</sql-query>
+
+	<!-- symast.dw_ma_empleado_retrieve_by_userid_ndww -->
+	<sql-query name="symast.DwMaEmpleadoRetrieveByUseridNdww">
+	</sql-query>
+
+	<!-- symast.dw_ma_empleado_retrieve_by_userid_ndwwpersonamast -->
+	<sql-query name="symast.DwMaEmpleadoRetrieveByUseridNdwwpersonamast">
+	</sql-query>
+
+	<!-- symast.dw_ma_empleado_retrieve_by_useridpersonamast -->
+	<sql-query name="symast.DwMaEmpleadoRetrieveByUseridpersonamast">
+	</sql-query>
+
+	<!-- symast.dw_ma_empleado_select -->
+	<sql-query name="symast.DwMaEmpleadoSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_empleadomast_retrieve -->
+	<sql-query name="symast.DwMaEmpleadomastRetrieve">
+	</sql-query>
+
+	<!-- symast.dw_ma_formadepago_detail -->
+	<sql-query name="symast.DwMaFormadepagoDetail">
+	</sql-query>
+
+	<!-- symast.dw_ma_formadepago_edit -->
+	<sql-query name="symast.DwMaFormadepagoEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_formadepago_list -->
+	<sql-query name="symast.DwMaFormadepagoList">
+	</sql-query>
+
+	<!-- symast.dw_ma_formadepago_select -->
+	<sql-query name="symast.DwMaFormadepagoSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_formadepago_select_imp -->
+	<sql-query name="symast.DwMaFormadepagoSelectImp">
+	</sql-query>
+
+	<!-- symast.dw_ma_hr_cargomast_select -->
+	<sql-query name="symast.DwMaHrCargomastSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_impuesto_select -->
+	<sql-query name="symast.DwMaImpuestoSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_impuesto_select_by_regimenfiscal -->
+	<sql-query name="symast.DwMaImpuestoSelectByRegimenfiscal">
+	</sql-query>
+
+	<!-- symast.dw_ma_impuesto_select_except_igv -->
+	<sql-query name="symast.DwMaImpuestoSelectExceptIgv">
+	</sql-query>
+
+	<!-- symast.dw_ma_impuestos_retrieve -->
+	<sql-query name="symast.DwMaImpuestosRetrieve">
+	</sql-query>
+
+	<!-- symast.dw_ma_impuestosmst_edit -->
+	<sql-query name="symast.DwMaImpuestosmstEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_impuestosmst_list -->
+	<sql-query name="symast.DwMaImpuestosmstList">
+	</sql-query>
+
+	<!-- symast.dw_ma_label_edit -->
+	<sql-query name="symast.DwMaLabelEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_label_list -->
+	<sql-query name="symast.DwMaLabelList">
+	</sql-query>
+
+	<!-- symast.dw_ma_miscelaneos_detail -->
+	<sql-query name="symast.DwMaMiscelaneosDetail">
+	</sql-query>
+
+	<!-- symast.dw_ma_miscelaneos_rules -->
+	<sql-query name="symast.DwMaMiscelaneosRules">
+	</sql-query>
+
+	<!-- symast.dw_ma_miscelaneosdetalle_select -->
+	<sql-query name="symast.DwMaMiscelaneosdetalleSelect">
+	  <![CDATA[
+    		SELECT 
+				MA_MiscelaneosDetalle.CodigoElemento as "codigoelemento",   
+				CAST(MA_MiscelaneosDetalle.DescripcionLocal as varchar(200)) as "descripcionlocal",   
+				MA_MiscelaneosDetalle.ValorCodigo5 as "valorcodigo5",
+				MA_MiscelaneosHeader.DescripcionLocal as "descripcionlocalheader",
+				MA_MiscelaneosDetalle.ValorNumerico as "valornumerico",
+				MA_MiscelaneosDetalle.ValorCodigo1 as "valorcodigo1"
+				
+				FROM 
+				SGCORESYS.MA_MiscelaneosDetalle
+				    INNER JOIN SGCORESYS.MA_MiscelaneosHeader  
+				        ON (MA_MiscelaneosDetalle.AplicacionCodigo = MA_MiscelaneosHeader.AplicacionCodigo AND
+				             MA_MiscelaneosDetalle.CodigoTabla = MA_MiscelaneosHeader.CodigoTabla AND
+				             MA_MiscelaneosDetalle.Compania = MA_MiscelaneosHeader.Compania)
+				WHERE 
+				( ( MA_MiscelaneosDetalle.AplicacionCodigo = :par_aplicacion ) AND  
+				( MA_MiscelaneosDetalle.CodigoTabla = :par_tabla ) AND  
+				( SUBSTR(MA_MiscelaneosDetalle.Compania,0,6) = SUBSTR(:par_companyowner,0,6) ) )  
+				order by MA_MiscelaneosDetalle.DescripcionLocal asc
+    ]]>
+	</sql-query>
+
+	<!-- symast.dw_ma_miscelaneosheader_edit -->
+	<sql-query name="symast.DwMaMiscelaneosheaderEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_miscelaneosheader_list -->
+	<sql-query name="symast.DwMaMiscelaneosheaderList">
+	</sql-query>
+
+	<!-- symast.dw_ma_monedamast_edit -->
+	<sql-query name="symast.DwMaMonedamastEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_monedamast_list -->
+	<sql-query name="symast.DwMaMonedamastList">
+	</sql-query>
+
+	<!-- symast.dw_ma_monedamast_select -->
+	<sql-query name="symast.DwMaMonedamastSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_monedamast_select_only_mn_me -->
+	<sql-query name="symast.DwMaMonedamastSelectOnlyMnMe">
+	</sql-query>
+
+	<!-- symast.dw_ma_monedamast_select_only_so_da -->
+	<sql-query name="symast.DwMaMonedamastSelectOnlySoDa">
+	</sql-query>
+
+	<!-- symast.dw_ma_pais_edit -->
+	<sql-query name="symast.DwMaPaisEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_pais_list -->
+	<sql-query name="symast.DwMaPaisList">
+	</sql-query>
+
+	<!-- symast.dw_ma_pais_select -->
+	<sql-query name="symast.DwMaPaisSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_parametrosmast_edit -->
+	<sql-query name="symast.DwMaParametrosmastEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_parametrosmast_list -->
+	<sql-query name="symast.DwMaParametrosmastList">
+	</sql-query>
+
+	<!-- symast.dw_ma_parametrosmast_list_position -->
+	<sql-query name="symast.DwMaParametrosmastListPosition">
+	</sql-query>
+
+	<!-- symast.dw_ma_parametrosmast_select -->
+	<sql-query name="symast.DwMaParametrosmastSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_parametrosmast_select_comun -->
+	<sql-query name="symast.DwMaParametrosmastSelectComun">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_correlativo -->
+	<sql-query name="symast.DwMaPersonaCorrelativo">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_edit_cliente -->
+	<sql-query name="symast.DwMaPersonaEditCliente">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_edit_cuentabancaria -->
+	<sql-query name="symast.DwMaPersonaEditCuentabancaria">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_edit_direccion -->
+	<sql-query name="symast.DwMaPersonaEditDireccion">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_edit_duplicado -->
+	<sql-query name="symast.DwMaPersonaEditDuplicado">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_edit_empleado -->
+	<sql-query name="symast.DwMaPersonaEditEmpleado">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_edit_empleado_dependiente -->
+	<sql-query name="symast.DwMaPersonaEditEmpleadoDependiente">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_edit_empleadocompania -->
+	<sql-query name="symast.DwMaPersonaEditEmpleadocompania">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_edit_firme -->
+	<sql-query name="symast.DwMaPersonaEditFirme">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_edit_general -->
+	<sql-query name="symast.DwMaPersonaEditGeneral">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_edit_proveedor -->
+	<sql-query name="symast.DwMaPersonaEditProveedor">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_edit_proveedor_cobrador -->
+	<sql-query name="symast.DwMaPersonaEditProveedorCobrador">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_edit_tipopersona -->
+	<sql-query name="symast.DwMaPersonaEditTipopersona">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_edit_unidadnegocio -->
+	<sql-query name="symast.DwMaPersonaEditUnidadnegocio">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_filter -->
+	<sql-query name="symast.DwMaPersonaFilter">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_firma_select -->
+	<sql-query name="symast.DwMaPersonaFirmaSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_grupo_select -->
+	<sql-query name="symast.DwMaPersonaGrupoSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_list -->
+	<sql-query name="symast.DwMaPersonaList">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_list_new_position -->
+	<sql-query name="symast.DwMaPersonaListNewPosition">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_list_position_america -->
+	<sql-query name="symast.DwMaPersonaListPositionAmerica">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_proveedor_retrieve -->
+	<sql-query name="symast.DwMaPersonaProveedorRetrieve">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_retrieve -->
+	<sql-query name="symast.DwMaPersonaRetrieve">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_select -->
+	<sql-query name="symast.DwMaPersonaSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_select_by_busqueda -->
+	<sql-query name="symast.DwMaPersonaSelectByBusqueda">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_select_position -->
+	<sql-query name="symast.DwMaPersonaSelectPosition">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_uni_select_by_busqueda -->
+	<sql-query name="symast.DwMaPersonaUniSelectByBusqueda">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_uni_select_position -->
+	<sql-query name="symast.DwMaPersonaUniSelectPosition">
+	</sql-query>
+
+	<!-- symast.dw_ma_persona_yaexiste -->
+	<sql-query name="symast.DwMaPersonaYaexiste">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime_list -->
+	<sql-query name="symast.DwMaPrimeList">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime_list_for_account_select -->
+	<sql-query name="symast.DwMaPrimeListForAccountSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime_list_for_budgetaccount_list -->
+	<sql-query name="symast.DwMaPrimeListForBudgetaccountList">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime_list_position -->
+	<sql-query name="symast.DwMaPrimeListPosition">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime_select -->
+	<sql-query name="symast.DwMaPrimeSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime_select_2digits -->
+	<sql-query name="symast.DwMaPrimeSelect2digits">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime_select_9xxx -->
+	<sql-query name="symast.DwMaPrimeSelect9xxx">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime_select_costcenter -->
+	<sql-query name="symast.DwMaPrimeSelectCostcenter">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime_select_for_range -->
+	<sql-query name="symast.DwMaPrimeSelectForRange">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime_select2 -->
+	<sql-query name="symast.DwMaPrimeSelect2">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime2_select -->
+	<sql-query name="symast.DwMaPrime2Select">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime2_select_6xxx -->
+	<sql-query name="symast.DwMaPrime2Select6xxx">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime2_select_6xxx_digits -->
+	<sql-query name="symast.DwMaPrime2Select6xxxDigits">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime2_select_9xxx -->
+	<sql-query name="symast.DwMaPrime2Select9xxx">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime2_select_9xxx_digits -->
+	<sql-query name="symast.DwMaPrime2Select9xxxDigits">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime3_select -->
+	<sql-query name="symast.DwMaPrime3Select">
+	</sql-query>
+
+	<!-- symast.dw_ma_prime4_select -->
+	<sql-query name="symast.DwMaPrime4Select">
+	</sql-query>
+
+	<!-- symast.dw_ma_primemst_centrocostos_select -->
+	<sql-query name="symast.DwMaPrimemstCentrocostosSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_primetype_select -->
+	<sql-query name="symast.DwMaPrimetypeSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_proveedor_familia_select -->
+	<sql-query name="symast.DwMaProveedorFamiliaSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_proveedor_select -->
+	<sql-query name="symast.DwMaProveedorSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_provincia_select -->
+	<sql-query name="symast.DwMaProvinciaSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_rate_edit -->
+	<sql-query name="symast.DwMaRateEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_rate_list -->
+	<sql-query name="symast.DwMaRateList">
+	</sql-query>
+
+	<!-- symast.dw_ma_referencefield_select -->
+	<sql-query name="symast.DwMaReferencefieldSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_responsable_select_list -->
+	<sql-query name="symast.DwMaResponsableSelectList">
+	</sql-query>
+
+	<!-- symast.dw_ma_responsible_edit -->
+	<sql-query name="symast.DwMaResponsibleEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_responsible_edit_detail -->
+	<sql-query name="symast.DwMaResponsibleEditDetail">
+	</sql-query>
+
+	<!-- symast.dw_ma_responsible_list -->
+	<sql-query name="symast.DwMaResponsibleList">
+	</sql-query>
+
+	<!-- symast.dw_ma_responsible_name_select -->
+	<sql-query name="symast.DwMaResponsibleNameSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_responsible_position -->
+	<sql-query name="symast.DwMaResponsiblePosition">
+	</sql-query>
+
+	<!-- symast.dw_ma_responsible_select -->
+	<sql-query name="symast.DwMaResponsibleSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_responsible_supervisor_select -->
+	<sql-query name="symast.DwMaResponsibleSupervisorSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_aplicacionreportetopico_edit -->
+	<sql-query name="symast.DwMaSyAplicacionreportetopicoEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_aplicacionreportetopico_list -->
+	<sql-query name="symast.DwMaSyAplicacionreportetopicoList">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_aplicacionreportetopico_select -->
+	<sql-query name="symast.DwMaSyAplicacionreportetopicoSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_empresa_edit -->
+	<sql-query name="symast.DwMaSyEmpresaEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_empresa_list -->
+	<sql-query name="symast.DwMaSyEmpresaList">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_empresa_select -->
+	<sql-query name="symast.DwMaSyEmpresaSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_preferences_list -->
+	<sql-query name="symast.DwMaSyPreferencesList">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_reports_edit -->
+	<sql-query name="symast.DwMaSyReportsEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_reports_edit_detail -->
+	<sql-query name="symast.DwMaSyReportsEditDetail">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_reports_list -->
+	<sql-query name="symast.DwMaSyReportsList">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_security_concepto_sel_account -->
+	<sql-query name="symast.DwMaSySecurityConceptoSelAccount">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_ubicacion_geografica_select -->
+	<sql-query name="symast.DwMaSyUbicacionGeograficaSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_ubicacion_geografica_select_pos -->
+	<sql-query name="symast.DwMaSyUbicacionGeograficaSelectPos">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_unidadnegocio_edit -->
+	<sql-query name="symast.DwMaSyUnidadnegocioEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_unidadnegocio_list -->
+	<sql-query name="symast.DwMaSyUnidadnegocioList">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_unidadreplicacion_edit -->
+	<sql-query name="symast.DwMaSyUnidadreplicacionEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_sy_unidadreplicacion_list -->
+	<sql-query name="symast.DwMaSyUnidadreplicacionList">
+	</sql-query>
+
+	
+
+	<!-- symast.dw_ma_tipocambiogeneral_edit -->
+	<sql-query name="symast.DwMaTipocambiogeneralEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_tipocambiogeneral_list -->
+	<sql-query name="symast.DwMaTipocambiogeneralList">
+	</sql-query>
+
+	<!-- symast.dw_ma_tipocambiogeneral_list_position -->
+	<sql-query name="symast.DwMaTipocambiogeneralListPosition">
+	</sql-query>
+
+	<!-- symast.dw_ma_tipocambiomast_edit -->
+	<sql-query name="symast.DwMaTipocambiomastEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_tipocambiomast_list -->
+	<sql-query name="symast.DwMaTipocambiomastList">
+	</sql-query>
+
+	<!-- symast.dw_ma_tipocambiomast_select -->
+	<sql-query name="symast.DwMaTipocambiomastSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_tipocomprobante_select -->
+	<sql-query name="symast.DwMaTipocomprobanteSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_tipodocumentocxp_select_not_system -->
+	<sql-query name="symast.DwMaTipodocumentocxpSelectNotSystem">
+	</sql-query>
+
+	<!-- symast.dw_ma_tipopago_edit -->
+	<sql-query name="symast.DwMaTipopagoEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_tipopago_list -->
+	<sql-query name="symast.DwMaTipopagoList">
+	</sql-query>
+
+		<!-- symast.dw_ma_tiposervicio_edit -->
+	<sql-query name="symast.DwMaTiposervicioEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_tiposervicio_edit_impuesto -->
+	<sql-query name="symast.DwMaTiposervicioEditImpuesto">
+	</sql-query>
+
+	<!-- symast.dw_ma_tiposervicio_list -->
+	<sql-query name="symast.DwMaTiposervicioList">
+	</sql-query>
+
+	<!-- symast.dw_ma_tiposervicio_select -->
+	<sql-query name="symast.DwMaTiposervicioSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_tiposervicio_select_by_regimenfisc -->
+	<sql-query name="symast.DwMaTiposervicioSelectByRegimenfisc">
+	</sql-query>
+
+	<!-- symast.dw_ma_unidadesmast_edit -->
+	<sql-query name="symast.DwMaUnidadesmastEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_unidadesmast_edit_conversion -->
+	<sql-query name="symast.DwMaUnidadesmastEditConversion">
+	</sql-query>
+
+	<!-- symast.dw_ma_unidadesmast_list -->
+	<sql-query name="symast.DwMaUnidadesmastList">
+	</sql-query>
+
+	<!-- symast.dw_ma_unidadnegocio_select -->
+	<sql-query name="symast.DwMaUnidadnegocioSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_usuario_edit_detail_1 -->
+	<sql-query name="symast.DwMaUsuarioEditDetail1">
+	</sql-query>
+
+	<!-- symast.dw_ma_usuario_edit_detail_2 -->
+	<sql-query name="symast.DwMaUsuarioEditDetail2">
+	</sql-query>
+
+	<!-- symast.dw_ma_usuario_select_position -->
+	<sql-query name="symast.DwMaUsuarioSelectPosition">
+	</sql-query>
+
+	<!-- symast.dw_ma_vendor_usertype_list -->
+	<sql-query name="symast.DwMaVendorUsertypeList">
+	</sql-query>
+
+	<!-- symast.dw_ma_vendor_usertype_select -->
+	<sql-query name="symast.DwMaVendorUsertypeSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_vouchermanual_select -->
+	<sql-query name="symast.DwMaVouchermanualSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_vouchermanual_select_manualonly -->
+	<sql-query name="symast.DwMaVouchermanualSelectManualonly">
+	</sql-query>
+
+	<!-- symast.dw_ma_vouchersource_edit -->
+	<sql-query name="symast.DwMaVouchersourceEdit">
+	</sql-query>
+
+	<!-- symast.dw_ma_vouchersource_select -->
+	<sql-query name="symast.DwMaVouchersourceSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_zonapostal_select -->
+	<sql-query name="symast.DwMaZonapostalSelect">
+	</sql-query>
+
+	<!-- symast.dw_ma_zonapostal_select_by_departament -->
+	<sql-query name="symast.DwMaZonapostalSelectByDepartament">
+	</sql-query>
+
+	<!-- symast.dw_sc_login -->
+	<sql-query name="symast.DwScLogin">
+	</sql-query>
+
+	<!-- symast.dw_sc_login_log -->
+	<sql-query name="symast.DwScLoginLog">
+	</sql-query>
+
+	<!-- symast.dw_sy_royal_empresa -->
+	<sql-query name="symast.DwSyRoyalEmpresa">
+	</sql-query>
+
+	<!-- symast.dw_sy_royal_formato -->
+	<sql-query name="symast.DwSyRoyalFormato">
+	</sql-query>
+
+	<!-- symast.dw_sy_royal_moneda -->
+	<sql-query name="symast.DwSyRoyalMoneda">
+	</sql-query>
+
+	<!-- symast.dw_sy_royal_parametro -->
+	<sql-query name="symast.DwSyRoyalParametro">
+	</sql-query>
+
+	<!-- symast.dw_sy_royal_password -->
+	<sql-query name="symast.DwSyRoyalPassword">
+	</sql-query>
+
+	<!-- symast.dw_sy_royal_reporte -->
+	<sql-query name="symast.DwSyRoyalReporte">
+	</sql-query>
+
+	<!-- symast.dw_sy_royal_seg_tipodetalle -->
+	<sql-query name="symast.DwSyRoyalSegTipodetalle">
+	</sql-query>
+
+	<!-- symast.dw_sy_royal_tipocorrelativo -->
+	<sql-query name="symast.DwSyRoyalTipocorrelativo">
+	</sql-query>
+
+	<!-- symast.dw_sy_royal_topico -->
+	<sql-query name="symast.DwSyRoyalTopico">
+	</sql-query>
+
+	<!-- symast.dw_sy_royal_utility -->
+	<sql-query name="symast.DwSyRoyalUtility">
+	</sql-query>
+
+	<!-- symast.dw_sy_selector_database_database -->
+	<sql-query name="symast.DwSySelectorDatabaseDatabase">
+	</sql-query>
+
+	<!-- symast.dw_sy_selector_database_list -->
+	<sql-query name="symast.DwSySelectorDatabaseList">
+	</sql-query>
+
+</hibernate-mapping>

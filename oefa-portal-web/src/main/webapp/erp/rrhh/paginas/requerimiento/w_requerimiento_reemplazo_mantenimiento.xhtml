@@ -1,0 +1,111 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="content">
+		<div class="ui-fluid">
+
+			<h:form id="frmReemplazoMantenimiento">
+
+				<p:growl life="#{msg.generico_tiempo_growl}" />
+
+				<p:panel>
+					<p:panelGrid columns="2" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-1,ui-grid-col-5" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<h:outputLabel value="Empleado" />
+						<p:panelGrid id="grdEmpleado" columns="4"
+							style="border-spacing:0px;"
+							columnClasses="ui-grid-col-3,ui-grid-col-8,ui-grid-col-2,ui-grid-col-2"
+							layout="grid" styleClass="ui-panelgrid-blank">
+							<p:inputText onkeypress="return validarIngreso(event,'N');"
+								required="true"
+								requiredMessage="El campo Empleado es obligatorio"
+								value="#{cWHrRequerimientoEdit.dw_reqadicionalregistro.pk.empleado}" />
+							<p:inputText readonly="true"
+								value="#{cWHrRequerimientoEdit.dw_reqadicionalregistro.auxiliarempleado}" />
+
+							<p:commandButton icon="buscar" immediate="true"
+								action="#{cwPrEmpleadoSelect.iniciarControladora}"
+								update="@form">
+								<f:setPropertyActionListener
+									target="#{cwPrEmpleadoSelect.nombreContenedorRefrescar}"
+									value="frmReemplazoMantenimiento" />
+								<f:setPropertyActionListener
+									target="#{cwPrEmpleadoSelect.iMantenimientoReferencia}"
+									value="#{cWHrRequerimientoEdit}" />
+								<f:setPropertyActionListener
+									target="#{cWHrRequerimientoEdit.nombreTipoBusqueda}"
+									value="empleadoReemplazo" />
+								<f:setPropertyActionListener
+									target="#{cwPrEmpleadoSelect.pantallaReferencia}"
+									value="w_requerimiento_reemplazo_mantenimiento" />
+								<f:setPropertyActionListener
+									target="#{cwPrEmpleadoSelect.incluirNegativos}" value="S" />
+							</p:commandButton>
+
+							<p:commandButton icon="limpiar"
+								action="#{cWHrRequerimientoEdit.limpiarEmpleado}"
+								update="grdEmpleado">
+							</p:commandButton>
+						</p:panelGrid>
+
+						<p:outputLabel value="Motivo" />
+						<p:selectOneMenu required="true"
+							requiredMessage="El campo Motivo es obligatorio"
+							value="#{cWHrRequerimientoEdit.dw_reqadicionalregistro.motivocese}">
+							<f:selectItem itemLabel="" />
+							<f:selectItems value="#{cWHrRequerimientoEdit.lstMotivoCese}"
+								var="mot" itemValue="#{mot.pk.motivo}"
+								itemLabel="#{mot.descripcion}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Puesto" />
+						<p:selectOneMenu required="true" disabled="true"
+							requiredMessage="El campo Puesto es obligatorio"
+							value="#{cWHrRequerimientoEdit.dw_reqadicionalregistro.codigopuesto}">
+							<f:selectItem itemLabel="" />
+							<f:selectItems
+								value="#{cWHrRequerimientoEdit.lstHrPuestoEmpresa}" var="pue"
+								itemValue="#{pue.pk.codigopuesto}"
+								itemLabel="#{pue.comentarios} - #{pue.descripcion}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Fecha Cese" />
+						<p:calendar locale="es" navigator="true" showButtonPanel="true"
+							mask="true"
+							converterMessage="El formato de fecha debe ser dd/MM/yyyy Ejem: 01/01/1900"
+							pattern="dd/MM/yyyy"
+							value="#{cWHrRequerimientoEdit.dw_reqadicionalregistro.fechainicio}" />
+
+						<p:outputLabel value="Sueldo" />
+						<p:inputText style="text-align:right" disabled="true"
+							readonly="true"
+							value="#{cWHrRequerimientoEdit.dw_reqadicionalregistro.auxiliarsueldo}" />
+
+					</p:panelGrid>
+				</p:panel>
+
+				<p:panel>
+					<p:panelGrid columns="2" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<p:commandButton value="Aceptar" icon="aceptar" update="@form"
+							action="#{cWHrRequerimientoEdit.agregarRequerimientoAdicional}">
+						</p:commandButton>
+
+						<p:commandButton value="Cancelar" icon="cancelar"
+							style="float:right" immediate="true"
+							action="#{cWHrRequerimientoEdit.irReemplazo}" />
+					</p:panelGrid>
+				</p:panel>
+
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+
+
+

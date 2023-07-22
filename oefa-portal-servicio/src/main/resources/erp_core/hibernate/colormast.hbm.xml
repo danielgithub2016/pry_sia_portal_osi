@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Colormast" table="SGCORESYS.COLORMAST">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.ColormastPk">
+            <key-property name="color" type="string">
+                <column name="COLOR" length="3" />
+            </key-property>
+        </composite-id>
+        <property name="descripcioncorta" type="string">
+            <column name="DESCRIPCIONCORTA" length="30" />
+        </property>
+        <property name="descripcionextranjera" type="string">
+            <column name="DESCRIPCIONEXTRANJERA" length="40" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

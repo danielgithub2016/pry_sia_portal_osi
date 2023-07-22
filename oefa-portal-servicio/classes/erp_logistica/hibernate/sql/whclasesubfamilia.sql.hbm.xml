@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : logistica.WhClasesubfamilia
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    
+     <sql-query name="whclasesubfamilia.obtenerDescripcionLocal">
+		SELECT 
+			WH_ClaseSubFamilia.DescripcionLocal as "descripcionlocal"
+    	FROM 
+    		SGCORESYS.WH_ClaseSubFamilia  
+  		 WHERE 
+  		 	( WH_ClaseSubFamilia.Linea 	= :p_linea ) AND  
+        	( WH_ClaseSubFamilia.Familia 	= :p_familia ) AND  
+         	( WH_ClaseSubFamilia.SubFamilia = :p_subfamilia )  	
+    </sql-query>
+</hibernate-mapping>

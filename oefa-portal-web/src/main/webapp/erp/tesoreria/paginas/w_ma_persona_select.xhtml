@@ -1,0 +1,189 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<!--  * 
+ * @author Jose
+ * @codigoapliacion SY
+ * @libreria symast01.pbl
+ * @windows w_ma_persona_select -->
+	<h:form id="wmapersonaselect">
+		<p:panel>
+			<h:panelGrid columns="12" style="width:100%"
+				rendered="#{!cwMaPersonaSelect.verUnidadNegocio}">
+				<h:outputLabel value="Criterio" />
+				<p:selectOneMenu style="width:100px"
+					value="#{cwMaPersonaSelect.dw_position.order}">
+					<f:selectItem itemLabel="Nombre Corto" itemValue="B" />
+					<f:selectItem itemLabel="Doc. de Identidad" itemValue="I" />
+					<f:selectItem itemLabel="Documento Fiscal" itemValue="F" />
+					<f:selectItem itemLabel="Documento" itemValue="D" />
+					<f:selectItem itemLabel="Número Persona" itemValue="N" />
+					<f:selectItem itemLabel="Código Anterior" itemValue="A" />
+					<f:selectItem itemLabel="Teléfono" itemValue="T" />
+				</p:selectOneMenu>
+
+				<h:outputLabel value="Buscar >=" />
+				<p:inputText value="#{cwMaPersonaSelect.dw_position.position}"
+					id="txtBuscarPersona"/>
+
+				<h:outputLabel value="PYME" />
+				<p:selectOneMenu style="width:80px" id="idPyme"
+					value="#{cwMaPersonaSelect.dw_position.pyme}">
+					<f:selectItem itemLabel="--Seleccione--" />
+					<f:selectItem itemLabel="Si" itemValue="S" />
+					<f:selectItem itemLabel="No" itemValue="N" />
+				</p:selectOneMenu>
+				<p:selectBooleanCheckbox
+					value="#{cwMaPersonaSelect.dw_position.wildCharacter}" />
+				<h:outputLabel value="Buscar Dentro" />
+
+				<p:selectBooleanCheckbox
+					value="#{cwMaPersonaSelect.dw_position.inactivoFlag}" />
+				<h:outputLabel value="Incluir Inactivos " />
+
+
+				<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+					update="@form" icon="buscar" action="#{cwMaPersonaSelect.buscar}"
+					style="float:right" />
+
+
+				<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+					style="float:right" icon="cancelar"
+					onclick="PF('popSelectorPersona').hide()" />
+			</h:panelGrid>
+
+
+			<h:panelGrid columns="12" style="width:100%"
+				rendered="#{cwMaPersonaSelect.verUnidadNegocio}">
+				<h:outputLabel value="Criterio" />
+				<p:selectOneMenu style="width:100px"
+					value="#{cwMaPersonaSelect.dw_position.order}">
+					<f:selectItem itemLabel="Nombre Corto" itemValue="B" />
+					<f:selectItem itemLabel="Doc. de Identidad" itemValue="I" />
+					<f:selectItem itemLabel="Documento Fiscal" itemValue="F" />
+					<f:selectItem itemLabel="Documento" itemValue="D" />
+					<f:selectItem itemLabel="Número Persona" itemValue="N" />
+					<f:selectItem itemLabel="Código Anterior" itemValue="A" />
+					<f:selectItem itemLabel="Teléfono" itemValue="T" />
+				</p:selectOneMenu>
+
+				<h:outputLabel value="Buscar >=" />
+				<p:inputText value="#{cwMaPersonaSelect.dw_position.position}"
+					onkeypress="return validarIngreso(NL);" />
+
+				<h:outputLabel value="PYME" />
+				<p:selectOneMenu style="width:150px" id="idPymes"
+					value="#{cwMaPersonaSelect.dw_position.pyme}">
+					<f:selectItem itemLabel="" />
+					<f:selectItem itemLabel="Si" itemValue="S" />
+					<f:selectItem itemLabel="No" itemValue="N" />
+				</p:selectOneMenu>
+				<p:selectBooleanCheckbox
+					value="#{cwMaPersonaSelect.dw_position.wildCharacter}" />
+				<h:outputLabel value="Buscar Dentro" />
+
+				<p:selectBooleanCheckbox
+					value="#{cwMaPersonaSelect.dw_position.inactivoFlag}" />
+				<h:outputLabel value="Incluir Inactivos " />
+
+
+				<h:outputLabel value="Unidad Negocio" />
+				<p:inputText value="#{cwMaPersonaSelect.dw_position.unidadNegocio}"
+					disabled="true" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" width="100%"
+				rendered="#{cwMaPersonaSelect.verUnidadNegocio}">
+				<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+					update="@form" icon="buscar" action="#{cwMaPersonaSelect.buscar}" />
+
+				<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+					style="float:right" icon="cancelar"
+					onclick="PF('popSelectorPersona').hide()" />
+			</h:panelGrid>
+
+		</p:panel>
+
+		<p:spacer width="1" height="20"></p:spacer>
+
+		<h:outputLabel
+			value="De dobleclick sobre una persona para seleccionarla"
+			style="font-size:11px; font-family:Open sans,sans-serif; font-weight: bold;color:#800000;margin:10px" />
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			id="tblPersona" paginator="true" paginatorPosition="bottom"
+			selectionMode="single" rowKey="#{p.persona}" scrollable="true"
+			scrollHeight="280" rows="20" scrollWidth="980"
+			tableStyle="width:970px" lazy="true"
+			selection="#{cwMaPersonaSelect.registroSeleccionado}"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+			value="#{cwMaPersonaSelect.dw_persona}" var="p">
+
+			<p:ajax event="rowDblselect"
+				listener="#{cwMaPersonaSelect.onRowSelect}" partialSubmit="true"
+				process="@this" />
+
+
+			<p:column headerText="#" width="20"
+				styleClass="columnatablaIzquierda">
+				<h:outputText value="#{p.persona}" />
+			</p:column>
+
+			<p:column headerText="Nombre de la Persona" width="300">
+				<h:outputText value="#{p.busqueda}" />
+			</p:column>
+
+			<p:column headerText="Cli" width="9" styleClass="columnatablaCentro">
+				<p:selectBooleanCheckbox value="#{p.esclienteBoleano}"
+					disabled="true" />
+			</p:column>
+
+			<p:column headerText="Pro" width="9" styleClass="columnatablaCentro">
+				<p:selectBooleanCheckbox value="#{p.esproveedorBoleano}"
+					disabled="true" />
+			</p:column>
+
+			<p:column headerText="Emp" width="9" styleClass="columnatablaCentro">
+				<p:selectBooleanCheckbox value="#{p.esempleadoBoleano}"
+					disabled="true" />
+			</p:column>
+
+			<p:column headerText="Otr" width="9" styleClass="columnatablaCentro">
+				<p:selectBooleanCheckbox value="#{p.esotroBoleano}" disabled="true" />
+			</p:column>
+
+			<p:column headerText="Documento" width="60"
+				styleClass="columnatablaCentro">
+				<h:outputText value="#{p.documento}" />
+			</p:column>
+
+			<p:column headerText="Doc.Fiscal" width="60"
+				styleClass="columnatablaCentro">
+				<h:outputText value="#{p.documentofiscal}" />
+			</p:column>
+
+			<p:column headerText="Doc. Identidad" width="70"
+				styleClass="columnatablaCentro">
+				<h:outputText value="#{p.documentoidentidad}" />
+			</p:column>
+
+			<p:column headerText="Ant" width="50">
+				<h:outputText value="#{p.personaant}" />
+			</p:column>
+
+			<p:column headerText="Estado" width="30"
+				styleClass="columnatablaCentro">
+				<h:outputText value="#{p.estado eq 'I' ? 'Inactivo' : 'Activo'}" />
+			</p:column>
+
+		</p:dataTable>
+
+	</h:form>
+</ui:composition>

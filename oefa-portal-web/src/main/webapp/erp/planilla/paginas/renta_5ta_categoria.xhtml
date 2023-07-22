@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>
+			Renta 5ta Categoría
+		</h2>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="frmRenta">
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+			
+			<p:panelGrid columns="2" layout="grid" id="grdFiltros" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-1">
+				<p:outputLabel value="Planilla" />
+				<p:selectOneMenu
+					value="#{cConsultaRenta5taCategoria.planilla}"
+					filter="true" filterMatchMode="contains">
+					<f:selectItems 
+						value="#{cConsultaRenta5taCategoria.listaTipoPlanilla}"
+						var="tipoplanilla" itemValue="#{tipoplanilla.pk.tipoplanilla}"
+						itemLabel="#{tipoplanilla.pk.tipoplanilla} - #{tipoplanilla.descripcion}" />
+					<p:ajax listener="#{cConsultaRenta5taCategoria.listarPeriodoXPlanilla}" update="@form" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Periodo" />
+				<p:selectOneMenu
+					value="#{cConsultaRenta5taCategoria.periodo}"
+					filter="true" filterMatchMode="contains">
+					<f:selectItems 
+						value="#{cConsultaRenta5taCategoria.listaPeriodos}"
+						var="periodo" itemValue="#{periodo.pk.periodo}"
+						itemLabel="#{periodo.pk.periodo}" />
+					
+				</p:selectOneMenu>
+				
+			</p:panelGrid>
+			
+			<p:panelGrid columns="1" layout="grid" id="grdBotones" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-2">
+				<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+					icon="buscar" update="@form" onstart="PF('bUI').block();"
+					oncomplete="PF('bUI').unblock();"
+					action="#{cConsultaRenta5taCategoria.buscar}" />
+			</p:panelGrid>
+			
+			<pe:documentViewer value="#{cConsultaRenta5taCategoria.reporte}" style="width:100%;height:650px;" />
+
+		</h:form>
+	</ui:define>
+</ui:composition>

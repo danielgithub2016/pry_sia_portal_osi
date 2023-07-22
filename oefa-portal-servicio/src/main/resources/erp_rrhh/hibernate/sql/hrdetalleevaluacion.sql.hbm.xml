@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : rrhh.HrDetalleevaluacion -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!--consulta que sirve para mostrar el detalle de la evaluacion llena el 
+		datawindows dw_1 de la controladora CwHrDetalleEvaluacion -->
+	<sql-query name="hrdetalleevaluacion.obtenerDetalleEvaluacion">
+		select
+		HR_DetalleEvaluacion.CompanyOwner as
+		"companyowner",
+		HR_DetalleEvaluacion.SecuenciaEval as "secuenciaeval",
+		HR_DetalleEvaluacion.Empleado as "empleado",
+		HR_DetalleEvaluacion.EmpleadoEvaluador as "empleadoevaluador",
+		HR_DetalleEvaluacion.Secuencia as "secuencia",
+		HR_DetalleEvaluacion.Tipo as "tipo",
+		HR_DetalleEvaluacion.Factor as
+		"factor",
+		HR_DetalleEvaluacion.Calificacion as "calificacion",
+		hr_factoresevaluacion.explicacion as "explicacionfactor",
+		HR_EvaluacionArea.descripcion as "competencias",
+		hr_factoresevaluacion.descripcion as "factor_des",
+		(select
+		sum(a.Calificacion)
+		from SGCORESYS.HR_DetalleEvaluacion a
+		where
+		a.companyowner = HR_DetalleEvaluacion.companyowner and
+		a.SecuenciaEval
+		= HR_DetalleEvaluacion.SecuenciaEval and
+		a.EmpleadoEvaluador =
+		HR_DetalleEvaluacion.EmpleadoEvaluador and
+		a.Empleado =
+		HR_DetalleEvaluacion.Empleado and
+		a.Tipo = 'N'
+		) as "cf_suma",
+		( select
+		count(a.Calificacion)
+		from SGCORESYS.HR_DetalleEvaluacion a
+		where
+		a.companyowner = HR_DetalleEvaluacion.companyowner and
+		a.SecuenciaEval
+		= HR_DetalleEvaluacion.SecuenciaEval and
+		a.EmpleadoEvaluador =
+		HR_DetalleEvaluacion.EmpleadoEvaluador and
+		a.Empleado =
+		HR_DetalleEvaluacion.Empleado and
+		a.Tipo = 'N'
+		) as "cf_cuenta",
+
+		HR_DetalleEvaluacion.Plantilla as "plantilla",
+		HR_DetalleEvaluacion.Factorponderacion as "factorponderacion",
+		HR_DetalleEvaluacion.FactorCompetencia as "factorcompetencia",
+		HR_DetalleEvaluacion.SecuenciaCompetencia as "secuenciacompetencia",
+		HR_DetalleEvaluacion.ValorCompetencia as "valorcompetencia",
+		HR_DetalleEvaluacion.ValorHastaCompetencia as "valorhastacompetencia",
+		(select max(HR_PlantillaFactorEvaluacion.OrdenFactor)
+		from
+		SGCORESYS.HR_PlantillaFactorEvaluacion
+		where
+		HR_PlantillaFactorEvaluacion.Plantilla =hr_detalleevaluacion.Plantilla
+		and
+		HR_PlantillaFactorEvaluacion.Factor = hr_detalleevaluacion.Factor)
+		as "ordenfactor",
+		HR_FactoresEvaluacion.OrdenPlantilla as
+		"ordenplantilla",
+		hr_factoresevaluacion.area as "area"
+		from
+		SGCORESYS.hr_detalleevaluacion
+		LEFT JOIN
+		SGCORESYS.hr_factoresevaluacion ON
+		hr_detalleevaluacion.factor
+		=hr_factoresevaluacion.factor
+		JOIN SGCORESYS.HR_EvaluacionArea ON
+		(HR_EvaluacionArea.Area= hr_factoresevaluacion.area)
+		where
+		hr_detalleevaluacion.CompanyOwner = :par_CompanyOwner and
+		hr_detalleevaluacion.secuenciaeval = :par_secuencia and
+		hr_detalleevaluacion.empleado = :par_empleado and
+		HR_DetalleEvaluacion.EmpleadoEvaluador = :par_evaluador and
+		HR_factoresevaluacion.FlagConcepto = 'N' and
+		hr_detalleevaluacion.tipo
+		= 'N'
+		order by hr_factoresevaluacion.descripcion
+
+	</sql-query>
+
+	<sql-query name="hrdetalleevaluacion.obtenerCantEvaluacion">
+		select count(distinct
+		hr_factoresevaluacion.descripcion) from
+		SGCORESYS.hr_detalleevaluacion
+		LEFT JOIN
+		SGCORESYS.hr_factoresevaluacion ON
+		hr_detalleevaluacion.factor =hr_factoresevaluacion.factor
+		JOIN
+		SGCORESYS.HR_EvaluacionArea ON (HR_EvaluacionArea.Area=
+		hr_factoresevaluacion.area)
+		where
+		hr_detalleevaluacion.CompanyOwner =
+		:par_CompanyOwner and
+		hr_detalleevaluacion.secuenciaeval =
+		:par_secuencia and
+		hr_detalleevaluacion.empleado = :par_empleado and
+		HR_DetalleEvaluacion.EmpleadoEvaluador = :par_evaluador and
+		HR_factoresevaluacion.FlagConcepto = 'N' and
+		hr_detalleevaluacion.tipo
+		= 'N'
+	</sql-query>
+
+	<sql-query name="hrdetalleevaluacion.obtenerDetalleEvaluacionGrafico">
+		select
+		a.empleado as "empleado",
+		a.secuencia as
+		"secuencia",
+		a.companyowner as "companyowner",
+		a.secuenciaeval as
+		"secuenciaeval",
+		a.factor as "factor" ,
+		a.descripcion as
+		"descripcioncabezera",
+		a.calificacion as "calificacion",
+		a.unidadnegocio as "unidadnegocio",
+		a.tipo as "tipo" ,
+		a.factorsecuencia as "factorsecuencia" ,
+		a.plantilla as "plantilla" ,
+		c.descripcion as "descripcion",
+		a.areaponderacion as "areaponderacion",
+		a.factorponderacion as "factorponderacion",
+		a.factorparticipacion as
+		"factorparticipacion",
+		b.area as "area",
+		nvl(b.valorrequerido,0) as
+		"valorrequerido",
+		nvl(b.valorminimoesperado,0) as
+		"valorminimoesperado",
+		b.descripcion as "descripcion2",
+		b.tipocompetencia as "tipocompetencia",
+		(select max(ordenfactor) from
+		sgcoresys.hr_plantillafactorevaluacion where
+		plantilla = a.plantilla
+		and factor = a.factor) as "ordenfactor",
+		b.ordenplantilla as
+		"ordenplantilla",
+		a.valorcompetencia as "valorcompetencia",
+		a.valorhastacompetencia as "valorhastacompetencia",
+		a.valorcompetencia
+		as "minimovalor" ,
+		(select max(descripcion) from
+		sgcoresys.hr_factorvalor where factor= a.factor
+		and
+		secuencia=b.valorrequerido ) as "desvalorrequerido",
+		(select
+		max(descripcion) from sgcoresys.hr_factorvalor where factor= a.factor
+		and (valor=a.calificacion)) as "desvalorregistrado",
+		b.ordenplantilla
+		as "ordenplantilla1"
+		from
+		sgcoresys.hr_detalleevaluacion a
+		inner join
+		sgcoresys.hr_factoresevaluacion b on (b.factor =
+		a.factor)
+		left join
+		sgcoresys.hr_evaluacionarea c on (b.area = c.area)
+		left join
+		sgcoresys.hr_evaluacionperiodo d on (d.secuenciaeval =
+		a.secuenciaeval
+		and d.companyowner = a.companyowner)
+		where
+		b.flagconcepto = 'N' and
+		a.tipo = 'N' and
+		a.companyowner = :par_companyowner and
+		a.Empleado =
+		:par_empleado and
+		a.SecuenciaEval = :par_secuencia and
+		a.EmpleadoEvaluador= :par_evaluador
+		order by b.descripcion
+	</sql-query>
+
+	<sql-query name="hrdetalleevaluacion.obtenerEvaluacionGraficoCabezera">
+		select Distinct
+		c.descripcion as
+		"descripcion",
+		c.area as "area"
+		from
+		sgcoresys.hr_detalleevaluacion a
+		inner join sgcoresys.hr_factoresevaluacion b on (b.factor =
+		a.factor)
+		left join sgcoresys.hr_evaluacionarea c on (b.area = c.area)
+		left join
+		sgcoresys.hr_evaluacionperiodo d on (d.secuenciaeval =
+		a.secuenciaeval
+		and d.companyowner = a.companyowner)
+		where
+		b.flagconcepto = 'N' and
+		a.tipo = 'N' and
+		a.companyowner = :par_companyowner and
+		a.Empleado =
+		:par_empleado and
+		a.SecuenciaEval = :par_secuencia and
+		a.EmpleadoEvaluador= :par_evaluador
+	</sql-query>
+
+	<sql-query name="hrdetalleevaluacion.obtenerCantEvaluacionGrafico">
+		select distinct
+		hr_factoresevaluacion.Factor
+		as "factor",
+		HR_DetalleEvaluacion.Calificacion as "calificacion",
+		EmpleadoMast.fechaingreso as "fechaingreso"
+		from
+		SGCORESYS.HR_DetalleEvaluacion
+		INNER JOIN
+		SGCORESYS.hr_factoresevaluacion ON
+		hr_detalleevaluacion.factor =
+		hr_factoresevaluacion.factor
+		LEFT JOIN SGCORESYS.HR_FactorValor ON
+		HR_DetalleEvaluacion.Factor = HR_FactorValor.factor
+		INNER JOIN
+		SGCORESYS.EmpleadoMast ON
+		( hr_detalleevaluacion.Empleado
+		=EmpleadoMast.Empleado )
+		INNER JOIN SGCORESYS.HR_EvaluacionPeriodo ON
+		(HR_DetalleEvaluacion.CompanyOwner =
+		HR_EvaluacionPeriodo.CompanyOwner)
+		AND (
+		HR_DetalleEvaluacion.SecuenciaEval
+		=HR_EvaluacionPeriodo.SecuenciaEval)
+		LEFT JOIN SGCORESYS.HR_CargosMast
+		ON EmpleadoMast.Cargo=HR_CargosMast.Cargo
+		where
+		hr_detalleevaluacion.CompanyOwner =:parCompany and
+		hr_detalleevaluacion.empleado=:parEmpleado and
+		hr_detalleevaluacion.empleadoevaluador = :parEvaluador and
+		hr_detalleevaluacion.secuenciaeval = :parSecuencia and
+		HR_factoresevaluacion.FlagConcepto = 'N' and
+		hr_detalleevaluacion.tipo
+		= 'N'
+	</sql-query>
+
+
+	<sql-query name="hrdetalleevaluacion.obtenerSumaEvaluacion">
+		select sum(a.Calificacion)
+		from SGCORESYS.HR_DetalleEvaluacion a
+		where a.companyowner = :iv_compania
+		and
+		a.SecuenciaEval = :iv_secuencia and
+		a.Empleado = :iv_empleado and
+		a.EmpleadoEvaluador=:iv_empleadoevaluador and
+		a.Tipo = :tipo
+	</sql-query>
+
+	<sql-query name="hrdetalleevaluacion.obtenerCantEvaluacionCedula">
+		SELECT count(1)
+		FROM SGCORESYS.HR_DETALLEEVALUACION A
+		JOIN SGCORESYS.HR_EVALUACIONEMPLEADO B ON A.COMPANYOWNER = B.COMPANYOWNER
+		AND A.SECUENCIAEVAL = B.SECUENCIAEVAL AND A.EMPLEADO = B.EMPLEADO AND
+		A.EMPLEADOEVALUADOR = B.EMPLEADOEVALUADOR
+		JOIN SGCORESYS.EMPLEADOMAST C ON A.EMPLEADOEVALUADOR = C.EMPLEADO
+		JOIN SGCORESYS.EMPLEADOMAST D ON A.EMPLEADO = D.EMPLEADO
+		LEFT JOIN SGCORESYS.HR_PUESTOEMPRESA E ON C.CODIGOCARGO = E.CODIGOPUESTO
+		LEFT JOIN SGCORESYS.HR_PUESTOEMPRESA F ON D.CODIGOCARGO =
+		F.CODIGOPUESTO
+		LEFT JOIN SGCORESYS.HR_CONTRATOS G ON G.EMPLEADO = D.EMPLEADO AND
+		G.COMPANIASOCIO = D.COMPANIASOCIO
+		LEFT JOIN SGCORESYS.HR_CARGOSMAST H ON D.CARGO = H.CARGO
+		WHERE
+		A.COMPANYOWNER =:par_company
+		AND A.SECUENCIAEVAL =:par_evaluacion
+		AND A.EMPLEADO = :par_empleado
+		AND A.EMPLEADOEVALUADOR = :par_evaluador
+	</sql-query>
+
+
+
+
+
+
+
+</hibernate-mapping>

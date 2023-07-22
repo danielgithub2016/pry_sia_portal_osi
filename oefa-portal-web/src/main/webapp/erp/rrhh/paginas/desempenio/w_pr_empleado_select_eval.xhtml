@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form id="wprempleadoselecteval">
+		<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+		<h:panelGrid columns="4">
+			<p:outputLabel value="Critero" id="lblCriterio" />
+			<p:selectOneMenu id="idCboCriterio"
+				style="width:150px; margin-left: 20px;"
+				value="#{cwPrEmpleadoSelectEval.cboCriterio}">
+				<f:selectItem itemLabel="Código" itemValue="C" />
+				<f:selectItem itemLabel="Apellido" itemValue="A" />
+			</p:selectOneMenu>
+			<p:outputLabel value="Buscar" id="lblBuscar"
+				style="margin-left: 40px;" />
+			<p:inputText id="txtBuscar" style="margin-left: 35px; "
+				value="#{cwPrEmpleadoSelectEval.txtBusqueda}" />
+		</h:panelGrid>
+
+		<h:panelGrid>
+			<p:commandButton id="idBtnBuscar" value="Buscar" icon="buscar"
+				action="#{cwPrEmpleadoSelectEval.buscar}"
+				update=":wprempleadoselecteval:idEmpleadoSelectEval"
+				style="margin-left: 387px; margin-bottom: 5px;" />
+		</h:panelGrid>
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			paginator="true" paginatorPosition="bottom" scrollHeight="240"
+			tableStyle="width:460px;" scrollWidth="480px" scrollable="true"
+			lazy="true" id="idEmpleadoSelectEval" rows="10"
+			selectionMode="single" value="#{cwPrEmpleadoSelectEval.dw_1}" var="c"
+			rowKey="#{c.total}"
+			selection="#{cwPrEmpleadoSelectEval.registroSeleccionado}"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+			<p:ajax event="rowDblselect"
+				listener="#{cwPrEmpleadoSelectEval.onRowSelectList}"
+				partialSubmit="true" process="@this" />
+
+			<p:column headerText="Código" width="100">
+				<h:outputText value="#{c.empleado}" />
+			</p:column>
+
+			<p:column headerText="Empleado" width="150">
+				<h:outputText value="#{c.nombrecompleto}" />
+			</p:column>
+
+			<p:column headerText="Entidad" width="150">
+				<h:outputText value="#{c.companiasocio}" />
+			</p:column>
+
+		</p:dataTable>
+
+		<h:panelGrid columns="4">
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Inactivos" id="lblInactivos" />
+				<p:selectBooleanCheckbox id="idChkInactivos"
+					value="#{cwPrEmpleadoSelectEval.cbx_inactivo}" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Cesados" id="lblCesados" />
+				<p:selectBooleanCheckbox id="idChkCesados"
+					value="#{cwPrEmpleadoSelectEval.cbx_cesados}" />
+			</h:panelGrid>
+
+			<p:commandButton id="idBtnAceptar" value="Aceptar" icon="aceptar"
+				style="margin-left: 145px;"
+				action="#{cwPrEmpleadoSelectEval.aceptar}" />
+
+			<p:commandButton id="idBtnCancelar" value="Cancelar" icon="cancelar"
+				action="PF('popEmpleadoSelectEval').hide()" />
+
+		</h:panelGrid>
+	</h:form>
+</ui:composition>

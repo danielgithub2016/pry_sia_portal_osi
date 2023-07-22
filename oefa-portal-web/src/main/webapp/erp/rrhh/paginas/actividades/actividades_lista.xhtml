@@ -1,0 +1,143 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>Actividades
+		</h2>
+	</ui:define>
+	<ui:define name="content">
+		<ui:include src="../usuarioActual01.xhtml" />
+		<h:form id="frmActividades_lista">
+			<p:growl autoUpdate="true" life="#{msg.generico_tiempo_growl}" />
+			<p:panel header="#{msg.generico_filtros}" rendered="false">
+				<h:panelGrid columns="3" width="60%">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Publicado" />
+						<p:selectBooleanCheckbox
+							value="#{cHrActividad.filtro.flagpublicacionBool}" />
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Fecha" />
+						<p:calendar locale="es" showButtonPanel="true" navigator="true"
+							value="#{cHrActividad.filtro.fechafiltro}" mask="true"
+							placeholder="TODOS" showOn="button" size="15"
+							pattern="#{msg.formato_fecha_fecha}" />
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Estado" />
+						<p:selectOneMenu style="width:100px;"
+							value="#{cHrActividad.filtro.estado}">
+							<f:selectItem itemLabel="#{msg.generico_listar_todos}" />
+							<f:selectItem itemValue="P" itemLabel="En Preparación" />
+							<f:selectItem itemValue="A" itemLabel="Aprobado" />
+							<f:selectItem itemValue="E" itemLabel="Ejecutado" />
+							<f:selectItem itemValue="T" itemLabel="Terminado" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:panel>
+			<h:panelGrid columns="2" width="100%" rendered="false"
+				style="padding-top: 5px;padding-bottom: 5px;">
+				<p:commandButton value="Buscar" icon="buscar" style="float:right;"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					styleClass="botonTextoImagen" action="#{cHrActividad.buscar}"
+					update="@(form)" />
+			</h:panelGrid>
+			<p:dataTable emptyMessage="En este momento no existen actividades." scrollable="true"
+				id="dtActividades" paginator="true" paginatorPosition="bottom" scrollHeight="400"
+				rows="15" reflow="true" value="#{cHrActividad.lstDatos}" var="row"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+				<p:column headerText="Categoría" width="200">
+					<h:outputText value="#{row.categoria}" />
+				</p:column>
+				<p:column headerText="Nombre" width="150">
+					<h:outputText value="#{row.nombre}" />
+				</p:column>
+
+				<p:column headerText="Fecha Inicio Publicación" width="100">
+					<h:outputText value="#{row.fechadesdepublicacion}">
+						<f:convertDateTime
+							pattern="#{msg.formato_fecha_fechahora_estandar}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Fecha Fin Publicación" width="100">
+					<h:outputText value="#{row.fechahastapublicacion}">
+						<f:convertDateTime
+							pattern="#{msg.formato_fecha_fechahora_estandar}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Dirigido a">
+					<h:outputText value="#{row.tipoparticipante}" />
+				</p:column>
+				<p:column headerText="Lugar" width="150">
+					<h:outputText value="#{row.lugar}" />
+				</p:column>
+				<p:column headerText="Fecha evento" width="120">
+					<h:outputText value="#{row.fechaevento}" escape="false" />
+				</p:column>
+				<p:column headerText="Acciones" width="55">
+					<p:commandButton type="image" icon="siguiente"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+						action="#{cHrActividad.participar}"
+						rendered="#{row.participo == 0}" title="Participar">
+						<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+							icon="alerta" message="¿Desea participar?" />
+						<f:setPropertyActionListener
+							target="#{cHrActividad.registroSeleccionado}" value="#{row}" />
+					</p:commandButton>
+					<p:commandButton type="image" icon="eliminar"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+						action="#{cHrActividad.retirar}" rendered="#{row.participo != 0}"
+						title="Retirar participación">
+						<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+							icon="alerta" message="¿Desea retirarse?" />
+						<f:setPropertyActionListener
+							target="#{cHrActividad.registroSeleccionado}" value="#{row}" />
+					</p:commandButton>
+					<p:commandButton type="image" icon="dinero" title="Donar"
+						oncomplete="PF('popDonar').show();" update=":dgDonar"
+						rendered="#{row.flagapoyosocial eq 'S' and row.monto == null and row.participo == 0 and row.valor1=='S'}">
+						<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+							icon="alerta" message="¿Desea donar?" />
+						<f:setPropertyActionListener
+							target="#{cHrActividad.registroSeleccionado}" value="#{row}" />
+						<f:setPropertyActionListener
+							target="#{cHrActividad.montoDonativo}" value="#{row.monto}"></f:setPropertyActionListener>
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog id="dgDonar" widgetVar="popDonar" header="Donación" responsive="true"
+			modal="true" appendTo="@(body)" draggable="false" resizable="false">
+			<h:form id="frmMontoIngreso">
+				<p:panel id="pnlMonto">
+					<h:panelGrid columns="2" id="pgMonto" width="100%">
+						<p:outputLabel value="Ingrese un monto"
+							style="    margin-right: 10px;" />
+						<p:inputText value="#{cHrActividad.montoDonativo}" id="itMonto"
+							required="true" requiredMessage="Ingrese un monto" maxlength="16"
+							styleClass="columnatablaDerecha" style="width:70px;"
+							onkeypress="return validarIngreso(event,'N');">
+							<f:convertNumber pattern="#{msg.formato_monto_patron}"
+								minIntegerDigits="1" maxFractionDigits="2" />
+							<f:validateDoubleRange minimum="1" />
+						</p:inputText>
+					</h:panelGrid>
+					<p:commandButton value="Donar" styleClass="botonTextoImagen"
+						update="@(form)" icon="dinero" onstart="PF('bUI').block();"
+						oncomplete="PF('bUI').unblock();"
+						style="margin-top:15px;margin-bottom:5px;"
+						action="#{cHrActividad.donar}" />
+				</p:panel>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

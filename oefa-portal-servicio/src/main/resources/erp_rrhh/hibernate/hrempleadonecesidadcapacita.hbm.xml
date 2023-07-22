@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrEmpleadonecesidadcapacita" table="SGCORESYS.HR_EMPLEADONECESIDADCAPACITA">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrEmpleadonecesidadcapacitaPk">
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+            <key-property name="secuenciaeval" type="integer">
+                <column name="SECUENCIAEVAL" length="22" />
+            </key-property>
+            <key-property name="empleado" type="integer">
+                <column name="EMPLEADO" length="22" />
+            </key-property>
+            <key-property name="empleadoevaluador" type="integer">
+                <column name="EMPLEADOEVALUADOR" length="22" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="prioridad" type="integer">
+            <column name="PRIORIDAD" length="22" />
+        </property>
+        <property name="curso" type="integer">
+            <column name="CURSO" length="22" />
+        </property>
+        <property name="objetivo" type="string">
+            <column name="OBJETIVO" length="100" />
+        </property>
+        <property name="necesidad" type="string">
+            <column name="NECESIDAD" length="100" />
+        </property>
+        <property name="capacitacion" type="string">
+            <column name="CAPACITACION" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

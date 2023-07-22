@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrFactorvalor" table="SGCORESYS.HR_FACTORVALOR">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrFactorvalorPk">
+            <key-property name="factor" type="integer">
+                <column name="FACTOR" length="22" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="plantilla" type="string">
+            <column name="PLANTILLA" length="5" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="255" />
+        </property>
+        <property name="valor" type="big_decimal">
+            <column name="VALOR" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="explicacion" type="string">
+            <column name="EXPLICACION" length="1000" />
+        </property>
+        <property name="valorrequerido" type="big_decimal">
+            <column name="VALORREQUERIDO" length="22" />
+        </property>
+        <property name="valorhasta" type="big_decimal">
+            <column name="VALORHASTA" length="22" />
+        </property>
+        <property name="curso" type="integer">
+            <column name="CURSO" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

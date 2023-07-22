@@ -1,0 +1,274 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+
+	<ui:define name="content">
+
+		<p:outputLabel value="Listado Horas Extras"
+			styleClass="tituloSubrayado" />
+
+		<br />
+		<h:form id="frmAutorizaciones">
+
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+
+			<p:panel>
+
+				<p:panelGrid columns="2" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-12,ui-grid-col-12" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:panelGrid columns="5"
+						columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-5,ui-grid-col-1,ui-grid-col-1"
+						layout="grid" styleClass="ui-panelgrid-blank">
+
+						<h:outputLabel value="Empleado" />
+						<h:outputText value="Seleccionados"
+							onkeypress="return validarIngreso(event,'N');" id="grdEmpleado"
+							rendered="#{!cwAsReporteCompensacionHoras.verSeleccionados}" />
+						<h:outputLabel
+							rendered="#{!cwAsReporteCompensacionHoras.verSeleccionados}" />
+						<p:inputText onkeypress="return validarIngreso(event,'N');"
+							rendered="#{cwAsReporteCompensacionHoras.verSeleccionados}"
+							value="#{cwAsReporteCompensacionHoras.datosgenerico.codEmpleado}" />
+						<p:inputText readonly="true"
+							rendered="#{cwAsReporteCompensacionHoras.verSeleccionados}"
+							value="#{cwAsReporteCompensacionHoras.datosgenerico.nombreCompleto}" />
+						<p:commandButton icon="buscar" styleClass="botonTextoImagenChico"
+							update="@form" action="#{cwAsEmpleadoSelectMultiple.listarTodos}">
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.nombreContenedorRefrescar}"
+								value="frmAutorizaciones" />
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.iMantenimientoReferencia}"
+								value="#{cwAsReporteCompensacionHoras}" />
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.nombreVentanaEmergente}"
+								value="w_as_empleado_select_multiple" />
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.pantallaReferencia}"
+								value="waslistacompensacionhoras" />
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.conjunto}"
+								value="#{cwAsReporteCompensacionHoras.datosgenerico.codEmpleado}" />
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.flgTodos}"
+								value="#{cwAsReporteCompensacionHoras.flgperfilas09}" />
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.flgReporteTodo}" value="N" />
+						</p:commandButton>
+
+						<p:commandButton icon="limpiar"
+							action="#{cwAsReporteCompensacionHoras.limpiezaEmpleado}"
+							styleClass="botonTextoImagenChico" update="@form">
+						</p:commandButton>
+					</p:panelGrid>
+
+
+					<p:panelGrid columns="5"
+						columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-5,ui-grid-col-1,ui-grid-col-1"
+						layout="grid" styleClass="ui-panelgrid-blank">
+
+						<h:outputLabel value="Área Operativa" />
+						<p:outputLabel value="Seleccionados"
+							rendered="#{cwAsReporteCompensacionHoras.datosgenerico.isvariosareaoperativa}" />
+						<p:inputText readonly="true"
+							rendered="#{cwAsReporteCompensacionHoras.datosgenerico.isvariosareaoperativa}"
+							value="#{cwAsReporteCompensacionHoras.datosgenerico.codAreaOperativa}" />
+						<p:inputText onkeypress="return validarIngreso(event,'N');"
+							rendered="#{!cwAsReporteCompensacionHoras.datosgenerico.isvariosareaoperativa}"
+							value="#{cwAsReporteCompensacionHoras.datosgenerico.codAreaOperativa}" />
+						<p:inputText readonly="true"
+							rendered="#{!cwAsReporteCompensacionHoras.datosgenerico.isvariosareaoperativa}"
+							value="#{cwAsReporteCompensacionHoras.datosgenerico.desAreaOperativa}" />
+						<p:commandButton icon="buscar" update="@form"
+							action="#{cwAsReporteCompensacionHoras.listarPopGenericos}"
+							styleClass="botonTextoImagenChico">
+							<f:setPropertyActionListener value="operaria"
+								target="#{cwAsReporteCompensacionHoras.tipo}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener
+								target="#{cUFiltros.iMantenimientoReferencia}"
+								value="#{cwAsReporteCompensacionHoras}" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreContenedorRefrescar}"
+								value="frmAutorizaciones" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreVentanaEmergente}"
+								value="w_as_compania_select" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.pantallaReferencia}"
+								value="waslistacompensacionhoras" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.isseleccionmultiple}" value="true" />
+							<f:setPropertyActionListener target="#{cUFiltros.conjunto}"
+								value="#{cwAsReporteCompensacionHoras.datosgenerico.codAreaOperativa}" />
+						</p:commandButton>
+						<p:commandButton icon="limpiar"
+							action="#{cwAsReporteCompensacionHoras.limpieza}"
+							styleClass="botonTextoImagenChico" update="@form">
+
+							<f:setPropertyActionListener value="operaria"
+								target="#{cwAsReporteCompensacionHoras.tipo}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreContenedorRefrescar}"
+								value="frmAutorizaciones" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreVentanaEmergente}"
+								value="w_as_compania_select" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.pantallaReferencia}"
+								value="waslistacompensacionhoras" />
+						</p:commandButton>
+
+					</p:panelGrid>
+
+
+					<p:panelGrid columns="5" id="grd2" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-1.5,ui-grid-col-2	,ui-grid-col-0.5"
+						layout="grid" styleClass="ui-panelgrid-blank">
+
+
+						<p:outputLabel value="Desde"
+							rendered="#{cwAsReporteCompensacionHoras.dwFiltros.isfecha}" />
+						<p:calendar pattern="dd/MM/yyyy" locale="es" navigator="true"
+							showButtonPanel="true" mask="true"
+							rendered="#{cwAsReporteCompensacionHoras.dwFiltros.isfecha}"
+							value="#{cwAsReporteCompensacionHoras.dwFiltros.fechadesde}">
+						</p:calendar>
+
+						<p:outputLabel value="Hasta"
+							rendered="#{cwAsReporteCompensacionHoras.dwFiltros.isfecha}" />
+						<p:calendar pattern="dd/MM/yyyy" locale="es" navigator="true"
+							showButtonPanel="true" mask="true"
+							rendered="#{cwAsReporteCompensacionHoras.dwFiltros.isfecha}"
+							value="#{cwAsReporteCompensacionHoras.dwFiltros.fechaHasta}">
+						</p:calendar>
+
+						<p:outputLabel value=""
+							rendered="#{cwAsReporteCompensacionHoras.dwFiltros.isfecha}" />
+
+					</p:panelGrid>
+
+
+					<p:panelGrid columns="4" id="grdFechas" style="border-spacing:0px"
+						columnClasses="ui-grid-col-2,ui-grid-col-5,ui-grid-col-2,ui-grid-col-2"
+						layout="grid" styleClass="ui-panelgrid-blank">
+
+
+						<p:outputLabel value=""
+							rendered="#{cwAsReporteCompensacionHoras.dwFiltros.isfecha}" />
+						<p:outputLabel value=""
+							rendered="#{cwAsReporteCompensacionHoras.dwFiltros.isfecha}" />
+						<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+							icon="buscar" update="tblAutorizaciones"
+							onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+							action="#{cwAsReporteCompensacionHoras.buscar}" />
+
+
+						<p:commandButton icon="exportar_excel"
+							onstart="PF('bUI').block();" value="Exportar"
+							oncomplete="PF('bUI').unblock();" styleClass="botonTextoImagen"
+							action="#{cwAsReporteCompensacionHoras.exportar}">
+						</p:commandButton>
+
+
+					</p:panelGrid>
+
+
+				</p:panelGrid>
+
+
+
+
+			</p:panel>
+
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				id="tblAutorizaciones" paginator="true" paginatorPosition="bottom"
+				scrollable="true" scrollHeight="370" reflow="true" rows="15"
+				lazy="true" value="#{cwAsReporteCompensacionHoras.lstCompensacion}"
+				var="autoriza" sortBy="#{autoriza.nombrecompleto}"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+				<p:columnGroup type="header">
+					<p:column width="15" headerText="Cod.">
+					</p:column>
+
+					<p:column width="260" headerText="Nombre">
+					</p:column>
+
+
+					<p:column headerText="Area Operativa" width="260">
+					</p:column>
+
+					<p:column headerText="Horas por Área" width="100">
+					</p:column>
+
+					<p:column headerText="Horas Generales" width="100">
+					</p:column>
+
+					<p:column headerText="Horas Consumidas" width="100">
+					</p:column>
+
+					<p:column headerText="Horas Solicitadas" width="100">
+					</p:column>
+
+					<p:column headerText="Semestre" width="170">
+					</p:column>
+				</p:columnGroup>
+
+
+				<p:column width="70" headerText="Código"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{autoriza.empleado}" />
+				</p:column>
+
+				<p:column width="260" headerText="Nombre">
+					<h:outputText value="#{autoriza.nombrecompleto}" />
+				</p:column>
+
+				<p:column headerText="Area Operativa" width="260">
+					<h:outputText value="#{autoriza.area}" />
+				</p:column>
+
+				<p:column headerText="Horas por Área" width="260"
+					styleClass="columnatablaDerecha">
+					<h:outputText value="#{autoriza.horasArea}" />
+				</p:column>
+
+				<p:column headerText="Horas Generales" width="260"
+					styleClass="columnatablaDerecha">
+					<h:outputText value="#{autoriza.horasGeneral}" />
+				</p:column>
+
+				<p:column headerText="Horas consumidas" width="260"
+					styleClass="columnatablaDerecha">
+					<h:outputText value="#{autoriza.horasConsumidasTexto}" />
+				</p:column>
+
+				<p:column headerText="Horas solicitadas" width="260"
+					styleClass="columnatablaDerecha">
+					<h:outputText value="#{autoriza.horasSolicitadasTexto}" />
+				</p:column>
+
+				<p:column headerText="Semestre" width="260"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{autoriza.semestre}" />
+				</p:column>
+
+			</p:dataTable>
+
+			<iframe src="#{request.contextPath}/temporaloefa/${nombrearchivo}"
+				style="width: 0px; height: 0px" />
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+

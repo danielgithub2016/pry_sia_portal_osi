@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrEvaluacion" table="SGCORESYS.HR_EVALUACION">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrEvaluacionPk">
+            <key-property name="evaluacion" type="integer">
+                <column name="EVALUACION" length="38" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="80" />
+        </property>
+        <property name="unidadnegocio" type="string">
+            <column name="UNIDADNEGOCIO" length="4" />
+        </property>
+        <property name="unidadreplicacion" type="string">
+            <column name="UNIDADREPLICACION" length="4" />
+        </property>
+        <property name="puntajeminimo" type="integer">
+            <column name="PUNTAJEMINIMO" length="38" />
+        </property>
+        <property name="puntajemaximo" type="integer">
+            <column name="PUNTAJEMAXIMO" length="38" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="ultimousuario" type="string">
+            <column name="ULTIMOUSUARIO" length="20" />
+        </property>
+        <property name="ultimafechamodif" type="timestamp">
+            <column name="ULTIMAFECHAMODIF" length="7" />
+        </property>
+        <property name="plantillaevaluacion" type="string">
+            <column name="PLANTILLAEVALUACION" length="20" />
+        </property>
+        <property name="flagempleadomast" type="string">
+            <column name="FLAGEMPLEADOMAST" length="20" />
+        </property>
+        <property name="flagperfil" type="string">
+            <column name="FLAGPERFIL" length="20" />
+        </property>
+        <property name="tipoeval" type="string">
+            <column name="TIPOEVAL" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

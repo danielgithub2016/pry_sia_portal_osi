@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+
+	<application>
+		<resource-bundle>
+			<base-name>erp_logistica.messages</base-name>
+			<var>msgWH</var>
+		</resource-bundle>
+	</application>
+
+	<!-- Modulo Logistica -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>wwhrequisitionbase</from-outcome>
+			<to-view-id>/erp/logistica/paginas/w_wh_requisition_base.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>wwhrequisitionlist</from-outcome>
+			<to-view-id>/erp/logistica/paginas/w_wh_requisition_list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>w_bu_ma_demanda_recurrente_adicional_list</from-outcome>
+			<to-view-id>/erp/logistica/paginas/w_bu_ma_demanda_recurrente_adicional_list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>w_bu_ma_presupuesto_centrocosto</from-outcome>
+			<to-view-id>/erp/logistica/paginas/w_bu_ma_presupuesto_centrocosto.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

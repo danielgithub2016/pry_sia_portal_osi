@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : rrhh.hrempleadocapacitacion -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="hrempleadocapacitacion.dwhrevaluacioncapacitaciondetail">
+    <![CDATA[
+    	SELECT 
+			HR_EmpleadoCapacitacion.Capacitacion as "capacitacion",   
+			HR_EmpleadoCapacitacion.Empleado as "empleado",   
+			HR_EmpleadoCapacitacion.SolicitudCapacitacion as "solicitudcapacitacion",   
+			HR_EmpleadoCapacitacion.CentroResponsabilidad as "centroresponsabilidad",   
+			HR_EmpleadoCapacitacion.NumeroConstancia as "numeroconstancia",   
+			HR_EmpleadoCapacitacion.NumeroAsistencias as "numeroasistencias",   
+			HR_EmpleadoCapacitacion.HorasAsistencia as "horasasistencia",   
+			HR_EmpleadoCapacitacion.Calificacion as "calificacion",   
+			HR_EmpleadoCapacitacion.UnidadNegocio as "unidadnegocio",   
+			HR_EmpleadoCapacitacion.UltimoUsuario as "ultimousuario",   
+			HR_EmpleadoCapacitacion.UltimaFechaModif as "ultimafechamodif",   
+			HR_EmpleadoCapacitacion.CostoIndividual as "costoindividual",  
+			HR_EmpleadoCapacitacion.DiasAsistidos as "diasasistidos",  
+			''  as "nombreempleado",   
+			HR_EmpleadoCapacitacion.NumeroPeriodos as "numeroperiodos",   
+			PersonaMast.PersonaAnt as "personaant",   
+			0 as "codigoempleado",   
+			HR_EmpleadoCapacitacion.CompanyOwner as "companyowner",   
+			HR_EmpleadoCapacitacion.InterfaceInstruccion as "interfaceinstruccion" , 
+			HR_EmpleadoCapacitacion.Nota as "nota",
+			HR_EmpleadoCapacitacion.ImporteGastoEmp as "importegastoemp",
+			EmpleadoMast.TipoContrato as "tipocontrato",
+			HR_EmpleadoCapacitacion.Comentario as "comentario",
+			EmpleadoMast.CorreoInterno as "correointerno"
+			FROM 
+			SGCORESYS.HR_EmpleadoCapacitacion     
+				INNER JOIN SGCORESYS.PersonaMast 
+					ON ( HR_EmpleadoCapacitacion.Empleado = PersonaMast.Persona ) 
+				INNER JOIN SGCORESYS.EmpleadoMast
+					ON ( HR_EmpleadoCapacitacion.Empleado = EmpleadoMast.Empleado ) 
+				INNER JOIN SGCORESYS.HR_Capacitacion
+					ON ( HR_EmpleadoCapacitacion.Capacitacion = HR_Capacitacion.capacitacion ) 
+			WHERE 
+			HR_Capacitacion.estado = 'P' and
+			hr_capacitacion.AnioPlan = :par_anioplan
+		]]>
+	</sql-query>
+	
+	
+	<sql-query name="hrempleadocapacitacion.contarCapacitacionDocumentoPendiente">
+    	<![CDATA[
+         SELECT DISTINCT
+            FLG_ADJUNTO_INFORM_FINAL as "flgadjuntoinformfinal",
+            CAP.CAPACITACION as "capacitacion",
+            EMPCAPA.empleado as "empleado"  
+          FROM SGCORESYS.HR_CAPACITACION  CAP
+          JOIN SGCORESYS.HR_EMPLEADOCAPACITACION EMPCAPA ON CAP.CAPACITACION=EMPCAPA.CAPACITACION
+          JOIN SGCORESYS.HR_EMPLEADOCURSOS EMPCUR ON EMPCUR.EMPLEADO=EMPCAPA.EMPLEADO
+          WHERE EMPCAPA.EMPLEADO=:empleado AND CAP.ESTADO IN ('T','L','M')
+          AND  SYSDATE   BETWEEN  CAP.FECHAFINCAPACITACION  AND CAP.FECHAFINCAPACITACION+:dias_revision
+    ]]>
+    </sql-query>
+
+</hibernate-mapping>

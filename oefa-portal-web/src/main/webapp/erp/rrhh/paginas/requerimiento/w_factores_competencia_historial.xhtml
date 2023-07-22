@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<div class="estiloFactores">
+		<h:form id="frmwFactoresCompetenciaHistorial">
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				scrollable="true"
+				scrollHeight="200" rows="20" scrollWidth="700px"
+				tableStyle="width:700px" lazy="true" id="tblCompetencia"
+				value="#{cwFactoresCompetenciaHistorial.dw1}" var="c"
+				selection="#{cwFactoresCompetenciaHistorial.registroSeleccionado}"
+				selectionMode="single" rowKey="#{c.total}"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+				<p:ajax event="rowSelect"
+					listener="#{cwFactoresCompetenciaHistorial.onRowSelectList}"
+					partialSubmit="true" process="@this" />
+
+				<p:column headerText="Evaluacion" width="150">
+					<h:outputText value="#{c.descripcion}" />
+				</p:column>
+
+				<p:column headerText="Periodo" width="70" styleClass="columnatablaCentro">
+					<h:outputText value="#{c.periodo}" />
+				</p:column>
+
+				<p:column headerText="Fecha Inicio" width="80" styleClass="columnatablaCentro">
+					<h:outputText value="#{c.fechainicio}" >
+					<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}" />
+				    </h:outputText>
+				</p:column>
+
+				<p:column headerText="Fecha Fin" width="80" styleClass="columnatablaCentro">
+					<h:outputText value="#{c.fechafin}" >
+					<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Calificacion" width="70" styleClass="columnatablaCentro">
+					<h:outputText value="#{c.calificacion}">
+					<f:convertNumber minIntegerDigits="1" maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Requerido" width="70" styleClass="columnatablaCentro">
+					<h:outputText value="#{c.valorrequerido}" >
+					<f:convertNumber minIntegerDigits="1" maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+					</h:outputText>
+				</p:column>
+
+			</p:dataTable>
+			<p:commandButton value="Cancelar" styleClass="botonTextoImagen" 
+				icon="cancelar" style="float:right;margin-top:5px;"
+				oncomplete="PF('popCompetenciasHistorial').hide()" />
+		</h:form>
+	</div>
+</ui:composition>

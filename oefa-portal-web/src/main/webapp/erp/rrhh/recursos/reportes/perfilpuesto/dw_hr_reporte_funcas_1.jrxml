@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dw_hr_reporte_funcas_1" language="groovy" pageWidth="500" pageHeight="842" whenNoDataType="BlankPage" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="e0061cc2-b2c9-420c-9085-c7d523e517e4">
+	<property name="ireport.zoom" value="1.7524694974069617"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PAR_REQUERIMIENTO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT FUNCIONDESCRIPCION,FUNCIONCOMENTARIOS FROM SGCORESYS.HR_REQUERIMIENTOFUNCAS
+WHERE REQUERIMIENTO =$P{PAR_REQUERIMIENTO}
+ AND COMPANYOWNER = $P{PAR_COMPANIA}]]>
+	</queryString>
+	<field name="FUNCIONDESCRIPCION" class="java.lang.String"/>
+	<field name="FUNCIONCOMENTARIOS" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="500" height="14" uuid="730a05fd-b9e6-481b-8fb9-8151cddccf54"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[II PERFIL DEL PUESTO]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="-15" width="500" height="15" backcolor="#CCCCCC" uuid="34ab3b08-0179-416e-a702-889dc57377bb"/>
+			</rectangle>
+			<line>
+				<reportElement x="215" y="-15" width="1" height="15" uuid="67677428-3627-44a7-9eae-c8960a39fd0c"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="-14" width="211" height="14" uuid="56578238-9723-440d-93e9-b288625057fb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REQUISITOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="217" y="-14" width="282" height="14" uuid="5729a9f8-afb1-4063-84c0-5a23cc6454f6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DETALLE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<rectangle>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="500" height="17" isPrintWhenDetailOverflows="true" uuid="4193488a-3dc7-4e7b-90b7-2eb26d73b27e"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="4" y="1" width="211" height="15" isPrintWhenDetailOverflows="true" uuid="bc889e11-f698-46b1-8a1d-d4a080faf79e"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FUNCIONDESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="224" y="1" width="275" height="15" isPrintWhenDetailOverflows="true" uuid="39135cff-8835-42b1-9557-e46c0ecd9c25"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FUNCIONCOMENTARIOS}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="215" y="0" width="1" height="17" isPrintWhenDetailOverflows="true" uuid="2a1011ba-feaf-4b4f-8c30-21982c9f02e5"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

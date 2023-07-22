@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dDesempenocomparativo01" language="groovy" pageWidth="320" pageHeight="500" columnWidth="320" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" isIgnorePagination="true" uuid="8cb93371-c05b-447d-8373-186a9be14f98">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="511"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Fabrica\\Desarrollo\\DesarrolloProductos\\OEFAMIGRA\\oefa-portal-web\\src\\main\\webapp\\erp\\rrhh\\recursos\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parCompania" class="java.lang.String"/>
+	<parameter name="parEvaluado" class="java.math.BigDecimal"/>
+	<parameter name="parSecuencia" class="java.math.BigDecimal"/>
+	<parameter name="parEvaluador" class="java.math.BigDecimal"/>
+	<parameter name="calificacion" class="java.math.BigDecimal"/>
+	<parameter name="resultadoEvaluacion" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT distinct
+	c.area,
+	c.descripcion,
+          a.empleado,
+          a.EmpleadoEvaluador,
+	a.companyowner,
+	a.secuenciaeval
+
+FROM
+	SGCORESYS.hr_detalleevaluacion a
+		inner join SGCORESYS.hr_factoresevaluacion b on (b.factor = a.factor)
+		left join SGCORESYS.hr_evaluacionarea c on (b.area = c.area)
+		left join SGCORESYS.HR_EvaluacionPeriodo d on (d.SecuenciaEval = a.SecuenciaEval and d.CompanyOwner = a.CompanyOwner)
+WHERE
+	b.FlagConcepto = 'N' and
+	a.Tipo = 'N' and
+	a.companyowner		 = $P{parCompania}  and
+	a.Empleado			 =$P{parEvaluado}   and
+	a.SecuenciaEval	 = $P{parSecuencia}  and
+	a.EmpleadoEvaluador= $P{parEvaluador}]]>
+	</queryString>
+	<field name="AREA" class="java.lang.String"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="EMPLEADOEVALUADOR" class="java.math.BigDecimal"/>
+	<field name="COMPANYOWNER" class="java.lang.String"/>
+	<field name="SECUENCIAEVAL" class="java.math.BigDecimal"/>
+	<variable name="sumValor" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="3">
+			<line>
+				<reportElement x="0" y="1" width="319" height="1" uuid="53a03263-e949-44ea-963d-374e218f1d7e"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="63">
+			<textField>
+				<reportElement x="6" y="4" width="288" height="12" uuid="c4ef2d2f-75e7-42ae-8d42-46fb427f5911"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="7" y="21" width="312" height="39" uuid="6c95fafa-ccd3-4bab-b81c-f422186152f5"/>
+				<subreportParameter name="parCompanyowner">
+					<subreportParameterExpression><![CDATA[$F{COMPANYOWNER}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parEmpleado">
+					<subreportParameterExpression><![CDATA[$F{EMPLEADO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parSecuencia">
+					<subreportParameterExpression><![CDATA[$F{SECUENCIAEVAL}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parEvaluador">
+					<subreportParameterExpression><![CDATA[$F{EMPLEADOEVALUADOR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_area">
+					<subreportParameterExpression><![CDATA[$F{AREA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["dDesempenocomparativo.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="319" y="-2" width="1" height="65" uuid="1b5752ae-e7bc-4aec-810c-a5d0d9042cee"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="-1" width="1" height="64" uuid="86810a30-49b8-4bc9-a2ff-4851e8c6b5b3"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="33">
+			<rectangle>
+				<reportElement x="126" y="1" width="27" height="14" uuid="52748a9b-8282-42b4-8dff-30f5c5b9ab4d"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="2" width="55" height="12" uuid="625d42d5-e182-4b06-a964-e75e47a1072a"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Puntaje total:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="17" width="103" height="12" uuid="3361c68a-8e80-4d4a-b352-7b0319a9a74c"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resultado de evaluación:]]></text>
+			</staticText>
+			<textField pattern="###0.00">
+				<reportElement x="127" y="2" width="25" height="12" forecolor="#0000CC" uuid="f0936395-7918-455d-b7a3-30f7d146fccf"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{calificacion}!=null?$P{calificacion}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="17" width="132" height="12" forecolor="#0000CC" uuid="9ea98884-e958-43c3-95dd-bfb256989b43"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{resultadoEvaluacion}!=null?$P{resultadoEvaluacion}:""]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="31" width="318" height="1" uuid="dadc89a5-5fcc-4315-aac8-d1f499d02cde"/>
+			</line>
+			<line>
+				<reportElement x="319" y="0" width="1" height="32" uuid="7e623b27-31b0-4fa4-8606-e7d4bf51df36"/>
+			</line>
+			<line>
+				<reportElement x="0" y="-1" width="1" height="33" uuid="f0a64f0f-afe3-47ec-b236-4a1f9c218a9e"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

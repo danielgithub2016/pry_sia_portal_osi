@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Accountmst" table="SGCORESYS.ACCOUNTMST">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.AccountmstPk">
+            <key-property name="account" type="string">
+                <column name="ACCOUNT" length="20" />
+            </key-property>
+        </composite-id>
+        <property name="prime" type="string">
+            <column name="PRIME" length="10" />
+        </property>
+        <property name="element" type="string">
+            <column name="ELEMENT" length="6" />
+        </property>
+        <property name="localname" type="string">
+            <column name="LOCALNAME" length="200" />
+        </property>
+        <property name="englishname" type="string">
+            <column name="ENGLISHNAME" length="200" />
+        </property>
+        <property name="afevalidation" type="string">
+            <column name="AFEVALIDATION" length="1" />
+        </property>
+        <property name="commitmentvalidation" type="string">
+            <column name="COMMITMENTVALIDATION" length="1" />
+        </property>
+        <property name="commitmentexpenseflag" type="string">
+            <column name="COMMITMENTEXPENSEFLAG" length="1" />
+        </property>
+        <property name="exchangepdvalidation" type="string">
+            <column name="EXCHANGEPDVALIDATION" length="1" />
+        </property>
+        <property name="intercompanyvalidation" type="string">
+            <column name="INTERCOMPANYVALIDATION" length="1" />
+        </property>
+        <property name="vendorvalidation" type="string">
+            <column name="VENDORVALIDATION" length="1" />
+        </property>
+        <property name="invoicevalidation" type="string">
+            <column name="INVOICEVALIDATION" length="1" />
+        </property>
+        <property name="checkvalidation" type="string">
+            <column name="CHECKVALIDATION" length="1" />
+        </property>
+        <property name="datevalidation" type="string">
+            <column name="DATEVALIDATION" length="1" />
+        </property>
+        <property name="costcentervalidation" type="string">
+            <column name="COSTCENTERVALIDATION" length="1" />
+        </property>
+        <property name="costcenterdestvalidation" type="string">
+            <column name="COSTCENTERDESTVALIDATION" length="1" />
+        </property>
+        <property name="subledgervalidation" type="string">
+            <column name="SUBLEDGERVALIDATION" length="1" />
+        </property>
+        <property name="cashflowvalidation" type="string">
+            <column name="CASHFLOWVALIDATION" length="1" />
+        </property>
+        <property name="code01validation" type="string">
+            <column name="CODE01VALIDATION" length="1" />
+        </property>
+        <property name="code02validation" type="string">
+            <column name="CODE02VALIDATION" length="1" />
+        </property>
+        <property name="code03validation" type="string">
+            <column name="CODE03VALIDATION" length="1" />
+        </property>
+        <property name="code04validation" type="string">
+            <column name="CODE04VALIDATION" length="1" />
+        </property>
+        <property name="code05validation" type="string">
+            <column name="CODE05VALIDATION" length="1" />
+        </property>
+        <property name="code06validation" type="string">
+            <column name="CODE06VALIDATION" length="1" />
+        </property>
+        <property name="code07validation" type="string">
+            <column name="CODE07VALIDATION" length="1" />
+        </property>
+        <property name="code08validation" type="string">
+            <column name="CODE08VALIDATION" length="1" />
+        </property>
+        <property name="code09validation" type="string">
+            <column name="CODE09VALIDATION" length="1" />
+        </property>
+        <property name="code10validation" type="string">
+            <column name="CODE10VALIDATION" length="1" />
+        </property>
+        <property name="revaluationindicator" type="string">
+            <column name="REVALUATIONINDICATOR" length="1" />
+        </property>
+        <property name="period13indicator" type="string">
+            <column name="PERIOD13INDICATOR" length="1" />
+        </property>
+        <property name="period14indicator" type="string">
+            <column name="PERIOD14INDICATOR" length="1" />
+        </property>
+        <property name="period16indicator" type="string">
+            <column name="PERIOD16INDICATOR" length="1" />
+        </property>
+        <property name="accountcurrency" type="string">
+            <column name="ACCOUNTCURRENCY" length="2" />
+        </property>
+        <property name="accountdestination" type="string">
+            <column name="ACCOUNTDESTINATION" length="20" />
+        </property>
+        <property name="accountdestinationmaterials" type="string">
+            <column name="ACCOUNTDESTINATIONMATERIALS" length="20" />
+        </property>
+        <property name="accountoffset" type="string">
+            <column name="ACCOUNTOFFSET" length="20" />
+        </property>
+        <property name="accountoffsetmaterials" type="string">
+            <column name="ACCOUNTOFFSETMATERIALS" length="20" />
+        </property>
+        <property name="elementsubindicator" type="string">
+            <column name="ELEMENTSUBINDICATOR" length="1" />
+        </property>
+        <property name="vendortypeflag" type="string">
+            <column name="VENDORTYPEFLAG" length="1" />
+        </property>
+        <property name="multicompanyflag" type="string">
+            <column name="MULTICOMPANYFLAG" length="1" />
+        </property>
+        <property name="inflationadjustmentflag" type="string">
+            <column name="INFLATIONADJUSTMENTFLAG" length="1" />
+        </property>
+        <property name="statisticsgenerationflag" type="string">
+            <column name="STATISTICSGENERATIONFLAG" length="1" />
+        </property>
+        <property name="cashflowcodedefault" type="string">
+            <column name="CASHFLOWCODEDEFAULT" length="4" />
+        </property>
+        <property name="budgetcategorydefault" type="string">
+            <column name="BUDGETCATEGORYDEFAULT" length="20" />
+        </property>
+        <property name="responsibledefault" type="string">
+            <column name="RESPONSIBLEDEFAULT" length="4" />
+        </property>
+        <property name="expensefinanceflag" type="string">
+            <column name="EXPENSEFINANCEFLAG" length="1" />
+        </property>
+        <property name="expenseadministrativeflag" type="string">
+            <column name="EXPENSEADMINISTRATIVEFLAG" length="1" />
+        </property>
+        <property name="expensesalesflag" type="string">
+            <column name="EXPENSESALESFLAG" length="1" />
+        </property>
+        <property name="expenseproductionflag" type="string">
+            <column name="EXPENSEPRODUCTIONFLAG" length="1" />
+        </property>
+        <property name="accountinflation" type="string">
+            <column name="ACCOUNTINFLATION" length="20" />
+        </property>
+        <property name="accountinflation02" type="string">
+            <column name="ACCOUNTINFLATION02" length="20" />
+        </property>
+        <property name="accountrelation" type="string">
+            <column name="ACCOUNTRELATION" length="20" />
+        </property>
+        <property name="accountgroup" type="string">
+            <column name="ACCOUNTGROUP" length="20" />
+        </property>
+        <property name="invoiceclasification" type="string">
+            <column name="INVOICECLASIFICATION" length="3" />
+        </property>
+        <property name="accounttype" type="string">
+            <column name="ACCOUNTTYPE" length="2" />
+        </property>
+        <property name="costproductionclasification" type="string">
+            <column name="COSTPRODUCTIONCLASIFICATION" length="2" />
+        </property>
+        <property name="billingprocessflag" type="string">
+            <column name="BILLINGPROCESSFLAG" length="1" />
+        </property>
+        <property name="billingaccountlocal" type="string">
+            <column name="BILLINGACCOUNTLOCAL" length="20" />
+        </property>
+        <property name="billingaccountdollar" type="string">
+            <column name="BILLINGACCOUNTDOLLAR" length="20" />
+        </property>
+        <property name="overheadprocessflag" type="string">
+            <column name="OVERHEADPROCESSFLAG" length="1" />
+        </property>
+        <property name="status" type="string">
+            <column name="STATUS" length="1" />
+        </property>
+        <property name="lastuser" type="string">
+            <column name="LASTUSER" length="20" />
+        </property>
+        <property name="lastdate" type="timestamp">
+            <column name="LASTDATE" length="7" />
+        </property>
+        <property name="statutoryprime" type="string">
+            <column name="STATUTORYPRIME" length="6" />
+        </property>
+        <property name="vendorusertype" type="string">
+            <column name="VENDORUSERTYPE" length="2" />
+        </property>
+        <property name="profitlossflag" type="string">
+            <column name="PROFITLOSSFLAG" length="1" />
+        </property>
+        <property name="expensefixedflag" type="string">
+            <column name="EXPENSEFIXEDFLAG" length="1" />
+        </property>
+        <property name="expensedirectflag" type="string">
+            <column name="EXPENSEDIRECTFLAG" length="1" />
+        </property>
+        <property name="sucursalvalidation" type="string">
+            <column name="SUCURSALVALIDATION" length="1" />
+        </property>
+        <property name="afedefault" type="string">
+            <column name="AFEDEFAULT" length="15" />
+        </property>
+        <property name="fasb52flag" type="string">
+            <column name="FASB52FLAG" length="1" />
+        </property>
+        <property name="fiscalreferencevalidation" type="string">
+            <column name="FISCALREFERENCEVALIDATION" length="1" />
+        </property>
+        <property name="inflationadjustmentafeflag" type="string">
+            <column name="INFLATIONADJUSTMENTAFEFLAG" length="1" />
+        </property>
+        <property name="cpautomaticrequflag" type="string">
+            <column name="CPAUTOMATICREQUFLAG" length="1" />
+        </property>
+        <property name="cpautomaticinvoflag" type="string">
+            <column name="CPAUTOMATICINVOFLAG" length="1" />
+        </property>
+        <property name="budgetexcluirflag" type="string">
+            <column name="BUDGETEXCLUIRFLAG" length="1" />
+        </property>
+        <property name="plancontable" type="string">
+            <column name="PLANCONTABLE" length="4" />
+        </property>
+    </class>
+</hibernate-mapping>

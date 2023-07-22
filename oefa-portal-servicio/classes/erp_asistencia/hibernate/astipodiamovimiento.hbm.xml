@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.asistencia.dominio.AsTipodiamovimiento" table="SGCORESYS.AS_TIPODIAMOVIMIENTO">
+        <composite-id name="pk" class="net.royal.erp.asistencia.dominio.AsTipodiamovimientoPk">
+            <key-property name="tipodia" type="integer">
+                <column name="TIPODIA" length="22" />
+            </key-property>
+            <key-property name="intervaloacceso" type="string">
+                <column name="INTERVALOACCESO" length="4" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="horainicio" type="timestamp">
+            <column name="HORAINICIO" length="7" />
+        </property>
+        <property name="horafin" type="timestamp">
+            <column name="HORAFIN" length="7" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="flagrestriccion" type="string">
+            <column name="FLAGRESTRICCION" length="1" />
+        </property>
+        <property name="conceptoaccesorestringido" type="string">
+            <column name="CONCEPTOACCESORESTRINGIDO" length="4" />
+        </property>
+        <property name="conceptoaccesocomplemento" type="string">
+            <column name="CONCEPTOACCESOCOMPLEMENTO" length="4" />
+        </property>
+        <property name="tiemporestringido" type="timestamp">
+            <column name="TIEMPORESTRINGIDO" length="7" />
+        </property>
+        <property name="flagdiaant" type="string">
+            <column name="FLAGDIAANT" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

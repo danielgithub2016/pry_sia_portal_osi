@@ -1,0 +1,656 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+
+	<p:commandButton style="display:none" immediate="true" id="btnmotivo"
+		update="@form" action="#{cWHrRequerimientoEdit.guardarDatosTemporal}" />
+	<!-- BLOQUE 1 -->
+	<p:panelGrid columns="2" style="border-spacing:0px;"
+		columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid"
+		styleClass="ui-panelgrid-blank">
+
+		<p:panelGrid columns="2" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<p:outputLabel value="Entidad" />
+			<p:selectOneMenu converter="compania" var="com"
+				disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitarcompania}"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.companyownerDto}">
+				<f:selectItems value="#{cWHrRequerimientoEdit.companyOwners}"
+					var="co" itemValue="#{co}" itemLabel="#{co.description}" />
+				<p:column>
+					<p:outputLabel value="#{com.companyowner}" />
+				</p:column>
+				<p:column>
+					<p:outputLabel value="#{com.description}" />
+				</p:column>
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Requerimiento" />
+			<p:panelGrid columns="3" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-8,ui-grid-col-4,ui-grid-col-8"
+				layout="grid" styleClass="ui-panelgrid-blank">
+				<p:inputText disabled="true"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.requerimiento}" />
+				<p:outputLabel value="Vacantes" />
+				<p:inputText validator="#{cWHrRequerimientoEdit.validarVacante}"
+					onkeypress="return validarIngreso(event,'N');"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.numerosolicitado}" />
+			</p:panelGrid>
+
+			<p:outputLabel value="Fecha solicitud" />
+			<p:panelGrid columns="3" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-8,ui-grid-col-4,ui-grid-col-8"
+				layout="grid" styleClass="ui-panelgrid-blank">
+				<p:calendar locale="es" navigator="true" showButtonPanel="true"
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.fechasolicitud}"
+					mask="true" pattern="#{msg.formato_fecha_fecha}" size="15" />
+				<p:outputLabel value="Pendientes" style="padding-left:6px;" />
+				<p:inputText disabled="true"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.numeropendiente}" />
+			</p:panelGrid>
+
+			<p:outputLabel value="Fecha Término" />
+			<p:panelGrid columns="3" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-8,ui-grid-col-4,ui-grid-col-8"
+				layout="grid" styleClass="ui-panelgrid-blank">
+				<p:calendar locale="es" navigator="true" showButtonPanel="true"
+					disabled="true"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.fechafinrequerimiento}"
+					mask="true" pattern="#{msg.formato_fecha_fecha}" size="15" />
+
+				<p:outputLabel value="Estado" />
+				<p:selectOneMenu disabled="true"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.estado}">
+					<f:selectItem itemLabel="" />
+					<f:selectItem itemValue="PR" itemLabel="En preparación" />
+					<f:selectItem itemValue="AP" itemLabel="Aprobado" />
+					<f:selectItem itemValue="RV" itemLabel="Revisado" />
+					<f:selectItem itemValue="RE" itemLabel="Rechazado" />
+				</p:selectOneMenu>
+			</p:panelGrid>
+
+			<p:outputLabel value="Empleado Solicitante" />
+			<p:panelGrid columns="2" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-8,ui-grid-col-4" layout="grid"
+				styleClass="ui-panelgrid-blank" id="grdEmpleado">
+				<p:inputText disabled="true"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.personanombrecompleto}" />
+				<p:commandButton icon="buscar" immediate="true"
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitarbempsolicitante}"
+					action="#{cwPrEmpleadoSelect.iniciarControladora}" update="@form">
+					<f:setPropertyActionListener
+						target="#{cwPrEmpleadoSelect.nombreContenedorRefrescar}"
+						value="frmWHrRequerimientoEdit:tvWHrRequerimientoEdit" />
+					<f:setPropertyActionListener
+						target="#{cwPrEmpleadoSelect.nombreVentanaEmergente}"
+						value="popSelectorHrcommonEmpleado" />
+					<f:setPropertyActionListener
+						target="#{cwPrEmpleadoSelect.iMantenimientoReferencia}"
+						value="#{cWHrRequerimientoEdit}" />
+					<f:setPropertyActionListener
+						target="#{cWHrRequerimientoEdit.nombreTipoBusqueda}"
+						value="empleado" />
+					<f:setPropertyActionListener
+						target="#{cwPrEmpleadoSelect.pantallaReferencia}"
+						value="hr_requerimiento_edit" />
+					<f:setPropertyActionListener
+						target="#{cwPrEmpleadoSelect.incluirNegativos}" value="N" />
+				</p:commandButton>
+			</p:panelGrid>
+
+			<p:outputLabel value="Organo/Und. Orgánica" />
+			<p:selectOneMenu disabled="true"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.codigoposicionsolicitante}">
+				<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}" />
+				<f:selectItems value="#{cWHrRequerimientoEdit.dwc_unidad}" var="oo"
+					itemValue="#{oo.codigoposicion}" itemLabel="#{oo.descripcion}" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Puesto del Solicitante" />
+			<p:selectOneMenu filter="true" filterMatchMode="contains"
+				disabled="true"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.codigopuestosolicitante}">
+				<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}" />
+				<f:selectItems value="#{cWHrRequerimientoEdit.lstHrPuestoEmpresa}"
+					var="pue" itemValue="#{pue.pk.codigopuesto}"
+					itemLabel="#{pue.comentarios} - #{pue.descripcion}" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Centro de Costo" />
+			<p:inputText onkeypress="return false;" onkeydown="return false;"
+				onkeyup="return false;" style="pointer-events:none;"
+				disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+				styleClass="controlCajaTextoLectura"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.centrocostonombre}" />
+
+			<p:outputLabel value="Puesto Solicitado" />
+			<p:panelGrid columns="1" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-12" layout="grid"
+				styleClass="ui-panelgrid-blank">
+				<p:inputText disabled="true" id="txtPuestoSol"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.nombrepuestocomntario}" />
+			</p:panelGrid>
+
+			<p:outputLabel value="Puesto Solicitado Desc.*"
+				style="color:rgb(150,50,60)" />
+			<p:panelGrid columns="1" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-12" layout="grid"
+				styleClass="ui-panelgrid-blank">
+				<p:inputText maxlength="150"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.descripcionpuestoinformativo}" />
+			</p:panelGrid>
+
+			<p:outputLabel value="Jefe Inmediato" />
+			<p:panelGrid columns="2" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-10,ui-grid-col-3" layout="grid"
+				styleClass="ui-panelgrid-blank">
+				<p:inputText disabled="true" id="txtJefeinmediato"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.personanombrecompletojefe}" />
+				<p:commandButton icon="buscar" immediate="true"
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitarbcodigojefe}"
+					action="#{cWHrRequerimientoEdit.buscarJefeInmediato}"
+					update="@form">
+					<f:setPropertyActionListener
+						target="#{cwPrEmpleadoSelect.nombreContenedorRefrescar}"
+						value="frmWHrRequerimientoEdit:tvWHrRequerimientoEdit:txtJefeinmediato" />
+					<f:setPropertyActionListener
+						target="#{cwPrEmpleadoSelect.nombreVentanaEmergente}"
+						value="popSelectorHrcommonEmpleado" />
+					<f:setPropertyActionListener
+						target="#{cwPrEmpleadoSelect.iMantenimientoReferencia}"
+						value="#{cWHrRequerimientoEdit}" />
+					<f:setPropertyActionListener
+						target="#{cWHrRequerimientoEdit.nombreTipoBusqueda}" value="jefe" />
+					<f:setPropertyActionListener
+						target="#{cwPrEmpleadoSelect.pantallaReferencia}"
+						value="hr_requerimiento_edit" />
+					<f:setPropertyActionListener
+						target="#{cwPrEmpleadoSelect.incluirNegativos}" value="N" />
+				</p:commandButton>
+			</p:panelGrid>
+		</p:panelGrid>
+		<p:panelGrid style="border-spacing:0px;" columns="2"
+			columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<p:outputLabel value="N° de Documento" />
+			<p:inputText maxlength="100" disabled="true"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.numerosolicitud}" />
+
+			<p:outputLabel value="N° Convocatoria" />
+			<p:panelGrid columns="3" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
+				layout="grid" styleClass="ui-panelgrid-blank">
+				<p:inputText disabled="true"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.convocatoria}" />
+
+				<p:outputLabel value="N° Proceso" />
+				<p:inputText onkeypress="return validarIngreso(event,'N')"
+					disabled="true"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.proceso}"
+					styleClass="columnatablaDerecha" />
+
+			</p:panelGrid>
+
+			<p:outputLabel value="Tipo Requerimiento" />
+			<p:selectOneMenu disabled="true"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.tiporequerimiento}">
+				<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}" />
+				<f:selectItem itemValue="C" itemLabel="Convocatoria Pública" />
+				<f:selectItem itemValue="D" itemLabel="Designación" />
+				<f:selectItem itemValue="P" itemLabel="Promoción" />
+			</p:selectOneMenu>
+			<p:outputLabel value="Vigencia" />
+			<p:panelGrid columns="3" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-5,ui-grid-col-1,ui-grid-col-5"
+				layout="grid" styleClass="ui-panelgrid-blank">
+				<p:calendar locale="es" navigator="true" showButtonPanel="true"
+					disabled="true" mask="true" pattern="#{msg.formato_fecha_fecha}"
+					size="15"
+					value="#{cWHrRequerimientoEdit.dw_adicionales.iniciovigencia}" />
+				<p:outputLabel value="-" />
+				<p:calendar locale="es" navigator="true" showButtonPanel="true"
+					disabled="true" mask="true" pattern="#{msg.formato_fecha_fecha}"
+					size="15"
+					value="#{cWHrRequerimientoEdit.dw_adicionales.finvigencia}" />
+			</p:panelGrid>
+
+			<p:outputLabel value="Tiempo Transcurrido" />
+			<p:inputText disabled="true"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.tiempotranscurrido}" />
+
+			<p:outputLabel value="Personal de Reclutam." />
+			<p:selectOneMenu
+				disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitarempleadoresponsable}"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.empleadoresponsable}">
+				<f:selectItem itemLabel="" />
+				<f:selectItems
+					value="#{cWHrRequerimientoEdit.lstHrEmpleadoReclutamiento}"
+					var="empre" itemValue="#{empre.persona}"
+					itemLabel="#{empre.nombrecompleto}" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Rango Remunerativo" />
+			<p:selectOneMenu filter="true" filterMatchMode="contains"
+				disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+				valueChangeListener="#{cWHrRequerimientoEdit.valueChangeRangoRemunerativo}"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.lineacarrera}">
+				<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}" />
+				<f:selectItems value="#{cWHrRequerimientoEdit.dwc_linea}" var="l"
+					itemLabel="#{l.descripcionlocal}" itemValue="#{l.gradosalario}" />
+				<p:ajax update="grdpagomaxmin" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Planilla" />
+			<p:selectOneMenu
+				disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+				valueChangeListener="#{cWHrRequerimientoEdit.valueChangePlanilla}"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.tipoplanilla}">
+				<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}" />
+				<f:selectItems value="#{cWHrRequerimientoEdit.dwc_tipoplanilla}"
+					var="tp" itemValue="#{tp.tipoplanilla}"
+					itemLabel="#{tp.descripcion}" />
+				<p:ajax update="grdFechas,cboTipoTrabajador" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Tipo de Horario" />
+			<p:selectOneMenu filter="true" filterMatchMode="contains"
+				disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.tipohorario}">
+				<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}" />
+				<f:selectItems value="#{cWHrRequerimientoEdit.lstTipoHorario}"
+					var="th" itemValue="#{th.pk.tipohorario}"
+					itemLabel="#{th.pk.tipohorario} - #{th.descripcionlocal}" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Fuente financiamiento*"
+				style="color:rgb(150,50,60)" />
+			<p:selectOneMenu filter="true" filterMatchMode="contains"
+				style="width:350px" panelStyle="width:auto;"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.fuentefinanciamiento}">
+				<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}" />
+				<f:selectItems
+					value="#{cWHrRequerimientoEdit.fuentesFinanciamiento}" var="ff"
+					itemValue="#{ff.pk.fuentefinanciamiento}"
+					itemLabel="#{ff.pk.fuentefinanciamiento} - #{ff.descripcion}" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Meta*" style="color:rgb(150,50,60)" />
+			<p:selectOneMenu filter="true" filterMatchMode="contains"
+				style="width:350px" panelStyle="width:80%;"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.referenciafiscal01}">
+				<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}" />
+				<f:selectItems value="#{cWHrRequerimientoEdit.lstMetas}" var="met"
+					itemValue="#{met.meta}"
+					itemLabel="#{met.meta} - #{met.descripcion} - #{met.componente}" />
+			</p:selectOneMenu>
+
+		</p:panelGrid>
+	</p:panelGrid>
+	<!-- /BLOQUE 1 -->
+
+	<p:separator />
+
+	<!-- BLOQUE 2 -->
+	<p:panelGrid columns="2" style="border-spacing:0px;"
+		columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid"
+		styleClass="ui-panelgrid-blank">
+		<p:panelGrid columns="2" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<p:outputLabel value="Cargo Estructural" />
+			<p:selectOneMenu disabled="true"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.categoria}">
+				<f:selectItem itemLabel="" />
+				<f:selectItems value="#{cWHrRequerimientoEdit.lstHrCargosMast}"
+					var="car" itemValue="#{car.pk.cargo}"
+					itemLabel="#{car.descripcionlocal}" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Tipo de Contrato" />
+			<p:selectOneMenu
+				disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+				valueChangeListener="#{cWHrRequerimientoEdit.valueChangeTipoContrato}"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.tipocontrato}">
+				<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}" />
+				<f:selectItems value="#{cWHrRequerimientoEdit.dwc_tipocontrato}"
+					var="tc" itemValue="#{tc.tipocontrato}"
+					itemLabel="#{tc.descripcion}" />
+				<p:ajax update="grdFechas,cboTipoTrabajador,grdprueba" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Desde" />
+			<p:panelGrid columns="3" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-6,ui-grid-col-2,ui-grid-col-6"
+				layout="grid" styleClass="ui-panelgrid-blank" id="grdFechas">
+				<p:calendar locale="es" navigator="true" showButtonPanel="true"
+					converterMessage="El formato de fecha debe ser dd/MM/yyyy Ejem: 01/01/1900"
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitarfechadesde}"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.fechadesde}"
+					mask="true" pattern="#{msg.formato_fecha_fecha}" size="15" />
+				<p:outputLabel value="Hasta" />
+				<p:calendar locale="es" navigator="true" showButtonPanel="true"
+					converterMessage="El formato de fecha debe ser dd/MM/yyyy Ejem: 01/01/1900"
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitarfechahasta}"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.fechahasta}"
+					mask="true" pattern="#{msg.formato_fecha_fecha}" size="15" />
+			</p:panelGrid>
+
+			<p:outputLabel value="Tipo" />
+			<h:selectOneRadio
+				disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.flagtipocontrato}">
+				<f:selectItem itemValue="R" itemLabel="Renovable" />
+				<f:selectItem itemValue="T" itemLabel="Temporal" />
+			</h:selectOneRadio>
+
+		</p:panelGrid>
+		<p:panelGrid columns="2" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<p:outputLabel value="Tipo Trabajador" />
+			<p:selectOneMenu id="cboTipoTrabajador"
+				disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.tipotrabajador}">
+				<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}" />
+				<f:selectItems value="#{cWHrRequerimientoEdit.lstTipoTrabajador}"
+					var="tip" itemValue="#{tip.pk.tipotrabajador}"
+					itemLabel="#{tip.descripcionlocal}" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Pago Máx." />
+			<p:panelGrid columns="3" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-5,ui-grid-col-3,ui-grid-col-5"
+				layout="grid" styleClass="ui-panelgrid-blank" id="grdpagomaxmin">
+				<p:inputText disabled="true" styleClass="columnatablaDerecha"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.pagomaximo}" />
+				<p:outputLabel value="Pago Mín" />
+				<p:inputText disabled="true" styleClass="columnatablaDerecha"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.pagominimo}" />
+			</p:panelGrid>
+
+			<p:outputLabel value="" />
+			<p:panelGrid columns="2" style="border-spacing:0px;float:right"
+				columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid"
+				styleClass="ui-panelgrid-blank">
+				<p:outputLabel value="Monto a Pagar*" style="color:rgb(150,50,60)" />
+				<p:inputText style="float: right;text-align:right"
+					onkeypress="return validarIngreso(event,'N');"
+					converterMessage="El formato es incorrecto. Ejem: 100.00"
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.montoapagar}" />
+			</p:panelGrid>
+
+			<p:outputLabel value="¿Requiere periodo prueba?" />
+			<p:panelGrid columns="3" style="border-spacing:0px" id="grdprueba"
+				columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-4"
+				layout="grid" styleClass="ui-panelgrid-blank">
+				<p:selectBooleanCheckbox disabled="true"
+					value="#{cWHrRequerimientoEdit.isrequiereperiodoprueba}" />
+				<p:outputLabel value="Meses"
+					rendered="#{cWHrRequerimientoEdit.isrequiereperiodoprueba}" />
+				<p:inputText onkeypress="return validarIngreso(event,'N');"
+					maxlength="2"
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitarmesesprueba or
+					!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+					rendered="#{cWHrRequerimientoEdit.isrequiereperiodoprueba}"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.mesesprueba}" />
+
+				<p:outputLabel value=""
+					rendered="#{!cWHrRequerimientoEdit.isrequiereperiodoprueba}" />
+				<p:outputLabel value=""
+					rendered="#{!cWHrRequerimientoEdit.isrequiereperiodoprueba}" />
+			</p:panelGrid>
+		</p:panelGrid>
+	</p:panelGrid>
+
+	<p:outputLabel
+		value="IMPORTANTE: En el caso de contrato temporal, este no podrá ser renovado una vez cumplido el periodo de contratación aprobado. Vence indefectiblemente."
+		style="color:rgb(150,50,60)" />
+
+	<p:panelGrid columns="2" style="border-spacing:0px;"
+		columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid"
+		styleClass="ui-panelgrid-blank">
+		<p:panelGrid columns="2" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<p:outputLabel value="Nivel Servicio" />
+			<p:panelGrid columns="2" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-10,ui-grid-col-3" layout="grid"
+				styleClass="ui-panelgrid-blank">
+				<p:inputText styleClass="controlCajaTextoLectura"
+					id="txtNivelServicio"
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.nombrenivelservicio}" />
+				<p:commandButton icon="buscar" styleClass="botonTextoImagenChico"
+					immediate="true"
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitarbnivelservicio}"
+					action="#{cwPrNivelServicioSelect.iniciarControladora}"
+					update="@form">
+					<f:setPropertyActionListener
+						target="#{cwPrNivelServicioSelect.nombreContenedorRefrescar}"
+						value="frmWHrRequerimientoEdit:tvWHrRequerimientoEdit:txtNivelServicio" />
+					<f:setPropertyActionListener
+						target="#{cwPrNivelServicioSelect.nombreVentanaEmergente}"
+						value="popSelectorNivelServicioSelect" />
+					<f:setPropertyActionListener
+						target="#{cwPrNivelServicioSelect.iMantenimientoReferencia}"
+						value="#{cWHrRequerimientoEdit}" />
+				</p:commandButton>
+			</p:panelGrid>
+		</p:panelGrid>
+		<p:panelGrid columns="2" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<p:outputLabel value="Sucursal*" style="color:rgb(150,50,60)" />
+			<p:selectOneMenu filter="true" filterMatchMode="contains"
+				disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.sucursal}">
+				<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}" />
+				<f:selectItems value="#{cWHrRequerimientoEdit.lstSucursal}"
+					var="suc" itemValue="#{suc.pk.sucursal}"
+					itemLabel="#{suc.descripcionlocal}" />
+			</p:selectOneMenu>
+		</p:panelGrid>
+	</p:panelGrid>
+
+	<p:outputLabel value="* Vigencia y Tipo del Contrato serán validados" />
+	<p:separator />
+
+	<!-- BLOQUE 3 -->
+	<p:outputLabel rendered="false"
+		value="Requerimiento: Accesos / Infraestructura (Marque sólo aquellos con los que actualmente no cuenta el puesto )" />
+	<p:panelGrid columns="8" style="border-spacing:0px;" rendered="false"
+		columnClasses="ui-grid-col-3,ui-grid-col-1,ui-grid-col-2,ui-grid-col-1,ui-grid-col-2,ui-grid-col-1,ui-grid-col-3,ui-grid-col-3"
+		layout="grid" styleClass="ui-panelgrid-blank">
+		<p:outputLabel value="Celular" />
+		<p:selectBooleanCheckbox
+			disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+			value="#{cWHrRequerimientoEdit.dw_requerimiento.isaccesocelular}" />
+		<p:outputLabel value="Oficina/Espacio" />
+		<p:selectBooleanCheckbox disabled="true"
+			value="#{cWHrRequerimientoEdit.dw_requerimiento.isaccesooficina}" />
+
+		<p:outputLabel value="Otros" />
+		<p:selectBooleanCheckbox
+			disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+			value="#{cWHrRequerimientoEdit.dw_requerimiento.isaccesootros}">
+			<p:ajax update="txtaccesootros" />
+		</p:selectBooleanCheckbox>
+		<p:inputText id="txtaccesootros"
+			disabled="#{!cWHrRequerimientoEdit.dw_requerimiento.isaccesootros}"
+			value="#{cWHrRequerimientoEdit.dw_requerimiento.acceso_otroscomentario}" />
+		<p:outputLabel />
+
+
+		<p:outputLabel value="Anexo Telefónico" />
+		<p:selectBooleanCheckbox
+			disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+			value="#{cWHrRequerimientoEdit.dw_requerimiento.isaccesotelefono}" />
+		<p:outputLabel value="PC" />
+		<p:selectBooleanCheckbox disabled="true"
+			value="#{cWHrRequerimientoEdit.dw_requerimiento.isaccesopc}" />
+		<p:outputLabel value="Acceso al SIA" />
+		<p:selectBooleanCheckbox
+			disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+			value="#{cWHrRequerimientoEdit.dw_requerimiento.isaccesootrossistemas}">
+			<p:ajax update="txtaccesootrossiscom" />
+		</p:selectBooleanCheckbox>
+		<p:inputText
+			disabled="#{!cWHrRequerimientoEdit.dw_requerimiento.isaccesootrossistemas}"
+			id="txtaccesootrossiscom"
+			value="#{cWHrRequerimientoEdit.dw_requerimiento.acceso_otrossistemascomentario}" />
+		<p:outputLabel />
+
+		<p:outputLabel value="Acceso a Internet" />
+		<p:selectBooleanCheckbox disabled="true"
+			value="#{cWHrRequerimientoEdit.dw_requerimiento.isaccesointernet}" />
+
+		<p:outputLabel value="Mobiliario" />
+		<p:selectBooleanCheckbox disabled="true"
+			value="#{cWHrRequerimientoEdit.dw_requerimiento.isaccesomobiliario}" />
+
+		<p:outputLabel value="Punto Electrico" />
+		<p:selectBooleanCheckbox disabled="true"
+			value="#{cWHrRequerimientoEdit.dw_requerimiento.isaccesopuntoelectrico}" />
+
+		<p:outputLabel value="Ubicación / Plano" />
+		<p:inputText disabled="true"
+			value="#{cWHrRequerimientoEdit.dw_requerimiento.ubicacion}" />
+
+	</p:panelGrid>
+
+
+	<p:panelGrid style="border-spacing:0px;" columns="1"
+		columnClasses="ui-grid-col-6" layout="grid"
+		styleClass="ui-panelgrid-blank">
+		<p:panelGrid style="border-spacing:0px;" columns="2"
+			columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<p:outputLabel value="Justificación del Servicio*"
+				style="color:rgb(150,50,60)" />
+			<p:inputTextarea cols="70" maxlength="4000"
+				disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.observaciones}" />
+			<p:outputLabel value="Motivo de la Solicitud" />
+			<p:panelGrid style="border-spacing:0px;" columns="2"
+				columnClasses="ui-grid-col-6,ui-grid-col-7" layout="grid"
+				styleClass="ui-panelgrid-blank">
+				<p:selectOneMenu
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+					valueChangeListener="#{cWHrRequerimientoEdit.valueChangeMotivo}"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.motivo}">
+					<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}" />
+					<f:selectItems value="#{cWHrRequerimientoEdit.dwc_motivo}" var="m"
+						itemValue="#{m.codigoelemento}" itemLabel="#{m.descripcionlocal}" />
+					<p:ajax
+						oncomplete="document.getElementById('frmWHrRequerimientoEdit:tvWHrRequerimientoEdit:btnmotivo').click()" />
+				</p:selectOneMenu>
+				<p:inputText
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardesnuevocurso}"
+					value="#{cWHrRequerimientoEdit.dw_requerimiento.desnuevocurso}" />
+			</p:panelGrid>
+		</p:panelGrid>
+	</p:panelGrid>
+	<!-- /BLOQUE 3 -->
+
+	<p:separator />
+
+	<!-- BLOQUE 4 -->
+	<p:panelGrid style="border-spacing:0px;" columns="1"
+		columnClasses="ui-grid-col-6" layout="grid"
+		styleClass="ui-panelgrid-blank">
+		<p:panelGrid style="border-spacing:0px;" columns="2"
+			columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<p:outputLabel value="Motivo de Rechazo" />
+			<p:inputTextarea cols="70"
+				disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitarmotivorechazo}"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.motivorechazo}" />
+		</p:panelGrid>
+	</p:panelGrid>
+	<!-- /BLOQUE 4 -->
+
+	<p:separator />
+
+	<!-- BLOQUE 5 -->
+	<p:panelGrid style="border-spacing:0px;" columns="1"
+		columnClasses="ui-grid-col-6" layout="grid"
+		styleClass="ui-panelgrid-blank">
+
+		<p:panelGrid style="border-spacing:0px;" columns="5"
+			columnClasses="ui-grid-col-3,ui-grid-col-6,ui-grid-col-0.5,ui-grid-col-0.5,ui-grid-col-0.5"
+			layout="grid" styleClass="ui-panelgrid-blank" id="grdDocumento">
+			<p:outputLabel value="Sustento" />
+			<p:inputText readonly="true"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.rutasustento}" />
+			<p:commandButton icon="archivo"
+				disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitarrutadocumento}"
+				title="Adjuntar Archivo" immediate="true"
+				action="#{cWHrRequerimientoEdit.nuevoArchivo}">
+				<f:setPropertyActionListener
+					target="#{cwWhDocumentoArchivoList.iMantenimientoReferencia}"
+					value="#{cWHrRequerimientoEdit}" />
+				<f:setPropertyActionListener
+					target="#{cwWhDocumentoArchivoList.nombreTipoBusqueda}"
+					value="cargarDocumento" />
+				<f:setPropertyActionListener
+					target="#{cwWhDocumentoArchivoList.nombreContenedorRefrescar}"
+					value="frmWHrRequerimientoEdit:tvWHrRequerimientoEdit:grdDocumento" />
+				<f:setPropertyActionListener
+					target="#{cwWhDocumentoArchivoList.islistado}" value="false" />
+				<f:setPropertyActionListener
+					target="#{cwWhDocumentoArchivoList.isrequierecomentario}"
+					value="false" />
+				<f:setPropertyActionListener
+					target="#{cwWhDocumentoArchivoList.isIformeFinal}" value="false" />
+
+			</p:commandButton>
+			<h:commandLink title="Ver" target="_blank" immediate="true"
+				action="#{cWHrRequerimientoEdit.verArchivo}"
+				rendered="#{cWHrRequerimientoEdit.opciones.ismostrarver}">
+				<h:graphicImage
+					value="/comun/recursos/imagenes/mantenimiento/btn_preview1_16.png" />
+			</h:commandLink>
+
+			<p:commandButton title="Actualizar Archivo" immediate="true"
+				onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+				action="#{cWHrRequerimientoEdit.actualizarArchivo}" icon="guardar"
+				rendered="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}">
+			</p:commandButton>
+
+			<p:outputLabel
+				rendered="#{!cWHrRequerimientoEdit.opciones.ismostrarver}" />
+
+			<p:outputLabel
+				rendered="#{cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}" />
+		</p:panelGrid>
+	</p:panelGrid>
+	<!-- /BLOQUE 5 -->
+
+	<!-- BLOQUE 6-->
+	<p:panelGrid style="border-spacing:0px;" columns="1"
+		columnClasses="ui-grid-col-6" layout="grid"
+		styleClass="ui-panelgrid-blank">
+		<p:panelGrid style="border-spacing:0px;" columns="3"
+			columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
+			layout="grid" styleClass="ui-panelgrid-blank">
+			<p:outputLabel value="Última Modificación" />
+			<p:inputText disabled="true"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.ultimousuario}" />
+			<p:inputText disabled="true"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.ultimafechamodif}" />
+		</p:panelGrid>
+	</p:panelGrid>
+
+
+
+	<!-- /BLOQUE 6 -->
+</ui:composition>

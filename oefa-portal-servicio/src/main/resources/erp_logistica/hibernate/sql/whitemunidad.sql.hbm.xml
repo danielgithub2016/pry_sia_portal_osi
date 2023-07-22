@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : logistica.WhItemmast
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	    
+    <sql-query name="whitemunidad.obtenerUnidadCodigo">
+		 SELECT
+		 	WH_ItemUnidad.UnidadCodigo as "unidadcodigo"
+    	 FROM 
+    	 	SGCORESYS.WH_ItemUnidad  
+   		 WHERE 
+   		 	( WH_ItemUnidad.Item = :p_item ) AND  
+         	( WH_ItemUnidad.UnidadCodigo = :p_unidadcodigo ) 
+    </sql-query>
+    
+</hibernate-mapping>

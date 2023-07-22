@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.asistencia.dominio.AsCarnetidentificacion" table="SGCORESYS.AS_CARNETIDENTIFICACION">
+        <composite-id name="pk" class="net.royal.erp.asistencia.dominio.AsCarnetidentificacionPk">
+            <key-property name="codigocarnet" type="string">
+                <column name="CODIGOCARNET" length="10" />
+            </key-property>
+            <key-property name="empleado" type="integer">
+                <column name="EMPLEADO" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="site" type="string">
+            <column name="SITE" length="3" />
+        </property>
+        <property name="secuencia" type="string">
+            <column name="SECUENCIA" length="4" />
+        </property>
+        <property name="nivelacceso" type="string">
+            <column name="NIVELACCESO" length="3" />
+        </property>
+        <property name="apellidopaterno" type="string">
+            <column name="APELLIDOPATERNO" length="40" />
+        </property>
+        <property name="apellidomaterno" type="string">
+            <column name="APELLIDOMATERNO" length="40" />
+        </property>
+        <property name="nombres" type="string">
+            <column name="NOMBRES" length="40" />
+        </property>
+        <property name="tipodocumento" type="string">
+            <column name="TIPODOCUMENTO" length="2" />
+        </property>
+        <property name="nrodocumento" type="string">
+            <column name="NRODOCUMENTO" length="15" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="area" type="integer">
+            <column name="AREA" length="22" />
+        </property>
+        <property name="suspendido" type="string">
+            <column name="SUSPENDIDO" length="1" />
+        </property>
+        <property name="nogeneraasistencia" type="string">
+            <column name="NOGENERAASISTENCIA" length="1" />
+        </property>
+        <property name="tipohorario" type="string">
+            <column name="TIPOHORARIO" length="1" />
+        </property>
+        <property name="flaghorasextras" type="string">
+            <column name="FLAGHORASEXTRAS" length="1" />
+        </property>
+        <property name="diadescanso" type="string">
+            <column name="DIADESCANSO" length="20" />
+        </property>
+        <property name="visador" type="integer">
+            <column name="VISADOR" length="22" />
+        </property>
+        <property name="comportamientosobretiempo" type="string">
+            <column name="COMPORTAMIENTOSOBRETIEMPO" length="1" />
+        </property>
+        <property name="solicitantealternativo" type="integer">
+            <column name="SOLICITANTEALTERNATIVO" length="22" />
+        </property>
+        <property name="flagunamarca" type="string">
+            <column name="FLAGUNAMARCA" length="1" />
+        </property>
+        <property name="flagnoimpresion" type="string">
+            <column name="FLAGNOIMPRESION" length="1" />
+        </property>
+        <property name="fecemision" type="timestamp">
+            <column name="FECEMISION" length="7" />
+        </property>
+        <property name="feccaducidad" type="timestamp">
+            <column name="FECCADUCIDAD" length="7" />
+        </property>
+        <property name="flagconfianza" type="string">
+            <column name="FLAGCONFIANZA" length="1" />
+        </property>
+        <property name="flagtodocompensa" type="string">
+            <column name="FLAGTODOCOMPENSA" length="1" />
+        </property>
+        <property name="flagtodopaga" type="string">
+            <column name="FLAGTODOPAGA" length="1" />
+        </property>
+         <property name="flgexonerasobr" type="string">
+            <column name="FLGEXONERASOBR" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,70 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+	xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
+	xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans 
+    	http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://jax-ws.dev.java.net/spring/core 
+        http://jax-ws.dev.java.net/spring/core.xsd
+		http://jax-ws.dev.java.net/spring/servlet 
+		http://jax-ws.dev.java.net/spring/servlet.xsd">
+
+	<bean id="BeanFactorySeguridad" class="net.royal.seguridad.factory.FactoryErpSeguridadImpl"
+		scope="singleton">
+		<property name="aplicacionesmastServicio">
+			<ref bean="BeanServicioAplicacionesmastSeguridad" />
+		</property>
+		<property name="seguridadautorizacionesServicio">
+			<ref bean="BeanServicioSeguridadautorizacionesSeguridad" />
+		</property>
+		<property name="seguridadconceptoServicio">
+			<ref bean="BeanServicioSeguridadconceptoSeguridad" />
+		</property>
+		<property name="seguridadgrupoServicio">
+			<ref bean="BeanServicioSeguridadgrupoSeguridad" />
+		</property>
+		<property name="seguridadperfilusuarioServicio">
+			<ref bean="BeanServicioSeguridadperfilusuarioSeguridad" />
+		</property>
+		<property name="usuarioServicio">
+			<ref bean="BeanServicioUsuarioSeguridad" />
+		</property>	
+		<property name="clientemastServicio">
+			<ref bean="BeanServicioClientemastSeguridad" />
+		</property>
+		<property name="companiamastServicio">
+			<ref bean="BeanServicioCompaniamastSeguridad" />
+		</property>
+		<property name="companyownerServicio">
+			<ref bean="BeanServicioCompanyownerSeguridad" />
+		</property>		
+		<property name="empleadomastServicio">
+			<ref bean="BeanServicioEmpleadomastSeguridad" />
+		</property>
+		<property name="personamastServicio">
+			<ref bean="BeanServicioPersonamastSeguridad" />
+		</property>		
+		<property name="hrPuestoempresaServicio">
+			<ref bean="BeanServicioHrPuestoempresaSeguridad" />
+		</property>		
+		<property name="correoServicio">
+			<ref bean="BeanServicioCorreoSeguridad" />
+		</property>	
+		<property name="parametrosmastServicio">
+			<ref bean="BeanServicioParametrosmastSeguridad" />
+		</property>	
+	</bean>
+	
+</beans>

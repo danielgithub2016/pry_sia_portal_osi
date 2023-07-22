@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : pfcmain.dw_bu_ex_version
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- pfcmain.d_calculator -->
+    <sql-query name="pfcmain.DCalculator">
+    </sql-query>
+
+    <!-- pfcmain.d_calendar -->
+    <sql-query name="pfcmain.DCalendar">
+    </sql-query>
+
+    <!-- pfcmain.d_definedmessages -->
+    <sql-query name="pfcmain.DDefinedmessages">
+    </sql-query>
+
+    <!-- pfcmain.d_dirattrib -->
+    <sql-query name="pfcmain.DDirattrib">
+    </sql-query>
+
+    <!-- pfcmain.d_messageprint -->
+    <sql-query name="pfcmain.DMessageprint">
+    </sql-query>
+
+    <!-- pfcmain.d_mruservice -->
+    <sql-query name="pfcmain.DMruservice">
+    </sql-query>
+
+    <!-- pfcmain.d_pfcsecurity_allcontrollist -->
+    <sql-query name="pfcmain.DPfcsecurityAllcontrollist">
+    </sql-query>
+
+    <!-- pfcmain.d_pfcsecurity_applookup -->
+    <sql-query name="pfcmain.DPfcsecurityApplookup">
+    </sql-query>
+
+    <!-- pfcmain.d_pfcsecurity_controllist -->
+    <sql-query name="pfcmain.DPfcsecurityControllist">
+    </sql-query>
+
+    <!-- pfcmain.d_pfcsecurity_grouplookup -->
+    <sql-query name="pfcmain.DPfcsecurityGrouplookup">
+    </sql-query>
+
+    <!-- pfcmain.d_pfcsecurity_groupverify -->
+    <sql-query name="pfcmain.DPfcsecurityGroupverify">
+    </sql-query>
+
+    <!-- pfcmain.d_pfcsecurity_templateupdate -->
+    <sql-query name="pfcmain.DPfcsecurityTemplateupdate">
+    </sql-query>
+
+    <!-- pfcmain.d_pfcsecurity_userlookup -->
+    <sql-query name="pfcmain.DPfcsecurityUserlookup">
+    </sql-query>
+
+    <!-- pfcmain.d_printtree -->
+    <sql-query name="pfcmain.DPrinttree">
+    </sql-query>
+
+    <!-- pfcmain.d_progress -->
+    <sql-query name="pfcmain.DProgress">
+    </sql-query>
+
+    <!-- pfcmain.d_timerlist -->
+    <sql-query name="pfcmain.DTimerlist">
+    </sql-query>
+
+</hibernate-mapping>

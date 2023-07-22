@@ -1,0 +1,15 @@
+<ui:composition xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form>
+		<iframe
+			src="#{request.contextPath}/temporal/#{cBindingController.nombreArchivoTemporal}"
+			style="width: 100%; height:  94%" />
+	</h:form>
+</ui:composition>
+
+
+

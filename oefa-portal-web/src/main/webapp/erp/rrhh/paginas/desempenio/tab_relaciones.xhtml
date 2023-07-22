@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panel>
+		<p:panelGrid columns="3" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+			layout="grid" styleClass="ui-panelgrid-blank">
+			<h:outputLabel value="¿A quienes reporta?"
+				style="font-size:11px; font-family:Open sans,sans-serif; font-weight: bold" />
+
+			<p:commandButton value="Agregar Puesto Sup." icon="nuevo" />
+
+			<p:commandButton value="Eliminar Puesto Sup." icon="eliminar" />
+
+		</p:panelGrid>
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			paginator="true" paginatorPosition="bottom" scrollHeight="100"
+			reflow="true" scrollable="true" rowStyleClass="#{list.estilo}"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+			value="#{cwHrPuestosEdit.dw_reporta}" var="c">
+
+			<p:column headerText="Puesto a quien reporta" width="150">
+				<p:outputLabel value="#{c.descripcionreporta}" />
+			</p:column>
+
+		</p:dataTable>
+
+		<p:panelGrid columns="3" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+			layout="grid" styleClass="ui-panelgrid-blank">
+			<h:outputLabel value="Relaciones Internas y Externas"
+				style="font-size:11px; font-family:Open sans,sans-serif; font-weight: bold" />
+
+			<p:commandButton value="Agregar Relación" icon="nuevo" />
+
+			<p:commandButton value="Eliminar Relación" icon="eliminar" />
+
+		</p:panelGrid>
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			paginator="true" paginatorPosition="bottom" scrollHeight="100"
+			reflow="true" scrollable="true" rowStyleClass="#{list.estilo}"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+			value="#{cwHrPuestosEdit.dw_relacion}" var="c">
+
+			<p:column headerText="Tipo" width="80">
+				<p:outputLabel value="#{c.pk.tiporelacion}" />
+			</p:column>
+
+			<p:column headerText="Relación" width="150">
+				<p:outputLabel value="#{c.enterelacionado}" />
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+
+</ui:composition>

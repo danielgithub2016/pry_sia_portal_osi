@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.sistema.dominio.SySeguridadmoduloopcion" table="SGCORESYS.SY_SEGURIDADMODULOOPCION">
+        <composite-id name="pk" class="net.royal.erp.sistema.dominio.SySeguridadmoduloopcionPk">
+            <key-property name="aplicacioncodigo" type="string">
+                <column name="APLICACIONCODIGO" length="2" />
+            </key-property>
+            <key-property name="modulocodigo" type="string">
+                <column name="MODULOCODIGO" length="3" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="opcionmenu" type="string">
+            <column name="OPCIONMENU" length="100" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="100" />
+        </property>
+    </class>
+</hibernate-mapping>

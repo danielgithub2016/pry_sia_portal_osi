@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Dw_formato" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d769f277-7108-4763-b4bd-368696df49ab">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="par_cia" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_ano" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_puesto" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Fabrica\\Desarrollo\\DesarrolloProductos\\OEFAMIGRA\\oefa-portal-web\\src\\main\\webapp\\erp\\rrhh\\recursos\\reportes\\formatos\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_tipoplanilla" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_supervisa" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT HR_PUESTOEMPRESA.CODIGOPUESTO,
+hr_cargosmast.DESCRIPCIONLOCAL,
+      HR_PUESTOEMPRESA.GRADOSALARIO,
+      HR_PUESTOEMPRESA.DESCRIPCION,
+      HR_PUESTOEMPRESA.DESCRIPCIONINGLES,
+      HR_PUESTOEMPRESA.COMENTARIOS,
+      HR_PUESTOEMPRESA.ESTADO,
+      HR_PUESTOEMPRESA.ULTIMOUSUARIO,
+      HR_PUESTOEMPRESA.ULTIMAFECHAMODIF,
+      HR_PUESTOEMPRESA.UNIDADNEGOCIO,
+      HR_PUESTOEMPRESA.UNIDADREPLICACION,
+      HR_PUESTOEMPRESA.TIPOPUESTO,
+      HR_PUESTOEMPRESA.CATEGORIAFUNCIONAL,
+      HR_PUESTOEMPRESA.PUESTOSUPERIOR,
+      HR_PUESTOEMPRESA.PLANTILLAEVALUACION,
+      HR_PUESTOEMPRESA.PLANTILLADOCUMENTO,
+      HR_PUESTOEMPRESA.GRUPOOCUPACIONAL,
+      HR_PUESTOEMPRESA.CODIGOCAP,
+      HR_PUESTOEMPRESA.PLANTILLAPOTENCIAL,
+      HR_PUESTOEMPRESA.PLANTILLAENTREGAS,
+      HR_PUESTOEMPRESA.LINEACARRERA,
+      HR_PUESTOEMPRESA.CODIGORTPS,
+      HR_PUESTOEMPRESA.CFLAGESDIRECTIVO,
+      HR_PUESTOEMPRESA.CFLAGESCONFIANZA,
+      HR_PUESTOEMPRESA.CLASIFICADORCARGO,
+      HR_PUESTOEMPRESA.CODIGOPUESTOCONFIANZA,
+      HR_PUESTOEMPRESA.CENTROCOSTO  ,
+
+HR_PUESTOEMPRESA.CURSOMINIMO,
+HR_PUESTOEMPRESA.CURSOMAXIMO,
+HR_PUESTOEMPRESA.CURSOUNITARIO,
+HR_PUESTOEMPRESA.EXPERIENCIAMINIMO,
+HR_PUESTOEMPRESA.EXPERIENCIAMAXIMO,
+HR_PUESTOEMPRESA.EXPERIENCIAUNITARIO,
+HR_PUESTOEMPRESA.FAMILIAPUESTO,
+HR_PUESTOEMPRESA.FLAGPUESTOPRACTICANTE,
+HR_PUESTOEMPRESA.CODIGOPOSICION,
+HR_PosicionEmpresa.DESCRIPCION AS DESCRIPCION_PO,
+hr_organigrama.numeroestandar, hr_cargosmast.descripcionlocal
+FROM    SGCORESYS.HR_PUESTOEMPRESA
+LEFT JOIN SGCORESYS.HR_PosicionEmpresa
+ON HR_PUESTOEMPRESA.CODIGOPOSICION = HR_PosicionEmpresa.CODIGOPOSICION
+LEFT JOIN SGCORESYS.hr_organigrama ON HR_PUESTOEMPRESA.CODIGOPUESTO = hr_organigrama.codigopuesto
+                        and hr_organigrama.FlagPuesto = 'S'
+                        and hr_organigrama.CompanyOwner = $P{par_cia} /*01000000  :par_cia*/
+                        and hr_organigrama.ano = $P{par_ano} /* 2015 :par_ano*/
+                        and (hr_organigrama.tipoplanilla in (case   when hr_puestoempresa.flagpuestopracticante='C' then 'EC'
+                                                                     when hr_puestoempresa.flagpuestopracticante='A' then 'EM'
+                                                                     when hr_puestoempresa.flagpuestopracticante='P' then 'PR' ELSE 'XX' END   ))
+left join SGCORESYS.hr_cargosmast on hr_cargosmast.cargo   = HR_PUESTOEMPRESA.CATEGORIAFUNCIONAL
+WHERE HR_PuestoEmpresa.CodigoPuesto =    $P{par_puesto}  /* 74 :par_puesto*/]]>
+	</queryString>
+	<field name="CODIGOPUESTO" class="java.math.BigDecimal"/>
+	<field name="DESCRIPCIONLOCAL" class="java.lang.String"/>
+	<field name="GRADOSALARIO" class="java.lang.String"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="DESCRIPCIONINGLES" class="java.lang.String"/>
+	<field name="COMENTARIOS" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<field name="ULTIMOUSUARIO" class="java.lang.String"/>
+	<field name="ULTIMAFECHAMODIF" class="java.sql.Timestamp"/>
+	<field name="UNIDADNEGOCIO" class="java.lang.String"/>
+	<field name="UNIDADREPLICACION" class="java.lang.String"/>
+	<field name="TIPOPUESTO" class="java.math.BigDecimal"/>
+	<field name="CATEGORIAFUNCIONAL" class="java.lang.String"/>
+	<field name="PUESTOSUPERIOR" class="java.math.BigDecimal"/>
+	<field name="PLANTILLAEVALUACION" class="java.lang.String"/>
+	<field name="PLANTILLADOCUMENTO" class="java.math.BigDecimal"/>
+	<field name="GRUPOOCUPACIONAL" class="java.math.BigDecimal"/>
+	<field name="CODIGOCAP" class="java.lang.String"/>
+	<field name="PLANTILLAPOTENCIAL" class="java.lang.String"/>
+	<field name="PLANTILLAENTREGAS" class="java.lang.String"/>
+	<field name="LINEACARRERA" class="java.lang.String"/>
+	<field name="CODIGORTPS" class="java.lang.String"/>
+	<field name="CFLAGESDIRECTIVO" class="java.lang.String"/>
+	<field name="CFLAGESCONFIANZA" class="java.lang.String"/>
+	<field name="CLASIFICADORCARGO" class="java.lang.String"/>
+	<field name="CODIGOPUESTOCONFIANZA" class="java.lang.String"/>
+	<field name="CENTROCOSTO" class="java.lang.String"/>
+	<field name="CURSOMINIMO" class="java.math.BigDecimal"/>
+	<field name="CURSOMAXIMO" class="java.math.BigDecimal"/>
+	<field name="CURSOUNITARIO" class="java.math.BigDecimal"/>
+	<field name="EXPERIENCIAMINIMO" class="java.math.BigDecimal"/>
+	<field name="EXPERIENCIAMAXIMO" class="java.math.BigDecimal"/>
+	<field name="EXPERIENCIAUNITARIO" class="java.math.BigDecimal"/>
+	<field name="FAMILIAPUESTO" class="java.lang.String"/>
+	<field name="FLAGPUESTOPRACTICANTE" class="java.lang.String"/>
+	<field name="CODIGOPOSICION" class="java.math.BigDecimal"/>
+	<field name="DESCRIPCION_PO" class="java.lang.String"/>
+	<field name="NUMEROESTANDAR" class="java.math.BigDecimal"/>
+	<title>
+		<band height="292" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="32" backcolor="#CCCCCC" uuid="cd6cb049-f9a6-45c0-8e48-bcfa4eea384b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="10" width="555" height="22" uuid="a05e500a-7f0f-4537-8989-75ae6065cc85"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IDENTIFICACIÓN DEL CARGO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="555" height="104" backcolor="#FFFFFF" uuid="a3b3f32c-f14d-48ed-94a5-9185105b9a5d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="32" width="119" height="72" uuid="5fa34998-a017-4803-b11e-04e8a5361b9c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="84" width="555" height="20" uuid="a1fb649a-1d73-4cfd-9adb-5519f93881c6"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="408" y="84" width="147" height="20" uuid="8a5a9e1e-adb8-4970-9775-9f4cf4c333ab"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="473" y="32" width="82" height="31" uuid="377fa98b-0221-4939-b037-29e2a6613d1f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="473" y="48" width="82" height="15" uuid="c60acc3e-0d7d-40f3-97fd-444b60a2b648"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="473" y="84" width="82" height="20" uuid="d135d3cd-586f-442a-a146-c1045d6fa231"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="8" y="40" width="111" height="20" uuid="e77a87f4-72ce-4ac0-815b-d7e270e0ab50"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cargo Estructural]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="65" width="92" height="16" uuid="ddee8730-553c-45c4-abe1-8bdf9e22a6df"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Unidad Orgánica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="87" width="92" height="14" uuid="7ba65c45-673e-4833-962e-b4689d304c8e"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número CAP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="418" y="87" width="55" height="15" uuid="99a2541c-324c-4b72-a412-756a9de9996b"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nivel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="473" y="34" width="82" height="14" uuid="524202be-c3e1-47c3-bf54-a0cfef0b486d"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="130" y="35" width="258" height="13" uuid="e4e9f599-0e52-4ab0-b99c-267d027bb530"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="130" y="48" width="258" height="14" uuid="45bd36b0-f8ed-4d3b-a0c1-80b286460e4d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DESCRIPCIONLOCAL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="130" y="89" width="237" height="14" uuid="25ba6da2-6781-4da2-9aa0-8c3a7b03ca2b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{CODIGOCAP}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="479" y="48" width="71" height="16" uuid="a3c0865b-09b8-439e-8d80-cf2b2afb7aac"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NUMEROESTANDAR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="482" y="88" width="71" height="14" uuid="07e1f565-4ed0-4e4e-ac52-108970f75449"/>
+				<textFieldExpression><![CDATA[$F{GRADOSALARIO}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="32" width="555" height="31" uuid="da5528e1-6e94-479e-8108-f72ae761c3f9"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="130" y="64" width="425" height="20" uuid="78dd5644-dc8d-4879-bdca-d4f9d60070e3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION_PO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="-177" width="555" height="22" uuid="706c9bcf-f542-410f-bc5b-591d11483e67"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FUNCIONES PRINCIPALES]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="108" width="555" height="20" backcolor="#CCCCCC" uuid="aa4722ca-4d80-48c4-9b84-e9996534434e"/>
+			</rectangle>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="128" width="555" height="75" uuid="1e783c9a-1e1a-4f33-8a26-ca2dcfe3d76d"/>
+				<subreportParameter name="par_puesto">
+					<subreportParameterExpression><![CDATA[$P{par_puesto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["Dw_formato_detalle_1.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="203" width="555" height="85" uuid="1b67c24c-a826-449d-8536-dad09a902d0a"/>
+				<subreportParameter name="par_puesto">
+					<subreportParameterExpression><![CDATA[$P{par_puesto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="as_tipo">
+					<subreportParameterExpression><![CDATA[$P{par_tipoplanilla}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="par_supervisa">
+					<subreportParameterExpression><![CDATA[$P{par_supervisa}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["Dw_formato_detalle_2.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="205" y="110" width="183" height="20" uuid="4b78fb28-05ad-48b3-a0fb-98509a311f9e"/>
+				<textElement textAlignment="Justified">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FUNCIONES PRINCIPALES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band/>
+	</detail>
+</jasperReport>

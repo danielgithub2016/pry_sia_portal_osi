@@ -1,0 +1,1647 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : whothers.w_wh_proveedor_select_by_tipo_uni
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- whothers.ds_cp_obligacionflujo_edit -->
+    <sql-query name="whothers.DsCpObligacionflujoEdit">
+    </sql-query>
+
+    <!-- whothers.dw_bu_budget_unit_edit -->
+    <sql-query name="whothers.DwBuBudgetUnitEdit">
+    </sql-query>
+
+    <!-- whothers.dw_cm_ma_wh_transportista -->
+    <sql-query name="whothers.DwCmMaWhTransportista">
+    </sql-query>
+
+    <!-- whothers.dw_co_009_documento -->
+    <sql-query name="whothers.DwCo009Documento">
+    </sql-query>
+
+    <!-- whothers.dw_co_009_documento_detalle -->
+    <sql-query name="whothers.DwCo009DocumentoDetalle">
+    </sql-query>
+
+    <!-- whothers.dw_co_pedido_edit_impuesto -->
+    <sql-query name="whothers.DwCoPedidoEditImpuesto">
+    </sql-query>
+
+    <!-- whothers.dw_cp_commitment_select_partir -->
+    <sql-query name="whothers.DwCpCommitmentSelectPartir">
+    </sql-query>
+
+    <!-- whothers.dw_cp_commitment_select_partir_detail -->
+    <sql-query name="whothers.DwCpCommitmentSelectPartirDetail">
+    </sql-query>
+
+    <!-- whothers.dw_cp_feeder_transfer_obligximpuesto -->
+    <sql-query name="whothers.DwCpFeederTransferObligximpuesto">
+    </sql-query>
+
+    <!-- whothers.dw_cp_obligacionxcuenta_retrieve -->
+    <sql-query name="whothers.DwCpObligacionxcuentaRetrieve">
+    </sql-query>
+
+    <!-- whothers.dw_cp_obligacionxitem_check_list -->
+    <sql-query name="whothers.DwCpObligacionxitemCheckList">
+    </sql-query>
+
+    <!-- whothers.dw_cp_obligacionxitem_currency_detail -->
+    <sql-query name="whothers.DwCpObligacionxitemCurrencyDetail">
+    </sql-query>
+
+    <!-- whothers.dw_cp_obligacionxitem_currency_header -->
+    <sql-query name="whothers.DwCpObligacionxitemCurrencyHeader">
+    </sql-query>
+
+    <!-- whothers.dw_cp_obligacionxitem_recibido_activo -->
+    <sql-query name="whothers.DwCpObligacionxitemRecibidoActivo">
+    </sql-query>
+
+    <!-- whothers.dw_cp_obligacionxitem_recibido_advance -->
+    <sql-query name="whothers.DwCpObligacionxitemRecibidoAdvance">
+    </sql-query>
+
+    <!-- whothers.dw_cp_obligacionxitem_recibido_detail -->
+    <sql-query name="whothers.DwCpObligacionxitemRecibidoDetail">
+    </sql-query>
+
+    <!-- whothers.dw_cp_obligacionxitem_recibido_distribuc -->
+    <sql-query name="whothers.DwCpObligacionxitemRecibidoDistribuc">
+    </sql-query>
+
+    <!-- whothers.dw_cp_obligacionxitem_recibido_list -->
+    <sql-query name="whothers.DwCpObligacionxitemRecibidoList">
+    </sql-query>
+
+    <!-- whothers.dw_cp_obligacionxitem_recibido_oc_distri -->
+    <sql-query name="whothers.DwCpObligacionxitemRecibidoOcDistri">
+    </sql-query>
+
+    <!-- whothers.dw_cp_obligacionxitem_recibido_position -->
+    <sql-query name="whothers.DwCpObligacionxitemRecibidoPosition">
+    </sql-query>
+
+    <!-- whothers.dw_cp_obligacionxitem_recibido_prov_comm -->
+    <sql-query name="whothers.DwCpObligacionxitemRecibidoProvComm">
+    </sql-query>
+
+    <!-- whothers.dw_cp_obligacionxitem_recibido_proveedor -->
+    <sql-query name="whothers.DwCpObligacionxitemRecibidoProveedor">
+    </sql-query>
+
+    <!-- whothers.dw_cp_obligacionxitem_recibido_select -->
+    <sql-query name="whothers.DwCpObligacionxitemRecibidoSelect">
+    </sql-query>
+
+    <!-- whothers.dw_cp_obligacionxitem_recibido_so_distri -->
+    <sql-query name="whothers.DwCpObligacionxitemRecibidoSoDistri">
+    </sql-query>
+
+    <!-- whothers.dw_cp_reportegastos_select_adelantos -->
+    <sql-query name="whothers.DwCpReportegastosSelectAdelantos">
+    </sql-query>
+
+    <!-- whothers.dw_cp_reportegastos_select_solicitud -->
+    <sql-query name="whothers.DwCpReportegastosSelectSolicitud">
+    </sql-query>
+
+    <!-- whothers.dw_item_list -->
+    <sql-query name="whothers.DwItemList">
+    </sql-query>
+
+    <!-- whothers.dw_item_list_aux -->
+    <sql-query name="whothers.DwItemListAux">
+    </sql-query>
+
+    <!-- whothers.dw_items_detail -->
+    <sql-query name="whothers.DwItemsDetail">
+    </sql-query>
+
+    <!-- whothers.dw_lap_list_position -->
+    <sql-query name="whothers.DwLapListPosition">
+    </sql-query>
+
+    <!-- whothers.dw_ma_cp_documentoclasific_select_system -->
+    <sql-query name="whothers.DwMaCpDocumentoclasificSelectSystem">
+    </sql-query>
+
+    <!-- whothers.dw_wh_002_voucher_prisma_gasto -->
+    <sql-query name="whothers.DwWh002VoucherPrismaGasto">
+    </sql-query>
+
+    <!-- whothers.dw_wh_002_voucher_prisma_position -->
+    <sql-query name="whothers.DwWh002VoucherPrismaPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_004_transaction_operacion_detail -->
+    <sql-query name="whothers.DwWh004TransactionOperacionDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_004_transaction_operacion_list -->
+    <sql-query name="whothers.DwWh004TransactionOperacionList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_004_transaction_operacion_position -->
+    <sql-query name="whothers.DwWh004TransactionOperacionPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_005_item_proveedor_export -->
+    <sql-query name="whothers.DwWh005ItemProveedorExport">
+    </sql-query>
+
+    <!-- whothers.dw_wh_005_item_proveedor_export_list -->
+    <sql-query name="whothers.DwWh005ItemProveedorExportList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_005_item_proveedor_export_only -->
+    <sql-query name="whothers.DwWh005ItemProveedorExportOnly">
+    </sql-query>
+
+    <!-- whothers.dw_wh_005_item_proveedor_export_petito -->
+    <sql-query name="whothers.DwWh005ItemProveedorExportPetito">
+    </sql-query>
+
+    <!-- whothers.dw_wh_005_item_proveedor_export_position -->
+    <sql-query name="whothers.DwWh005ItemProveedorExportPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_006_item_proveedor_import -->
+    <sql-query name="whothers.DwWh006ItemProveedorImport">
+    </sql-query>
+
+    <!-- whothers.dw_wh_006_item_proveedor_import_history -->
+    <sql-query name="whothers.DwWh006ItemProveedorImportHistory">
+    </sql-query>
+
+    <!-- whothers.dw_wh_006_item_proveedor_import_list -->
+    <sql-query name="whothers.DwWh006ItemProveedorImportList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_006_item_proveedor_import_position -->
+    <sql-query name="whothers.DwWh006ItemProveedorImportPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_006_item_proveedor_import_rpt -->
+    <sql-query name="whothers.DwWh006ItemProveedorImportRpt">
+    </sql-query>
+
+    <!-- whothers.dw_wh_006_item_proveedor_import_save -->
+    <sql-query name="whothers.DwWh006ItemProveedorImportSave">
+    </sql-query>
+
+    <!-- whothers.dw_wh_007_costosproduccion_import -->
+    <sql-query name="whothers.DwWh007CostosproduccionImport">
+    </sql-query>
+
+    <!-- whothers.dw_wh_007_costosproduccion_list -->
+    <sql-query name="whothers.DwWh007CostosproduccionList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_007_costosproduccion_position -->
+    <sql-query name="whothers.DwWh007CostosproduccionPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_activity_kardex -->
+    <sql-query name="whothers.DwWh008ActivityKardex">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_activity_voucher -->
+    <sql-query name="whothers.DwWh008ActivityVoucher">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_position -->
+    <sql-query name="whothers.DwWh008Position">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_position_2 -->
+    <sql-query name="whothers.DwWh008Position2">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_position_4 -->
+    <sql-query name="whothers.DwWh008Position4">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_tab_1_cierre -->
+    <sql-query name="whothers.DwWh008Tab1Cierre">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_tab_1_report -->
+    <sql-query name="whothers.DwWh008Tab1Report">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_tab_2_report -->
+    <sql-query name="whothers.DwWh008Tab2Report">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_tab_3_cuenta -->
+    <sql-query name="whothers.DwWh008Tab3Cuenta">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_tab_4_cierre -->
+    <sql-query name="whothers.DwWh008Tab4Cierre">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_tab_4_kardex -->
+    <sql-query name="whothers.DwWh008Tab4Kardex">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_tab_4_kardex_detalle -->
+    <sql-query name="whothers.DwWh008Tab4KardexDetalle">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_tab_5_report -->
+    <sql-query name="whothers.DwWh008Tab5Report">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_tab_5_report2 -->
+    <sql-query name="whothers.DwWh008Tab5Report2">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_voucher_browse -->
+    <sql-query name="whothers.DwWh008VoucherBrowse">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_wh_vs_ac_account1 -->
+    <sql-query name="whothers.DwWh008WhVsAcAccount1">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_wh_vs_ac_account2 -->
+    <sql-query name="whothers.DwWh008WhVsAcAccount2">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_wh_vs_ac_account_condicion -->
+    <sql-query name="whothers.DwWh008WhVsAcAccountCondicion">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_wh_vs_ac_account_item -->
+    <sql-query name="whothers.DwWh008WhVsAcAccountItem">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_wh_vs_ac_account_whse -->
+    <sql-query name="whothers.DwWh008WhVsAcAccountWhse">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_wh_vs_ac_contable -->
+    <sql-query name="whothers.DwWh008WhVsAcContable">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_wh_vs_ac_detail -->
+    <sql-query name="whothers.DwWh008WhVsAcDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_wh_vs_ac_kardex -->
+    <sql-query name="whothers.DwWh008WhVsAcKardex">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_wh_vs_ac_logistica -->
+    <sql-query name="whothers.DwWh008WhVsAcLogistica">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_wh_vs_ac_logistica_almacen -->
+    <sql-query name="whothers.DwWh008WhVsAcLogisticaAlmacen">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_wh_vs_ac_logistica_condicion -->
+    <sql-query name="whothers.DwWh008WhVsAcLogisticaCondicion">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_wh_vs_ac_position -->
+    <sql-query name="whothers.DwWh008WhVsAcPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_008_wh_vs_ac_vouchers -->
+    <sql-query name="whothers.DwWh008WhVsAcVouchers">
+    </sql-query>
+
+    <!-- whothers.dw_wh_009_item_proveedor_update_history -->
+    <sql-query name="whothers.DwWh009ItemProveedorUpdateHistory">
+    </sql-query>
+
+    <!-- whothers.dw_wh_009_item_proveedor_update_position -->
+    <sql-query name="whothers.DwWh009ItemProveedorUpdatePosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_010_planeamiento_list -->
+    <sql-query name="whothers.DwWh010PlaneamientoList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_010_planeamiento_print -->
+    <sql-query name="whothers.DwWh010PlaneamientoPrint">
+    </sql-query>
+
+    <!-- whothers.dw_wh_010_position -->
+    <sql-query name="whothers.DwWh010Position">
+    </sql-query>
+
+    <!-- whothers.dw_wh_011_kardex_input -->
+    <sql-query name="whothers.DwWh011KardexInput">
+    </sql-query>
+
+    <!-- whothers.dw_wh_011_position -->
+    <sql-query name="whothers.DwWh011Position">
+    </sql-query>
+
+    <!-- whothers.dw_wh_012_requisition_detail -->
+    <sql-query name="whothers.DwWh012RequisitionDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_012_requisition_header -->
+    <sql-query name="whothers.DwWh012RequisitionHeader">
+    </sql-query>
+
+    <!-- whothers.dw_wh_013_item -->
+    <sql-query name="whothers.DwWh013Item">
+    </sql-query>
+
+    <!-- whothers.dw_wh_013_position -->
+    <sql-query name="whothers.DwWh013Position">
+    </sql-query>
+
+    <!-- whothers.dw_wh_013_produccion -->
+    <sql-query name="whothers.DwWh013Produccion">
+    </sql-query>
+
+    <!-- whothers.dw_wh_014_detail -->
+    <sql-query name="whothers.DwWh014Detail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_014_position -->
+    <sql-query name="whothers.DwWh014Position">
+    </sql-query>
+
+    <!-- whothers.dw_wh_014_summary -->
+    <sql-query name="whothers.DwWh014Summary">
+    </sql-query>
+
+    <!-- whothers.dw_wh_015_import_items -->
+    <sql-query name="whothers.DwWh015ImportItems">
+    </sql-query>
+
+    <!-- whothers.dw_wh_015_import_items_copy -->
+    <sql-query name="whothers.DwWh015ImportItemsCopy">
+    </sql-query>
+
+    <!-- whothers.dw_wh_015_import_items_error -->
+    <sql-query name="whothers.DwWh015ImportItemsError">
+    </sql-query>
+
+    <!-- whothers.dw_wh_015_position -->
+    <sql-query name="whothers.DwWh015Position">
+    </sql-query>
+
+    <!-- whothers.dw_wh_016_reposicion_estadistica -->
+    <sql-query name="whothers.DwWh016ReposicionEstadistica">
+    </sql-query>
+
+    <!-- whothers.dw_wh_016_reposicion_estadistica_alter -->
+    <sql-query name="whothers.DwWh016ReposicionEstadisticaAlter">
+    </sql-query>
+
+    <!-- whothers.dw_wh_017_exporta_proveedor_detail -->
+    <sql-query name="whothers.DwWh017ExportaProveedorDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_017_exporta_proveedor_position -->
+    <sql-query name="whothers.DwWh017ExportaProveedorPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_019_consumo_data01 -->
+    <sql-query name="whothers.DwWh019ConsumoData01">
+    </sql-query>
+
+    <!-- whothers.dw_wh_019_consumo_data02 -->
+    <sql-query name="whothers.DwWh019ConsumoData02">
+    </sql-query>
+
+    <!-- whothers.dw_wh_019_consumo_data03 -->
+    <sql-query name="whothers.DwWh019ConsumoData03">
+    </sql-query>
+
+    <!-- whothers.dw_wh_019_error -->
+    <sql-query name="whothers.DwWh019Error">
+    </sql-query>
+
+    <!-- whothers.dw_wh_019_output -->
+    <sql-query name="whothers.DwWh019Output">
+    </sql-query>
+
+    <!-- whothers.dw_wh_019_position -->
+    <sql-query name="whothers.DwWh019Position">
+    </sql-query>
+
+    <!-- whothers.dw_wh_019_report -->
+    <sql-query name="whothers.DwWh019Report">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_costcenter -->
+    <sql-query name="whothers.DwWh020Costcenter">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_cuenta -->
+    <sql-query name="whothers.DwWh020Cuenta">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_data_voucher -->
+    <sql-query name="whothers.DwWh020DataVoucher">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_documentos -->
+    <sql-query name="whothers.DwWh020Documentos">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_empleado -->
+    <sql-query name="whothers.DwWh020Empleado">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_import -->
+    <sql-query name="whothers.DwWh020Import">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_obligaciones -->
+    <sql-query name="whothers.DwWh020Obligaciones">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_obligacionesxcuenta -->
+    <sql-query name="whothers.DwWh020Obligacionesxcuenta">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_persona -->
+    <sql-query name="whothers.DwWh020Persona">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_position1 -->
+    <sql-query name="whothers.DwWh020Position1">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_position2 -->
+    <sql-query name="whothers.DwWh020Position2">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_position3 -->
+    <sql-query name="whothers.DwWh020Position3">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_position4 -->
+    <sql-query name="whothers.DwWh020Position4">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_prime -->
+    <sql-query name="whothers.DwWh020Prime">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_proveedor -->
+    <sql-query name="whothers.DwWh020Proveedor">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_read_transacc_commodity -->
+    <sql-query name="whothers.DwWh020ReadTransaccCommodity">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_read_transacc_item -->
+    <sql-query name="whothers.DwWh020ReadTransaccItem">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_tipocambio -->
+    <sql-query name="whothers.DwWh020Tipocambio">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_voucher_detail -->
+    <sql-query name="whothers.DwWh020VoucherDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_020_voucher_header -->
+    <sql-query name="whothers.DwWh020VoucherHeader">
+    </sql-query>
+
+    <!-- whothers.dw_wh_021_transaction_import_detail -->
+    <sql-query name="whothers.DwWh021TransactionImportDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_021_transaction_import_error -->
+    <sql-query name="whothers.DwWh021TransactionImportError">
+    </sql-query>
+
+    <!-- whothers.dw_wh_021_transaction_import_header -->
+    <sql-query name="whothers.DwWh021TransactionImportHeader">
+    </sql-query>
+
+    <!-- whothers.dw_wh_021_transaction_import_position -->
+    <sql-query name="whothers.DwWh021TransactionImportPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_022_documento -->
+    <sql-query name="whothers.DwWh022Documento">
+    </sql-query>
+
+    <!-- whothers.dw_wh_022_documento_detail -->
+    <sql-query name="whothers.DwWh022DocumentoDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_022_documento_impuesto -->
+    <sql-query name="whothers.DwWh022DocumentoImpuesto">
+    </sql-query>
+
+    <!-- whothers.dw_wh_022_redondos_cliente_x_ruc -->
+    <sql-query name="whothers.DwWh022RedondosClienteXRuc">
+    </sql-query>
+
+    <!-- whothers.dw_wh_022_redondos_despacho -->
+    <sql-query name="whothers.DwWh022RedondosDespacho">
+    </sql-query>
+
+    <!-- whothers.dw_wh_023_pesaje_document_select_guia -->
+    <sql-query name="whothers.DwWh023PesajeDocumentSelectGuia">
+    </sql-query>
+
+    <!-- whothers.dw_wh_023_pesaje_document_select_oc -->
+    <sql-query name="whothers.DwWh023PesajeDocumentSelectOc">
+    </sql-query>
+
+    <!-- whothers.dw_wh_023_pesaje_document_select_ocposit -->
+    <sql-query name="whothers.DwWh023PesajeDocumentSelectOcposit">
+    </sql-query>
+
+    <!-- whothers.dw_wh_023_pesaje_edit -->
+    <sql-query name="whothers.DwWh023PesajeEdit">
+    </sql-query>
+
+    <!-- whothers.dw_wh_023_pesaje_list -->
+    <sql-query name="whothers.DwWh023PesajeList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_023_pesaje_list_position -->
+    <sql-query name="whothers.DwWh023PesajeListPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_023_pesaje_report -->
+    <sql-query name="whothers.DwWh023PesajeReport">
+    </sql-query>
+
+    <!-- whothers.dw_wh_024_list -->
+    <sql-query name="whothers.DwWh024List">
+    </sql-query>
+
+    <!-- whothers.dw_wh_024_position -->
+    <sql-query name="whothers.DwWh024Position">
+    </sql-query>
+
+    <!-- whothers.dw_wh_030_transaction_comercial_list -->
+    <sql-query name="whothers.DwWh030TransactionComercialList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_030_transaction_comercial_list_pos -->
+    <sql-query name="whothers.DwWh030TransactionComercialListPos">
+    </sql-query>
+
+    <!-- whothers.dw_wh_031_po_transaction_import -->
+    <sql-query name="whothers.DwWh031PoTransactionImport">
+    </sql-query>
+
+    <!-- whothers.dw_wh_031_po_transaction_list -->
+    <sql-query name="whothers.DwWh031PoTransactionList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_centrocosto_list -->
+    <sql-query name="whothers.DwWh056CentrocostoList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_centrocosto_position -->
+    <sql-query name="whothers.DwWh056CentrocostoPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_empleado_list -->
+    <sql-query name="whothers.DwWh056EmpleadoList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_empleado_position -->
+    <sql-query name="whothers.DwWh056EmpleadoPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_familia_select_list -->
+    <sql-query name="whothers.DwWh056FamiliaSelectList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_familia_select_position -->
+    <sql-query name="whothers.DwWh056FamiliaSelectPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_item_account -->
+    <sql-query name="whothers.DwWh056ItemAccount">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_item_account_familia -->
+    <sql-query name="whothers.DwWh056ItemAccountFamilia">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_item_account_familia_mst -->
+    <sql-query name="whothers.DwWh056ItemAccountFamiliaMst">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_item_account_familia_position -->
+    <sql-query name="whothers.DwWh056ItemAccountFamiliaPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_item_account_itemmst -->
+    <sql-query name="whothers.DwWh056ItemAccountItemmst">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_item_account_position -->
+    <sql-query name="whothers.DwWh056ItemAccountPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_item_contrato -->
+    <sql-query name="whothers.DwWh056ItemContrato">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_item_list -->
+    <sql-query name="whothers.DwWh056ItemList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_item_mst_account -->
+    <sql-query name="whothers.DwWh056ItemMstAccount">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_item_mst_position -->
+    <sql-query name="whothers.DwWh056ItemMstPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_item_position -->
+    <sql-query name="whothers.DwWh056ItemPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_perfil_list -->
+    <sql-query name="whothers.DwWh056PerfilList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_perfil_list_cc -->
+    <sql-query name="whothers.DwWh056PerfilListCc">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_perfil_list_item -->
+    <sql-query name="whothers.DwWh056PerfilListItem">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_perfil_racion_manten_select -->
+    <sql-query name="whothers.DwWh056PerfilRacionMantenSelect">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_perfil_racion_select -->
+    <sql-query name="whothers.DwWh056PerfilRacionSelect">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_perfilitem_data -->
+    <sql-query name="whothers.DwWh056PerfilitemData">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_perfilitem_item -->
+    <sql-query name="whothers.DwWh056PerfilitemItem">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_perfilitem_perfil -->
+    <sql-query name="whothers.DwWh056PerfilitemPerfil">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_perfilitem_position -->
+    <sql-query name="whothers.DwWh056PerfilitemPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_position -->
+    <sql-query name="whothers.DwWh056Position">
+    </sql-query>
+
+    <!-- whothers.dw_wh_056_racion_contrato_select -->
+    <sql-query name="whothers.DwWh056RacionContratoSelect">
+    </sql-query>
+
+    <!-- whothers.dw_wh_057_data -->
+    <sql-query name="whothers.DwWh057Data">
+    </sql-query>
+
+    <!-- whothers.dw_wh_057_item -->
+    <sql-query name="whothers.DwWh057Item">
+    </sql-query>
+
+    <!-- whothers.dw_wh_057_list -->
+    <sql-query name="whothers.DwWh057List">
+    </sql-query>
+
+    <!-- whothers.dw_wh_057_position -->
+    <sql-query name="whothers.DwWh057Position">
+    </sql-query>
+
+    <!-- whothers.dw_wh_057_summary -->
+    <sql-query name="whothers.DwWh057Summary">
+    </sql-query>
+
+    <!-- whothers.dw_wh_098_ingresos -->
+    <sql-query name="whothers.DwWh098Ingresos">
+    </sql-query>
+
+    <!-- whothers.dw_wh_098_position -->
+    <sql-query name="whothers.DwWh098Position">
+    </sql-query>
+
+    <!-- whothers.dw_wh_098_salidas -->
+    <sql-query name="whothers.DwWh098Salidas">
+    </sql-query>
+
+    <!-- whothers.dw_wh_admision_temporal_auxiliar -->
+    <sql-query name="whothers.DwWhAdmisionTemporalAuxiliar">
+    </sql-query>
+
+    <!-- whothers.dw_wh_admision_temporal_detalle_list -->
+    <sql-query name="whothers.DwWhAdmisionTemporalDetalleList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_admision_temporal_edit -->
+    <sql-query name="whothers.DwWhAdmisionTemporalEdit">
+    </sql-query>
+
+    <!-- whothers.dw_wh_admision_temporal_list -->
+    <sql-query name="whothers.DwWhAdmisionTemporalList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_admision_temporal_list_position -->
+    <sql-query name="whothers.DwWhAdmisionTemporalListPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_aliado_producto_list -->
+    <sql-query name="whothers.DwWhAliadoProductoList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_aliado_producto_position -->
+    <sql-query name="whothers.DwWhAliadoProductoPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_controlcalidad_po_select -->
+    <sql-query name="whothers.DwWhControlcalidadPoSelect">
+    </sql-query>
+
+    <!-- whothers.dw_wh_detalle -->
+    <sql-query name="whothers.DwWhDetalle">
+    </sql-query>
+
+    <!-- whothers.dw_wh_exportacion_detail_select -->
+    <sql-query name="whothers.DwWhExportacionDetailSelect">
+    </sql-query>
+
+    <!-- whothers.dw_wh_exportacion_detail_select_position -->
+    <sql-query name="whothers.DwWhExportacionDetailSelectPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_exportacion_edit_auxiliar -->
+    <sql-query name="whothers.DwWhExportacionEditAuxiliar">
+    </sql-query>
+
+    <!-- whothers.dw_wh_exportacion_edit_detail -->
+    <sql-query name="whothers.DwWhExportacionEditDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_exportacion_edit_error -->
+    <sql-query name="whothers.DwWhExportacionEditError">
+    </sql-query>
+
+    <!-- whothers.dw_wh_exportacion_edit_import -->
+    <sql-query name="whothers.DwWhExportacionEditImport">
+    </sql-query>
+
+    <!-- whothers.dw_wh_exportacion_edit_main -->
+    <sql-query name="whothers.DwWhExportacionEditMain">
+    </sql-query>
+
+    <!-- whothers.dw_wh_exportacion_edit_totales -->
+    <sql-query name="whothers.DwWhExportacionEditTotales">
+    </sql-query>
+
+    <!-- whothers.dw_wh_exportacion_list -->
+    <sql-query name="whothers.DwWhExportacionList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_exportacion_list_position -->
+    <sql-query name="whothers.DwWhExportacionListPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_generacion_paac_edit_prepaac_data -->
+    <sql-query name="whothers.DwWhGeneracionPaacEditPrepaacData">
+    </sql-query>
+
+    <!-- whothers.dw_wh_generacion_paac_list -->
+    <sql-query name="whothers.DwWhGeneracionPaacList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_generacion_paac_list_detail -->
+    <sql-query name="whothers.DwWhGeneracionPaacListDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_generacion_paac_position -->
+    <sql-query name="whothers.DwWhGeneracionPaacPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_avance_autorizacion -->
+    <sql-query name="whothers.DwWhImportacionAvanceAutorizacion">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_avance_despacho -->
+    <sql-query name="whothers.DwWhImportacionAvanceDespacho">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_avance_informacion -->
+    <sql-query name="whothers.DwWhImportacionAvanceInformacion">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_avance_list -->
+    <sql-query name="whothers.DwWhImportacionAvanceList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_avance_list_position -->
+    <sql-query name="whothers.DwWhImportacionAvanceListPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_avance_llegada -->
+    <sql-query name="whothers.DwWhImportacionAvanceLlegada">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_avance_pago -->
+    <sql-query name="whothers.DwWhImportacionAvancePago">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_edit -->
+    <sql-query name="whothers.DwWhImportacionBlEdit">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_edit_detail -->
+    <sql-query name="whothers.DwWhImportacionBlEditDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_list -->
+    <sql-query name="whothers.DwWhImportacionBlList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_list_position -->
+    <sql-query name="whothers.DwWhImportacionBlListPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_po_select_oblig_det -->
+    <sql-query name="whothers.DwWhImportacionBlPoSelectObligDet">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_po_select_obligacio -->
+    <sql-query name="whothers.DwWhImportacionBlPoSelectObligacio">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_po_select_position -->
+    <sql-query name="whothers.DwWhImportacionBlPoSelectPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_report1 -->
+    <sql-query name="whothers.DwWhImportacionBlReport1">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_report2 -->
+    <sql-query name="whothers.DwWhImportacionBlReport2">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_report3 -->
+    <sql-query name="whothers.DwWhImportacionBlReport3">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_report_cargo -->
+    <sql-query name="whothers.DwWhImportacionBlReportCargo">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_report_modelo1 -->
+    <sql-query name="whothers.DwWhImportacionBlReportModelo1">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_report_modelo2 -->
+    <sql-query name="whothers.DwWhImportacionBlReportModelo2">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_report_modelo3 -->
+    <sql-query name="whothers.DwWhImportacionBlReportModelo3">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_report_modelo_det -->
+    <sql-query name="whothers.DwWhImportacionBlReportModeloDet">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_report_novalorizado -->
+    <sql-query name="whothers.DwWhImportacionBlReportNovalorizado">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_valorizar_bl_detail -->
+    <sql-query name="whothers.DwWhImportacionBlValorizarBlDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_valorizar_importaci -->
+    <sql-query name="whothers.DwWhImportacionBlValorizarImportaci">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_valorizar_input -->
+    <sql-query name="whothers.DwWhImportacionBlValorizarInput">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_valorizar_mit -->
+    <sql-query name="whothers.DwWhImportacionBlValorizarMit">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_valorizar_mit_detai -->
+    <sql-query name="whothers.DwWhImportacionBlValorizarMitDetai">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_valorizar_po -->
+    <sql-query name="whothers.DwWhImportacionBlValorizarPo">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_valorizar_position -->
+    <sql-query name="whothers.DwWhImportacionBlValorizarPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_bl_valorizar_voucher -->
+    <sql-query name="whothers.DwWhImportacionBlValorizarVoucher">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_commodity_input -->
+    <sql-query name="whothers.DwWhImportacionCommodityInput">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_commodity_po_detail -->
+    <sql-query name="whothers.DwWhImportacionCommodityPoDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_commodity_po_distrib -->
+    <sql-query name="whothers.DwWhImportacionCommodityPoDistrib">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_commodity_val_po_det -->
+    <sql-query name="whothers.DwWhImportacionCommodityValPoDet">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_completar_header -->
+    <sql-query name="whothers.DwWhImportacionCompletarHeader">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_completar_input -->
+    <sql-query name="whothers.DwWhImportacionCompletarInput">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_completar_po_cuenta -->
+    <sql-query name="whothers.DwWhImportacionCompletarPoCuenta">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_completar_po_detail -->
+    <sql-query name="whothers.DwWhImportacionCompletarPoDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_completar_po_distribut -->
+    <sql-query name="whothers.DwWhImportacionCompletarPoDistribut">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_completar_po_header -->
+    <sql-query name="whothers.DwWhImportacionCompletarPoHeader">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_completar_po_number -->
+    <sql-query name="whothers.DwWhImportacionCompletarPoNumber">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_completar_trans_detail -->
+    <sql-query name="whothers.DwWhImportacionCompletarTransDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_completar_trans_header -->
+    <sql-query name="whothers.DwWhImportacionCompletarTransHeader">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_completar_val_po_hdr -->
+    <sql-query name="whothers.DwWhImportacionCompletarValPoHdr">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_completar_val_po_tran -->
+    <sql-query name="whothers.DwWhImportacionCompletarValPoTran">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_completar_voucher -->
+    <sql-query name="whothers.DwWhImportacionCompletarVoucher">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_edit_poliza -->
+    <sql-query name="whothers.DwWhImportacionEditPoliza">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_ingreso_browse_tran -->
+    <sql-query name="whothers.DwWhImportacionIngresoBrowseTran">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_ingreso_docum_detail -->
+    <sql-query name="whothers.DwWhImportacionIngresoDocumDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_ingreso_docum_header -->
+    <sql-query name="whothers.DwWhImportacionIngresoDocumHeader">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_ingreso_header -->
+    <sql-query name="whothers.DwWhImportacionIngresoHeader">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_ingreso_input -->
+    <sql-query name="whothers.DwWhImportacionIngresoInput">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_ingreso_selectall -->
+    <sql-query name="whothers.DwWhImportacionIngresoSelectall">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_ingreso_serie_position -->
+    <sql-query name="whothers.DwWhImportacionIngresoSeriePosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_ingreso_trans_serie -->
+    <sql-query name="whothers.DwWhImportacionIngresoTransSerie">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_ingreso_transacciones -->
+    <sql-query name="whothers.DwWhImportacionIngresoTransacciones">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_item_list -->
+    <sql-query name="whothers.DwWhImportacionItemList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_item_list_position -->
+    <sql-query name="whothers.DwWhImportacionItemListPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_list -->
+    <sql-query name="whothers.DwWhImportacionList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_list_position -->
+    <sql-query name="whothers.DwWhImportacionListPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_pendiente_list -->
+    <sql-query name="whothers.DwWhImportacionPendienteList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_pendiente_position -->
+    <sql-query name="whothers.DwWhImportacionPendientePosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_provision_detail -->
+    <sql-query name="whothers.DwWhImportacionProvisionDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_provision_detail_accou -->
+    <sql-query name="whothers.DwWhImportacionProvisionDetailAccou">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_provision_kardex -->
+    <sql-query name="whothers.DwWhImportacionProvisionKardex">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_provision_list -->
+    <sql-query name="whothers.DwWhImportacionProvisionList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_provision_list_mit -->
+    <sql-query name="whothers.DwWhImportacionProvisionListMit">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_provision_po -->
+    <sql-query name="whothers.DwWhImportacionProvisionPo">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_provision_position -->
+    <sql-query name="whothers.DwWhImportacionProvisionPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_importacion_provision_voucher -->
+    <sql-query name="whothers.DwWhImportacionProvisionVoucher">
+    </sql-query>
+
+    <!-- whothers.dw_wh_item_detalle -->
+    <sql-query name="whothers.DwWhItemDetalle">
+    </sql-query>
+
+    <!-- whothers.dw_wh_lap -->
+    <sql-query name="whothers.DwWhLap">
+    </sql-query>
+
+    <!-- whothers.dw_wh_lap_browse_list -->
+    <sql-query name="whothers.DwWhLapBrowseList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_lap_browse_list_position -->
+    <sql-query name="whothers.DwWhLapBrowseListPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_lap_detail -->
+    <sql-query name="whothers.DwWhLapDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_lap_detalle -->
+    <sql-query name="whothers.DwWhLapDetalle">
+    </sql-query>
+
+    <!-- whothers.dw_wh_lap_detalle_proveedor -->
+    <sql-query name="whothers.DwWhLapDetalleProveedor">
+    </sql-query>
+
+    <!-- whothers.dw_wh_lap_list -->
+    <sql-query name="whothers.DwWhLapList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_lap_list_detail -->
+    <sql-query name="whothers.DwWhLapListDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_lap_list_error -->
+    <sql-query name="whothers.DwWhLapListError">
+    </sql-query>
+
+    <!-- whothers.dw_wh_lap_proveedor_aux -->
+    <sql-query name="whothers.DwWhLapProveedorAux">
+    </sql-query>
+
+    <!-- whothers.dw_wh_lap_proveedor_position -->
+    <sql-query name="whothers.DwWhLapProveedorPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_lap_report -->
+    <sql-query name="whothers.DwWhLapReport">
+    </sql-query>
+
+    <!-- whothers.dw_wh_lap_retrieve_anterior -->
+    <sql-query name="whothers.DwWhLapRetrieveAnterior">
+    </sql-query>
+
+    <!-- whothers.dw_wh_lap_retrieve_detalle -->
+    <sql-query name="whothers.DwWhLapRetrieveDetalle">
+    </sql-query>
+
+    <!-- whothers.dw_wh_licitacionprocesosrango_retrieve -->
+    <sql-query name="whothers.DwWhLicitacionprocesosrangoRetrieve">
+    </sql-query>
+
+    <!-- whothers.dw_wh_listamaestra_edit_detail -->
+    <sql-query name="whothers.DwWhListamaestraEditDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_listamaestra_edit_header -->
+    <sql-query name="whothers.DwWhListamaestraEditHeader">
+    </sql-query>
+
+    <!-- whothers.dw_wh_listamaestra_itemtipo -->
+    <sql-query name="whothers.DwWhListamaestraItemtipo">
+    </sql-query>
+
+    <!-- whothers.dw_wh_listamaestra_list -->
+    <sql-query name="whothers.DwWhListamaestraList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_listamaestra_position -->
+    <sql-query name="whothers.DwWhListamaestraPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_mora_list_detail -->
+    <sql-query name="whothers.DwWhMoraListDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_mora_list_pending -->
+    <sql-query name="whothers.DwWhMoraListPending">
+    </sql-query>
+
+    <!-- whothers.dw_wh_mora_list_pending_item -->
+    <sql-query name="whothers.DwWhMoraListPendingItem">
+    </sql-query>
+
+    <!-- whothers.dw_wh_mora_list_pending_position -->
+    <sql-query name="whothers.DwWhMoraListPendingPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_mora_list_position -->
+    <sql-query name="whothers.DwWhMoraListPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_mora_penalidad_edit -->
+    <sql-query name="whothers.DwWhMoraPenalidadEdit">
+    </sql-query>
+
+    <!-- whothers.dw_wh_mora_realizada_edit -->
+    <sql-query name="whothers.DwWhMoraRealizadaEdit">
+    </sql-query>
+
+    <!-- whothers.dw_wh_mora_realizada_list -->
+    <sql-query name="whothers.DwWhMoraRealizadaList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_mora_realizada_position -->
+    <sql-query name="whothers.DwWhMoraRealizadaPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_nivelservicio_list -->
+    <sql-query name="whothers.DwWhNivelservicioList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_nivelservicio_list_detail -->
+    <sql-query name="whothers.DwWhNivelservicioListDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_nivelservicio_req_det_position -->
+    <sql-query name="whothers.DwWhNivelservicioReqDetPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_nivelservicio_req_list -->
+    <sql-query name="whothers.DwWhNivelservicioReqList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_nivelservicio_req_list2 -->
+    <sql-query name="whothers.DwWhNivelservicioReqList2">
+    </sql-query>
+
+    <!-- whothers.dw_wh_nivelservicio_req_list_detail -->
+    <sql-query name="whothers.DwWhNivelservicioReqListDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_nivelservicio_req_list_detail2 -->
+    <sql-query name="whothers.DwWhNivelservicioReqListDetail2">
+    </sql-query>
+
+    <!-- whothers.dw_wh_nivelservicio_req_list_detail2_bk -->
+    <sql-query name="whothers.DwWhNivelservicioReqListDetail2Bk">
+    </sql-query>
+
+    <!-- whothers.dw_wh_nivelservicio_req_position -->
+    <sql-query name="whothers.DwWhNivelservicioReqPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_obsolescencia_edit -->
+    <sql-query name="whothers.DwWhObsolescenciaEdit">
+    </sql-query>
+
+    <!-- whothers.dw_wh_obsolescencia_generation_excdentar -->
+    <sql-query name="whothers.DwWhObsolescenciaGenerationExcdentar">
+    </sql-query>
+
+    <!-- whothers.dw_wh_obsolescencia_generation_invfisico -->
+    <sql-query name="whothers.DwWhObsolescenciaGenerationInvfisico">
+    </sql-query>
+
+    <!-- whothers.dw_wh_obsolescencia_generation_output -->
+    <sql-query name="whothers.DwWhObsolescenciaGenerationOutput">
+    </sql-query>
+
+    <!-- whothers.dw_wh_obsolescencia_generation_position -->
+    <sql-query name="whothers.DwWhObsolescenciaGenerationPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_obsolescencia_generation_sinmovim -->
+    <sql-query name="whothers.DwWhObsolescenciaGenerationSinmovim">
+    </sql-query>
+
+    <!-- whothers.dw_wh_obsolescencia_list -->
+    <sql-query name="whothers.DwWhObsolescenciaList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_obsolescencia_list_position -->
+    <sql-query name="whothers.DwWhObsolescenciaListPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_paac_edit -->
+    <sql-query name="whothers.DwWhPaacEdit">
+    </sql-query>
+
+    <!-- whothers.dw_wh_paac_edit_budget_unit -->
+    <sql-query name="whothers.DwWhPaacEditBudgetUnit">
+    </sql-query>
+
+    <!-- whothers.dw_wh_paac_edit_budget_unit_item -->
+    <sql-query name="whothers.DwWhPaacEditBudgetUnitItem">
+    </sql-query>
+
+    <!-- whothers.dw_wh_paac_edit_detail -->
+    <sql-query name="whothers.DwWhPaacEditDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_paac_edit_distribucion -->
+    <sql-query name="whothers.DwWhPaacEditDistribucion">
+    </sql-query>
+
+    <!-- whothers.dw_wh_paac_edit_filter -->
+    <sql-query name="whothers.DwWhPaacEditFilter">
+    </sql-query>
+
+    <!-- whothers.dw_wh_paac_interfase_dbf -->
+    <sql-query name="whothers.DwWhPaacInterfaseDbf">
+    </sql-query>
+
+    <!-- whothers.dw_wh_paac_interfase_list -->
+    <sql-query name="whothers.DwWhPaacInterfaseList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_paac_item_approve -->
+    <sql-query name="whothers.DwWhPaacItemApprove">
+    </sql-query>
+
+    <!-- whothers.dw_wh_paac_item_approve_distr -->
+    <sql-query name="whothers.DwWhPaacItemApproveDistr">
+    </sql-query>
+
+    <!-- whothers.dw_wh_paac_list -->
+    <sql-query name="whothers.DwWhPaacList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_paac_list_position -->
+    <sql-query name="whothers.DwWhPaacListPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_paac_select -->
+    <sql-query name="whothers.DwWhPaacSelect">
+    </sql-query>
+
+    <!-- whothers.dw_wh_penalidad_edit -->
+    <sql-query name="whothers.DwWhPenalidadEdit">
+    </sql-query>
+
+    <!-- whothers.dw_wh_penalidad_list -->
+    <sql-query name="whothers.DwWhPenalidadList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_penalidad_list_position -->
+    <sql-query name="whothers.DwWhPenalidadListPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_penalidad_referencia_select_co_list -->
+    <sql-query name="whothers.DwWhPenalidadReferenciaSelectCoList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_penalidad_referencia_select_oc_list -->
+    <sql-query name="whothers.DwWhPenalidadReferenciaSelectOcList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_penalidad_referencia_select_os_list -->
+    <sql-query name="whothers.DwWhPenalidadReferenciaSelectOsList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_penalidad_referencia_select_position -->
+    <sql-query name="whothers.DwWhPenalidadReferenciaSelectPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_precios_calificacion_prov_edit -->
+    <sql-query name="whothers.DwWhPreciosCalificacionProvEdit">
+    </sql-query>
+
+    <!-- whothers.dw_wh_precios_calificacion_prov_edit_pos -->
+    <sql-query name="whothers.DwWhPreciosCalificacionProvEditPos">
+    </sql-query>
+
+    <!-- whothers.dw_wh_precios_calificacion_prov_list -->
+    <sql-query name="whothers.DwWhPreciosCalificacionProvList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_precios_calificacion_prov_list_pos -->
+    <sql-query name="whothers.DwWhPreciosCalificacionProvListPos">
+    </sql-query>
+
+    <!-- whothers.dw_wh_precios_calificacion_prov_lista -->
+    <sql-query name="whothers.DwWhPreciosCalificacionProvLista">
+    </sql-query>
+
+    <!-- whothers.dw_wh_precios_calificacion_prov_percent -->
+    <sql-query name="whothers.DwWhPreciosCalificacionProvPercent">
+    </sql-query>
+
+    <!-- whothers.dw_wh_precios_proveedor_item_vendor -->
+    <sql-query name="whothers.DwWhPreciosProveedorItemVendor">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_generate_cc -->
+    <sql-query name="whothers.DwWhRacionGenerateCc">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_generate_position -->
+    <sql-query name="whothers.DwWhRacionGeneratePosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_generate_racion -->
+    <sql-query name="whothers.DwWhRacionGenerateRacion">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_history_list -->
+    <sql-query name="whothers.DwWhRacionHistoryList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_history_position -->
+    <sql-query name="whothers.DwWhRacionHistoryPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_items_select_list -->
+    <sql-query name="whothers.DwWhRacionItemsSelectList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_items_select_list_aliados -->
+    <sql-query name="whothers.DwWhRacionItemsSelectListAliados">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_list_massive_add -->
+    <sql-query name="whothers.DwWhRacionListMassiveAdd">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_list_massive_add_item -->
+    <sql-query name="whothers.DwWhRacionListMassiveAddItem">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_list_massive_position_item -->
+    <sql-query name="whothers.DwWhRacionListMassivePositionItem">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_list_plantilla_add -->
+    <sql-query name="whothers.DwWhRacionListPlantillaAdd">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_list_plantilla_control -->
+    <sql-query name="whothers.DwWhRacionListPlantillaControl">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_list_plantilla_position -->
+    <sql-query name="whothers.DwWhRacionListPlantillaPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_pedidos_browse_detail -->
+    <sql-query name="whothers.DwWhRacionPedidosBrowseDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_pedidos_browse_header -->
+    <sql-query name="whothers.DwWhRacionPedidosBrowseHeader">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_pedidos_browse_position -->
+    <sql-query name="whothers.DwWhRacionPedidosBrowsePosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_pedidos_edit -->
+    <sql-query name="whothers.DwWhRacionPedidosEdit">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_pedidos_edit_control -->
+    <sql-query name="whothers.DwWhRacionPedidosEditControl">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_pedidos_edit_errores -->
+    <sql-query name="whothers.DwWhRacionPedidosEditErrores">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_pedidos_edit_historia -->
+    <sql-query name="whothers.DwWhRacionPedidosEditHistoria">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_pedidos_edit_import -->
+    <sql-query name="whothers.DwWhRacionPedidosEditImport">
+    </sql-query>
+
+    <!-- whothers.dw_wh_racion_pedidos_edit_position -->
+    <sql-query name="whothers.DwWhRacionPedidosEditPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_replicacion_detail -->
+    <sql-query name="whothers.DwWhReplicacionDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_replicacion_distri -->
+    <sql-query name="whothers.DwWhReplicacionDistri">
+    </sql-query>
+
+    <!-- whothers.dw_wh_replicacion_header -->
+    <sql-query name="whothers.DwWhReplicacionHeader">
+    </sql-query>
+
+    <!-- whothers.dw_wh_replicacion_mst -->
+    <sql-query name="whothers.DwWhReplicacionMst">
+    </sql-query>
+
+    <!-- whothers.dw_wh_replicacion_mst_cliente -->
+    <sql-query name="whothers.DwWhReplicacionMstCliente">
+    </sql-query>
+
+    <!-- whothers.dw_wh_replicacion_mst_depen -->
+    <sql-query name="whothers.DwWhReplicacionMstDepen">
+    </sql-query>
+
+    <!-- whothers.dw_wh_replicacion_mst_empleado -->
+    <sql-query name="whothers.DwWhReplicacionMstEmpleado">
+    </sql-query>
+
+    <!-- whothers.dw_wh_replicacion_mst_item -->
+    <sql-query name="whothers.DwWhReplicacionMstItem">
+    </sql-query>
+
+    <!-- whothers.dw_wh_replicacion_mst_persona -->
+    <sql-query name="whothers.DwWhReplicacionMstPersona">
+    </sql-query>
+
+    <!-- whothers.dw_wh_replicacion_pendiente -->
+    <sql-query name="whothers.DwWhReplicacionPendiente">
+    </sql-query>
+
+    <!-- whothers.dw_wh_requisicion_distribucion_detail -->
+    <sql-query name="whothers.DwWhRequisicionDistribucionDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_edit_avance -->
+    <sql-query name="whothers.DwWhStEditAvance">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_edit_avance_ingresos -->
+    <sql-query name="whothers.DwWhStEditAvanceIngresos">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_edit_componente -->
+    <sql-query name="whothers.DwWhStEditComponente">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_edit_cxp -->
+    <sql-query name="whothers.DwWhStEditCxp">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_edit_detail -->
+    <sql-query name="whothers.DwWhStEditDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_edit_items_producidos -->
+    <sql-query name="whothers.DwWhStEditItemsProducidos">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_edit_main -->
+    <sql-query name="whothers.DwWhStEditMain">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_edit_material -->
+    <sql-query name="whothers.DwWhStEditMaterial">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_edit_req_detail -->
+    <sql-query name="whothers.DwWhStEditReqDetail">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_edit_req_distribution -->
+    <sql-query name="whothers.DwWhStEditReqDistribution">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_edit_req_header -->
+    <sql-query name="whothers.DwWhStEditReqHeader">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_list -->
+    <sql-query name="whothers.DwWhStList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_list_position -->
+    <sql-query name="whothers.DwWhStListPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_pendings_list -->
+    <sql-query name="whothers.DwWhStPendingsList">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_pendings_position -->
+    <sql-query name="whothers.DwWhStPendingsPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_print -->
+    <sql-query name="whothers.DwWhStPrint">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_print_position -->
+    <sql-query name="whothers.DwWhStPrintPosition">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_process_lote -->
+    <sql-query name="whothers.DwWhStProcessLote">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_process_main -->
+    <sql-query name="whothers.DwWhStProcessMain">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_process_material -->
+    <sql-query name="whothers.DwWhStProcessMaterial">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_process_producto -->
+    <sql-query name="whothers.DwWhStProcessProducto">
+    </sql-query>
+
+    <!-- whothers.dw_wh_st_process_requisition -->
+    <sql-query name="whothers.DwWhStProcessRequisition">
+    </sql-query>
+
+</hibernate-mapping>

@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form id="whrcursoselector">
+		<p:panel>
+			<p:panelGrid columns="1" layout="grid"
+				styleClass="ui-panelgrid-blank">
+
+				<p:panelGrid columns="5" layout="grid"
+					columnClasses="ui-grid-col-1,ui-grid-col-4,ui-grid-col-1,ui-grid-col-1,ui-grid-col-5">
+					<h:outputLabel value="Criterio" />
+
+					<p:selectOneMenu style="width:100%;"
+						value="#{cwHrCursoSelector.dw_position.tipobusqueda}">
+						<f:selectItem itemLabel="Descripcion" itemValue="A" />
+						<f:selectItem itemLabel="Código" itemValue="C" />
+					</p:selectOneMenu>
+					<p:spacer />
+
+					<h:outputLabel value="Buscar" id="txtbuscar" />
+					<p:inputText value="#{cwHrCursoSelector.dw_position.sle_buscar}"
+						style="width:100%;" />
+				</p:panelGrid>
+
+
+				<p:panelGrid columns="3" layout="grid"
+					columnClasses="ui-grid-col-1,ui-grid-col-1,ui-grid-col-2">
+					<h:outputLabel value="Area" />
+					<p:selectBooleanCheckbox id="chkArea"
+						value="#{cwHrCursoSelector.dw_position.areaBool}">
+						<p:ajax update="cboMiscelaneosdetalle" />
+					</p:selectBooleanCheckbox>
+					
+					<p:selectOneMenu style="width:250px;"
+						value="#{cwHrCursoSelector.dw_position.area}"
+						 id="cboMiscelaneosdetalle"
+						disabled="#{cwHrCursoSelector.dw_position.areaBool}">
+						<f:selectItem itemLabel="" />
+						<f:selectItems value="#{cwHrCursoSelector.dwc_arealst}" var="m"
+							itemLabel="#{m.descripcionlocal}" itemValue="#{m.codigoelemento}" />
+					</p:selectOneMenu>
+
+				</p:panelGrid>
+			</p:panelGrid>
+
+
+		</p:panel>
+
+		<p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank"
+			columnClasses="ui-grid-col-8,ui-grid-col-2,ui-grid-col-2">
+			<h:outputLabel value="Seleccione una Cuenta con dobleClick"
+				style="font-size:11px; font-family:Open sans,sans-serif; font-weight: bold;color:#800000" />
+
+			<p:commandButton value="Buscar" style="width:100%;"
+				action="#{cwHrCursoSelector.buscar}" update="@form" 
+				icon="buscar" />
+			<p:commandButton value="Cancelar" style="width:100%;" icon="cancelar"
+				onclick="PF('popSelectorCurso').hide()" />
+		</p:panelGrid>
+
+
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			paginator="true" paginatorPosition="bottom" scrollHeight="240"
+			rowStyleClass="#{list.estilo}" sortBy="#{d.curso}" rows="1"
+			scrollable="true" rowKey="#{d.curso}"
+			selection="#{cwHrCursoSelector.registroSeleccionado}"
+			selectionMode="single"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+			value="#{cwHrCursoSelector.dw_1List}" var="d">
+
+			<p:columnGroup type="header">
+				<p:row>
+					<p:column headerText="Curso" width="15" />
+					<p:column headerText="Descripción" width="180" />
+					<p:column headerText="Acción" width="15" />
+				</p:row>
+			</p:columnGroup>
+
+
+			<p:subTable var="details" value="#{d.dw1Detalle}" id="idsubtable">
+
+				<f:facet name="header">
+					<h:outputText value="#{d.area}  -  #{d.areadescripcion}" />
+				</f:facet>
+
+				<p:column headerText="Curso" width="15">
+					<h:outputText value="#{details.curso}" />
+				</p:column>
+
+				<p:column headerText="Descripcion" width="180">
+					<h:outputText value="#{details.descripcion}" />
+				</p:column>
+
+				<p:column headerText="Acción" width="15">
+					<p:commandButton icon="aceptar" update="@form"
+						action="#{cwHrCursoSelector.seleccionRegistro}">
+						<f:setPropertyActionListener
+							target="#{cwHrCursoSelector.registroSeleccionado}"
+							value="#{details}"></f:setPropertyActionListener>
+					</p:commandButton>
+				</p:column>
+			</p:subTable>
+		</p:dataTable>
+
+	</h:form>
+</ui:composition>
+
+
+
+

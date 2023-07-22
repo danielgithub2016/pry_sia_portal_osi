@@ -1,0 +1,218 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="content">
+		<style>
+.ui-tabs .ui-tabs-nav li a {
+	float: left;
+	padding: .0em 1em 0em 0em;
+	text-decoration: none;
+}
+</style>
+		<h:form id="frmWHrRequerimientoEdit">
+
+			<h:commandLink id="lnkReport" target="_blank" style="display:none;"
+				immediate="true" action="#{cWHrRequerimientoEdit.imprimirRepor}" />
+
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+
+			<p:panelGrid columns="2" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+				layout="grid" styleClass="ui-panelgrid-blank">
+				<p:commandButton value="Guardar" icon="guardar" update="@form"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					rendered="#{!cWHrRequerimientoEdit.mostrarEnviar}"
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+					action="#{cWHrRequerimientoEdit.guardar}" />
+
+				<p:commandButton value="Guardar y Enviar" icon="guardar"
+					update="@form" onstart="PF('bUI').block();"
+					oncomplete="PF('bUI').unblock();" type="image"
+					rendered="#{cWHrRequerimientoEdit.mostrarEnviar}"
+					action="#{cWHrRequerimientoEdit.enviar}">
+					<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+						icon="alerta"
+						message="¿Está seguro de Guardar y Enviar?. Recuerde que al enviar la información ya no podrá modificarla." />
+				</p:commandButton>
+
+				<p:commandButton value="Cancelar" icon="cancelar" immediate="true"
+					action="#{cLogin.ejecutarMenu}" onstart="PF('bUI').block();"
+					oncomplete="PF('bUI').unblock();">
+					<f:setPropertyActionListener target="#{cLogin.codigoConcepto}"
+						value="SPGRUP05CON001" />
+				</p:commandButton>
+
+
+				<p:commandButton id="btnUpdate" style="display:none" update="@form"
+					action="#{cWHrRequerimientoEdit.guardarDatosTemporal}">
+				</p:commandButton>
+			</p:panelGrid>
+
+			<p:panelGrid columns="1" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-12" layout="grid"
+				styleClass="ui-panelgrid-blank">
+				<p:outputLabel value="* Campos Obligatorios"
+					style="color:rgb(150,50,60)" />
+			</p:panelGrid>
+
+
+
+			<p:tabView id="tvWHrRequerimientoEdit" widgetVar="twtabview"
+				activeIndex="#{cWHrRequerimientoEdit.indiceActivoTabMantenimiento}">
+
+				<p:ajax event="tabChange"
+					oncomplete="document.getElementById('frmWHrRequerimientoEdit:btnUpdate').click()"
+					listener="#{cWHrRequerimientoEdit.onTabChange}" />
+
+				<p:tab id="tRequerimiento">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1082.bmp" />
+							<h:outputText value="Requerimiento" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include
+						src="/erp/rrhh/paginas/requerimiento/dw_requerimiento.xhtml" />
+				</p:tab>
+
+				<p:tab id="tReemplazo"
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitartabreqadicionales}"
+					rendered="#{cWHrRequerimientoEdit.opciones.ismostrartabreqadicionales}">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1686.bmp" />
+							<h:outputText value="Reemplazo" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include
+						src="/erp/rrhh/paginas/requerimiento/w_hr_requerimiento_reemplazo.xhtml" />
+				</p:tab>
+
+				<p:tab id="tPerfil"
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitartabfuncionescas}" rendered="false">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2484.bmp" />
+							<h:outputText value="Perfil del Puesto" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include
+						src="/erp/rrhh/paginas/requerimiento/w_hr_requerimiento_perfilpuesto.xhtml" />
+				</p:tab>
+
+				<p:tab id="tPracticante"
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitartabfuncionesprac}"
+					rendered="#{cWHrRequerimientoEdit.opciones.ismostrartabfuncionesprac}">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2484.bmp" />
+							<h:outputText value="Practicante" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include
+						src="/erp/rrhh/paginas/requerimiento/w_hr_requerimiento_practicante.xhtml" />
+				</p:tab>
+
+				<p:tab id="tSeguimiento" >
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2480.bmp" />
+							<h:outputText value="Seguimiento" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include
+						src="/erp/rrhh/paginas/requerimiento/w_hr_requerimiento_seguimiento.xhtml" />
+				</p:tab>
+
+			</p:tabView>
+
+		</h:form>
+
+		<p:dialog id="dgPuestosSelect" dynamic="true" resizable="false"
+			draggable="false" widgetVar="popPuestosSelect"
+			header="Maestro de Puestos" modal="true" appendTo="@(Body)"
+			responsive="true" fitViewport="true">
+			<ui:include src="w_hr_puestos_select.xhtml" />
+		</p:dialog>
+
+		<p:dialog id="dgSelectorNivelServicioSelect" dynamic="true"
+			resizable="false" draggable="false" fitViewport="true"
+			widgetVar="popSelectorNivelServicioSelect" appendTo="@(body)"
+			modal="true" header="Seleccione el Nivel" responsive="true">
+			<ui:include src="w_pr_nivelservicio_select.xhtml" />
+		</p:dialog>
+
+		<p:dialog id="dgDocumento" widgetVar="popDocumento" modal="true"
+			style="max-width:500px;" width="100%" appendTo="@(Body)"
+			header="Selector de Documento" resizable="false" responsive="true">
+			<ui:include
+				src="/comun/paginas/frm_documento_selector_emergente.xhtml" />
+		</p:dialog>
+
+		<p:dialog id="dgFuncionesCasMantenimiento" dynamic="true"
+			widgetVar="popFuncionesCasMantenimiento" modal="true"
+			responsive="true" appendTo="@(Body)"
+			styleClass="contenedorPrincipalExtraGrande"
+			header="Mantenimiento de Perfil del Puesto" resizable="false">
+			<ui:include src="w_requerimiento_funcionescas_mantenimiento.xhtml" />
+		</p:dialog>
+
+		<p:dialog id="dgFuncionesCasDetMantenimiento" dynamic="true"
+			widgetVar="popFuncionesCasDetMantenimiento" modal="true"
+			responsive="true" appendTo="@(Body)"
+			styleClass="contenedorPrincipalExtraGrande"
+			header="Mantenimiento de Funciones del Puesto" resizable="false">
+			<ui:include src="w_requerimiento_funcionescasdet_mantenimiento.xhtml" />
+		</p:dialog>
+
+		<p:dialog id="dgMiscelaneoSelectorVarios" dynamic="true"
+			resizable="false" draggable="false"
+			styleClass="contenedorPrincipalChico"
+			widgetVar="popSelectorMiscelaneoSelectorVarios" appendTo="@(body)"
+			modal="true" header="Seleccione el Misceláneo">
+			<ui:include
+				src="/erp/rrhh/paginas/desempenio/w_hr_miscelaneo_selector_varios.xhtml" />
+		</p:dialog>
+
+		<p:confirmDialog id="dgReemplazoInfo" closable="false"
+			widgetVar="popReemplazoInfo" header="Info" resizable="false"
+			severity="info" appendTo="@(body)" responsive="true"
+			message="Debe registrar la información en la ficha de Reemplazo">
+			<div class="ui-fluid">
+				<p:panelGrid columns="1" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-4" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:commandButton value="OK" immediate="true"
+						onclick="PF('twtabview').select(1);PF('popReemplazoInfo').hide()" />
+				</p:panelGrid>
+			</div>
+		</p:confirmDialog>
+
+		<p:confirmDialog id="dgEnvioCorreoEstado" closable="false"
+			widgetVar="popEnvioCorreoEstado" header="Info" resizable="false"
+			severity="info" appendTo="@(body)" responsive="true"
+			message="#{cWHrRequerimientoEdit.destinatariosEnvioCorreo}">
+			<div class="ui-fluid">
+				<h:form>
+					<p:commandButton value="OK" immediate="true"
+						action="whrrequerimientolist"
+						oncomplete="PF('popEnvioCorreoEstado').hide()" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+
+
+	</ui:define>
+</ui:composition>

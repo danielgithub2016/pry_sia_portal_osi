@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+	<class name="net.royal.seguridad.dominio.AcSucursal" table="SGCORESYS.AC_SUCURSAL">
+		<composite-id name="pk"
+			class="net.royal.seguridad.dominio.AcSucursalPk">
+			<key-property name="sucursal" type="string">
+				<column name="SUCURSAL" length="4" />
+			</key-property>
+		</composite-id>
+		<property name="descripcionlocal" type="string">
+			<column name="DESCRIPCIONLOCAL" length="50" />
+		</property>
+		<property name="descripcioningles" type="string">
+			<column name="DESCRIPCIONINGLES" length="50" />
+		</property>
+		<property name="sucursalgrupo" type="string">
+			<column name="SUCURSALGRUPO" length="6" />
+		</property>
+		<property name="estado" type="string">
+			<column name="ESTADO" length="10" />
+		</property>
+		<property name="ultimousuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+		<property name="ultimafechamodif" type="timestamp">
+			<column name="ULTIMAFECHAMODIF" />
+		</property>
+		<property name="cuentacontabledefecto" type="string">
+			<column name="CUENTACONTABLEDEFECTO" length="20" />
+		</property>
+		<property name="departamento" type="string">
+			<column name="DEPARTAMENTO" length="3" />
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dw_hr_rep_desempeno_cedula" language="groovy" pageWidth="600" pageHeight="1500" whenNoDataType="AllSectionsNoDetail" columnWidth="600" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="aa7fe9f8-9759-4626-a3bf-a897ac05e0ad">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="23"/>
+	<parameter name="PAR_COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_SECUENCIA" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_EVALUADO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_EVALUADOR" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\nunezh\\Desktop\\temp\\INDEPOQUI\\CEDULA\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CABECERA" class="java.lang.String"/>
+	<parameter name="par_nombreEvaluado" class="java.lang.String"/>
+	<parameter name="par_nombreEvaluador" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="96" splitType="Stretch">
+			<staticText>
+				<reportElement x="19" y="70" width="581" height="26" uuid="80c6cf6a-eaf8-4260-b674-a0d185995f9f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÉDULA DE EVALUACIÓN]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="439" y="25" width="45" height="20" uuid="49f431b8-065c-47c5-83e5-20b6d441b2cf"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="439" y="45" width="45" height="20" uuid="75c058ab-0521-4227-9347-aaf9ef822c71"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="484" y="25" width="45" height="20" uuid="ec13680f-7e8c-4072-b040-24b3061df699"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="484" y="45" width="45" height="20" uuid="be300588-3755-4c4f-8b97-d3f7711979b3"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="25" width="45" height="20" uuid="600fa24f-27cd-47de-acde-e889b5421a1c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="45" width="45" height="20" uuid="ca390b4f-eafa-4531-ac77-3282e45162fd"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="484" y="25" width="45" height="20" uuid="6522cee1-e862-4582-a8b2-7c72cbbb35ff"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="439" y="25" width="45" height="20" uuid="294f4e7c-cb19-4b30-845f-7bdf0760e204"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DÍA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="529" y="25" width="45" height="20" uuid="8e00c332-0349-47a7-b6fc-983ddacdf994"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AÑO]]></text>
+			</staticText>
+			<textField pattern="dd">
+				<reportElement x="439" y="45" width="45" height="20" uuid="40626956-dd0b-4eab-8750-bda40e62a3c9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM">
+				<reportElement x="484" y="45" width="45" height="20" uuid="7ddb4d6d-8c53-4d20-be07-de0f25e830d6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy">
+				<reportElement x="529" y="45" width="45" height="20" uuid="fcc7aa8f-c58b-485c-b87a-65e938996bd6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="19" y="4" width="234" height="51" uuid="ccbe0e54-d776-444f-8ac3-f4dedff4c223"/>
+				<imageExpression><![CDATA[$P{CABECERA}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="264" splitType="Stretch">
+			<subreport>
+				<reportElement positionType="Float" x="19" y="3" width="581" height="41" uuid="c60d3997-e029-479d-8cc9-9bc59bcca59a"/>
+				<subreportParameter name="PAR_COMPANIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_COMPANIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_SECUENCIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_SECUENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_EVALUADO">
+					<subreportParameterExpression><![CDATA[$P{PAR_EVALUADO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_EVALUADOR">
+					<subreportParameterExpression><![CDATA[$P{PAR_EVALUADOR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["dw_hr_rep_desempeno_cedula_cabecera.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="19" y="44" width="581" height="40" isPrintWhenDetailOverflows="true" uuid="fd2e071f-ad89-4cc6-8cec-0ff4e8961234"/>
+				<subreportParameter name="PAR_COMPANIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_COMPANIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_SECUENCIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_SECUENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_EVALUADO">
+					<subreportParameterExpression><![CDATA[$P{PAR_EVALUADO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_EVALUADOR">
+					<subreportParameterExpression><![CDATA[$P{PAR_EVALUADOR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["dw_hr_rep_desempeno_cedula_meta.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="19" y="86" width="581" height="40" isPrintWhenDetailOverflows="true" uuid="43d61008-cda9-4b0e-a9b3-54e05b7e73b1"/>
+				<subreportParameter name="PAR_COMPANIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_COMPANIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_SECUENCIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_SECUENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_EVALUADO">
+					<subreportParameterExpression><![CDATA[$P{PAR_EVALUADO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_EVALUADOR">
+					<subreportParameterExpression><![CDATA[$P{PAR_EVALUADOR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["dw_hr_rep_desempeno_cedula_competencia.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="19" y="127" width="581" height="38" isPrintWhenDetailOverflows="true" uuid="5bb91b09-67e0-4919-989b-de6421958c30"/>
+				<subreportParameter name="PAR_COMPANIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_COMPANIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_SECUENCIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_SECUENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_EVALUADO">
+					<subreportParameterExpression><![CDATA[$P{PAR_EVALUADO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_EVALUADOR">
+					<subreportParameterExpression><![CDATA[$P{PAR_EVALUADOR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["dw_hr_rep_desempeno_cedula_comentario.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="19" y="165" width="581" height="39" uuid="68198892-2839-4016-9123-c6b179b0b71a"/>
+				<subreportParameter name="PAR_EVALUADO">
+					<subreportParameterExpression><![CDATA[$P{PAR_EVALUADO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="par_nombreEvaluado">
+					<subreportParameterExpression><![CDATA[$P{par_nombreEvaluado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_COMPANIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_COMPANIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_EVALUADOR">
+					<subreportParameterExpression><![CDATA[$P{PAR_EVALUADOR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_SECUENCIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_SECUENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="par_nombreEvaluador">
+					<subreportParameterExpression><![CDATA[$P{par_nombreEvaluador}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["dw_hr_rep_desempeno_cedula_pie.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="19" y="204" width="581" height="40" uuid="07400d50-068f-4454-bae4-41a6a01624ae"/>
+				<subreportParameter name="PAR_COMPANIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_COMPANIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_SECUENCIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_SECUENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_EVALUADO">
+					<subreportParameterExpression><![CDATA[$P{PAR_EVALUADO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_EVALUADOR">
+					<subreportParameterExpression><![CDATA[$P{PAR_EVALUADOR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["dw_hr_rep_desempeno_cedula_leyenda.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,57 @@
+<!--
+@powerbuilder : w_hr_curso_selector
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form id="frmCursoSelector">
+		<p:panel>
+			<h:panelGrid columns="2" style="border-spacing:0px;" width="70%">
+				<h:panelGrid columns="2" style="border-spacing:0px;" width="100%">
+					<p:outputLabel value="Criterio" />
+					<p:selectOneMenu style="width:80px;margin-left: 4px;">
+						<f:selectItem itemLabel="Descripción" itemValue="D" />
+						<f:selectItem itemLabel="Código" itemValue="C" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				<h:panelGrid columns="2" style="border-spacing:0px;">
+					<p:outputLabel value="Buscar" />
+					<p:inputText style="width:300px;" />
+				</h:panelGrid>
+			</h:panelGrid>
+			<h:panelGrid columns="3" style="border-spacing:0px;">
+				<p:outputLabel value="Area" />
+				<p:selectBooleanCheckbox value="true" />
+				<p:selectOneMenu style="width: 432px;" disabled="true">
+				</p:selectOneMenu>
+			</h:panelGrid>
+		</p:panel>
+		<h:panelGrid width="100%">
+			<p:commandButton value="Buscar" icon="buscar"
+				styleClass="botonTextoImagen" style="float:right;" />
+		</h:panelGrid>
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			paginator="true" paginatorPosition="bottom" scrollWidth="580"
+			scrollable="true" scrollHeight="250" tableStyle="width:560px"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+			<p:column headerText="Curso" width="50"></p:column>
+			<p:column headerText="Descripción"></p:column>
+
+		</p:dataTable>
+		<p:panel style="margin-top:5px;">
+		<h:panelGrid width="100%">
+			<h:panelGrid style="float:right;" columns="2">
+				<p:commandButton value="Aceptar" icon="aceptar"
+					styleClass="botonTextoImagen" style="float:right;" />
+				<p:commandButton value="Cancelar" icon="cancelar"
+					styleClass="botonTextoImagen" style="float:right;" />
+			</h:panelGrid>
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
+</ui:composition>

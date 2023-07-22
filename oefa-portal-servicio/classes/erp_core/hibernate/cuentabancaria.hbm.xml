@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Cuentabancaria" table="SGCORESYS.CUENTABANCARIA">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.CuentabancariaPk">
+            <key-property name="cuentabancaria" type="string">
+                <column name="CUENTABANCARIA" length="15" />
+            </key-property>
+            <key-property name="banco" type="string">
+                <column name="BANCO" length="3" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="40" />
+        </property>
+        <property name="companiacodigo" type="string">
+            <column name="COMPANIACODIGO" length="6" />
+        </property>
+        <property name="fechaapertura" type="timestamp">
+            <column name="FECHAAPERTURA" length="7" />
+        </property>
+        <property name="fechacierrecuenta" type="timestamp">
+            <column name="FECHACIERRECUENTA" length="7" />
+        </property>
+        <property name="monedacodigo" type="string">
+            <column name="MONEDACODIGO" length="2" />
+        </property>
+        <property name="tipocuenta" type="string">
+            <column name="TIPOCUENTA" length="1" />
+        </property>
+        <property name="cuentacontable" type="string">
+            <column name="CUENTACONTABLE" length="20" />
+        </property>
+        <property name="sobregiroautorizado" type="integer">
+            <column name="SOBREGIROAUTORIZADO" length="22" />
+        </property>
+        <property name="agenciabanco" type="string">
+            <column name="AGENCIABANCO" length="30" />
+        </property>
+        <property name="agenciadistrito" type="string">
+            <column name="AGENCIADISTRITO" length="30" />
+        </property>
+        <property name="sucursalcodigo" type="string">
+            <column name="SUCURSALCODIGO" length="3" />
+        </property>
+        <property name="idioma" type="string">
+            <column name="IDIOMA" length="1" />
+        </property>
+        <property name="ultimoperiodoconciliacion" type="string">
+            <column name="ULTIMOPERIODOCONCILIACION" length="6" />
+        </property>
+        <property name="vouchertipo" type="string">
+            <column name="VOUCHERTIPO" length="2" />
+        </property>
+        <property name="voucherclasificacion" type="string">
+            <column name="VOUCHERCLASIFICACION" length="4" />
+        </property>
+        <property name="atencionpersona" type="string">
+            <column name="ATENCIONPERSONA" length="30" />
+        </property>
+        <property name="atencioncargo" type="string">
+            <column name="ATENCIONCARGO" length="30" />
+        </property>
+        <property name="flujodecajaflag" type="string">
+            <column name="FLUJODECAJAFLAG" length="1" />
+        </property>
+        <property name="flujodecajaorden" type="integer">
+            <column name="FLUJODECAJAORDEN" length="22" />
+        </property>
+        <property name="codigodiskette" type="string">
+            <column name="CODIGODISKETTE" length="20" />
+        </property>
+        <property name="conciliacionbancariaflag" type="string">
+            <column name="CONCILIACIONBANCARIAFLAG" length="1" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="smartcredflag" type="string">
+            <column name="SMARTCREDFLAG" length="1" />
+        </property>
+        <property name="numctabanco" type="string">
+            <column name="NUMCTABANCO" length="15" />
+        </property>
+        <property name="montoapertura" type="integer">
+            <column name="MONTOAPERTURA" length="22" />
+        </property>
+        <property name="cuentabancariaconsolidada" type="string">
+            <column name="CUENTABANCARIACONSOLIDADA" length="20" />
+        </property>
+        <property name="cuentabancooriginal" type="string">
+            <column name="CUENTABANCOORIGINAL" length="25" />
+        </property>
+        <property name="cuentacontabledescuento" type="string">
+            <column name="CUENTACONTABLEDESCUENTO" length="20" />
+        </property>
+        <property name="archivodiskette" type="string">
+            <column name="ARCHIVODISKETTE" length="100" />
+        </property>
+        <property name="referenciafiscal03" type="string">
+            <column name="REFERENCIAFISCAL03" length="10" />
+        </property>
+        <property name="unidadnegocio" type="string">
+            <column name="UNIDADNEGOCIO" length="4" />
+        </property>
+        <property name="itfflag" type="string">
+            <column name="ITFFLAG" length="1" />
+        </property>
+        <property name="conciliacionapflag" type="string">
+            <column name="CONCILIACIONAPFLAG" length="1" />
+        </property>
+        <property name="conciliacionperiodo" type="string">
+            <column name="CONCILIACIONPERIODO" length="4" />
+        </property>
+        <property name="pagosinterfaseflag" type="string">
+            <column name="PAGOSINTERFASEFLAG" length="1" />
+        </property>
+        <property name="codigosiaf" type="string">
+            <column name="CODIGOSIAF" length="3" />
+        </property>
+        <property name="multifondoflag" type="string">
+            <column name="MULTIFONDOFLAG" length="1" />
+        </property>
+        <property name="transitoflag" type="string">
+            <column name="TRANSITOFLAG" length="1" />
+        </property>
+        <property name="funcioncuentaflag" type="string">
+            <column name="FUNCIONCUENTAFLAG" length="1" />
+        </property>
+        <property name="cutflag" type="string">
+            <column name="CUTFLAG" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

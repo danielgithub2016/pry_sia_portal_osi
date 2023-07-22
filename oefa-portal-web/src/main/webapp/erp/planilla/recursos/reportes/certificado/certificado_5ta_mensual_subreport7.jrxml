@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado_5ta_mensual_subreport7" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="bc3c0ca6-7ce0-4b60-82a7-51568b05db64">
+	<property name="ireport.zoom" value="2.1435888100000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="EMPLEADO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{EMPLEADO}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EJERCICIO_FISCAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{EJERCICIO_FISCAL}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{COMPANIA}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select descripcion,montotope,factor*100 as factor,impuesto
+from SGCORESYS.pr_impuestorentadetalle
+where empleado = $P{EMPLEADO} and ejerciciofiscal = (select max(ejerciciofiscal)
+                                                from SGCORESYS.pr_impuestorenta
+                                                where empleado =$P{EMPLEADO} and substr(ejerciciofiscal,1,4) =substr($P{EJERCICIO_FISCAL},1,4))
+                     and companiasocio=$P{COMPANIA} and impuesto > 0]]>
+	</queryString>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="MONTOTOPE" class="java.math.BigDecimal"/>
+	<field name="FACTOR" class="java.math.BigDecimal"/>
+	<field name="IMPUESTO" class="java.math.BigDecimal"/>
+	<variable name="TOTAL_IMPUESTO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPUESTO}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="15" forecolor="#333333" uuid="cc06cea1-1cbf-4d0f-a26d-5b0bab297797"/>
+				<box leftPadding="5" rightPadding="0">
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="100" y="0" width="65" height="15" forecolor="#333333" uuid="b2b1d9aa-7aaf-4977-8371-756e9c7b1e30"/>
+				<box leftPadding="5" rightPadding="0">
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MONTOTOPE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="0" width="76" height="15" forecolor="#333333" uuid="930c1782-7f33-4870-880b-95bc8795bbac"/>
+				<box leftPadding="5" rightPadding="0">
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FACTOR} + "%"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="241" y="0" width="63" height="15" forecolor="#333333" uuid="17441195-d34e-4356-bb62-fe1c5bdf2fba"/>
+				<box leftPadding="5" rightPadding="5">
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IMPUESTO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="241" height="20" forecolor="#000000" uuid="064305da-0ac9-41c0-8df0-0b982ede0196"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCUENTO ANUAL RENTA 5TA.]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="241" y="0" width="63" height="20" forecolor="#333333" uuid="b081902f-225f-4d48-9e59-66f6e3b80c64"/>
+				<box leftPadding="5" rightPadding="5">
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_IMPUESTO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<WatchedResource>WEB-INF/web.xml</WatchedResource>
+	<WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
+
+
+
+	<!-- conexion dev -->
+	<!-- <Resource name="jndi/dbPortalWeb" auth="Container" type="javax.sql.DataSource"
+		driverClassName="oracle.jdbc.OracleDriver"
+		url="jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=11.160.123.168)(PORT=1521))(LOAD_BALANCE=yes)(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=o12d01)))"
+		username="sgsigawoper" password="oracle2023" maxActive="20" maxIdle="10"
+		maxWait="-1">
+	</Resource> -->
+	
+	<!-- conexion certificacion -->
+	<Resource name="jndi/dbPortalWeb" auth="Container" type="javax.sql.DataSource"
+		driverClassName="oracle.jdbc.OracleDriver"
+		url="jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=11.160.123.169)(PORT=1521))(LOAD_BALANCE=yes)(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=o12c01)))"
+		username="SGCORESYS" password="SGCORESYS2023" maxActive="20" maxIdle="10"
+		maxWait="-1">
+	</Resource>
+
+
+</Context>
+

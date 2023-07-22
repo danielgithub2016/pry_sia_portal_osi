@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : presupuesto.BuPresupuesto -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="bupresupuesto.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+	</sql-query>
+
+	<sql-query name="bupresupuesto.listarPresupuestoPorCentroCosto">
+	  <![CDATA[
+	  SELECT 
+		BU_PRESUPUESTO.REFERENCIAFISCAL03 as "referenciafiscal03",
+		(SELECT DESCRIPCIONLOCAL FROM SGCORESYS.ac_referenciafiscal
+		WHERE COMPANIASOCIO = :p_compania AND ANO = :p_anio AND VERSION = :p_version AND
+		TIPOREFERENCIAFISCAL = '03' and NIVEL='02' AND
+		REFERENCIAFISCAL=BU_PRESUPUESTO.REFERENCIAFISCAL03 ) as "descfuente",
+		BU_PRESUPUESTO.CENTROCOSTO as "centrocosto",
+		BU_PRESUPUESTO.efp as "componente",
+		BU_PRESUPUESTO.REFERENCIAFISCAL01 as "meta",
+		BU_PRESUPUESTO.REFERENCIA02 as "clasificador",
+		bu_presupuesto.elementogasto as "servicio",
+		( select descripcion from SGCORESYS.bu_nivelserviciomst where
+		bu_nivelserviciomst.companiasocio = BU_PRESUPUESTO.companiasocio
+		and nivelservicio=bu_presupuesto.elementogasto) as "descripcionnivelservicio",
+		y.montoreferencial as "pia",
+		nvl(( select sum(a.monto) - sum(a.monto_anulacion)
+		from SGCORESYS.bu_presupuestocambiodetalle a
+		inner join SGCORESYS.bu_presupuestocambio b on a.companiasocio=b.companiasocio
+		and a.ampliacionnumero=b.ampliacionnumero
+		where a.referencia02 = BU_PRESUPUESTO.REFERENCIA02
+		and a.referenciafiscal01 = BU_PRESUPUESTO.REFERENCIAFISCAL01
+		and a.referenciafiscal03 = BU_PRESUPUESTO.REFERENCIAFISCAL03
+		and a.ampliacionnumero <>'00'
+		and a.elementogasto = BU_PRESUPUESTO.elementogasto
+		and a.centrocosto = BU_PRESUPUESTO.centrocosto
+		and a.componente = BU_PRESUPUESTO.EFP
+		and b.ano = BU_PRESUPUESTO.ANO ),0.00) as "modificaciones",
+		bu_presupuesto.montoreferencial as "pim",
+		(Select nvl(sum(a.monto),0.00) - nvl(sum(montodisminucion),0.00)
+		from SGCORESYS.bu_pca_notas a
+		inner JOIN SGCORESYS.bu_nota b ON a.ANO=b.ANO AND a.NOTA=b.NOTA
+		Where b.tiponota='05' and b.estado='AP'
+		and a.companiasocio = bu_presupuesto.companiasocio
+		and ejercicio = BU_PRESUPUESTO.ejercicio
+		and sucursal = BU_PRESUPUESTO.sucursal
+		and cuentacontable = BU_PRESUPUESTO.cuentacontable
+		and a.centrocosto = BU_PRESUPUESTO.centrocosto
+		and proyecto = BU_PRESUPUESTO.proyecto
+		and referencia01 = BU_PRESUPUESTO.referencia01
+		and efp = BU_PRESUPUESTO.efp
+		and fuentefinancimiento = BU_PRESUPUESTO.referenciafiscal03
+		and elementogasto = BU_PRESUPUESTO.elementogasto
+		and referencia02 = BU_PRESUPUESTO.referencia02 ) as "pca",
+		nvl((select sum(monto) from SGCORESYS.bu_certificaciondetalle a
+		inner JOIN SGCORESYS.bu_certificacion b
+		on a.companiasocio = b.companiasocio
+		and a.ano = b.ano
+		and a.numerodocumento = b.numerodocumento
+		and a.secuencia = b.secuencia
+		and a.movimiento = b.movimiento
+		where a.ano = BU_PRESUPUESTO.ANO
+		and a.companiasocio = BU_PRESUPUESTO.COMPANIASOCIO
+		and a.nivelservicio = BU_PRESUPUESTO.elementogasto
+		and a.referenciafiscal02 = BU_PRESUPUESTO.REFERENCIA02
+		and a.referenciafiscal01 = BU_PRESUPUESTO.REFERENCIAFISCAL01
+		and a.referenciafiscal03 = BU_PRESUPUESTO.REFERENCIAFISCAL03
+		and a.componente = BU_PRESUPUESTO.efp
+		and b.Estado2 in ('AP','PR','OB')
+		and b.tipodocumento='CR'
+		and b.movimiento =0
+		and b.tipoproceso IN ('CR','MR') ),0.00) as "certificaciones",
+		nvl((select sum(monto) from SGCORESYS.bu_certificaciondetalle a
+		inner JOIN SGCORESYS.bu_certificacion b
+		on a.companiasocio = b.companiasocio
+		and a.ano = b.ano
+		and a.numerodocumento = b.numerodocumento
+		and a.secuencia = b.secuencia
+		and a.movimiento = b.movimiento
+		where a.companiasocio = BU_PRESUPUESTO.COMPANIASOCIO
+		and a.ano = BU_PRESUPUESTO.ANO
+		and a.nivelservicio = BU_PRESUPUESTO.elementogasto
+		and a.referenciafiscal02 = BU_PRESUPUESTO.REFERENCIA02
+		and a.referenciafiscal01 = BU_PRESUPUESTO.REFERENCIAFISCAL01
+		and a.referenciafiscal03 = BU_PRESUPUESTO.REFERENCIAFISCAL03
+		and a.componente = BU_PRESUPUESTO.efp
+		and b.Estado2 in ('AP')
+		and b.tipodocumento = 'CA'
+		and b.movimiento =0
+		and b.tipoproceso IN ('CA') ),0.00) as "compromisos",
+		E.ejecucion as "ejecutado",
+		 (CASE WHEN (SELECT referenciafiscalanterior FROM SGCORESYS.ac_referenciafiscal
+         WHERE COMPANIASOCIO = :p_compania 
+         AND ANO = :p_anio
+         AND VERSION = :p_version AND 
+         REFERENCIAFISCAL = BU_PRESUPUESTO.REFERENCIA02) = 1 THEN 'indverde' ELSE 
+         (CASE WHEN (SELECT referenciafiscalanterior FROM SGCORESYS.ac_referenciafiscal
+         WHERE COMPANIASOCIO = :p_compania 
+         AND ANO = :p_anio
+         AND VERSION = :p_version AND 
+         REFERENCIAFISCAL = BU_PRESUPUESTO.REFERENCIA02) = 3 then 'indverde'
+         else 'indrojo' end) end ) as "permisos"
+		FROM SGCORESYS.BU_PRESUPUESTO bu_presupuesto
+		inner join SGCORESYS.vw_bu_efp on ( vw_bu_efp.EFP= BU_PRESUPUESTO.efp and
+		vw_bu_efp.ano=BU_PRESUPUESTO.ano and
+		vw_bu_efp.companiasocio=BU_PRESUPUESTO.companiasocio and
+		vw_bu_efp.version =:p_version )
+		left outer join
+		(select sum(cpd.monto) as ejecucion,
+		max(SUBSTR(cp.periodo,1,4)) as ano,
+		cpd.referenciafiscal03 as referenciafiscal03,
+		cpd.partidapresupuestal as efp,
+		cpd.referenciafiscal01 as referenciafiscal01,
+		cpd.referenciafiscal02 as referenciafiscal02,
+		to_number(cpd.camporeferencia) as elementogasto,
+		cpd.centrocosto as centrocosto,
+		max(cp.companiasocio) as companiasocio
+		from SGCORESYS.bu_controlpresupuestal cp
+		inner join SGCORESYS.bu_controlpresupuestal_distrib cpd
+		on (cp.companiasocio=cpd.companiasocio)
+		and (cp.tipodocumento=cpd.tipodocumento)
+		and (cp.numerodocumento=cpd.numerodocumento)
+		and (cp.proveedor=cpd.proveedor)
+		where (cp.ciclo = 'G')
+		and ( (cp.fase = 'D') OR (cp.fase = 'G' and cp.tipoajuste IN ('AD','DV')
+		) )
+		and (cp.estado ='AP')
+		and (cp.ano = :p_anio )
+		and cp.companiasocio = :p_compania
+		AND NOT (cpd.partidapresupuestal IS NULL)
+		group by
+		cpd.referenciafiscal03,cpd.partidapresupuestal,cpd.referenciafiscal01,
+		cpd.referenciafiscal02,to_number(cpd.camporeferencia) ,
+		cpd.centrocosto
+		) E
+		ON BU_PRESUPUESTO.COMPANIASOCIO = e.companiasocio and
+		BU_PRESUPUESTO.ANO = e.ano and
+		BU_PRESUPUESTO.REFERENCIAFISCAL03 = e.REFERENCIAFISCAL03 and
+		BU_PRESUPUESTO.REFERENCIAFISCAL01 = e.REFERENCIAFISCAL01 and
+		BU_PRESUPUESTO.elementogasto = e.elementogasto and
+		BU_PRESUPUESTO.REFERENCIA02 = e.referenciafiscal02 and
+		BU_PRESUPUESTO.centrocosto = e.centrocosto and
+		BU_PRESUPUESTO.EFP = e.EFP
+		inner join (select montoreferencial , companiasocio , ano ,
+		REFERENCIAFISCAL03 ,REFERENCIAFISCAL01,
+		CUENTACONTABLE,CENTROCOSTO,PROYECTO,SUCURSAL,
+		Elementogasto,REFERENCIA01,REFERENCIA02, EFP
+		from SGCORESYS.bu_presupuesto
+		where companiasocio = :p_compania and ano = :p_anio and ejercicio = :p_ejercicio and
+		ESTADO = 'AP' ) y
+		on BU_PRESUPUESTO.COMPANIASOCIO = y.COMPANIASOCIO and
+		BU_PRESUPUESTO.ANO = y.ano and
+		BU_PRESUPUESTO.REFERENCIAFISCAL03 = y.REFERENCIAFISCAL03 and
+		BU_PRESUPUESTO.REFERENCIAFISCAL01 = y.REFERENCIAFISCAL01 and
+		bu_presupuesto.elementogasto = y.elementogasto and
+		bu_presupuesto.CUENTACONTABLE = y.CUENTACONTABLE and
+		bu_presupuesto.CENTROCOSTO = y.CENTROCOSTO and
+		bu_presupuesto.PROYECTO = y.PROYECTO and
+		bu_presupuesto.SUCURSAL = y.SUCURSAL and
+		bu_presupuesto.REFERENCIA01 = y.REFERENCIA01 and
+		BU_PRESUPUESTO.REFERENCIA02 = y.REFERENCIA02 and
+		BU_PRESUPUESTO.EFP=y.EFP
+		WHERE
+		( BU_PRESUPUESTO.COMPANIASOCIO = :p_compania )
+		AND ( BU_PRESUPUESTO.ANO = :p_anio )
+		AND ( BU_PRESUPUESTO.EJERCICIO = :p_pim )
+		AND BU_PRESUPUESTO.CENTROCOSTO = :p_centrocosto
+		ORDER BY 
+		TO_NUMBER(bu_presupuesto.elementogasto),
+		BU_PRESUPUESTO.REFERENCIAFISCAL01
+		 ]]>
+	</sql-query>
+	
+	<sql-query name="bupresupuesto.obtenerSecuenciaElementoGasto">
+		SELECT nvl(max(TO_NUMBER(ELEMENTOGASTO)),1) 
+		from SGCORESYS.bu_presupuesto 
+		where ano = :p_ano
+	</sql-query>
+	
+	
+	
+</hibernate-mapping>

@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<div class="contenedorPrincipalChico">
+		<h:form id="whrevaluacioncapacvalorlist">
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				paginator="true" paginatorPosition="bottom" rows="10"
+				scrollable="true" scrollWidth="580" scrollHeight="180" lazy="true"
+				id="idtblEvaluacionCapacValor"
+				value="#{cwHrEvaluacionCapacValorList.dw_1}" var="c"
+				selection="#{cwHrEvaluacionCapacValorList.registroSeleccionado}"
+				selectionMode="single" rowKey="#{c.total}"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+				<p:ajax event="rowDblselect"
+					listener="#{cwHrEvaluacionCapacValorList.onRowSelectList}"
+					partialSubmit="true" />
+
+				<p:column headerText="Nota" width="20">
+					<p:outputLabel value="#{c.valor}" />
+				</p:column>
+
+				<p:column headerText="Descripcion" width="200">
+					<p:outputLabel value="#{c.descripcion}" />
+				</p:column>
+
+				<p:column headerText="¿Aprobado?" width="50">
+					<p:selectBooleanCheckbox value="#{c.boolflagaprobado}" />
+				</p:column>
+			</p:dataTable>
+
+			<h:panelGrid columns="2" style="float:right">
+				<p:commandButton value="Aceptar" styleClass="botonTextoImagen"
+					action="#{cwHrEvaluacionCapacValorList.aceptar}" icon="buscar" />
+
+				<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+					icon="cancelar"
+					onclick="PF('popSelectorEvaluacionCapacValor').hide()" />
+			</h:panelGrid>
+
+		</h:form>
+	</div>
+</ui:composition>

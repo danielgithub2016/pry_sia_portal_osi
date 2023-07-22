@@ -1,0 +1,248 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+	xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
+	xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans 
+    	http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://jax-ws.dev.java.net/spring/core 
+        http://jax-ws.dev.java.net/spring/core.xsd
+		http://jax-ws.dev.java.net/spring/servlet 
+		http://jax-ws.dev.java.net/spring/servlet.xsd">
+
+	<!-- TOMCAT -->
+	<bean id="BeanDataSourceErp" class="net.royal.seguridad.dao.DataSourceManager"> 
+		<property name="flgEncriptado" value="N" /> </bean> 
+	<!-- WEBLOGIC -->
+	<!-- <bean id="BeanDataSourceErp" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>jdbc/siarrhh</value>
+		</property>
+	</bean> -->
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="BeanDataSourceErp" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+				<prop key="hibernate.max_fetch_depth">3</prop>
+				<prop key="hibernate.proxool.pool_alias">PoolDb1</prop>
+				<prop key="hibernate.jdbc.batch_versioned_data">true</prop>
+				<prop key="hibernate.jdbc.use_streams_for_binary">true</prop>
+				<prop key="hibernate.c3p0.max_size">100</prop>
+				<prop key="hibernate.c3p0.min_size">20</prop>
+				<prop key="hibernate.c3p0.timeout">5000</prop>
+				<prop key="hibernate.c3p0.max_statements">20</prop>
+				<prop key="hibernate.c3p0.idle_test_period">3000</prop>
+				<prop key="hibernate.c3p0.acquire_increment">2</prop>
+				<prop key="hibernate.connection.charSet">UTF-8</prop>
+			</props>
+		</property>
+
+		<property name="mappingLocations">
+			<list>
+				<value>classpath*:**/hibernate/**/*.hbm.xml</value>
+				<!-- <value>classpath:erp_core/hibernate/*.hbm.xml</value>
+				<value>classpath:seguridad/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_accommon/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_ascommon/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_asmain/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_asmast/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_asoracle/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_asreport/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_asrepus/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_asuser/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_hrcommon/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_segapp/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_syclass/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_sycomm/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_sylock/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_symast/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_sysexport/hibernate/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_sytool/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_contabilidad/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_logistica/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_logistica_bumain/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_logistica_pfcmain/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_logistica_servicios/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_logistica_whlicita/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_logistica_whmast/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_logistica_whmenu/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_logistica_whothers/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_logistica_whreport/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_logistica_whsiaf/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_logistica_whstock/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_logistica_whtrans/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_logistica_whuser/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_mantenimiento/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_planilla/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_presupuesto/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_rrhh/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_commodity/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_hrmast/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_hroracle/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_hrothers/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_hrproc/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_hrrep/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_hrrepus/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_prmast/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_sistema/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_sistema_segapp/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_sistema_sycommon/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_sistema_syexport/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_sistema_syfinan/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_sistema_symast01/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_sistema_syroyal/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_sistema_sysiaf/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_tesoreria_apfeeder/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_tesoreria_apmain/hibernate/*.hbm.xml</value>
+				<value>classpath:erp_core/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:seguridad/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_asistencia/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_asistencia_accommon/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_ascommon/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_asmain/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_asmast/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_asoracle/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_asreport/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_asrepus/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_asuser/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_hrcommon/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_segapp/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_syclass/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_sycomm/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_sylock/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_symast/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_sysexport/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_asistencia_sytool/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_contabilidad/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_logistica/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_logistica_bumain/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_logistica_pfcmain/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_logistica_servicios/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_logistica_whlicita/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_logistica_whmast/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_logistica_whmenu/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_logistica_whothers/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_logistica_whreport/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_logistica_whsiaf/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_logistica_whstock/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_logistica_whtrans/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_logistica_whuser/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_mantenimiento/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_planilla/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_presupuesto/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_rrhh/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_commodity/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_hrmast/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_hroracle/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_hrothers/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_hrproc/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_hrrep/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_hrrepus/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_rrhh_prmast/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_sistema/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_sistema_segapp/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_sistema_sycommon/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_sistema_syexport/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_sistema_syfinan/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_sistema_symast01/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_sistema_syroyal/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_sistema_sysiaf/hibernate/sql/*.hbm.xml</value>
+				<value>classpath:erp_tesoreria_apfeeder/hibernate/sql/*.hbm.xml
+				</value>
+				<value>classpath:erp_tesoreria_apmain/hibernate/sql/*.hbm.xml
+				</value> -->
+			</list>
+		</property>
+	</bean>
+
+	<bean id="BeanTransactionManagerErp"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="BeanTransactionManagerErp" />
+	<context:annotation-config />
+	<context:component-scan base-package="net.royal" />
+
+	<import resource="classpath*:/seguridad/ctxSeguridadServicio.xml" />
+
+	<import resource="classpath*:/erp_asistencia/ctxPortalAsistenciaServicio.xml" />
+	<import resource="classpath*:/erp_sistema/ctxPortalSistemaServicio.xml" />
+	<import resource="classpath*:/erp_core/ctxPortalCoreServicio.xml" />
+	<import resource="classpath*:/erp_logistica/ctxPortalLogisticaServicio.xml" />
+	<import resource="classpath*:/erp_presupuesto/ctxPortalPresupuestoServicio.xml" />
+	<import
+		resource="classpath*:/erp_contabilidad/ctxPortalContabilidadServicio.xml" />
+	<import resource="classpath*:/erp_rrhh/ctxPortalRrhhServicio.xml" />
+	<import resource="classpath*:/erp_planilla/ctxPortalPlanillaServicio.xml" />
+	<import
+		resource="classpath*:/erp_mantenimiento/ctxPortalMantenimientoServicio.xml" />
+	<import resource="classpath*:/erp_alfresco/ctxPortalAlfrescoServicio.xml" />
+
+	<!-- MOTOR DE 1 DIA -->
+	<!-- <bean id="tareaAdministradorPapeleta" class="net.royal.erp.rrhh.tarea.AdministradorTareaPapeleta"> 
+		<property name="facAsistencia" ref="BeanFactoryErpAsistencia" /> </bean> 
+		<bean id="tareaPlanificadorPapeleta" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> 
+		<property name="targetObject" ref="tareaAdministradorPapeleta" /> <property 
+		name="targetMethod" value="ejecutar" /> </bean> <bean id="tareaDesencadenadorPapeleta" 
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean"> <property 
+		name="jobDetail" ref="tareaPlanificadorPapeleta" /> <property name="repeatInterval" 
+		value="86400000" /> <property name="startDelay" value="120000" /> </bean> 
+		<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> 
+		<property name="jobDetails"> <list> <ref bean="tareaPlanificadorPapeleta" 
+		/> </list> </property> <property name="triggers"> <list> <ref bean="tareaDesencadenadorPapeleta" 
+		/> </list> </property> </bean> -->
+
+</beans>

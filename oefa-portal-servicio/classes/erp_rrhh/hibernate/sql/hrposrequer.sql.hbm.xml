@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : rrhh.HrPosrequer -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="hrposrequer.dwhrrequerimientopostedit">
+		<![CDATA[
+		SELECT 
+                ''  as "seleccion",
+                HR_POSREQUER.REQUERIMIENTO as "requerimiento",   
+                HR_POSREQUER.POSTULANTE as "postulante",  
+                HR_POSREQUER.COMPANYOWNER  as "companyowner",
+                HR_POSREQUER.ESTADO as "estado",   
+                HR_POSREQUER.ETAPA as "etapa",   
+                HR_POSREQUER.ULTIMOUSUARIO as "ultimousuario",   
+                HR_POSREQUER.ULTIMAFECHAMODIF as "ultimafechamodif",   
+                '' AS "nombre",   
+                HR_POSREQUER.UNIDADNEGOCIO as "unidadnegocio",   
+                HR_POSREQUER.TIPOPOSTULANTE  as "tipopostulante",
+                HR_POSREQUER.PUNTAJE as "puntaje",
+                HR_POSREQUER.OBSERVACIONES as "observaciones",
+                HR_POSREQUER.FECHAPOSTULANTE as "fechapostulante",
+                HR_POSREQUER.VARIABEREMUNERATIVA as "variableremunerativa",
+                HR_POSREQUER.SECUENCIA as "secuencia",
+                HR_POSREQUER.SECUENCIA_2 as "secuencia2",
+                HR_POSREQUER.CONDVARREM as "condvarrem",
+                
+                (SELECT A.FECHAEVALUACION
+                FROM SGCORESYS.HR_EVALPOSTOBS A
+                WHERE     A.COMPANYOWNER = HR_POSREQUER.COMPANYOWNER AND
+                    A.REQUERIMIENTO = HR_POSREQUER.REQUERIMIENTO AND
+                    A.POSTULANTE = HR_POSREQUER.POSTULANTE AND
+                    A.SECUENCIA = HR_POSREQUER.SECUENCIA AND
+                    A.SECUENCIA_2 = HR_POSREQUER.SECUENCIA_2
+                ) AS "fechaevaluacion",
+                
+                (SELECT A.OBSERVACION
+                FROM SGCORESYS.HR_EVALPOSTOBS A
+                WHERE     A.COMPANYOWNER = HR_POSREQUER.COMPANYOWNER AND
+                    A.REQUERIMIENTO = HR_POSREQUER.REQUERIMIENTO AND
+                    A.POSTULANTE = HR_POSREQUER.POSTULANTE AND
+                    A.SECUENCIA = HR_POSREQUER.SECUENCIA AND
+                    A.SECUENCIA_2 = HR_POSREQUER.SECUENCIA_2
+                ) AS "observacionesad",
+                HR_POSREQUER.OBSERVACIONESFINALES as "observacionesfinales",
+                CASE WHEN  SUBSTR(HR_POSREQUER.POSTULANTE,0,4) = 'INTE' THEN (SELECT CORREOINTERNO FROM SGCORESYS.EMPLEADOMAST WHERE EMPLEADO = TO_NUMBER(SUBSTR(HR_POSREQUER.POSTULANTE,LENGTH(HR_POSREQUER.POSTULANTE)-5,LENGTH(HR_POSREQUER.POSTULANTE))) ) 
+                        ELSE (SELECT DIRECCIONELECTRONICA FROM SGCORESYS.HR_POSTULANTES WHERE POSTULANTE = HR_POSREQUER.POSTULANTE) END AS "correo",
+                
+            
+                CAST(HR_POSREQUER.FLAG_FORMACION AS VARCHAR2(1)) as "flagformacion",
+                HR_POSREQUER.OTROSESTUDIOS as "otrosestudios",
+                CAST(HR_POSREQUER.FLAG_OTROSESTUDIOS AS VARCHAR2(1)) as "flagotrosestudios",
+                HR_POSREQUER.EXPERIENCIA as "experiencia",
+                CAST(HR_POSREQUER.FLAG_EXPERIENCIA  AS VARCHAR2(1)) as "flagexperiencia", 
+                HR_REQUERIMIENTO.CODIGOPUESTO AS "puesto",
+                HR_POSREQUER.FLAGGANADOR as "flagganador",
+                CAST(HR_POSREQUER.FLAG_REVISADO  AS VARCHAR2(1)) as "flagrevisado",
+                HR_POSREQUER.ESTADO_SEGUIMIENTO as "estadoseguimiento"
+            FROM 
+                SGCORESYS.HR_POSREQUER  , SGCORESYS.HR_REQUERIMIENTO
+			WHERE 
+			    ( HR_POSREQUER.COMPANYOWNER = :par_companyowner ) AND  
+			    ( HR_POSREQUER.REQUERIMIENTO = :par_requerimiento )    AND
+			    HR_POSREQUER.COMPANYOWNER = HR_REQUERIMIENTO.COMPANYOWNER AND
+			    HR_POSREQUER.REQUERIMIENTO = HR_REQUERIMIENTO.REQUERIMIENTO
+			    AND 
+			    (:par_validacion1 = 'N' OR 
+			        EXISTS
+			        (SELECT 1 
+			        FROM SGCORESYS.HR_EVALREQUERIMIENTO_2 B
+			        WHERE 
+			        B.COMPANYOWNER     = HR_POSREQUER.COMPANYOWNER AND
+			        B.REQUERIMIENTO = HR_POSREQUER.REQUERIMIENTO AND
+			        (B.EMPLEADOEVALUADOR = :par_codigopuesto OR B.EMPLEADOSUPLENTE = :par_codigopuesto) AND
+			         HR_POSREQUER.SECUENCIA = B.SECUENCIA AND
+			        HR_POSREQUER.ESTADO IN('P','V'))
+			    )
+		]]>
+	</sql-query>
+</hibernate-mapping>

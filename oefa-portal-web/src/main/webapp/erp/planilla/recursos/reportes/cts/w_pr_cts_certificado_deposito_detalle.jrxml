@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_pr_cts_certificado_deposito_detalle" language="groovy" pageWidth="700" pageHeight="70" orientation="Landscape" columnWidth="700" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="dbdfc50a-030c-4a17-9cec-0a8c95816bdd">
+	<property name="ireport.zoom" value="2.357947691000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="empleado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cts" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT EmpleadoMast.Empleado as Empleado,
+            (SELECT NOMBRECOMPLETO FROM sgcoresys.PersonaMast , sgcoresys.empleadomast WHERE persona = empleado and Persona = ( SELECT ParametrosMast.Numero FROM sgcoresys.ParametrosMast
+            WHERE ( ParametrosMast.CompaniaCodigo ='999999') AND ( ParametrosMast.AplicacionCodigo = 'PR' ) AND ( ParametrosMast.ParametroClave ='RESPONSCTS')))
+             as Responsable,
+             (SELECT DOCUMENTO FROM sgcoresys.PersonaMast , sgcoresys.empleadomast WHERE persona = empleado and Persona = ( SELECT ParametrosMast.Numero FROM sgcoresys.ParametrosMast
+            WHERE ( ParametrosMast.CompaniaCodigo ='999999') AND ( ParametrosMast.AplicacionCodigo = 'PR' ) AND ( ParametrosMast.ParametroClave ='RESPONSCTS')))
+             as ResponsableDocumento,
+             (SELECT descripcion FROM sgcoresys.HR_PuestoEmpresa WHERE codigopuesto = (SELECT CODIGOCARGO FROM sgcoresys.PersonaMast , sgcoresys.empleadomast WHERE persona = empleado and
+             Persona = (SELECT ParametrosMast.Numero FROM sgcoresys.ParametrosMast WHERE ( ParametrosMast.CompaniaCodigo ='999999') AND ( ParametrosMast.AplicacionCodigo = 'PR' ) AND
+            (ParametrosMast.ParametroClave ='RESPONSCTS')))) as ResponsableCargo,
+         PersonaMast.Nombres || ' ' || PersonaMast.ApellidoPaterno  || ' ' || PersonaMast.ApellidoMaterno as NombreCompleto,
+         PersonaMast.PersonaAnt,
+         EmpleadoMast.FechaInicioContrato,
+         PR_CTS.FechaInicio as FechaInicio,
+         PR_CTS.FechaFin as FechaFin,
+         PR_CTS.Remuneracion,
+         PR_CTS.IML,
+         PR_CTS.IndemnizacionAnual,
+        PR_CTS.TiempoaCancelar as TiempoACancelar,
+         PR_CTS.TiempoValorizado as Tiempovalorizado,
+         PR_CTS.TipoCambio as TipoCambio ,
+         PR_CTS.MontoLocal,
+         PR_CTS.MontoDolar as MontoDolar,
+         (case when substr(PR_CTSDetalle.Descripcion, -1) ='*' then Substr (PR_CTSDetalle.Descripcion, 2,30) else PR_CTSDetalle.Descripcion end) as Descripcion,
+         PR_CTSDetalle.MontoLocal as detallemontolocal,
+         PR_CTS.MonedaCuentaCTS,
+         PR_CTS.Banco,
+         PR_CTS.NumeroCTS,
+         PR_CTS.EstadoCTS as EstadoCTS,
+         PR_CTS.FechaPago as PR_FechaPago,
+         MA_CTS.FechaPago  as MA_FechaPago,
+         EmpleadoMast.FechaIngreso as FechaIngreso,
+        EmpleadoMast.UnidadNegocioAsignada as Area,
+        EmpleadoMast.FechaCese as FechaCese,
+        EmpleadoMast.EstadoEmpleado  as EstadoEmpleado,
+         PR_CTS.TipoCancelacion,
+         PR_CTS.NumeroCuentaCTS as numerocuentacts,
+         EmpleadoMast.CentroCostos,
+         EmpleadoMast.Cargo,
+         MA_UnidadNegocio.RegistroPatronalPlanilla,
+        Secuencia,
+         Banco.Descripcioncorta as bancodes,
+         PersonaMast.documento as Documento,
+        upper(CompaniaMast.DescripcionLarga) as Empleador,
+        CompaniaMast.DocumentoFiscal as Ruc,
+        CompaniaMast.DireccionComun as Direccion,
+        CompaniaMast.descripcionlarga as descripcionlarga,
+        EmpleadoMast.CodigoCargo as Cargo,
+        NVL(PR_CTS.MontoInteres,0) as MontoInteres,
+        NVL(PR_CTS.retencionjudicial,0) as retencionjudicial,
+        personaMast.TipoDocumento as TipoDocumento,
+        (Select rtrim(x.descripcionlocal) from sgcoresys.ma_miscelaneosdetalle x where x.codigotabla='TIPODOCI' and x.aplicacioncodigo='HR' and x.codigoelemento=personaMast.TipoDocumento)
+        as DesTipoDocumento,
+        PersonaMast.sexo   ,
+        to_char(PR_CTS.FechaPago, 'dd')||' de '||CASE to_char(PR_CTS.FechaPago, 'mm')
+                                                WHEN '01' THEN 'Enero'
+                                                WHEN '02' THEN 'Febrero'
+                                                WHEN '03' THEN 'Marzo'
+                                                WHEN '04' THEN 'Abril'
+                                                WHEN '05' THEN 'Mayo'
+                                                WHEN '06' THEN 'Junio'
+                                                WHEN '07' THEN 'Julio'
+                                                WHEN '08' THEN 'Agosto'
+                                                WHEN '09' THEN 'Setiembre'
+                                                WHEN '10' THEN 'Octubre'
+                                                WHEN '11' THEN 'Noviembre'
+                                                WHEN '12' THEN 'Diciembre'
+                                          END    as fechades,
+            EmpleadoMast.CompaniaSocio,
+            EmpleadoMast.TipoPlanilla,
+            to_char(PR_CTS.FechaInicio,'yyyymm')  || to_char(PR_CTS.FechaInicio,'mm')  PeriodoInicio,
+            to_char(PR_CTS.FechaFin,'yyyymm')  || to_char(PR_CTS.FechaFin,'mm') PeriodoFinal
+    FROM sgcoresys.PR_CTS
+        INNER JOIN sgcoresys.PR_CTSDetalle
+            ON (    PR_CTS.Empleado = PR_CTSDetalle.Empleado and
+                    PR_CTS.CompaniaSocio = PR_CTSDetalle.CompaniaSocio and
+                    PR_CTS.NumeroCTS = PR_CTSDetalle.NumeroCTS )
+        INNER JOIN sgcoresys.EmpleadoMast
+            ON (     PR_CTS.Empleado = EmpleadoMast.Empleado and
+                    PR_CTS.CompaniaSocio = EmpleadoMast.CompaniaSocio )
+         INNER JOIN sgcoresys.PersonaMast
+            ON ( EmpleadoMast.Empleado = PersonaMast.Persona )
+         INNER JOIN sgcoresys.CompaniaMast
+             ON ( substr(PR_CTS.CompaniaSocio,1,6) = CompaniaMast.companiacodigo )
+        left JOIN sgcoresys.Banco
+            ON ( Banco.Banco = PR_CTS.Banco )
+         LEFT JOIN sgcoresys.MA_UnidadNegocio
+            ON ( EmpleadoMast.LocaciondePago = MA_UnidadNegocio.UnidadNegocio )
+         LEFT JOIN sgcoresys.MA_CTS
+             ON ( PR_CTS.NumeroCTS = MA_CTS.NumeroCTS)
+   WHERE ( PR_CTS.NumeroCTS = $P{cts})  and (EmpleadoMast.CodigoUsuario=$P{empleado}) and
+            ( pr_ctsdetalle.montolocal <> 0  OR substr(PR_CTSDetalle.Descripcion,-1) = '*')]]>
+	</queryString>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="RESPONSABLE" class="java.lang.String"/>
+	<field name="RESPONSABLEDOCUMENTO" class="java.lang.String"/>
+	<field name="RESPONSABLECARGO" class="java.lang.String"/>
+	<field name="NOMBRECOMPLETO" class="java.lang.String"/>
+	<field name="PERSONAANT" class="java.lang.String"/>
+	<field name="FECHAINICIOCONTRATO" class="java.sql.Timestamp"/>
+	<field name="FECHAINICIO" class="java.sql.Timestamp"/>
+	<field name="FECHAFIN" class="java.sql.Timestamp"/>
+	<field name="REMUNERACION" class="java.math.BigDecimal"/>
+	<field name="IML" class="java.math.BigDecimal"/>
+	<field name="INDEMNIZACIONANUAL" class="java.math.BigDecimal"/>
+	<field name="TIEMPOACANCELAR" class="java.lang.String"/>
+	<field name="TIEMPOVALORIZADO" class="java.math.BigDecimal"/>
+	<field name="TIPOCAMBIO" class="java.lang.Double"/>
+	<field name="MONTOLOCAL" class="java.math.BigDecimal"/>
+	<field name="MONTODOLAR" class="java.math.BigDecimal"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="DETALLEMONTOLOCAL" class="java.math.BigDecimal"/>
+	<field name="MONEDACUENTACTS" class="java.lang.String"/>
+	<field name="BANCO" class="java.lang.String"/>
+	<field name="NUMEROCTS" class="java.math.BigDecimal"/>
+	<field name="ESTADOCTS" class="java.lang.String"/>
+	<field name="PR_FECHAPAGO" class="java.sql.Timestamp"/>
+	<field name="MA_FECHAPAGO" class="java.sql.Timestamp"/>
+	<field name="FECHAINGRESO" class="java.sql.Timestamp"/>
+	<field name="AREA" class="java.lang.String"/>
+	<field name="FECHACESE" class="java.sql.Timestamp"/>
+	<field name="ESTADOEMPLEADO" class="java.lang.String"/>
+	<field name="TIPOCANCELACION" class="java.lang.String"/>
+	<field name="NUMEROCUENTACTS" class="java.lang.String"/>
+	<field name="CENTROCOSTOS" class="java.lang.String"/>
+	<field name="CARGO" class="java.lang.String"/>
+	<field name="REGISTROPATRONALPLANILLA" class="java.lang.String"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="BANCODES" class="java.lang.String"/>
+	<field name="DOCUMENTO" class="java.lang.String"/>
+	<field name="EMPLEADOR" class="java.lang.String"/>
+	<field name="RUC" class="java.lang.String"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="DESCRIPCIONLARGA" class="java.lang.String"/>
+	<field name="MONTOINTERES" class="java.math.BigDecimal"/>
+	<field name="RETENCIONJUDICIAL" class="java.math.BigDecimal"/>
+	<field name="TIPODOCUMENTO" class="java.lang.String"/>
+	<field name="DESTIPODOCUMENTO" class="java.lang.String"/>
+	<field name="SEXO" class="java.lang.String"/>
+	<field name="FECHADES" class="java.lang.String"/>
+	<field name="COMPANIASOCIO" class="java.lang.String"/>
+	<field name="TIPOPLANILLA" class="java.lang.String"/>
+	<field name="PERIODOINICIO" class="java.lang.String"/>
+	<field name="PERIODOFINAL" class="java.lang.String"/>
+	<variable name="SUMADETALLEMONTOTOTAL" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{DETALLEMONTOLOCAL}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="72" y="0" width="274" height="20" isPrintWhenDetailOverflows="true" uuid="d1d9abf4-02b1-4a76-b078-6529dc65733d"/>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement stretchType="RelativeToTallestObject" x="450" y="0" width="139" height="20" isPrintWhenDetailOverflows="true" uuid="32c593c8-f90c-48b6-b66f-5ad26ee2bc66"/>
+				<textElement textAlignment="Right">
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DETALLEMONTOLOCAL}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="1" height="20" isPrintWhenDetailOverflows="true" uuid="f7a9d656-8082-42b2-9202-ea1c7bbde827"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToTallestObject" x="599" y="0" width="1" height="20" isPrintWhenDetailOverflows="true" uuid="2b1776a5-ce70-448e-acdb-ec504fb0cc4c"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

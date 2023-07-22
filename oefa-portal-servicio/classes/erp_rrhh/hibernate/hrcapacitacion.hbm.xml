@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.rrhh.dominio.HrCapacitacion" table="SGCORESYS.HR_CAPACITACION">
+		<composite-id name="pk"
+			class="net.royal.erp.rrhh.dominio.HrCapacitacionPk">
+			<key-property name="capacitacion" type="string">
+				<column name="CAPACITACION" length="10" />
+			</key-property>
+			<key-property name="companyowner" type="string">
+				<column name="COMPANYOWNER" length="8" />
+			</key-property>
+		</composite-id>
+		<property name="numerovacantes" type="integer">
+			<column name="NUMEROVACANTES" length="22" />
+		</property>
+		<property name="curso" type="integer">
+			<column name="CURSO" length="22" />
+		</property>
+		<property name="nombregrupo" type="string">
+			<column name="NOMBREGRUPO" length="10" />
+		</property>
+		<property name="flaghorarioindividual" type="string">
+			<column name="FLAGHORARIOINDIVIDUAL" length="1" />
+		</property>
+		<property name="descripcion" type="string">
+			<column name="DESCRIPCION" length="500" />
+		</property>
+		<property name="costosubtotal" type="big_decimal">
+			<column name="COSTOSUBTOTAL" length="22" />
+		</property>
+		<property name="costototal" type="big_decimal">
+			<column name="COSTOTOTAL" length="22" />
+		</property>
+		<property name="costototalext" type="big_decimal">
+			<column name="COSTOTOTALEXT" length="22" />
+		</property>
+		<property name="costosubtotalext" type="big_decimal">
+			<column name="COSTOSUBTOTALEXT" length="22" />
+		</property>
+		<property name="costoimpuestosext" type="big_decimal">
+			<column name="COSTOIMPUESTOSEXT" length="22" />
+		</property>
+		<property name="costoimpuestos" type="big_decimal">
+			<column name="COSTOIMPUESTOS" length="22" />
+		</property>
+		<property name="estado" type="string">
+			<column name="ESTADO" length="1" />
+		</property>
+		<property name="proyecto" type="string">
+			<column name="PROYECTO" length="20" />
+		</property>
+		<property name="fechadesde" type="timestamp">
+			<column name="FECHADESDE" length="7" />
+		</property>
+		<property name="fechahasta" type="timestamp">
+			<column name="FECHAHASTA" length="7" />
+		</property>
+		<property name="horadesde" type="timestamp">
+			<column name="HORADESDE" length="7" />
+		</property>
+		<property name="horahasta" type="timestamp">
+			<column name="HORAHASTA" length="7" />
+		</property>
+		<property name="periodoinicial" type="string">
+			<column name="PERIODOINICIAL" length="6" />
+		</property>
+		<property name="periodofinal" type="string">
+			<column name="PERIODOFINAL" length="6" />
+		</property>
+		<property name="unidadnegocio" type="string">
+			<column name="UNIDADNEGOCIO" length="4" />
+		</property>
+		<property name="centrocapacitacion" type="integer">
+			<column name="CENTROCAPACITACION" length="22" />
+		</property>
+		<property name="numeroparticipantes" type="integer">
+			<column name="NUMEROPARTICIPANTES" length="22" />
+		</property>
+		<property name="totaldias" type="integer">
+			<column name="TOTALDIAS" length="22" />
+		</property>
+		<property name="totalhoras" type="integer">
+			<column name="TOTALHORAS" length="22" />
+		</property>
+		<property name="logisticatipocompromiso" type="string">
+			<column name="LOGISTICATIPOCOMPROMISO" length="2" />
+		</property>
+		<property name="logisticanumerocompromiso" type="string">
+			<column name="LOGISTICANUMEROCOMPROMISO" length="10" />
+		</property>
+		<property name="flaglogistica" type="string">
+			<column name="FLAGLOGISTICA" length="1" />
+		</property>
+		<property name="tipocurso" type="string">
+			<column name="TIPOCURSO" length="1" />
+		</property>
+		<property name="aula" type="string">
+			<column name="AULA" length="100" />
+		</property>
+		<property name="expositor" type="string">
+			<column name="EXPOSITOR" length="50" />
+		</property>
+		<property name="plancapacitacion" type="integer">
+			<column name="PLANCAPACITACION" length="22" />
+		</property>
+		<property name="lugarcapacitacion" type="string">
+			<column name="LUGARCAPACITACION" length="20" />
+		</property>
+		<property name="solicitante" type="integer">
+			<column name="SOLICITANTE" length="22" />
+		</property>
+		<property name="cursodescripcion" type="string">
+			<column name="CURSODESCRIPCION" length="500" />
+		</property>
+		<property name="fundamentacion1" type="string">
+			<column name="FUNDAMENTACION1" length="4000" />
+		</property>
+		<property name="fundamentacion2" type="string">
+			<column name="FUNDAMENTACION2" length="4000" />
+		</property>
+		<property name="fundamentacion3" type="string">
+			<column name="FUNDAMENTACION3" length="4000" />
+		</property>
+		<property name="costototalestimadolocal" type="big_decimal">
+			<column name="COSTOTOTALESTIMADOLOCAL" length="22" />
+		</property>
+		<property name="costototalestimadoextranjero" type="big_decimal">
+			<column name="COSTOTOTALESTIMADOEXTRANJERO" length="22" />
+		</property>
+		<property name="costounitariolocal" type="big_decimal">
+			<column name="COSTOUNITARIOLOCAL" length="22" />
+		</property>
+		<property name="costounitarioextranjero" type="big_decimal">
+			<column name="COSTOUNITARIOEXTRANJERO" length="22" />
+		</property>
+		<property name="fundamentacion4" type="string">
+			<column name="FUNDAMENTACION4" length="4000" />
+		</property>
+		<property name="fundamentacion5" type="string">
+			<column name="FUNDAMENTACION5" length="4000" />
+		</property>
+		<property name="fundamentacion6" type="string">
+			<column name="FUNDAMENTACION6" length="4000" />
+		</property>
+		<property name="fundamentacion7" type="string">
+			<column name="FUNDAMENTACION7" length="4000" />
+		</property>
+		<property name="fundamentacion8" type="string">
+			<column name="FUNDAMENTACION8" length="4000" />
+		</property>
+		<property name="fundamentacion9" type="string">
+			<column name="FUNDAMENTACION9" length="4000" />
+		</property>
+		<property name="fundamentacion10" type="string">
+			<column name="FUNDAMENTACION10" length="4000" />
+		</property>
+		<property name="telefonocontacto" type="string">
+			<column name="TELEFONOCONTACTO" length="30" />
+		</property>
+		<property name="empleado" type="integer">
+			<column name="EMPLEADO" length="22" />
+		</property>
+		<property name="montomaxasumido" type="big_decimal">
+			<column name="MONTOMAXASUMIDO" length="22" />
+		</property>
+		<property name="montoasumido" type="big_decimal">
+			<column name="MONTOASUMIDO" length="22" />
+		</property>
+		<property name="modalidad" type="string">
+			<column name="MODALIDAD" length="10" />
+		</property>
+		<property name="grupoocupacional" type="string">
+			<column name="GRUPOOCUPACIONAL" length="10" />
+		</property>
+		<property name="ano" type="string">
+			<column name="ANO" length="4" />
+		</property>
+		<property name="capacitador" type="integer">
+			<column name="CAPACITADOR" length="22" />
+		</property>
+		<property name="tipo" type="string">
+			<column name="TIPO" length="10" />
+		</property>
+		<property name="financiamiento" type="string">
+			<column name="FINANCIAMIENTO" length="10" />
+		</property>
+		<property name="becas" type="string">
+			<column name="BECAS" length="10" />
+		</property>
+		<property name="beneftotlocal" type="big_decimal">
+			<column name="BENEFTOTLOCAL" length="22" />
+		</property>
+		<property name="beneftotextranjero" type="big_decimal">
+			<column name="BENEFTOTEXTRANJERO" length="22" />
+		</property>
+		<property name="anioplan" type="integer">
+			<column name="ANIOPLAN" length="22" />
+		</property>
+		<property name="fechasolicitud" type="timestamp">
+			<column name="FECHASOLICITUD" length="7" />
+		</property>
+		<property name="nombrecapacitador" type="string">
+			<column name="NOMBRECAPACITADOR" length="60" />
+		</property>
+		<property name="centrocosto" type="string">
+			<column name="CENTROCOSTO" length="10" />
+		</property>
+		<property name="afe" type="string">
+			<column name="AFE" length="15" />
+		</property>
+		<property name="prioridad" type="integer">
+			<column name="PRIORIDAD" length="22" />
+		</property>
+		<property name="moneda" type="string">
+			<column name="MONEDA" length="2" />
+		</property>
+		<property name="porcentajeempresa" type="big_decimal">
+			<column name="PORCENTAJEEMPRESA" length="22" />
+		</property>
+		<property name="porcentajeempleado" type="big_decimal">
+			<column name="PORCENTAJEEMPLEADO" length="22" />
+		</property>
+		<property name="indsustento1" type="string">
+			<column name="INDSUSTENTO1" length="10" />
+		</property>
+		<property name="indsustento2" type="string">
+			<column name="INDSUSTENTO2" length="10" />
+		</property>
+		<property name="dia" type="integer">
+			<column name="DIA" length="22" />
+		</property>
+		<property name="idtransaccion" type="integer">
+			<column name="IDTRANSACCION" length="22" />
+		</property>
+		<property name="departamento" type="string">
+			<column name="DEPARTAMENTO" length="10" />
+		</property>
+		<property name="empleadosolicitante" type="integer">
+			<column name="EMPLEADOSOLICITANTE" length="22" />
+		</property>
+		<property name="flagevaluacion" type="string">
+			<column name="FLAGEVALUACION" length="1" />
+		</property>
+		<property name="flagprogramado" type="string">
+			<column name="FLAGPROGRAMADO" length="1" />
+		</property>
+		<property name="codigounidad" type="integer">
+			<column name="CODIGOUNIDAD" length="22" />
+		</property>
+		<property name="jefeunidad" type="integer">
+			<column name="JEFEUNIDAD" length="22" />
+		</property>
+		<property name="tipocambio" type="integer">
+			<column name="TIPOCAMBIO" length="22" />
+		</property>
+		<property name="codigounidadsolicitante" type="integer">
+			<column name="CODIGOUNIDADSOLICITANTE" length="22" />
+		</property>
+		<property name="requisicionnumero" type="string">
+			<column name="REQUISICIONNUMERO" length="10" />
+		</property>
+		<property name="motivoRechazo" type="string">
+			<column name="MOTIVO_RECHAZO" length="4000" />
+		</property>
+		<property name="presupuesto" type="integer">
+			<column name="PRESUPUESTO" length="22" />
+		</property>
+		<property name="areatematica" type="string">
+			<column name="AREATEMATICA" length="10" />
+		</property>
+		<property name="documento" type="string">
+			<column name="DOCUMENTO" length="25" />
+		</property>
+		<property name="tipoexpositor" type="string">
+			<column name="TIPOEXPOSITOR" length="1" />
+		</property>
+		<property name="esplan" type="string">
+			<column name="ESPLAN" length="1" />
+		</property>
+		<property name="estadologistica" type="string">
+			<column name="ESTADOLOGISTICA" length="1" />
+		</property>
+		<property name="referencia" type="string">
+			<column name="REFERENCIA" length="50" />
+		</property>
+		<property name="demanda" type="string">
+			<column name="DEMANDA" length="20" />
+		</property>
+		<property name="porcentajeempresacap" type="big_decimal">
+			<column name="PORCENTAJEEMPRESACAP" length="22" />
+		</property>
+		<property name="fechafincapacitacion" type="timestamp">
+			<column name="FECHAFINCAPACITACION" length="7" />
+		</property>
+		<property name="secuenciaDnc" type="integer">
+			<column name="SECUENCIA_DNC" length="22" />
+		</property>
+		<property name="flagcursonuevo" type="string">
+			<column name="FLAGCURSONUEVO" length="1" />
+		</property>
+		<property name="cursonuevo" type="string">
+			<column name="CURSONUEVO" length="4000" />
+		</property>
+		<property name="codigoproceso" type="string">
+			<column name="CODIGOPROCESO" length="2" />
+		</property>
+		<property name="numeroproceso" type="integer">
+			<column name="NUMEROPROCESO" length="22" />
+		</property>
+		<property name="nivelaprobacion" type="integer">
+			<column name="NIVELAPROBACION" length="22" />
+		</property>
+		<property name="flaginscripcionpublica" type="string">
+			<column name="FLAGINSCRIPCIONPUBLICA" length="1" />
+		</property>
+		<property name="fechadesdeinscripcion" type="timestamp">
+			<column name="FECHADESDEINSCRIPCION" />
+		</property>
+		<property name="fechahastainscripcion" type="timestamp">
+			<column name="FECHAHASTAINSCRIPCION" />
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.planilla.dominio.PrTipoplanilla" table="SGCORESYS.PR_TIPOPLANILLA">
+        <composite-id name="pk" class="net.royal.erp.planilla.dominio.PrTipoplanillaPk">
+            <key-property name="tipoplanilla" type="string">
+                <column name="TIPOPLANILLA" length="2" />
+            </key-property>
+        </composite-id>
+        <property name="funcion" type="integer">
+            <column name="FUNCION" length="22" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="30" />
+        </property>
+        <property name="titulodeboleta" type="string">
+            <column name="TITULODEBOLETA" length="60" />
+        </property>
+        <property name="descripcionextranjera" type="string">
+            <column name="DESCRIPCIONEXTRANJERA" length="30" />
+        </property>
+        <property name="tipodecambio" type="big_decimal">
+            <column name="TIPODECAMBIO" length="22" />
+        </property>
+        <property name="clasepago" type="string">
+            <column name="CLASEPAGO" length="1" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="mensaje" type="string">
+            <column name="MENSAJE" length="255" />
+        </property>
+        <property name="planillaperfil" type="integer">
+            <column name="PLANILLAPERFIL" length="22" />
+        </property>
+        <property name="periodicidad" type="string">
+            <column name="PERIODICIDAD" length="1" />
+        </property>
+        <property name="categoriatrabajador" type="string">
+            <column name="CATEGORIATRABAJADOR" length="1" />
+        </property>
+        <property name="tipotrabajador" type="string">
+            <column name="TIPOTRABAJADOR" length="2" />
+        </property>
+        <property name="cuentacontable" type="string">
+            <column name="CUENTACONTABLE" length="10" />
+        </property>
+        <property name="flujocaja" type="string">
+            <column name="FLUJOCAJA" length="4" />
+        </property>
+    </class>
+</hibernate-mapping>

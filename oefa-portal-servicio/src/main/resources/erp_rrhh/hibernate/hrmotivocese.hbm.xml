@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrMotivocese" table="SGCORESYS.HR_MOTIVOCESE">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrMotivocesePk">
+            <key-property name="motivo" type="integer">
+                <column name="MOTIVO" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="40" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="codigortps" type="string">
+            <column name="CODIGORTPS" length="2" />
+        </property>
+        <property name="motivortps" type="string">
+            <column name="MOTIVORTPS" length="2" />
+        </property>
+    </class>
+</hibernate-mapping>

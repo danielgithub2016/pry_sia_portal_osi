@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : core.Empleadomast -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="empleadomast.listarEmpleadoEval">
+		<![CDATA[
+			SELECT 
+				PersonaMast.Persona as "persona",   
+				PersonaMast.NombreCompleto as "nombrecompleto",   
+				EmpleadoMast.TipoContrato as "tipocontrato",   
+				EmpleadoMast.Empleado as "empleado",   
+				PersonaMast.PersonaAnt as "personaant",
+				EmpleadoMast.EstadoEmpleado as "estadoempleado",
+				EmpleadoMast.Estado as "estado",
+				EmpleadoMast.CentroCostos as "centrocostos",
+				EmpleadoMast.CompaniaSocio as "companiasocio",
+				EmpleadoMast.TipoPlanilla as "tipoplanilla",
+				ROWNUM AS "total"
+			FROM 
+				SGCORESYS.EmpleadoMast 
+			Left JOIN SGCORESYS.Personamast
+				ON (PersonaMast.Persona = EmpleadoMast.Empleado)
+			WHERE
+						( PersonaMast.EsEmpleado = 'S') and ROWNUM <= 100 
+		]]>
+	</sql-query>
+
+	<sql-query name="empleadomast.listardwList">
+		<![CDATA[
+			SELECT 	PersonaMast.Persona as "persona",   
+					PersonaMast.NombreCompleto as "nombrecompleto",   
+					CAST('N' AS VARCHAR(2)) as "seleccionado",   
+					EmpleadoMast.Estado as "estado",   
+					EmpleadoMast.EstadoEmpleado as "estadoempleado", 
+					Empleadomast.centrocostos as "centrocostos",
+					EmpleadoMast.CompaniaSocio as "companiasocio",
+					EmpleadoMast.Cargo as "cargo",
+					EmpleadoMast.tipoplanilla as "tipoplanilla",
+					EmpleadoMast.dptoareaoperativa as "dptoareaoperativa",
+					ROWNUM as "total"
+			FROM 	SGCORESYS.EmpleadoMast,
+			         	SGCORESYS.PersonaMast
+			WHERE 	( PersonaMast.Persona = EmpleadoMast.Empleado ) and
+						( PersonaMast.EsEmpleado = 'S') and ROWNUM <= 200
+		]]>
+	</sql-query>
+
+	<sql-query name="empleadomast.obtenerMaximoEmpleado">
+		SELECT Max (Empleado)
+		FROM
+		SGCORESYS.EmpleadoMast
+		WHERE CodigoUsuario = :p_userid
+	</sql-query>
+
+	<sql-query name="empleadomast.obtenerTipoHorario">
+
+	</sql-query>
+
+	<sql-query name="empleadomast.obtenerSolicitadoPor">
+		SELECT
+		Empleado
+		FROM
+		SGCORESYS.EmpleadoMast
+		WHERE
+		CodigoUsuario = :p_userid
+	</sql-query>
+
+	<sql-query name="empleadomast.obtenerSucursal">
+		SELECT
+		EmpleadoMast.Sucursal as "sucursal"
+		FROM
+		SGCORESYS.EmpleadoMast
+		WHERE
+		EmpleadoMast.Empleado = :p_empleado
+	</sql-query>
+
+	<sql-query name="empleadomast.obtenerTipoPlanilla">
+		SELECT
+		TipoPlanilla as "tipoplanilla"
+		FROM
+		SGCORESYS.EmpleadoMast
+		WHERE Empleado = :p_empleado
+	</sql-query>
+
+
+	<sql-query name="empleadomast.obtenerCentroCosto">
+		select
+		centrocostos as "centrocostos"
+		from
+		SGCORESYS.empleadomast
+		where
+		empleado = :p_empleado
+	</sql-query>
+
+	<sql-query name="empleadomast.obtenerTipoContrato">
+		Select TipoContrato as "tipocontrato"
+		From
+		SGCORESYS.EmpleadoMast
+		Where Empleado = :p_empleado
+	</sql-query>
+
+	<sql-query name="empleadomast.ListarEmpleadoReporteAsistencia">
+		<![CDATA[
+			SELECT 
+			            rownum as "secuencia",
+			            EmpleadoMast.Empleado as "empleado",   
+			            PersonaMast.TipoDocumento as "tipodocumento",   
+			            PersonaMast.Documento as "documento",
+			            PersonaMast.NombreCompleto as "nombrecompleto",
+			            EmpleadoMast.CompaniaSocio as "companiasocio", 
+			            EmpleadoMast.TipoPlanilla as "tipoplanilla",
+			            EmpleadoMast.LocaciondePago as "locaciondepago",  
+			            EmpleadoMast.CentroCostos as "centrocostos" , 
+			            EmpleadoMast.Sucursal as "sucursal",
+			            AS_CarnetIdentificacion.Area as "area",
+			            EmpleadoMast.TipoHorario as "tipohorario",
+			            EmpleadoMast.EstadoEmpleado as "estadoempleado"
+			FROM 	SGCORESYS.PersonaMast
+			              INNER JOIN    SGCORESYS.EmpleadoMast ON ( EmpleadoMast.Empleado = PersonaMast.Persona )
+			                 LEFT JOIN SGCORESYS.AS_CarnetIdentificacion ON  ( EmpleadoMast.Empleado = AS_CarnetIdentificacion.Empleado )
+			WHERE  
+			 			NVL(Empleadomast.companiasocio ,'XX') 	= NVL(:compania,NVL(Empleadomast.companiasocio ,'XX')) AND
+			 			NVL(Empleadomast.CentroCostos,'XX') 		= NVL(:centrocosto,NVL(Empleadomast.CentroCostos,'XX')) AND
+			 			NVL(Empleadomast.sucursal,'XX') 				= NVL(:sucursal,NVL(Empleadomast.sucursal,'XX')) AND
+			 			NVL(Empleadomast.Cargo,'XX') 				= NVL(:categoria,NVL(Empleadomast.Cargo,'XX')) AND
+			 			NVL(Empleadomast.tipoplanilla,'XX') 			= NVL(:tipoplanilla,NVL(Empleadomast.tipoplanilla,'XX')) AND
+			 			NVL(AS_CarnetIdentificacion.area,0) 			= NVL(:area, NVL(AS_CarnetIdentificacion.area,0)) AND
+			 			NVL(Empleadomast.CodigoCargo,0) 			= NVL(:cargo,NVL(Empleadomast.CodigoCargo,0)) AND
+			            ((EXISTS (SELECT 1
+			                        FROM SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+			                        WHERE AS_EMPLEADOS_AUTORIZADOS.SID =:sid
+			                                    and AS_EMPLEADOS_AUTORIZADOS.USUARIO = :user
+			                                    and  AS_EMPLEADOS_AUTORIZADOS.empleado = EmpleadoMast.empleado )) or 
+			             (EXISTS (SELECT 1
+									FROM SGCORESYS.EMPLEADOMAST E INNER JOIN SGCORESYS.SEGURIDADPERFILUSUARIO SP
+									ON E.CODIGOUSUARIO = SP.USUARIO
+									INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+									ON SP.PERFIL = SA.USUARIO
+									WHERE SA.CONCEPTO = 'SYSREA' AND
+									(E.dptoareaoperativa = EmpleadoMast.dptoareaoperativa OR 
+									 E.dptoareaoperativa IN (SELECT AREApADRE FROM SGCORESYS.AS_AREA WHERE AREA = EmpleadoMast.dptoareaoperativa)) AND
+									SP.USUARIO = :user)))		                                    
+	    ]]>
+	</sql-query>
+
+	<sql-query name="empleadomast.ListarEmpleadoReporteAsistenciaMarca">
+		<![CDATA[
+			SELECT EmpleadoMast.Empleado as "empleado",   
+			            PersonaMast.TipoDocumento as "tipodocumento",   
+			            PersonaMast.Documento as "documento",
+			            PersonaMast.NombreCompleto as "nombrecompleto",
+			            EmpleadoMast.CompaniaSocio as "companiasocio", 
+			            EmpleadoMast.TipoPlanilla as "tipoplanilla",
+			            EmpleadoMast.LocaciondePago as "locaciondepago",  
+			            EmpleadoMast.CentroCostos as "centrocostos", 
+			            EmpleadoMast.Sucursal as "sucursal",
+			            AS_AsistenciaDiariaMarca.Fecha as "fecha",
+			            AS_AsistenciaDiariaMarca.Secuencia as "secuencia",
+			            AS_AsistenciaDiariaMarca.Hora as "hora",
+			            SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,AS_AsistenciaDiariaMarca.Fecha,'D') as "tipodia",
+			            SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,AS_AsistenciaDiariaMarca.Fecha,'H') as "tipohorario"
+			FROM SGCORESYS.PersonaMast
+			        INNER JOIN SGCORESYS.EmpleadoMast ON ( EmpleadoMast.Empleado = PersonaMast.Persona )
+			        INNER JOIN SGCORESYS.AS_AsistenciaDiariaMarca ON ( EmpleadoMast.Empleado = AS_AsistenciaDiariaMarca.Empleado )
+			WHERE     
+			        ((EXISTS (SELECT 1
+			                        FROM SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+			                        WHERE AS_EMPLEADOS_AUTORIZADOS.SID =:sid
+			                                    AND AS_EMPLEADOS_AUTORIZADOS.USUARIO = :user
+			                                    AND  AS_EMPLEADOS_AUTORIZADOS.empleado = AS_AsistenciaDiariaMarca.Empleado )) or 
+			          (EXISTS (SELECT 1
+									FROM SGCORESYS.EMPLEADOMAST E INNER JOIN SGCORESYS.SEGURIDADPERFILUSUARIO SP
+									ON E.CODIGOUSUARIO = SP.USUARIO
+									INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+									ON SP.PERFIL = SA.USUARIO
+									WHERE SA.CONCEPTO = 'SYSREA' AND
+									(E.dptoareaoperativa = EmpleadoMast.dptoareaoperativa OR 
+									 E.dptoareaoperativa IN (SELECT AREApADRE FROM SGCORESYS.AS_AREA WHERE AREA = EmpleadoMast.dptoareaoperativa)) AND
+									SP.USUARIO = :user))) AND
+			        ( AS_AsistenciaDiariaMarca.Fecha >= :fechadesde ) AND
+			        ( AS_AsistenciaDiariaMarca.Fecha <= :fechahasta ) and
+			        ( AS_AsistenciaDiariaMarca.Secuencia <= 6) 
+	    ]]>
+	</sql-query>
+
+	<sql-query name="empleadomast.ListarEmpleadoReporteAsistenciaMarca2">
+		<![CDATA[
+			SELECT EmpleadoMast.Empleado,   
+			            PersonaMast.TipoDocumento,   
+			            PersonaMast.Documento,
+			            PersonaMast.NombreCompleto,
+			            EmpleadoMast.CompaniaSocio, 
+			            EmpleadoMast.TipoPlanilla,
+			            EmpleadoMast.LocaciondePago,  
+			            EmpleadoMast.CentroCostos, 
+			            EmpleadoMast.Sucursal,
+			            as_asistenciadiaria.Fecha,
+			            as_asistenciadiaria.Secuencia,
+			            as_asistenciadiaria.Desde,
+			            SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,as_asistenciadiaria.Fecha,'D') as "tipodia",
+			            SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,as_asistenciadiaria.Fecha,'H') as "tipohorario"
+			 FROM SGCORESYS.PersonaMast
+			        INNER JOIN SGCORESYS.EmpleadoMast ON ( EmpleadoMast.Empleado = PersonaMast.Persona )
+			        INNER JOIN SGCORESYS.AS_AsistenciaDiaria ON ( EmpleadoMast.Empleado = AS_AsistenciaDiaria.Empleado )    
+			WHERE   
+			            ((EXISTS (SELECT 1
+			                            FROM SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+			                            WHERE AS_EMPLEADOS_AUTORIZADOS.SID =:sid
+			                                        AND AS_EMPLEADOS_AUTORIZADOS.USUARIO = :user
+			                                        AND  AS_EMPLEADOS_AUTORIZADOS.empleado = AS_AsistenciaDiaria.Empleado )) or 
+			             (EXISTS (SELECT 1
+									FROM SGCORESYS.EMPLEADOMAST E INNER JOIN SGCORESYS.SEGURIDADPERFILUSUARIO SP
+									ON E.CODIGOUSUARIO = SP.USUARIO
+									INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+									ON SP.PERFIL = SA.USUARIO
+									WHERE SA.CONCEPTO = 'SYSREA' AND
+									(E.dptoareaoperativa = EmpleadoMast.dptoareaoperativa OR 
+									 E.dptoareaoperativa IN (SELECT AREApADRE FROM SGCORESYS.AS_AREA WHERE AREA = EmpleadoMast.dptoareaoperativa)) AND
+									SP.USUARIO = :user))) AND
+			            ( as_asistenciadiaria.Fecha >= :fechadesde ) AND
+			            ( as_asistenciadiaria.Fecha <= :fechahasta ) AND
+			            ( as_asistenciadiaria.Secuencia <= 6) AND
+			            ( as_asistenciadiaria.CONCEPTOACCESO = 'INAS' ) 
+	    ]]>
+	</sql-query>
+
+	<sql-query name="empleadomast.ListarEmpleadoReporteAsistenciaSobretiempo">
+		<![CDATA[
+			  SELECT EmpleadoMast.Empleado as "empleado",   
+							PersonaMast.TipoDocumento as "tipodocumento",   
+							PersonaMast.Documento as "documento",
+							PersonaMast.NombreCompleto as "nombrecompleto",
+							EmpleadoMast.CompaniaSocio as "companiasocio", 
+							EmpleadoMast.TipoPlanilla as "tipoplanilla",
+							EmpleadoMast.LocaciondePago as "locaciondepago",  
+							EmpleadoMast.CentroCostos as "centrocostos", 
+							EmpleadoMast.Sucursal as "sucursal",
+							AS_CarnetIdentificacion.Area as "area",
+							as_asistenciadiaria.conceptoacceso as "conceptoacceso",
+							AS_AsistenciaDiaria.Fecha as "fecha",
+							EmpleadoMast.TipoHorario as "tipohorarioempleado",
+							EmpleadoMast.EstadoEmpleado as "estadoempleado",
+							SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,AS_AsistenciaDiaria.Fecha,'D') as "tipodia",
+			                SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,AS_AsistenciaDiaria.Fecha,'H') as "tipohorario",
+							sum(as_asistenciadiaria.CantidadReal) AS "cantidadreal"
+				 FROM SGCORESYS.PersonaMast
+						INNER JOIN	SGCORESYS.EmpleadoMast ON ( EmpleadoMast.Empleado = PersonaMast.Persona )
+						INNER JOIN SGCORESYS.as_asistenciadiaria ON ( EmpleadoMast.Empleado = as_asistenciadiaria.Empleado )
+						left JOIN SGCORESYS.AS_CarnetIdentificacion ON ( EmpleadoMast.Empleado = AS_CarnetIdentificacion.Empleado )			
+				WHERE  
+				            ((EXISTS (SELECT 1
+				                            FROM SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+				                            WHERE AS_EMPLEADOS_AUTORIZADOS.SID =:sid
+				                                        AND AS_EMPLEADOS_AUTORIZADOS.USUARIO = :user
+				                                        AND  AS_EMPLEADOS_AUTORIZADOS.empleado = AS_AsistenciaDiaria.Empleado )) or 
+			                (EXISTS (SELECT 1
+									FROM SGCORESYS.EMPLEADOMAST E INNER JOIN SGCORESYS.SEGURIDADPERFILUSUARIO SP
+									ON E.CODIGOUSUARIO = SP.USUARIO
+									INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+									ON SP.PERFIL = SA.USUARIO
+									WHERE SA.CONCEPTO = 'SYSREA' AND
+									(E.dptoareaoperativa = EmpleadoMast.dptoareaoperativa OR 
+									 E.dptoareaoperativa IN (SELECT AREApADRE FROM SGCORESYS.AS_AREA WHERE AREA = EmpleadoMast.dptoareaoperativa)) AND
+									SP.USUARIO = :user))) AND
+							( AS_AsistenciaDiaria.Fecha >= :fechadesde ) AND
+							( AS_AsistenciaDiaria.Fecha <= :fechahasta ) AND
+							( as_asistenciadiaria.conceptoacceso in ('HNAU')) 				                                        
+	    ]]>
+	</sql-query>
+
+	<sql-query name="empleadomast.ListarEmpleadoReporteAsistenciaSobretiempo2">
+		<![CDATA[
+			 SELECT EmpleadoMast.Empleado,   
+							PersonaMast.TipoDocumento,   
+							PersonaMast.Documento,
+							PersonaMast.NombreCompleto,
+							EmpleadoMast.CompaniaSocio, 
+							EmpleadoMast.TipoPlanilla,
+							EmpleadoMast.LocaciondePago,  
+							EmpleadoMast.CentroCostos, 
+							EmpleadoMast.Sucursal,
+							AS_CarnetIdentificacion.Area,
+							'TARD' as conceptoacceso,
+							AS_AsistenciaDiaria.Fecha,
+							EmpleadoMast.TipoHorario as "tipohorarioempleado",
+							EmpleadoMast.EstadoEmpleado as "estadoempleado",
+							SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,AS_AsistenciaDiaria.Fecha,'D') as "tipodia",
+			                SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,AS_AsistenciaDiaria.Fecha,'H') as "tipohorario",
+							sum(as_asistenciadiaria.CantidadReal) AS CantidadReal
+				FROM SGCORESYS.PersonaMast
+						INNER JOIN	SGCORESYS.EmpleadoMast ON ( EmpleadoMast.Empleado = PersonaMast.Persona )
+						INNER JOIN SGCORESYS.as_asistenciadiaria ON ( EmpleadoMast.Empleado = as_asistenciadiaria.Empleado )
+						left JOIN SGCORESYS.AS_CarnetIdentificacion ON ( EmpleadoMast.Empleado = AS_CarnetIdentificacion.Empleado )			
+				WHERE    
+				            ((EXISTS (SELECT 1
+				                            FROM SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+				                            WHERE AS_EMPLEADOS_AUTORIZADOS.SID =:sid
+				                                        AND AS_EMPLEADOS_AUTORIZADOS.USUARIO = :user
+				                                        AND  AS_EMPLEADOS_AUTORIZADOS.empleado = AS_AsistenciaDiaria.Empleado )) or 
+			                (EXISTS (SELECT 1
+									FROM SGCORESYS.EMPLEADOMAST E INNER JOIN SGCORESYS.SEGURIDADPERFILUSUARIO SP
+									ON E.CODIGOUSUARIO = SP.USUARIO
+									INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+									ON SP.PERFIL = SA.USUARIO
+									WHERE SA.CONCEPTO = 'SYSREA' AND
+									(E.dptoareaoperativa = EmpleadoMast.dptoareaoperativa OR 
+									 E.dptoareaoperativa IN (SELECT AREApADRE FROM SGCORESYS.AS_AREA WHERE AREA = EmpleadoMast.dptoareaoperativa)) AND
+									SP.USUARIO = :user))) AND
+							( AS_AsistenciaDiaria.Fecha >= :fechadesde ) AND
+							( AS_AsistenciaDiaria.Fecha <= :fechahasta )  AND
+							( as_asistenciadiaria.conceptoacceso in ('TARD','TART')) 
+	    ]]>
+	</sql-query>
+
+	<sql-query name="empleadomast.ListarSobreTiempo">
+		<![CDATA[
+		
+	 SELECT EmpleadoMast.Empleado as "empleado",  
+			PersonaMast.TipoDocumento as "tipodocumento",     
+			PersonaMast.Documento as "documento",
+			PersonaMast.NombreCompleto as "nombrecompleto",
+			EmpleadoMast.CompaniaSocio as "companiasocio",  
+			EmpleadoMast.TipoPlanilla as "tipoplanilla",
+			EmpleadoMast.LocaciondePago as "locaciondepago",  
+			EmpleadoMast.CentroCostos as "centrocostos", 
+			EmpleadoMast.Sucursal as "sucursal",
+			AS_CarnetIdentificacion.Area as "area",
+			EmpleadoMast.TipoHorario as "tipohorarioempleado",
+			as_asistenciadiaria.conceptoacceso as "conceptoacceso",
+			AS_AsistenciaDiaria.Fecha as "fecha",
+			EmpleadoMast.EstadoEmpleado as "estadoempleado",
+			SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,AS_AsistenciaDiaria.Fecha,'D') as "tipodia",
+			SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,AS_AsistenciaDiaria.Fecha,'H') as "tipohorario",
+			sum(as_asistenciadiaria.CantidadReal) AS "cantidadreal"
+ FROM SGCORESYS.PersonaMast
+		INNER JOIN	SGCORESYS.EmpleadoMast ON ( EmpleadoMast.Empleado = PersonaMast.Persona )
+		INNER JOIN SGCORESYS.as_asistenciadiaria ON ( EmpleadoMast.Empleado = as_asistenciadiaria.Empleado )
+		left JOIN SGCORESYS.AS_CarnetIdentificacion ON ( EmpleadoMast.Empleado = AS_CarnetIdentificacion.Empleado )			
+WHERE  
+     		( EmpleadoMast.Empleado in (:empleado) or  :todos = 'S') AND
+			( AS_AsistenciaDiaria.Fecha >= :fechadesde ) AND
+			( AS_AsistenciaDiaria.Fecha <= :fechahasta ) AND
+			( as_asistenciadiaria.conceptoacceso in ('HSOB','HAUT','HNAU','40','05','33')) AND
+            ((EXISTS (SELECT 1
+                            FROM SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+                            WHERE AS_EMPLEADOS_AUTORIZADOS.SID =:sid
+                                        AND AS_EMPLEADOS_AUTORIZADOS.USUARIO = :user
+                                        AND  AS_EMPLEADOS_AUTORIZADOS.empleado = AS_AsistenciaDiaria.Empleado )) or 
+			          (EXISTS (SELECT 1
+									FROM SGCORESYS.EMPLEADOMAST E INNER JOIN SGCORESYS.SEGURIDADPERFILUSUARIO SP
+									ON E.CODIGOUSUARIO = SP.USUARIO
+									INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+									ON SP.PERFIL = SA.USUARIO
+									WHERE SA.CONCEPTO = 'SYSREA' AND
+									(E.dptoareaoperativa = EmpleadoMast.dptoareaoperativa OR 
+									 E.dptoareaoperativa IN (SELECT AREApADRE FROM SGCORESYS.AS_AREA WHERE AREA = EmpleadoMast.dptoareaoperativa)) AND
+									SP.USUARIO = :user))) 
+group by EmpleadoMast.Empleado,   
+			PersonaMast.TipoDocumento,   
+			PersonaMast.Documento,
+			PersonaMast.NombreCompleto,
+			EmpleadoMast.CompaniaSocio, 
+			EmpleadoMast.TipoPlanilla,
+			EmpleadoMast.LocaciondePago,  
+			EmpleadoMast.CentroCostos, 
+			EmpleadoMast.Sucursal,
+			AS_CarnetIdentificacion.Area,
+			EmpleadoMast.TipoHorario,
+			as_asistenciadiaria.conceptoacceso,
+			AS_AsistenciaDiaria.Fecha,
+			 EmpleadoMast.EstadoEmpleado
+
+UNION
+
+SELECT EmpleadoMast.Empleado as "empleado",   
+			PersonaMast.TipoDocumento as "tipodocumento",   
+			PersonaMast.Documento as "documento",
+			PersonaMast.NombreCompleto as "nombrecompleto",
+			EmpleadoMast.CompaniaSocio as "companiasocio",
+			EmpleadoMast.TipoPlanilla as "tipoplanilla",
+			EmpleadoMast.LocaciondePago as "locaciondepago", 
+			EmpleadoMast.CentroCostos as "centrocostos",  
+			EmpleadoMast.Sucursal as "sucursal",
+			AS_CarnetIdentificacion.Area as "area",
+			EmpleadoMast.TipoHorario as "tipohorarioempleado",
+			as_asistenciadiaria.conceptoacceso as "conceptoacceso",
+			AS_AsistenciaDiaria.Fecha as "fecha",
+			EmpleadoMast.EstadoEmpleado as "estadoempleado",
+			SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,AS_AsistenciaDiaria.Fecha,'D') as "tipodia",
+			SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,AS_AsistenciaDiaria.Fecha,'H') as "tipohorario",
+			sum(as_asistenciadiaria.CantidadReal)AS "cantidadreal"
+FROM SGCORESYS.PersonaMast
+		INNER JOIN	SGCORESYS.EmpleadoMast ON ( EmpleadoMast.Empleado = PersonaMast.Persona )
+		INNER JOIN SGCORESYS.as_asistenciadiaria ON ( EmpleadoMast.Empleado = as_asistenciadiaria.Empleado )
+		left JOIN SGCORESYS.AS_CarnetIdentificacion ON ( EmpleadoMast.Empleado = AS_CarnetIdentificacion.Empleado )			
+WHERE    
+	    	( EmpleadoMast.Empleado in (:empleado) or  :todos = 'S') AND
+			( AS_AsistenciaDiaria.Fecha >= :fechadesde ) AND
+			( AS_AsistenciaDiaria.Fecha <= :fechahasta )  AND
+			( as_asistenciadiaria.conceptoacceso in ('TARD','TART')) AND
+            ((EXISTS (SELECT 1
+                            FROM SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+                            WHERE AS_EMPLEADOS_AUTORIZADOS.SID =:sid
+                                        AND AS_EMPLEADOS_AUTORIZADOS.USUARIO = :user
+                                        AND  AS_EMPLEADOS_AUTORIZADOS.empleado = AS_AsistenciaDiaria.Empleado )) or 
+			          (EXISTS (SELECT 1
+									FROM SGCORESYS.EMPLEADOMAST E INNER JOIN SGCORESYS.SEGURIDADPERFILUSUARIO SP
+									ON E.CODIGOUSUARIO = SP.USUARIO
+									INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+									ON SP.PERFIL = SA.USUARIO
+									WHERE SA.CONCEPTO = 'SYSREA' AND
+									(E.dptoareaoperativa = EmpleadoMast.dptoareaoperativa OR 
+									 E.dptoareaoperativa IN (SELECT AREApADRE FROM SGCORESYS.AS_AREA WHERE AREA = EmpleadoMast.dptoareaoperativa)) AND
+									SP.USUARIO = :user)))
+group by EmpleadoMast.Empleado,   
+			PersonaMast.TipoDocumento,   
+			PersonaMast.Documento,
+			PersonaMast.NombreCompleto,
+			EmpleadoMast.CompaniaSocio, 
+			EmpleadoMast.TipoPlanilla,
+			EmpleadoMast.LocaciondePago,  
+			EmpleadoMast.CentroCostos, 
+			EmpleadoMast.Sucursal,
+			AS_CarnetIdentificacion.Area,
+			EmpleadoMast.TipoHorario,
+			as_asistenciadiaria.conceptoacceso,
+			AS_AsistenciaDiaria.Fecha,
+			 EmpleadoMast.EstadoEmpleado
+		    ]]>
+	</sql-query>
+
+	<sql-query name="empleadomast.ListarEmpleadoReporteAsistenciaFaltadia">
+		<![CDATA[
+		  SELECT EmpleadoMast.Empleado as "empleado",   
+						PersonaMast.TipoDocumento as "tipodocumento",   
+						PersonaMast.Documento as "documento",
+						PersonaMast.NombreCompleto as "nombrecompleto",
+						EmpleadoMast.CompaniaSocio as "companiasocio", 
+						EmpleadoMast.TipoPlanilla as "tipoplanilla",
+						EmpleadoMast.LocaciondePago as "locaciondepago",  
+						EmpleadoMast.CentroCostos as "centrocostos", 
+						EmpleadoMast.Sucursal as "sucursal",
+						AS_CarnetIdentificacion.Area as "area",
+						as_asistenciadiaria.conceptoacceso as "conceptoacceso",
+						AS_AsistenciaDiaria.Fecha as "fecha",
+						EmpleadoMast.EstadoEmpleado as "estadoempleado",
+						EmpleadoMast.TipoHorario as "tipohorarioempleado",
+			            SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,AS_AsistenciaDiaria.Fecha,'H') as "tipohorario",
+			            SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,AS_AsistenciaDiaria.Fecha,'D') as "tipodia",
+						SUM(as_asistenciadiaria.CantidadReal) AS "cantidadreal"
+			FROM 	SGCORESYS.PersonaMast
+						INNER JOIN	SGCORESYS.EmpleadoMast 
+							ON ( EmpleadoMast.Empleado = PersonaMast.Persona )
+			
+						INNER JOIN SGCORESYS.as_asistenciadiaria 
+							ON ( EmpleadoMast.Empleado = as_asistenciadiaria.Empleado )
+			
+						INNER JOIN	SGCORESYS.as_conceptoacceso 
+							ON ( as_asistenciadiaria.conceptoacceso = as_conceptoacceso.conceptoacceso)
+			
+						LEFT JOIN SGCORESYS.AS_CarnetIdentificacion 
+							ON ( EmpleadoMast.Empleado = AS_CarnetIdentificacion.Empleado)
+			
+			WHERE  
+						( AS_AsistenciaDiaria.Fecha >= :fechadesde ) AND
+						( AS_AsistenciaDiaria.Fecha <= :fechahasta ) AND
+						( AS_Conceptoacceso.conceptoaccesosistema in ('FALT','PERM'))
+						AND	( (
+								EXISTS 	(
+											SELECT 1
+											FROM 	SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+											WHERE 	AS_EMPLEADOS_AUTORIZADOS.SID =:sid
+														AND AS_EMPLEADOS_AUTORIZADOS.USUARIO = :user
+														AND  AS_EMPLEADOS_AUTORIZADOS.empleado = AS_AsistenciaDiaria.Empleado 
+											)
+							) or 
+			                (EXISTS (SELECT 1
+									FROM SGCORESYS.EMPLEADOMAST E INNER JOIN SGCORESYS.SEGURIDADPERFILUSUARIO SP
+									ON E.CODIGOUSUARIO = SP.USUARIO
+									INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+									ON SP.PERFIL = SA.USUARIO
+									WHERE SA.CONCEPTO = 'SYSREA' AND
+									(E.dptoareaoperativa = EmpleadoMast.dptoareaoperativa OR 
+									 E.dptoareaoperativa IN (SELECT AREApADRE FROM SGCORESYS.AS_AREA WHERE AREA = EmpleadoMast.dptoareaoperativa)) AND
+									SP.USUARIO = :user))) 
+	    ]]>
+	</sql-query>
+
+	<sql-query name="empleadomast.ListarEmpleadoFaltas">
+		<![CDATA[
+		     SELECT EmpleadoMast.Empleado as "empleado",      
+            PersonaMast.TipoDocumento as "tipodocumento",     
+            PersonaMast.Documento as "documento",
+            PersonaMast.NombreCompleto as "nombrecompleto",
+            EmpleadoMast.CompaniaSocio as "companiasocio", 
+            EmpleadoMast.TipoPlanilla as "tipoplanilla",
+            EmpleadoMast.LocaciondePago as "locaciondepago",  
+            EmpleadoMast.CentroCostos as "centrocostos",  
+            EmpleadoMast.Sucursal as "sucursal",
+            AS_CarnetIdentificacion.Area as "area",
+            EmpleadoMast.TipoHorario as "tipohorarioempleado",
+            as_asistenciadiaria.conceptoacceso as "conceptoacceso",
+            AS_AsistenciaDiaria.Fecha as "fecha",
+            SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,AS_AsistenciaDiaria.Fecha,'H') as "tipohorario",
+			SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,AS_AsistenciaDiaria.Fecha,'D') as "tipodia",
+            SUM(as_asistenciadiaria.CantidadReal) AS "cantidadreal"
+            
+FROM    SGCORESYS. PersonaMast
+            INNER JOIN    SGCORESYS.EmpleadoMast 
+                ON ( EmpleadoMast.Empleado = PersonaMast.Persona )
+
+            INNER JOIN SGCORESYS.as_asistenciadiaria 
+                ON ( EmpleadoMast.Empleado = as_asistenciadiaria.Empleado )
+
+            INNER JOIN    SGCORESYS.as_conceptoacceso 
+                ON ( as_asistenciadiaria.conceptoacceso = as_conceptoacceso.conceptoacceso)
+
+            LEFT JOIN SGCORESYS.AS_CarnetIdentificacion 
+                ON ( EmpleadoMast.Empleado = AS_CarnetIdentificacion.Empleado)
+
+WHERE      ( EmpleadoMast.Empleado in (:empleado) or :todos = 'S') AND
+            ( AS_AsistenciaDiaria.Fecha >= :fechadesde) AND
+            ( AS_AsistenciaDiaria.Fecha <= :fechahasta) AND
+            ( AS_Conceptoacceso.conceptoaccesosistema in ('FALT','PERM','MARC') AND AS_Conceptoacceso.ConceptoAcceso NOT IN ('05', '40', 'HAUT'))
+            AND    ((
+                    EXISTS     (
+                                SELECT 1
+                                FROM     SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+                                WHERE     AS_EMPLEADOS_AUTORIZADOS.SID =:sid
+                                            AND AS_EMPLEADOS_AUTORIZADOS.USUARIO =:user
+                                            AND  AS_EMPLEADOS_AUTORIZADOS.empleado = AS_AsistenciaDiaria.Empleado 
+                                )
+                ) or 
+			          (EXISTS (SELECT 1
+									FROM SGCORESYS.EMPLEADOMAST E INNER JOIN SGCORESYS.SEGURIDADPERFILUSUARIO SP
+									ON E.CODIGOUSUARIO = SP.USUARIO
+									INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+									ON SP.PERFIL = SA.USUARIO
+									WHERE SA.CONCEPTO = 'SYSREA' AND
+									(E.dptoareaoperativa = EmpleadoMast.dptoareaoperativa OR 
+									 E.dptoareaoperativa IN (SELECT AREApADRE FROM SGCORESYS.AS_AREA WHERE AREA = EmpleadoMast.dptoareaoperativa)) AND
+									SP.USUARIO = :user))) 
+GROUP BY
+            EmpleadoMast.Empleado,   
+            PersonaMast.TipoDocumento,   
+            PersonaMast.Documento,
+            PersonaMast.NombreCompleto,
+            EmpleadoMast.CompaniaSocio, 
+            EmpleadoMast.TipoPlanilla,
+            EmpleadoMast.LocaciondePago,  
+            EmpleadoMast.CentroCostos, 
+            EmpleadoMast.Sucursal,
+            AS_CarnetIdentificacion.Area,
+            EmpleadoMast.TipoHorario,
+            as_asistenciadiaria.conceptoacceso,
+            AS_AsistenciaDiaria.Fecha
+		
+		   ]]>
+	</sql-query>
+
+
+
+	<sql-query name="empleadomast.ListarEmpleadoReporteAsistenciaVacacion">
+		<![CDATA[
+		SELECT EmpleadoMast.Empleado as "empleado",   
+					PersonaMast.TipoDocumento as "tipodocumento",   
+					PersonaMast.Documento as "documento",
+					PersonaMast.NombreCompleto as "nombrecompleto",
+					EmpleadoMast.CompaniaSocio as "companiasocio", 
+					EmpleadoMast.TipoPlanilla as "tipoplanilla",
+					EmpleadoMast.LocaciondePago as "locaciondepago",  
+					EmpleadoMast.CentroCostos as "centrocostos", 
+					EmpleadoMast.Sucursal as "sucursal",
+					AS_CarnetIdentificacion.Area as "area",
+					AS_CarnetIdentificacion.DIADESCANSO as "diadescanso",
+					pr_vacacionutilizacion.fechainicio as "fechainicio", 
+					pr_vacacionutilizacion.fechafin as "fechafin",
+					EmpleadoMast.EstadoEmpleado as "estadoempleado",
+			        SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,pr_vacacionutilizacion.fechainicio,'H') as "tipohorario"
+		FROM	SGCORESYS.PersonaMast inner join  SGCORESYS.EmpleadoMast
+				on EmpleadoMast.Empleado = PersonaMast.Persona 
+				inner join SGCORESYS.pr_vacacionutilizacion
+				on EmpleadoMast.Empleado = pr_vacacionutilizacion.Empleado
+				LEFT JOIN SGCORESYS.AS_CarnetIdentificacion on		
+				( EmpleadoMast.Empleado = AS_CarnetIdentificacion.Empleado ) 
+					
+		WHERE  
+				( pr_vacacionutilizacion.TipoUtilizacion = 'GOC' ) AND
+				( PR_VacacionUtilizacion.FechaInicio >= :p_fechadesde AND 
+				  PR_VacacionUtilizacion.FechaInicio <= :p_fechahasta) AND
+		          ((EXISTS (SELECT 1
+		                            FROM SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+		                            WHERE AS_EMPLEADOS_AUTORIZADOS.SID =:sid
+		                                        AND AS_EMPLEADOS_AUTORIZADOS.USUARIO = :user
+		                                        AND  AS_EMPLEADOS_AUTORIZADOS.empleado = EmpleadoMast.Empleado )) or 
+			          (EXISTS (SELECT 1
+									FROM SGCORESYS.EMPLEADOMAST E INNER JOIN SGCORESYS.SEGURIDADPERFILUSUARIO SP
+									ON E.CODIGOUSUARIO = SP.USUARIO
+									INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+									ON SP.PERFIL = SA.USUARIO
+									WHERE SA.CONCEPTO = 'SYSREA' AND
+									(E.dptoareaoperativa = EmpleadoMast.dptoareaoperativa OR 
+									 E.dptoareaoperativa IN (SELECT AREApADRE FROM SGCORESYS.AS_AREA WHERE AREA = EmpleadoMast.dptoareaoperativa)) AND
+									SP.USUARIO = :user)))
+				
+	    ]]>
+	</sql-query>
+
+	<sql-query name="empleadomast.ListarEmpleadoReporteAsistenciaLicencias">
+		<![CDATA[
+			SELECT EmpleadoMast.Empleado as "empleado",   
+							PersonaMast.TipoDocumento as "tipodocumento",   
+							PersonaMast.Documento as "documento",
+							PersonaMast.NombreCompleto as "nombrecompleto",
+							EmpleadoMast.CompaniaSocio as "companiasocio", 
+							EmpleadoMast.TipoPlanilla as "tipoplanilla",
+							EmpleadoMast.LocaciondePago  as "locaciondepago",  
+							EmpleadoMast.CentroCostos as "centrocostos", 
+							EmpleadoMast.Sucursal as "sucursal",
+							AS_CarnetIdentificacion.Area as "area",
+							AS_CarnetIdentificacion.DIADESCANSO as "diadescanso",
+							HR_Licencias.FechaInicio as "fechainicio",    
+							HR_Licencias.FechaFinal as "fechafinal",
+							HR_Licencias.TipoLicencia as "tipolicencia",
+							EmpleadoMast.EstadoEmpleado as "estadoempleado",
+			                SGCORESYS.CASE_TIPO_DIA_HORARIO(EmpleadoMast.Empleado,HR_Licencias.FechaInicio,'H') as "tipohorario"
+					FROM 	SGCORESYS.PersonaMast,   
+								SGCORESYS.EmpleadoMast
+									LEFT JOIN SGCORESYS.AS_CarnetIdentificacion on 	( EmpleadoMast.Empleado = AS_CarnetIdentificacion.Empleado ) ,
+								SGCORESYS.HR_Licencias
+					WHERE ( EmpleadoMast.Empleado = PersonaMast.Persona ) AND  
+							( EmpleadoMast.Empleado = HR_Licencias.Empleado ) AND  
+							( EmpleadoMast.CompaniaSocio = HR_Licencias.CompanyOwner ) AND
+							( HR_Licencias.TipoLicencia in ('07','08','09') ) AND
+								((EXISTS (SELECT 1
+													 FROM SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+													 WHERE AS_EMPLEADOS_AUTORIZADOS.SID =:sid
+																	 AND AS_EMPLEADOS_AUTORIZADOS.USUARIO = :user
+																	 AND  AS_EMPLEADOS_AUTORIZADOS.empleado = EmpleadoMast.Empleado )) or 
+			                     (EXISTS (SELECT 1
+									FROM SGCORESYS.EMPLEADOMAST E INNER JOIN SGCORESYS.SEGURIDADPERFILUSUARIO SP
+									ON E.CODIGOUSUARIO = SP.USUARIO
+									INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+									ON SP.PERFIL = SA.USUARIO
+									WHERE SA.CONCEPTO = 'SYSREA' AND
+									(E.dptoareaoperativa = EmpleadoMast.dptoareaoperativa OR 
+									 E.dptoareaoperativa IN (SELECT AREApADRE FROM SGCORESYS.AS_AREA WHERE AREA = EmpleadoMast.dptoareaoperativa)) AND
+									SP.USUARIO = :user)))
+	    ]]>
+	</sql-query>
+
+	<sql-query name="empleadomast.ListarEmpleadoReporteAsistenciaCasiDetallada">
+		<![CDATA[
+					SELECT   
+			            as_AsistenciaDiaria.Empleado as "empleado",    
+			            as_AsistenciaDiaria.Fecha as "fecha",   
+			            as_AsistenciaDiaria.Desde as "desde",    
+			            as_AsistenciaDiaria.Hasta as "hasta",   
+			            as_AsistenciaDiaria.Cantidad as "cantidad",    
+			            as_AsistenciaDiaria.ConceptoAcceso as "conceptoacceso",
+			            as_AsistenciaDiaria.CantidadReal as "cantidadreal",  
+			            as_AsistenciaDiaria.FlagCompensacion as "flagcompensacion",
+			            as_conceptoacceso.flagcompensa as "flagcompensa",
+			            as_conceptoacceso.flagotrospermisos as "flagotrospermisos"
+			FROM SGCORESYS.as_AsistenciaDiaria   
+			        INNER JOIN SGCORESYS.EmpleadoMast on ( as_AsistenciaDiaria.Empleado = EmpleadoMast.Empleado )
+			        INNER JOIN SGCORESYS.Vw_as_EmpleadoMast ON (Vw_as_EmpleadoMast.Empleado = EmpleadoMast.Empleado)
+			        INNER JOIN SGCORESYS.PersonaMast ON ( EmpleadoMast.Empleado = PersonaMast.Persona )
+			        INNER JOIN SGCORESYS.as_conceptoacceso ON ( as_AsistenciaDiaria.ConceptoAcceso = as_conceptoacceso.ConceptoAcceso )
+			        INNER JOIN SGCORESYS.as_CarnetIdentificacion ON ( as_CarnetIdentificacion.Empleado = EmpleadoMast.Empleado )
+			WHERE  ( as_CarnetIdentificacion.Estado = 'A' ) 
+			                AND (Empleadomast.empleado = :empleado)
+			              AND     ( as_AsistenciaDiaria.Fecha between :desde AND :hasta  ) 
+			             AND    (( (AS_AsistenciaDiaria.ConJustificacion = 'S' AND  AS_AsistenciaDiaria.Justificacion = 'S') OR  (AS_AsistenciaDiaria.ConJustificacion = 'N')) OR     'N' = 'S')
+			               AND  ((EXISTS (SELECT 1
+			                            FROM SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+			                            WHERE AS_EMPLEADOS_AUTORIZADOS.SID =:sid
+			                                        AND AS_EMPLEADOS_AUTORIZADOS.USUARIO = :user
+			                                        AND  AS_EMPLEADOS_AUTORIZADOS.empleado = AS_AsistenciaDiaria.Empleado ))
+			                                        or 
+			         			 (EXISTS (SELECT 1
+									FROM SGCORESYS.EMPLEADOMAST E INNER JOIN SGCORESYS.SEGURIDADPERFILUSUARIO SP
+									ON E.CODIGOUSUARIO = SP.USUARIO
+									INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+									ON SP.PERFIL = SA.USUARIO
+									WHERE SA.CONCEPTO = 'SYSREA' AND
+									(E.dptoareaoperativa = EmpleadoMast.dptoareaoperativa OR 
+									 E.dptoareaoperativa IN (SELECT AREApADRE FROM SGCORESYS.AS_AREA WHERE AREA = EmpleadoMast.dptoareaoperativa)) AND
+									SP.USUARIO = :user)))
+			                                            
+			                                                    
+			ORDER BY as_AsistenciaDiaria.Empleado
+	    ]]>
+	</sql-query>
+
+	<sql-query name="empleadomast.obtenerInasistencias">
+		SELECT
+		FechaDesde as "fechadesde",
+		FechaHasta
+		as "fechahasta"
+		FROM
+		sgcoresys.AS_EmpleadosInasistencia
+		WHERE
+		Empleado =
+		:p_empleado
+	</sql-query>
+
+	<sql-query name="empleadomast.obtenertipohorario">
+     <![CDATA[
+		SELECT nvl(max(AS_EmpleadoExcepcionDetalle.TipoHorario),0)
+	 	FROM SGCORESYS.AS_EmpleadoExcepcion, SGCORESYS.AS_EmpleadoExcepcionDetalle
+	 	WHERE	AS_EmpleadoExcepcion.Empleado = :p_empleado and 
+				AS_EmpleadoExcepcion.fecha <= :p_fecha and
+				AS_EmpleadoExcepcion.fechahasta >= :p_fecha and
+				AS_EmpleadoExcepcion.CLASEHORARIO = 'E' and
+				AS_EmpleadoExcepcion.FECHA = AS_EmpleadoExcepcionDetalle.FECHA and
+				AS_EmpleadoExcepcion.EMPLEADO = AS_EmpleadoExcepcionDetalle.EMPLEADO and
+				AS_EmpleadoExcepcion.CLASEHORARIO = AS_EmpleadoExcepcionDetalle.CLASEHORARIO
+	  ]]>
+	</sql-query>
+
+	<sql-query name="empleadomast.contarActivosArea">
+     <![CDATA[
+			select  
+			count(*)
+			from
+			sgcoresys.empleadomast e
+			join sgcoresys.personamast p
+			on e.empleado = p.persona
+			join sgcoresys.as_area a
+			on a.area = e.dptoareaoperativa
+			where 
+			e.estado = 'A' and
+			e.estadoempleado = '0' and 
+			empleado > 0
+	  ]]>
+	</sql-query>
+
+	<sql-query name="empleadomast.listarActivosArea">
+     <![CDATA[
+			select  
+			e.empleado as "empleado",
+			p.nombrecompleto as "nombrecompleto",
+			a.nombre as "area"
+			from
+			sgcoresys.empleadomast e
+			join sgcoresys.personamast p
+			on e.empleado = p.persona
+			join sgcoresys.as_area a
+			on a.area = e.dptoareaoperativa
+			where 
+			e.estado = 'A' and
+			e.estadoempleado = '0' and 
+			empleado > 0
+	  ]]>
+	</sql-query>
+
+
+
+</hibernate-mapping>

@@ -1,0 +1,130 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panelGrid columns="3" style="border-spacing:0px;"
+		columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+		layout="grid" styleClass="ui-panelgrid-blank">
+		<h:outputLabel value="Experiencia en otras empresas"
+			style="font-size:11px; font-family:Open sans,sans-serif; font-weight: bold;color:#0B0B61" />
+
+		<p:commandButton value="Agregar Exp. Exterior" disabled="true"
+			icon="nuevo" />
+
+		<p:commandButton value="Eliminar Exp. Exterior" disabled="true"
+			icon="eliminar" />
+	</p:panelGrid>
+
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		paginator="true" paginatorPosition="bottom" reflow="true"
+		scrollable="true" scrollHeight="125" var="e" rows="20"
+		id="tblExperienciaPrevia"
+		value="#{cwHrPuestosEdit.dw_experiencia_exterior}"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+		<p:column headerText="Área" width="180">
+			<h:outputText value="#{e.auxFuncion}" />
+		</p:column>
+
+		<p:column headerText="Tiempo Desde" width="60">
+			<h:outputText value="#{e.meseshasta}">
+				<f:convertNumber pattern="000000" />
+			</h:outputText>
+		</p:column>
+
+		<p:column headerText="Hasta (aammdd)" width="60">
+			<h:outputText value="#{e.meses}" />
+		</p:column>
+
+		<p:column headerText="Puntaje" width="90">
+			<h:outputText value="#{e.puntos}">
+				<f:convertNumber pattern=".00" />
+			</h:outputText>
+		</p:column>
+
+		<p:column headerText="Experiencia" width="160">
+			<h:outputText
+				value="#{e.flagconocimiento.equals('1')?'Relacionados al cargo':'Complementarios'}" />
+		</p:column>
+
+		<p:column headerText="Acciones" width="70"
+			styleClass="columnatablaCentro">
+			<p:commandButton id="btnBuscar" icon="buscar" immediate="true"
+				process="@this" action="#{cwHrPuestosEdit.buscarMiscelaneos}"
+				styleClass="botonTextoImagenChico">
+				<f:setPropertyActionListener
+					target="#{cwHrMiscelaneoSelectorVarios.iMantenimientoReferencia}"
+					value="#{cwHrPuestosEdit}" />
+				<f:setPropertyActionListener
+					target="#{cwHrMiscelaneoSelectorVarios.nombreContenedorRefrescar}"
+					value="whrpuestosedit:tabView:tblExperienciaPrevia" />
+				<f:setPropertyActionListener
+					target="#{cwHrMiscelaneoSelectorVarios.nombreVentanaEmergente}"
+					value="popSelectorMiscelaneoSelectorVarios" />
+
+			</p:commandButton>
+
+		</p:column>
+
+	</p:dataTable>
+
+
+
+	<p:panelGrid columns="3" style="border-spacing:0px;"
+		columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+		layout="grid" styleClass="ui-panelgrid-blank">
+		<h:outputLabel value="Experiencia Local" id="lblExperiencia"
+			style="font-size:11px; font-family:Open sans,sans-serif; font-weight: bold;color:#0B0B61" />
+
+		<p:commandButton value="Agregar Exp. Local" disabled="true"
+			icon="nuevo" />
+
+		<p:commandButton value="Eliminar Exp. Local" disabled="true"
+			icon="eliminar" />
+	</p:panelGrid>
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		paginator="true" paginatorPosition="bottom" reflow="true"
+		scrollable="true" scrollHeight="125" rows="20"
+		id="tblExperienciaPrevia2"
+		value="#{cwHrPuestosEdit.dw_experiencia_local}" var="a"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+		<p:column headerText="Área" width="180">
+			<h:outputText value="#{a.auxFuncion}" />
+		</p:column>
+
+		<p:column headerText="Tiempo Desde" width="60">
+			<h:outputText value="#{a.meseshasta}" />
+		</p:column>
+
+		<p:column headerText="Hasta" width="60">
+			<h:outputText value="#{a.meses}" />
+		</p:column>
+
+		<p:column headerText="Puntaje" width="90">
+			<h:outputText value="#{a.puntos}" />
+		</p:column>
+
+		<p:column headerText="Experiencia" width="160">
+			<h:outputText
+				value="#{a.flagconocimiento.equals('1')?'Relacionados al cargo':'Complementarios'}" />
+		</p:column>
+
+		<p:column headerText="Acciones" width="70">
+			<p:commandButton id="btnBuscar" icon="buscar"
+				styleClass="botonTextoImagenChico" />
+			<p:commandButton id="btnVer" icon="ver"
+				styleClass="botonTextoImagenChico" />
+		</p:column>
+
+	</p:dataTable>
+</ui:composition>

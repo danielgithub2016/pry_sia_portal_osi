@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrEvaluacionesrango" table="SGCORESYS.HR_EVALUACIONESRANGO">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrEvaluacionesrangoPk">
+            <key-property name="codigorango" type="string">
+                <column name="CODIGORANGO" length="8" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="50" />
+        </property>
+        <property name="valor" type="big_decimal">
+            <column name="VALOR" length="22" />
+        </property>
+        <property name="desde" type="big_decimal">
+            <column name="DESDE" length="22" />
+        </property>
+        <property name="hasta" type="big_decimal">
+            <column name="HASTA" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

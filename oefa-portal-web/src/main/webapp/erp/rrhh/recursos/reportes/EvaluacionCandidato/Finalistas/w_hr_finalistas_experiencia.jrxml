@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_hr_finalistas_educacion" language="groovy" pageWidth="595" pageHeight="100" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c1e7bdd2-b771-409c-aa56-29c6c275bb54">
+	<property name="ireport.zoom" value="1.7715610000000015"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="postulante" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT  HR_POSTULANTEEXPERIENCIA.SECUENCIA ,
+			HR_POSTULANTEEXPERIENCIA.POSTULANTE ,
+			HR_POSTULANTEEXPERIENCIA.EMPRESA ,
+			HR_POSTULANTEEXPERIENCIA.FECHADESDE ,
+			HR_POSTULANTEEXPERIENCIA.FECHAHASTA ,
+			HR_POSTULANTEEXPERIENCIA.CARGOOCUPADO ,
+			HR_POSTULANTEEXPERIENCIA.GIROEMPRESA ,
+			HR_POSTULANTEEXPERIENCIA.ESPECIALIDAD ,
+			HR_POSTULANTEEXPERIENCIA.FUNCIONES ,
+			HR_POSTULANTEEXPERIENCIA.TRABAJOSREALIZADOS ,
+			HR_POSTULANTEEXPERIENCIA.SUELDO ,
+			HR_POSTULANTEEXPERIENCIA.MOTIVOCESE ,
+			HR_POSTULANTEEXPERIENCIA.ULTIMOUSUARIO ,
+			HR_POSTULANTEEXPERIENCIA.ULTIMAFECHAMODIF ,
+			HR_POSTULANTEEXPERIENCIA.UNIDADNEGOCIO ,
+			HR_POSTULANTEEXPERIENCIA.OBJETIVOSALCANZADOS
+FROM HR_POSTULANTEEXPERIENCIA
+WHERE HR_POSTULANTEEXPERIENCIA.POSTULANTE = $P{postulante}]]>
+	</queryString>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="POSTULANTE" class="java.lang.String"/>
+	<field name="EMPRESA" class="java.lang.String"/>
+	<field name="FECHADESDE" class="java.sql.Timestamp"/>
+	<field name="FECHAHASTA" class="java.sql.Timestamp"/>
+	<field name="CARGOOCUPADO" class="java.lang.String"/>
+	<field name="GIROEMPRESA" class="java.lang.String"/>
+	<field name="ESPECIALIDAD" class="java.lang.String"/>
+	<field name="FUNCIONES" class="java.lang.String"/>
+	<field name="TRABAJOSREALIZADOS" class="java.lang.String"/>
+	<field name="SUELDO" class="java.math.BigDecimal"/>
+	<field name="MOTIVOCESE" class="java.lang.String"/>
+	<field name="ULTIMOUSUARIO" class="java.lang.String"/>
+	<field name="ULTIMAFECHAMODIF" class="java.sql.Timestamp"/>
+	<field name="UNIDADNEGOCIO" class="java.lang.String"/>
+	<field name="OBJETIVOSALCANZADOS" class="java.lang.String"/>
+	<detail>
+		<band height="68" splitType="Stretch">
+			<rectangle>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="20" width="455" height="40" isPrintWhenDetailOverflows="true" uuid="9e26f8d6-e794-4546-abe2-642026bdad34"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="455" height="20" backcolor="#E3E3E3" uuid="905e9a99-7118-4a17-9e8a-402d1d622bba"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="5" y="0" width="450" height="20" uuid="4d25311d-edce-4b26-80c1-e45557317478"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Experiencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="20" width="125" height="14" uuid="c4f375f9-b03f-4a38-90c8-f32e87add379"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empresa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="164" y="20" width="70" height="14" uuid="39bd942c-1ad3-4677-b608-52a6a1f744e1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desde]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="20" width="73" height="14" uuid="39ca2e24-1eb1-4969-a221-b1ffe3e09b5f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hasta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="20" width="148" height="14" uuid="3d306f65-90e0-4f06-a3a2-30d67a925e0c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Puesto Ocupado]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="39" y="34" width="125" height="26" isPrintWhenDetailOverflows="true" uuid="1e0fd30a-2e4a-4168-bcce-50b05da4a8f2"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMPRESA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="5" y="33" width="34" height="27" isPrintWhenDetailOverflows="true" uuid="5671cc0c-fbcf-4ca8-a64f-f4235dfe8f2b"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SECUENCIA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement stretchType="RelativeToTallestObject" x="164" y="34" width="70" height="26" isPrintWhenDetailOverflows="true" uuid="90ad0e83-b27e-48ac-8b88-ec098a6e4840"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHADESDE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement stretchType="RelativeToTallestObject" x="234" y="34" width="73" height="26" isPrintWhenDetailOverflows="true" uuid="9e402f2d-afa9-4b3b-b28f-ad54855ff38e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHAHASTA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="307" y="34" width="148" height="26" isPrintWhenDetailOverflows="true" uuid="0c0b7128-39ae-4f08-8715-a83d5519be55"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CARGOOCUPADO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

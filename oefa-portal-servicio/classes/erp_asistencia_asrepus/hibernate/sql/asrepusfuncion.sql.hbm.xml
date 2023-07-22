@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : asrepus.w_as_captura_string_idle -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<!-- asrepus.f_sql_documentofiscal_compania -->
+	<sql-query name="asrepus.fsqldocumentofiscalcompania">
+	   SELECT CompaniaMast.DocumentoFiscal as "documentofiscal"  
+		FROM SGCORESYS.CompaniaMast  
+		WHERE companiacodigo = :par_compania;
+	</sql-query>
+
+</hibernate-mapping>

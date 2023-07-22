@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to get your coordinates.</p>
+
+<button onclick="getLocation()">Try It</button>
+
+<p><strong>Note:</strong> The geolocation property is not supported in IE8 and earlier versions.</p>
+
+<p id="demo"></p>
+
+<script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+  
+
+}
+
+function calcularDistanciaEntreDosCoordenadas (lat1,lon1,lat2,lon2) {
+    // Convertir todas las coordenadas a radianes
+	rad = function(x) {return x*Math.PI/180;}
+	var R = 6378.137; //Radio de la tierra en km
+	 var dLat = rad( lat2 - lat1 );
+	 var dLong = rad( lon2 - lon1 );
+	var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(rad(lat1)) * Math.cos(rad(lat2)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+	 var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	 var d = R * c;
+	return d.toFixed(3) * 1000;
+};
+
+
+function showPosition(position) {
+  x.innerHTML = "Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude + 
+  // mi casa a oefa
+   "<br>distancia: " + calcularDistanciaEntreDosCoordenadas(-12.0892813,-77.05801,-12.089388258009098, -77.05840528245196);
+  //"<br>distancia: " + calcularDistanciaEntreDosCoordenadas(19.416326917410476,-99.12479042256915,23.097069089850933,-82.35006433419622);
+  // oefa a 
+}
+
+
+function gradosARadianes(grados){
+    return grados * Math.PI / 180;
+};
+
+</script>
+
+</body>
+</html>

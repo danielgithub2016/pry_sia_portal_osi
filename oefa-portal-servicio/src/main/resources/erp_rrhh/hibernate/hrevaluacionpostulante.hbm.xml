@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.rrhh.dominio.HrEvaluacionpostulante"
+		table="SGCORESYS.HR_EVALUACIONPOSTULANTE">
+		<composite-id name="pk"
+			class="net.royal.erp.rrhh.dominio.HrEvaluacionpostulantePk">
+			<key-property name="requerimiento" type="string">
+				<column name="REQUERIMIENTO" length="10" />
+			</key-property>
+			<key-property name="secuencia" type="integer">
+				<column name="SECUENCIA" length="22" />
+			</key-property>
+			<key-property name="secuencia2" type="integer">
+				<column name="SECUENCIA_2" length="22" />
+			</key-property>
+			<key-property name="companyowner" type="string">
+				<column name="COMPANYOWNER" length="8" />
+			</key-property>
+			<key-property name="postulante" type="string">
+				<column name="POSTULANTE" length="10" />
+			</key-property>
+			<key-property name="factor" type="integer">
+				<column name="FACTOR" length="22" />
+			</key-property>
+		</composite-id>
+		<property name="calificacion9" type="integer">
+			<column name="CALIFICACION9" length="22" />
+		</property>
+		<property name="calificacion5" type="integer">
+			<column name="CALIFICACION5" length="22" />
+		</property>
+		<property name="ultimoUsuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+		<property name="puntaje" type="big_decimal">
+			<column name="PUNTAJE" length="22" />
+		</property>
+		<property name="calificacion2" type="integer">
+			<column name="CALIFICACION2" length="22" />
+		</property>
+		<property name="secuenciacompetencia" type="integer">
+			<column name="SECUENCIACOMPETENCIA" length="22" />
+		</property>
+		<property name="calificacion8" type="integer">
+			<column name="CALIFICACION8" length="22" />
+		</property>
+		<property name="calificacion7" type="integer">
+			<column name="CALIFICACION7" length="22" />
+		</property>
+		<property name="calificacion3" type="integer">
+			<column name="CALIFICACION3" length="22" />
+		</property>
+		<property name="valorcompetencia" type="big_decimal">
+			<column name="VALORCOMPETENCIA" length="22" />
+		</property>
+		<property name="entrevistador" type="integer">
+			<column name="ENTREVISTADOR" length="22" />
+		</property>
+		<property name="ultimaFechaModif" type="timestamp">
+			<column name="ULTIMAFECHAMODIF" length="7" />
+		</property>
+		<property name="calificacion10" type="integer">
+			<column name="CALIFICACION10" length="22" />
+		</property>
+		<property name="flagcalificado" type="string">
+			<column name="FLAGCALIFICADO" length="1" />
+		</property>
+		<property name="calificacion6" type="integer">
+			<column name="CALIFICACION6" length="22" />
+		</property>
+		<property name="calificacion1" type="integer">
+			<column name="CALIFICACION1" length="22" />
+		</property>
+		<property name="comentario" type="string">
+			<column name="COMENTARIO" length="2000" />
+		</property>
+		<property name="rutadocumento" type="string">
+			<column name="RUTADOCUMENTO" length="200" />
+		</property>
+		<property name="factorcompetencia" type="integer">
+			<column name="FACTORCOMPETENCIA" length="22" />
+		</property>
+		<property name="flagaprobacion" type="string">
+			<column name="FLAGAPROBACION" length="1" />
+		</property>
+		<property name="calificacion4" type="integer">
+			<column name="CALIFICACION4" length="22" />
+		</property>
+		<property name="unidadnegocio" type="string">
+			<column name="UNIDADNEGOCIO" length="4" />
+		</property>
+		<property name="calificativo" type="big_decimal">
+			<column name="CALIFICATIVO" length="22" />
+		</property>
+		<property name="valorhastacompetencia" type="big_decimal">
+			<column name="VALORHASTACOMPETENCIA" length="22" />
+		</property>
+	</class>
+</hibernate-mapping>

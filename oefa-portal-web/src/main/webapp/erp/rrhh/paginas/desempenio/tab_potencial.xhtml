@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:panelGrid columns="2" style="border-spacing:0px;">
+		<p:spacer height="1" width="1" />
+		<h:panelGrid columns="4" style="border-spacing:0px;">
+			<p:commandButton value="Actualizar Plantilla" />
+			<p:commandButton value="Imprimir Detalle" />
+			<p:commandButton value="Cancelar" />
+			<p:commandButton value="Gráfico" />
+		</h:panelGrid>
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			scrollWidth="600" scrollable="true" scrollHeight="250"
+			tableStyle="580px;"
+			style="#{cwHrEvaluacionempleadoEdit.opciones.dw9_disable ? 'pointer-events:none' : null}"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+			<p:column></p:column>
+			<f:facet name="footer">
+				<table style="border-color: rgb(112, 168, 210);">
+					<tr>
+						<td class="columnatablaIzquierda">Evaluaciones : 0</td>
+						<td class="columnatablaDerecha">Puntaje Total</td>
+						<td class="columnatablaDerecha" style="width: 40px;">10000</td>
+						<td style="width: 45px;"></td>
+					</tr>
+				</table>
+			</f:facet>
+		</p:dataTable>
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			scrollWidth="660" scrollable="true" scrollHeight="250"
+			tableStyle="640px;"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+			<p:columnGroup type="header">
+				<p:row>
+					<p:column headerText="Descripción" rowspan="2" />
+					<p:column headerText="DEFICIENTE" colspan="3"
+						style="width:15%;color:#00F;font-weight:bold;" />
+					<p:column headerText="REGULAR" colspan="2"
+						style="width:10%;color:#06791C;font-weight:bold;" />
+					<p:column headerText="BUENO" colspan="3"
+						style="width:15%;color: #722B82;font-weight:bold;" />
+					<p:column headerText="SUPERIOR" colspan="2"
+						style="width:10%;color: #000;font-weight:bold;" />
+				</p:row>
+				<p:row>
+					<p:column headerText="1" style="color:#00F;font-weight:bold;" />
+					<p:column headerText="2" style="color:#00F;font-weight:bold;" />
+					<p:column headerText="3" style="color:#00F;font-weight:bold;" />
+					<p:column headerText="4" style="color:#06791C;font-weight:bold;" />
+					<p:column headerText="5" style="color:#06791C;font-weight:bold;" />
+					<p:column headerText="6" style="color: #722B82;font-weight:bold;" />
+					<p:column headerText="7" style="color: #722B82;font-weight:bold;" />
+					<p:column headerText="8" style="color: #722B82;font-weight:bold;" />
+					<p:column headerText="9" style="color: #000;font-weight:bold;" />
+					<p:column headerText="10" style="color: #000;font-weight:bold;" />
+				</p:row>
+			</p:columnGroup>
+			<p:column></p:column>
+			<p:column></p:column>
+			<p:column></p:column>
+			<p:column></p:column>
+			<p:column></p:column>
+			<p:column></p:column>
+			<p:column></p:column>
+			<p:column></p:column>
+			<p:column></p:column>
+			<p:column></p:column>
+			<p:column></p:column>
+		</p:dataTable>
+
+	</h:panelGrid>
+
+</ui:composition>

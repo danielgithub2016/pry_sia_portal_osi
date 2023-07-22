@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : core.Companiamast -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="seguridad.companiamast.fechaActual">
+		SELECT SYSDATE FROM DUAL
+	</sql-query>
+	
+		<sql-query name="seguridad.companiamast.listarSelector">
+		SELECT 
+				COMPANIACODIGO as "companiaCodigo",
+				DESCRIPCIONCORTA as "descripcionCorta"
+				FROM
+				SGCORESYS.COMPANIAMAST
+				WHERE ESTADO = 'A'
+	</sql-query>
+	
+	<sql-query name="seguridad.companiamast.contar">
+				SELECT COUNT(1)
+                  FROM SGCORESYS.COMPANIAMAST CM
+                  WHERE CM.COMPANIACODIGO = NVL(:p_codigo,CM.COMPANIACODIGO)
+                  AND CM.DESCRIPCIONCORTA LIKE '%'||NVL(:p_descripcion,'')||'%'
+                  AND CM.TIPOCOMPANIA = NVL(:p_tipo,CM.TIPOCOMPANIA)
+                  AND CM.ESTADO = NVL(:p_estado,CM.ESTADO)
+	</sql-query>
+	
+	<sql-query name="seguridad.companiamast.listar">
+				SELECT CM.COMPANIACODIGO AS "companiaCodigo"
+                      ,CM.DESCRIPCIONCORTA AS "descripcionCorta"
+                      ,CM.TIPOCOMPANIA AS "tipoCompania"
+                      ,CM.ESTADO AS "estado"
+                  FROM SGCORESYS.COMPANIAMAST CM
+                  WHERE CM.COMPANIACODIGO = NVL(:p_codigo,CM.COMPANIACODIGO)
+                  AND CM.DESCRIPCIONCORTA LIKE '%'||NVL(:p_descripcion,'')||'%'
+                  AND NVL(CM.TIPOCOMPANIA,'P') = NVL(:p_tipo,NVL(CM.TIPOCOMPANIA,'P') )
+                  AND CM.ESTADO = NVL(:p_estado,CM.ESTADO)
+	</sql-query>
+</hibernate-mapping>

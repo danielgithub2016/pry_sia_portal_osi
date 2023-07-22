@@ -1,0 +1,28 @@
+<f:subview xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" id="svAuditoriaClasica">
+
+
+	<p:panel header="#{msg.auditoria_header}" style="width:99.2%">
+		<h:panelGrid columns="2" id="gridAuditoria">
+			
+			<h:panelGrid columns="6" styleClass="gridderecha">
+				<p:outputLabel value="#{msg.auditoria_modificacion}"
+					style="font-family:Open sans, Gill Sans, Verdana; font-size: 11px; line-height: 14px; text-transform: uppercase; letter-spacing: 2px;font-weight: bold;" />
+				<p:outputLabel value="#{cBindingController.modificacionUsuario}" />
+				
+				<p:outputLabel value="#{msg.auditoria_separador}" />				
+				<h:outputText value="#{cBindingController.modificacionFecha}">
+					<f:convertDateTime pattern="#{msg.formato_fecha_fechahora}"
+						timeZone="#{msg.formato_fecha_timezone}" />
+				</h:outputText>
+				
+			</h:panelGrid>
+		</h:panelGrid>
+	</p:panel>
+
+
+</f:subview>

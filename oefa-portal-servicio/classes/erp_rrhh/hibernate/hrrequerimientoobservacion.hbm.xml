@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrRequerimientoobservacion" table="SGCORESYS.HR_REQUERIMIENTOOBSERVACION">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrRequerimientoobservacionPk">
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+            <key-property name="requerimiento" type="string">
+                <column name="REQUERIMIENTO" length="10" />
+            </key-property>
+        </composite-id>
+        <property name="adjuntainformes" type="string">
+            <column name="ADJUNTAINFORMES" length="1" />
+        </property>
+        <property name="adjuntadocpersonales" type="string">
+            <column name="ADJUNTADOCPERSONALES" length="1" />
+        </property>
+        <property name="necesidad" type="string">
+            <column name="NECESIDAD" length="255" />
+        </property>
+        <property name="inicioplazo" type="string">
+            <column name="INICIOPLAZO" length="6" />
+        </property>
+        <property name="finplazo" type="string">
+            <column name="FINPLAZO" length="6" />
+        </property>
+        <property name="funcionespecifica" type="string">
+            <column name="FUNCIONESPECIFICA" length="255" />
+        </property>
+        <property name="resultadoesperado" type="string">
+            <column name="RESULTADOESPERADO" length="255" />
+        </property>
+        <property name="educacionexperiencia" type="string">
+            <column name="EDUCACIONEXPERIENCIA" length="255" />
+        </property>
+        <property name="condiciones" type="string">
+            <column name="CONDICIONES" length="255" />
+        </property>
+        <property name="iniciovigencia" type="timestamp">
+            <column name="INICIOVIGENCIA" length="7" />
+        </property>
+        <property name="finvigencia" type="timestamp">
+            <column name="FINVIGENCIA" length="7" />
+        </property>
+    </class>
+</hibernate-mapping>

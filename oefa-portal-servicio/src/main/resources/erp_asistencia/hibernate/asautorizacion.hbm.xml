@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+	<class name="net.royal.erp.asistencia.dominio.AsAutorizacion"
+		table="SGCORESYS.AS_AUTORIZACION">
+		<composite-id name="pk"
+			class="net.royal.erp.asistencia.dominio.AsAutorizacionPk">
+			<key-property name="empleado" type="big_decimal">
+				<column name="EMPLEADO" length="10" />
+			</key-property>
+			<key-property name="fecha" type="timestamp">
+				<column name="FECHA" />
+			</key-property>
+			<key-property name="conceptoacceso" type="string">
+				<column name="CONCEPTOACCESO" length="5" />
+			</key-property>
+			<key-property name="desde" type="timestamp">
+				<column name="DESDE" />
+			</key-property>
+		</composite-id>
+		<property name="tipoautorizacion" type="string">
+			<column name="TIPOAUTORIZACION" length="1" />
+		</property>
+		<property name="fechafin" type="timestamp">
+			<column name="FECHAFIN" />
+		</property>
+		<property name="hasta" type="timestamp">
+			<column name="HASTA" />
+		</property>
+		<property name="autorizadopor" type="string">
+			<column name="AUTORIZADOPOR" length="20" />
+		</property>
+		<property name="fechaautorizacion" type="timestamp">
+			<column name="FECHAAUTORIZACION" />
+		</property>
+		<property name="estado" type="string">
+			<column name="ESTADO" length="1" />
+		</property>
+		<property name="ultimoUsuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+		<property name="ultimaFechaModif" type="timestamp">
+			<column name="ULTIMAFECHAMODIF" />
+		</property>
+		<property name="refrigerio" type="string">
+			<column name="REFRIGERIO" length="1" />
+		</property>
+		<property name="periodo" type="string">
+			<column name="PERIODO" length="6" />
+		</property>
+		<property name="mandatorio" type="string">
+			<column name="MANDATORIO" length="1" />
+		</property>
+		<property name="observacion" type="string">
+			<column name="OBSERVACION" length="255" />
+		</property>
+		<property name="comportamientosobretiempo" type="string">
+			<column name="COMPORTAMIENTOSOBRETIEMPO" length="1" />
+		</property>
+		<property name="sobretiempoposicion" type="string">
+			<column name="SOBRETIEMPOPOSICION" length="1" />
+		</property>
+		<property name="solicitadopor" type="string">
+			<column name="SOLICITADOPOR" length="20" />
+		</property>
+		<property name="visadopor" type="string">
+			<column name="VISADOPOR" length="20" />
+		</property>
+		<property name="fechavisado" type="timestamp">
+			<column name="FECHAVISADO" />
+		</property>
+		<property name="fechasolicitud" type="timestamp">
+			<column name="FECHASOLICITUD" />
+		</property>
+		<property name="categoriaautorizacion" type="string">
+			<column name="CATEGORIAAUTORIZACION" length="4" />
+		</property>
+		<property name="tipohorario" type="big_decimal">
+			<column name="TIPOHORARIO" length="38" />
+		</property>
+		<property name="motivorechazo" type="string">
+			<column name="MOTIVORECHAZO" length="255" />
+		</property>
+		<property name="flagcorrido" type="string">
+			<column name="FLAGCORRIDO" length="1" />
+		</property>
+		<property name="terminal" type="big_decimal">
+			<column name="TERMINAL" length="38" />
+		</property>
+		<property name="rutadocumento" type="string">
+			<column name="x_desc_orig_as_fp" length="200" />
+		</property>
+		<property name="nroresolucion" type="string">
+			<column name="NRORESOLUCION" length="25" />
+		</property>
+		<property name="fecharesolucion" type="timestamp">
+			<column name="FECHARESOLUCION" />
+		</property>
+		<property name="rechazadopor" type="string">
+			<column name="RECHAZADOPOR" length="20" />
+		</property>
+		<property name="fecharechazo" type="timestamp">
+			<column name="FECHARECHAZO" />
+		</property>
+		<property name="uuidalfresco" type="string">
+			<column name="x_digital_as_fp" length="1000" />
+		</property>
+		<property name="flagreprogramado" type="string">
+			<column name="flagreprogramado" length="1" />
+		</property>
+		<property name="desdeanterior" type="timestamp">
+			<column name="desdeanterior" />
+		</property>
+		<property name="fechaanterior" type="timestamp">
+			<column name="fechaanterior" />
+		</property>
+		<property name="periodoplanilla" type="string">
+			<column name="periodoplanilla" length="10" />
+		</property>
+		<property name="desderecupera" type="timestamp">
+			<column name="desderecupera" />
+		</property>
+		<property name="hastarecupera" type="timestamp">
+			<column name="hastarecupera" />
+		</property>
+
+		<property name="flagAprobadoJefe" type="string">
+			<column name="flagAprobadoJefe" length="1" />
+		</property>
+		<property name="aprobadoJefePor" type="string">
+			<column name="aprobadoJefePor" length="20" />
+		</property>
+		<property name="fechaAprobadoJefe" type="timestamp">
+			<column name="fechaAprobadoJefe" />
+		</property>
+
+		<property name="uuiddj" type="string">
+			<column name="UUIDDJ" length="100" />
+		</property>
+		<property name="nombrearchivodj" type="string">
+			<column name="NOMBREARCHIVODJ" length="200" />
+		</property>
+
+	</class>
+</hibernate-mapping>

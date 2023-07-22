@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : planilla.PrPlanillaEmpleado
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="PrPlanillaEmpleado.listarBoletasEmpleado">
+		SELECT 	pr_planillaempleado.companiasocio 	COMPANIASOCIO,
+				pr_planillaempleado.periodo 	  	PERIODO,
+				pr_tipoplanilla.descripcion 	  	TIPOPLANILLA,
+				pr_tipoplanilla.tipoplanilla 	  	PLANILLA,
+				pr_tipoproceso.descripcion 		  	TIPOPROCESO,
+				pr_tipoproceso.tipoproceso 		  	PROCESO,
+				pr_planillaempleado.totalingresos 	INGRESOS,
+				pr_planillaempleado.totalegresos  	EGRESOS,
+				pr_planillaempleado.totalneto 	  	NETO,
+				pr_planillaempleado.totalpatronales PATRONALES
+			
+		FROM 	sgcoresys.pr_planillaempleado 
+				INNER JOIN sgcoresys.pr_tipoproceso  ON (pr_planillaempleado.tipoproceso = pr_tipoproceso.tipoproceso)
+			    INNER JOIN sgcoresys.pr_tipoplanilla ON (pr_planillaempleado.tipoplanilla = pr_tipoplanilla.tipoplanilla)
+			
+		WHERE 	(pr_planillaempleado.empleado = :p_idempleado)
+				AND (pr_planillaempleado.companiasocio = :p_companiasocio)
+			
+		ORDER BY 
+				pr_planillaempleado.periodo DESC
+    </sql-query>
+    
+    <sql-query name="PrPlanillaEmpleado.listarDetalleBoleta">
+    <![CDATA[
+    	SELECT pr_concepto.descripcion 				CONCEPTO,
+    	       pr_concepto.tipoconcepto				TIPOCONCEPTO,		
+    		   pr_planillaempleadoconcepto.cantidad CANTIDAD,
+    		   pr_planillaempleadoconcepto.monto	MONTO
+
+  		FROM   sgcoresys.pr_planillaempleadoconcepto
+  			   INNER JOIN sgcoresys.pr_concepto     ON (pr_planillaempleadoconcepto.concepto = pr_concepto.concepto)
+       		   INNER JOIN sgcoresys.pr_tipoplanilla ON (pr_planillaempleadoconcepto.tipoplanilla = pr_tipoplanilla.tipoplanilla)
+       	       INNER JOIN sgcoresys.pr_tipoproceso  ON (pr_planillaempleadoconcepto.tipoproceso = pr_tipoproceso.tipoproceso)
+
+		WHERE  (pr_planillaempleadoconcepto.periodo = :p_periodo)
+   			   AND (pr_tipoplanilla.descripcion = :p_planilla)
+			   AND (pr_tipoproceso.descripcion = :p_proceso)
+ 			   AND (pr_planillaempleadoconcepto.empleado = :p_idempleado)
+			   AND (pr_planillaempleadoconcepto.companiasocio = :p_companiasocio)
+ 			   AND (pr_planillaempleadoconcepto.monto <> 0)
+ 	]]>
+    </sql-query>
+    
+    <sql-query name="PrPlanillaEmpleado.listarEncabezadoBoleta">
+    <![CDATA[
+    	SELECT  empleadomast.fechaingreso       FECHAINGRESO,
+                personamast.nombrecompleto      NOMBRECOMPLETO,
+                hr_puestoempresa.descripcion    PUESTO,
+                empleadomast.tipopension        TIPOPENSION,
+                empleadomast.codigoafp          CODIGOAFP,
+                empleadomast.numeroafp          NUMEROAFP,
+				ac_costcentermst.localname      CENTROCOSTO,
+				pr_obligaciones.siaf_expediente EXPEDIENTE
+			
+		FROM 	sgcoresys.pr_planillaempleado
+				INNER JOIN sgcoresys.pr_tipoproceso   ON (pr_planillaempleado.tipoproceso = pr_tipoproceso.tipoproceso)
+			    INNER JOIN sgcoresys.pr_tipoplanilla  ON (pr_planillaempleado.tipoplanilla = pr_tipoplanilla.tipoplanilla)
+                INNER JOIN sgcoresys.personamast      ON (pr_planillaempleado.empleado = personamast.persona)
+                INNER JOIN sgcoresys.empleadomast     ON (pr_planillaempleado.empleado = empleadomast.empleado)
+                INNER JOIN sgcoresys.hr_puestoempresa ON (empleadomast.codigocargo = hr_puestoempresa.codigopuesto)
+                INNER JOIN sgcoresys.ac_costcentermst ON (pr_planillaempleado.centrocosto = ac_costcentermst.costcenter)
+                INNER JOIN sgcoresys.pr_obligaciones  ON (pr_planillaempleado.tipoplanilla = pr_obligaciones.tipoplanilla)
+			
+		WHERE 	(pr_planillaempleado.empleado = :p_idempleado)
+				AND (pr_planillaempleado.companiasocio = :p_companiasocio)
+                AND ROWNUM = 1
+                
+ 	]]>
+    </sql-query>
+    
+    <sql-query name="PrPlanillaEmpleado.obtenerFechasVacacionBoleta">
+    	<![CDATA[
+    		select min(fechainicio) AS "fechainicio",
+			       max(fechafin) AS "fechafin",
+			       min(ano) "aniominimo",
+			       max(ano) "aniomaximo"
+			from sgcoresys.pr_vacacionpago a , sgcoresys.pr_vacacionperiodo b 
+			where a.empleado = b.empleado
+			    and a.numeroperiodo = b.numeroperiodo
+			    and a.periodo  = :par_periodo
+			    and a.empleado = :par_empleado
+    	]]>
+    </sql-query>
+    
+    <sql-query name="PrPlanillaEmpleado.obtenerMonedaLocal">
+    	<![CDATA[
+    		SELECT MonedaMast.DescripcionCorta AS "descripcioncorta"
+			   FROM sgcoresys.MonedaMast  
+			   WHERE MonedaMast.MonedaCodigo = :par_currency
+    	]]>
+    	
+    </sql-query>
+</hibernate-mapping>

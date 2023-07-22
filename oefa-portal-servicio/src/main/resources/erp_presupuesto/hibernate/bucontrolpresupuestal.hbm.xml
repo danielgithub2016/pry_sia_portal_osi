@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.presupuesto.dominio.BuControlpresupuestal" table="SGCORESYS.BU_CONTROLPRESUPUESTAL">
+        <composite-id name="pk" class="net.royal.erp.presupuesto.dominio.BuControlpresupuestalPk">
+            <key-property name="companiasocio" type="string">
+                <column name="COMPANIASOCIO" length="8" />
+            </key-property>
+            <key-property name="tipodocumento" type="string">
+                <column name="TIPODOCUMENTO" length="2" />
+            </key-property>
+            <key-property name="numerodocumento" type="string">
+                <column name="NUMERODOCUMENTO" length="14" />
+            </key-property>
+            <key-property name="proveedor" type="integer">
+                <column name="PROVEEDOR" length="22" />
+            </key-property>
+        </composite-id>
+        
+        <property name="fechadocumento" type="timestamp">
+            <column name="FECHADOCUMENTO" length="7" />
+        </property>
+        <property name="fechaasignacion" type="timestamp">
+            <column name="FECHAASIGNACION" length="7" />
+        </property>
+        <property name="centrocosto" type="string">
+            <column name="CENTROCOSTO" length="10" />
+        </property>
+        <property name="centrocostoanterior" type="string">
+            <column name="CENTROCOSTOANTERIOR" length="10" />
+        </property>
+        <property name="numerodocumentointerno" type="string">
+            <column name="NUMERODOCUMENTOINTERNO" length="20" />
+        </property>
+        <property name="monedadocumento" type="string">
+            <column name="MONEDADOCUMENTO" length="2" />
+        </property>
+        
+        <property name="montototal" type="big_decimal">
+            <column name="MONTOTOTAL" length="22" />
+        </property>
+        <property name="montopendiente" type="big_decimal">
+            <column name="MONTOPENDIENTE" length="22" />
+        </property>
+        <property name="comentario" type="string">
+            <column name="COMENTARIO" length="255" />
+        </property>
+        <property name="razonrechazo" type="string">
+            <column name="RAZONRECHAZO" length="100" />
+        </property>
+        <property name="unidadnegocio" type="string">
+            <column name="UNIDADNEGOCIO" length="4" />
+        </property>
+        <property name="responsablecodigo" type="string">
+            <column name="RESPONSABLECODIGO" length="4" />
+        </property>
+        <property name="periodo" type="string">
+            <column name="PERIODO" length="6" />
+        </property>
+        <property name="tipodecambio" type="big_decimal">
+            <column name="TIPODECAMBIO" length="22" />
+        </property>
+        <property name="voucherno" type="string">
+            <column name="VOUCHERNO" length="18" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="2" />
+        </property>
+        <property name="proveedorcotizacion" type="integer">
+            <column name="PROVEEDORCOTIZACION" length="22" />
+        </property>
+        <property name="aprobadopor" type="integer">
+            <column name="APROBADOPOR" length="22" />
+        </property>
+        <property name="fechaaprobacion" type="timestamp">
+            <column name="FECHAAPROBACION" length="7" />
+        </property>
+        <property name="responsablecodigoanterior" type="string">
+            <column name="RESPONSABLECODIGOANTERIOR" length="4" />
+        </property>
+        <property name="revisadopor" type="integer">
+            <column name="REVISADOPOR" length="22" />
+        </property>
+        <property name="fecharevision" type="timestamp">
+            <column name="FECHAREVISION" length="7" />
+        </property>
+        <property name="comprometidodiferidoflag" type="string">
+            <column name="COMPROMETIDODIFERIDOFLAG" length="1" />
+        </property>
+        <property name="cantidad" type="integer">
+            <column name="CANTIDAD" length="22" />
+        </property>
+        <property name="item" type="string">
+            <column name="ITEM" length="20" />
+        </property>
+        <property name="commodity" type="string">
+            <column name="COMMODITY" length="5" />
+        </property>
+        <property name="siafExpediente" type="string">
+            <column name="SIAF_EXPEDIENTE" length="10" />
+        </property>
+        <property name="fase" type="string">
+            <column name="FASE" length="1" />
+        </property>
+        <property name="tipoajuste" type="string">
+            <column name="TIPOAJUSTE" length="2" />
+        </property>
+        <property name="montototaldolares" type="big_decimal">
+            <column name="MONTOTOTALDOLARES" length="22" />
+        </property>
+        <property name="siafSecuencia" type="string">
+            <column name="SIAF_SECUENCIA" length="4" />
+        </property>
+        <property name="siafCorrelativo" type="string">
+            <column name="SIAF_CORRELATIVO" length="4" />
+        </property>
+        <property name="voucherpresupuestal" type="string">
+            <column name="VOUCHERPRESUPUESTAL" length="16" />
+        </property>
+        <property name="secuenciaanterior" type="integer">
+            <column name="SECUENCIAANTERIOR" length="22" />
+        </property>
+        <property name="ciclo" type="string">
+            <column name="CICLO" length="1" />
+        </property>
+        <property name="nivelservicio" type="integer">
+            <column name="NIVELSERVICIO" length="22" />
+        </property>
+        <property name="certificacionnumero" type="string">
+            <column name="CERTIFICACIONNUMERO" length="10" />
+        </property>
+        <property name="certificacionsecuencia" type="string">
+            <column name="CERTIFICACIONSECUENCIA" length="6" />
+        </property>
+        <property name="ano" type="string">
+            <column name="ANO" length="4" />
+        </property>
+    </class>
+</hibernate-mapping>

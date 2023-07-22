@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<div class="ui-fluid">
+		<h:form id="wasautorizacionpreprocesoaprobdlg">
+
+			<p:growl life="#{msg.generico_tiempo_growl}" />
+			<p:panel>
+				<p:panelGrid columns="1" columnClasses="ui-grid-col-20"
+					layout="grid" styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Ingrese el motivo del rechazo del empleado" />
+					<p:outputLabel
+						value="Empleado: #{cwAsAutorizacionPreprocesoAprobacion.empleadoNombre}" />
+					<p:inputTextarea required="true" autoResize="false" cols="80"
+						maxlength="250"
+						requiredMessage="El campo motivo rechazo es Obligatorio."
+						value="#{cwAsAutorizacionPreprocesoAprobacion.motivoRechazo}" />
+				</p:panelGrid>
+			</p:panel>
+
+			<p:panel>
+				<p:panelGrid columns="2" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-8,ui-grid-col-8" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Aceptar" icon="aceptar" process="@form"
+						update="@form" onstart="PF('bUI').block();"
+						oncomplete="PF('bUI').unblock();"
+						action="#{cwAsAutorizacionPreprocesoAprobacion.ingresoMotivoRechazo}" />
+					<p:commandButton value="Cancelar" icon="cancelar" immediate="true"
+						onclick="PF('popMotivoRechazo').hide()" />
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+	</div>
+</ui:composition>
+
+

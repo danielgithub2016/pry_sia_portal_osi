@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subReporte_feriado_detalle" language="groovy" pageWidth="400" pageHeight="600" columnWidth="400" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7078df61-cd88-43f9-a2e0-41ed015b3c48">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="360"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_centro_costos" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_empleado" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_FlagFiltroPeriodo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_sid" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+        Tablas_01.Persona,
+        Tablas_01.NombreCompleto,
+        Tablas_01.FECHA,
+        Tablas_01.Desde,
+        Tablas_01.Hasta,
+        Tablas_01.ConceptoAcceso,
+        Tablas_01.ConceptoDescripcion,
+        Tablas_01.CantidadReal,
+        Tablas_01.SaldoInicial,
+        Tablas_01.FlagCompensacion,
+        Tablas_01.LocalName,
+        Tablas_01.CompaniaSocio,
+        Tablas_01.estadoempleado,
+        Tablas_01.area_des,
+        area_01,
+        sgcoresys.f_cent2sex_texto(Tablas_01.CantidadReal)  as compensadas,
+        Tablas_01.CentroCostos,
+        Tablas_01.departamentooperacional,
+        Tablas_01.sucursal,
+        cargo_01,
+        tipoplanilla_01,
+        codigocargo_01,
+        empleado_01,
+        fechaingreso,
+        total_feriados,
+        nvl(horas_recuperadas,0) as horas_recuperadas,
+        TipoDia,
+cantNegativo,
+cantPositivo,
+balance
+from ( SELECT PersonaMast.Persona,
+                PersonaMast.NombreCompleto,
+                AS_AsistenciaDiaria.Fecha,
+                AS_AsistenciaDiaria.Desde,
+                AS_AsistenciaDiaria.Hasta,
+                AS_AsistenciaDiaria.ConceptoAcceso,
+                AS_ConceptoAcceso.DescripcionLocal as ConceptoDescripcion,
+                AS_AsistenciaDiaria.CantidadReal,
+                NULL as SaldoInicial,
+                AS_AsistenciaDiaria.FlagCompensacion,
+                AC_CostCenterMst.LocalName,
+                EmpleadoMast.CompaniaSocio as companiasocio,
+                EmpleadoMast.estadoempleado,
+                AS_Area.Nombre AREA_DES,
+                as_carnetidentificacion.area as area_01,
+                EmpleadoMast.CentroCostos as CentroCostos,
+                EmpleadoMast.departamentooperacional,
+                EmpleadoMast.sucursal,
+                EmpleadoMast.cargo as cargo_01,
+                EmpleadoMast.tipoplanilla as tipoplanilla_01,
+                Empleadomast.CodigoCargo as codigocargo_01,
+                EmpleadoMast.empleado as empleado_01,
+                EmpleadoMast.fechaingreso as fechaingreso,
+                 (
+                            (
+                        SELECT     Count(1)
+                        FROM     SGCORESYS.PR_CalendarioFeriados a
+                        WHERE     a.flagcompensable = 'S'
+                                   AND substr(a.fechamesdia,5,4) || substr(a.fechamesdia,3,2) ||substr(a.fechamesdia,1,2)  >= to_char($P{p_desde},'YYYYMMDD')
+                                   AND SUBSTR(a.fechamesdia,5,4) || SUBSTR(a.fechamesdia,3,2) ||SUBSTR(a.fechamesdia,1,2)  <= TO_CHAR($P{p_hasta},'YYYYMMDD')
+                                    AND a.estado = 'A'
+                                    AND substr(a.fechamesdia,5,4) || substr(a.fechamesdia,3,2) ||substr(a.fechamesdia,1,2)  > TO_CHAR(EmpleadoMast.fechaingreso,'YYYYMMDD')
+
+                        )
+                        -
+                        (
+                        SELECT  Count(1)
+                        FROM  SGCORESYS.AS_EMPLEADOSINASISTENCIA
+                            WHERE   EMPLEADO = PersonaMast.Persona
+                                       AND FechaDesde >= $P{p_desde}
+                                         AND FechaHasta < = $P{p_hasta}
+                        )
+                ) total_feriados,
+                (
+                SELECT     SUM(a.CantidadReal)
+                FROM    SGCORESYS.AS_AsistenciaDiaria a
+                WHERE     a.empleado = empleadomast.empleado
+                            AND a.conceptoacceso = 'HNAU'
+                            AND to_char(a.fecha,'yyyymm') between to_char($P{p_desde},'yyyymm') and to_char($P{p_hasta},'yyyymm')
+                ) horas_recuperadas,
+                (
+                SELECT    Case  TO_CHAR(sysdate,'D')
+                                WHEN '1' Then LUNES
+                                WHEN '2' Then MARTES
+                                WHEN '3' Then MIERCOLES
+                                WHEN '4' Then JUEVES
+                                WHEN '5' Then VIERNES
+                                WHEN '6' Then SABADO
+                                WHEN '7' Then DOMINGO
+                        END TipoDia
+                   FROM    SGCORESYS.AS_TIPOHORARIO
+                   WHERE   TipoHorario = EmpleadoMast.TipoHorario
+                   )  TipoDia,
+ sgcoresys.f_cent2sex_texto( NVL( SGCORESYS.fn_sumar_horas('+',$P{p_FlagFiltroPeriodo},$P{p_desde},$P{p_hasta},$P{p_empleado},$P{p_centro_costos},'HNAU'),0)-NVL(SGCORESYS.fn_sumar_horas('-',$P{p_FlagFiltroPeriodo},$P{p_desde},$P{p_hasta},$P{p_empleado},$P{p_centro_costos}, 'HNAU'),0))  as balance,
+
+sgcoresys.f_cent2sex_texto(  SGCORESYS.fn_sumar_horas('-',$P{p_FlagFiltroPeriodo},$P{p_desde},$P{p_hasta},$P{p_empleado},$P{p_centro_costos},'HNAU'))  as cantNegativo,
+
+sgcoresys.f_cent2sex_texto(  SGCORESYS.fn_sumar_horas('+',$P{p_FlagFiltroPeriodo},$P{p_desde},$P{p_hasta},$P{p_empleado},$P{p_centro_costos},'HNAU'))  as cantPositivo
+
+
+        FROM    SGCORESYS.AS_AsistenciaDiaria
+                    INNER JOIN  SGCORESYS.PersonaMast
+                         ON  AS_AsistenciaDiaria.Empleado = PersonaMast.Persona
+
+                    INNER JOIN SGCORESYS.EmpleadoMast
+                         ON  AS_AsistenciaDiaria.Empleado = EmpleadoMast.Empleado
+
+                    INNER JOIN  SGCORESYS.AS_CarnetIdentificacion
+                         ON AS_AsistenciaDiaria.Empleado = AS_CarnetIdentificacion.Empleado
+                                AND AS_CarnetIdentificacion.Estado = 'A'
+
+                  INNER JOIN SGCORESYS.AS_ConceptoAcceso
+                         ON AS_AsistenciaDiaria.ConceptoAcceso = AS_ConceptoAcceso.ConceptoAcceso
+
+                    LEFT JOIN SGCORESYS.AC_CostCenterMst
+                         ON EmpleadoMast.CentroCostos = AC_CostCenterMst.CostCenter
+
+                    LEFT JOIN SGCORESYS.AS_Area
+                         ON AS_CarnetIdentificacion.Area = AS_Area.Area
+
+        WHERE     (AS_ASISTENCIADIARIA.FlagCompensacion = '+' or AS_ASISTENCIADIARIA.FlagCompensacion = '-')
+ AND ( AS_ASISTENCIADIARIA.ConceptoAcceso in ('HNAU','33') )
+and AC_COSTCENTERMST.COSTCENTER=$P{p_centro_costos}
+AND PersonaMast.persona=$P{p_empleado}
+                and ((AS_AsistenciaDiaria.Fecha >= $P{p_desde} AND AS_AsistenciaDiaria.Fecha <=$P{p_hasta}) or $P{p_FlagFiltroPeriodo}  = 'N')
+  and ( AS_ASISTENCIADIARIA.FECHA >= NVL(empleadomast.fechareingreso, empleadomast.fechaingreso ))
+
+        )  Tablas_01
+where 1 = 1
+AND  ( empleado_01 in (select AS_EMPLEADOS_AUTORIZADOS.empleado
+                                            from SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+                                            where AS_EMPLEADOS_AUTORIZADOS.sid =$P{p_sid}))]]>
+	</queryString>
+	<field name="PERSONA" class="java.math.BigDecimal"/>
+	<field name="NOMBRECOMPLETO" class="java.lang.String"/>
+	<field name="FECHA" class="java.sql.Timestamp"/>
+	<field name="DESDE" class="java.sql.Timestamp"/>
+	<field name="HASTA" class="java.sql.Timestamp"/>
+	<field name="CONCEPTOACCESO" class="java.lang.String"/>
+	<field name="CONCEPTODESCRIPCION" class="java.lang.String"/>
+	<field name="CANTIDADREAL" class="java.lang.Double"/>
+	<field name="SALDOINICIAL" class="java.lang.String"/>
+	<field name="FLAGCOMPENSACION" class="java.lang.String"/>
+	<field name="LOCALNAME" class="java.lang.String"/>
+	<field name="COMPANIASOCIO" class="java.lang.String"/>
+	<field name="ESTADOEMPLEADO" class="java.lang.String"/>
+	<field name="AREA_DES" class="java.lang.String"/>
+	<field name="AREA_01" class="java.math.BigDecimal"/>
+	<field name="COMPENSADAS" class="java.lang.String"/>
+	<field name="CENTROCOSTOS" class="java.lang.String"/>
+	<field name="DEPARTAMENTOOPERACIONAL" class="java.lang.String"/>
+	<field name="SUCURSAL" class="java.lang.String"/>
+	<field name="CARGO_01" class="java.lang.String"/>
+	<field name="TIPOPLANILLA_01" class="java.lang.String"/>
+	<field name="CODIGOCARGO_01" class="java.math.BigDecimal"/>
+	<field name="EMPLEADO_01" class="java.math.BigDecimal"/>
+	<field name="FECHAINGRESO" class="java.sql.Timestamp"/>
+	<field name="TOTAL_FERIADOS" class="java.math.BigDecimal"/>
+	<field name="HORAS_RECUPERADAS" class="java.math.BigDecimal"/>
+	<field name="TIPODIA" class="java.math.BigDecimal"/>
+	<field name="CANTNEGATIVO" class="java.lang.String"/>
+	<field name="CANTPOSITIVO" class="java.lang.String"/>
+	<field name="BALANCE" class="java.lang.String"/>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="335" height="1" uuid="30f32357-dc33-4d36-abe9-aa1df04d979d"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="4" y="4" width="45" height="12" uuid="e694da61-3902-4e1a-8cce-b6c93c58c5ac"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="69" y="4" width="100" height="12" uuid="45d17d85-f0da-495c-9802-c49dcf5ecd6d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONCEPTODESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="209" y="4" width="56" height="12" forecolor="#00CC33" uuid="0e53a0de-bf7f-4b16-9ddd-4caaa4e711ba"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FLAGCOMPENSACION}=="+"?$F{COMPENSADAS}:$F{COMPENSADAS}==""?"00:00":"00:00"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="4" width="66" height="12" forecolor="#CC0000" uuid="6033dc46-4293-4510-8ca1-5fde40372fe0"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FLAGCOMPENSACION}=="-"?$F{COMPENSADAS}:$F{COMPENSADAS}==""?"00:00":"00:00"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="335" height="1" uuid="a261ba14-1570-4474-9ef2-5a1bf132146d"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="52" y="1" width="1" height="19" uuid="ed230fa0-ce83-4c1a-8950-9cfaf6a3d662"/>
+			</line>
+			<line>
+				<reportElement x="0" y="1" width="1" height="19" uuid="a9e21905-1af5-45bc-a681-d35e313c1a1b"/>
+			</line>
+			<line>
+				<reportElement x="207" y="0" width="1" height="20" uuid="ea3b1314-b423-4f17-973f-0a5c9faf52da"/>
+			</line>
+			<line>
+				<reportElement x="266" y="0" width="1" height="20" uuid="af126a25-6dc2-4d8e-9cd3-487c904dd6e3"/>
+			</line>
+			<line>
+				<reportElement x="334" y="1" width="1" height="19" uuid="baf2f830-d7c6-454c-b959-b44784e4844f"/>
+			</line>
+		</band>
+	</detail>
+	<summary>
+		<band height="31">
+			<staticText>
+				<reportElement x="169" y="0" width="38" height="14" uuid="9420c792-6727-4cc0-996b-945d1f1e2fe9"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<line>
+				<reportElement x="208" y="13" width="127" height="1" uuid="ca962351-ab11-4355-8b24-5dc9a1e0913a"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="209" y="30" width="126" height="1" uuid="c332d7bb-add7-4b16-8b02-a94c011a4925"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="334" y="0" width="1" height="30" uuid="8b7fe8e9-b37a-43b1-bac7-219da58a124b"/>
+			</line>
+			<line>
+				<reportElement x="266" y="0" width="1" height="30" uuid="9c6f898b-1c97-4ec7-876a-1e3bd4dde88b"/>
+			</line>
+			<line>
+				<reportElement x="207" y="-1" width="1" height="15" uuid="c4913b8e-9b7c-4067-8e82-81641b610897"/>
+			</line>
+			<textField>
+				<reportElement mode="Transparent" x="210" y="1" width="55" height="12" forecolor="#00CC00" backcolor="#CCFFFF" uuid="1b9fdad2-f4c7-468a-b9cd-77933fd46665"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTPOSITIVO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="268" y="1" width="65" height="12" forecolor="#CC0000" uuid="54ea217d-5970-4dae-9f6a-ef3651adea09"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTNEGATIVO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="169" y="14" width="96" height="16" forecolor="#000000" uuid="2090e22e-1f7d-4054-8d75-7f1fc5c93b3b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTPOSITIVO}>$F{CANTNEGATIVO}?"Horas Ganadas :":"Exceso por Compensar :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="14" width="65" height="16" uuid="e2f7d528-648f-4cdc-b4d0-d4129034fb26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BALANCE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

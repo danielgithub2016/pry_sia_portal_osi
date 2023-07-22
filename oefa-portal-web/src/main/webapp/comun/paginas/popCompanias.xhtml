@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="frmListaEmpresas" style="font-size: 12px">
+		
+		<p:fieldset legend="Preferencias" id="fsPreferencias">
+			<h:panelGrid columns="2" width="70%">
+				<p:outputLabel value="Compañia" />
+				<p:selectOneMenu id="comboCompania"
+					value="#{cLogin.seguridadCompaniaLista}"
+					style="width:270px;font-size:10px;" disabled="true"
+					styleClass="controlCajaTextoLecturaObligatorio">
+					<f:selectItem itemLabel="" />
+					<f:selectItems value="#{cLogin.lstCompaniaUsuario}" var="u"
+						itemLabel="#{u.compania} : #{u.nombre}" itemValue="#{u}" />
+
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Sucursal" />
+				<p:selectOneMenu id="comboSucursal" value="#{cLogin.sucursalLista}"
+					var="sucur" style="width:270px;font-size:10px;"
+					converter="usuarioSucursal" valueChangeListener="#{cLogin.llenarUnidad}"
+					styleClass="controlCajaTextoLecturaObligatorio">
+					<f:selectItem itemLabel="" />
+					<f:selectItems value="#{cLogin.lstpreferenciasSucursal}" var="suc"
+						itemLabel="#{suc.sucursal} :#{suc.nombre}" itemValue="#{suc}" />
+
+					<p:column>
+						<p:outputLabel value="#{sucur.compania}" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="#{sucur.sucursal}" />
+					</p:column>
+                    <p:column>
+						<p:outputLabel value="#{sucur.nombre}" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="#{sucur.estado}" />
+					</p:column>
+					
+					 <p:ajax update="comboUnidad"/>
+
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Unidad R." />
+				<p:selectOneMenu id="comboUnidad"
+					value="#{cLogin.unidadReplicacion}" var="unid"
+					style="width:270px;font-size:10px;" converter="usuarioUnidad"
+					styleClass="controlCajaTextoLecturaObligatorio">
+					<f:selectItem itemLabel="" />
+					<f:selectItems value="#{cLogin.lstpreferenciasUnidad}" var="uni"
+						itemLabel="UR : #{uni.unidadReplicacion} : #{uni.descripcionLocal}"
+						itemValue="#{uni}" />
+
+					<p:column>
+						<p:outputLabel value="#{unid.unidadReplicacion}" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="#{unid.descripcionLocal}" />
+					</p:column>
+					
+
+				</p:selectOneMenu>
+
+			</h:panelGrid>
+		</p:fieldset>
+
+		<table style="width: 100%;">
+			<tr>
+				<td align="right" width="100%"><p:commandButton immediate="true" id="btnAceptar"
+						styleClass="botonTextoImagen" icon="aceptar" value="Aceptar"
+						action="pantallaBienvenida" /></td>
+
+				<td align="left" width="100%"><p:commandButton
+						styleClass="botonTextoImagen" icon="cancelar" value="Cancelar" immediate="true"
+						onclick="PF('popListaPreferencias').hide()" /></td>
+			</tr>
+		</table>
+		
+		<p:focus context="fsPreferencias"/>
+		<p:defaultCommand target="btnAceptar"/>
+	</h:form>
+</ui:composition>

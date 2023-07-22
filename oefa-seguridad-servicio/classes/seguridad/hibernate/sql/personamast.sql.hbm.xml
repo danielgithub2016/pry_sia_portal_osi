@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : core.Personamast
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+   <sql-query name="seguridad.personamast.tipoPersona">
+ 			 	SELECT CAST('B' AS VARCHAR2(50)) AS "IdTipoPersona", 'B' AS "nombre", 'B' AS "descripcion",  CAST('A' AS VARCHAR2(50)) AS "estado" FROM DUAL UNION
+                SELECT CAST('G' AS VARCHAR2(50)) AS "IdTipoPersona", 'G'  AS "nombre", 'G' AS "descripcion",  CAST('A' AS VARCHAR2(50)) AS "estado"  FROM DUAL UNION 
+                SELECT CAST('J' AS VARCHAR2(50)) AS "IdTipoPersona", 'Jurídica'  AS "nombre", 'Jurídica' as "descripcion",  CAST('A' AS VARCHAR2(50)) AS "estado" FROM DUAL UNION 
+                SELECT CAST('N' AS VARCHAR2(50)) AS "IdTipoPersona", 'Natural'  AS "nombre", 'Natural' as "descripcion",  CAST('A' AS VARCHAR2(50)) AS "estado" FROM DUAL 
+    </sql-query>
+    
+    <sql-query name="seguridad.personamast.sexo">
+		    SELECT CAST('M' AS VARCHAR2(50)) AS "idsexo" ,'Masculino' AS "nombre",'Masculino' AS "descripcion",CAST('A' AS VARCHAR2(50)) AS "estado" FROM DUAL UNION 
+		    SELECT CAST('F' AS VARCHAR2(50)) AS "idsexo" ,'Femenino' AS "nombre",'Femenino' AS "descripcion",CAST('A' AS VARCHAR2(50)) AS "estado" FROM DUAL
+    </sql-query>
+    
+    <sql-query name="seguridad.personamast.tipoDocumento">
+    <![CDATA[
+	           select CAST('A' AS VARCHAR2(50)) AS "IdTipoDocumentoPersona"  , 'Doc. Administrativo' AS "nombre", 'Doc. Administrativo' AS "descripcion", CAST('A' AS VARCHAR2(50)) AS "estado" FROM DUAL UNION
+            select CAST('C' AS VARCHAR2(50)) AS "IdTipoDocumentoPersona", 'Carnet Militar' AS "nombre", 'Carnet Militar' AS "descripcion", CAST('A' AS VARCHAR2(50)) AS "estado" FROM DUAL UNION
+            select CAST('D' AS VARCHAR2(50)) AS "IdTipoDocumentoPersona", 'D.N.I./Cédula/L.E.' AS "nombre", 'D.N.I./Cédula/L.E.' AS "descripcion", CAST('A' AS VARCHAR2(50)) AS "estado" FROM DUAL UNION
+            select CAST('E' AS VARCHAR2(50)) AS "IdTipoDocumentoPersona", 'E' AS "nombre", 'E' AS "descripcion", CAST('A' AS VARCHAR(50)) AS "estado" FROM DUAL UNION
+            select CAST('M' AS VARCHAR2(50)) AS "IdTipoDocumentoPersona", 'Libreta Militar' AS "nombre", 'Libreta Militar' AS "descripcion", CAST('A' AS VARCHAR2(50)) AS "estado" FROM DUAL UNION
+            select CAST('N' AS VARCHAR2(50)) AS "IdTipoDocumentoPersona", 'Partida de Nacimiento' AS "nombre", 'Partida de Nacimiento' AS "descripcion", CAST('A' AS VARCHAR2(50)) AS "estado" FROM DUAL UNION
+            select CAST('O' AS VARCHAR2(50)) AS "IdTipoDocumentoPersona", 'Otros' AS "nombre", 'Otros' AS "descripcion", CAST('A' AS VARCHAR2(50)) AS "estado" FROM DUAL UNION
+            select CAST('P' AS VARCHAR2(50)) AS "IdTipoDocumentoPersona", 'Pasaporte' AS "nombre", 'Pasaporte' AS "descripcion", CAST('A' AS VARCHAR2(50)) AS "estado" FROM DUAL UNION
+            select CAST('R' AS VARCHAR2(50)) AS "IdTipoDocumentoPersona", 'RUC / NIT' AS "nombre", 'RUC / NIT' AS "descripcion", CAST('A' AS VARCHAR2(50)) AS "estado" FROM DUAL UNION
+            select CAST('T' AS VARCHAR2(50)) AS "IdTipoDocumentoPersona", 'T' AS "nombre", 'T' AS "descripcion", CAST('A' AS VARCHAR2(50)) AS "estado" FROM DUAL UNION
+            select CAST('X' AS VARCHAR2(50)) AS "IdTipoDocumentoPersona", 'Carnet Extranjeria' AS "nombre", 'Carnet Extranjeria' AS "descripcion", CAST('A' AS VARCHAR2(50)) AS "estado" FROM DUAL
+		    ]]>
+    </sql-query>
+    
+    <sql-query name="seguridad.personamast.pais">
+    	SELECT  CAST (PA.PAIS AS VARCHAR (4)) AS "pais",
+	                 CAST(PA.DESCRIPCIONCORTA AS VARCHAR (20)) AS "descripcionCorta",
+	                 CAST (PA.ESTADO AS VARCHAR (1)) AS "estado"
+          FROM SGCORESYS.PAIS PA
+          WHERE 1=1
+          AND NVL(PA.ESTADO,'A') = 'A'
+          ORDER BY 1 ASC
+    </sql-query>
+    
+    <sql-query name="seguridad.personamast.listarPersona">
+	    <![CDATA[
+	    	SELECT
+                PE.PERSONA AS "codigo",
+                PE.NOMBRECOMPLETO  AS "nombre",
+                PE.DOCUMENTO AS "documento",
+                PE.DIRECCION  AS "direccion",
+                PE.SEXO AS "sexo",
+                PE.ESTADO  AS "estado",
+                CASE PE.ESTADO
+                    WHEN 'A' THEN 'Activo'
+                     WHEN 'I' THEN 'Inactivo'
+                 END AS "EstadoNombre",   
+                CASE PE.TIPODOCUMENTO
+                        WHEN 'A' THEN 'Doc. Administrativo' 
+                        WHEN 'C' THEN 'Carnet Militar'
+                        WHEN 'D' THEN 'D.N.I./Cédula/L.E.' 
+                        WHEN 'E' THEN 'E' 
+                        WHEN 'M' THEN 'Libreta Militar'
+                        WHEN 'N' THEN 'Partida de Nacimiento' 
+                        WHEN 'O' THEN 'Otros' 
+                        WHEN 'P' THEN 'Pasaporte' 
+                        WHEN 'R' THEN 'RUC / NIT' 
+                        WHEN 'T' THEN 'T'
+                        WHEN 'X' THEN 'Carnet Extranjeria'
+                  END AS "tipoDocumentoNombre"
+           FROM
+                SGCORESYS.PERSONAMAST pe 
+                WHERE 1=1
+                 AND PE.NOMBRECOMPLETO LIKE  '%' || NVL(:p_nombre,'') || '%'
+                 AND PE.DOCUMENTO LIKE NVL(:p_documento,PE.DOCUMENTO) || '%'
+                 AND PE.PERSONA= NVL(:p_codigo,PE.PERSONA)
+                 AND PE.DOCUMENTO like NVL(:p_documento,'') || '%'
+                 AND PE.ESTADO = NVL(:p_estado,PE.ESTADO)
+	    ]]>
+    </sql-query>
+    
+    <sql-query name="seguridad.personamast.paginacionContara">
+    <![CDATA[
+	    	SELECT
+                COUNT(1)
+           FROM
+                SGCORESYS.PERSONAMAST pe 
+                WHERE 1=1
+                 AND PE.NOMBRECOMPLETO LIKE  '%' || NVL(:p_nombre,'') || '%'
+                 AND PE.DOCUMENTO LIKE NVL(:p_documento,PE.DOCUMENTO) || '%'
+                 AND PE.PERSONA= NVL(:p_codigo,PE.PERSONA)
+                 AND PE.DOCUMENTO like NVL(:p_documento,'') || '%'
+                 AND PE.ESTADO = NVL(:p_estado,PE.ESTADO)
+	    ]]>
+    </sql-query>
+    
+    
+    <sql-query name="seguridad.personamast.Departamento">
+    	<![CDATA[
+    	 SELECT DP.DEPARTAMENTO AS "Departamento",
+                DP.DESCRIPCIONCORTA AS "Descripcion",
+                DP.PAIS  AS "pais",
+                DP.ESTADO  AS "estado"
+          FROM SGCORESYS.DEPARTAMENTO dp
+          WHERE 1=1
+           AND DP.PAIS= NVL(:p_pais,DP.PAIS)
+            AND NVL(DP.ESTADO,'A')= 'A'
+    	]]>
+    </sql-query>
+    
+    
+    <sql-query name="seguridad.personamast.provincia" >
+    	<![CDATA[
+    		SELECT PR.DEPARTAMENTO as "Departamento",
+                PR.PROVINCIA as  "Provincia",
+                 PR.DESCRIPCIONCORTA as "Descripcion",
+                 PR.ESTADO as "estado"
+            FROM SGCORESYS.PROVINCIA PR
+            WHERE 1=1
+           AND PR.DEPARTAMENTO= NVL(:p_departamento,'')
+            AND NVL(PR.ESTADO , 'A') = 'A'
+    	]]>
+    </sql-query>
+    
+    <sql-query name="seguridad.personamast.zonapostal" >
+    	<![CDATA[
+    		SELECT  ZP.DEPARTAMENTO AS "Departamento",
+	           ZP.PROVINCIA AS "Provincia",
+	           ZP.CODIGOPOSTAL AS "CodigoPostal",
+	           ZP.DESCRIPCIONCORTA AS "Descripcion",
+	           ZP.ESTADO AS "estado"
+	           FROM SGCORESYS.ZONAPOSTAL ZP
+	           WHERE 1=1
+	           AND ZP.DEPARTAMENTO= NVL(:p_departamento,'')
+	           AND ZP.PROVINCIA= NVL(:p_provincia,'')
+	           AND NVL(ZP.ESTADO,'A') = 'A'
+    	]]>
+    </sql-query>
+    
+    <sql-query name="seguridad.personamast.obtenerCodigoMaximo" >
+    	Select NVL(MAX(pe.Persona),0) +1
+            FROM SGCORESYS.PersonaMast pe
+    </sql-query>
+    
+    <sql-query name="seguridad.personamast.buscarIguales">
+    		SELECT P.DOCUMENTO AS  "documento"
+            FROM SGCORESYS.PERSONAMAST P
+             WHERE 1=1 AND P.DOCUMENTO=:p_documento
+    </sql-query>    
+    
+    <sql-query name="seguridad.personamast.tipoContrato">
+    SELECT TIPOCONTRATO as "tipoContrato",DESCRIPCION as "descripcion", ESTADO as "estado" FROM SGCORESYS.HR_TIPOCONTRATO WHERE ESTADO = 'A'
+    </sql-query>
+</hibernate-mapping>

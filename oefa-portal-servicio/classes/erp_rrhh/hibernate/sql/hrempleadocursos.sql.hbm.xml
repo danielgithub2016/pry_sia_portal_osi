@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : rrhh.HrEmpleadocursos -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="hrempleadocursos.listarPorEmpleado">
+	 <![CDATA[
+	    SELECT DISTINCT
+        CAST(TIP.DESCRIPCIONLOCAL as varchar(200)) as "auxTipoRegistro",
+        CAST(CAP.TIEMPOPERMANENCIA as varchar(200))as "auxTiempoPermanencia" ,
+        EMPCUR.EMPLEADO as "empleado",
+        CAP.CAPACITACION as "capacitacion" ,
+        CAST(D.DESCRIPCIONLOCAL as varchar(200)) as "auxTipoCapacitacion",
+        CAST(CAP.TipoCurso as varchar(2)) as "auxTipocurso",      
+        CAP.FECHADESDE as "fechainicio",
+        CAP.FECHAHASTA as "fechafin",
+        CAP.FECHAFINCAPACITACION as "auxDateFechaFin",
+        CAP.TOTALHORAS as  "totalhorasAux",
+       CAST(CE.DESCRIPCION as varchar(200)) as "auxCentroestudios",
+        CAST(CU.DESCRIPCION as varchar(200)) as "auxCurso"
+        FROM SGCORESYS.HR_CAPACITACION  CAP
+        JOIN SGCORESYS.HR_EMPLEADOCAPACITACION EMPCAPA ON CAP.CAPACITACION=EMPCAPA.CAPACITACION
+        JOIN SGCORESYS.HR_EMPLEADOCURSOS EMPCUR ON EMPCUR.EMPLEADO=EMPCAPA.EMPLEADO
+         LEFT JOIN SGCORESYS.HR_CENTROESTUDIOS CE 
+                        ON CAP.CENTROCAPACITACION =  CE.CENTRO                         
+        LEFT JOIN SGCORESYS.HR_CURSODESCRIPCION CU
+                                    ON CAP.CURSO = CU.CURSO
+        LEFT JOIN SGCORESYS.MA_MISCELANEOSDETALLE D
+                                            ON D.APLICACIONCODIGO='HR'
+                                            AND D.CODIGOTABLA='TIPOCAPA'
+                                            AND D.CODIGOELEMENTO = CAP.TIPO
+         LEFT JOIN SGCORESYS.MA_MISCELANEOSDETALLE TIP
+                                            ON TIP.APLICACIONCODIGO='HR'
+                                            AND TIP.CODIGOTABLA='TIPOREGCAP'
+                                            AND TIP.CODIGOELEMENTO = CAP.TIPO_REG
+       WHERE EMPCAPA.EMPLEADO=:empleado AND CAP.ESTADO IN ('T','L','M')
+		AND upper(CU.DESCRIPCION) LIKE '%'|| upper(:curso) || '%'
+		[FILTROCAPACITACIONES]
+		ORDER BY CAP.CAPACITACION DESC
+      ]]>
+	</sql-query>
+	
+	<sql-query name="hrempleadocursos.listarMateriales">
+	 <![CDATA[
+			SELECT DISTINCT
+                CAP.CAPACITACION as "capacitacion" ,
+               CAST(D.DESCRIPCIONLOCAL as varchar(200)) as "auxTipoCapacitacion",
+                CAST(CAP.TipoCurso as varchar(2)) as "auxTipocurso",      
+                CAP.FECHADESDE as "fechainicio",
+                CAP.FECHAHASTA as "fechafin",
+                CAP.TOTALHORAS as "totalhorasAux",
+             
+              CAST(CE.DESCRIPCION as varchar(200)) as "auxCentroestudios",
+               CAST(CU.DESCRIPCION as varchar(200)) as "auxCurso"
+                FROM SGCORESYS.HR_CAPACITACION  CAP
+                JOIN SGCORESYS.HR_EMPLEADOCAPACITACION EMPCAPA ON CAP.CAPACITACION=EMPCAPA.CAPACITACION
+                LEFT JOIN SGCORESYS.HR_CENTROESTUDIOS CE
+                                            ON CAP.CENTROCAPACITACION = CE.CENTRO
+                LEFT JOIN SGCORESYS.HR_CURSODESCRIPCION CU
+                                            ON CAP.CURSO = CU.CURSO
+                LEFT JOIN SGCORESYS.MA_MISCELANEOSDETALLE D
+                                                    ON D.APLICACIONCODIGO='HR'
+                                                    AND D.CODIGOTABLA='TIPOCAPA'
+                                                    AND D.CODIGOELEMENTO = CAP.TIPO
+                WHERE CAP.ESTADO IN ('T','L','M')
+                 AND (SELECT COUNT(FLAGCOMPARTIRMATERIAL) FROM SGCORESYS.HR_EMPLEADOCURSOSDOCUMENTO WHERE  FLAGCOMPARTIRMATERIAL='S' AND CAPACITACION=CAP.CAPACITACION)>0
+                AND upper(CU.DESCRIPCION) LIKE '%'|| upper(:curso) || '%'  
+                ORDER BY CAP.CAPACITACION DESC
+      ]]>
+	</sql-query>
+</hibernate-mapping>
+

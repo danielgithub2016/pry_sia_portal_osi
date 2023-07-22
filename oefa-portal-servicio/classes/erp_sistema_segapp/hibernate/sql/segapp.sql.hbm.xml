@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : segapp.
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- segapp.d_perfiles -->
+    <sql-query name="segapp.DPerfiles">
+    </sql-query>
+
+    <!-- segapp.d_permisos -->
+    <sql-query name="segapp.DPermisos">
+    </sql-query>
+
+</hibernate-mapping>

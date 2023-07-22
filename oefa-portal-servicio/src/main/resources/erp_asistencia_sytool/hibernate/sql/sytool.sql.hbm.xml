@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : sytool.w_sy_selector_database
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- sytool.d_calendar -->
+    <sql-query name="sytool.DCalendar">
+    </sql-query>
+
+    <!-- sytool.dw_dwimport_external -->
+    <sql-query name="sytool.DwDwimportExternal">
+    </sql-query>
+
+    <!-- sytool.dw_label -->
+    <sql-query name="sytool.DwLabel">
+    </sql-query>
+
+    <!-- sytool.dw_report_properties_group_external -->
+    <sql-query name="sytool.DwReportPropertiesGroupExternal">
+    </sql-query>
+
+    <!-- sytool.dw_report_properties_group_select -->
+    <sql-query name="sytool.DwReportPropertiesGroupSelect">
+    </sql-query>
+
+    <!-- sytool.dw_report_properties_sort_external -->
+    <sql-query name="sytool.DwReportPropertiesSortExternal">
+    </sql-query>
+
+    <!-- sytool.dw_report_properties_sort_select -->
+    <sql-query name="sytool.DwReportPropertiesSortSelect">
+    </sql-query>
+
+    <!-- sytool.dw_selector_datawindow -->
+    <sql-query name="sytool.DwSelectorDatawindow">
+    </sql-query>
+
+</hibernate-mapping>

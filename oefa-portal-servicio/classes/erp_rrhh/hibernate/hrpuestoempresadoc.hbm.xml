@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrPuestoempresaDoc" table="SGCORESYS.HR_PUESTOEMPRESA_DOC">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrPuestoempresaDocPk">
+            <key-property name="codigopuesto" type="integer">
+                <column name="CODIGOPUESTO" length="22" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="tipodocumento" type="string">
+            <column name="TIPODOCUMENTO" length="2" />
+        </property>
+        <property name="rutadocumento" type="string">
+            <column name="RUTADOCUMENTO" length="200" />
+        </property>
+        <property name="ruta" type="binary">
+            <column name="RUTA" length="4000" />
+        </property>
+    </class>
+</hibernate-mapping>

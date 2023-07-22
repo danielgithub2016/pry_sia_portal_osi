@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteAutorizacion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ace71c89-f9b3-4346-aa11-cc8d3dedcfc0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_conceptoacceso" class="java.lang.String"/>
+	<parameter name="p_empleado" class="java.lang.Integer"/>
+	<parameter name="p_fecha" class="java.util.Date"/>
+	<parameter name="p_desde" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT
+         'RUC: ' || CompaniaMast.DocumentoFiscal,
+         AS_Autorizacion.Empleado,
+         sgcoresys.fn_obtener_busqueda_empleado(AS_Autorizacion.AutorizadoPor) as busqueda,
+         p1.NombreCompleto,
+         AS_Autorizacion.ConceptoAcceso,
+         AS_ConceptoAcceso.DescripcionLocal,
+         AS_Autorizacion.Desde,
+         AS_Autorizacion.Hasta,
+         AS_Autorizacion.AutorizadoPor,
+         AS_Autorizacion.FechaAutorizacion,
+         AS_Autorizacion.VisadoPor,
+         AS_Autorizacion.FechaVisado,
+         AS_Autorizacion.Fecha,
+         AS_Autorizacion.FechaSolicitud,
+         AS_Autorizacion.Estado,
+         AS_Autorizacion.UltimoUsuario,
+         AS_Autorizacion.UltimaFechaModif,
+         AS_Autorizacion.FechaFin,
+         AS_Autorizacion.Refrigerio,
+         AS_Autorizacion.Observacion,
+         AS_Autorizacion.Periodo,
+         e1.companiasocio,
+         AS_Autorizacion.MotivoRechazo
+    FROM SGCORESYS.AS_Autorizacion,
+         SGCORESYS.empleadomast e1,
+         SGCORESYS.CompaniaMast,
+         SGCORESYS.PersonaMast p1,
+         SGCORESYS.AS_ConceptoAcceso
+   WHERE
+       ( AS_Autorizacion.Empleado = e1.empleado) and
+       ( AS_Autorizacion.Empleado = $P{p_empleado} ) and
+       ( p1.Persona =  $P{p_empleado} ) and
+       ( AS_Autorizacion.Fecha = $P{p_fecha} ) AND
+       ( TO_CHAR(AS_Autorizacion.Desde) = TO_CHAR($P{p_desde}) ) AND
+       ( AS_Autorizacion.ConceptoAcceso = $P{p_conceptoacceso} ) and
+       ( AS_ConceptoAcceso.ConceptoAcceso = AS_Autorizacion.ConceptoAcceso ) and
+         CompaniaMast.companiacodigo = substr(e1.companiasocio,0,6)]]>
+	</queryString>
+	<field name="&apos;RUC:&apos;||COMPANIAMAST.DOCUMENTOFISCAL" class="java.lang.String"/>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="BUSQUEDA" class="java.lang.String"/>
+	<field name="NOMBRECOMPLETO" class="java.lang.String"/>
+	<field name="CONCEPTOACCESO" class="java.lang.String"/>
+	<field name="DESCRIPCIONLOCAL" class="java.lang.String"/>
+	<field name="DESDE" class="java.sql.Timestamp"/>
+	<field name="HASTA" class="java.sql.Timestamp"/>
+	<field name="AUTORIZADOPOR" class="java.lang.String"/>
+	<field name="FECHAAUTORIZACION" class="java.sql.Timestamp"/>
+	<field name="VISADOPOR" class="java.lang.String"/>
+	<field name="FECHAVISADO" class="java.sql.Timestamp"/>
+	<field name="FECHA" class="java.sql.Timestamp"/>
+	<field name="FECHASOLICITUD" class="java.sql.Timestamp"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<field name="ULTIMOUSUARIO" class="java.lang.String"/>
+	<field name="ULTIMAFECHAMODIF" class="java.sql.Timestamp"/>
+	<field name="FECHAFIN" class="java.sql.Timestamp"/>
+	<field name="REFRIGERIO" class="java.lang.String"/>
+	<field name="OBSERVACION" class="java.lang.String"/>
+	<field name="PERIODO" class="java.lang.String"/>
+	<field name="COMPANIASOCIO" class="java.lang.String"/>
+	<field name="MOTIVORECHAZO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="86" splitType="Stretch">
+			<staticText>
+				<reportElement x="121" y="36" width="317" height="20" uuid="907831db-571b-45ed-997e-ac66870a989b"/>
+				<textElement textAlignment="Center">
+					<font size="15" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Autorización]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="0" width="67" height="16" uuid="4e61b677-2218-4cc6-a8bf-82e05d9a6e29"/>
+				<text><![CDATA[OEFA]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="487" y="0" width="68" height="17" uuid="447ed894-023c-4e7d-a462-6ba46e87187f"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm.ss">
+				<reportElement x="487" y="16" width="68" height="20" uuid="65aae421-3f1b-47f8-b912-10c172ab6118"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="451" y="1" width="36" height="16" uuid="301d85da-5067-4bf4-9cc0-013b05e9db09"/>
+				<text><![CDATA[Fecha: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="458" y="17" width="25" height="19" uuid="ad1352a3-bfda-4a39-948f-4e2d0192a8fc"/>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="3" y="16" width="268" height="20" uuid="79810e82-6245-4409-b590-0296d0d73c3e"/>
+				<textFieldExpression><![CDATA[$F{'RUC:'||COMPANIAMAST.DOCUMENTOFISCAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="396" splitType="Stretch">
+			<textField>
+				<reportElement x="93" y="15" width="90" height="20" uuid="a549f392-de10-4343-9891-3b3958e08925"/>
+				<textFieldExpression><![CDATA[$F{EMPLEADO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="28" y="15" width="65" height="20" uuid="d197f6e5-6b42-4a5e-b3d8-8231a31a4e95"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empleado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="37" width="77" height="31" uuid="5f93e093-c860-4870-9f44-157330974155"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Concepto de Autorización]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="70" width="42" height="20" uuid="54846242-5c0f-4933-aed9-382639ad34f9"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="92" width="43" height="20" uuid="fa4b4df6-1527-422f-ace6-1d5bd054d0d2"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desde]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="183" y="92" width="38" height="20" uuid="9b0ec55c-fa24-4636-a53b-ad01cc52514b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hasta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="183" y="70" width="38" height="20" uuid="554fb612-27d2-476c-a12d-637610060d26"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hasta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="117" width="77" height="20" uuid="f54e733d-31f3-4844-bb50-f6cfe9050335"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observación]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="94" y="117" width="457" height="113" uuid="87e0f440-7bba-4507-ac68-537af19625ba"/>
+				<textFieldExpression><![CDATA[$F{OBSERVACION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="243" width="124" height="20" uuid="777716a6-75a6-4b3d-89b4-8244664757c4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Motivo de Rechazo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="183" y="15" width="255" height="20" uuid="2895bb47-f91b-4286-bfbb-efbeb1757d9f"/>
+				<textFieldExpression><![CDATA[$F{NOMBRECOMPLETO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="94" y="42" width="461" height="20" uuid="49fc1ddd-e555-468f-a1fc-439f766aef8c"/>
+				<textFieldExpression><![CDATA[$F{DESCRIPCIONLOCAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="93" y="70" width="78" height="20" uuid="4b68c86a-0027-42e9-996d-69dc6eec194e"/>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm">
+				<reportElement x="93" y="92" width="78" height="20" uuid="7ca80974-1958-492d-bdbd-6a120e12b0fd"/>
+				<textFieldExpression><![CDATA[$F{DESDE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm">
+				<reportElement x="221" y="92" width="100" height="20" uuid="432feeea-e488-4738-9262-a34b51ce51e0"/>
+				<textFieldExpression><![CDATA[$F{HASTA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="221" y="70" width="100" height="20" uuid="ddaf9632-184d-43a0-ada5-407abc3a8bc8"/>
+				<textFieldExpression><![CDATA[$F{FECHAFIN}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="84" y="268" width="457" height="111" uuid="1963aff6-7e4c-4d87-9396-6f083095ce9a"/>
+				<textFieldExpression><![CDATA[$F{MOTIVORECHAZO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="295" splitType="Stretch">
+			<staticText>
+				<reportElement x="104" y="41" width="82" height="20" uuid="420d4393-8728-4f26-abff-c1dbf347966e"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Autorizado por]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="41" width="81" height="20" uuid="b59ba842-ebae-4e27-b054-de85a844d0d7"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Solicitado por]]></text>
+			</staticText>
+			<line>
+				<reportElement x="37" y="38" width="215" height="1" uuid="9c04d127-0993-447c-8884-6217ecd97fcc"/>
+			</line>
+			<line>
+				<reportElement x="299" y="37" width="215" height="1" uuid="f27f72c2-fa41-4bd9-9ae3-f8549b340ad6"/>
+			</line>
+			<staticText>
+				<reportElement x="72" y="81" width="83" height="20" uuid="d52b0a59-d057-421f-ac2d-fbbff495b0ee"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Autoriz.]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="155" y="81" width="82" height="20" uuid="d378a326-14ab-414b-8cb4-a73c09d0f615"/>
+				<textFieldExpression><![CDATA[$F{FECHAAUTORIZACION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="330" y="81" width="82" height="20" uuid="d9235b2e-f442-4f58-9267-c9cc25a9d4e3"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Solicitud]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="419" y="81" width="70" height="20" uuid="a6e07916-0eee-41ea-b757-e89a5431c7d6"/>
+				<textFieldExpression><![CDATA[$F{FECHASOLICITUD}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="299" y="61" width="215" height="20" uuid="4f892abc-3345-42ab-82a5-21ff9a630afc"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NOMBRECOMPLETO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="453" y="273" width="41" height="20" uuid="6439ba38-66c0-44b1-9ff4-c927b8762e70"/>
+				<text><![CDATA[Usuario:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="494" y="273" width="59" height="20" uuid="a1b0788f-ada9-4fbb-b3cb-6f816407ec76"/>
+				<textFieldExpression><![CDATA[$F{ULTIMOUSUARIO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="37" y="61" width="215" height="20" uuid="375f6e53-dfa3-456f-92e0-80ee9e54dcf9"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{BUSQUEDA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

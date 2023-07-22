@@ -1,0 +1,97 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>
+			Reporte de Vacaciones</h2>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="frmReporteVacaciones">
+			<p:panel toggleable="true" header="#{msg.generico_filtros}">
+				<p:panelGrid columns="5" layout="grid"
+					columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3,ui-grid-col-1"
+					styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Entidad" />
+					<p:selectOneMenu
+						value="#{cwPrVacacionesReporte.filtro.codCompania}">
+						<f:selectItems value="#{cwPrVacacionesReporte.filtrocompanias}"
+							var="com" itemLabel="#{com.description}"
+							itemValue="#{com.companyowner}" />
+					</p:selectOneMenu>
+					<p:outputLabel value="Planilla" />
+					<p:selectOneMenu
+						value="#{cwPrVacacionesReporte.filtro.codPlantilla}">
+						<f:selectItem itemLabel="#{msg.generico_listar_todos}" />
+						<f:selectItems
+							value="#{cwPrVacacionesReporte.filtrotipoplanillas}" var="tipla"
+							itemLabel="#{tipla.descripcion}"
+							itemValue="#{tipla.pk.tipoplanilla}" />
+					</p:selectOneMenu>
+					<p:spacer />
+					<p:outputLabel value="Desde" id="lblDesde" />
+					<p:calendar pattern="dd/MM/yyyy" id="txtDesde" locale="es"
+							navigator="true" showButtonPanel="true"
+							value="#{cwPrVacacionesReporte.filtro.fechadesde}"/>
+					<p:outputLabel value="Hasta" id="lblHasta" />
+					<p:calendar pattern="dd/MM/yyyy" id="txtHasta" locale="es"
+							navigator="true" showButtonPanel="true"
+							value="#{cwPrVacacionesReporte.filtro.fechahasta}"/>
+					<p:spacer  rendered="false"/>
+					<p:spacer />
+					<p:outputLabel value="C. de Costo" />
+					<p:selectOneMenu
+						value="#{cwPrVacacionesReporte.filtro.codCentroCosto}">
+						<f:selectItem itemLabel="#{msg.generico_listar_todos}" />
+						<f:selectItems value="#{cwPrVacacionesReporte.filtrocentrocostos}"
+							var="cc" itemLabel="#{cc.costcenter} | #{cc.localname}"
+							itemValue="#{cc.costcenter}" />
+					</p:selectOneMenu>
+					<p:outputLabel value="Sucursal" />
+					<p:selectOneMenu
+						value="#{cwPrVacacionesReporte.filtro.codSucursal}">
+						<f:selectItem itemLabel="#{msg.generico_listar_todos}" />
+						<f:selectItems value="#{cwPrVacacionesReporte.filtrosucursales}"
+							var="suc" itemLabel="#{suc.descripcionlocal}"
+							itemValue="#{suc.pk.sucursal}" />
+					</p:selectOneMenu>
+					<p:spacer />
+					<p:outputLabel value="Empleado" />
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2,ui-grid-col-8"
+						styleClass="ui-panelgrid-blank">
+						<p:inputText disabled="true"
+							value="#{cwPrVacacionesReporte.filtro.empleado}" />
+						<p:inputText disabled="true"
+							value="#{cwPrVacacionesReporte.filtro.nombreCompleto}" />
+					</p:panelGrid>
+					<p:spacer />
+					<p:spacer />
+					<p:commandButton value="Buscar" icon="buscar" update="frmReporteVacaciones:tvVacacionesReporte"
+						action="#{cwPrVacacionesReporte.buscar}"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();" />
+				</p:panelGrid>
+			</p:panel>
+			<p:tabView id="tvVacacionesReporte" scrollable="true">
+				<p:ajax event="tabChange"
+					listener="#{cwPrVacacionesReporte.onTabChange}" />
+				<p:tab title="Resumen" id="RES">
+				<pe:documentViewer height="380"
+						value="#{cwPrVacacionesReporte.reporteStreamResumen}" />
+				</p:tab>
+				<p:tab title="Pendientes de Goce" id="PEN">
+					<pe:documentViewer height="380"
+						value="#{cwPrVacacionesReporte.reporteStreamPendiente}" />
+				</p:tab>
+				<p:tab title="Utilizacion" id="UTI">
+					<pe:documentViewer height="380"
+						value="#{cwPrVacacionesReporte.reporteStreamUtilizacion}" />
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+</ui:composition>

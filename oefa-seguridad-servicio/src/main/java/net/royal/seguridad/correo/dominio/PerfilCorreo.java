@@ -1,0 +1,33 @@
+package net.royal.seguridad.correo.dominio;
+
+public class PerfilCorreo {
+		
+	private String correo;
+	private String clave;
+	private String perfil;
+	
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+	public String getClave() {
+		return clave;
+	}
+
+	public void setClave(String clave) {
+		this.clave = clave;
+	}
+
+	public String getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
+	}
+
+}

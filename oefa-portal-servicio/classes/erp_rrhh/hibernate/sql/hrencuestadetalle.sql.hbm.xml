@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : rrhh.HrEncuestadetalle -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="hrencuestadetalle.listarDetalle">
+		<![CDATA[
+			  SELECT 
+                E.SECUENCIA as "secuencia", 
+                E.ORDEN as "orden",
+                E.PREGUNTA as "pregunta",
+                EP.DESCRIPCION as "descripcion",
+                CAST(EP.TIPO AS VARCHAR2(1)) as "tipo",
+                 (SELECT CAST(MAX(MA_MiscelaneosDetalle.DescripcionLocal)  as VARCHAR(200))
+                FROM SGCORESYS.MA_MiscelaneosDetalle    
+              WHERE MA_MiscelaneosDetalle.AplicacionCodigo = 'HR'
+                AND  MA_MiscelaneosDetalle.Compania = '999999'
+                AND  MA_MiscelaneosDetalle.CodigoTabla = 'AREASCLIMA' 
+                AND CodigoElemento = EP.Area)  AS "areadescripcion"
+              FROM SGCORESYS.HR_ENCUESTADETALLE E INNER JOIN SGCORESYS.HR_ENCUESTAPREGUNTA EP
+                ON E.PREGUNTA = EP.PREGUNTA 
+				WHERE E.SECUENCIA  = :secuencia AND EP.TIPOENCUESTA = :tipo_encuesta
+				ORDER BY E.ORDEN
+		]]>
+	</sql-query>
+</hibernate-mapping>

@@ -1,0 +1,209 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+
+	<ui:define name="content">
+
+
+		<h:form id="whrpuestosedit">
+			<style>
+.ui-tabs .ui-tabs-nav li a {
+	float: left;
+	padding: .0em 1em 0em 0em;
+	text-decoration: none;
+}
+
+.ui-tabs .ui-tabs-panel {
+	pointer-events: none;
+}
+</style>
+
+			<p:tabView id="tabView" dynamic="true"
+				activeIndex="#{cwHrPuestosEdit.tabActivo}">
+
+				<p:ajax event="tabChange" listener="#{cwHrPuestosEdit.onTabChange}" />
+
+				<p:tab id="tpuestossubordinados">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/copy1.bmp" />
+							<h:outputText value="Puestos Subordinados" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="tab_puestos_subordinados.xhtml" />
+				</p:tab>
+
+				<p:tab id="totrosestudios">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2548.bmp" />
+							<h:outputText value="Otros Estudios" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="tab_otros_estudios.xhtml" />
+				</p:tab>
+
+				<p:tab id="tobjetivosmetas">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2702.bmp" />
+							<h:outputText value="Objetivos y/o Metas" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="tab_objetivos_metas.xhtml" />
+				</p:tab>
+
+				<p:tab id="tevaluacion">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1630.bmp" />
+							<h:outputText value="Evaluación" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="tab_evaluacion.xhtml" />
+				</p:tab>
+
+				<p:tab id="tseleccion">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1298.bmp" />
+							<h:outputText value="Selección" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="tab_seleccion.xhtml" />
+				</p:tab>
+
+				<p:tab id="tformatosevaluacion">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1686.bmp" />
+							<h:outputText value="Formatos de Evaluación" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="tab_formatos_evaluacion.xhtml" />
+				</p:tab>
+
+				<p:tab id="tpuesto">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1030.bmp" />
+							<h:outputText value="Puesto" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="tab_puesto.xhtml" />
+				</p:tab>
+
+				<p:tab id="trelaciones">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1052.bmp" />
+							<h:outputText value="Relaciones" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="tab_relaciones.xhtml" />
+				</p:tab>
+
+				<p:tab id="tfunciones">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1456.bmp" />
+							<h:outputText value="Funciones" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="tab_funciones_puestos.xhtml" />
+				</p:tab>
+
+				<p:tab id="tformacion">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2678.bmp" />
+							<h:outputText value="Formación" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="tab_formacion.xhtml" />
+				</p:tab>
+
+				<p:tab id="texperienciaprevia">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2484.bmp" />
+							<h:outputText value="Experiencia Previa" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="tab_experienciaprevia.xhtml" />
+				</p:tab>
+
+				<p:tab id="tcondicionestrabajo">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1444.bmp" />
+							<h:outputText value="Condiciones de Trabajo" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="tab_condicionestrabajo.xhtml" />
+				</p:tab>
+
+				<p:tab id="triesgotrabajo">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2462.bmp" />
+							<h:outputText value="Riesgo de Trabajo" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="tab_riesgotrabajo.xhtml" />
+				</p:tab>
+
+				<p:tab id="tpuestosimilares">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1344.bmp" />
+							<h:outputText value="Puestos Similares" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="tab_puestos_similares.xhtml" />
+				</p:tab>
+
+				<p:tab id="tFormato">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<p:graphicImage
+								value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1344.bmp" />
+							<h:outputText value="Formato" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="tab_formato.xhtml" />
+				</p:tab>
+
+			</p:tabView>
+
+
+			<p:panelGrid columns="2" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid"
+				styleClass="ui-panelgrid-blank">
+				<p:commandButton value="Aceptar" icon="aceptar" />
+
+				<p:commandButton value="Cancelar" icon="cancelar"
+					action="#{cwHrPuestosEdit.salir}" />
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

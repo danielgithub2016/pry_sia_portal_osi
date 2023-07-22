@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<div class="ui-fluid">
+		<h:form id="frmDocumentoEdicion">
+			<p:panel>
+				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank"
+					layout="grid" columnClasses="ui-grid-col-4,ui-grid-col-8">
+					<p:spacer></p:spacer>
+					<div class="ui-messages ui-widget" aria-live="polite"
+						data-global="false" data-summary="data-summary"
+						data-detail="data-detail" data-severity="all,error"
+						data-redisplay="true">
+						<div class="ui-messages-info ui-corner-all">
+							<span class="ui-messages-info-icon"></span>
+							<ul>
+								<li><span class="ui-messages-info-summary"></span><span
+									class="ui-messages-info-detail">Tamaño Max: #{cEmpCursos.tamanioArchivo}</span></li>
+							</ul>
+						</div>
+					</div>
+
+					<p:outputLabel value="N° documento" />
+					<p:inputText disabled="true" style="width:100%"
+						value="#{cEmpCursos.bean.pk.documento}" />
+					<p:outputLabel value="Archivo" />
+					<p:fileUpload mode="advanced" required="true"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+						requiredMessage="Seleccione un Archivo" style="heigth:130px"
+						fileUploadListener="#{cEmpCursos.handleFileUpload}"
+						label="Seleccione un archivo" auto="true" showButtons="false"
+						sizeLimit="#{cEmpCursos.tamanioBytes}"
+						invalidFileMessage="archivo inválido"
+						invalidSizeMessage="se excedió el límite de tamaño"
+						uploadLabel="Cargando" rendered="true" />
+					<p:outputLabel value="Nombre documento" />
+					<p:inputText value="#{cEmpCursos.bean.nombrearchivo}"
+						disabled="true" id="itNombreArch" />
+
+					<p:outputLabel value="Es Informe Final?" />
+					<p:selectBooleanCheckbox value="#{cEmpCursos.esInformeFinal}" />
+
+				</p:panelGrid>
+			</p:panel>
+			<p:panelGrid columns="1" layout="grid" columnClasses="ui-grid-col-3"
+				styleClass="ui-panelgrid-blank">
+				<p:commandButton icon="guardar" action="#{cEmpCursos.guardar}"
+					style="width:100%" onstart="PF('bUI').block();"
+					update=":frmCursosDocumentos" oncomplete="PF('bUI').unblock();"
+					value="Guardar" />
+			</p:panelGrid>
+		</h:form>
+	</div>
+</ui:composition>

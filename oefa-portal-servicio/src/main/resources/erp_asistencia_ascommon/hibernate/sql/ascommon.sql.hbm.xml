@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : ascommon.w_pr_seguridad -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<!-- ascommon.dw_as_filtros Compañia -->
+	<sql-query name="ascommon.DwFiltrosCompania">
+		SELECT
+		ROWNUM as "idrow",
+		COMPANYOWNER as
+		"codigo",
+		DESCRIPTION as "descripcion"
+		FROM SGCORESYS.companyowner
+		WHERE (companyowner IN (
+		SELECT companyowner
+		FROM SGCORESYS.seguridadautorizacioncompania
+		WHERE ( usuario = :p_usuario
+		OR usuario IN (SELECT a.perfil
+		FROM SGCORESYS.seguridadperfilusuario a
+		WHERE a.usuario = :p_usuario)
+		))
+		OR :p_admin = 'S')
+
+	</sql-query>
+
+	<!-- ascommon.dw_as_filtros Compañia Contar -->
+	<sql-query name="ascommon.DwFiltrosCompaniaContar">
+		SELECT
+		count(*)
+		FROM SGCORESYS.companyowner
+		WHERE companyowner IN (
+		SELECT companyowner
+		FROM SGCORESYS.seguridadautorizacioncompania
+		WHERE ( usuario = :p_usuario
+		OR usuario IN (SELECT a.perfil
+		FROM SGCORESYS.seguridadperfilusuario a
+		WHERE a.usuario = :p_usuario)
+		))
+		OR :p_admin = 'S'
+
+	</sql-query>
+
+	<!-- ascommon.dw_as_filtros Centro Costos -->
+	<sql-query name="ascommon.DwFiltrosCostos">
+		SELECT
+		ROWNUM as "idrow",
+		COSTCENTER as
+		"codigo",
+		LOCALNAME as "descripcion"
+		FROM sgcoresys.AC_COSTCENTERMST
+
+	</sql-query>
+
+	<!-- ascommon.dw_as_filtros Centro Costos Conteo -->
+	<sql-query name="ascommon.DwFiltrosCostosContar">
+		SELECT
+		count(*)
+		FROM sgcoresys.AC_COSTCENTERMST
+
+	</sql-query>
+
+	<!-- ascommon.dw_as_filtros oficina -->
+	<sql-query name="ascommon.DwFiltrosOficina">
+		SELECT
+		ROWNUM AS "idrow",
+		SUCURSAL AS "codigo",
+		DESCRIPCIONLOCAL AS "descripcion"
+		FROM
+		sgcoresys.AC_SUCURSAL
+		WHERE
+		(estado = 'A')
+		AND ( ((( sucursal IN (
+		SELECT valortexto
+		FROM SGCORESYS.as_seguridad
+		WHERE ( usuario = :p_usuario
+		OR usuario IN (SELECT a.perfil
+		FROM SGCORESYS.seguridadperfilusuario a
+		WHERE a.usuario = :p_usuario)
+		)
+		AND conceptoseguridad = 'TIPOSU')
+		OR ((SELECT MAX (LTRIM (RTRIM (valortexto)))
+		FROM SGCORESYS.as_seguridad
+		WHERE ( usuario = :p_usuario
+		OR usuario IN (SELECT a.perfil
+		FROM SGCORESYS.seguridadperfilusuario a
+		WHERE a.usuario = :p_usuario)
+		)
+		AND conceptoseguridad = 'ALLSUCURS') = 'S'
+		)
+		)
+		)
+		)
+		OR :p_admin = 'S'
+		)
+
+	</sql-query>
+
+	<!-- ascommon.dw_as_filtros oficina Conteo -->
+	<sql-query name="ascommon.DwFiltrosOficinaContar">
+		SELECT
+		count(*)
+		FROM
+		sgcoresys.AC_SUCURSAL
+		WHERE
+		(estado = 'A')
+		AND ( ((( sucursal IN (
+		SELECT valortexto
+		FROM SGCORESYS.as_seguridad
+		WHERE ( usuario = :p_usuario
+		OR usuario IN (SELECT a.perfil
+		FROM SGCORESYS.seguridadperfilusuario a
+		WHERE a.usuario = :p_usuario)
+		)
+		AND conceptoseguridad = 'TIPOSU')
+		OR ((SELECT MAX (LTRIM (RTRIM (valortexto)))
+		FROM SGCORESYS.as_seguridad
+		WHERE ( usuario = :p_usuario
+		OR usuario IN (SELECT a.perfil
+		FROM SGCORESYS.seguridadperfilusuario a
+		WHERE a.usuario = :p_usuario)
+		)
+		AND conceptoseguridad = 'ALLSUCURS') = 'S'
+		)
+		)
+		)
+		)
+		OR :p_admin = 'S'
+		)
+
+	</sql-query>
+
+	<!-- ascommon.dw_as_filtros categoria -->
+	<sql-query name="ascommon.DwFiltrosCategoria">
+		Select
+		ROWNUM as "idrow",
+		CARGO as "codigo",
+		DESCRIPCIONLOCAL as "descripcion"
+		From
+		sgcoresys.HR_CARGOSMAST
+
+	</sql-query>
+
+
+	<!-- ascommon.dw_as_filtros categoria Conteo -->
+	<sql-query name="ascommon.DwFiltrosCategoriaContar">
+		Select
+		count(*)
+		From
+		sgcoresys.HR_CARGOSMAST
+
+	</sql-query>
+
+	<!-- ascommon.dw_as_filtros tipo planilla -->
+	<sql-query name="ascommon.DwFiltrosPlanilla">
+		SELECT
+		ROWNUM AS "idrow",
+		TIPOPLANILLA AS
+		"codigo",
+		DESCRIPCION AS "descripcion"
+		FROM sgcoresys.PR_TIPOPLANILLA
+
+	</sql-query>
+
+
+	<!-- ascommon.dw_as_filtros tipo planilla conteo -->
+	<sql-query name="ascommon.DwFiltrosPlanillaContar">
+
+		SELECT
+		count(*)
+		FROM sgcoresys.PR_TIPOPLANILLA
+	</sql-query>
+
+	<!-- ascommon.dw_as_filtros Area Operaria -->
+	<sql-query name="ascommon.DwFiltrosAreaOperaria">
+
+		SELECT
+		ROWNUM AS "idrow",
+		ltrim(TO_CHAR(AREA
+		,'999999')) AS "codigo",
+		NOMBRE AS "descripcion"
+		FROM sgcoresys.AS_AREA
+		WHERE (area IN (
+		SELECT valornumero
+		FROM SGCORESYS.as_seguridad
+		WHERE (
+		usuario = :p_usuario
+		OR (usuario IN (SELECT perfil
+		FROM
+		SGCORESYS.seguridadperfilusuario
+		WHERE usuario = :p_usuario))
+		)
+		AND
+		conceptoseguridad = 'TIPOAR')
+		OR 'S' =
+		(SELECT MAX (valortexto)
+		FROM
+		SGCORESYS.as_seguridad
+		WHERE ( usuario = :p_usuario
+		OR (usuario IN
+		(SELECT perfil
+		FROM SGCORESYS.seguridadperfilusuario
+		WHERE usuario =
+		:p_usuario))
+		)
+		AND conceptoseguridad = 'ALLAREA')
+		OR (area IN (
+		SELECT area
+		FROM sgcoresys.as_area
+		WHERE area IN (SELECT area
+		FROM sgcoresys.as_area
+		WHERE empleadoresponsable = :p_vendor OR
+		empleadoresponsable2 = :p_vendor OR
+		empleadoresponsable3 = :p_vendor OR
+		empleadoresponsable4 = :p_vendor)
+		UNION
+		SELECT area
+		FROM sgcoresys.as_area
+		WHERE areapadre IN (SELECT area
+		FROM sgcoresys.as_area
+		WHERE empleadoresponsable = :p_vendor OR
+		empleadoresponsable2 = :p_vendor OR
+		empleadoresponsable3 = :p_vendor OR
+		empleadoresponsable4 = :p_vendor))
+		)
+		OR (area = (SELECT dptoareaoperativa
+		FROM sgcoresys.empleadomast
+		WHERE empleado = :p_vendor))
+		OR :p_administrador = 'S')
+
+	</sql-query>
+
+
+	<!-- ascommon.dw_as_filtros Area Operaria conteo -->
+	<sql-query name="ascommon.DwFiltrosAreaOperariaContar">
+		SELECT
+		count(*)
+		FROM sgcoresys.AS_AREA
+		WHERE
+		(area IN (
+		SELECT valornumero
+		FROM SGCORESYS.as_seguridad
+		WHERE ( usuario
+		= :p_usuario
+		OR (usuario IN (SELECT perfil
+		FROM
+		SGCORESYS.seguridadperfilusuario
+		WHERE usuario = :p_usuario))
+		)
+		AND
+		conceptoseguridad = 'TIPOAR')
+		OR 'S' =
+		(SELECT MAX (valortexto)
+		FROM
+		SGCORESYS.as_seguridad
+		WHERE ( usuario = :p_usuario
+		OR (usuario IN
+		(SELECT perfil
+		FROM SGCORESYS.seguridadperfilusuario
+		WHERE usuario =
+		:p_usuario))
+		)
+		AND conceptoseguridad = 'ALLAREA')
+		OR (area IN (
+		SELECT area
+		FROM sgcoresys.as_area
+		WHERE area IN (SELECT area
+		FROM sgcoresys.as_area
+		WHERE empleadoresponsable = :p_vendor OR
+		empleadoresponsable2 = :p_vendor OR
+		empleadoresponsable3 = :p_vendor OR
+		empleadoresponsable4 = :p_vendor)
+		UNION
+		SELECT area
+		FROM sgcoresys.as_area
+		WHERE areapadre IN (SELECT area
+		FROM sgcoresys.as_area
+
+		WHERE empleadoresponsable = :p_vendor OR
+		empleadoresponsable2 = :p_vendor OR
+		empleadoresponsable3 = :p_vendor OR
+		empleadoresponsable4 = :p_vendor))
+		)
+		OR (area = (SELECT dptoareaoperativa
+		FROM sgcoresys.empleadomast
+		WHERE empleado = :p_vendor))
+		OR :p_administrador = 'S')
+
+	</sql-query>
+
+
+	<!-- ascommon.dw_as_filtros CC Inactivos -->
+	<sql-query name="ascommon.DwFiltrosInactivos">
+
+		SELECT ROWNUM AS "idrow",
+		COSTCENTER AS
+		"codigo",
+		LOCALNAME AS "descripcion"
+		FROM sgcoresys.AC_COSTCENTERMST
+
+	</sql-query>
+
+
+	<!-- ascommon.dw_as_filtros CC Inactivo conteo -->
+	<sql-query name="ascommon.DwFiltrosInactivosContar">
+
+		SELECT count(*)
+		FROM
+		sgcoresys.AC_COSTCENTERMST
+
+	</sql-query>
+
+
+	<!-- ascommon.dw_as_filtros puesto -->
+	<sql-query name="ascommon.DwFiltrosPuesto">
+
+		SELECT ROWNUM AS "idrow",
+		ltrim(TO_CHAR(CODIGOPUESTO ,'999999')) AS "codigo",
+		DESCRIPCION AS
+		"descripcion"
+		FROM sgcoresys.HR_PUESTOEMPRESA
+
+	</sql-query>
+
+
+	<!-- ascommon.dw_as_filtros puesto conteo -->
+	<sql-query name="ascommon.DwFiltrosPuestoContar">
+
+		SELECT
+		count(*)
+		FROM sgcoresys.HR_PUESTOEMPRESA
+	</sql-query>
+
+	<sql-query name="ascommon.DwAsEventoUseridActivoSIGED">
+		SELECT DISTINCT
+		AS_EVENTO.IDEVENTO as "idevento",
+		ORDEN as "orden",
+		cast(' ' as varchar(2)) as "estado" ,
+		NOMBRE_LARGO as "nombrelargo",
+		CONCEPTOACCESO as "conceptoacceso"
+		FROM
+		SGCORESYS.AS_EVENTO
+		WHERE
+		CONCEPTOACCESO='PSIG'
+		ORDER BY 2 ASC
+	</sql-query>
+
+
+	<!-- ascommon.dw_as_evento_userid_activo -->
+	<sql-query name="ascommon.DwAsEventoUseridActivo">
+	 <![CDATA[
+		SELECT DISTINCT
+            AS_EVENTO.IDEVENTO as "idevento",
+            ORDEN as "orden",
+            cast(' ' as varchar(2)) as "estado" ,
+            NOMBRE_LARGO as "nombrelargo",
+            CONCEPTOACCESO as "conceptoacceso"
+        FROM 
+            SGCORESYS.AS_EVENTO LEFT JOIN
+            SGCORESYS.AS_EVENTOUSUARIO 
+            ON ( AS_EVENTO.IDEVENTO = AS_EVENTOUSUARIO.IDEVENTO)
+        WHERE
+            (( AS_EVENTOUSUARIO.USERID = :p_userid
+            or ( (SELECT MAX(TRIM(valortexto))
+                  FROM SGCORESYS.AS_SEGURIDAD
+                  WHERE conceptoseguridad = 'ALLCONCEPT' AND
+                    usuario = :p_userid ) = 'S') ) AND
+            ( AS_EVENTOUSUARIO.ESTADO in ( :p_estado1, :p_estado2 )) )
+            AND    CONCEPTOACCESO<>'PSIG'
+        UNION 
+        SELECT 
+            A.IDEVENTO as "idevento",
+            ORDEN as "orden",
+            cast(' ' as varchar(2)) as "estado" ,
+            NOMBRE_LARGO as "nombrelargo",
+            CONCEPTOACCESO as "conceptoacceso"
+        FROM 
+            SGCORESYS.AS_EVENTO C, SGCORESYS.AS_EVENTOUSUARIO A,
+            SGCORESYS.SeguridadPerfilUsuario b
+        WHERE 
+            A.IDEVENTO = C.IDEVENTO AND
+            A.USERID = B.PERFIL AND 
+            B.USUARIO = :p_userid AND 
+            A.estado = '1'
+            AND    CONCEPTOACCESO<>'PSIG'
+        UNION
+        SELECT 
+            A.IDEVENTO as "idevento",
+            ORDEN as "orden",
+            cast(' ' as varchar(2)) as "estado" ,
+            NOMBRE_LARGO as "nombrelargo",
+            CONCEPTOACCESO as "conceptoacceso"
+        FROM 
+            SGCORESYS.AS_EVENTO C, SGCORESYS.AS_EVENTOUSUARIO A,
+            SGCORESYS.SeguridadPerfilUsuario b
+        WHERE 
+            A.IDEVENTO = C.IDEVENTO AND
+            A.USERID = B.PERFIL AND 
+            B.USUARIO = :p_userid AND 
+            A.estado = '0' AND 
+            exists (SELECT idevento
+                   FROM sgcoresys.as_eventousuario
+                   WHERE idevento = 9999 AND userid = b.perfil)
+            AND    CONCEPTOACCESO<>'PSIG'
+        ORDER BY 2 ASC
+        ]]>
+	</sql-query>
+
+	<!-- ascommon.dw_as_ingreso_diasvacaciones_position -->
+	<sql-query name="ascommon.DwAsIngresoDiasvacacionesPosition">
+	</sql-query>
+
+	<!-- ascommon.dw_as_uo_busqueda -->
+	<sql-query name="ascommon.DwAsUoBusqueda">
+	</sql-query>
+
+	<!-- ascommon.dw_hr_asistenciadiaria_rpt_filtro -->
+	<sql-query name="ascommon.DwHrAsistenciadiariaRptFiltro">
+	</sql-query>
+
+	<!-- ascommon.dw_hr_filtro_asistencia -->
+	<sql-query name="ascommon.DwHrFiltroAsistencia">
+	</sql-query>
+
+	<!-- ascommon.dw_hr_filtro_empleado_fechas_ext_pr_onp -->
+	<sql-query name="ascommon.DwHrFiltroEmpleadoFechasExtPrOnp">
+	</sql-query>
+
+	<!-- ascommon.dw_hr_filtro_empleado_fechas_external -->
+	<sql-query name="ascommon.DwHrFiltroEmpleadoFechasExternal">
+	</sql-query>
+
+	<!-- ascommon.dw_hr_filtro_empleado_fechas_external_2 -->
+	<sql-query name="ascommon.DwHrFiltroEmpleadoFechasExternal2">
+	</sql-query>
+
+	<!-- ascommon.dw_hr_filtro_empleado_fechas_external_pr -->
+	<sql-query name="ascommon.DwHrFiltroEmpleadoFechasExternalPr">
+	</sql-query>
+
+	<!-- ascommon.dw_hr_filtro_empleado_fechas_external_rp -->
+	<sql-query name="ascommon.DwHrFiltroEmpleadoFechasExternalRp">
+	</sql-query>
+
+	<!-- ascommon.dw_hr_filtro_empleado_fechas_external_st -->
+	<sql-query name="ascommon.DwHrFiltroEmpleadoFechasExternalSt">
+	</sql-query>
+
+	<!-- ascommon.dw_hr_filtro_empleado_fechas_external_st_rp -->
+	<sql-query name="ascommon.DwHrFiltroEmpleadoFechasExternalStRp">
+	</sql-query>
+
+	<!-- ascommon.dw_hr_filtro_empleado_fechas_rep_ext -->
+	<sql-query name="ascommon.DwHrFiltroEmpleadoFechasRepExt">
+	</sql-query>
+
+	<!-- ascommon.dw_hr_filtro_empleado_fechas_rep_ext_pro -->
+	<sql-query name="ascommon.DwHrFiltroEmpleadoFechasRepExtPro">
+	</sql-query>
+
+	<!-- ascommon.dw_hr_filtro_generacionbonificacion -->
+	<sql-query name="ascommon.DwHrFiltroGeneracionbonificacion">
+	</sql-query>
+
+	<!-- ascommon.dw_hr_filtro_programa -->
+	<sql-query name="ascommon.DwHrFiltroPrograma">
+	</sql-query>
+
+	<!-- ascommon.dw_hr_gen_bonos_filtro_bonos -->
+	<sql-query name="ascommon.DwHrGenBonosFiltroBonos">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_ac_sucursal_select_seguridad -->
+	<sql-query name="ascommon.DwMaAcSucursalSelectSeguridad">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_area_varios -->
+	<sql-query name="ascommon.DwMaAreaVarios">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_cargo_varios -->
+	<sql-query name="ascommon.DwMaCargoVarios">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_categoria_varios -->
+	<sql-query name="ascommon.DwMaCategoriaVarios">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_centrocosto_inactivos -->
+	<sql-query name="ascommon.DwMaCentrocostoInactivos">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_centrocosto_varios -->
+	<sql-query name="ascommon.DwMaCentrocostoVarios">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_compania_varios -->
+	<sql-query name="ascommon.DwMaCompaniaVarios">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_hr_cursofechas_movimiento -->
+	<sql-query name="ascommon.DwMaHrCursofechasMovimiento">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_hr_filtro_horario_fechas_external -->
+	<sql-query name="ascommon.DwMaHrFiltroHorarioFechasExternal">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_oficina_varios -->
+	<sql-query name="ascommon.DwMaOficinaVarios">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_pr_concepto_select_popup_varios -->
+	<sql-query name="ascommon.DwMaPrConceptoSelectPopupVarios">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_pr_empleadomast_direcciones -->
+	<sql-query name="ascommon.DwMaPrEmpleadomastDirecciones">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_pr_empleadomast_edit_parte1 -->
+	<sql-query name="ascommon.DwMaPrEmpleadomastEditParte1">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_pr_empleadomast_edit_parte2 -->
+	<sql-query name="ascommon.DwMaPrEmpleadomastEditParte2">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_pr_empleadomast_edit_parte2_pers -->
+	<sql-query name="ascommon.DwMaPrEmpleadomastEditParte2Pers">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_pr_empleadomast_edit_parte3 -->
+	<sql-query name="ascommon.DwMaPrEmpleadomastEditParte3">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_pr_persona_edit_general -->
+	<sql-query name="ascommon.DwMaPrPersonaEditGeneral">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_pr_proceso_periodo_select -->
+	<sql-query name="ascommon.DwMaPrProcesoPeriodoSelect">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_pr_tipoplanilla_select -->
+	<sql-query name="ascommon.DwMaPrTipoplanillaSelect">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_pr_tipoplanilla_select_seguridad -->
+	<sql-query name="ascommon.DwMaPrTipoplanillaSelectSeguridad">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_pr_ubicaciongeografica_select -->
+	<sql-query name="ascommon.DwMaPrUbicaciongeograficaSelect">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_pr_vacacionpago_list -->
+	<sql-query name="ascommon.DwMaPrVacacionpagoList">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_pr_vacacionperiodo_list -->
+	<sql-query name="ascommon.DwMaPrVacacionperiodoList">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_pr_vacacionperiodo_select -->
+	<sql-query name="ascommon.DwMaPrVacacionperiodoSelect">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_pr_vacacionutilizacion_list -->
+	<sql-query name="ascommon.DwMaPrVacacionutilizacionList">
+	</sql-query>
+
+	<!-- ascommon.dw_ma_tipoplanilla_varios -->
+	<sql-query name="ascommon.DwMaTipoplanillaVarios">
+	</sql-query>
+
+	<!-- ascommon.dw_pr_filter_external -->
+	<sql-query name="ascommon.DwPrFilterExternal">
+	</sql-query>
+
+	<!-- ascommon.dw_pr_seguridad -->
+	<sql-query name="ascommon.DwPrSeguridad">
+	</sql-query>
+
+	<!-- ascommon.dw_pr_seguridad_area -->
+	<sql-query name="ascommon.DwPrSeguridadArea">
+	</sql-query>
+
+	<!-- ascommon.dw_pr_seguridad_as_area -->
+	<sql-query name="ascommon.DwPrSeguridadAsArea">
+	</sql-query>
+
+	<!-- ascommon.dw_pr_seguridad_as_unidaddetrabajo -->
+	<sql-query name="ascommon.DwPrSeguridadAsUnidaddetrabajo">
+	</sql-query>
+
+	<!-- ascommon.dw_pr_seguridad_conceptosacceso -->
+	<sql-query name="ascommon.DwPrSeguridadConceptosacceso">
+	</sql-query>
+
+	<!-- ascommon.dw_pr_seguridad_idevento -->
+	<sql-query name="ascommon.DwPrSeguridadIdevento">
+	</sql-query>
+
+	<!-- ascommon.dw_pr_seguridad_sucursal -->
+	<sql-query name="ascommon.DwPrSeguridadSucursal">
+	</sql-query>
+
+	<!-- ascommon.dw_pr_seguridad_tipoplanilla -->
+	<sql-query name="ascommon.DwPrSeguridadTipoplanilla">
+	</sql-query>
+
+	<!-- ascommon.dw_pr_seguridad_usuario_conceptos -->
+	<sql-query name="ascommon.DwPrSeguridadUsuarioConceptos">
+	</sql-query>
+
+	<!-- ascommon.dw_pr_seguridad_usuarios -->
+	<sql-query name="ascommon.DwPrSeguridadUsuarios">
+	</sql-query>
+
+	<!-- ascommon.dw_pr_uo_busqueda -->
+	<sql-query name="ascommon.DwPrUoBusqueda">
+	</sql-query>
+
+</hibernate-mapping>

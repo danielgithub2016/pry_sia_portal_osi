@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_acta_publicacion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="173e1505-9c8c-4c95-b10f-12644f21bc37">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="144"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="1cd31c3d-e3f2-4a31-8d4a-3c922778dfac"/>
+	<parameter name="PAR_COMPANIA" class="java.lang.String"/>
+	<parameter name="PAR_ETAPA" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_REQUERIMIENTO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    (SELECT UPPER(DESCRIPCION) FROM SGCORESYS.PR_TIPOPLANILLA WHERE TIPOPLANILLA = B.TIPOPLANILLA) AS PLANILLA,
+    B.CONVOCATORIA AS CONVOCATORIA,
+    (SELECT UPPER(DESCRIPCION) FROM SGCORESYS.HR_EVALUACION WHERE EVALUACION IN(SELECT EVALUACION FROM SGCORESYS.HR_EVALREQUERIMIENTO WHERE SECUENCIA = $P{PAR_ETAPA})) AS EVALUACION,
+    (SELECT UPPER(NOMBRE) FROM SGCORESYS.AS_AREA WHERE AREA IN(SELECT DPTOAREAOPERATIVA FROM SGCORESYS.EMPLEADOMAST WHERE EMPLEADO = B.EMPLEADOSOLICITANTE)) AS UNIDAD_ORGANICA,
+    (SELECT DESCRIPCION FROM SGCORESYS.HR_PUESTOEMPRESA WHERE CODIGOPUESTO = B.CODIGOPUESTO) AS PUESTO,
+    B.CONCURSO AS CONCURSO,
+    CASE WHEN SUBSTR(A.POSTULANTE,1,4) = 'INTE' THEN
+        C1.APELLIDOPATERNO || ' ' || C1.APELLIDOMATERNO || ' ' || C1.NOMBRES
+    ELSE
+        C.APELLIDOPATERNO || ' ' || C.APELLIDOMATERNO || ' ' || C.NOMBRES
+    END AS NOMBRE,
+    I.TIPOEVAL AS TIPOEVALUACION,
+    CASE WHEN I.TIPOEVAL = '3' THEN
+        CASE WHEN FLAG_OTROSESTUDIOS = 'A' AND FLAG_EXPERIENCIA = 'A' AND FLAG_FORMACION = 'A' THEN 'APTO' ELSE 'NO APTO' END
+        ELSE
+        CASE WHEN A.SECUENCIA = $P{PAR_ETAPA} AND (A.ESTADO = 'E' OR A.ESTADO = 'P') THEN 'NO APTO' ELSE 'APTO' END
+    END AS RESULTADO,
+    A.OBSERVACIONESFINALES AS OBSERVACION,
+    (SELECT SUM(PUNTAJE) FROM SGCORESYS.HR_EVALUACIONPOSTULANTE WHERE REQUERIMIENTO = $P{PAR_REQUERIMIENTO} AND COMPANYOWNER = $P{PAR_COMPANIA} AND POSTULANTE = A.POSTULANTE AND SECUENCIA = $P{PAR_ETAPA}) AS PUNTAJE,
+    A.SECUENCIA AS ETAPA,
+    (SELECT FECHAEVALUACION FROM SGCORESYS.HR_EVALREQUERIMIENTO WHERE REQUERIMIENTO = A.REQUERIMIENTO AND COMPANYOWNER = A.COMPANYOWNER AND SECUENCIA = $P{PAR_ETAPA}) AS FECHAEVALUACION,
+    (A.SECUENCIA + 1) AS SGTEETAPA,
+    (SELECT EVALUACION FROM SGCORESYS.HR_EVALREQUERIMIENTO WHERE REQUERIMIENTO = A.REQUERIMIENTO AND COMPANYOWNER = A.COMPANYOWNER AND SECUENCIA = $P{PAR_ETAPA} + 1) AS SGTEEVALUACION,
+    (SELECT FECHAEVALUACION FROM SGCORESYS.HR_EVALREQUERIMIENTO WHERE REQUERIMIENTO = A.REQUERIMIENTO AND COMPANYOWNER = A.COMPANYOWNER AND SECUENCIA = $P{PAR_ETAPA} + 1) AS SGTEFECHAEVALUACION,
+    (SELECT FECHAEVALUACIONHASTA FROM SGCORESYS.HR_EVALREQUERIMIENTO WHERE REQUERIMIENTO = A.REQUERIMIENTO AND COMPANYOWNER = A.COMPANYOWNER AND SECUENCIA = $P{PAR_ETAPA} + 1) AS SGTEFECHAEVALUACIONHASTA,
+    (SELECT LUGAR FROM SGCORESYS.HR_EVALREQUERIMIENTO WHERE REQUERIMIENTO = A.REQUERIMIENTO AND COMPANYOWNER = A.COMPANYOWNER AND SECUENCIA = $P{PAR_ETAPA} + 1) AS DIRECCION,
+    G.DESCRIPCIONCORTA AS DEPARTAMENTO,
+    (SELECT TIPOEVAL FROM SGCORESYS.HR_EVALUACION WHERE EVALUACION IN(SELECT EVALUACION FROM SGCORESYS.HR_EVALREQUERIMIENTO WHERE SECUENCIA = $P{PAR_ETAPA} AND REQUERIMIENTO = $P{PAR_REQUERIMIENTO} AND COMPANYOWNER = $P{PAR_COMPANIA})) AS TIPOEVALUACION_ETAPA,
+    CASE WHEN SUBSTR(A.POSTULANTE,1,4) = 'INTE' THEN
+        C1.SEXO
+    ELSE
+        C.SEXO
+    END AS SEXO,
+    CASE WHEN SUBSTR(A.POSTULANTE,1,4) = 'INTE' THEN
+        C1.FECHANACIMIENTO
+    ELSE
+        C.FECHANACIMIENTO
+    END AS FECHANACIMIENTO,
+    (SELECT FAMILIAPUESTO FROM SGCORESYS.HR_PUESTOEMPRESA WHERE CODIGOPUESTO = B.CODIGOPUESTO) AS FAMILIA,
+    A.FECHAPOSTULANTE AS FECHAEVALUACIONPOSTULANTE,
+    (SELECT HORA FROM SGCORESYS.HR_EVALREQUERIMIENTO_DATOS
+    WHERE REQUERIMIENTO = A.REQUERIMIENTO
+    AND COMPANYOWNER = A.COMPANYOWNER
+    AND EVALUACION = (CASE
+                                    WHEN ($P{PAR_ETAPA} + 1) = (SELECT MAX(SECUENCIA) FROM SGCORESYS.HR_POSREQUER
+                                                                          WHERE REQUERIMIENTO = A.REQUERIMIENTO  AND COMPANYOWNER =  A.COMPANYOWNER )
+                                    THEN $P{PAR_ETAPA}
+                                    ELSE ($P{PAR_ETAPA} + 1)
+                                END)) AS HORAEVALUACION,
+(SELECT FLOOR(MONTHS_BETWEEN(SYSDATE,CASE WHEN SUBSTR(A.POSTULANTE,1,4) = 'INTE' THEN
+        C1.FECHANACIMIENTO
+    ELSE
+        C.FECHANACIMIENTO
+    END) /12) FROM DUAL) AS EDAD
+FROM
+    SGCORESYS.HR_POSREQUER A
+    JOIN SGCORESYS.HR_REQUERIMIENTO B ON A.REQUERIMIENTO = B.REQUERIMIENTO AND A.COMPANYOWNER = B.COMPANYOWNER
+    LEFT JOIN SGCORESYS.HR_POSTULANTES C ON A.POSTULANTE = C.POSTULANTE AND SUBSTR(A.POSTULANTE,1,4) <> 'INTE'
+    LEFT JOIN SGCORESYS.PERSONAMAST C1 ON CAST(SUBSTR(A.POSTULANTE,5,5) AS INTEGER) = C1.PERSONA AND SUBSTR(A.POSTULANTE,1,4) = 'INTE'
+    LEFT JOIN SGCORESYS.AC_SUCURSAL D ON B.SUCURSAL = D.SUCURSAL
+    LEFT JOIN SGCORESYS.ZONAPOSTAL E ON E.DEPARTAMENTO = D.DEPARTAMENTO AND E.PROVINCIA = D.PROVINCIA AND E.CODIGOPOSTAL = D.DISTRITO
+    LEFT JOIN SGCORESYS.PROVINCIA F ON F.DEPARTAMENTO = D.DEPARTAMENTO AND F.PROVINCIA = D.PROVINCIA
+    LEFT JOIN SGCORESYS.DEPARTAMENTO G ON G.DEPARTAMENTO = D.DEPARTAMENTO
+    JOIN SGCORESYS.HR_EVALREQUERIMIENTO H ON H.REQUERIMIENTO = A.REQUERIMIENTO AND H.COMPANYOWNER = A.COMPANYOWNER AND H.SECUENCIA = A.SECUENCIA
+    JOIN SGCORESYS.HR_EVALUACION I ON I.EVALUACION = H.EVALUACION
+WHERE
+    A.REQUERIMIENTO = $P{PAR_REQUERIMIENTO} AND A.COMPANYOWNER = $P{PAR_COMPANIA}
+    AND A.SECUENCIA >= $P{PAR_ETAPA}
+--    AND A.ESTADO IN('P','A','C')]]>
+	</queryString>
+	<field name="PLANILLA" class="java.lang.String"/>
+	<field name="CONVOCATORIA" class="java.lang.String"/>
+	<field name="EVALUACION" class="java.lang.String"/>
+	<field name="UNIDAD_ORGANICA" class="java.lang.String"/>
+	<field name="PUESTO" class="java.lang.String"/>
+	<field name="CONCURSO" class="java.math.BigDecimal"/>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="TIPOEVALUACION" class="java.lang.String"/>
+	<field name="RESULTADO" class="java.lang.String"/>
+	<field name="OBSERVACION" class="java.lang.String"/>
+	<field name="PUNTAJE" class="java.math.BigDecimal"/>
+	<field name="ETAPA" class="java.math.BigDecimal"/>
+	<field name="FECHAEVALUACION" class="java.sql.Timestamp"/>
+	<field name="SGTEETAPA" class="java.math.BigDecimal"/>
+	<field name="SGTEEVALUACION" class="java.math.BigDecimal"/>
+	<field name="SGTEFECHAEVALUACION" class="java.sql.Timestamp"/>
+	<field name="SGTEFECHAEVALUACIONHASTA" class="java.sql.Timestamp"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="DEPARTAMENTO" class="java.lang.String"/>
+	<field name="TIPOEVALUACION_ETAPA" class="java.lang.String"/>
+	<field name="SEXO" class="java.lang.String"/>
+	<field name="FECHANACIMIENTO" class="java.sql.Timestamp"/>
+	<field name="FAMILIA" class="java.lang.String"/>
+	<field name="FECHAEVALUACIONPOSTULANTE" class="java.sql.Timestamp"/>
+	<field name="HORAEVALUACION" class="java.sql.Timestamp"/>
+	<field name="EDAD" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="69" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="15" width="555" height="20" uuid="9253585f-7f44-4e2a-856a-f510ca5d59ae"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="35" width="555" height="20" backcolor="#CCCCCC" uuid="29580d26-dcfb-4af3-921d-c94c29067bc8"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="15" width="555" height="20" forecolor="#333333" uuid="62a70413-9559-40ac-b6ec-111381b543a4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PROCESO DE CONVOCATORIA " +  ( $F{PLANILLA} != null ? $F{PLANILLA} : "" ) + " N° " +  ( $F{CONVOCATORIA} != null ? $F{CONVOCATORIA} : "" )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="35" width="555" height="20" forecolor="#333333" uuid="b584a07c-14f8-4c3d-8f7b-bd17adf8e5d1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PUBLICACIÓN DEL RESULTADO DE LA " + $F{EVALUACION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="83" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="12" width="393" height="20" forecolor="#333333" uuid="16e6bbdb-b7be-42f7-92bd-aa7c970ae711"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PUESTO Y/O CARGO	: " + $F{PUESTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="32" width="393" height="20" forecolor="#333333" uuid="8c80b1d2-a223-4efa-8cf6-90749ff7a420"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["FAMILIA                              : " + $F{FAMILIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="52" width="393" height="20" forecolor="#333333" uuid="c5c044c6-4083-4672-814c-afcc3a74f752"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["UNIDAD ORGÁNICA	: " + $F{UNIDAD_ORGANICA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="55" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="11" width="224" height="30" uuid="fb41042f-21ca-4954-97eb-4769e3ecd2be"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineColor="#333333"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="224" y="11" width="32" height="30" uuid="c144d609-b66b-49ae-8697-9828f167bd78"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineColor="#333333"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="256" y="11" width="32" height="30" uuid="8451b89d-8019-4f9f-b6f7-6eea258e694a"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineColor="#333333"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="288" y="11" width="71" height="30" uuid="78713264-c1b3-4dcc-a0b0-73e1370e1240"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineColor="#333333"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="359" y="11" width="83" height="30" uuid="80eeac2a-eceb-4080-b5da-e6d44570c558"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineColor="#333333"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="442" y="11" width="113" height="30" uuid="11c43071-083a-4e27-b017-3f7da0ba629f"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineColor="#333333"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="11" width="224" height="30" forecolor="#333333" uuid="3bfa3bf4-2fbb-4cd3-b716-ed2a7d04722f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRES Y APELLIDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="223" y="11" width="33" height="30" forecolor="#333333" uuid="ac6d3fbd-ec75-44cb-9030-7fd139391e35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SEXO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="256" y="11" width="32" height="30" forecolor="#333333" uuid="f4bd4f8b-2b49-421b-9a12-7ccf3a41c193"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="288" y="11" width="71" height="30" forecolor="#333333" uuid="048ea678-7950-4f3c-9ef1-ffc54c1e8336"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA EVALUACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="359" y="11" width="83" height="30" forecolor="#333333" uuid="e78e5bec-9d14-45d4-975b-ffe6eccfb6e5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESULTADO
+APTO / NO APTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="11" width="113" height="30" forecolor="#333333" uuid="cc9836ba-4ca9-4759-9c4b-8f6700eaae51"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PUNTAJE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="46" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="12" y="10" width="198" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="6a5308b9-5929-4529-8e2e-7070cbdedf47"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="224" y="10" width="32" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="6cb0c745-498a-46f8-a966-0304dff8e3f3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SEXO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="288" y="10" width="71" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="66b7c658-b9cf-40e8-b56e-027b42f95873"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FECHAEVALUACIONPOSTULANTE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="359" y="10" width="83" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="7cf83e54-cb3a-4901-8722-031771448a79"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RESULTADO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="442" y="10" width="113" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="1b7d2816-b182-405c-9ade-5d771ca5abcc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PUNTAJE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="259" y="10" width="29" height="20" forecolor="#333333" uuid="f0a21619-1a94-453a-a130-1ba8c9936735"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EDAD}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="236" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="11" width="555" height="20" forecolor="#333333" uuid="3ef08917-7961-460d-b934-3f79d16de8c6"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[1.- La siguiente etapa del proceso se realizará de acuerdo al cronograma establecido en la convocatoria]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="14" y="47" width="58" height="21" forecolor="#333333" uuid="2ce0f2a0-adf6-4e47-8fe3-9149d1eebccf"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Etapa  : "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="68" width="58" height="21" forecolor="#333333" uuid="e865f3f1-d428-411b-9db2-1ee789094ff0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fecha  : "]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm.ss a">
+				<reportElement x="14" y="89" width="58" height="21" forecolor="#333333" uuid="e3b770c0-c147-42dc-816c-e322c1a4cfb8"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hora   : "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="110" width="58" height="21" forecolor="#333333" uuid="22a4c587-ad76-45df-8c0e-e7e9b961c5b5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Lugar  : "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="148" width="555" height="20" forecolor="#333333" uuid="52bd453b-b1f3-40d2-b623-25236de1cafe"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[2.- Los postulantes APTOS deberán presentarse a la siguiente etapa con los siguientes documentos :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="180" width="210" height="21" forecolor="#333333" uuid="441c9715-199e-47e4-ac27-cf17990e83bf"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[** Documento Nacional de Identidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="201" width="324" height="21" forecolor="#333333" uuid="9f3a59f7-b94b-4a17-9573-f9ba1ee0741b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[** Curriculum Vitae debidamente documentado en fotocopia simple]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="72" y="69" width="173" height="20" forecolor="#333333" uuid="d161cfe4-d2fd-48cb-bd27-483ad29b5462"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SGTEFECHAEVALUACION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="72" y="47" width="173" height="21" forecolor="#333333" uuid="7796e4dd-1329-4643-9651-4c57ab826118"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SGTEETAPA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="72" y="110" width="173" height="21" forecolor="#333333" uuid="ef9c0bfc-5d30-4c05-847c-043ec8ce242e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIRECCION}]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm a" isBlankWhenNull="true">
+				<reportElement x="72" y="89" width="173" height="21" forecolor="#333333" uuid="073dfebe-52d2-449b-a42e-c5e129b6ea82"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{HORAEVALUACION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="107" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="33" width="241" height="46" uuid="7f382480-ff82-4984-820c-0e79972142fe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[-----------------------------------------------
+Evaluador (Titular)]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

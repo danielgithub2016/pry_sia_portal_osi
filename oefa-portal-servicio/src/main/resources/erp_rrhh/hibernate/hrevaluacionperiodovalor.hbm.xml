@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrEvaluacionperiodovalor" table="SGCORESYS.HR_EVALUACIONPERIODOVALOR">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrEvaluacionperiodovalorPk">
+            <key-property name="secuenciaeval" type="integer">
+                <column name="SECUENCIAEVAL" length="22" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="255" />
+        </property>
+        <property name="explicacion" type="string">
+            <column name="EXPLICACION" length="255" />
+        </property>
+        <property name="valor" type="big_decimal">
+            <column name="VALOR" length="22" />
+        </property>
+        <property name="explicacion2" type="string">
+            <column name="EXPLICACION2" length="255" />
+        </property>
+    </class>
+</hibernate-mapping>

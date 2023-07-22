@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.erp.rrhh.dominio.HrCentroestudios" table="SGCORESYS.HR_CENTROESTUDIOS">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrCentroestudiosPk">
+            <key-property name="centro" type="integer">
+                <column name="CENTRO" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="200" />
+        </property>
+        <property name="unidadreplicacion" type="string">
+            <column name="UNIDADREPLICACION" length="4" />
+        </property>
+        <property name="lugar" type="string">
+            <column name="LUGAR" length="100" />
+        </property>
+        <property name="pais" type="string">
+            <column name="PAIS" length="1" />
+        </property>
+        <property name="codigopersona" type="integer">
+            <column name="CODIGOPERSONA" length="22" />
+        </property>
+        <property name="ruc" type="string">
+            <column name="RUC" length="11" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="TELEFONO" length="15" />
+        </property>
+        <property name="correoelectronico" type="string">
+            <column name="CORREOELECTRONICO" length="50" />
+        </property>
+        <property name="fax" type="string">
+            <column name="FAX" length="15" />
+        </property>
+        <property name="titulorepresentantecentro" type="string">
+            <column name="TITULOREPRESENTANTECENTRO" length="100" />
+        </property>
+        <property name="representantecentro" type="string">
+            <column name="REPRESENTANTECENTRO" length="100" />
+        </property>
+        <property name="tipodocrepresentantecentro" type="string">
+            <column name="TIPODOCREPRESENTANTECENTRO" length="2" />
+        </property>
+        <property name="documentorepresentantecentro" type="string">
+            <column name="DOCUMENTOREPRESENTANTECENTRO" length="10" />
+        </property>
+        <property name="representante" type="string">
+            <column name="REPRESENTANTE" length="50" />
+        </property>
+        <property name="representantedoc" type="string">
+            <column name="REPRESENTANTEDOC" length="20" />
+        </property>
+        <property name="cargorepresentantecentro" type="string">
+            <column name="CARGOREPRESENTANTECENTRO" length="100" />
+        </property>
+    </class>
+</hibernate-mapping>

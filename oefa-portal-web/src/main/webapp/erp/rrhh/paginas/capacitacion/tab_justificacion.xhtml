@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panel style="height:500px;">
+		<p:outputLabel
+			value="Justificación y/u Observación  del Requerimiento"
+			style="text-decoration: underline;" />
+
+		<h:panelGrid width="100%" style="margin-top: 30px;">
+
+			<p:outputLabel value="1. Justificación"
+				styleClass="oefa-required" />
+			<p:inputTextarea
+				style="width: 600px;min-width:600px;max-width:600px;height: 100px;min-height: 100px;max-height: 100px;margin-bottom: 20px;" />
+
+			<p:outputLabel value="2. Observación" />
+			<p:inputTextarea
+				style="width: 600px;min-width:600px;max-width:600px;height: 100px;min-height: 100px;max-height: 100px;" />
+
+		</h:panelGrid>
+	</p:panel>
+
+</ui:composition>

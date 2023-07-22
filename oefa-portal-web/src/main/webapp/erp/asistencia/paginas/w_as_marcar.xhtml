@@ -1,0 +1,141 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+
+	<ui:define name="title">
+		<h2>Marcación de Asistencia</h2>
+	</ui:define>
+
+
+	<ui:define name="content">
+
+
+		<script>
+			window.onload = clock;
+		</script>
+
+		<h:form id="idwasmarcar">
+			<p:growl autoUpdate="true" life="#{msg.generico_tiempo_growl}"></p:growl>
+			<p:remoteCommand rendered="#{!cwAsMarcar.inicializar}" autoRun="true"
+				oncomplete="PF('popMsjNoCarnet').show()" update=":dgMsjNoCarnet" />
+
+			<p:panel header="#{msg.marcar_header}" style="max-width:1000px">
+				<p:panelGrid columns="4" layout="grid"
+					columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-2,ui-grid-col-2"
+					styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Nombre de Usuario" />
+					<p:inputText value="#{cwAsMarcar.dw_1.nombreEmpleado}"
+						disabled="true" />
+					<p:outputLabel value="Fecha / Hora (aaaa/mm/dd hh:mm:ss)" />
+					<p:inputText disabled="true" id="relojito"
+						value="#{cwAsMarcar.horaServidor}" />
+					<p:outputLabel value="Tarjeta" />
+					<p:inputText value="#{cwAsMarcar.dw_1.carnetid}" disabled="true" />
+					<p:outputLabel value="Tipo" />
+					<p:selectOneMenu value="#{cwAsMarcar.dw_1.lugarrecoleccion}">
+						<f:selectItem itemLabel="Entrada" itemValue="E" />
+						<f:selectItem itemLabel="Salida" itemValue="S" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+			</p:panel>
+
+			<p:panelGrid columns="3" layout="grid"
+				styleClass="ui-panelgrid-blank" style="max-width:1000px"
+				columnClasses="ui-grid-col-8,ui-grid-col-2,ui-grid-col-2">
+				<p:spacer />
+				<p:commandButton value="Marcar" icon="aceptar"
+					styleClass="botonTextoImagen" onstart="PF('bUI').block();"
+					oncomplete="PF('bUI').unblock();"
+					action="#{cwAsMarcar.objectStartEvent('cb_aceptar_clicked')}"
+					update=":idwasmarcar:tblregistros">
+					<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+						icon="alerta" message="¿Está seguro de marcar?" />
+				</p:commandButton>
+				<p:button value="Cancelar" styleClass="botonTextoImagen"
+					icon="cancelar" outcome="pantallaBienvenida" />
+			</p:panelGrid>
+
+
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				id="tblregistros" paginator="true" paginatorPosition="bottom"
+				value="#{cwAsMarcar.dw_2}" var="lst" rows="15" reflow="true"
+				rowKey="#{lst.carnetid}" style="max-width:1000px"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+				<p:column headerText="Fecha / Hora" style="text-align: center;">
+					<h:outputText value="#{lst.pk.fecha}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Tipo" style="text-align: center;">
+					<h:outputText
+						value="#{lst.lugarrecoleccion.equals('E')?'Entrada':'Salida'}" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+
+		<p:confirmDialog appendTo="@(body)" closeOnEscape="false"
+			responsive="true" id="dgMsjNoCarnet" widgetVar="popMsjNoCarnet"
+			closable="false" header="Mensaje" showEffect="size"
+			message="#{cwAsMarcar.errorMsj}" hideEffect="size">
+			<p:button value="Aceptar" icon="aceptar" outcome="pantallaBienvenida" />
+		</p:confirmDialog>
+
+		<p:confirmDialog appendTo="@(body)" closeOnEscape="false"
+			responsive="true" id="dgExito" widgetVar="popExito" closable="false"
+			header="Mensaje de Confirmación" showEffect="size"
+			message="#{cwAsMarcar.mensaje}" hideEffect="size">
+			<p:commandButton value="Aceptar" icon="aceptar"
+				onclick="PF('popExito').hide()" />
+		</p:confirmDialog>
+
+		<p:dialog appendTo="@(body)" responsive="true"
+			styleClass="contenedorPrincipalExtraChico" id="dgMsgIngresoIcono"
+			widgetVar="popMsgIngresoIcono" modal="true"
+			header="Mensaje de alerta" resizable="false">
+			<p:panelGrid columns="1" layout="grid"
+				styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-12">
+
+				<p>Para realizar su marcación, bajo la modalidad de trabajo presencial, 
+				   deberá ingresar a través del ícono "Marcación SIA Web", ubicado en 
+				   el escritorio de la PC del OEFA.</p>
+
+				<p:graphicImage style="width:360px"
+					value="/comun/recursos/imagenes/sistema/icono_marcacion_pc_oefa.png" />
+
+				<p:button value="Cerrar" outcome="pantallaLogin" />
+
+			</p:panelGrid>
+		</p:dialog>
+
+
+		<p:dialog appendTo="@(body)" responsive="true"
+			styleClass="contenedorPrincipalExtraChico" id="dgMsgIngresoPCOefa"
+			widgetVar="popMsgIngresoPCOefa" modal="true"
+			header="Mensaje de alerta" resizable="false">
+			<p:panelGrid columns="1" layout="grid"
+				styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-12">
+
+				<p>Para marcar durante labores presenciales, debe generar la
+					marcación desde una PC ubicada fìsicamente en el OEFA</p>
+
+				<p:button value="Cerrar" outcome="pantallaLogin" />
+
+			</p:panelGrid>
+		</p:dialog>
+
+
+
+
+
+	</ui:define>
+</ui:composition>

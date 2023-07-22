@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : sistema.SyCampocalculado
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="sycampocalculado.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+    </sql-query>
+    
+    <!-- syfinan.dw_wh_importacion_select_bl -->
+	<sql-query name="sycampocalculado.DwWhImportacionSelectBl">
+			SELECT 
+		         WH_BILLOFLADING.COMPANIASOCIO as "companiasocio",   
+		         WH_BILLOFLADING.BLNUMERO as "blnumero",   
+		         WH_BILLOFLADING.TRANSPORTEDOCUMENTO as "transportedocumento",   
+		         WH_BILLOFLADING.EXPORTADORDOCUMENTO as "exportadordocumento",   
+		         SY_CAMPOCALCULADO.MONTO01 as "monto01",   
+		         SY_CAMPOCALCULADO.MONTO02 as "monto02",  
+		         cast('N' as varchar2(1)) as "seleccion",
+		         sum(AP_Documentos.MontoTotal) as "montototal",   
+		         sum(MontoFlete) as "montoflete",
+        		 sum( MontoFlete + AP_Documentos.MontoTotal) as "sumatotal",
+		         rownum as "rowkey"
+		    FROM sgcoresys.WH_BILLOFLADING,   
+		         sgcoresys.WH_BILLOFLADINGDETALLE,   
+		         sgcoresys.AP_DOCUMENTOS,   
+		         sgcoresys.WH_IMPORTACION,   
+		         sgcoresys.SY_CAMPOCALCULADO  
+		   WHERE ( WH_BILLOFLADINGDETALLE.COMPANIASOCIO = WH_BILLOFLADING.COMPANIASOCIO ) and  
+		         ( WH_BILLOFLADINGDETALLE.BLNUMERO = WH_BILLOFLADING.BLNUMERO )          and  
+		         ( WH_BILLOFLADINGDETALLE.DOCUMENTOCLASIFICACION = AP_DOCUMENTOS.DOCUMENTOCLASIFICACION ) and  
+		         ( WH_BILLOFLADINGDETALLE.DOCUMENTOCLASIFICACION = AP_DOCUMENTOS.DOCUMENTOCLASIFICACION )   and  
+		         ( WH_BILLOFLADINGDETALLE.DOCUMENTOREFERENCIA = AP_DOCUMENTOS.DOCUMENTOREFERENCIA ) and
+		         ( WH_BILLOFLADING.COMPANIASOCIO = WH_IMPORTACION.COMPANIASOCIO )   and
+		         ( WH_BILLOFLADINGDETALLE.PROVEEDOR = AP_DOCUMENTOS.PROVEEDOR ) and
+		         ( WH_BILLOFLADINGDETALLE.PROVEEDOR = AP_DOCUMENTOS.PROVEEDOR ) and  
+		         ( WH_IMPORTACION.CARPETANUMERO = AP_DOCUMENTOS.REFERENCIANUMERODOCUMENTO ) and  
+		         ( ( WH_BillofLading.CompaniaSocio = :companiasocio  ) AND
+		         ( SY_CampoCalculado.RegistroNumero = 1 ) AND  
+		         ( WH_BillofLading.Estado = 'AP' ) AND  
+		         ( WH_Importacion.Estado = 'AP' ) )
+		       GROUP BY WH_BILLOFLADING.COMPANIASOCIO, 
+		         WH_BILLOFLADING.BLNUMERO,   
+		         WH_BILLOFLADING.EXPORTADORDOCUMENTO,   
+		         WH_BILLOFLADING.TRANSPORTEDOCUMENTO,   
+		         SY_CAMPOCALCULADO.MONTO01,   
+		         SY_CAMPOCALCULADO.MONTO02,
+		         rownum
+	</sql-query>
+    
+    <sql-query name="sycampocalculado.DwBuBudgetValidationDetail">
+	 select sy_campocalculado.monto01 as "monto01",   
+     sy_campocalculado.monto02 as "monto02",   
+     sy_campocalculado.monto03 as "monto03",   
+     sy_campocalculado.monto04 as "monto04",   
+     sy_campocalculado.monto05 as "monto05",   
+     sy_campocalculado.monto06 as "monto06",   
+     sy_campocalculado.flag01 as "flag01",   
+     sy_campocalculado.monto07 as "monto07",   
+     sy_campocalculado.monto08 as "monto08",   
+     sy_campocalculado.monto09 as "monto09",   
+     sy_campocalculado.monto10 as "monto10",   
+     sy_campocalculado.descripcion01 as "descripcion01",   
+     sy_campocalculado.descripcion02 as "descripcion02",   
+     sy_campocalculado.descripcion03 as "descripcion03",   
+     bu_controlpresupuestal_distrib.centrocosto as "centrocosto",   
+     bu_controlpresupuestal_distrib.cuentacontable as "cuentacontable",   
+     bu_controlpresupuestal_distrib.proyecto as "proyecto",   
+     bu_controlpresupuestal_distrib.camporeferencia as"camporeferencia",   
+     bu_controlpresupuestal_distrib.sucursal as "sucursal",   
+     bu_controlpresupuestal_distrib.monto as "monto",   
+     bu_controlpresupuestal_distrib.companiasocio as "companiasocio",   
+     sy_campocalculado.codigo01 as "codigo01",   
+     bu_controlpresupuestal_distrib.referenciafiscal01 as "referenciafiscal01",   
+     bu_controlpresupuestal_distrib.referenciafiscal02 as "referenciafiscal02",   
+     bu_controlpresupuestal_distrib.referenciafiscal03 as "referenciafiscal03",   
+     sy_campocalculado.codigo02 as "codigo02",   
+     sy_campocalculado.flag02 as "flag02" 
+    FROM SGCORESYS.BU_CONTROLPRESUPUESTAL_DISTRIB,   
+         SGCORESYS.SY_CAMPOCALCULADO  
+   WHERE ( SY_CampoCalculado.RegistroNumero = 1 )    
+	</sql-query>
+    
+</hibernate-mapping>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Dw_formato_detalle_3" language="groovy" pageWidth="555" pageHeight="90" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="038e57db-ceda-4caf-ba62-390db15fd472">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="as_tipo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="as_puesto" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Fabrica\\Desarrollo\\DesarrolloProductos\\OEFAMIGRA\\oefa-portal-web\\src\\main\\webapp\\erp\\rrhh\\recursos\\reportes\\formatos\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT	HR_FactoresEvaluacion.Area,
+         HR_FactoresEvaluacion.Descripcion,
+         HR_FactoresEvaluacion.valorrequerido,
+			(select min(a.Valor) from SGCORESYS.hr_factorvalor a where a.factor = HR_FactoresEvaluacion.Factor) as valor,
+			(select max(a.Valorhasta) from SGCORESYS.hr_factorvalor a where a.factor = HR_FactoresEvaluacion.Factor) as valorhasta,
+			HR_FactoresEvaluacion.flagcalificacion, HR_FactoresEvaluacion.factor
+    FROM SGCORESYS.HR_FactoresEvaluacion,SGCORESYS.HR_FactoresEvaluacionPlantilla
+	 WHERE HR_FactoresEvaluacion.PLANTILLA  = HR_FactoresEvaluacionPlantilla.PLANTILLA
+			AND  HR_FactoresEvaluacionPlantilla.TipoPlantilla =$P{as_tipo} /* S :as_tipo*/
+			AND   HR_FactoresEvaluacionPlantilla.CodigoPuesto = $P{as_puesto}  /* 0 :an_puesto*/]]>
+	</queryString>
+	<field name="AREA" class="java.lang.String"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="VALORREQUERIDO" class="java.math.BigDecimal"/>
+	<field name="VALOR" class="java.math.BigDecimal"/>
+	<field name="VALORHASTA" class="java.math.BigDecimal"/>
+	<field name="FLAGCALIFICACION" class="java.lang.String"/>
+	<field name="FACTOR" class="java.math.BigDecimal"/>
+	<title>
+		<band height="90">
+			<staticText>
+				<reportElement x="0" y="2" width="162" height="18" uuid="91dd5a2d-2baf-44cf-be75-4ebe59460f83"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[           Competencias:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="177" y="0" width="378" height="20" uuid="7c3a268d-31d9-4261-8bfd-eebd72f9eaa7"/>
+				<subreportParameter name="as_tipo">
+					<subreportParameterExpression><![CDATA[$P{as_tipo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="as_puesto">
+					<subreportParameterExpression><![CDATA[$P{as_puesto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Dw_Formato_detalleXdetalle_2.jasper"]]></subreportExpression>
+			</subreport>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="555" height="90" uuid="fedb4f0f-34c1-4a23-b361-eb10f2783df4"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="167" height="90" uuid="ac3b7ea4-613a-467f-aaa7-cfbfee252eef"/>
+			</rectangle>
+		</band>
+	</title>
+</jasperReport>

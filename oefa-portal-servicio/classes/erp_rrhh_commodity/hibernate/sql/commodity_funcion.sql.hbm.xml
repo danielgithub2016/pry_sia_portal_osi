@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="commodity.FNombreNivelServicio">
+    <![CDATA[
+	    select
+			DESCRIPCION as "descripcionlocal"
+			from SGCORESYS.bu_nivelserviciomst
+			where COMPANIASOCIO = :par_compania and tiposervicio = 'RH' and NIVELSERVICIO = :par_nivel
+    ]]>
+	</sql-query>
+
+
+</hibernate-mapping>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.asistencia.dominio.AsPeriodo" table="SGCORESYS.AS_PERIODO">
+        <composite-id name="pk" class="net.royal.erp.asistencia.dominio.AsPeriodoPk">
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="fechadesde" type="timestamp">
+            <column name="FECHADESDE" length="7" />
+        </property>
+        <property name="tipo" type="string">
+            <column name="TIPO" length="3" />
+        </property>
+        <property name="fechahasta" type="timestamp">
+            <column name="FECHAHASTA" length="7" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="50" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="estadoprog" type="string">
+            <column name="ESTADO_PROG" length="1" />
+        </property>
+        <property name="periodoplanilla" type="string">
+            <column name="PERIODOPLANILLA" length="8" />
+        </property>
+        <property name="tipoplanilla" type="string">
+            <column name="TIPOPLANILLA" length="2" />
+        </property>
+        <property name="tipoproceso" type="string">
+            <column name="TIPOPROCESO" length="255" />
+        </property>
+        <property name="flagtipoproceso" type="string">
+            <column name="FLAGTIPOPROCESO" length="1" />
+        </property>
+        <property name="fechadesdertps" type="timestamp">
+            <column name="FECHADESDERTPS" length="7" />
+        </property>
+        <property name="fechahastartps" type="timestamp">
+            <column name="FECHAHASTARTPS" length="7" />
+        </property>
+        <property name="flagingresoautorizaciones" type="string">
+            <column name="FLAGINGRESOAUTORIZACIONES" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

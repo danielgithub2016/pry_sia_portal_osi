@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panel>
+		<p:panelGrid columns="3" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-5,ui-grid-col-2,ui-grid-col-2"
+			layout="grid" styleClass="ui-panelgrid-blank">
+			<h:outputLabel
+				value="Porcentajes de tiempos establecidos en cada lugar como condición de trabajo"
+				style="font-size:11px; font-family:Open sans,sans-serif; font-weight: bold" />
+
+			<p:commandButton value="Agregar" icon="nuevo" />
+
+			<p:commandButton value="Eliminar" icon="eliminar" />
+		</p:panelGrid>
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			paginator="true" paginatorPosition="bottom" scrollHeight="250"
+			reflow="true" scrollable="true" var="p"
+			rowStyleClass="#{list.estilo}"
+			value="#{cwHrPuestosEdit.dw_condiciones_trabajo}"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+			<p:column headerText="Tipo Condición" width="150">
+				<h:outputText value="#{p.auxDescripcionlocal}" />
+			</p:column>
+
+			<p:column headerText="Porcentaje" width="50">
+				<h:outputText value="#{p.porcentaje}" />
+			</p:column>
+
+
+		</p:dataTable>
+
+
+	</p:panel>
+
+
+
+</ui:composition>

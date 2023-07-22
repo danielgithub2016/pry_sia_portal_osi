@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_pr_boleta_pago_print_libre_user_detalle_2" language="groovy" pageWidth="595" pageHeight="60" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="76b1402e-f3b0-4ef9-b1a9-63aeaf04a374">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="empleado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="periodo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="proceso" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="planilla" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="compania" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT PR_Concepto.Concepto,
+            PR_PlanillaEmpleadoConcepto.Monto,
+         PR_PlanillaEmpleadoConcepto.Cantidad,
+         PR_PlanillaEmpleadoConcepto.Saldo,
+            PR_Concepto.TipoConcepto,
+            PR_Concepto.PlanillaOrden,
+            PR_Concepto.TextoImpresion
+    FROM SGCORESYS.PR_Concepto,
+            SGCORESYS.PR_PlanillaEmpleadoConcepto
+   WHERE ( PR_Concepto.Concepto = PR_PlanillaEmpleadoConcepto.Concepto ) and
+         ( PR_PlanillaEmpleadoConcepto.Periodo = $P{periodo}) AND
+         ( PR_PlanillaEmpleadoConcepto.TipoProceso = $P{proceso}) and
+         ( PR_PlanillaEmpleadoConcepto.TipoPlanilla = $P{planilla} ) and
+            ( PR_PlanillaEmpleadoConcepto.Empleado = $P{empleado}) and
+            ( PR_PlanillaEmpleadoConcepto.CompaniaSocio = $P{compania}) and
+            ( PR_Concepto.TipoConcepto ='PA') and
+            (PR_PlanillaEmpleadoConcepto.Monto <> 0 OR PlanillaOrden < 0 or PR_PlanillaEmpleadoConcepto.Saldo>0)
+    ORDER BY PR_Concepto.TipoConcepto DESC,PR_Concepto.PlanillaOrden]]>
+	</queryString>
+	<field name="CONCEPTO" class="java.lang.String"/>
+	<field name="MONTO" class="java.lang.Double"/>
+	<field name="CANTIDAD" class="java.lang.Double"/>
+	<field name="SALDO" class="java.math.BigDecimal"/>
+	<field name="TIPOCONCEPTO" class="java.lang.String"/>
+	<field name="PLANILLAORDEN" class="java.math.BigDecimal"/>
+	<field name="TEXTOIMPRESION" class="java.lang.String"/>
+	<summary>
+		<band height="60" splitType="Stretch">
+			<crosstab>
+				<reportElement x="0" y="0" width="595" height="60" uuid="f28fb271-3b1b-4e73-aa07-f4d7bc429753"/>
+				<rowGroup name="TIPOCONCEPTO" width="0" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{TIPOCONCEPTO}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#FFBFBF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="TEXTOIMPRESION" height="23" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{TEXTOIMPRESION}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="159" height="23" uuid="41fcfa4c-f236-4130-a9c1-d0d01eadc6f4"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{TEXTOIMPRESION}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="113" height="23" uuid="f206fe00-7072-426f-9679-e7316b69462c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[TOTAL]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="MONTOMeasure" class="java.lang.Double" calculation="Sum">
+					<measureExpression><![CDATA[$F{MONTO}]]></measureExpression>
+				</measure>
+				<crosstabCell width="159" height="25">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="159" height="18" uuid="3e25447f-d7d0-4ee9-887f-399b9a09a80d"/>
+							<textFieldExpression><![CDATA[$V{MONTOMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="159" height="0" rowTotalGroup="TIPOCONCEPTO">
+					<cellContents backcolor="#FFBFBF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="113" columnTotalGroup="TEXTOIMPRESION">
+					<cellContents backcolor="#FFFFFF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="113" height="18" uuid="61052e48-5bb3-4d51-8855-a21a16d72228"/>
+							<textFieldExpression><![CDATA[$V{MONTOMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="113" height="0" rowTotalGroup="TIPOCONCEPTO" columnTotalGroup="TEXTOIMPRESION">
+					<cellContents backcolor="#FFBFBF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

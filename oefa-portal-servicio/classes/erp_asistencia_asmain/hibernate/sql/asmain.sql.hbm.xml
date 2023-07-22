@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : asmain.w_as_vacacionesutilizacion_rpt2 -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<!-- asmain.dw_as_autorizacion_preproceso_hextra -->
+	<sql-query name="asmain.DwAsAutorizacionPreprocesoHextra">
+    <![CDATA[
+    	SELECT 
+    			cast(ROW_NUMBER() OVER(order by as_autorizacion.empleado) as integer) AS "secuencia",
+    			cast('N' as varchar(1)) AS "seleccionado", 
+				as_autorizacion.empleado as "empleado",
+                cast('N' as varchar(1)) AS "seleccionadoRechazo", 
+                as_autorizacion.fecha as "fecha",
+                as_autorizacion.fechafin as "fechafin", 
+                as_autorizacion.conceptoacceso as "conceptoacceso",
+                (SELECT AS_ConceptoAcceso.DescripcionLocal FROM sgcoresys.AS_ConceptoAcceso
+                 WHERE AS_ConceptoAcceso.Estado = 'A'
+                 AND as_autorizacion.conceptoacceso = 
+                 AS_ConceptoAcceso.conceptoacceso) as "conceptoaccesonombre",
+                as_autorizacion.tipohorario as "tipohorario",
+                cast(as_autorizacion.flagreprogramado as varchar(1)) as "flagreprogramado",
+                MAX
+                   (CASE
+                       WHEN sobretiempoposicion = 1
+                          THEN as_autorizacion.desde
+                       ELSE NULL
+                    END
+                   ) AS "desde1",
+                MAX
+                   (CASE
+                       WHEN sobretiempoposicion = 1
+                          THEN as_autorizacion.hasta
+                       ELSE NULL
+                    END
+                   ) AS "hasta1",
+                MAX
+                   (CASE
+                       WHEN sobretiempoposicion = 2
+                          THEN as_autorizacion.desde
+                       ELSE NULL
+                    END
+                   ) AS "desde2",
+                MAX
+                   (CASE
+                       WHEN sobretiempoposicion = 2
+                          THEN as_autorizacion.hasta
+                       ELSE NULL
+                    END
+                   ) AS "hasta2",
+                MAX (as_autorizacion.autorizadopor) as "autorizadoPor",
+                MAX (fechaautorizacion) AS "fechaAutorizado",
+                MAX (as_autorizacion.ultimafechamodif) as "ultimafechaModif",
+                MAX (as_autorizacion.ultimousuario) as "ultimoUsuario",
+                MAX (personamast.nombrecompleto) as "nombrecompleto",
+                MAX (personamast.documento) as "documento",
+                MAX (empleadomast.estadoempleado) as "estadoempleado",
+                MAX (as_autorizacion.estado) as "estado",
+                MAX (as_autorizacion.refrigerio) as "refrigerio",
+                MAX (as_autorizacion.mandatorio) as "mandatorio",
+                MAX (as_autorizacion.observacion) as "observacion", 
+                periodo as "periodo",
+                MAX (solicitadopor) AS "solicitadoPor",
+                MAX (fechasolicitud) AS "fechaSolicitud",
+                MAX (visadopor) AS "visadoPor", 
+                MAX (fechavisado) AS "fechaVisado",
+                MAX (as_autorizacion.estado) AS "estadoautorizacion", 
+                categoriaautorizacion AS "categoriaAutorizacion",
+                (SELECT a.nombre
+                   FROM SGCORESYS.as_area a
+                  WHERE a.area = as_carnetidentificacion.area) AS "areaNombre",
+                to_char(empleadomast.fechaingreso,'dd/MM/yyyy') as "fechaingreso",
+                empleadomast.companiasocio as "companiaSocio",
+                empleadomast.tipoplanilla as "tipoplanilla",
+                empleadomast.departamentooperacional as "departamentoOperacional",
+                (SELECT cc.localname
+                   FROM SGCORESYS.ac_costcentermst cc
+                  WHERE cc.costcenter =
+                                  empleadomast.centrocostos)
+                                                            AS "centrocostodes",
+                (SELECT o.descripcionlocal
+                   FROM SGCORESYS.ac_sucursal o
+                  WHERE o.sucursal = empleadomast.sucursal) AS "oficinades",
+                (SELECT cat.descripcionlocal
+                   FROM SGCORESYS.hr_cargosmast cat
+                  WHERE cat.cargo = empleadomast.cargo) AS "categoriades",
+                (SELECT tp.descripcion
+                   FROM SGCORESYS.pr_tipoplanilla tp
+                  WHERE tp.tipoplanilla =
+                                 empleadomast.tipoplanilla)
+                                                           AS "tipoplanillades",
+                CASE
+                   WHEN empleadomast.centrocostos IN (
+                                     SELECT cdc.costcenter
+                                       FROM SGCORESYS.ac_costcentermst cdc
+                                      WHERE cdc.status = 'A')
+                      THEN NULL
+                   ELSE (SELECT cc.localname
+                           FROM SGCORESYS.ac_costcentermst cc
+                          WHERE cc.costcenter = empleadomast.centrocostos)
+                END AS "divisiondes",
+                (SELECT p.descripcion
+                   FROM SGCORESYS.hr_puestoempresa p
+                  WHERE p.codigopuesto = empleadomast.codigocargo) AS "puestodes",
+                MAX (empleadomast.estado) as "estadoai", 
+                as_autorizacion.terminal as "terminal",
+                as_autorizacion.NroResolucion as "nroresolucion",
+                as_autorizacion.FECHARESOLUCION as "fecharesolucion",
+                as_autorizacion.x_desc_orig_as_fp as "rutadocumento",
+                as_autorizacion.X_DIGITAL_AS_FP as "uuidalfrescoweb",
+                as_autorizacion.TIPOAUTORIZACION as "tipoautorizacion",
+                as_autorizacion.X_DIGITAL_AS_FP as "uuidalfresco",
+                empleadomast.codigousuario as "codigoUsuario",
+             	cast('N' as varchar(1)) as "isadminapro",
+             	as_autorizacion.flagAprobadoJefe as "flagAprobadoJefe",
+             	(select flagAprobacionURH FROM sgcoresys.AS_ConceptoAcceso
+                 WHERE AS_ConceptoAcceso.Estado = 'A'
+                 AND as_autorizacion.conceptoacceso = 
+                 AS_ConceptoAcceso.conceptoacceso) as "flagAprobacionURH",
+                 ca.flagaprobacionsst as "flagaprobacionsst",
+                 as_autorizacion.fechaAprobadoJefe as "fechaAprobadoJefe",
+                 as_autorizacion.aprobadoJefePor as "aprobadoJefePor",
+                 as_autorizacion.desdeanterior as "desdeanterior", 
+                 as_autorizacion.fechaanterior as "fechaanterior",
+                 as_autorizacion.DESDERECUPERA as "desderecupera",
+				 as_autorizacion.HASTARECUPERA as "hastarecupera",
+                 ca.diascompensa as "diascompensa"
+           FROM SGCORESYS.as_autorizacion,
+                SGCORESYS.empleadomast,
+                SGCORESYS.personamast,
+                SGCORESYS.as_carnetidentificacion,
+                SGCORESYS.as_conceptoacceso ca
+          WHERE 
+                (as_autorizacion.conceptoacceso = ca.conceptoacceso)
+            AND (as_autorizacion.empleado = empleadomast.empleado)
+             AND (as_autorizacion.categoriaautorizacion<>'PSIG')
+            AND (empleadomast.empleado = personamast.persona)
+            AND (empleadomast.locaciondepago = :p_locacion OR :p_locacion = 'S')
+            AND (personamast.persona = as_carnetidentificacion.empleado)
+        	AND (( ((as_autorizacion.fecha BETWEEN to_date(:p_fechadesde,'dd/MM/yyyy') AND to_date(:p_fechahasta,'dd/MM/yyyy')
+                     ) OR
+                   (as_autorizacion.fechafin BETWEEN to_date(:p_fechadesde,'dd/MM/yyyy') AND to_date(:p_fechahasta,'dd/MM/yyyy')
+                     ))
+                  OR :p_flagfiltroperiodo = 'N'
+                 )
+                )
+            AND (empleadomast.empleado IN (
+                                   SELECT as_empleados_autorizados.empleado
+                                     FROM SGCORESYS.as_empleados_autorizados
+                                    WHERE as_empleados_autorizados.SID =
+                                                                       :p_an_sid)
+                  OR EmpleadoMast.empleado in(
+                                 select EmpleadoResponsable
+                                 from sgcoresys.AS_AREA
+                                 where EmpleadoAprobador = CASE :p_flagaprobacion WHEN 'S' THEN :p_empleadoaprobador ELSE 0 END
+                                 UNION
+                                 select EmpleadoResponsable2
+                                 from  sgcoresys.AS_AREA
+                                 where EmpleadoAprobador2 = CASE :p_flagaprobacion WHEN 'S' THEN :p_empleadoaprobador ELSE 0 END
+                                 UNION
+                                 select EmpleadoResponsable3
+                                 from  sgcoresys.AS_AREA
+                                 where EmpleadoAprobador3 = CASE :p_flagaprobacion WHEN 'S' THEN :p_empleadoaprobador ELSE 0 END
+                                 UNION
+                                 select EmpleadoResponsable4
+                                 from  sgcoresys.AS_AREA
+                                 where EmpleadoAprobador4 = CASE :p_flagaprobacion WHEN 'S' THEN :p_empleadoaprobador ELSE 0 END
+                                )
+                                
+                                    or (:p_usuario in (select usuario from sgcoresys.seguridadperfilusuario where 
+                               perfil = 'AS21') and as_autorizacion.conceptoacceso = '101' )
+                               
+                                    or (:p_usuario in (select usuario from sgcoresys.seguridadperfilusuario where 
+                               perfil = 'AS09') and as_autorizacion.conceptoacceso = '34' )
+                               
+                               or (:p_usuario in (select usuario from sgcoresys.seguridadperfilusuario where 
+                               perfil = 'AS19') and ca.flagaprobacionsst = 'S' )
+                )
+                 ]]>
+	</sql-query>
+
+	<sql-query name="asmain.DwAsAutorizacionPreprocesoHextraSIGED">
+    <![CDATA[
+    	SELECT 
+    			cast(ROW_NUMBER() OVER(order by as_autorizacion.empleado) as integer) AS "secuencia",
+    			cast('N' as varchar(1)) AS "seleccionado", 
+				as_autorizacion.empleado as "empleado",
+                cast('N' as varchar(1)) AS "seleccionadoRechazo", 
+                as_autorizacion.fecha as "fecha",
+                as_autorizacion.fechafin as "fechafin", 
+                as_autorizacion.conceptoacceso as "conceptoacceso",
+                (SELECT AS_ConceptoAcceso.DescripcionLocal FROM sgcoresys.AS_ConceptoAcceso
+                 WHERE AS_ConceptoAcceso.Estado = 'A'
+                 AND as_autorizacion.conceptoacceso = 
+                 AS_ConceptoAcceso.conceptoacceso) as "conceptoaccesonombre",
+                as_autorizacion.tipohorario as "tipohorario",
+                cast(as_autorizacion.flagreprogramado as varchar(1)) as "flagreprogramado",
+                MAX
+                   (CASE
+                       WHEN sobretiempoposicion = 1
+                          THEN as_autorizacion.desde
+                       ELSE NULL
+                    END
+                   ) AS "desde1",
+                MAX
+                   (CASE
+                       WHEN sobretiempoposicion = 1
+                          THEN as_autorizacion.hasta
+                       ELSE NULL
+                    END
+                   ) AS "hasta1",
+                MAX
+                   (CASE
+                       WHEN sobretiempoposicion = 2
+                          THEN as_autorizacion.desde
+                       ELSE NULL
+                    END
+                   ) AS "desde2",
+                MAX
+                   (CASE
+                       WHEN sobretiempoposicion = 2
+                          THEN as_autorizacion.hasta
+                       ELSE NULL
+                    END
+                   ) AS "hasta2",
+                MAX (as_autorizacion.autorizadopor) as "autorizadoPor",
+                MAX (fechaautorizacion) AS "fechaAutorizado",
+                MAX (as_autorizacion.ultimafechamodif) as "ultimafechaModif",
+                MAX (as_autorizacion.ultimousuario) as "ultimoUsuario",
+                MAX (personamast.nombrecompleto) as "nombrecompleto",
+                MAX (empleadomast.estadoempleado) as "estadoempleado",
+                MAX (as_autorizacion.estado) as "estado",
+                MAX (as_autorizacion.refrigerio) as "refrigerio",
+                MAX (as_autorizacion.mandatorio) as "mandatorio",
+                MAX (as_autorizacion.observacion) as "observacion", 
+                periodo as "periodo",
+                MAX (solicitadopor) AS "solicitadoPor",
+                MAX (fechasolicitud) AS "fechaSolicitud",
+                MAX (visadopor) AS "visadoPor", 
+                MAX (fechavisado) AS "fechaVisado",
+                MAX (as_autorizacion.estado) AS "estadoautorizacion", 
+                categoriaautorizacion AS "categoriaAutorizacion",
+                (SELECT a.nombre
+                   FROM SGCORESYS.as_area a
+                  WHERE a.area = as_carnetidentificacion.area) AS "areaNombre",
+                empleadomast.companiasocio as "companiaSocio",
+                empleadomast.tipoplanilla as "tipoplanilla",
+                empleadomast.departamentooperacional as "departamentoOperacional",
+                (SELECT cc.localname
+                   FROM SGCORESYS.ac_costcentermst cc
+                  WHERE cc.costcenter =
+                                  empleadomast.centrocostos)
+                                                            AS "centrocostodes",
+                (SELECT o.descripcionlocal
+                   FROM SGCORESYS.ac_sucursal o
+                  WHERE o.sucursal = empleadomast.sucursal) AS "oficinades",
+                (SELECT cat.descripcionlocal
+                   FROM SGCORESYS.hr_cargosmast cat
+                  WHERE cat.cargo = empleadomast.cargo) AS "categoriades",
+                (SELECT tp.descripcion
+                   FROM SGCORESYS.pr_tipoplanilla tp
+                  WHERE tp.tipoplanilla =
+                                 empleadomast.tipoplanilla)
+                                                           AS "tipoplanillades",
+                CASE
+                   WHEN empleadomast.centrocostos IN (
+                                     SELECT cdc.costcenter
+                                       FROM SGCORESYS.ac_costcentermst cdc
+                                      WHERE cdc.status = 'A')
+                      THEN NULL
+                   ELSE (SELECT cc.localname
+                           FROM SGCORESYS.ac_costcentermst cc
+                          WHERE cc.costcenter = empleadomast.centrocostos)
+                END AS "divisiondes",
+                (SELECT p.descripcion
+                   FROM SGCORESYS.hr_puestoempresa p
+                  WHERE p.codigopuesto = empleadomast.codigocargo) AS "puestodes",
+                MAX (empleadomast.estado) as "estadoai", 
+                as_autorizacion.terminal as "terminal",
+                as_autorizacion.NroResolucion as "nroresolucion",
+                as_autorizacion.FECHARESOLUCION as "fecharesolucion",
+                as_autorizacion.x_desc_orig_as_fp as "rutadocumento",
+                as_autorizacion.X_DIGITAL_AS_FP as "uuidalfrescoweb",
+                as_autorizacion.TIPOAUTORIZACION as "tipoautorizacion",
+                as_autorizacion.X_DIGITAL_AS_FP as "uuidalfresco",
+                empleadomast.codigousuario as "codigoUsuario",
+             	cast('N' as varchar(1)) as "isadminapro",
+             	as_autorizacion.flagAprobadoJefe as "flagAprobadoJefe",
+             	(select flagAprobacionURH FROM sgcoresys.AS_ConceptoAcceso
+                 WHERE AS_ConceptoAcceso.Estado = 'A'
+                 AND as_autorizacion.conceptoacceso = 
+                 AS_ConceptoAcceso.conceptoacceso) as "flagAprobacionURH",
+                 as_autorizacion.fechaAprobadoJefe as "fechaAprobadoJefe",
+                 as_autorizacion.aprobadoJefePor as "aprobadoJefePor",
+                 as_autorizacion.desdeanterior as "desdeanterior", 
+                 as_autorizacion.fechaanterior as "fechaanterior",
+                 as_autorizacion.DESDERECUPERA as "desderecupera",
+				 as_autorizacion.HASTARECUPERA as "hastarecupera",
+                 ca.diascompensa as "diascompensa"
+           FROM SGCORESYS.as_autorizacion,
+                SGCORESYS.empleadomast,
+                SGCORESYS.personamast,
+                SGCORESYS.as_carnetidentificacion,
+                SGCORESYS.as_conceptoacceso ca
+          WHERE 
+                (as_autorizacion.conceptoacceso = ca.conceptoacceso)
+            AND (as_autorizacion.empleado = empleadomast.empleado)
+            AND (as_autorizacion.categoriaautorizacion='PSIG')
+            AND (empleadomast.empleado = personamast.persona)
+            AND (empleadomast.locaciondepago = :p_locacion OR :p_locacion = 'S')
+            AND (personamast.persona = as_carnetidentificacion.empleado)
+        	AND (( ((as_autorizacion.fecha BETWEEN to_date(:p_fechadesde,'dd/MM/yyyy') AND to_date(:p_fechahasta,'dd/MM/yyyy')
+                     ) OR
+                   (as_autorizacion.fechafin BETWEEN to_date(:p_fechadesde,'dd/MM/yyyy') AND to_date(:p_fechahasta,'dd/MM/yyyy')
+                     ))
+                  OR :p_flagfiltroperiodo = 'N'
+                 )
+                )
+            AND (empleadomast.empleado IN (
+                                   SELECT as_empleados_autorizados.empleado
+                                     FROM SGCORESYS.as_empleados_autorizados
+                                    WHERE as_empleados_autorizados.SID =
+                                                                       :p_an_sid)
+                  OR EmpleadoMast.empleado in(
+                                 select EmpleadoResponsable
+                                 from sgcoresys.AS_AREA
+                                 where EmpleadoAprobador = CASE :p_flagaprobacion WHEN 'S' THEN :p_empleadoaprobador ELSE 0 END
+                                 UNION
+                                 select EmpleadoResponsable2
+                                 from  sgcoresys.AS_AREA
+                                 where EmpleadoAprobador2 = CASE :p_flagaprobacion WHEN 'S' THEN :p_empleadoaprobador ELSE 0 END
+                                 UNION
+                                 select EmpleadoResponsable3
+                                 from  sgcoresys.AS_AREA
+                                 where EmpleadoAprobador3 = CASE :p_flagaprobacion WHEN 'S' THEN :p_empleadoaprobador ELSE 0 END
+                                 UNION
+                                 select EmpleadoResponsable4
+                                 from  sgcoresys.AS_AREA
+                                 where EmpleadoAprobador4 = CASE :p_flagaprobacion WHEN 'S' THEN :p_empleadoaprobador ELSE 0 END
+                                )
+                                
+                                or (:p_usuario in (select usuario from sgcoresys.seguridadperfilusuario where 
+                               perfil = 'AS20') and as_autorizacion.conceptoacceso = '98' and 
+                               (select INSTR((select texto from sgcoresys.parametrosmast where 
+                               companiacodigo= '999999' and aplicacioncodigo= 'HR' and parametroclave = 'SUCUDEOLIM') || ',', empleadomast.sucursal || ',') from dual)>0
+                                 )
+                		)
+                 ]]>
+	</sql-query>
+
+
+	<!-- asmain.dw_as_autorizacion_preproceso_hextra_det -->
+	<sql-query name="asmain.DwAsAutorizacionPreprocesoHextraDet">
+	</sql-query>
+
+	<!-- asmain.dw_as_autorizacion_preproceso_hextrae -->
+	<sql-query name="asmain.DwAsAutorizacionPreprocesoHextrae">
+	</sql-query>
+
+	<!-- asmain.dw_as_autorizacion_preproceso_hextraedit -->
+	<sql-query name="asmain.DwAsAutorizacionPreprocesoHextraedit">
+	</sql-query>
+
+	<!-- asmain.dw_as_autorizacion_preproceso_hextraedit_v2 -->
+	<sql-query name="asmain.DwAsAutorizacionPreprocesoHextraeditV2">
+	</sql-query>
+
+
+
+
+	<!-- asmain.dw_as_autorizacion_preproceso_tipodia -->
+	<sql-query name="asmain.DwAsAutorizacionPreprocesoTipodia">
+		select
+		b.intervaloacceso as "intervaloacceso",
+		c.descripcion as "descripcionconcepto",
+		a.cantidadhoras as
+		"cantidadhoras",
+		a.tipodia as "tipodia",
+		b.horainicio as "horainicio",
+		b.horafin as "horafin",
+		b.secuencia as "secuencia",
+		a.descripcionlocal
+		as "descripciondia",
+		b.FlagRestriccion as "flagrestriccion",
+		b.ConceptoAccesoRestringido as "conceptoaccesorestringido",
+		b.ConceptoAccesoComplemento as "conceptoaccesocomplemento",
+		b.TiempoRestringido as "tiemporestringido",
+		d.MAXTEMPRAN as
+		"maxtempran",
+		d.MINSOBRETT as "minsobrett",
+		cast(b.FlagDiaAnt as
+		varchar(1)) as "flagdiaant"
+		from
+		sgcoresys.as_tipodiaasistencia a,
+		sgcoresys.as_tipodiamovimiento b,
+		sgcoresys.as_intervaloacceso c,
+		sgcoresys.AS_TipoDiaAsistencia d
+		where
+		a.tipodia = b.tipodia
+		and
+		b.intervaloacceso = c.intervalo
+		and a.tipodia
+		= d.TipoDia
+		and
+		b.intervaloacceso != 'REFR'
+		and a.tipodia =
+		:p_tipodia
+	</sql-query>
+
+	<!-- asmain.dw_as_autorizaciones_he -->
+	<sql-query name="asmain.DwAsAutorizacionesHe">
+	</sql-query>
+
+	<!-- asmain.dw_as_captura_string_idle -->
+	<sql-query name="asmain.DwAsCapturaStringIdle">
+	</sql-query>
+
+	<!-- asmain.dw_as_captura_string_idle_carnetnoexiste -->
+	<sql-query name="asmain.DwAsCapturaStringIdleCarnetnoexiste">
+	</sql-query>
+
+	<!-- asmain.dw_as_captura_string_idle_texto_insertar -->
+	<sql-query name="asmain.DwAsCapturaStringIdleTextoInsertar">
+	</sql-query>
+
+	<!-- asmain.dw_as_cursoprofesor_list -->
+	<sql-query name="asmain.DwAsCursoprofesorList">
+	</sql-query>
+
+	<!-- asmain.dw_as_empleado_select_2 -->
+	<sql-query name="asmain.DwAsEmpleadoSelect2">
+	</sql-query>
+
+	<!-- asmain.dw_as_excepcion_list_2 -->
+	<sql-query name="asmain.DwAsExcepcionList2">
+	</sql-query>
+
+	<!-- asmain.dw_as_filtro_comun -->
+	<sql-query name="asmain.DwAsFiltroComun">
+	</sql-query>
+
+	<!-- asmain.dw_as_filtro_fechas_external -->
+	<sql-query name="asmain.DwAsFiltroFechasExternal">
+	</sql-query>
+
+	<!-- asmain.dw_as_intervalo_horario_wrk -->
+	<sql-query name="asmain.DwAsIntervaloHorarioWrk">
+	</sql-query>
+
+	<!-- asmain.dw_as_jefe_x_trabajador -->
+	<sql-query name="asmain.DwAsJefeXTrabajador">
+	</sql-query>
+
+	<!-- asmain.dw_as_marcar -->
+	<sql-query name="asmain.DwAsMarcar">
+	</sql-query>
+
+	<!-- asmain.dw_as_marcar_list -->
+	<sql-query name="asmain.DwAsMarcarList">
+	</sql-query>
+
+	<!-- asmain.dw_as_marcas_empleado -->
+	<sql-query name="asmain.DwAsMarcasEmpleado">
+		 <![CDATA[
+		SELECT 
+        AS_ACCESOSDIARIOS.HORA as "hora",   
+		AS_ACCESOSDIARIOS.FECHA as "fecha"  
+		FROM 
+		      SGCORESYS.AS_ACCESOSDIARIOS  
+		WHERE ( AS_ACCESOSDIARIOS.EMPLEADO = :p_empleado ) and  
+					( AS_ACCESOSDIARIOS.FECHA >= :p_desde ) and  
+					( AS_ACCESOSDIARIOS.FECHA <= :p_hasta ) 
+		ORDER BY AS_ACCESOSDIARIOS.FECHA
+		]]>
+	</sql-query>
+
+	<!-- asmain.dw_as_proceso_asistencia_diaria -->
+	<sql-query name="asmain.DwAsProcesoAsistenciaDiaria">
+	</sql-query>
+
+	<!-- asmain.dw_as_proceso_asistencia_diaria_diaant -->
+	<sql-query name="asmain.DwAsProcesoAsistenciaDiariaDiaant">
+	</sql-query>
+
+	<!-- asmain.dw_as_proceso_asistencia_diaria_empleado -->
+	<sql-query name="asmain.DwAsProcesoAsistenciaDiariaEmpleado">
+	</sql-query>
+
+	<!-- asmain.dw_as_proceso_asistencia_diaria_hordin -->
+	<sql-query name="asmain.DwAsProcesoAsistenciaDiariaHordin">
+	</sql-query>
+
+	<!-- asmain.dw_as_proceso_asistencia_diaria_interv -->
+	<sql-query name="asmain.DwAsProcesoAsistenciaDiariaInterv">
+	</sql-query>
+
+	<!-- asmain.dw_as_proceso_asistencia_diaria_mvtos -->
+	<sql-query name="asmain.DwAsProcesoAsistenciaDiariaMvtos">
+	</sql-query>
+
+	<!-- asmain.dw_as_proceso_asistencia_diaria_out -->
+	<sql-query name="asmain.DwAsProcesoAsistenciaDiariaOut">
+	</sql-query>
+
+	<!-- asmain.dw_as_proceso_asistencia_diaria_tipodia -->
+	<sql-query name="asmain.DwAsProcesoAsistenciaDiariaTipodia">
+		select
+		b.intervaloacceso as "intervaloacceso",
+		c.descripcion as "descripcionconcepto",
+		a.cantidadhoras as
+		"cantidadhoras",
+		a.tipodia as "tipodia",
+		b.horainicio as "horainicio",
+		b.horafin as "horafin" ,
+		b.secuencia as "secuencia",
+		a.descripcionlocal
+		as "descripciondia",
+		b.FlagRestriccion as "flagrestriccion",
+		b.ConceptoAccesoRestringido as "conceptoaccesorestringido",
+		b.ConceptoAccesoComplemento as "conceptoaccesocomplemento",
+		b.TiempoRestringido as "tiemporestringido",
+		d.MAXTEMPRAN as
+		"maxtempran",
+		d.MINSOBRETT as "minsobrett",
+		CAST(b.FlagDiaAnt AS
+		VARCHAR(1)) as "flagdiaant"
+		from
+		SGCORESYS.as_tipodiaasistencia a,
+		SGCORESYS.as_tipodiamovimiento b,
+		SGCORESYS.as_intervaloacceso c,
+		SGCORESYS.AS_TipoDiaAsistencia d
+		where
+		a.tipodia = b.tipodia
+		and
+		b.intervaloacceso = c.intervalo
+		and a.tipodia = d.TipoDia
+		order by
+		b.secuencia,a.tipodia
+	</sql-query>
+
+	<!-- asmain.dw_as_proceso_asistencia_diaria_tipodiam -->
+	<sql-query name="asmain.DwAsProcesoAsistenciaDiariaTipodiam">
+	</sql-query>
+
+	<!-- asmain.dw_as_proceso_asistencia_diaria_tipodiax -->
+	<sql-query name="asmain.DwAsProcesoAsistenciaDiariaTipodiax">
+	</sql-query>
+
+	<!-- asmain.dw_as_proceso_asistencia_diaria_tipodxem -->
+	<sql-query name="asmain.DwAsProcesoAsistenciaDiariaTipodxem">
+	</sql-query>
+
+	<!-- asmain.dw_as_proceso_asistencia_diaria_transf -->
+	<sql-query name="asmain.DwAsProcesoAsistenciaDiariaTransf">
+	</sql-query>
+
+	<!-- asmain.dw_as_proceso_asistencia_programada -->
+	<sql-query name="asmain.DwAsProcesoAsistenciaProgramada">
+	</sql-query>
+
+	<!-- asmain.dw_as_sustitucion -->
+	<sql-query name="asmain.DwAsSustitucion">
+	</sql-query>
+
+	<!-- asmain.dw_as_sustitucion_edit -->
+	<sql-query name="asmain.DwAsSustitucionEdit">
+	</sql-query>
+
+	<!-- asmain.dw_as_sustitucion_external -->
+	<sql-query name="asmain.DwAsSustitucionExternal">
+	</sql-query>
+
+	<!-- asmain.dw_as_transf_a_planillas_valida_concepto -->
+	<sql-query name="asmain.DwAsTransfAPlanillasValidaConcepto">
+	</sql-query>
+
+	<!-- asmain.dw_as_transf_a_planillas_valida_concepto_new -->
+	<sql-query name="asmain.DwAsTransfAPlanillasValidaConceptoNew">
+	</sql-query>
+
+	<!-- asmain.dw_as_transfer_asistencia_programada -->
+	<sql-query name="asmain.DwAsTransferAsistenciaProgramada">
+	</sql-query>
+
+	<!-- asmain.dw_as_transferencia_a_planillas_reporte -->
+	<sql-query name="asmain.DwAsTransferenciaAPlanillasReporte">
+	</sql-query>
+
+	<!-- asmain.dw_as_transferencia_a_planillas_resumen -->
+	<sql-query name="asmain.DwAsTransferenciaAPlanillasResumen">
+	</sql-query>
+
+	<!-- asmain.dw_as_transferencia_a_planillas_resumen2 -->
+	<sql-query name="asmain.DwAsTransferenciaAPlanillasResumen2">
+	</sql-query>
+
+	<!-- asmain.dw_hr_asistenciadiaria_rpt_filtro_justif -->
+	<sql-query name="asmain.DwHrAsistenciadiariaRptFiltroJustif">
+	</sql-query>
+
+	<!-- asmain.dw_ma_companyowner_select_seguridad -->
+	<sql-query name="asmain.DwMaCompanyownerSelectSeguridad">
+	</sql-query>
+
+	<!-- asmain.dw_ma_pr_calendarioferiados_proceso -->
+	<sql-query name="asmain.DwMaPrCalendarioferiadosProceso">
+	</sql-query>
+
+	<!-- asmain.dw_ma_pr_calendarioferiados_proceso_sarg -->
+	<sql-query name="asmain.DwMaPrCalendarioferiadosProcesoSarg">
+		SELECT
+		pr_calendarioferiados.fechamesdia as
+		"fechamesdia",
+		pr_calendarioferiados.feriadocompletoflag as
+		"feriadocompletoflag",
+		pr_calendarioferiados.estado as "estado",
+		pr_calendarioferiados.descripcion as "descripcion"
+		FROM
+		sgcoresys.pr_calendarioferiados
+		WHERE 1 = 1
+		ORDER BY
+		pr_calendarioferiados.fechamesdia ASC
+	</sql-query>
+
+	<!-- asmain.dw_pr_centrocosto_select -->
+	<sql-query name="asmain.DwPrCentrocostoSelect">
+	</sql-query>
+
+	<!-- asmain.dw_pr_valoresglobales -->
+	<sql-query name="asmain.DwPrValoresglobales">
+	</sql-query>
+
+	<!-- asmain.dw_pr_valoresglobales -->
+	<sql-query name="asmain.WAsAutorizacionHorasDisponibles">
+		   <![CDATA[
+		  SELECT Count(1) "contador",
+                SUM (AS_AsistenciaDiaria.CantidadReal * CASE
+                   WHEN AS_AsistenciaDiaria.FlagCompensacion = '+' THEN 1 
+                       ELSE -1 END)
+                        +
+                        (
+                        SELECT  NVL(SUM(AS_SaldoHoras.CantidadAuxiliar),0)
+                        FROM  SGCORESYS.AS_SaldoHoras
+                        WHERE  AS_SaldoHoras.Empleado =  AS_AsistenciaDiaria.Empleado 
+                                     AND AS_SaldoHoras.Fecha_Saldo < :p_fecha
+					  )  "saldoinicial"
+				FROM  SGCORESYS.AS_AsistenciaDiaria
+            	INNER JOIN SGCORESYS.AS_ConceptoAcceso
+                ON ( AS_AsistenciaDiaria.ConceptoAcceso = AS_ConceptoAcceso.ConceptoAcceso )
+				WHERE  Empleado =:p_empleado
+		            AND ( (AS_AsistenciaDiaria.ConceptoAcceso in ('HAUT')) or (AS_ConceptoAcceso.flagcompensa = 'S' and AS_ConceptoAcceso.ConceptoAcceso <>'33') )
+		            AND (AS_AsistenciaDiaria.FlagCompensacion = '+' or AS_AsistenciaDiaria.FlagCompensacion = '-') 
+		            AND AS_AsistenciaDiaria.Fecha < :p_fecha   
+				GROUP BY   Empleado   
+				]]>
+	</sql-query>
+
+	<sql-query name="asmain.DwAsAsistenciaHextraEdit">
+		SELECT
+		tipo as "tipo",
+		Fecha as "fecha",
+		Cantidad as
+		"cantidad",
+		Compensado as "compensado",
+		Diferencia as
+		"diferencia",
+		Mostrar as "mostrar",
+		:par_dfs as "diasdfs",
+		:par_dlv as
+		"diasdlv"
+		FROM (
+		SELECT
+		'Carga Inicial' tipo,
+		A.Fecha_Saldo fecha,
+		Sum(CantidadAuxiliar) cantidad,
+		NVL(B.Cantidad,0)
+		Compensado,
+		(
+		Sum(CantidadAuxiliar) - NVL(B.Cantidad,0)) Diferencia,
+		cast('S' as
+		varchar(1)) Mostrar
+		FROM
+		sgcoresys.AS_SaldoHoras A
+		LEFT JOIN
+		(
+		SELECT
+		Empleado,
+		SUM(Cantidad) Cantidad,
+		Fecha
+		FROM
+		sgcoresys.AS_AUTORIZACIONFECHA
+		WHERE
+		Empleado = :par_empleado
+		AND Fecha
+		BETWEEN :par_fechainicio AND
+		:par_fechafinal
+		GROUP BY
+		Empleado,Fecha
+		) B
+		ON ( A.Empleado = B.Empleado
+		AND A.Fecha_Saldo = B. Fecha )
+		WHERE
+		A.Empleado = :par_empleado AND
+		(A.Fecha_Saldo BETWEEN :par_fechainicio
+		AND :par_fechafinal) AND
+		A.TIPO = 'M'
+		GROUP BY
+		A.Fecha_Saldo,
+		B.Cantidad
+
+		UNION ALL
+
+		SELECT
+		' ' tipo,
+		A.Fecha fecha,
+		Sum(CantidadReal) cantidad,
+		NVL(B.Cantidad,0)
+		Compensado,
+		( Sum(CantidadReal) - NVL(B.Cantidad,0))
+		Diferencia,
+		cast('S' as varchar(1)) Mostrar
+		FROM
+		sgcoresys.AS_AsistenciaDiaria A
+		LEFT JOIN
+		(
+		SELECT
+		Empleado,
+		SUM(Cantidad)
+		Cantidad,
+		Fecha
+		FROM
+		sgcoresys.AS_AUTORIZACIONFECHA
+		WHERE
+		Empleado =
+		:par_empleado
+		AND Fecha BETWEEN :par_fechainicio AND
+		:par_fechafinal
+		GROUP BY
+		Empleado,Fecha
+		) B
+		ON ( A.Empleado = B.Empleado
+		AND A.Fecha = B.
+		Fecha )
+		WHERE
+		A.Empleado = :par_empleado AND
+		(A.Fecha BETWEEN
+		:par_fechainicio AND :par_fechafinal) AND
+		CONCEPTOACCESO IN
+		(:par_concepto1, :par_concepto2)
+		GROUP BY
+		A.Fecha,
+		B.Cantidad
+		) T
+		WHERE
+		T.Diferencia > 0
+	</sql-query>
+
+	<sql-query name="asmain.DwAsAsistenciaHextraEditModif">
+		SELECT
+		cast('S' as varchar(1)) as "seleccion",
+		cast(Tipo as varchar(1)) as "tipo",
+		Fecha as "fecha",
+		Desde as "desde",
+		Hasta as "hasta",
+		Cantidad as "cantidad",
+		CantidadReal as
+		"cantidadreal",
+		(CantidadReal - Cantidad) as "diferencia"
+		FROM
+		sgcoresys.AS_AUTORIZACIONFECHA
+		WHERE
+		empleado = :p_empleado
+		AND
+		FechaSolicitud = :p_fecha
+	</sql-query>
+
+	<sql-query name="asmain.listarUsuariosAdministradores">
+		SELECT
+		EM.EMPLEADO as "empleado",
+		US.USUARIO as
+		"usuario",
+		EM.correoInterno as "correointerno"
+		FROM
+		SGCORESYS.SEGURIDADAUTORIZACIONES SA
+		JOIN USUARIO US join empleadomast
+		EM
+		on EM.CODIGOUSUARIO = US.USUARIO
+		ON SA.USUARIO = US.USUARIO AND
+		SA.APLICACIONCODIGO = :p_aplicacion AND
+		SA.GRUPO = 'SYSTEM' AND
+		SA.CONCEPTO = 'SYSADM'
+		WHERE
+		USUARIOPERFIL = 'US'
+		UNION
+		SELECT
+		EM.EMPLEADO
+		as "empleado", SPU.USUARIO as "usuario", EM.correoInterno as
+		"correointerno"
+		FROM
+		SGCORESYS.SEGURIDADAUTORIZACIONES SA
+		JOIN
+		SEGURIDADPERFILUSUARIO SPU
+		inner
+		join empleadomast EM
+		on em.codigousuario
+		= SPU.USUARIO
+		ON
+		SA.USUARIO = SPU.PERFIL AND
+		SA.APLICACIONCODIGO =
+		:p_aplicacion AND
+		SA.GRUPO = 'SYSTEM' AND
+		SA.CONCEPTO = 'SYSADM'
+	</sql-query>
+
+	<sql-query name="asmain.obtenerTotalFeriadoCompensado">
+		 <![CDATA[
+		 SELECT 
+            SUM( AS_AsistenciaDiaria.CantidadReal) as "MONTOTOTAL"
+                   
+            FROM    SGCORESYS.AS_AsistenciaDiaria
+                    INNER JOIN  SGCORESYS.PersonaMast
+                         ON  AS_AsistenciaDiaria.Empleado = PersonaMast.Persona
+
+                    INNER JOIN SGCORESYS.EmpleadoMast
+                         ON  AS_AsistenciaDiaria.Empleado = EmpleadoMast.Empleado
+
+                    INNER JOIN  SGCORESYS.AS_CarnetIdentificacion
+                         ON AS_AsistenciaDiaria.Empleado = AS_CarnetIdentificacion.Empleado
+                                AND AS_CarnetIdentificacion.Estado = 'A'
+
+                  INNER JOIN SGCORESYS.AS_ConceptoAcceso
+                         ON AS_AsistenciaDiaria.ConceptoAcceso = AS_ConceptoAcceso.ConceptoAcceso
+
+                    LEFT JOIN SGCORESYS.AC_CostCenterMst
+                         ON EmpleadoMast.CentroCostos = AC_CostCenterMst.CostCenter
+
+                    LEFT JOIN SGCORESYS.AS_Area
+                         ON AS_CarnetIdentificacion.Area = AS_Area.Area
+
+                  WHERE     AS_ASISTENCIADIARIA.FlagCompensacion = :p_flagCompensacion
+                     AND AS_ASISTENCIADIARIA.ConceptoAcceso in (:p_tipo,'33') 
+                     and AC_COSTCENTERMST.COSTCENTER=NVL(:p_centro_costo,AC_COSTCENTERMST.COSTCENTER)
+                    and PersonaMast.persona=NVL(:p_persona,PersonaMast.persona)
+                    and ((AS_AsistenciaDiaria.Fecha >= :p_fecha_desde AND AS_AsistenciaDiaria.Fecha <= :p_fecha_hasta) or :p_FlagFiltroPeriodo= 'N')
+                    and AS_ASISTENCIADIARIA.FECHA >= NVL(empleadomast.fechareingreso, empleadomast.fechaingreso )
+               group by   AS_AsistenciaDiaria.FlagCompensacion
+               ]]>
+	</sql-query>
+
+	<sql-query name="asmain.contarPuedeAprobarConcepto">
+		SELECT COUNT(*) FROM sgcoresys.AS_Seguridad s
+		join sgcoresys.SeguridadperfilUsuario spu
+		on (s.usuario = spu.perfil or
+		s.usuario = spu.usuario)
+		WHERE
+		(spu.usuario = :p_usuario and
+		((ConceptoSeguridad='ALLCONCEPT' and valortexto='S' and
+		valortextoaprobacion='S') or
+		(ConceptoSeguridad='TIPOCO' and
+		valortexto=:p_concepto and
+		valortextoaprobacion='S'))
+		) or
+		( :p_isadmin =
+		'S')
+	</sql-query>
+
+
+
+
+
+</hibernate-mapping>

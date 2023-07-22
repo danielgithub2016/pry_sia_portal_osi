@@ -1,0 +1,147 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>Evaluaciones de Conocimientos FIFA - Gestión de Salas FIFA</h2>
+	</ui:define>
+	<ui:define name="content">
+		<!--  <ui:include src="../usuarioActual01.xhtml" />-->
+		<h:form id="frmEvaluacion_lista">
+			<p:growl autoUpdate="true" life="#{msg.generico_tiempo_growl}"
+				widgetVar="growlWV" />
+			<p:panel header="#{msg.generico_filtros}">
+				<h:panelGrid columns="3" width="50%">
+					<p:outputLabel value="Convocatoria" />
+					<p:inputText value="#{cHrEvaluacionesFIFA.convocatoria}" />
+					<p:commandButton value="Buscar" icon="buscar" style="float:right;"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+						styleClass="botonTextoImagen"
+						action="#{cHrEvaluacionesFIFA.buscarSalas}" update="@(form)" />
+				</h:panelGrid>
+			</p:panel>
+			<p:dataTable
+				emptyMessage="En este momento no existen Evaluaciones de Conocimientos para evaluar."
+				id="dtEncuestas" paginator="true" paginatorPosition="bottom"
+				rows="15" reflow="true" value="#{cHrEvaluacionesFIFA.lstDatos}"
+				var="row"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+				<p:column headerText="Convocatoria" width="80"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.nro_requerimiento}" />
+				</p:column>
+				<p:column headerText="Grupo" width="150">
+					<h:outputText value="#{row.nombregrupo}" />
+				</p:column>
+				<p:column headerText="Fecha" width="55">
+					<h:outputText value="#{row.fecha_evaluacion}" />
+				</p:column>
+				<p:column headerText="Estado" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.estado}" />
+				</p:column>
+				<p:column headerText="N° Total de Postulantes Aptos" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.n_partotal}" />
+				</p:column>
+				<p:column headerText="N° de Grupo" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.n_grupo}" />
+				</p:column>
+				<p:column headerText="N° de Postulantes a Evaluar del Grupo"
+					width="60" styleClass="columnatablaCentro">
+					<h:outputText value="#{row.n_partgrupo}" />
+				</p:column>
+				<p:column headerText="N° Postulantes que Iniciaron del Grupo"
+					width="60" styleClass="columnatablaCentro">
+					<h:outputText value="#{row.n_partgrupoini}" />
+				</p:column>
+				<p:column headerText="N° Total de Postulantes Evaluados" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.n_partotaleval}" />
+				</p:column>
+				<p:column headerText="Acciones" width="40"
+					styleClass="columnatableCentro">
+
+					<p:commandButton type="icon" icon="ui-icon-contact"
+						title="Ver sala" action="#{cHrEvaluacionesFIFA.verPostSala}"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();">
+						<f:setPropertyActionListener
+							target="#{cHrEvaluacionesFIFA.registroSeleccionado}"
+							value="#{row}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog id="dgSalas" widgetVar="popSalas"
+			header="Por favor seleccionar una sala para continuar"
+			responsive="true" modal="true" styleClass="contenedorPrincipalGrande"
+			appendTo="@(body)" draggable="false" resizable="false">
+			<h:form id="frmSalas">
+				<h:panelGrid columns="1" columnClasses="ui-grid-col-12"
+					layout="grid" styleClass="ui-panelgrid-blank" width="100%"
+					style="border-spacing:0px;">
+					Convocatoria: #{cHrEvaluacionesFIFA.proceso} <br /> Grupo:
+					#{cHrEvaluacionesFIFA.grupo} <br /> Especialidad:
+					#{cHrEvaluacionesFIFA.especialidad}
+				</h:panelGrid>
+
+				<h:panelGrid columns="1" columnClasses="ui-grid-col-12"
+					layout="grid" styleClass="ui-panelgrid-blank" width="100%"
+					style="border-spacing:0px;">
+					<p:dataTable
+						emptyMessage="En este momento no existen salas para evaluar."
+						id="dtEncuestas" paginator="true" paginatorPosition="bottom"
+						rows="15" reflow="true" value="#{cHrEvaluacionesFIFA.lstSala}"
+						var="row"
+						currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+						paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+						<p:column headerText="Sala" width="80"
+							styleClass="columnatablaCentro">
+							<h:outputText value="#{row.nombresala}" />
+						</p:column>
+						<p:column headerText="Coordinadores" width="150">
+							<h:outputText value="#{row.nombrecoordinador}" />
+						</p:column>
+						<p:column headerText="Supervisores" width="55">
+							<h:outputText value="#{row.nombresupervisor}" />
+						</p:column>
+						<p:column headerText="Evaluadores" width="55">
+							<h:outputText value="#{row.nombreevaluador}" />
+						</p:column>
+						<p:column headerText="N° de Postulantes a Evaluar de la sala"
+							width="60" styleClass="columnatablaCentro">
+							<h:outputText value="#{row.n_postsala}" />
+						</p:column>
+
+						<p:column headerText="Acciones" width="40"
+							styleClass="columnatableCentro">
+							<center>
+								<p:commandButton type="icon" icon="ui-icon-check"
+									title="Seleccionar" onstart="PF('bUI').block();"
+									oncomplete="PF('bUI').unblock();"
+									action="#{cHrEvaluacionesFIFA.listarPostulantesSala}">
+									<f:setPropertyActionListener
+										target="#{cHrEvaluacionesFIFA.registroSeleccionadoSala}"
+										value="#{row}" />
+								</p:commandButton>
+							</center>
+
+						</p:column>
+					</p:dataTable>
+				</h:panelGrid>
+
+			</h:form>
+
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

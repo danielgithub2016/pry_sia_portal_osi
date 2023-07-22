@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : asistencia.AsAccesosdiarios -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="asaccesosdiarios.obtenerTerminal">
+		select
+		terminal
+		FROM
+		SGCORESYS.AS_Accesosdiarios
+		WHERE
+		Empleado = :p_empleado and
+		Fecha=
+		:p_fecha
+	</sql-query>
+
+	<sql-query name="asaccesosdiarios.eliminarAccesosDiarios">
+		DELETE
+		FROM
+		SGCORESYS.AS_Accesosdiarios
+		WHERE
+		Empleado_A = :p_empleado
+		AND Fecha_A = :p_fecha
+		AND ConceptoAcceso_A =
+		:p_conceptoacceso
+		AND to_char(Desde_A, 'hh24:mi') =
+		to_char(:p_fechadesde,'hh24:mi')
+	</sql-query>
+
+	<sql-query name="asaccesosdiarios.obtenerMaximoSecuencia">
+		SELECT nvl(Max (Secuencia),0) + 1
+		FROM
+		SGCORESYS.AS_AccesosDiarios
+		WHERE
+		Empleado = :p_empleado AND
+		Fecha =
+		:p_fecha
+	</sql-query>
+
+	<sql-query name="asaccesosdiarios.insertarAccesosDiarios">
+		Insert into SGCORESYS.AS_Accesosdiarios
+		(
+		CARNETID, FECHA,
+		SECUENCIA, EMPLEADO,
+		HORA, OBSERVACION,
+		LUGARRECOLECCION , ANO,
+		MES, DIA,
+		ULTIMOUSUARIO, ULTIMAFECHAMODIF,
+		Lectora
+		)
+		values (:p_carnet, :p_fecha,
+		:p_secuencia, :p_empleado,
+		:p_fecha, :p_observacion,
+		'MANUAL', :p_anio,
+		:p_mes, :p_dia,
+		:p_userid,
+		sysdate,
+		'SPRING'
+		)
+	</sql-query>
+
+	<sql-query name="asaccesosdiarios.marcacionempleadodetalle">
+		SELECT
+		hed.empleado as "empleado"
+		,hed.fecha as
+		"fecha"
+		,NVL((SELECT AS_TIPOHORARIO.DESCRIPCIONLOCAL
+		FROM
+		SGCORESYS.AS_TIPOHORARIO
+		WHERE AS_TIPOHORARIO.TIPOHORARIO =
+		SGCORESYS.CASE_TIPO_DIA_HORARIO(hed.empleado,hed.fecha,'H')),
+		(SELECT
+		AS_TIPODIAASISTENCIA.DESCRIPCIONLOCAL
+		FROM
+		SGCORESYS.AS_TIPODIAASISTENCIA
+		WHERE AS_TIPODIAASISTENCIA.TIPODIA =
+		SGCORESYS.CASE_TIPO_DIA_HORARIO(hed.empleado,hed.fecha,'H')) ) as
+		"hora"
+		,MAX(DECODE(res.secuenciadia, 1, res.hora)) AS "marca1"
+		,MAX(DECODE(res.secuenciadia, 2, res.hora)) AS "marca2"
+		,MAX(DECODE(res.secuenciadia, 3, res.hora)) AS "marca3"
+		,MAX(DECODE(res.secuenciadia, 4, res.hora)) AS "marca4"
+		,MAX(DECODE(res.secuenciadia, 5, res.hora)) AS "marca5"
+		,MAX(DECODE(res.secuenciadia, 6, res.hora)) AS "marca6"
+		,MAX(DECODE(res.secuenciadia, 7, res.hora)) AS "marca7"
+		,MAX(DECODE(res.secuenciadia, 8, res.hora)) AS "marca8"
+		,MAX(DECODE(res.secuenciadia, 9, res.hora)) AS "marca9"
+		,MAX(DECODE(res.secuenciadia, 10, res.hora)) AS "marca10"
+		,MAX(DECODE(res.secuenciadia, 11, res.hora)) AS "marca11"
+		,MAX(DECODE(res.secuenciadia, 12, res.hora)) AS "marca12"
+		FROM
+		(
+		SELECT
+		ca.empleado, trunc(ca.fecha) as fecha
+		from sgcoresys.as_accesosdiarios
+		ca
+		where [EMPLEADO_1] ca.fecha
+		between :p_fechainicio and :p_fechafin
+		group by
+		ca.empleado,
+		trunc(ca.fecha)
+		) hed
+		inner join
+		(
+		SELECT de.carnetid,
+		trunc(de.fecha)
+		fecha, de.hora, de.empleado,
+		de.secuencia,
+		row_number()
+		over (PARTITION
+		BY de.empleado, trunc(de.fecha) order by
+		de.empleado,
+		de.hora)
+		secuenciadia FROM sgcoresys.as_accesosdiarios de
+		where
+		[EMPLEADO_2] de.fecha between :p_fechainicio and
+		:p_fechafin
+		order by
+		de.empleado, de.secuencia, de.fecha
+		) res
+		on
+		hed.empleado = res.empleado
+		and hed.fecha=res.fecha
+		AND ((hed.empleado IN (SELECT
+		as_empleados_autorizados.empleado
+		FROM
+		SGCORESYS.as_empleados_autorizados
+		WHERE as_empleados_autorizados.SID =
+		:p_sid))
+		or
+		(EXISTS (SELECT 1
+		FROM SGCORESYS.EMPLEADOMAST e
+		where
+		e.empleado = hed.empleado AND
+		(e.dptoareaoperativa in(
+		select a.area from
+		SGCORESYS.EMPLEADOMAST e2
+		inner join sgcoresys.as_area a
+		on
+		e2.dptoareaoperativa = a.area
+		INNER JOIN
+		SGCORESYS.SEGURIDADPERFILUSUARIO SP
+		ON SP.USUARIO = e2.codigousuario
+		INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+		ON SP.PERFIL
+		=
+		SA.USUARIO
+		WHERE SA.CONCEPTO = 'SYSREA' AND
+		SP.USUARIO = :user) or 
+		(
+		e.dptoareaoperativa IN (
+		    SELECT AREA FROM SGCORESYS.AS_AREA WHERE AREApADRE in
+		    (SELECT E.dptoareaoperativa
+		FROM SGCORESYS.EMPLEADOMAST E INNER JOIN
+		SGCORESYS.SEGURIDADPERFILUSUARIO SP
+		ON E.CODIGOUSUARIO = SP.USUARIO
+		INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+		ON SP.PERFIL = SA.USUARIO
+		WHERE SA.CONCEPTO = 'SYSREA' AND
+		SP.USUARIO = :user)
+		    )
+		))
+		))
+		or
+		:p_admin = 'S')
+
+		group by
+		hed.empleado, hed.fecha
+		order by hed.empleado,
+		hed.fecha
+	</sql-query>
+
+	<sql-query name="asaccesosdiarios.eliminarmarcacionsobretiempo">
+		DELETE
+		FROM
+		sgcoresys.AS_Accesosdiarios
+		WHERE
+		Empleado = :p_empleado
+		and Fecha= :p_fecha
+		and ConceptoAcceso_A
+		=:p_conceptoacceso
+		and observacion = 'Vía Autorización'
+	</sql-query>
+</hibernate-mapping>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html" encoding="UTF-8"
+	locale="#{facesContext.externalContext.requestLocale}">
+	<h:head>
+		<f:facet name="first">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta name="viewport"
+				content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+			<meta http-equiv="Cache-Control" content="no-cache" />
+			<meta http-equiv="Pragma" content="no-cache" />
+			<title>#{cComunGlobal.nombreAplicacion}</title>
+			  <link rel="Shortcut Icon" href="http://www.oefa.gob.pe/wp-content/themes/topbusiness/favicon.png" type="image/x-icon" />
+		</f:facet>
+
+		<link rel="stylesheet" type="text/css"
+			href="#{request.contextPath}/comun/recursos/css/estilos.css" />
+
+		<link rel="stylesheet" type="text/css"
+			href="#{request.contextPath}/comun/recursos/css/colores.css" />
+
+		<script type="text/javascript"
+			src="#{request.contextPath}/comun/recursos/js/validators.js"></script>
+
+		<link rel="stylesheet" type="text/css"
+			href="#{request.contextPath}/comun/recursos/css/default.css" />
+
+		<link rel="stylesheet" type="text/css"
+			href="#{request.contextPath}/comun/recursos/css/iconos.css" />
+
+
+	</h:head>
+
+	<h:body
+		style="
+		background-repeat: no-repeat;
+		background-size: 100%;
+		background-color: rgb(238,238,238)">
+		<div id="backlogin">
+			<ui:insert name="login" />
+		</div>
+	</h:body>
+
+</f:view>
+</html>

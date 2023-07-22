@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.rrhh.dominio.HrPostulanteexperiencia"
+		table="SGCORESYS.HR_POSTULANTEEXPERIENCIA">
+		<composite-id name="pk"
+			class="net.royal.erp.rrhh.dominio.HrPostulanteexperienciaPk">
+			<key-property name="secuencia" type="integer">
+				<column name="SECUENCIA" length="22" />
+			</key-property>
+			<key-property name="postulante" type="string">
+				<column name="POSTULANTE" length="10" />
+			</key-property>
+		</composite-id>
+		<property name="empresa" type="string">
+			<column name="EMPRESA" length="250" />
+		</property>
+		<property name="fechadesde" type="timestamp">
+			<column name="FECHADESDE" length="7" />
+		</property>
+		<property name="fechahasta" type="timestamp">
+			<column name="FECHAHASTA" length="7" />
+		</property>
+		<property name="cargoocupado" type="string">
+			<column name="CARGOOCUPADO" length="250" />
+		</property>
+		<property name="giroempresa" type="string">
+			<column name="GIROEMPRESA" length="40" />
+		</property>
+		<property name="especialidad" type="string">
+			<column name="ESPECIALIDAD" length="40" />
+		</property>
+		<property name="funciones" type="string">
+			<column name="FUNCIONES" length="1000" />
+		</property>
+		<property name="trabajosrealizados" type="string">
+			<column name="TRABAJOSREALIZADOS" length="255" />
+		</property>
+		<property name="sueldo" type="integer">
+			<column name="SUELDO" length="22" />
+		</property>
+		<property name="motivocese" type="string">
+			<column name="MOTIVOCESE" length="40" />
+		</property>
+		<property name="unidadnegocio" type="string">
+			<column name="UNIDADNEGOCIO" length="4" />
+		</property>
+		<property name="objetivosalcanzados" type="string">
+			<column name="OBJETIVOSALCANZADOS" length="800" />
+		</property>
+		<property name="moneda" type="string">
+			<column name="MONEDA" length="2" />
+		</property>
+		<property name="areaexperiencia" type="string">
+			<column name="AREAEXPERIENCIA" length="10" />
+		</property>
+		<property name="tipoexperiencia" type="string">
+			<column name="TIPOEXPERIENCIA" length="10" />
+		</property>
+		<property name="codigopuesto" type="integer">
+			<column name="CODIGOPUESTO" length="22" />
+		</property>
+		<property name="personasacargo" type="integer">
+			<column name="PERSONASACARGO" length="22" />
+		</property>
+		<property name="tipocontrato" type="string">
+			<column name="TIPOCONTRATO" length="100" />
+		</property>
+		<property name="nombrejefe" type="string">
+			<column name="NOMBREJEFE" length="1000" />
+		</property>
+		<property name="cargojefe" type="string">
+			<column name="CARGOJEFE" length="1000" />
+		</property>
+		<property name="telefono" type="string">
+			<column name="TELEFONO" length="50" />
+		</property>
+		<property name="ultimoUsuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+		<property name="ultimaFechaModif" type="timestamp">
+			<column name="ultimaFechaModif" length="7" />
+		</property>
+	</class>
+</hibernate-mapping>

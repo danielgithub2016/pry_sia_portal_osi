@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.presupuesto.dominio.BuControlpresupuestalSummary" table="SGCORESYS.BU_CONTROLPRESUPUESTAL_SUMMARY">
+        <composite-id name="pk" class="net.royal.erp.presupuesto.dominio.BuControlpresupuestalSummaryPk">
+            <key-property name="companiasocio" type="string">
+                <column name="COMPANIASOCIO" length="8" />
+            </key-property>
+            <key-property name="tipodocumento" type="string">
+                <column name="TIPODOCUMENTO" length="2" />
+            </key-property>
+            <key-property name="numerodocumento" type="string">
+                <column name="NUMERODOCUMENTO" length="14" />
+            </key-property>
+            <key-property name="proveedor" type="integer">
+                <column name="PROVEEDOR" length="22" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="centrocosto" type="string">
+            <column name="CENTROCOSTO" length="10" />
+        </property>
+        <property name="fechatransaccion" type="timestamp">
+            <column name="FECHATRANSACCION" length="7" />
+        </property>
+        <property name="accion" type="string">
+            <column name="ACCION" length="2" />
+        </property>
+        <property name="comentario" type="string">
+            <column name="COMENTARIO" length="100" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<p:panel style="height:500px;" >
+		<h:panelGrid width="100%">
+			<h:panelGrid columns="3" width="100%"
+				columnClasses="columnatablaIzquierda,columnatablaDerecha,columnatablaIzquierda">
+				<p:outputLabel value="Gastos" style="text-decoration: underline;" />
+				<p:commandButton value="Agregar" />
+				<p:commandButton value="Eliminar" />
+			</h:panelGrid>
+
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				scrollWidth="1000" scrollable="true" scrollHeight="150"
+				tableStyle="width:980px;"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+				<p:column headerText="#" width="10"></p:column>
+				<p:column headerText="Comprobante" width="100"></p:column>
+				<p:column headerText="Fecha" width="70"></p:column>
+				<p:column headerText="Moneda" width="70"></p:column>
+				<p:column headerText="Subtotal" width="80"></p:column>
+				<p:column headerText="Impuestos" width="80"></p:column>
+				<p:column headerText="Total" width="80"></p:column>
+
+				<f:facet name="footer">
+					<table style="border-color: transparent;">
+						<tr>
+							<td align="right"><h:outputText value="TOTALES: " /></td>
+							<td align="right" width="128"><h:outputText
+									value="999,999.99" /></td>
+							<td align="right" width="121"><h:outputText
+									value="999,999.99" /></td>
+							<td align="right" width="125"><h:outputText
+									value="999,999.99" /></td>
+						</tr>
+					</table>
+				</f:facet>
+			</p:dataTable>
+
+			<h:panelGrid columns="3" width="100%"
+				columnClasses="columnatablaIzquierda,columnatablaDerecha,columnatablaIzquierda">
+				<p:outputLabel value="Participantes del Gasto"
+					style="text-decoration: underline;" />
+				<p:commandButton value="Prorratear Gasto" />
+				<p:commandButton value="Calcular Dscts" />
+			</h:panelGrid>
+
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				scrollWidth="1100" scrollable="true" scrollHeight="150"
+				tableStyle="width:1080px;"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+				<p:column headerText="Código" width="30"></p:column>
+				<p:column headerText="Empleado" width="200"></p:column>
+				<p:column headerText="C.Costo" width="30"></p:column>
+				<p:column headerText="Participa?" width="50"></p:column>
+				<p:column headerText="% Empresa" width="50"></p:column>
+				<p:column headerText="Importe" width="80"></p:column>
+				<p:column headerText="Monto Descuento" width="80"></p:column>
+				<p:column headerText="Número Cuotas" width="50"></p:column>
+				<p:column headerText="Periodo Inicio" width="50"></p:column>
+				<p:column headerText="Tipo Prestamo" width="80"></p:column>
+				<p:column headerText="Nro. Préstamo" width="50"></p:column>
+			</p:dataTable>
+
+		</h:panelGrid>
+		</p:panel>
+</ui:composition>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.seguridad.dominio.Usuario" table="SGCORESYS.USUARIO">
+        <composite-id name="pk" class="net.royal.seguridad.dominio.UsuarioPk">
+            <key-property name="usuario" type="string">
+                <column name="USUARIO" length="20" />
+            </key-property>
+        </composite-id>
+        <property name="usuarioperfil" type="string">
+            <column name="USUARIOPERFIL" length="2" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="70" />
+        </property>
+        <property name="clave" type="string">
+            <column name="CLAVE" length="100" />
+        </property>
+        <property name="expirarpasswordflag" type="string">
+            <column name="EXPIRARPASSWORDFLAG" length="1" />
+        </property>
+        <property name="fechaexpiracion" type="timestamp">
+            <column name="FECHAEXPIRACION" length="7" />
+        </property>
+        <property name="ultimologin" type="timestamp">
+            <column name="ULTIMOLOGIN" length="7" />
+        </property>
+        <property name="numerologinsdisponible" type="integer">
+            <column name="NUMEROLOGINSDISPONIBLE" length="22" />
+        </property>
+        <property name="numerologinsusados" type="integer">
+            <column name="NUMEROLOGINSUSADOS" length="22" />
+        </property>
+        <property name="sqllogin" type="string">
+            <column name="SQLLOGIN" length="20" />
+        </property>
+        <property name="sqlpassword" type="string">
+            <column name="SQLPASSWORD" length="10" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="ultimousuario" type="string">
+            <column name="ULTIMOUSUARIO" length="20" />
+        </property>
+        <property name="ultimafechamodif" type="timestamp">
+            <column name="ULTIMAFECHAMODIF" length="7" />
+        </property>
+        <property name="usuariored" type="string">
+            <column name="USUARIORED" length="20" />
+        </property>
+        <property name="horainicio" type="string">
+            <column name="HORAINICIO" length="10" />
+        </property>
+        <property name="horafin" type="string">
+            <column name="HORAFIN" length="10" />
+        </property>
+        <property name="horainicioap" type="string">
+            <column name="HORAINICIOAP" length="10" />
+        </property>
+        <property name="horafinap" type="string">
+            <column name="HORAFINAP" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

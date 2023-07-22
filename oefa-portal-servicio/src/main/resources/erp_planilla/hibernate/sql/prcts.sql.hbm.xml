@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="prcts.listactsempleado">
+    	<![CDATA[
+			SELECT 
+            distinct 
+            PR_CTS.CompaniaSocio as "companiaowner",   
+            EmpleadoMast.Empleado as "empleado",   
+            personaant as "personaant", 
+            EmpleadoMast.EstadoEmpleado as "estadoempleado",   
+            PersonaMast.NombreCompleto as "nombrecompleto",
+            PersonaMast.Documento as "documento"
+            FROM 
+            EmpleadoMast
+                INNER JOIN PersonaMast
+                    ON (EmpleadoMast.Empleado = PersonaMast.Persona)
+                INNER JOIN PR_CTS 
+                    ON (    EmpleadoMast.Empleado = PR_CTS.Empleado and
+                            EmpleadoMast.CompaniaSocio = PR_CTS.CompaniaSocio )
+            WHERE 
+            (PR_CTS.companiasocio=:p_compania)and (PR_CTS.NumeroCTS >= :p_cts)
+             and (PR_CTS.NumeroCTS <= :p_ctsfinal) and (PR_CTS.MonedaCuentaCTS=:p_moneda)
+             and (EmpleadoMast.EstadoEmpleado <> :p_estadoempleado)
+		 ]]>
+    </sql-query>
+    
+    <sql-query name="prcts.listactsempleado2">
+    	<![CDATA[
+			SELECT 
+            distinct 
+            PR_CTS.CompaniaSocio as "companiaowner",   
+            EmpleadoMast.Empleado as "empleado",   
+            personaant as "personaant", 
+            EmpleadoMast.EstadoEmpleado as "estadoempleado",   
+            PersonaMast.NombreCompleto as "nombrecompleto",
+            PersonaMast.Documento as "documento"
+            FROM 
+            EmpleadoMast
+                INNER JOIN PersonaMast
+                    ON (EmpleadoMast.Empleado = PersonaMast.Persona)
+                INNER JOIN PR_CTS 
+                    ON (EmpleadoMast.Empleado = PR_CTS.Empleado and
+                        EmpleadoMast.CompaniaSocio = PR_CTS.CompaniaSocio )
+            WHERE 
+            1=1 and PR_CTS.NumeroCTS >= :p_cts 
+            and PR_CTS.NumeroCTS <= :p_ctsfinal
+		 ]]>
+    </sql-query>
+</hibernate-mapping>

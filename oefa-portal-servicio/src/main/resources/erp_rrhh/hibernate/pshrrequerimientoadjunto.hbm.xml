@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.rrhh.dominio.HrRequerimientoAdjunto"
+		table="SGCORESYS.HR_REQUERIMIENTOADJUNTO">
+		<composite-id name="pk"
+			class="net.royal.erp.rrhh.dominio.HrRequerimientoAdjuntoPk">
+			<key-property name="requerimiento" type="string">
+				<column name="REQUERIMIENTO" length="10" />
+			</key-property>
+
+			<key-property name="companyowner" type="string">
+				<column name="COMPANYOWNER" length="8" />
+			</key-property>
+
+			<key-property name="secuencia" type="integer">
+				<column name="SECUENCIA" />
+			</key-property>
+		</composite-id>
+
+		<property name="fecha" type="timestamp">
+			<column name="FECHA" />
+		</property>
+
+		<property name="ruta" type="string">
+			<column name="X_DESC_ORIG_HR_FP" length="4000" />
+		</property>
+
+		<property name="ultimousuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+		<property name="ultimafechamodif" type="timestamp">
+			<column name="ULTIMAFECHAMODIF" />
+		</property>
+		<property name="uuidalfresco" type="string">
+			<column name="X_DIGITAL_RH_FP" length="4000" />
+		</property>
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,122 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>Evaluación
+			de Desempeño</h2>
+	</ui:define>
+	<ui:define name="content">
+		<h:inputHidden value="oculto" />
+		<h:form id="whrevaluacionperiodolist">
+			<p:growl autoUpdate="true" life="#{msg.generico_tiempo_growl}" />
+			<p:panelGrid columns="2" layout="grid"
+				styleClass="ui-panelgrid-blank"
+				columnClasses="ui-grid-col-1,ui-grid-col-3">
+				<h:outputLabel value="Buscar" />
+				<p:inputText value="#{cwHrEvaluacionPeriodoList.textoBusqueda}"
+					id="idtexto" onkeypress="return validarIngreso(event,'L');">
+
+					<p:ajax event="keyup"
+						listener="#{cwHrEvaluacionPeriodoList.mostrarRegistroSeleccioando}"
+						update="idTable" />
+				</p:inputText>
+			</p:panelGrid>
+
+
+			<p:menubar rendered="#{cwHrEvaluacionPeriodoList.verEvaluar}">
+				<p:menuitem
+					value="#{cwHrEvaluacionPeriodoList.dw_opciones.descripcion}"
+					icon="evaluar" id="idEvaluar"
+					action="#{cwHrEvaluacionPeriodoList.evaluar}"
+					rendered="#{cwHrEvaluacionPeriodoList.verEvaluar}"
+					disabled="#{cwHrEvaluacionPeriodoList.mostrarBoton}" />
+			</p:menubar>
+			<p:spacer />
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				id="idTable" paginator="true" paginatorPosition="bottom"
+				rowKey="#{lst.secuenciaeval}"
+				selection="#{cwHrEvaluacionPeriodoList.registroSeleccionado}"
+				value="#{cwHrEvaluacionPeriodoList.dw2}" var="lst"
+				selectionMode="single" reflow="true" rows="10"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+				<p:column headerText="Entidad" width="50">
+					<h:outputText value="#{lst.companyNombre}" />
+				</p:column>
+
+				<p:column headerText="Sec." width="30"
+					styleClass="columnatablaDerecha">
+					<h:outputText value="#{lst.secuenciaeval}" />
+				</p:column>
+
+				<p:column headerText="Periodo" width="50"
+					styleClass="columnatablaCentro" rendered="false">
+					<p:inputMask mask="9999-99" value="#{lst.periodo}"
+						style="font-weight: normal;box-shadow: inset 0 0px 0px #8f8f8f;color:black;border:none;background-color: transparent;" />
+				</p:column>
+
+				<p:column headerText="Descripción" width="190">
+					<h:outputText value="#{lst.descripcion}" />
+				</p:column>
+
+				<p:column headerText="Periodo Inicio" width="50" styleClass="columnatablaCentro">
+					<h:outputText value="#{lst.fechainicio}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}"
+							timeZone="#{msg.formato_fecha_timezone}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Periodo Fin" width="50" styleClass="columnatablaCentro">
+					<h:outputText value="#{lst.fechafin}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}"
+							timeZone="#{msg.formato_fecha_timezone}" />
+					</h:outputText>
+				</p:column>
+				
+				<p:column headerText="Fecha Inicio Evaluación" width="50" styleClass="columnatablaCentro">
+					<h:outputText value="#{lst.fechaevalinicio}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}"
+							timeZone="#{msg.formato_fecha_timezone}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Fecha Fin Evaluación" width="50" styleClass="columnatablaCentro">
+					<h:outputText value="#{lst.fechaevalfin}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}"
+							timeZone="#{msg.formato_fecha_timezone}" />
+					</h:outputText>
+				</p:column>
+				
+				<p:column headerText="Fecha Fin Feed Back" width="50" styleClass="columnatablaCentro">
+					<h:outputText value="#{lst.fechacierrereal}">
+						<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}"
+							timeZone="#{msg.formato_fecha_timezone}" />
+					</h:outputText>
+				</p:column>
+				
+
+				<p:column headerText="Estado" width="150">
+					<h:outputText value="#{lst.estadonombre}"
+						style="color:#800000;font-weight: bold" />
+				</p:column>
+			</p:dataTable>
+
+
+			<p:tooltip for="idEvaluar" showEffect="clip">
+				<h:panelGrid>
+					<p:outputLabel
+						value="#{cwHrEvaluacionPeriodoList.dw_opciones.objetowindow}" />
+				</h:panelGrid>
+			</p:tooltip>
+		</h:form>
+	</ui:define>
+</ui:composition>
+

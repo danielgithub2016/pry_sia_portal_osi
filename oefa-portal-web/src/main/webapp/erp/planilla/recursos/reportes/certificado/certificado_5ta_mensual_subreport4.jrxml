@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado_5ta_mensual_subreport4" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="661f47fc-c274-4d9c-b522-69d1999222c3">
+	<property name="ireport.zoom" value="1.9965000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{COMPANIA}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select 'Hasta 5 UIT'as rango, '8%' as porcentaje ,monto*5 as importe from SGCORESYS.pr_valoresmiscelaneos where codigo = 'UITANU' AND PERIODO =(select substr(max(periodo),1,6) from SGCORESYS.pr_planillaempleado where companiasocio =$P{COMPANIA})
+union all
+select 'Más de 5 UIT hasta 20 UIT'as rango, '14%' as porcentaje ,monto*20 as importe from SGCORESYS.pr_valoresmiscelaneos where codigo = 'UITANU' AND PERIODO =(select substr(max(periodo),1,6) from SGCORESYS.pr_planillaempleado where companiasocio =$P{COMPANIA})
+union all
+select 'Más de 20 UIT hasta 35 UIT'as rango, '17%' as porcentaje ,monto*35 as importe from SGCORESYS.pr_valoresmiscelaneos where codigo = 'UITANU' AND PERIODO =(select substr(max(periodo),1,6) from SGCORESYS.pr_planillaempleado where companiasocio =$P{COMPANIA})
+union all
+select 'Más de 35 UIT hasta 45 UIT'as rango, '20%' as porcentaje ,monto*45 as importe from SGCORESYS.pr_valoresmiscelaneos where codigo = 'UITANU' AND PERIODO=(select substr(max(periodo),1,6) from SGCORESYS.pr_planillaempleado where companiasocio = $P{COMPANIA})
+union all
+select 'Más de 45 UIT'as rango, '30%' as porcentaje ,(monto*45)+1 as importe from SGCORESYS.pr_valoresmiscelaneos where codigo = 'UITANU' AND PERIODO=(select substr(max(periodo),1,6) from SGCORESYS.pr_planillaempleado where companiasocio =$P{COMPANIA})]]>
+	</queryString>
+	<field name="RANGO" class="java.lang.String"/>
+	<field name="PORCENTAJE" class="java.lang.String"/>
+	<field name="IMPORTE" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="13" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="304" height="13" forecolor="#000000" uuid="0cf5a115-e594-4ee9-876a-dae606cd73f9"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOPES SEGÚN LEY IMPUESTO A LA RENTA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="165" height="14" forecolor="#333333" uuid="ee6d52a4-1f75-4c9b-a822-3ce7cc86f038"/>
+				<box leftPadding="5" rightPadding="0">
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RANGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="0" width="76" height="14" forecolor="#333333" uuid="7eb1e234-26cd-449f-9984-1a6b88fcd413"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PORCENTAJE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="241" y="0" width="63" height="14" forecolor="#333333" uuid="75cafde6-9b11-4539-9b43-43af49280468"/>
+				<box rightPadding="5">
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IMPORTE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

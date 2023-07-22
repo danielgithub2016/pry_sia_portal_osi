@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="hrothers.dwHrEmpleadoevaluacionEdit">
+    	<![CDATA[
+    		SELECT 
+				HR_EvaluacionEmpleado.CompanyOwner as "companyowner",   
+				HR_EvaluacionEmpleado.SecuenciaEval as "secuenciaeval",  
+				HR_EvaluacionEmpleado.Empleado as "empleado",    
+				HR_EvaluacionEmpleado.EmpleadoEvaluador as "empleadoevaluador",   
+				HR_EvaluacionEmpleado.FechaEvaluacion as "fechaevaluacion",   
+				HR_EvaluacionEmpleado.TotalPuntos as "totalpuntos",   
+				HR_EvaluacionEmpleado.TotalPuntosFuncion as "totalpuntosfuncion",   
+				HR_EvaluacionEmpleado.TotalPuntosPotencial as "totalpuntospotencial",   
+				HR_EvaluacionEmpleado.TotalPuntosMetas as "totalpuntosmetas",   
+				HR_EvaluacionEmpleado.UnidadReplicacion as "unidadreplicacion",   
+				HR_EvaluacionEmpleado.UnidadNegocio as "unidadnegocio",   
+				HR_EvaluacionEmpleado.UltimoUsuario as "ultimousuario",   
+				HR_EvaluacionEmpleado.UltimaFechaModif as "ultimafechamodif",   
+				HR_EvaluacionEmpleado.CentroCostos as "centrocostos",   
+				HR_EvaluacionEmpleado.Estado as "estado",   
+				HR_EvaluacionEmpleado.Comentario as "comentario",   
+				HR_EvaluacionEmpleado.ComentarioEvaluado as "comentarioevaluado",   
+				HR_EvaluacionEmpleado.EmpleadoGerente as "empleadogerente", 
+				HR_EvaluacionEmpleado.EmpleadoSupervisor as "empleadosupervisor",
+				HR_EvaluacionEmpleado.ComentarioSupervisor as "comentariosupervisor",
+				HR_EvaluacionEmpleado.FlagPresento as "flagpresento",
+				HR_EvaluacionEmpleado.TipoEvaluador as "tipoevaluador",
+				CAST(HR_EvaluacionEmpleado.evaluado as VARCHAR2(1) ) as "evaluado",
+				CAST(HR_EvaluacionEmpleado.evaluador as VARCHAR2(1) ) as "evaluador",
+				CAST(HR_EvaluacionEmpleado.jefe_organo as VARCHAR2(1) ) as "jefe_organo",
+				HR_EvaluacionEmpleado.ComentarioRevisor as "comentariorevisor",  
+				HR_EvaluacionPeriodo.FlagMetas as "flagmetas",   
+				HR_EvaluacionPeriodo.FlagNecesidadCapacita as "flagnecesidadcapacita",   
+				HR_EvaluacionPeriodo.FlagRevisionMetas as "flagrevisionmetas",   
+				HR_EvaluacionPeriodo.FlagPotencial as "flagpotencial",   
+				HR_EvaluacionPeriodo.FlagRevisionPotencial as "flagrevisionpotencial",   
+				HR_EvaluacionPeriodo.FlagDesempeno as "flagdesempeno",
+				HR_EvaluacionPeriodo.Periodo as "periodo",   
+				HR_EvaluacionPeriodo.FechaInicio as "fechainicio",   
+				HR_EvaluacionPeriodo.FechaFin as "fechafin",   
+				HR_EvaluacionPeriodo.FlagEvaluacionIntegral as "flagevaluacionintegral", 
+				CAST('0' AS VARCHAR2(1)) as "codigoempleado",   
+				CAST('0' AS VARCHAR2(1)) as "codigoevaluador",   
+				CAST('0' AS VARCHAR2(1)) as  "codigosupervisor",
+				CAST('0' AS VARCHAR2(1)) as  "codigogerente",
+				HR_EvaluacionPeriodo.descripcion as "descripcion"
+				FROM 
+				SGCORESYS.HR_EvaluacionEmpleado,   
+				SGCORESYS.HR_EvaluacionPeriodo  
+			WHERE 
+				( HR_EvaluacionEmpleado.SecuenciaEval = HR_EvaluacionPeriodo.SecuenciaEval ) and  
+				( HR_EvaluacionEmpleado.Empleado = :par_empleado ) AND  
+				( HR_EvaluacionEmpleado.SecuenciaEval = :par_secuencia )  AND  
+				( HR_EvaluacionEmpleado.EmpleadoEvaluador = :par_EmpleadoEvaluador )
+    		]]>
+	</sql-query>
+
+	<sql-query name="hrothers.dwHrEmpleadoevaluacion2Detail">
+    	<![CDATA[
+			SELECT	
+				hr_detalleevaluacion.companyowner as "companyowner" ,
+				hr_detalleevaluacion.secuenciaeval as "secuenciaeval" ,
+				hr_detalleevaluacion.empleado as "empleado" ,
+				hr_detalleevaluacion.empleadoevaluador as "empleadoevaluador" ,
+				hr_detalleevaluacion.secuencia as "secuencia" ,
+          		 hr_detalleevaluacion.tipo as "tipo" ,
+
+				hr_detalleevaluacion.factor as "factor" ,
+				hr_detalleevaluacion.descripcion as "descripcion" ,
+				hr_detalleevaluacion.calificacion as "calificacion" ,
+				hr_detalleevaluacion.unidadnegocio as "unidadnegocio" ,
+				hr_detalleevaluacion.ultimousuario as "ultimousuario" ,
+				hr_detalleevaluacion.ultimafechamodif as "ultimafechamodif" ,
+
+				hr_detalleevaluacion.ordenfactor as "ordenfactor",
+				hr_detalleevaluacion.factorsecuencia as "factorsecuencia"  ,
+				hr_detalleevaluacion.plantilla as "plantilla" ,
+				hr_evaluacionarea.descripcion as "descripcion",
+				hr_detalleevaluacion.areaponderacion as "areaponderacion",
+				hr_detalleevaluacion.factorponderacion as "factorponderacion",
+				hr_detalleevaluacion.FactorParticipacion as "factorparticipacion",
+				hr_factoresevaluacion.area as "area",
+				hr_detalleevaluacion.Comentarios as "comentarios",
+				hr_factoresevaluacion.tipocompetencia as "tipocompetencia"
+			FROM	SGCORESYS.hr_detalleevaluacion ,
+					SGCORESYS.HR_EvaluacionPeriodo,
+					SGCORESYS.hr_factoresevaluacion
+			LEFT JOIN SGCORESYS.hr_evaluacionarea ON
+				( hr_factoresevaluacion.area 				= hr_evaluacionarea.area)
+			   WHERE 
+				   ( HR_FactoresEvaluacion.Factor			= HR_DetalleEvaluacion.Factor) and  
+			       ( HR_DetalleEvaluacion.CompanyOwner	= :par_companyowner ) AND  
+			       ( HR_DetalleEvaluacion.Empleado			= :par_empleado ) AND  
+			       ( HR_DetalleEvaluacion.SecuenciaEval	= :par_secuenciaeval ) AND  
+			       ( HR_DetalleEvaluacion.Tipo 				= 'C' ) and
+					  HR_DetalleEvaluacion.EmpleadoEvaluador		= :par_evaluador and
+				   ( HR_EvaluacionPeriodo.SecuenciaEval 		= HR_DetalleEvaluacion.SecuenciaEval )
+						    	
+		]]>
+	</sql-query>
+
+	<sql-query name="hrothers.DwHrCursoSelectorCabezera">
+		SELECT distinct
+		HR_CursoDescripcion.Area as "area",
+		CAST((
+		SELECT MA_MiscelaneosDetalle.DescripcionLocal
+		FROM
+		sgcoresys.MA_MiscelaneosDetalle
+		WHERE (
+		MA_MiscelaneosDetalle.AplicacionCodigo = 'HR' )
+		AND (
+		MA_MiscelaneosDetalle.Compania = '999999' )
+		AND (
+		MA_MiscelaneosDetalle.CodigoTabla = 'AREACURSO' )
+		AND CodigoElemento =HR_CursoDescripcion.ARea) as VARCHAR(200))   AS "areadescripcion"
+		FROM
+		sgcoresys.HR_CursoDescripcion
+		where
+		nvl(upper(HR_CursoDescripcion.Descripcion),null) like
+		nvl(upper(:p_descripcion),null)
+		and nvl(HR_CursoDescripcion.Curso,null)
+		like nvl(:p_curso,null)
+		and nvl(HR_CursoDescripcion.Area,null) like
+		nvl(:p_area,null)
+	</sql-query>
+
+
+	<sql-query name="hrothers.DwHrCursoSelector">
+		SELECT
+		HR_CursoDescripcion.Curso as "curso",
+		HR_CursoDescripcion.Descripcion as "descripcion",
+		HR_CursoDescripcion.Estado as "estado",
+		HR_CursoDescripcion.Tipo as
+		"tipo",
+		HR_CursoDescripcion.Area as "area",
+		HR_CursoDescripcion.Area ||'
+		- '|| HR_CursoDescripcion.Descripcion as "descripcioncompleta",
+		CAST((
+		SELECT MA_MiscelaneosDetalle.DescripcionLocal
+		FROM
+		sgcoresys.MA_MiscelaneosDetalle
+		WHERE (
+		MA_MiscelaneosDetalle.AplicacionCodigo = 'HR' )
+		AND (
+		MA_MiscelaneosDetalle.Compania = '999999' )
+		AND (
+		MA_MiscelaneosDetalle.CodigoTabla = 'AREACURSO' )
+		AND CodigoElemento =HR_CursoDescripcion.ARea) as varchar (200)) AS "areadescripcion"
+		FROM
+		sgcoresys.HR_CursoDescripcion
+		where
+		nvl(upper(HR_CursoDescripcion.Descripcion),null) like
+		nvl(upper(:p_descripcion),null)
+		and nvl(HR_CursoDescripcion.Curso,null)
+		like nvl(:p_curso,null)
+		and nvl(HR_CursoDescripcion.Area,null) like
+		nvl(:p_area,null)
+		ORDER BY HR_CursoDescripcion.Descripcion
+	</sql-query>
+
+	<sql-query name="hrothers.dwmetasempleado">
+	<![CDATA[
+		SELECT HR_MetasPuesto.Secuencia as "secuencia",
+            HR_MetasPuesto.Descripcion as "descripcion", 
+            HR_MetasPuesto.FactorParticipacion as "factorparticipacion",
+            HR_MetasPuesto.Estado as "estado",
+            HR_EvaluacionPeriodo.Periodo as "periodo",
+            HR_MetasPuesto.SecuenciaEval as "secuenciaEval"
+		FROM     SGCORESYS.EmpleadoMast
+		            JOIN  SGCORESYS.HR_MetasPuesto
+		                    ON EmpleadoMast.CodigoCargo = HR_MetasPuesto.CodigoPuesto
+		            LEFT JOIN SGCORESYS.HR_EvaluacionPeriodo
+		                    ON HR_EvaluacionPeriodo.SecuenciaEval = HR_MetasPuesto.SecuenciaEval AND
+		                       HR_EvaluacionPeriodo.CompanyOwner = EmpleadoMast.CompaniaSocio
+		WHERE EmpleadoMast.Empleado = :parm_empleado
+		
+		
+	]]>
+	</sql-query>
+
+	<sql-query name="hrothers.dwfuncionesxempleado">
+	<![CDATA[
+		SELECT  CodigoFuncion  AS "codigofuncion", 
+            Comentarios as "comentarios", 
+            Funcion as "funcion", 
+            hr_puestofunciones.FactorParticipacion  as "factorparticipacion",
+            hr_puestofunciones.Estado as "estado",
+            HR_EvaluacionPeriodo.Periodo as "periodo",
+            hr_puestofunciones.SecuenciaEval as "secuenciaEval"
+		FROM     SGCORESYS.EmpleadoMast 
+		            join SGCORESYS.hr_puestofunciones
+		            on EmpleadoMast.CodigoCargo = hr_puestofunciones.CodigoPuesto
+		            left join SGCORESYS.HR_EvaluacionPeriodo
+		            on HR_EvaluacionPeriodo.SecuenciaEval = hr_puestofunciones.SecuenciaEval 
+		            and  HR_EvaluacionPeriodo.CompanyOwner = EmpleadoMast .CompaniaSocio 
+		WHERE     EmpleadoMast.Empleado = :parm_empleado
+	]]>
+	</sql-query>
+
+	<sql-query name="hrothers.DwHrCompetenciasList2">
+		SELECT
+		HR_EvaluacionCandidatoHist.Requerimiento as "requerimiento",
+		HR_EvaluacionCandidatoHist.Secuencia as "secuencia",
+		HR_EvaluacionCandidatoHist.CompanyOwner as "companyowner",
+		HR_EvaluacionCandidatoHist.Evaluacion as "evaluacion",
+		nvl(HR_EvaluacionCandidatoHist.ValorRequerido,0) as "valorrequerido",
+		nvl(HR_EvaluacionCandidatoHist.valorminimoesperado,0) as
+		"valorminimoesperado",
+		nvl(sum(VALOR1+VALOR2+VALOR3+VALOR4+VALOR5+VALOR6+VALOR7+VALOR8+VALOR9+VALOR10),0)
+		as "valor",
+		HR_EvaluacionCandidatoHist.DescripcionArea as
+		"descripcionarea",
+		HR_EvaluacionCandidatoHist.Area as "area",
+		HR_EvaluacionCandidatoHist.DescripcionFactor as "descripcionfactor",
+		HR_EvaluacionCandidatoHist.Factor as "factor",
+		HR_EvaluacionCandidatoHist.OrdenPlantillaFactor as
+		"ordenplanillafactor",
+		HR_EvaluacionCandidatoHist.TipoCompetenciaFactor as
+		"tipocompetenciafactor",
+		HR_EvaluacionCandidatoHist.NombreEval as
+		"nombreeval",
+		HR_EvaluacionCandidatoHist.Tipo as "tipo"
+		FROM
+		sgcoresys.HR_EvaluacionCandidatoHist
+		WHERE
+		HR_EvaluacionCandidatoHist.COMPANYOWNER= :p_compania AND
+		HR_EvaluacionCandidatoHist.Empleado = :p_empleado AND
+		HR_EvaluacionCandidatoHist.Secuencia = :p_secuencia AND
+		HR_EvaluacionCandidatoHist.Fecha = TO_DATE(:p_fecha,'YYYY/MM/DD
+		HH24:MI:SS')
+		GROUP BY
+		HR_EvaluacionCandidatoHist.Requerimiento,
+		HR_EvaluacionCandidatoHist.Secuencia,
+		HR_EvaluacionCandidatoHist.CompanyOwner,
+		HR_EvaluacionCandidatoHist.Evaluacion,
+		HR_EvaluacionCandidatoHist.DescripcionArea,
+		HR_EvaluacionCandidatoHist.Area,
+		HR_EvaluacionCandidatoHist.valorminimoesperado,
+		HR_EvaluacionCandidatoHist.ValorRequerido,
+		HR_EvaluacionCandidatoHist.DescripcionFactor,
+		HR_EvaluacionCandidatoHist.Factor,
+		HR_EvaluacionCandidatoHist.OrdenPlantillaFactor,
+		HR_EvaluacionCandidatoHist.TipoCompetenciaFactor,
+		HR_EvaluacionCandidatoHist.NombreEval,
+		HR_EvaluacionCandidatoHist.Tipo
+	</sql-query>
+
+	<sql-query name="hrothers.dwhrincidentecriticolist">
+	<![CDATA[
+		SELECT 
+			HR_MeritosFaltas.CompanyOwner as "companyowner",
+			HR_MeritosFaltas.Secuencia as "secuencia",
+			HR_MeritosFaltas.Empleado as "empleado",   
+			HR_MeritosFaltas.Periodo as "periodo",   
+			HR_MeritosFaltas.Tipo as "tipo",   
+			HR_MeritosFaltas.Descripcion as "descripcion",   
+			HR_MeritosFaltas.Fecha as "fecha",   
+			HR_MeritosFaltas.Responsable as "responsable",   
+			HR_MeritosFaltas.UnidadNegocio as "unidadnegocio",   
+			HR_MeritosFaltas.UltimoUsuario as "ultimousuario",    
+			HR_MeritosFaltas.UltimaFechaModif  as "ultimafechamodif" ,
+			HR_MeritosFaltas.FlagSoloenEvaluacion as "flagsoloenevaluacion"
+			FROM 
+			SGCORESYS.HR_MeritosFaltas,   
+			SGCORESYS.HR_EvaluacionPeriodo  
+			WHERE 
+			( HR_MeritosFaltas.CompanyOwner	= :par_companyowner ) 	AND
+			( HR_MeritosFaltas.Empleado 		= :par_empleado ) 				AND
+			( HR_MeritosFaltas.Fecha >= HR_EvaluacionPeriodo.FechaInicio ) AND
+			( HR_MeritosFaltas.Fecha <= :p_fechafin ) 	AND
+			( HR_EvaluacionPeriodo.SecuenciaEval = :par_secuenciaeval )    
+	]]>
+	</sql-query>
+
+	<sql-query name="hrothers.DwHrCompetenciasList">
+
+		SELECT
+		distinct
+		HR_EvaluacionCandidatoHist.Fecha as "fecha",
+		HR_EvaluacionCandidatoHist.Tipo as "tipo",
+		HR_EvaluacionCandidatoHist.COMPANYOWNER as "companyowner",
+		HR_EvaluacionCandidatoHist.empleado as "empleado",
+		HR_EvaluacionCandidatoHist.Secuencia as "secuencia",
+		HR_EvaluacionCandidatoHist.NombreEval as "nombreeval",
+		personamast.nombrecompleto as "nombrecompleto"
+		FROM
+		sgcoresys.HR_EvaluacionCandidatoHist inner
+		join
+		sgcoresys.personamast
+		on
+		HR_EvaluacionCandidatoHist.EmpleadoEvaluador = personamast.persona
+		WHERE
+		HR_EvaluacionCandidatoHist.COMPANYOWNER= :p_compania AND
+		HR_EvaluacionCandidatoHist.Empleado = :p_empleado
+
+	</sql-query>
+
+
+</hibernate-mapping>

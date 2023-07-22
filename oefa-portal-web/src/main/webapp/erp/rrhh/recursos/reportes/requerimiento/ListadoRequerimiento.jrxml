@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Listado Requerimiento" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba312c69-431f-4949-8fce-f465fe1de330">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="par_codigopuesto" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fini" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_ffin" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_dinamico" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Fabrica\\Desarrollo\\DesarrolloProductos\\OEFAMIGRA\\oefa-portal-web\\src\\main\\webapp\\erp\\rrhh\\recursos\\reportes\\requerimiento\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+HR_Requerimiento.Requerimiento ,
+PersonaMast.NOMBRECOMPLETO,
+HR_Requerimiento.EmpleadoSolicitante,
+HR_Requerimiento.CodigoPosicionSolicitante ,
+HR_Requerimiento.CodigoPuesto ,
+HR_Requerimiento.FechaSolicitud ,
+HR_Requerimiento.UnidadNegocio ,
+HR_Requerimiento.NumeroSolicitado ,
+HR_Requerimiento.NumeroPendiente ,
+HR_Requerimiento.Estado ,
+HR_Requerimiento.CompanyOwner ,
+HR_PuestoEmpresa.Descripcion ,  HR_PosicionEmpresa.Descripcion DescripcionPosicion,
+hr_requerimientoobservacion.InicioVigencia, hr_requerimientoobservacion.FinVigencia,
+HR_Requerimiento.fechalimite,
+	(select count(1)
+	from SGCORESYS.HR_EvalRequerimiento_2 b, SGCORESYS.HR_PosRequer c
+	where
+	b.Requerimiento = HR_Requerimiento.Requerimiento AND
+	b.CompanyOwner = HR_Requerimiento.CompanyOwner AND
+	(  (b.flagcodigopuesto = 'S' and HR_Requerimiento.CodigoPuestoSolicitante = $P{par_codigopuesto} ) or
+		(  NVL(b.flagcodigopuesto, 'N') <> 'S' and b.CodigoPuesto = $P{par_codigopuesto} ) )   AND
+	b.Requerimiento= c.Requerimiento AND
+	b.CompanyOwner = c.CompanyOwner AND
+    c.Secuencia = b.Secuencia AND
+	c.Secuencia_2 = b.Secuencia_2 AND
+	c.Estado = 'P'
+	) as cf_pendientes,
+HR_Requerimiento.numeroconcurso,
+HR_REQUERIMIENTO.CONVOCATORIA,
+HR_REQUERIMIENTO.CONCURSO,
+HR_REQUERIMIENTO.FECHAENVIO, SGCORESYS.FN_FECHA_DIA_UTIL(HR_REQUERIMIENTO.FECHAENVIO) AS FECHAQUIEBRE,
+FLAGDESIERTO, MOTIVODESIERTO, FECHARESULTADO,
+(select numeroestandar from SGCORESYS.hr_organigrama where HR_Requerimiento.CodigoPuesto = hr_organigrama.CodigoPuesto and HR_organigrama.companyowner = HR_Requerimiento.companyowner and
+        ano in (select numero from SGCORESYS.parametrosmast where parametroclave = 'ORGAN_YEAR')) as puesto_vacante
+FROM
+SGCORESYS.HR_Requerimiento
+	LEFT OUTER JOIN SGCORESYS.HR_PuestoEmpresa
+		ON (HR_Requerimiento.CodigoPuesto = HR_PuestoEmpresa.CodigoPuesto)
+	left outer join SGCORESYS.HR_PosicionEmpresa
+		on (HR_PosicionEmpresa.CodigoPosicion = HR_Requerimiento.CodigoPosicionSolicitante)
+	LEFT OUTER JOIN SGCORESYS.PersonaMast
+                    ON(HR_REQUERIMIENTO.EMPLEADOSOLICITANTE = PersonaMast.persona )
+	left outer join SGCORESYS.hr_requerimientoobservacion
+		on (hr_requerimientoobservacion.Requerimiento = HR_Requerimiento.Requerimiento and
+			 hr_requerimientoobservacion.CompanyOwner =	HR_Requerimiento.CompanyOwner)
+
+WHERE
+ $P!{p_dinamico}]]>
+	</queryString>
+	<field name="REQUERIMIENTO" class="java.lang.String"/>
+	<field name="NOMBRECOMPLETO" class="java.lang.String"/>
+	<field name="EMPLEADOSOLICITANTE" class="java.math.BigDecimal"/>
+	<field name="CODIGOPOSICIONSOLICITANTE" class="java.math.BigDecimal"/>
+	<field name="CODIGOPUESTO" class="java.math.BigDecimal"/>
+	<field name="FECHASOLICITUD" class="java.sql.Timestamp"/>
+	<field name="UNIDADNEGOCIO" class="java.lang.String"/>
+	<field name="NUMEROSOLICITADO" class="java.math.BigDecimal"/>
+	<field name="NUMEROPENDIENTE" class="java.math.BigDecimal"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<field name="COMPANYOWNER" class="java.lang.String"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="DESCRIPCIONPOSICION" class="java.lang.String"/>
+	<field name="INICIOVIGENCIA" class="java.sql.Timestamp"/>
+	<field name="FINVIGENCIA" class="java.sql.Timestamp"/>
+	<field name="FECHALIMITE" class="java.sql.Timestamp"/>
+	<field name="CF_PENDIENTES" class="java.math.BigDecimal"/>
+	<field name="NUMEROCONCURSO" class="java.lang.String"/>
+	<field name="CONVOCATORIA" class="java.lang.String"/>
+	<field name="CONCURSO" class="java.math.BigDecimal"/>
+	<field name="FECHAENVIO" class="java.sql.Timestamp"/>
+	<field name="FECHAQUIEBRE" class="java.sql.Timestamp"/>
+	<field name="FLAGDESIERTO" class="java.lang.String"/>
+	<field name="MOTIVODESIERTO" class="java.lang.String"/>
+	<field name="FECHARESULTADO" class="java.sql.Timestamp"/>
+	<field name="PUESTO_VACANTE" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="237" y="0" width="328" height="20" uuid="dcf24d39-9b95-4061-8bba-ae3442f42b08"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[OFICINA DE RECURSOS HUMANOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="237" y="20" width="328" height="20" uuid="d9c918f4-f033-4426-862d-4fb7a29e8ed7"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTADO DE REQUERIMIENTOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="5" y="5" width="47" height="17" uuid="1f8cda2c-a42f-4cf8-93d8-6089056daae5"/>
+				<text><![CDATA[# Req.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="52" y="5" width="58" height="17" uuid="b5d1a390-abd5-42bc-a17a-7170e7b12e2e"/>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="5" width="54" height="17" uuid="9b90604c-876e-4b3c-8e8c-5083eac43315"/>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="164" y="5" width="120" height="17" uuid="b73d71c3-d97b-4af8-b32a-7af865dce519"/>
+				<text><![CDATA[Puesto Solicitado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="5" width="103" height="17" uuid="ab601993-f175-41db-a821-7e15bc1c6164"/>
+				<text><![CDATA[Unidad Solicitante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="387" y="5" width="37" height="17" uuid="a9c0ca40-aeb6-4360-849e-4c8c2137f336"/>
+				<text><![CDATA[# Sol.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="424" y="5" width="50" height="17" uuid="edca33ec-6a3f-4987-9fba-ceb93327d3b3"/>
+				<text><![CDATA[# Pend.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="474" y="5" width="57" height="17" uuid="7b5e03e8-8b47-4d12-8500-5a2e2526f190"/>
+				<text><![CDATA[x Evaluar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="531" y="5" width="70" height="17" uuid="1e4ea402-718f-4978-82bd-04bd3d8ec94a"/>
+				<text><![CDATA[Vigencia(ini)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="601" y="5" width="73" height="17" uuid="6a35173e-72f8-4782-aae4-5c7d954187b5"/>
+				<text><![CDATA[Vigencia(fin)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="674" y="5" width="88" height="17" uuid="1f0fc5e7-500f-4b33-af80-2dc8fa264612"/>
+				<text><![CDATA[Solicitante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="762" y="5" width="40" height="17" uuid="90a85b47-e5ad-44c1-bfb9-0e9d9b6fdcc5"/>
+				<text><![CDATA[# Vac.]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="802" height="22" uuid="d12e7517-1dc4-46fd-acae-d437a77efd60"/>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="52" height="13" uuid="1cd2b4fd-5736-405b-8d70-1d00a601b07d"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REQUERIMIENTO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="52" y="0" width="58" height="13" uuid="58fd1ae6-f2b4-4baf-bbc8-360242e39549"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ESTADO}.equals("PR")?"En Preparacion":($F{ESTADO}.equals("AP")?"Aprobado":
+    ($F{ESTADO}.equals("RE")?"Rechazado":($F{ESTADO}.equals("EV")?"En evaluacion":
+        ($F{ESTADO}.equals("TE")?"Terminado":($F{ESTADO}.equals("RV")?"En Revisión":
+            ($F{ESTADO}.equals("OA")?"Enviado":null))))))]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="110" y="0" width="54" height="13" uuid="87871b13-3370-45c3-a93f-beac262dcbac"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHASOLICITUD}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="0" width="120" height="13" uuid="487beb02-8aff-4878-9ebe-94537db347a0"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="287" y="0" width="100" height="13" uuid="fc9aafca-db58-4f66-b5e6-549f4deec07a"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCIONPOSICION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="387" y="0" width="37" height="13" uuid="a6842ccf-f751-471c-8dbd-972fc7a95865"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NUMEROSOLICITADO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="424" y="0" width="50" height="13" uuid="cc7170e6-c435-4056-91e2-0f00a9614f2b"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NUMEROPENDIENTE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="474" y="0" width="57" height="13" uuid="28f2901e-626c-4f52-a379-59d96467dce1"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CF_PENDIENTES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="531" y="0" width="70" height="13" uuid="ff720995-c153-45a5-81d1-34e6efd53290"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INICIOVIGENCIA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="601" y="0" width="73" height="13" uuid="3d832a83-dd48-4760-815f-5656ee412851"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FINVIGENCIA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="674" y="0" width="88" height="13" uuid="2f87597c-947b-4f4f-a45f-f976704cb736"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRECOMPLETO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="762" y="0" width="40" height="13" uuid="0afefc88-4085-4dea-81ed-e6a8f808ebf2"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PUESTO_VACANTE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+<f:view contentType="text/html" encoding="UTF-8">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta name="viewport"
+				content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+			<meta http-equiv="Cache-Control" content="no-cache" />
+			<meta http-equiv="Pragma" content="no-cache" />
+			<title>#{cComunGlobal.nombreAplicacion}</title>
+			  <link rel="Shortcut Icon" href="http://www.oefa.gob.pe/wp-content/themes/topbusiness/favicon.png" type="image/x-icon" />
+		</f:facet>
+
+		<link rel="stylesheet" type="text/css"
+			href="#{request.contextPath}/comun/recursos/css/estilos.css" />
+		<link rel="stylesheet" type="text/css"
+			href="#{request.contextPath}/comun/recursos/css/colores.css" />
+		<script type="text/javascript"
+			src="#{request.contextPath}/comun/recursos/js/validators.js"></script>
+		<link type="text/css" rel="stylesheet"
+			href="#{request.contextPath}/comun/recursos/css/pushy.css" />
+		<link rel="stylesheet" type="text/css"
+			href="#{request.contextPath}/comun/recursos/css/default.css" />
+		<link rel="stylesheet" type="text/css"
+			href="#{request.contextPath}/comun/recursos/css/iconos.css" />
+		<h:outputScript target="body">
+			$(document).ready(function() {
+				setTimeout("document.getElementById('frm_rpt_blanco:clickme').click();", 500);			
+			})
+		</h:outputScript>
+		<style type="text/css">
+			/* H2 {
+				text-decoration: underline;
+				color: #4669A9;
+				font-family: Open sans 
+			} */
+		</style>
+	</h:head>
+	<f:metadata>
+	  <f:viewParam name="Idreq" value="#{cHrEntrevistaCAS.idreq}"/>
+	  <f:viewParam name="Idpst" value="#{cHrEntrevistaCAS.idpst}"/>	  
+	</f:metadata>
+	<h:body>
+		<div class="ui-fluid">
+			<h:form id="frm_rpt_blanco">
+				<p:growl autoUpdate="true" />
+				<h:commandButton id="clickme" value="Ir a Reporte"
+					action="#{cHrEntrevistaCAS.ReporteBlanco_02(cHrEntrevistaCAS.idreq, cHrEntrevistaCAS.idpst)}" update="@form">
+				</h:commandButton>
+			</h:form>
+		</div>
+	</h:body>
+</f:view>
+</html>
+

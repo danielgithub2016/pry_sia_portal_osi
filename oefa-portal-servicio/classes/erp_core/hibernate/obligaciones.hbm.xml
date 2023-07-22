@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Obligaciones" table="SGCORESYS.OBLIGACIONES">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.ObligacionesPk">
+            <key-property name="proveedor" type="big_decimal">
+                <column name="PROVEEDOR" length="22" />
+            </key-property>
+            <key-property name="tipodocumento" type="string">
+                <column name="TIPODOCUMENTO" length="2" />
+            </key-property>
+            <key-property name="numerodocumento" type="string">
+                <column name="NUMERODOCUMENTO" length="14" />
+            </key-property>
+        </composite-id>
+        <property name="cuentabancaria" type="string">
+            <column name="CUENTABANCARIA" length="15" />
+        </property>
+        <property name="companiacodigo" type="string">
+            <column name="COMPANIACODIGO" length="6" />
+        </property>
+        <property name="unidadnegocio" type="string">
+            <column name="UNIDADNEGOCIO" length="4" />
+        </property>
+        <property name="responsablecodigo" type="string">
+            <column name="RESPONSABLECODIGO" length="4" />
+        </property>
+        <property name="tipopago" type="string">
+            <column name="TIPOPAGO" length="2" />
+        </property>
+        <property name="fechadocumento" type="timestamp">
+            <column name="FECHADOCUMENTO" length="7" />
+        </property>
+        <property name="fecharegistro" type="timestamp">
+            <column name="FECHAREGISTRO" length="7" />
+        </property>
+        <property name="fechavencimiento" type="timestamp">
+            <column name="FECHAVENCIMIENTO" length="7" />
+        </property>
+        <property name="fechavencimientooriginal" type="timestamp">
+            <column name="FECHAVENCIMIENTOORIGINAL" length="7" />
+        </property>
+        <property name="fecharecepcion" type="timestamp">
+            <column name="FECHARECEPCION" length="7" />
+        </property>
+        <property name="fechapago" type="timestamp">
+            <column name="FECHAPAGO" length="7" />
+        </property>
+        <property name="generarpago" type="string">
+            <column name="GENERARPAGO" length="1" />
+        </property>
+        <property name="tiposervicio" type="string">
+            <column name="TIPOSERVICIO" length="6" />
+        </property>
+        <property name="monedadocumento" type="string">
+            <column name="MONEDADOCUMENTO" length="2" />
+        </property>
+        <property name="conversionrequerida" type="string">
+            <column name="CONVERSIONREQUERIDA" length="1" />
+        </property>
+        <property name="monedapago" type="string">
+            <column name="MONEDAPAGO" length="2" />
+        </property>
+        <property name="referenciatipodocumento" type="string">
+            <column name="REFERENCIATIPODOCUMENTO" length="2" />
+        </property>
+        <property name="referencianumerodocumento" type="string">
+            <column name="REFERENCIANUMERODOCUMENTO" length="12" />
+        </property>
+        <property name="referenciacodigointerno" type="string">
+            <column name="REFERENCIACODIGOINTERNO" length="20" />
+        </property>
+        <property name="obligacionrelacionadatipo" type="string">
+            <column name="OBLIGACIONRELACIONADATIPO" length="2" />
+        </property>
+        <property name="obligacionrelacionadanumero" type="string">
+            <column name="OBLIGACIONRELACIONADANUMERO" length="14" />
+        </property>
+        <property name="montoobligacion" type="big_decimal">
+            <column name="MONTOOBLIGACION" length="22" />
+        </property>
+        <property name="montoimpuestoventas" type="big_decimal">
+            <column name="MONTOIMPUESTOVENTAS" length="22" />
+        </property>
+        <property name="montonoafecto" type="big_decimal">
+            <column name="MONTONOAFECTO" length="22" />
+        </property>
+        <property name="montoimponible" type="big_decimal">
+            <column name="MONTOIMPONIBLE" length="22" />
+        </property>
+        <property name="montoadelantos" type="big_decimal">
+            <column name="MONTOADELANTOS" length="22" />
+        </property>
+        <property name="montoimpuestos" type="big_decimal">
+            <column name="MONTOIMPUESTOS" length="22" />
+        </property>
+        <property name="netomonedalocal" type="big_decimal">
+            <column name="NETOMONEDALOCAL" length="22" />
+        </property>
+        <property name="netomonedaextranjera" type="big_decimal">
+            <column name="NETOMONEDAEXTRANJERA" length="22" />
+        </property>
+        <property name="montopagoparcial" type="big_decimal">
+            <column name="MONTOPAGOPARCIAL" length="22" />
+        </property>
+        <property name="tipodecambio" type="big_decimal">
+            <column name="TIPODECAMBIO" length="22" />
+        </property>
+        <property name="aprobadopor" type="big_decimal">
+            <column name="APROBADOPOR" length="22" />
+        </property>
+        <property name="aprobadocp1" type="big_decimal">
+            <column name="APROBADOCP1" length="22" />
+        </property>
+        <property name="aprobadocp2" type="big_decimal">
+            <column name="APROBADOCP2" length="22" />
+        </property>
+        <property name="ingresadopor" type="big_decimal">
+            <column name="INGRESADOPOR" length="22" />
+        </property>
+        <property name="revisadopor" type="big_decimal">
+            <column name="REVISADOPOR" length="22" />
+        </property>
+        <property name="retenidopor" type="big_decimal">
+            <column name="RETENIDOPOR" length="22" />
+        </property>
+        <property name="estadodocumento" type="string">
+            <column name="ESTADODOCUMENTO" length="2" />
+        </property>
+        <property name="contabilizacionpendiente" type="string">
+            <column name="CONTABILIZACIONPENDIENTE" length="1" />
+        </property>
+        <property name="facturaafectasplitflag" type="string">
+            <column name="FACTURAAFECTASPLITFLAG" length="1" />
+        </property>
+        <property name="chequeindividual" type="string">
+            <column name="CHEQUEINDIVIDUAL" length="1" />
+        </property>
+        <property name="voucher" type="string">
+            <column name="VOUCHER" length="18" />
+        </property>
+        <property name="voucheranulacion" type="string">
+            <column name="VOUCHERANULACION" length="18" />
+        </property>
+        <property name="fechavoucher" type="timestamp">
+            <column name="FECHAVOUCHER" length="7" />
+        </property>
+        <property name="numeropago" type="integer">
+            <column name="NUMEROPAGO" length="22" />
+        </property>
+        <property name="numeroproceso" type="integer">
+            <column name="NUMEROPROCESO" length="22" />
+        </property>
+        <property name="procesosecuencia" type="integer">
+            <column name="PROCESOSECUENCIA" length="22" />
+        </property>
+        <property name="registronumero" type="integer">
+            <column name="REGISTRONUMERO" length="22" />
+        </property>
+        <property name="canjeregistronumero" type="integer">
+            <column name="CANJEREGISTRONUMERO" length="22" />
+        </property>
+        <property name="factorrvalidacion" type="string">
+            <column name="FACTORRVALIDACION" length="1" />
+        </property>
+        <property name="comentarios" type="string">
+            <column name="COMENTARIOS" length="100" />
+        </property>
+        <property name="comentariosadicional" type="string">
+            <column name="COMENTARIOSADICIONAL" length="100" />
+        </property>
+        <property name="razonrechazo" type="string">
+            <column name="RAZONRECHAZO" length="100" />
+        </property>
+        <property name="unidadreplicacion" type="string">
+            <column name="UNIDADREPLICACION" length="4" />
+        </property>
+        <property name="proveedorpagara" type="big_decimal">
+            <column name="PROVEEDORPAGARA" length="22" />
+        </property>
+        <property name="partidapresupuestal" type="string">
+            <column name="PARTIDAPRESUPUESTAL" length="4" />
+        </property>
+        <property name="flujodecaja" type="string">
+            <column name="FLUJODECAJA" length="4" />
+        </property>
+        <property name="centrocosto" type="string">
+            <column name="CENTROCOSTO" length="10" />
+        </property>
+        <property name="centrocostocp" type="string">
+            <column name="CENTROCOSTOCP" length="10" />
+        </property>
+        <property name="fechaaprobacion" type="timestamp">
+            <column name="FECHAAPROBACION" length="7" />
+        </property>
+        <property name="fecharevision" type="timestamp">
+            <column name="FECHAREVISION" length="7" />
+        </property>
+        <property name="controlpresupuestalflag" type="string">
+            <column name="CONTROLPRESUPUESTALFLAG" length="1" />
+        </property>
+        <property name="numerodocumentointerno" type="string">
+            <column name="NUMERODOCUMENTOINTERNO" length="20" />
+        </property>
+        <property name="cargoflag" type="string">
+            <column name="CARGOFLAG" length="1" />
+        </property>
+        <property name="montocreditofiscal" type="big_decimal">
+            <column name="MONTOCREDITOFISCAL" length="22" />
+        </property>
+        <property name="tipodecambioprovision" type="big_decimal">
+            <column name="TIPODECAMBIOPROVISION" length="22" />
+        </property>
+        <property name="afectoigvflag" type="string">
+            <column name="AFECTOIGVFLAG" length="1" />
+        </property>
+        <property name="pagaranombre" type="string">
+            <column name="PAGARANOMBRE" length="80" />
+        </property>
+        <property name="diferidoflag" type="string">
+            <column name="DIFERIDOFLAG" length="1" />
+        </property>
+        <property name="adelantoflag" type="string">
+            <column name="ADELANTOFLAG" length="1" />
+        </property>
+        <property name="transferenciaexcluidaflag" type="string">
+            <column name="TRANSFERENCIAEXCLUIDAFLAG" length="1" />
+        </property>
+        <property name="pagocajachicaflag" type="string">
+            <column name="PAGOCAJACHICAFLAG" length="1" />
+        </property>
+        <property name="montoretenidolocal" type="big_decimal">
+            <column name="MONTORETENIDOLOCAL" length="22" />
+        </property>
+        <property name="montoretenidodolares" type="big_decimal">
+            <column name="MONTORETENIDODOLARES" length="22" />
+        </property>
+        <property name="pagodiferidoflag" type="string">
+            <column name="PAGODIFERIDOFLAG" length="1" />
+        </property>
+        <property name="archivoadjunto" type="string">
+            <column name="ARCHIVOADJUNTO" length="100" />
+        </property>
+        <property name="defaultcamporeferencia" type="string">
+            <column name="DEFAULTCAMPOREFERENCIA" length="12" />
+        </property>
+        <property name="detraccioncodigo" type="string">
+            <column name="DETRACCIONCODIGO" length="4" />
+        </property>
+        <property name="detraccioncodigoflag" type="string">
+            <column name="DETRACCIONCODIGOFLAG" length="1" />
+        </property>
+        <property name="detracciondocumento" type="string">
+            <column name="DETRACCIONDOCUMENTO" length="20" />
+        </property>
+        <property name="siafExpediente" type="string">
+            <column name="SIAF_EXPEDIENTE" length="10" />
+        </property>
+        <property name="detraccionfecha" type="timestamp">
+            <column name="DETRACCIONFECHA" length="7" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="OBSERVACIONES" length="1000" />
+        </property>
+        <property name="detraccionmontoreferencial" type="big_decimal">
+            <column name="DETRACCIONMONTOREFERENCIAL" length="22" />
+        </property>
+        <property name="intSecuencial" type="string">
+            <column name="INT_SECUENCIAL" length="20" />
+        </property>
+        <property name="intEstadoproceso" type="string">
+            <column name="INT_ESTADOPROCESO" length="1" />
+        </property>
+        <property name="intEstadoenvio" type="string">
+            <column name="INT_ESTADOENVIO" length="1" />
+        </property>
+        <property name="siafSecuencia" type="string">
+            <column name="SIAF_SECUENCIA" length="4" />
+        </property>
+        <property name="siafCorrelativo" type="string">
+            <column name="SIAF_CORRELATIVO" length="4" />
+        </property>
+        <property name="siafFechapago" type="timestamp">
+            <column name="SIAF_FECHAPAGO" length="7" />
+        </property>
+        <property name="mefEstado" type="string">
+            <column name="MEF_ESTADO" length="1" />
+        </property>
+        <property name="tipocambiosiaf" type="big_decimal">
+            <column name="TIPOCAMBIOSIAF" length="22" />
+        </property>
+        <property name="cintSecuencial" type="string">
+            <column name="CINT_SECUENCIAL" length="20" />
+        </property>
+        <property name="cintEstadoproceso" type="string">
+            <column name="CINT_ESTADOPROCESO" length="1" />
+        </property>
+        <property name="cintEstadoenvio" type="string">
+            <column name="CINT_ESTADOENVIO" length="1" />
+        </property>
+        <property name="csiafExpediente" type="string">
+            <column name="CSIAF_EXPEDIENTE" length="10" />
+        </property>
+        <property name="csiafSecuencia" type="string">
+            <column name="CSIAF_SECUENCIA" length="4" />
+        </property>
+        <property name="csiafCorrelativo" type="string">
+            <column name="CSIAF_CORRELATIVO" length="4" />
+        </property>
+        <property name="csiafFechapago" type="timestamp">
+            <column name="CSIAF_FECHAPAGO" length="7" />
+        </property>
+        <property name="cmefEstado" type="string">
+            <column name="CMEF_ESTADO" length="1" />
+        </property>
+        <property name="secuenciacp" type="integer">
+            <column name="SECUENCIACP" length="22" />
+        </property>
+        <property name="cuentaprovision" type="string">
+            <column name="CUENTAPROVISION" length="20" />
+        </property>
+        <property name="tiporetencion" type="string">
+            <column name="TIPORETENCION" length="3" />
+        </property>
+        <property name="nivelservicio" type="integer">
+            <column name="NIVELSERVICIO" length="22" />
+        </property>
+        <property name="certificacionnumero" type="string">
+            <column name="CERTIFICACIONNUMERO" length="10" />
+        </property>
+        <property name="compromisonumero" type="string">
+            <column name="COMPROMISONUMERO" length="10" />
+        </property>
+        <property name="ano" type="string">
+            <column name="ANO" length="4" />
+        </property>
+        <property name="certificacionestado" type="string">
+            <column name="CERTIFICACIONESTADO" length="2" />
+        </property>
+        <property name="compromisoestado" type="string">
+            <column name="COMPROMISOESTADO" length="2" />
+        </property>
+    </class>
+</hibernate-mapping>

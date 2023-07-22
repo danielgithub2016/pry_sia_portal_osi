@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.erp.core.dominio.Pais" table="SGCORESYS.PAIS">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.PaisPk">
+            <key-property name="pais" type="string">
+                <column name="PAIS" length="4" />
+            </key-property>
+        </composite-id>
+        <property name="descripcioncorta" type="string">
+            <column name="DESCRIPCIONCORTA" length="20" />
+        </property>
+        <property name="descripcionlarga" type="string">
+            <column name="DESCRIPCIONLARGA" length="40" />
+        </property>
+        <property name="descripcionextranjera" type="string">
+            <column name="DESCRIPCIONEXTRANJERA" length="40" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="40" />
+        </property>
+        <property name="nacionalidad" type="string">
+            <column name="NACIONALIDAD" length="30" />
+        </property>
+        <property name="codigortps" type="string">
+            <column name="CODIGORTPS" length="4" />
+        </property>
+    </class>
+</hibernate-mapping>

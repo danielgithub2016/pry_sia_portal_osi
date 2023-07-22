@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.presupuesto.dominio.BuCertificacion" table="SGCORESYS.BU_CERTIFICACION">
+        <composite-id name="pk" class="net.royal.erp.presupuesto.dominio.BuCertificacionPk">
+            <key-property name="companiasocio" type="string">
+                <column name="COMPANIASOCIO" length="8" />
+            </key-property>
+            <key-property name="ano" type="string">
+                <column name="ANO" length="4" />
+            </key-property>
+            <key-property name="numerodocumento" type="string">
+                <column name="NUMERODOCUMENTO" length="10" />
+            </key-property>
+            <key-property name="secuencia" type="string">
+                <column name="SECUENCIA" length="6" />
+            </key-property>
+            <key-property name="movimiento" type="integer">
+                <column name="MOVIMIENTO" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="tipodocumento" type="string">
+            <column name="TIPODOCUMENTO" length="2" />
+        </property>
+        <property name="fechadocumento" type="timestamp">
+            <column name="FECHADOCUMENTO" length="7" />
+        </property>
+        <property name="fechapreparacion" type="timestamp">
+            <column name="FECHAPREPARACION" length="7" />
+        </property>
+        <property name="preparadopor" type="integer">
+            <column name="PREPARADOPOR" length="22" />
+        </property>
+        <property name="fechaaprobacion" type="timestamp">
+            <column name="FECHAAPROBACION" length="7" />
+        </property>
+        <property name="aprobadopor" type="integer">
+            <column name="APROBADOPOR" length="22" />
+        </property>
+        <property name="centrocosto" type="string">
+            <column name="CENTROCOSTO" length="10" />
+        </property>
+        <property name="tipocambio" type="integer">
+            <column name="TIPOCAMBIO" length="22" />
+        </property>
+        <property name="moneda" type="string">
+            <column name="MONEDA" length="2" />
+        </property>
+        <property name="montooriginal" type="integer">
+            <column name="MONTOORIGINAL" length="22" />
+        </property>
+        <property name="montototal" type="integer">
+            <column name="MONTOTOTAL" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="2" />
+        </property>
+        <property name="periodo" type="string">
+            <column name="PERIODO" length="6" />
+        </property>
+        <property name="referenciatipodocumento" type="string">
+            <column name="REFERENCIATIPODOCUMENTO" length="2" />
+        </property>
+        <property name="referencianumerodocumento" type="string">
+            <column name="REFERENCIANUMERODOCUMENTO" length="20" />
+        </property>
+        <property name="observacion" type="string">
+            <column name="OBSERVACION" length="250" />
+        </property>
+        <property name="proveedor" type="integer">
+            <column name="PROVEEDOR" length="22" />
+        </property>
+        <property name="referenciafiscal03" type="string">
+            <column name="REFERENCIAFISCAL03" length="10" />
+        </property>
+        <property name="tipoajuste" type="string">
+            <column name="TIPOAJUSTE" length="2" />
+        </property>
+        <property name="tipoproceso" type="string">
+            <column name="TIPOPROCESO" length="2" />
+        </property>
+        <property name="tipocertificacion" type="string">
+            <column name="TIPOCERTIFICACION" length="2" />
+        </property>
+        <property name="unidadnegocio" type="string">
+            <column name="UNIDADNEGOCIO" length="4" />
+        </property>
+        <property name="tipooperacion" type="string">
+            <column name="TIPOOPERACION" length="4" />
+        </property>
+        <property name="documentorelacionado" type="string">
+            <column name="DOCUMENTORELACIONADO" length="10" />
+        </property>
+        <property name="tiporegistroflag" type="string">
+            <column name="TIPOREGISTROFLAG" length="1" />
+        </property>
+        <property name="etapa" type="string">
+            <column name="ETAPA" length="2" />
+        </property>
+        <property name="estado2" type="string">
+            <column name="ESTADO2" length="2" />
+        </property>
+        <property name="observacionrechazo" type="string">
+            <column name="OBSERVACIONRECHAZO" length="100" />
+        </property>
+        <property name="numerocontrato" type="string">
+            <column name="NUMEROCONTRATO" length="10" />
+        </property>
+        <property name="voucher" type="string">
+            <column name="VOUCHER" length="10" />
+        </property>
+        <property name="siafCertificacion" type="string">
+            <column name="SIAF_CERTIFICACION" length="10" />
+        </property>
+        <property name="siafSecuencia" type="string">
+            <column name="SIAF_SECUENCIA" length="4" />
+        </property>
+        <property name="siafCorrelativo" type="string">
+            <column name="SIAF_CORRELATIVO" length="4" />
+        </property>
+        <property name="intSecuencial" type="string">
+            <column name="INT_SECUENCIAL" length="20" />
+        </property>
+        <property name="intEstadoproceso" type="string">
+            <column name="INT_ESTADOPROCESO" length="1" />
+        </property>
+        <property name="intEstadoenvio" type="string">
+            <column name="INT_ESTADOENVIO" length="1" />
+        </property>
+        <property name="mefEstado" type="string">
+            <column name="MEF_ESTADO" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

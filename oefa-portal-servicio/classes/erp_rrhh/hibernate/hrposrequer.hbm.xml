@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrPosRequer" table="SGCORESYS.HR_POSREQUER">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrPosRequerPk">
+            <key-property name="requerimiento" type="string">
+                <column name="REQUERIMIENTO" length="10" />
+            </key-property>
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+            <key-property name="postulante" type="string">
+                <column name="POSTULANTE" length="10" />
+            </key-property>
+        </composite-id>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="etapa" type="string">
+            <column name="ETAPA" length="1" />
+        </property>
+        <property name="tipopostulante" type="string">
+            <column name="TIPOPOSTULANTE" length="1" />
+        </property>
+        <property name="unidadnegocio" type="string">
+            <column name="UNIDADNEGOCIO" length="4" />
+        </property>
+        <property name="puntaje" type="integer">
+            <column name="PUNTAJE" length="22" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="OBSERVACIONES" length="300" />
+        </property>
+        <property name="fechapostulante" type="timestamp">
+            <column name="FECHAPOSTULANTE" length="7" />
+        </property>
+        <property name="variaberemunerativa" type="java.math.BigDecimal">
+            <column name="VARIABEREMUNERATIVA" length="22" />
+        </property>
+        <property name="secuencia" type="integer">
+            <column name="SECUENCIA" length="22" />
+        </property>
+        <property name="condvarrem" type="string">
+            <column name="CONDVARREM" length="10" />
+        </property>
+        <property name="observacionesfinales" type="string">
+            <column name="OBSERVACIONESFINALES" length="4000" />
+        </property>
+        <property name="secuencia2" type="integer">
+            <column name="SECUENCIA_2" length="22" />
+        </property>
+        <property name="flagFormacion" type="string">
+            <column name="FLAG_FORMACION" length="1" />
+        </property>
+        <property name="otrosestudios" type="integer">
+            <column name="OTROSESTUDIOS" length="22" />
+        </property>
+        <property name="flagOtrosestudios" type="string">
+            <column name="FLAG_OTROSESTUDIOS" length="1" />
+        </property>
+        <property name="experiencia" type="integer">
+            <column name="EXPERIENCIA" length="22" />
+        </property>
+        <property name="flagExperiencia" type="string">
+            <column name="FLAG_EXPERIENCIA" length="1" />
+        </property>
+        <property name="flagganador" type="string">
+            <column name="FLAGGANADOR" length="1" />
+        </property>
+        
+        <property name="ultimoUsuario" type="string">
+            <column name="ULTIMOUSUARIO" length="20" />
+        </property>
+        <property name="ultimaFechaModif" type="timestamp">
+            <column name="ultimaFechaModif" length="7" />
+        </property>
+    </class>
+</hibernate-mapping>

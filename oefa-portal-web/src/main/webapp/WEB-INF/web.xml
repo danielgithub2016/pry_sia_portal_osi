@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+
+	<display-name>OEFA ERP Portal 1.0</display-name>
+
+	<welcome-file-list>
+		<welcome-file>comun/paginas/login.jsf</welcome-file>
+	</welcome-file-list>
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
+
+	<!-- codigo de la aplicacion que se esta configurando -->
+	<context-param>
+		<param-name>APLICACION.CODIGO_APLICACION</param-name>
+		<param-value>SP</param-value>
+	</context-param>
+	<context-param>
+		<param-name>PREFERENCIAS.DATABASE</param-name>
+		<param-value>ORACLE</param-value>
+	</context-param>
+	<context-param>
+		<param-name>PREFERENCIAS.UNIDAD_REPLICACION</param-name>
+		<param-value>LIMA</param-value>
+	</context-param>
+	<context-param>
+		<param-name>PREFERENCIAS.EMPRESA</param-name>
+		<param-value>OEFA</param-value>
+	</context-param>
+	<context-param>
+		<param-name>PREFERENCIAS.ALMACEN</param-name>
+		<param-value>001</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>URL_OBTENER_TOKEN</param-name>
+		<param-value>http://1.1.1.1:9191/siged/login</param-value> 
+	</context-param>
+
+	<context-param>
+		<param-name>URL_OBTENER_DETALLE</param-name>
+		<param-value>http://1.1.1.1:9191/siged/rest/persona/detalle/</param-value> 
+	</context-param>
+
+	<context-param>
+		<param-name>URL_OBTENER_BANDEJAS</param-name>
+		<param-value>http://1.1.1.1:9191/siged/rest/persona/detalle/red/</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>URL_OBTENER_AREAS</param-name>
+		<param-value>http://1.1.1.1:9191/siged/rest/area/buscar</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>URL_OBTENER_CARGOS</param-name>
+		<param-value>http://1.1.1.1:9191/siged/rest/cargo/buscar</param-value> 
+	</context-param>
+
+	<context-param>
+		<param-name>URL_OBTENER_PERFILES</param-name>
+		<param-value>http://1.1.1.1:9191/siged/rest/persona/perfiles</param-value> 
+	</context-param>
+
+	<context-param>
+		<param-name>URL_GESTIONAR_USUARIO</param-name>
+		<param-value>http://1.1.1.1:9191/siged/rest/persona/gestionarUsuario</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>URL_GESTIONAR_BANDEJA</param-name>
+		<param-value>http://1.1.1.1:9191/siged/rest/persona/gestionarBandeja</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>URL_GESTIONAR_USUARIO_PERFIL</param-name>
+		<param-value>http://1.1.1.1:9191/siged/rest/persona/gestionarUsuarioPerfil</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>URL_GESTIONAR_PERSONA_ACTUALIZAR</param-name>
+		<param-value>http://1.1.1.1:9191/siged/rest/persona/actualizar</param-value> 
+	</context-param>
+
+	<context-param>
+		<param-name>USUARIO_TOKEN</param-name>
+		<param-value>TEST</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>CLAVE_TOKEN</param-name>
+		<param-value>11111111</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>ID_PERFIL_USUARIO_FINAL</param-name>
+		<param-value>2</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>PREFERENCIAS.URL_ALFRESCO</param-name>
+		<param-value>http://1.1.1.1:8089/WS_CMS/ws_cms?wsdl</param-value> 
+	</context-param>
+
+	<context-param>
+		<param-name>PREFERENCIAS.CONTACTO_SIA</param-name>
+		<param-value>Por favor comuniquese al correo help_desk@gmail.com o a
+		los números 111111111 y 999999999</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>APLICACION.IMAGEN_LOGIN_PRINCIPAL</param-name>
+		<param-value>/comun/recursos/imagenes/login/fondo_principal_001.png</param-value>
+	</context-param>
+	<context-param>
+		<param-name>APLICACION.IMAGEN_LOGIN_FONDO</param-name>
+		<param-value>/comun/recursos/imagenes/login/fondo_login_001.png</param-value>
+	</context-param>
+	<context-param>
+		<param-name>APLICACION.IMAGEN_LOGIN_BANDA1</param-name>
+		<param-value>/../comun/recursos/imagenes/login/franja_login_001.png</param-value>
+	</context-param>
+	<context-param>
+		<param-name>APLICACION.VER_LISTA_COMPANIAS</param-name>
+		<param-value>N</param-value>
+	</context-param>
+	<context-param>
+		<param-name>APLICACION.VER_LISTA_CLIENTES</param-name>
+		<param-value>N</param-value>
+	</context-param>
+	<context-param>
+		<param-name>APLICACION.VER_LISTA_PERIODOS</param-name>
+		<param-value>N</param-value>
+	</context-param>
+
+	<!-- si se desea establecer una pagina de bienvenida propio para la aplicacion 
+		y no usar el generico se especifica cual es el navegation case de bienvenida, 
+		en el UGestorNavegacion, realizara el cambio al nuevo pagina de bienvenida -->
+	<!-- si se desea establecer un login propio para la aplicacion y no usar 
+		el generico se especifica cual es el navegation case de login, en el UGestorNavegacion, 
+		realizara el cambio al nuevo login -->
+	<context-param>
+		<param-name>APLICACION.NAVEGACION_LOGIN</param-name>
+		<param-value></param-value>
+	</context-param>
+
+	<!-- si se desea establecer una pagina de bienvenida propio para la aplicacion 
+		y no usar el generico se especifica cual es el navegation case de bienvenida, 
+		en el UGestorNavegacion, realizara el cambio al nuevo pagina de bienvenida -->
+
+	<context-param>
+		<param-name>APLICACION.NAVEGACION_BIENVENIDA</param-name>
+		<param-value>pantallaBienvenida</param-value>
+	</context-param>
+
+	<!-- si se desea establecer una pagina de error propio para la aplicacion 
+		y no usar el generico se especifica cual es el navegation case de error, 
+		en el UGestorNavegacion, realizara el cambio al nuevo pagina de error -->
+	<context-param>
+		<param-name>APLICACION.NAVEGACION_ERROR</param-name>
+		<param-value></param-value>
+	</context-param>
+
+	<!-- Performence - JSF (Inicio) -->
+	<!-- <context-param> <param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name> 
+		<param-value>-1</param-value> </context-param> -->
+	<context-param>
+		<param-name>javax.faces.SKIP_COMMENTS</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>server</param-value>	<!-- client,server -->
+	</context-param>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>portalWeb</web-resource-name>
+			<url-pattern>/login</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
+	<!-- Servlet para recuperar el resultado de la firma digital -->
+
+	<!-- <servlet> <servlet-name>jersey-serlvet</servlet-name> <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class> 
+		<init-param> <param-name>com.sun.jersey.config.property.packages</param-name> 
+		<param-value>net.royal.marcainterna.rest</param-value> </init-param> <init-param> 
+		<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name> <param-value>true</param-value> 
+		</init-param> <load-on-startup>1</load-on-startup> </servlet> <servlet-mapping> 
+		<servlet-name>jersey-serlvet</servlet-name> <url-pattern>/rest/*</url-pattern> 
+		</servlet-mapping> -->
+
+	<filter>
+		<filter-name>SeguridadAccesos</filter-name>
+		<filter-class>net.royal.comun.vista.controladora.SeguridadAccesos</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>SeguridadAccesos</filter-name>
+		<url-pattern>*.jsf</url-pattern>
+		<url-pattern>*.jsp</url-pattern>
+		<url-pattern>*.xhtml</url-pattern>
+	</filter-mapping>
+
+	<context-param>
+		<param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Production</param-value>	<!-- Development,Production -->
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.CONFIG_FILES</param-name>
+		<param-value>/WEB-INF/faces-config.xml, /WEB-INF/faces-config-comun.xml, /WEB-INF/faces-config-erp_asistencia.xml, /WEB-INF/faces-config-erp_auditoria.xml, /WEB-INF/faces-config-erp_contabilidad.xml, /WEB-INF/faces-config-erp_controlpatrimonial.xml, /WEB-INF/faces-config-erp_logistica.xml, /WEB-INF/faces-config-erp_mantenimiento.xml, /WEB-INF/faces-config-erp_planeamiento.xml, /WEB-INF/faces-config-erp_planilla.xml, /WEB-INF/faces-config-erp_presupuesto.xml, /WEB-INF/faces-config-erp_rrhh.xml, /WEB-INF/faces-config-erp_seguridad.xml, /WEB-INF/faces-config-erp_tesoreria.xml</param-value>
+	</context-param>
+	<!-- EVALUACION SI SE UTILIZA O SIRVE <context-param> <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name> 
+		<param-value>resources.application</param-value> </context-param> -->
+
+	<!-- config primefaces - inicio -->
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>start</param-value>	<!-- sentinel, cupertino, sentinel -->
+	</context-param>
+	<context-param>
+		<param-name>primefaces.FONT_AWESOME</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+		<param-value>6LfwZwoAAAAAAEhRyntKF1PBzysAJLzqp2v-GMRR</param-value>
+	</context-param>
+	<context-param>
+		<param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+		<param-value>6LfwZwoAAAAAAI-oUHpdvRnkMfu9fXQHxc0P7IBu</param-value>
+	</context-param>
+	<!-- <context-param> <param-name>primefaces.PUSH_SERVER_URL</param-name> 
+		<param-value>http://127.0.0.1:8080</param-value> </context-param> -->
+	<context-param>
+		<param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>primefaces.UPLOADER</param-name>
+		<param-value>commons</param-value>
+	</context-param>
+	<!-- config primefaces - fin -->
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/comun/ctxPortalWeb.xml</param-value>
+	</context-param>
+
+	<!-- Spring - inicio -->
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- Spring - fin -->
+
+	<!-- primefaces filtros - inicio -->
+	<filter>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+		<init-param>
+			<param-name>thresholdSize</param-name>
+			<param-value>51200</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+	<!-- <filter> <filter-name>Character Encoding Filter</filter-name> <filter-class>org.primefaces.showcase.filter.CharacterEncodingFilter</filter-class> 
+		</filter> <filter-mapping> <filter-name>Character Encoding Filter</filter-name> 
+		<servlet-name>Faces Servlet</servlet-name> </filter-mapping> <filter> <filter-name>Browser 
+		Stats Filter</filter-name> <filter-class>org.primefaces.showcase.filter.UserAgentListener</filter-class> 
+		</filter> <filter-mapping> <filter-name>Browser Stats Filter</filter-name> 
+		<url-pattern>/push/chart.jsf</url-pattern> </filter-mapping> -->
+	<!-- primefaces filtros - fin -->
+
+	<!-- hibernate filtros - inicio -->
+	<!-- filtros obligatorios para que funcione el current session cada vez 
+		que se haga una llamada a las paginas jsf -->
+	<filter>
+		<filter-name>hibernateFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+		<init-param>
+			<param-name>sessionFactoryBeanName</param-name>
+			<param-value>sessionFactory</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>hibernateFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	<!-- hibernate filtros - inicio -->
+
+	<!-- <servlet>
+		<servlet-name>jersey-serlvet</servlet-name>
+		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>com.sun.jersey.config.property.packages</param-name>
+			<param-value>net.royal.marcainterna.rest</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>jersey-serlvet</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping> -->
+
+	<!-- JSF - inicio -->
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- JSF - fin -->
+
+	<!-- primefaces servlet - inicio -->
+	<!--<servlet> <servlet-name>Push Servlet</servlet-name> <servlet-class>org.primefaces.push.PushServlet</servlet-class> 
+		<load-on-startup>0</load-on-startup> <async-supported>true</async-supported> 
+		</servlet> <servlet-mapping> <servlet-name>Push Servlet</servlet-name> <url-pattern>/primepush/*</url-pattern> 
+		</servlet-mapping> -->
+	<!-- primefaces servlet - fin -->
+
+	<!-- LOG4J - inicio -->
+	<servlet>
+		<servlet-name>log4j-init</servlet-name>
+		<servlet-class>net.royal.framework.web.core.ULog4jInit</servlet-class>
+		<init-param>
+			<param-name>log4j-init-file</param-name>
+			<param-value>log4j.properties</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<!-- LOG4J - fin -->
+	<mime-mapping>
+		<extension>ttf</extension>
+		<mime-type>application/font-sfnt</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>woff</extension>
+		<mime-type>application/font-woff</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>eot</extension>
+		<mime-type>application/vnd.ms-fontobject</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>eot?#iefix</extension>
+		<mime-type>application/vnd.ms-fontobject</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>svg</extension>
+		<mime-type>image/svg+xml</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>svg#exosemibold</extension>
+		<mime-type>image/svg+xml</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>svg#exobolditalic</extension>
+		<mime-type>image/svg+xml</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>svg#exomedium</extension>
+		<mime-type>image/svg+xml</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>svg#exoregular</extension>
+		<mime-type>image/svg+xml</mime-type>
+	</mime-mapping>
+
+
+</web-app>

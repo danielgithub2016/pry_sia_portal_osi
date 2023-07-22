@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : rrhh.HrDncSolicitante -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="hrdncsolicitante.cantHrDncSolicitantePuesto">
+		SELECT COUNT(*)
+		FROM
+		SGCORESYS.HR_DNC_SOLICITANTE
+		WHERE PUESTO LIKE :wsbuscar1
+		OR PUESTO LIKE
+		:wsbuscar2
+		OR PUESTO LIKE :wsbuscar3
+		OR PUESTO LIKE :wsbuscar4
+	</sql-query>
+
+
+	<sql-query name="hrdncsolicitante.cantHrDncSolicitanteArea">
+		SELECT COUNT(*) FROM
+		SGCORESYS.HR_DNC_SOLICITANTE
+		WHERE AREA LIKE :wsbuscar1
+		OR AREA LIKE
+		:wsbuscar2
+		OR AREA LIKE :wsbuscar3
+		OR AREA LIKE :wsbuscar4
+	</sql-query>
+
+	<sql-query name="hrdncsolicitante.grabarDncSolicitanteArea">
+		UPDATE
+		SGCORESYS.HR_DNC_SOLICITANTE
+		SET NUMERO_PARTICIPANTE = NUMERO_PARTICIPANTE + 1,
+		PUESTO = CASE WHEN :wsflagpuesto ='S'
+		THEN PUESTO || :wsPuesto ELSE PUESTO END,
+		AREA = CASE WHEN :wsflagarea = 'S'
+		THEN AREA || :wsArea ELSE AREA END
+		WHERE COMPANYOWNER = :iv_compania
+		AND SECUENCIA = :wiSecuencia
+	</sql-query>
+
+
+	<sql-query name="hrdncsolicitante.insertarPuestoCapacita">
+		INSERT INTO SGCORESYS.HR_PUESTONECESIDADCAPACITA (COMPANYOWNER, SECUENCIA, PUESTO) VALUES (:compania,:secuencia,:puesto)
+	</sql-query>
+	
+	<sql-query name="hrdncsolicitante.obtenerPuestoCapacita">
+	SELECT PUESTO "puesto", 
+	       COMPANYOWNER "compania", 
+	       SECUENCIA "secuencia"
+	FROM SGCORESYS.HR_PUESTONECESIDADCAPACITA
+    WHERE COMPANYOWNER=:compania AND SECUENCIA=:secuencia
+	</sql-query>
+
+</hibernate-mapping>

@@ -1,0 +1,332 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="whrcompetenciaslist">
+		<h:panelGrid columns="2" style="border-spacing:0px;">
+
+			<h:panelGrid columns="1" style="border-spacing:0px;">
+
+				<p:outputLabel value="Seguimiento de Evaluaciones"
+					style="font-weight:bold;font-size:12px;" />
+
+				<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+					paginator="true" paginatorPosition="bottom" scrollWidth="550"
+					scrollable="true" scrollHeight="340" tableStyle="width:530px;"
+					rows="20" rowKey="#{a.fecha}"
+					selection="#{cwHrCompetenciasList.registroSeleccionado}"
+					selectionMode="single"
+					currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+					paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+					value="#{cwHrCompetenciasList.dw_list}" var="a">
+
+					<p:ajax event="rowDblselect" update="@form"
+						listener="#{cwHrCompetenciasList.onRowSelect}" />
+
+					<p:column headerText="Fecha" width="110">
+						<h:outputText value="#{a.fecha}">
+							<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Tipo" width="50">
+						<h:outputText value="#{a.tipo}" />
+					</p:column>
+
+					<p:column headerText="Evaluación" width="100">
+						<h:outputText value="#{a.nombreeval}" />
+					</p:column>
+
+					<p:column headerText="Responsable/Evaluador" width="140">
+						<h:outputText value="#{a.nombrecompleto}" />
+					</p:column>
+
+				</p:dataTable>
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="1" style="border-spacing:0px;">
+
+				<p:panel>
+					<h:panelGrid columns="2" style="border-spacing:0px;" width="100%">
+						<h:panelGrid columns="2" style="border-spacing:0px;">
+							<p:outputLabel value="Entidad" />
+							<p:inputText style="width: 300px;" disabled="true"
+								value="#{cwHrCompetenciasList.dw_position.compania}" />
+							<h:panelGrid columns="2" style="border-spacing:0px;">
+								<p:outputLabel value="Empleado" />
+								<p:inputText style="width:50px;" disabled="true"
+									value="#{cwHrCompetenciasList.dw_position.empleadootro}" />
+							</h:panelGrid>
+							<p:inputText style="width: 300px;" disabled="true"
+								value="#{cwHrCompetenciasList.dw_position.empleado}" />
+							<p:outputLabel value="Puesto" />
+							<p:inputText style="width: 300px;" disabled="true"
+								value="#{cwHrCompetenciasList.dw_position.puesto}" />
+							<p:outputLabel value="Centro de Costos" />
+							<p:inputText style="width: 300px;" disabled="true"
+								value="#{cwHrCompetenciasList.dw_position.centrocostos}" />
+						</h:panelGrid>
+						<p:panelGrid>
+							<img width="80" height="90"
+								src="data:image/jpg;base64,#{cwHrCompetenciasList.iv_foto}" />
+						</p:panelGrid>
+
+					</h:panelGrid>
+				</p:panel>
+
+				<p:panel style="margin-top:2px;margin-bottom:2px;">
+					<h:panelGrid columns="3" style="border-spacing:0px;">
+						<h:panelGrid columns="2" style="border-spacing:0px;">
+							<p:commandButton type="image" icon=""
+								style="background: black;border-radius: 0px;pointer-events:none;" />
+							<h:outputText value="Valor Requerido" />
+						</h:panelGrid>
+						<h:panelGrid columns="2" style="border-spacing:0px;">
+							<p:commandButton type="image" icon=""
+								style="background: #880000;border-radius: 0px;pointer-events:none;" />
+							<h:outputText value="Mínimo esperado" />
+						</h:panelGrid>
+						<h:panelGrid columns="2" style="border-spacing:0px;">
+							<p:commandButton type="image" icon=""
+								style="background: skyblue;border-radius: 0px;pointer-events:none;" />
+							<h:outputText value="Valor Obtenido" />
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:panel>
+
+				<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+					scrollWidth="600" scrollable="true" scrollHeight="200"
+					id="tbcompetencia" tableStyle="580px;"
+					currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+					paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+					value="#{cwHrCompetenciasList.dw_list_2}" var="b">
+					<p:columnGroup type="header">
+						<p:row>
+							<p:column headerText="Descripción" rowspan="2" style="width:30%;" />
+							<p:column headerText="DEFICIENTE" colspan="3"
+								style="width:15%;color:#00F;font-weight:bold;" />
+							<p:column headerText="REGULAR" colspan="2"
+								style="width:10%;color:#06791C;font-weight:bold;" />
+							<p:column headerText="BUENO" colspan="3"
+								style="width:15%;color: #722B82;font-weight:bold;" />
+							<p:column headerText="SUPERIOR" colspan="2"
+								style="width:10%;color: #000;font-weight:bold;" />
+						</p:row>
+						<p:row>
+							<p:column headerText="1" style="color:#00F;font-weight:bold;" />
+							<p:column headerText="2" style="color:#00F;font-weight:bold;" />
+							<p:column headerText="3" style="color:#00F;font-weight:bold;" />
+							<p:column headerText="4" style="color:#06791C;font-weight:bold;" />
+							<p:column headerText="5" style="color:#06791C;font-weight:bold;" />
+							<p:column headerText="6" style="color: #722B82;font-weight:bold;" />
+							<p:column headerText="7" style="color: #722B82;font-weight:bold;" />
+							<p:column headerText="8" style="color: #722B82;font-weight:bold;" />
+							<p:column headerText="9" style="color: #000;font-weight:bold;" />
+							<p:column headerText="10" style="color: #000;font-weight:bold;" />
+						</p:row>
+					</p:columnGroup>
+					<p:column>
+						<h:outputText value="#{b.valor} - #{b.descripcionfactor}" />
+					</p:column>
+					<p:column styleClass="columnatablaCentro">
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorrequerido == 1}"
+								style="background: black;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorminimoesperado == 1}"
+								style="background: #880000;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon="" rendered="#{b.valor == 1}"
+								style="background: skyblue;border-radius: 0px;pointer-events:none;" />
+						</center>
+					</p:column>
+					<p:column styleClass="columnatablaCentro">
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorrequerido == 2}"
+								style="background: black;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorminimoesperado == 2}"
+								style="background: #880000;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon="" rendered="#{b.valor == 2}"
+								style="background: skyblue;border-radius: 0px;pointer-events:none;" />
+						</center>
+					</p:column>
+					<p:column styleClass="columnatablaCentro">
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorrequerido == 3}"
+								style="background: black;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorminimoesperado == 3}"
+								style="background: #880000;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon="" rendered="#{b.valor == 3}"
+								style="background: skyblue;border-radius: 0px;pointer-events:none;" />
+						</center>
+					</p:column>
+					<p:column styleClass="columnatablaCentro">
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorrequerido == 4}"
+								style="background: black;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorminimoesperado == 4}"
+								style="background: #880000;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon="" rendered="#{b.valor == 4}"
+								style="background: skyblue;border-radius: 0px;pointer-events:none;" />
+						</center>
+					</p:column>
+					<p:column styleClass="columnatablaCentro">
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorrequerido == 5}"
+								style="background: black;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorminimoesperado == 5}"
+								style="background: #880000;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon="" rendered="#{b.valor == 5}"
+								style="background: skyblue;border-radius: 0px;pointer-events:none;" />
+						</center>
+					</p:column>
+					<p:column styleClass="columnatablaCentro">
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorrequerido == 6}"
+								style="background: black;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorminimoesperado == 6}"
+								style="background: #880000;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon="" rendered="#{b.valor == 6}"
+								style="background: skyblue;border-radius: 0px;pointer-events:none;" />
+						</center>
+					</p:column>
+					<p:column styleClass="columnatablaCentro">
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorrequerido == 7}"
+								style="background: black;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorminimoesperado == 7}"
+								style="background: #880000;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon="" rendered="#{b.valor == 7}"
+								style="background: skyblue;border-radius: 0px;pointer-events:none;" />
+						</center>
+					</p:column>
+					<p:column styleClass="columnatablaCentro">
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorrequerido == 8}"
+								style="background: black;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorminimoesperado == 8}"
+								style="background: #880000;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon="" rendered="#{b.valor == 8}"
+								style="background: skyblue;border-radius: 0px;pointer-events:none;" />
+						</center>
+					</p:column>
+					<p:column styleClass="columnatablaCentro">
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorrequerido == 9}"
+								style="background: black;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorminimoesperado == 9}"
+								style="background: #880000;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon="" rendered="#{b.valor == 9}"
+								style="background: skyblue;border-radius: 0px;pointer-events:none;" />
+						</center>
+					</p:column>
+					<p:column styleClass="columnatablaCentro">
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorrequerido == 10}"
+								style="background: black;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon=""
+								rendered="#{b.valorminimoesperado == 10}"
+								style="background: #880000;border-radius: 0px;pointer-events:none;" />
+						</center>
+						<br />
+						<center>
+							<p:commandButton type="image" icon="" rendered="#{b.valor == 10}"
+								style="background: skyblue;border-radius: 0px;pointer-events:none;" />
+						</center>
+					</p:column>
+				</p:dataTable>
+			</h:panelGrid>
+		</h:panelGrid>
+	</h:form>
+</ui:composition>

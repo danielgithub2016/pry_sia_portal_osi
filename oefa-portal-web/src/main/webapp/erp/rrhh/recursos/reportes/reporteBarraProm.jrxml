@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteBarra" language="groovy" pageWidth="120" pageHeight="40" columnWidth="120" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4349660c-e1e6-4fbc-83c9-287d4834a204">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PAR_COMPANYOWNER" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_EMPLEADO" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_SECUENCIA" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_EVALUADOR" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_FACTOR" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+           (SELECT
+            round(sum(a.calificacion)/ count(a.empleado),2) as "promedio"
+        FROM
+            SGCORESYS.hr_detalleevaluacion a
+                inner join SGCORESYS.hr_factoresevaluacion b on (b.factor = a.factor)
+                left join SGCORESYS.hr_evaluacionarea c on (b.area = c.area)
+                left join SGCORESYS.HR_EvaluacionPeriodo d on (d.SecuenciaEval = a.SecuenciaEval and d.CompanyOwner = a.CompanyOwner)
+                LEFT JOIN SGCORESYS.empleadomast f ON (f.EMPLEADO = a.EMPLEADO AND F.COMPANIASOCIO = a.COMPANYOWNER)
+        WHERE
+            b.FlagConcepto = 'N' and
+            a.Tipo = 'N' AND
+            f.cargo = (SELECT cargo FROM SGCORESYS.EMPLEADOMAST WHERE EMPLEADO = aa.empleado AND COMPANIASOCIO = aa.companyowner)    and
+            a.companyowner         = aa.companyowner  AND
+            a.SecuenciaEval     = aa.secuenciaeval AND
+            a.factor =aa.factor ) as valor,
+             aa.valorhastacompetencia,
+             CAST((SELECT
+            round(sum(a.calificacion)/ count(a.empleado),2) as "promedio"
+        FROM
+            SGCORESYS.hr_detalleevaluacion a
+                inner join SGCORESYS.hr_factoresevaluacion b on (b.factor = a.factor)
+                left join SGCORESYS.hr_evaluacionarea c on (b.area = c.area)
+                left join SGCORESYS.HR_EvaluacionPeriodo d on (d.SecuenciaEval = a.SecuenciaEval and d.CompanyOwner = a.CompanyOwner)
+                LEFT JOIN SGCORESYS.empleadomast f ON (f.EMPLEADO = a.EMPLEADO AND F.COMPANIASOCIO = a.COMPANYOWNER)
+        WHERE
+            b.FlagConcepto = 'N' and
+            a.Tipo = 'N' AND
+            f.cargo = (SELECT cargo FROM SGCORESYS.EMPLEADOMAST WHERE EMPLEADO = aa.empleado AND COMPANIASOCIO = aa.companyowner)    and
+            a.companyowner         = aa.companyowner  AND
+            a.SecuenciaEval     = aa.secuenciaeval AND
+            a.factor =aa.factor ) as VARCHAR(10)) as DesValorRegistrado,
+            CAST(' ' AS VARCHAR(10)) as requerido,
+            CAST(' ' AS VARCHAR(10)) as obtenido
+        FROM
+            SGCORESYS.hr_detalleevaluacion aa
+                inner join SGCORESYS.hr_factoresevaluacion b on (b.factor = aa.factor)
+                left join SGCORESYS.hr_evaluacionarea c on (b.area = c.area)
+                left join SGCORESYS.HR_EvaluacionPeriodo d on (d.SecuenciaEval = aa.SecuenciaEval and d.CompanyOwner = aa.CompanyOwner)
+        WHERE
+            b.FlagConcepto = 'N' and
+            aa.Tipo = 'N' AND
+            aa.companyowner         = $P{PAR_COMPANYOWNER} AND
+            CAST(aa.SecuenciaEval AS VARCHAR(10))    = $P{PAR_SECUENCIA} AND
+            CAST(aa.factor AS VARCHAR(10))=$P{PAR_FACTOR}  AND
+            CAST(aa.empleado AS VARCHAR(10))= $P{PAR_EMPLEADO}  AND
+            CAST(aa.empleadoevaluador AS VARCHAR(10)) = $P{PAR_EVALUADOR}]]>
+	</queryString>
+	<field name="VALOR" class="java.math.BigDecimal"/>
+	<field name="VALORHASTACOMPETENCIA" class="java.math.BigDecimal"/>
+	<field name="DESVALORREGISTRADO" class="java.lang.String"/>
+	<field name="REQUERIDO" class="java.lang.String"/>
+	<field name="OBTENIDO" class="java.lang.String"/>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<barChart>
+				<chart isShowLegend="false">
+					<reportElement x="0" y="0" width="120" height="35" uuid="ecc04ae2-e5f0-44cb-98a3-43b8aada899d"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["obtenido"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{OBTENIDO}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{VALOR}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["requerido"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{REQUERIDO}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{VALORHASTACOMPETENCIA}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="false" isShowTickLabels="false" isShowTickMarks="false">
+					<plot orientation="Horizontal">
+						<seriesColor seriesOrder="0" color="#0000CC"/>
+						<seriesColor seriesOrder="1" color="#0000CC"/>
+					</plot>
+					<itemLabel color="#FFFFFF" backgroundColor="#FFFFFF"/>
+					<categoryAxisFormat>
+						<axisFormat verticalTickLabels="false"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat verticalTickLabels="false"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+			<rectangle>
+				<reportElement x="1" y="2" width="117" height="3" forecolor="#FFFFFF" uuid="1c9cf712-a8e1-48d8-81c9-70e4027f772c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="1" y="1" width="12" height="33" forecolor="#FFFFFF" uuid="6f7ad011-c672-41db-9bbf-579b7e6310f4"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="107" y="1" width="12" height="33" forecolor="#FFFFFF" uuid="ebff1648-4229-44da-ad0e-8fae8f2accb4"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="2" y="16" width="117" height="18" forecolor="#FFFFFF" uuid="4a93ee03-2a28-4dd7-bb21-e952ceb6c476"/>
+			</rectangle>
+		</band>
+	</detail>
+</jasperReport>

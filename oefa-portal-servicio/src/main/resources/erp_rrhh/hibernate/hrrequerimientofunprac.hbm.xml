@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrRequerimientofunprac" table="SGCORESYS.HR_REQUERIMIENTOFUNPRAC">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrRequerimientofunpracPk">
+            <key-property name="requerimiento" type="string">
+                <column name="REQUERIMIENTO" length="10" />
+            </key-property>
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+        </composite-id>
+        <property name="flagformacion" type="string">
+            <column name="FLAGFORMACION" length="1" />
+        </property>
+        <property name="flagnivelacademico" type="string">
+            <column name="FLAGNIVELACADEMICO" length="1" />
+        </property>
+        <property name="ciclo" type="integer">
+            <column name="CICLO" length="22" />
+        </property>
+        <property name="profesion" type="string">
+            <column name="PROFESION" length="4000" />
+        </property>
+        <property name="conocimientos" type="string">
+            <column name="CONOCIMIENTOS" length="4000" />
+        </property>
+        <property name="flagword" type="string">
+            <column name="FLAGWORD" length="1" />
+        </property>
+        <property name="flagnivelword" type="string">
+            <column name="FLAGNIVELWORD" length="1" />
+        </property>
+        <property name="flagexcel" type="string">
+            <column name="FLAGEXCEL" length="1" />
+        </property>
+        <property name="flagnivelexcel" type="string">
+            <column name="FLAGNIVELEXCEL" length="1" />
+        </property>
+        <property name="flagpowerpoint" type="string">
+            <column name="FLAGPOWERPOINT" length="1" />
+        </property>
+        <property name="flagnivelpowerpoint" type="string">
+            <column name="FLAGNIVELPOWERPOINT" length="1" />
+        </property>
+        <property name="flagotro" type="string">
+            <column name="FLAGOTRO" length="1" />
+        </property>
+        <property name="otroinformatica" type="string">
+            <column name="OTROINFORMATICA" length="4000" />
+        </property>
+        <property name="flagnivelotroinformatica" type="string">
+            <column name="FLAGNIVELOTROINFORMATICA" length="1" />
+        </property>
+        <property name="flagindispensableidioma" type="string">
+            <column name="FLAGINDISPENSABLEIDIOMA" length="1" />
+        </property>
+        <property name="flagnivelindispensableidioma" type="string">
+            <column name="FLAGNIVELINDISPENSABLEIDIOMA" length="1" />
+        </property>
+        <property name="flagingles" type="string">
+            <column name="FLAGINGLES" length="1" />
+        </property>
+        <property name="flagnivelingles" type="string">
+            <column name="FLAGNIVELINGLES" length="1" />
+        </property>
+        <property name="flagotroidioma" type="string">
+            <column name="FLAGOTROIDIOMA" length="1" />
+        </property>
+        <property name="otroidioma" type="string">
+            <column name="OTROIDIOMA" length="4000" />
+        </property>
+        <property name="flagnivelotroidioma" type="string">
+            <column name="FLAGNIVELOTROIDIOMA" length="1" />
+        </property>
+        <property name="flagexperiencia" type="string">
+            <column name="FLAGEXPERIENCIA" length="1" />
+        </property>
+        <property name="tiempoexperiencia" type="string">
+            <column name="TIEMPOEXPERIENCIA" length="4000" />
+        </property>
+        <property name="detalle" type="string">
+            <column name="DETALLE" length="4000" />
+        </property>
+    </class>
+</hibernate-mapping>

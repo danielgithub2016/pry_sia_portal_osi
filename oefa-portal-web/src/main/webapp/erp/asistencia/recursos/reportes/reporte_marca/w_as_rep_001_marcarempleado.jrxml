@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_as_rep_001_marcarempleado" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4ddff00a-cbac-4104-8af5-b4b5f1c884a9">
+	<property name="ireport.zoom" value="1.1269722013523673"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\YatacoW\\Desktop\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fechainicio" class="java.util.Date"/>
+	<parameter name="p_fechafin" class="java.util.Date"/>
+	<parameter name="companiaruc" class="java.lang.String">
+		<defaultValueExpression><![CDATA[20133840533]]></defaultValueExpression>
+	</parameter>
+	<parameter name="companianombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA["OEFA"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_queryempleado1" class="java.lang.String"/>
+	<parameter name="p_admin" class="java.lang.String"/>
+	<parameter name="DETALLE" class="java.util.List"/>
+	<parameter name="fechadesde" class="java.util.Date"/>
+	<parameter name="fechahasta" class="java.util.Date"/>
+	<parameter name="p_queryempleado2" class="java.lang.String"/>
+	<parameter name="p_sid" class="java.lang.Integer"/>
+	<parameter name="Logo" class="java.lang.String"/>
+	<parameter name="p_usuario" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+        sel.empleado,
+        pm.nombrecompleto,
+        ac.COSTCENTER,
+        ac.localname
+    FROM(
+    SELECT
+        hed.empleado as empleado
+        FROM
+        (
+        SELECT ca.empleado, trunc(ca.fecha) as fecha
+        from sgcoresys.as_accesosdiarios ca
+        where $P!{p_queryempleado1} ca.fecha between $P{p_fechainicio} and $P{p_fechafin}+1
+        group by ca.empleado, trunc(ca.fecha)
+        ) hed
+        inner join
+        (
+        SELECT de.carnetid, trunc(de.fecha) fecha, de.hora, de.empleado,
+        de.secuencia,
+        row_number() over (PARTITION BY de.empleado, trunc(de.fecha) order by
+        de.empleado,
+        de.hora) secuenciadia FROM sgcoresys.as_accesosdiarios de
+        where $P!{p_queryempleado2} de.fecha between $P{p_fechainicio} and $P{p_fechafin}+1
+        order by de.empleado, de.secuencia, de.fecha
+        ) res
+        on hed.empleado = res.empleado and hed.fecha=res.fecha
+AND ((hed.empleado IN (SELECT as_empleados_autorizados.empleado
+                              FROM SGCORESYS.as_empleados_autorizados
+                              WHERE as_empleados_autorizados.SID = $P{p_sid} ))
+or
+		(EXISTS(SELECT 1
+		FROM SGCORESYS.EMPLEADOMAST e
+		where e.empleado = hed.empleado AND
+		(e.dptoareaoperativa in (
+		select a.area from SGCORESYS.EMPLEADOMAST e2
+		inner join SGCORESYS.as_area a
+		on e2.dptoareaoperativa = a.area
+		INNER JOIN SGCORESYS.SEGURIDADPERFILUSUARIO SP
+		ON SP.USUARIO = e2.codigousuario
+		INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+		ON SP.PERFIL
+		= SA.USUARIO
+		WHERE SA.CONCEPTO = 'SYSREA' AND
+		SP.USUARIO = $P{p_usuario}) or
+(
+e.dptoareaoperativa IN (
+		    SELECT AREA FROM SGCORESYS.AS_AREA WHERE AREApADRE in
+		    (SELECT E.dptoareaoperativa
+		FROM SGCORESYS.EMPLEADOMAST E INNER JOIN
+		SGCORESYS.SEGURIDADPERFILUSUARIO SP
+		ON E.CODIGOUSUARIO = SP.USUARIO
+		INNER JOIN SGCORESYS.SEGURIDADAUTORIZACIONES SA
+		ON SP.PERFIL = SA.USUARIO
+		WHERE SA.CONCEPTO = 'SYSREA' AND
+		SP.USUARIO = $P{p_usuario})
+		    )
+)
+
+)
+
+))
+or $P{p_admin} = 'S')
+        group by hed.empleado
+        order by hed.empleado) sel
+   inner join sgcoresys.personamast pm
+   on pm.persona = sel.empleado
+   inner join sgcoresys.empleadomast em
+   on sel.empleado = em.empleado
+   inner join sgcoresys.ac_costcentermst ac
+   on em.centrocostos = ac.costcenter]]>
+	</queryString>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="NOMBRECOMPLETO" class="java.lang.String"/>
+	<field name="COSTCENTER" class="java.lang.String"/>
+	<field name="LOCALNAME" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="103" splitType="Stretch">
+			<staticText>
+				<reportElement x="704" y="0" width="49" height="11" uuid="ecf2c08e-b56d-4896-bea0-a43bcec974ab"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="341" y="85" width="24" height="10" uuid="fa9c2f37-6ee3-4e0d-8760-d0d9dc03f3de"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Desde:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="407" y="85" width="24" height="10" uuid="0f38c0af-7a52-4584-86d8-be4db43ad212"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Hasta:]]></text>
+			</staticText>
+			<textField pattern="HH:mm:ss">
+				<reportElement x="755" y="11" width="44" height="11" uuid="cf285ebc-5166-47a5-9b5e-08d06948f59b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="704" y="11" width="50" height="11" uuid="13db086d-26d0-4d3c-b450-2b2449a49097"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="365" y="85" width="39" height="10" uuid="580f900f-f0f3-43da-ac87-58c604664f1a"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechadesde}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="755" y="0" width="44" height="11" uuid="a51197e0-66f6-42f6-9026-b873c18227db"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="50" width="801" height="19" forecolor="#000000" uuid="a983d197-6e6f-4602-adab-b5a5bac75e4e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Marcas]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="431" y="85" width="39" height="10" uuid="58c46b37-2d62-47ae-bb70-6419a887c50b"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechahasta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="71" width="801" height="13" uuid="47525782-13ce-434b-b6d7-051cadc6457b"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tipo Planilla: Todas]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="21" y="53" width="101" height="11" uuid="10a05ec7-d4cd-4e19-ac09-c5c06d6075fc"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{companiaruc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="53" width="20" height="11" uuid="50a25d66-93b9-4ab7-a400-2ac0373a6b1b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[RUC]]></text>
+			</staticText>
+			<image>
+				<reportElement x="2" y="0" width="150" height="50" uuid="64602873-b922-44fb-bbaa-a8a199185d32"/>
+				<imageExpression><![CDATA[$P{Logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="704" y="11" width="49" height="11" uuid="9a8a440d-f3e9-4942-9aec-3ab3b68f557f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<textField pattern="HH:mm:ss">
+				<reportElement x="755" y="11" width="44" height="11" uuid="0b7f8292-4556-421f-bf0b-efd203dd895e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="19" uuid="2b2a885f-e1b6-411a-91fd-7b63be92529c"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="44" y="0" width="1" height="19" uuid="cd963491-7c55-4a11-94a3-77e5acfb1c6f"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="95" y="0" width="1" height="19" uuid="ace2886a-a389-439a-acd9-e5e592338504"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="275" y="0" width="1" height="19" uuid="b00deb28-d1e9-40ee-8079-1823f92cc9b9"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="0" width="43" height="19" forecolor="#000000" backcolor="#009933" uuid="d05c1f56-24ea-466d-9f8b-7af5ff6cd36c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="44" y="0" width="51" height="19" forecolor="#000000" backcolor="#009933" uuid="d9652b9c-7ce2-423d-becc-40976cf3f9e7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="96" y="0" width="179" height="19" forecolor="#000000" backcolor="#009933" uuid="6a5951ac-9c33-475e-bc64-cd2638196e67"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horario Diario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="276" y="0" width="526" height="19" forecolor="#000000" backcolor="#009933" uuid="aa0e7b13-464d-483d-acdb-976983ca1148"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Marcaciones]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="73" splitType="Stretch">
+			<subreport>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="47" width="802" height="23" uuid="351f2e97-bcfe-482b-844f-e31526b7f734"/>
+				<subreportParameter name="p_empleado">
+					<subreportParameterExpression><![CDATA[$F{EMPLEADO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{DETALLE})]]></dataSourceExpression>
+				<subreportExpression><![CDATA["w_as_rep_001_marcarempleado_detalle.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="50" y="27" width="30" height="20" uuid="e0794274-a303-4701-a190-78120ef775be"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMPLEADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="85" y="27" width="333" height="20" uuid="4fc36135-f10e-4fa2-aea2-af85582d683d"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRECOMPLETO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="1" y="6" width="84" height="20" uuid="87913aaa-41a4-41e9-b051-0eb4303802e9"/>
+				<textElement>
+					<font size="9" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COSTCENTER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="85" y="6" width="333" height="20" uuid="4f135e2c-0b2a-4a38-99ee-baf53e886158"/>
+				<textElement>
+					<font size="9" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOCALNAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="27" width="40" height="20" uuid="5b5cd5c8-2b7b-46de-ac88-31b1a548e040"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="56" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="403" y="38" width="40" height="11" uuid="19cc658f-0c64-40a3-a843-69024936bb0f"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="323" y="38" width="80" height="11" uuid="8631c214-5fe4-40ea-9738-8fdf3ed55161"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="10" width="68" height="11" uuid="d0589faa-b299-44aa-afdd-dcf206279595"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Registros:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="10" width="41" height="11" uuid="c35532ae-1f99-46d2-aace-b98c177c8bdf"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DETALLE}.size()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="21" width="41" height="11" uuid="fc5d5b2c-0c51-4ba3-b6a1-4e385a3a5b50"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="21" width="68" height="11" uuid="8afb83e6-8ca6-46c9-a333-9ce91e941bf8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Trabajadores:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

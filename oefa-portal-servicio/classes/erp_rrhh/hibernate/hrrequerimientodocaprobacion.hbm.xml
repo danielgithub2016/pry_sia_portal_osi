@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrRequerimientodocaprobacion" table="SGCORESYS.HR_REQUERIMIENTODOCAPROBACION">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrRequerimientodocaprobacionPk">
+            <key-property name="requerimiento" type="string">
+                <column name="REQUERIMIENTO" length="15" />
+            </key-property>
+            <key-property name="compania" type="string">
+                <column name="COMPANIA" length="15" />
+            </key-property>
+            <key-property name="secuencial" type="integer">
+                <column name="SECUENCIAL" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="idgrupoaprobacion" type="integer">
+            <column name="IDGRUPOAPROBACION" length="22" />
+        </property>
+        <property name="responsable" type="integer">
+            <column name="RESPONSABLE" length="22" />
+        </property>
+        <property name="indicadoraprobacion" type="integer">
+            <column name="INDICADORAPROBACION" length="22" />
+        </property>
+        <property name="fechaaprobacion" type="timestamp">
+            <column name="FECHAAPROBACION" length="7" />
+        </property>
+        <property name="comentario" type="string">
+            <column name="COMENTARIO" length="150" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="usuariocreacion" type="string">
+            <column name="USUARIOCREACION" length="15" />
+        </property>
+        <property name="fechacreacion" type="timestamp">
+            <column name="FECHACREACION" length="7" />
+        </property>
+        <property name="usuariomodificacion" type="string">
+            <column name="USUARIOMODIFICACION" length="15" />
+        </property>
+        <property name="fechamodificacion" type="timestamp">
+            <column name="FECHAMODIFICACION" length="7" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,1039 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/comun/plantillas/main.xhtml">
+
+	<ui:define name="content">
+
+		<script>
+			function callkeydownhandler(evnt) {
+				var ev = (evnt) ? evnt : event;
+				var code = (ev.which) ? ev.which : event.keyCode;
+
+				if (code == 113) {// F2
+					document.getElementById(
+							"wasautorizacionpreprocesohextraedit:btnbuscaremp")
+							.click();
+				}
+			}
+			if (window.document.addEventListener) {
+				window.document.addEventListener("keydown", callkeydownhandler,
+						false);
+			} else {
+				window.document.attachEvent("onkeydown", callkeydownhandler);
+			}
+		</script>
+		<div class="ui-fluid">
+
+			<p:outputLabel
+				value="Autorizaciones #{cwAsAutorizacionPreprocesoHextraEdit.pantallaTituloReferente}"
+				styleClass="tituloSubrayado"
+				rendered="#{cwAsAutorizacionPreprocesoAprobacion.flagOrigenSolicitud == 'A'}" />
+			<p:outputLabel
+				value="Solicitudes #{cwAsAutorizacionPreprocesoHextraEdit.pantallaTituloReferente}"
+				styleClass="tituloSubrayado"
+				rendered="#{cwAsAutorizacionPreprocesoAprobacion.flagOrigenSolicitud == 'S'}" />
+			<br />
+
+			<h:form id="wasautorizacionpreprocesohextraedit">
+
+
+				<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+
+				<p:commandButton style="display:none" id="btnbuscaremp"
+					update="wasautorizacionpreprocesohextraedit"
+					action="#{cwAsAutorizacionPreprocesoHextraEdit.empleadoKeyEvent}">
+				</p:commandButton>
+
+				<p:panel>
+					<p:panelGrid columns="3" id="grdEmpleado"
+						style="border-spacing:0px;"
+						columnClasses="ui-grid-col-1,ui-grid-col-4,ui-grid-col-4"
+						layout="grid" styleClass="ui-panelgrid-blank">
+
+						<p:outputLabel value="Cod. Empleado" />
+						<p:panelGrid columns="3" style="border-spacing:0px;"
+							columnClasses="ui-grid-col-3,ui-grid-col-10,ui-grid-col-2"
+							layout="grid" styleClass="ui-panelgrid-blank">
+							<p:inputText onkeypress="return validarIngreso(event,'N');"
+								title="Ingrese el Código de Empleado y presione la tecla F2 para obtener sus datos."
+								disabled="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarcb1 or 
+							            !cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarok}"
+								value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.empleado}">
+							</p:inputText>
+							<p:inputText disabled="true"
+								value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.empleadonombre}" />
+							<p:commandButton icon="buscar" immediate="true"
+								title="Buscar Empleado"
+								rendered="#{!((cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso == '34' or cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso == '101') and cwAsAutorizacionPreprocesoHextraEdit.dw_1.estado == 'A')}"
+								disabled="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarcb1 or
+						            !cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarok}"
+								action="#{cwAsEmpleadoSelect.iniciarControladora}"
+								onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+								update="@form">
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.nombreContenedorRefrescar}"
+									value="wasautorizacionpreprocesohextraedit" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.iMantenimientoReferencia}"
+									value="#{cwAsAutorizacionPreprocesoHextraEdit}" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.nombreVentanaEmergente}"
+									value="w_as_empleado_select" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.pantallaReferencia}"
+									value="w_as_autorizacion_preproceso_hextra_edit" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.nombreTipoBusqueda}"
+									value="agregarEmpleado" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.flgTodos}" value="N" />
+
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.esPermisoSIGED}" value="false" />
+
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.usuarioRed}" value="" />
+
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.mostraAsignarTodos}" value="false" />
+
+
+
+							</p:commandButton>
+							<p:commandButton icon="buscar" immediate="true"
+								title="Buscar Empleado"
+								rendered="#{(cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso == '34' or cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso == '101') and cwAsAutorizacionPreprocesoHextraEdit.dw_1.estado == 'A'}"
+								disabled="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarcb1 or
+						            !cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarok}"
+								action="#{cwAsEmpleadoSelect.listarTodos}" update="@form">
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.nombreContenedorRefrescar}"
+									value="wasautorizacionpreprocesohextraedit" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.iMantenimientoReferencia}"
+									value="#{cwAsAutorizacionPreprocesoHextraEdit}" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.nombreVentanaEmergente}"
+									value="w_as_empleado_select" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.pantallaReferencia}"
+									value="w_as_autorizacion_preproceso_hextra_edit" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.flgTodos}" value="S" />
+							</p:commandButton>
+						</p:panelGrid>
+
+						<p:panelGrid columns="1" style="border-spacing:0px;"
+							columnClasses="ui-grid-col-12" layout="grid"
+							styleClass="ui-panelgrid-blank">
+
+							<p:outputLabel
+								value="* Ingrese el Código de Empleado y presione la tecla F2 para obtener sus datos." />
+
+						</p:panelGrid>
+
+
+						<p:outputLabel value="Área Operativa" />
+						<p:inputText disabled="true"
+							value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.puesto}" />
+						<p:panelGrid columns="2"
+							columnClasses="ui-grid-col-3,ui-grid-col-4" layout="grid"
+							styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+							<p:outputLabel value="Estado: " style="font-size:18px" />
+							<p:outputLabel value="Solicitado" style="font-size:18px"
+								rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.estado == 'S'}" />
+							<p:outputLabel value="Aprobado" style="font-size:18px"
+								rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.estado == 'A'}" />
+							<p:outputLabel value="Visado" style="font-size:18px"
+								rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.estado == 'V'}" />
+							<p:outputLabel value="Rechazado" style="font-size:18px"
+								rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.estado == 'R'}" />
+						</p:panelGrid>
+
+						<p:outputLabel value="Centro de Costo" />
+						<p:inputText disabled="true"
+							value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.centrocosto}" />
+
+						<p:panelGrid columns="2" style="border-spacing:0px;"
+							columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid"
+							styleClass="ui-panelgrid-blank">
+							<p:commandButton value="Aceptar" icon="aceptar" update="@form"
+								onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+								rendered="#{!cwAsAutorizacionPreprocesoHextraEdit.ib_elimina}"
+								action="#{cwAsAutorizacionPreprocesoHextraEdit.guardar}"
+								disabled="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarok or
+								(cwAsAutorizacionPreprocesoHextraEdit.dw_1.estado == 'A' and cwAsAutorizacionPreprocesoHextraEdit.accion != 'Add')}">
+								<f:param name="validation1" value="1"></f:param>
+							</p:commandButton>
+
+							<p:commandButton value="Aceptar" icon="aceptar" update="@form"
+								onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+								rendered="#{cwAsAutorizacionPreprocesoHextraEdit.ib_elimina}"
+								action="#{cwAsAutorizacionPreprocesoHextraEdit.guardar}"
+								disabled="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarok}">
+								<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+									icon="alerta" message="¿Desea eliminar la información?" />
+							</p:commandButton>
+
+							<p:commandButton value="Cancelar" icon="cancelar"
+								immediate="true" validateClient="false"
+								action="#{cwAsAutorizacionPreprocesoHextraEdit.salir}">
+								<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+									icon="alerta" message="¿Desea cancelar la Operación?" />
+							</p:commandButton>
+						</p:panelGrid>
+					</p:panelGrid>
+				</p:panel>
+
+
+
+
+
+				<p:panel>
+					<p:panelGrid columns="3"
+						columnClasses="ui-grid-col-12,ui-grid-col-10,ui-grid-col-1"
+						layout="grid" styleClass="ui-panelgrid-blank"
+						style="border-spacing:0px;">
+
+						<p:fieldset>
+
+							<p:panelGrid columns="1" columnClasses="ui-grid-col-20"
+								layout="grid" styleClass="ui-panelgrid-blank"
+								style="border-spacing:0px;">
+								<h:outputLabel value="Evento"
+									style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+
+								<p:outputPanel>
+									<p:selectOneRadio id="customRadio" layout="custom"
+										required="#{param['validation1']=='1'}"
+										requiredMessage="Debe ingresar un evento"
+										disabled="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitardweventos or
+									cwAsAutorizacionPreprocesoHextraEdit.dw_1.empleado == NULL or !cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarok}"
+										valueChangeListener="#{cwAsAutorizacionPreprocesoHextraEdit.valueChangeEventEvento}"
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion}">
+										<f:selectItems itemValue="#{event.conceptoacceso}"
+											itemLabel="#{event.nombrelargo}" var="event"
+											value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_eventos}" />
+										<p:ajax update="wasautorizacionpreprocesohextraedit" />
+									</p:selectOneRadio>
+
+									<ui:repeat
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_eventos}"
+										var="eve">
+										<p:panelGrid columns="2" cellpadding="1">
+											<p:radioButton
+												for="wasautorizacionpreprocesohextraedit:customRadio"
+												itemIndex="#{eve.indice}" />
+											<p:outputLabel value="#{eve.nombrelargo}" />
+										</p:panelGrid>
+									</ui:repeat>
+								</p:outputPanel>
+							</p:panelGrid>
+
+							<p:panelGrid columns="1" columnClasses="ui-grid-col-20"
+								layout="grid" styleClass="ui-panelgrid-blank"
+								style="border-spacing:0px;"
+								rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion == 'CHOR' and
+									cwAsAutorizacionPreprocesoHextraEdit.dw_1.empleado != NULL}">
+								<p:outputLabel value="Horario" />
+								<p:selectOneMenu
+									value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.tipohorario}"
+									style="width:200px">
+									<f:selectItem itemLabel="--Seleccione--" />
+									<f:selectItems
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dwc_tipohorario}" />
+								</p:selectOneMenu>
+							</p:panelGrid>
+
+							<p:panelGrid columns="2"
+								columnClasses="ui-grid-col-2,ui-grid-col-6" layout="grid"
+								styleClass="ui-panelgrid-blank" style="border-spacing:0px;"
+								rendered="#{(cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion == 'OTRO'  or 
+											 cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion == 'COMP'  or
+											 cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion == 'PSIG'  or
+											 cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion == 'ADFR' )
+									and cwAsAutorizacionPreprocesoHextraEdit.dw_1.empleado != NULL}">
+								<p:outputLabel value="Concepto" />
+								<p:selectOneMenu
+									requiredMessage="El campo Concepto es obligatorio."
+									filter="true" filterMatchMode="contains"
+									required="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarconcepto}"
+									disabled="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarconcepto}"
+									valueChangeListener="#{cwAsAutorizacionPreprocesoHextraEdit.valuechangedConceptoAcceso}"
+									value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso}">
+
+									<p:ajax event="change" onstart="PF('bUI').block();"
+										update="segundaSeccion,grdDetEvento" oncomplete="PF('bUI').unblock();" />
+
+									<f:selectItem itemLabel="--Seleccione--" />
+									<f:selectItems
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dwc_ConceptoAccesoFiltrado}"
+										var="conac" itemValue="#{conac.conceptoacceso}"
+										itemLabel="#{conac.conceptoacceso} - #{conac.descripcionlocal} - (#{conac.descripcion})" />
+									<p:ajax update="@form" />
+								</p:selectOneMenu>
+							</p:panelGrid>
+
+
+							<p:panelGrid columns="2" id="grdDetEvento"
+								columnClasses="ui-grid-col-2,ui-grid-col-20" layout="grid"
+								styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+								<p:outputLabel value="Lugar"
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion == 'SOBR' and
+							cwAsAutorizacionPreprocesoHextraEdit.dw_1.empleado != NULL}" />
+								<p:selectOneRadio required="true"
+									disabled="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarlugar}"
+									requiredMessage="Debe seleccionar el Lugar"
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion == 'SOBR' and
+							cwAsAutorizacionPreprocesoHextraEdit.dw_1.empleado != NULL}"
+									value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.tipoautorizacion}"
+									valueChangeListener="#{cwAsAutorizacionPreprocesoHextraEdit.valuechangeTipoAutorizacion}">
+									<f:selectItem itemValue="D"
+										itemLabel="DENTRO de la Institución" />
+									<f:selectItem itemValue="F" itemLabel="FUERA de la Institución" />
+								</p:selectOneRadio>
+								<p:outputLabel
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion == 'SOBR' and
+							cwAsAutorizacionPreprocesoHextraEdit.dw_1.empleado != NULL}" />
+
+								<p:selectBooleanCheckbox
+									itemLabel="Activar en caso haya permanecido de un día para otro."
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion == 'SOBR' and
+							cwAsAutorizacionPreprocesoHextraEdit.dw_1.empleado != NULL}"
+									value="#{cwAsAutorizacionPreprocesoHextraEdit.flgDiaSiguiente}">
+									<p:ajax event="change"
+										listener="#{cwAsAutorizacionPreprocesoHextraEdit.valueChangeDiaSiguiente}"
+										update="cldal" />
+								</p:selectBooleanCheckbox>
+
+								<h:outputLabel value="Fecha"
+									style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+								<p:panelGrid columns="2"
+									columnClasses="ui-grid-col-1,ui-grid-col-12" layout="grid"
+									styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+									<p:outputLabel value="del" />
+									<p:panelGrid columns="4"
+										columnClasses="columnGrid ui-grid-col-12,columnGrid ui-grid-col-2,columnGrid ui-grid-col-12,columnGrid ui-grid-col-5"
+										layout="grid" styleClass="ui-panelgrid-blank"
+										style="border-spacing:0px;">
+										<p:calendar required="true" locale="es" navigator="true"
+											showButtonPanel="true" mask="true" id="clddel"
+											disabled="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarfecha}"
+											requiredMessage="El campo fecha del es requerida"
+											validator="#{cwAsAutorizacionPreprocesoHextraEdit.validarfechainicio}"
+											converterMessage="El formato de fecha debe ser dd/MM/yyyy Ejem: 01/01/1900"
+											value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.fecha}"
+											pattern="dd/MM/yyyy">
+											<p:ajax event="blur"
+												listener="#{cwAsAutorizacionPreprocesoHextraEdit.keyfechainicio}"
+												update="cldal,grdmarcas,grdHoras,lblDiasDif" />
+											<p:ajax event="dateSelect"
+												listener="#{cwAsAutorizacionPreprocesoHextraEdit.valuechangeFecha}"
+												update="cldal,grdmarcas,grdHoras,lblDiasDif" />
+										</p:calendar>
+										<h:outputLabel value="al"
+											rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion != 'OMIS'}" />
+										<p:calendar locale="es" navigator="true"
+											showButtonPanel="true" id="cldal"
+											requiredMessage="El campo fecha al es requerida" mask="true"
+											required="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarfechafin}"
+											validator="#{cwAsAutorizacionPreprocesoHextraEdit.validarfechafin}"
+											converterMessage="El formato de fecha debe ser dd/MM/yyyy Ejem: 01/01/1900"
+											disabled="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarfechafin}"
+											rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion != 'OMIS' }"
+											value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.fechafin}"
+											pattern="dd/MM/yyyy">
+											<p:ajax event="dateSelect"
+												listener="#{cwAsAutorizacionPreprocesoHextraEdit.valuechangeFechaFin}"
+												update="cldal,grdmarcas,grdHoras,lblDiasDif" />
+											<p:ajax event="blur"
+												listener="#{cwAsAutorizacionPreprocesoHextraEdit.keyfechafin}"
+												update="lblDiasDif" />
+										</p:calendar>
+										<p:outputLabel
+											rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion == 'OMIS'}" />
+										<p:outputLabel
+											rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion == 'OMIS'}" />
+										<p:outputLabel
+											rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion == 'OMIS'}" />
+										<p:outputLabel id="lblDiasDif"
+											value="Días: #{cwAsAutorizacionPreprocesoHextraEdit.diferenciaDia}"
+											rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion != 'OMIS'}" />
+									</p:panelGrid>
+								</p:panelGrid>
+								<h:outputLabel value="Marca"
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion == 'OMIS' and
+									cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrartextohora1}"
+									style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;" />
+								<h:outputLabel value="Intervalo"
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion != 'OMIS' and
+									cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrartextohora1}"
+									style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;" />
+								<h:outputLabel
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrartextohora2}"
+									value="(Formato 24 horas)" />
+								<p:outputLabel id="lblmostrar"
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrardesde1}" />
+								<p:panelGrid columns="2" id="grdHoras"
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrardesde1}"
+									columnClasses="ui-grid-col-1,ui-grid-col-20" layout="grid"
+									styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+									<h:outputLabel value="de"
+										rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrartde}" />
+									<p:panelGrid columns="4"
+										columnClasses="ui-grid-col-8,ui-grid-col-1,ui-grid-col-8,ui-grid-col-5"
+										layout="grid" styleClass="ui-panelgrid-blank"
+										style="border-spacing:0px;">
+										<p:calendar
+											required="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitardesde1}"
+											requiredMessage="El campo Fecha de es obligatorio"
+											immediate="true"
+											converterMessage="El formato de Hora debe ser HH:mm. Ejem: 07:30"
+											disabled="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitardesde1}"
+											rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrardesde1}"
+											value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.desde1}"
+											mask="true" styleClass="controlCajaTextoHora"
+											pattern="HH:mm:ss" locale="es" title="Hora" timeOnly="true">
+											<p:ajax event="blur"
+												listener="#{cwAsAutorizacionPreprocesoHextraEdit.keyhorainicio}"
+												update="lblHorasDif" />
+											<p:ajax event="dateSelect"
+												listener="#{cwAsAutorizacionPreprocesoHextraEdit.valuechangeHora}"
+												update="lblHorasDif" />
+										</p:calendar>
+
+										<h:outputLabel value="a"
+											rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarta}" />
+										<p:calendar timeOnly="true"
+											required="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarhasta1}"
+											requiredMessage="El campo Fecha a es obligaltorio"
+											converterMessage="El formato de Hora debe ser HH:mm. Ejem: 07:30"
+											disabled="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarhasta1}"
+											rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarhasta1}"
+											value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.hasta1}"
+											mask="true" styleClass="controlCajaTextoHora"
+											pattern="HH:mm:ss" locale="es">
+											<p:ajax event="blur"
+												listener="#{cwAsAutorizacionPreprocesoHextraEdit.keyhorafin}"
+												update="lblHorasDif" />
+											<p:ajax event="dateSelect"
+												listener="#{cwAsAutorizacionPreprocesoHextraEdit.valuechangeHoraFin}"
+												update="lblHorasDif" />
+										</p:calendar>
+
+										<p:outputLabel id="lblHorasDif"
+											value="Horas: #{cwAsAutorizacionPreprocesoHextraEdit.diferenciaHora}"
+											rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarhasta1 != 'OMIS'}" />
+										<p:outputLabel
+											rendered="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarhasta1}" />
+										<p:outputLabel
+											rendered="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarhasta1}" />
+										<p:outputLabel
+											rendered="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarhasta1}" />
+									</p:panelGrid>
+								</p:panelGrid>
+
+
+								<p:outputLabel value="Periodo Recuperación"
+									rendered="#{(cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso == '34' or 
+									cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso == '101' ) and
+									cwAsAutorizacionPreprocesoHextraEdit.dw_1.estado == 'A'}" />
+
+								<p:panelGrid columns="1"
+									rendered="#{(cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso == '34' or 
+									cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso == '101' ) and cwAsAutorizacionPreprocesoHextraEdit.dw_1.estado == 'A'}"
+									columnClasses="ui-grid-col-12" layout="grid"
+									styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+
+									<p:selectOneMenu
+										rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso == '34' and cwAsAutorizacionPreprocesoHextraEdit.dw_1.estado == 'A'}"
+										requiredMessage="El campo Periodo Recuperación es obligatorio."
+										filter="true" filterMatchMode="contains" required="true"
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.periodoplanilla}">
+										<f:selectItem itemLabel="--Seleccione--" />
+										<f:selectItems
+											value="#{cwAsAutorizacionPreprocesoHextraEdit.lstPeriodosPlanilla}"
+											var="perio" itemValue="#{perio.pk.periodo}"
+											itemLabel="#{perio.pk.periodo}" />
+									</p:selectOneMenu>
+								</p:panelGrid>
+
+
+								<p:outputLabel value="Fecha Recuperación"
+									rendered="#{(cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso == '34' or
+									cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso == '101' ) and cwAsAutorizacionPreprocesoHextraEdit.dw_1.estado == 'A'}" />
+
+								<p:panelGrid columns="2"
+									rendered="#{(cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso == '34' or 
+									cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso == '101') and cwAsAutorizacionPreprocesoHextraEdit.dw_1.estado == 'A'}"
+									columnClasses="ui-grid-col-1,ui-grid-col-12" layout="grid"
+									styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+									<p:outputLabel value="del" />
+									<p:panelGrid columns="4"
+										columnClasses="columnGrid ui-grid-col-12,columnGrid ui-grid-col-2,columnGrid ui-grid-col-12,columnGrid ui-grid-col-5"
+										layout="grid" styleClass="ui-panelgrid-blank"
+										style="border-spacing:0px;">
+										<p:calendar required="true" locale="es" navigator="true"
+											showButtonPanel="true" mask="true" id="clddelrep"
+											requiredMessage="El campo fecha recuperación del es requerida"
+											converterMessage="El formato de fecha debe ser dd/MM/yyyy Ejem: 01/01/1900"
+											value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.desderecupera}"
+											pattern="dd/MM/yyyy">
+											<p:ajax event="blur"
+												listener="#{cwAsAutorizacionPreprocesoHextraEdit.keyfechainicioRecupera}"
+												update="cldalrep" />
+											<p:ajax event="dateSelect"
+												listener="#{cwAsAutorizacionPreprocesoHextraEdit.valuechangeFechaRecupera}"
+												update="cldalrep" />
+										</p:calendar>
+										<h:outputLabel value="al" />
+										<p:calendar locale="es" navigator="true"
+											showButtonPanel="true" id="cldalrep"
+											requiredMessage="El campo fecha al es requerida" mask="true"
+											required="true"
+											converterMessage="El formato de fecha debe ser dd/MM/yyyy Ejem: 01/01/1900"
+											disabled="true"
+											value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.hastarecupera}"
+											pattern="dd/MM/yyyy">
+										</p:calendar>
+										<p:outputLabel
+											rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion == 'OMIS'}" />
+										<p:outputLabel
+											rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.categoriaautorizacion == 'OMIS'}" />
+										<p:outputLabel
+											rendered="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso == '34' or 
+											cwAsAutorizacionPreprocesoHextraEdit.dw_1.conceptoacceso == '101'}" />
+
+									</p:panelGrid>
+								</p:panelGrid>
+
+
+
+
+								<p:outputLabel value="Descripción" />
+								<p:inputTextarea cols="70" maxlength="250"
+									disabled="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarobservaciones}"
+									value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.observacion}" />
+
+								<p:outputLabel value="N° Resolución"
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarnroresolucion and
+							cwAsAutorizacionPreprocesoHextraEdit.dw_1.empleado != NULL}" />
+								<p:panelGrid columns="3"
+									columnClasses="ui-grid-col-8,ui-grid-col-2,ui-grid-col-8"
+									layout="grid" styleClass="ui-panelgrid-blank"
+									style="border-spacing:0px;"
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarnroresolucion and
+							cwAsAutorizacionPreprocesoHextraEdit.dw_1.empleado != NULL}">
+									<p:inputText maxlength="25"
+										disabled="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarnroresolucion}"
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.nroresolucion}" />
+
+									<p:outputLabel value="Fecha" />
+
+									<p:calendar locale="es" navigator="true" showButtonPanel="true"
+										mask="true"
+										converterMessage="El formato de fecha debe ser dd/MM/yyyy Ejem: 01/01/1900"
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.fecharesolucion}"
+										pattern="dd/MM/yyyy" />
+								</p:panelGrid>
+
+
+								<p:outputLabel value="Archivo Adjunto"
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarrutadocumento}" />
+								<p:panelGrid columns="3"
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarrutadocumento}"
+									columnClasses="ui-grid-col-12,ui-grid-col-2,ui-grid-col-2"
+									layout="grid" styleClass="ui-panelgrid-blank"
+									style="border-spacing:0px;" id="grdArchivo">
+									<p:inputText disabled="true"
+										rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarrutadocumento}"
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.rutadocumento}">
+									</p:inputText>
+									<p:commandButton icon="archivo"
+										disabled="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ishabilitarverarchivo}"
+										title="Adjuntar Archivo" immediate="true"
+										action="#{cwWhDocumentoArchivoList.nuevo}"
+										rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarrutadocumento}">
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.iMantenimientoReferencia}"
+											value="#{cwAsAutorizacionPreprocesoHextraEdit}" />
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.nombreTipoBusqueda}"
+											value="cargarDocumento" />
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.nombreContenedorRefrescar}"
+											value="wasautorizacionpreprocesohextraedit:grdArchivo" />
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.islistado}" value="false" />
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.isrequierecomentario}"
+											value="false" />
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.isIformeFinal}"
+											value="false" />
+									</p:commandButton>
+									<h:commandLink title="Ver" 
+										action="#{cwAsAutorizacionPreprocesoHextraEdit.verDocumento}"
+										rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarver}">
+										<h:graphicImage
+											value="/comun/recursos/imagenes/mantenimiento/btn_preview1_16.png" />
+									</h:commandLink>
+									<p:outputLabel
+										rendered="#{!cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarver}" />
+								</p:panelGrid>
+
+								<p:outputLabel value="Declaración jurada"
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.blDeclaracionjurada}" />
+								<p:panelGrid columns="3"
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.blDeclaracionjurada}"
+									columnClasses="ui-grid-col-12,ui-grid-col-2,ui-grid-col-2"
+									layout="grid" styleClass="ui-panelgrid-blank"
+									style="border-spacing:0px;" id="grdDj">
+									<p:inputText disabled="true"
+										rendered="#{cwAsAutorizacionPreprocesoHextraEdit.blDeclaracionjurada}"
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.nombrearchivodj}">
+									</p:inputText>
+									<p:commandButton icon="archivo" title="Adjuntar Archivo"
+										immediate="true" action="#{cwWhDocumentoArchivoList.nuevo}"
+										rendered="#{cwAsAutorizacionPreprocesoHextraEdit.blDeclaracionjurada}">
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.iMantenimientoReferencia}"
+											value="#{cwAsAutorizacionPreprocesoHextraEdit}" />
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.nombreTipoBusqueda}"
+											value="cargarDj" />
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.nombreContenedorRefrescar}"
+											value="wasautorizacionpreprocesohextraedit:grdDj" />
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.islistado}" value="false" />
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.isrequierecomentario}"
+											value="false" />
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.isIformeFinal}"
+											value="false" />
+									</p:commandButton>
+									<h:commandLink title="Ver" 
+										action="#{cwAsAutorizacionPreprocesoHextraEdit.verDocumentoDj}"
+										rendered="#{cwAsAutorizacionPreprocesoHextraEdit.blVerDeclaracionjurada}">
+										<h:graphicImage
+											value="/comun/recursos/imagenes/mantenimiento/btn_preview1_16.png" />
+									</h:commandLink>
+									<p:outputLabel
+										rendered="#{!cwAsAutorizacionPreprocesoHextraEdit.blVerDeclaracionjurada}" />
+								</p:panelGrid>
+
+								<p:outputLabel value="Solicitado por"
+									styleClass="formularioEtiquetaChico1" />
+								<p:panelGrid columns="2"
+									columnClasses="ui-grid-col-12,ui-grid-col-8" layout="grid"
+									styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+									<p:inputText
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.solicitadopornombre}"
+										disabled="true" />
+									<p:inputText
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.fechasolicitud}"
+										disabled="true">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm a" />
+									</p:inputText>
+								</p:panelGrid>
+
+								<p:outputLabel value="Autorizado jefe por"
+									styleClass="formularioEtiquetaChico1" />
+								<p:panelGrid columns="2"
+									columnClasses="ui-grid-col-12,ui-grid-col-8" layout="grid"
+									styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+									<p:inputText disabled="true"
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.aprobadoJefePorNombre}" />
+									<p:inputText
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.fechaAprobadoJefe}"
+										disabled="true">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm a" />
+									</p:inputText>
+								</p:panelGrid>
+
+								<p:outputLabel value="Autorizado por"
+									styleClass="formularioEtiquetaChico1" />
+								<p:panelGrid columns="2"
+									columnClasses="ui-grid-col-12,ui-grid-col-8" layout="grid"
+									styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+									<p:inputText disabled="true"
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.autorizadopornombre}" />
+									<p:inputText
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.fechaautorizacion}"
+										disabled="true">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm a" />
+									</p:inputText>
+								</p:panelGrid>
+
+
+
+
+
+								<p:outputLabel value="Rechazado por"
+									styleClass="formularioEtiquetaChico1" />
+								<p:panelGrid columns="2"
+									columnClasses="ui-grid-col-12,ui-grid-col-8" layout="grid"
+									styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+									<p:inputText
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.rechazadopornombre}"
+										disabled="true" />
+									<p:inputText
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.fecharechazo}"
+										disabled="true">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm a" />
+									</p:inputText>
+								</p:panelGrid>
+
+								<p:outputLabel value="Últ. Modificación" />
+								<p:panelGrid columns="2"
+									columnClasses="ui-grid-col-12,ui-grid-col-8" layout="grid"
+									styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+									<p:inputText
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.ultimousuarionombre}"
+										disabled="true" />
+									<p:inputText
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_1.ultimafechamodif}"
+										disabled="true">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm a" />
+									</p:inputText>
+								</p:panelGrid>
+							</p:panelGrid>
+						</p:fieldset>
+
+						<p:panel id="segundaSeccion">
+
+
+							<p:panelGrid columns="1" style="border-spacing:0px;"
+								columnClasses="ui-grid-col-15" layout="grid"
+								styleClass="ui-panelgrid-blank" id="grdmarcas">
+								<p:panelGrid columns="1" style="border-spacing:0px;"
+									columnClasses="ui-grid-col-15" layout="grid"
+									styleClass="ui-panelgrid-blank">
+									<h:outputLabel value="Marcas"
+										style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+									<h:outputLabel id="lbltipodia"
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.st_tipodia}" />
+
+									<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+										id="tblMarcas" paginator="true" paginatorPosition="bottom"
+										reflow="true"
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_2}" var="mar"
+										currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+										paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+										scrollHeight="100">
+										<p:column headerText="Fecha" styleClass="columnatablaCentro"
+											width="250">
+											<h:outputText value="#{mar.fecha}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column width="250" headerText="Hora"
+											styleClass="columnatablaCentro">
+											<h:outputText value="#{mar.hora}">
+												<f:convertDateTime pattern="HH:mm" />
+											</h:outputText>
+										</p:column>
+									</p:dataTable>
+								</p:panelGrid>
+
+								<p:panelGrid columns="1" columnClasses="ui-grid-col-20"
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.verHistorialVacaciones}">
+									<ui:include src="w_historial_vacaciones.xhtml" />
+								</p:panelGrid>
+
+								<p:panelGrid columns="1" columnClasses="ui-grid-col-20"
+									layout="grid" styleClass="ui-panelgrid-blank"
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrardiascompensados}">
+									<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+										id="tblDiasCompensados" paginator="true"
+										style="max-width:540px" paginatorPosition="bottom"
+										scrollable="true" reflow="true"
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_diascompensados}"
+										var="diascomp" sortBy="#{msg.generico_tabla_sinregistros}"
+										currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+										paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+										scrollHeight="270">
+										<p:column headerText="Selección"
+											styleClass="columnatablaCentro">
+											<p:selectBooleanCheckbox value="#{diascomp.isseleccionado}"
+												disabled="#{cwAsAutorizacionPreprocesoHextraEdit.accion != 'Add' and
+												cwAsAutorizacionPreprocesoHextraEdit.accion != 'Update'}">
+
+												<p:ajax event="change" update="tblDiasCompensados"
+													listener="#{cwAsAutorizacionPreprocesoHextraEdit.sumarHoras}" />
+											</p:selectBooleanCheckbox>
+										</p:column>
+										<p:column headerText="Fecha" styleClass="columnatablaCentro">
+											<h:outputText value="#{diascomp.fecha}"
+												styleClass="columnatablaCentro">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="Horas Ganadas"
+											styleClass="columnatablaCentro">
+											<h:outputText value="#{diascomp.cantidadhor}">
+											</h:outputText>
+										</p:column>
+										<p:column headerText="Horas Consumidas"
+											styleClass="columnatablaCentro">
+											<h:outputText value="#{diascomp.compensadohor}">
+											</h:outputText>
+										</p:column>
+										<p:column headerText="Saldo Actual"
+											styleClass="columnatablaDerecha">
+											<h:outputText value="#{diascomp.diferenciahor}">
+											</h:outputText>
+										</p:column>
+										<p:column headerText="" styleClass="columnatablaCentro">
+											<h:outputText value="#{diascomp.tipo}" />
+										</p:column>
+										<p:summaryRow>
+											<p:column style="text-align:right" colspan="2"
+												rendered="#{cwAsAutorizacionPreprocesoHextraEdit.accion!='Browse'}">
+												<h:outputText value="Horas:" />
+											</p:column>
+											<p:column style="text-align:right"
+												rendered="#{cwAsAutorizacionPreprocesoHextraEdit.accion!='Browse'}">
+												<h:outputText
+													value="#{cwAsAutorizacionPreprocesoHextraEdit.horasSumadas}" />
+											</p:column>
+
+											<p:column style="text-align:right" colspan="3"
+												rendered="#{cwAsAutorizacionPreprocesoHextraEdit.accion=='Browse'}">
+
+											</p:column>
+
+											<p:column style="text-align:right">
+												<h:outputText value="Total:" />
+											</p:column>
+											<p:column style="text-align:right">
+												<h:outputText
+													value="#{cwAsAutorizacionPreprocesoHextraEdit.totalsaldoactualhor}" />
+											</p:column>
+											<p:column colspan="1">
+											</p:column>
+										</p:summaryRow>
+									</p:dataTable>
+								</p:panelGrid>
+
+								<!-- Horas extras -->
+
+								<p:panel
+									rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrardwhorario}">
+									<p:panelGrid columns="2" style="border-spacing:0px;"
+										columnClasses="ui-grid-col-3,ui-grid-col-3" layout="grid"
+										styleClass="ui-panelgrid-blank">
+										<p:commandButton icon="nuevo" value="Insertar"
+											rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarcbinsertar}"
+											action="#{cwAsAutorizacionPreprocesoHextraEdit.nuevoHorario}">
+											<f:param name="validation1" value="0"></f:param>
+										</p:commandButton>
+
+										<p:commandButton icon="copiar" value="Copiar"
+											rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarcbinsertar}"
+											update="tblHorario" title="Copia el horario anterior."
+											action="#{cwAsAutorizacionPreprocesoHextraEdit.copiarHorario}">
+											<f:param name="validation1" value="0"></f:param>
+										</p:commandButton>
+									</p:panelGrid>
+
+									<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+										paginator="true" paginatorPosition="bottom" scrollable="true"
+										value="#{cwAsAutorizacionPreprocesoHextraEdit.dw_horario}"
+										sortBy="#{msg.generico_tabla_sinregistros}" var="hor"
+										id="tblHorario" scrollHeight="187" reflow="true"
+										currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+										paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+										<p:column headerText="Fecha" width="130">
+											<h:outputLabel value="#{hor.dianombre} - " />
+											<h:outputText value="#{hor.fecha}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="Horario" styleClass="columnatablaCentro"
+											width="80">
+											<p:outputLabel value="#{hor.descripcion}" />
+										</p:column>
+										<p:column headerText="Horas Trabajo" width="70"
+											styleClass="columnatablaDerecha">
+											<p:outputLabel value="#{hor.horasdescripcion}" />
+										</p:column>
+										<p:column headerText="Horas Refrigerio" width="70"
+											styleClass="columnatablaDerecha">
+											<p:outputLabel value="#{hor.horasrefrigeriodescripcion}" />
+										</p:column>
+										<p:column headerText="Acción" width="60">
+											<p:panelGrid columns="2" style="border-spacing:0px;"
+												columnClasses="ui-grid-col-12,ui-grid-col-12" layout="grid"
+												styleClass="ui-panelgrid-blank">
+												<h:commandLink title="Editar" immediate="true"
+													rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarcbeliminar}"
+													action="#{cwAsAutorizacionPreprocesoHextraEdit.editarHorario}">
+													<f:setPropertyActionListener
+														target="#{cwAsAutorizacionPreprocesoHextraEdit.dw_horarioregistro}"
+														value="#{hor}" />
+													<h:graphicImage
+														value="/comun/recursos/imagenes/mantenimiento/btn_editar1_16.png" />
+												</h:commandLink>
+												<h:commandLink title="Eliminar" immediate="true"
+													rendered="#{cwAsAutorizacionPreprocesoHextraEdit.opciones.ismostrarcbeliminar}"
+													action="#{cwAsAutorizacionPreprocesoHextraEdit.eliminarHorario}"
+													update="tblHorario">
+													<f:setPropertyActionListener
+														target="#{cwAsAutorizacionPreprocesoHextraEdit.dw_horarioregistro}"
+														value="#{hor}" />
+													<h:graphicImage
+														value="/comun/recursos/imagenes/mantenimiento/btn_inactivar2_16.png" />
+												</h:commandLink>
+											</p:panelGrid>
+										</p:column>
+
+										<p:summaryRow>
+											<p:column colspan="2">
+											</p:column>
+											<p:column style="text-align:right">
+												<h:outputText
+													value="#{cwAsAutorizacionPreprocesoHextraEdit.totalhorastrabajodescripcion}" />
+											</p:column>
+											<p:column style="text-align:right">
+												<h:outputText
+													value="#{cwAsAutorizacionPreprocesoHextraEdit.totalhorasrefrigeriodescripcion}" />
+											</p:column>
+											<p:column style="text-align:right">
+												<h:outputText
+													value="#{cwAsAutorizacionPreprocesoHextraEdit.totalhorashorariodescripcion}" />
+											</p:column>
+											<p:column>
+											</p:column>
+										</p:summaryRow>
+									</p:dataTable>
+								</p:panel>
+							</p:panelGrid>
+
+						</p:panel>
+
+						<p:outputLabel />
+
+					</p:panelGrid>
+				</p:panel>
+			</h:form>
+		</div>
+
+		<p:dialog id="dgDocumento" widgetVar="popDocumento" modal="true"
+			appendTo="@(Body)" header="Selector de Documento" resizable="false"
+			responsive="true" fitViewport="true" dynamic="true">
+			<ui:include
+				src="/comun/paginas/frm_documento_selector_emergente.xhtml" />
+		</p:dialog>
+
+		<p:dialog id="dgIntervalosAutorizacion" dynamic="true"
+			resizable="false" draggable="false" fitViewport="true"
+			header="Intervalos de Autorización" responsive="true"
+			widgetVar="popIntervalosAutorizacion" appendTo="@(body)" modal="true">
+			<ui:include src="w_as_autorizacion_preproceso_hextra_msg.xhtml" />
+		</p:dialog>
+
+		<p:confirmDialog id="dgAvisoSiNo" closable="false"
+			widgetVar="popAvisoSiNo" header="Aviso" resizable="false"
+			severity="info" appendTo="@(body)" responsive="true"
+			message="Fecha ingresada muy superior al actual. ¿Desea Grabar?">
+			<div class="ui-fluid">
+				<h:form>
+					<p:panelGrid columns="2" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<p:commandButton value="Si"
+							action="#{cwAsAutorizacionPreprocesoHextraEdit.validarFechaFin}" />
+						<p:commandButton value="No" onclick="PF('popAvisoSiNo').hide();" />
+					</p:panelGrid>
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+		<p:confirmDialog id="dgNuevaSolicitud" closable="false"
+			widgetVar="popNuevaSolicitud" header="Advertencia" resizable="false"
+			severity="info" appendTo="@(body)" responsive="true"
+			message="Se guardará el registro como una nueva solicitud en estado SOLICITADO. ¿Desea continuar?">
+			<div class="ui-fluid">
+				<h:form>
+					<p:panelGrid columns="2" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<p:commandButton value="Si"
+							action="#{cwAsAutorizacionPreprocesoHextraEdit.nuevaSolicitud}" />
+						<p:commandButton value="No"
+							onclick="PF('popNuevaSolicitud').hide();" />
+					</p:panelGrid>
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+		<p:dialog id="dgHorarioMantenimiento" dynamic="true" resizable="false"
+			header="Cambio de Horario" widgetVar="popHorarioMantenimiento"
+			appendTo="@(body)" modal="true" responsive="true">
+			<ui:include src="horario_mantenimiento.xhtml" />
+		</p:dialog>
+
+		<p:confirmDialog id="dgAlertaLicencia" closable="false"
+			widgetVar="popAlertaLicencia" header="Advertencia" resizable="false"
+			severity="info" appendTo="@(body)" responsive="true"
+			message="#{cwAsAutorizacionPreprocesoHextraEdit.mensajelicencia}">
+			<div class="ui-fluid">
+				<h:form>
+					<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+						paginator="true" paginatorPosition="bottom" scrollable="true"
+						value="#{cwAsAutorizacionPreprocesoHextraEdit.licencias}"
+						var="licen" reflow="true" style="max-width:600px"
+						currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+						paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+						scrollHeight="200">
+
+						<f:facet name="header">
+							<h:outputText value="Días que generó Licencia sin Goce" />
+						</f:facet>
+
+						<p:column headerText="Desde" styleClass="columnatablaCentro">
+							<h:outputText value="#{licen.fecha}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Hasta" styleClass="columnatablaCentro">
+							<h:outputText value="#{licen.fechahasta}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Días Habiles"
+							styleClass="columnatablaDerecha">
+							<h:outputText value="#{licen.veces}" />
+						</p:column>
+					</p:dataTable>
+
+					<p:panelGrid columns="1" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-4" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<p:commandButton value="Ok"
+							action="#{cwAsAutorizacionPreprocesoHextraEdit.guardardesdelicencia}" />
+					</p:panelGrid>
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+	</ui:define>
+</ui:composition>
+
+

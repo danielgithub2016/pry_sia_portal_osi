@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : logistica.WhRequisiciondetalle
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!-- whrequisiciondetalle.XXXXXX -->
+    
+    <!-- syfinan.dw_wh_requisition_detail -->
+	<sql-query name="whrequisiciondetalle.DwWhRequisitionDetail">
+		SELECT
+		WH_REQUISICIONDETALLE.COMPANIASOCIO as "companiasocio",
+		WH_REQUISICIONDETALLE.REQUISICIONNUMERO as "requisicionnumero",
+		WH_REQUISICIONDETALLE.SECUENCIA as "secuencia",
+		WH_REQUISICIONDETALLE.ITEM as "item",
+		WH_REQUISICIONDETALLE.COMMODITY as "commodity",
+		WH_REQUISICIONDETALLE.UNIDADCODIGO as "unidadcodigo",
+		WH_REQUISICIONDETALLE.DESCRIPCION as "descripcion",
+		WH_REQUISICIONDETALLE.COMPRASALMACENFLAG as "comprasalmacenflag",
+		WH_REQUISICIONDETALLE.REDEFINIDOFLAG as "redefinidoflag",
+		WH_REQUISICIONDETALLE.CANTIDADPEDIDA as "cantidadpedida",
+		WH_REQUISICIONDETALLE.CANTIDADORDENCOMPRA as "cantidadordencompra",
+		WH_REQUISICIONDETALLE.CANTIDADRECIBIDA as "cantidadrecibida",
+		WH_REQUISICIONDETALLE.PRECIOUNITARIO as "preciounitario",
+		WH_REQUISICIONDETALLE.PRECIOXCANTIDAD as "precioxcantidad",
+		WH_REQUISICIONDETALLE.COTIZACIONSECUENCIA as "cotizacionsecuencia",
+		WH_REQUISICIONDETALLE.COTIZACIONCANTIDAD as "cotizacioncantidad",
+		WH_REQUISICIONDETALLE.COTIZACIONPRECIOUNITARIO as
+		"cotizacionpreciounitario",
+		WH_REQUISICIONDETALLE.COTIZACIONPRECIOUNITARIOCONIGV as
+		"cotizacionpreciounitarioconigv",
+		WH_REQUISICIONDETALLE.COTIZACIONPROVEEDOR as "cotizacionproveedor",
+		WH_REQUISICIONDETALLE.COTIZACIONMONEDA as "cotizacionmoneda",
+		WH_REQUISICIONDETALLE.COTIZACIONREGISTROS as "cotizacionregistros",
+		WH_REQUISICIONDETALLE.COTIZACIONFORMADEPAGO as
+		"cotizacionformadepago",
+		WH_REQUISICIONDETALLE.COTIZACIONFECHAASIGNACION as
+		"cotizacionfechaasignacion",
+		WH_REQUISICIONDETALLE.CONTROLPRESUPUESTALFLAG as
+		"controlpresupuestalflag",
+		WH_REQUISICIONDETALLE.PARTIDAPRESUPUESTAL as "partidapresupuestal",
+		WH_REQUISICIONDETALLE.COMENTARIO as "comentario",
+		WH_REQUISICIONDETALLE.RAZONRECHAZO as "razonrechazo",
+		WH_REQUISICIONDETALLE.CENTROCOSTO as "centrocosto",
+		WH_REQUISICIONDETALLE.ESTADO as "estado",
+		WH_REQUISICIONDETALLE.ULTIMOUSUARIO as "ultimousuario",
+		WH_REQUISICIONDETALLE.ULTIMAFECHAMODIF as "ultimafechamodif",
+		WH_REQUISICIONDETALLE.IGVEXONERADOFLAG as "igvexoneradoflag",
+		WH_REQUISICIONDETALLE.GENERARCONTRATOFLAG as "generarcontratoflag",
+		WH_REQUISICIONDETALLE.COMENTARIOADICIONAL as "comentarioadicional",
+		WH_REQUISICIONDETALLE.LICITACIONASIGNADAFLAG as
+		"licitacionasignadaflag"
+		FROM
+		SGCORESYS.WH_REQUISICIONDETALLE
+		WHERE ( WH_RequisicionDetalle.CompaniaSocio = :p_companiasocio ) AND
+		( WH_RequisicionDetalle.RequisicionNumero = :p_numerorequisicion )
+	</sql-query>
+    
+    <sql-query name="whrequisiciondetalle.obtenerSecuenciaMaximo">
+		SELECT NVL(MAX(WH_REQUISICIONDETALLE.SECUENCIA),0) + 1
+		FROM
+		SGCORESYS.WH_REQUISICIONDETALLE
+		WHERE
+		WH_REQUISICIONDETALLE.COMPANIASOCIO = :p_companiasocio AND
+		WH_REQUISICIONDETALLE.REQUISICIONNUMERO = :p_numerorequisicion
+    </sql-query>
+</hibernate-mapping>

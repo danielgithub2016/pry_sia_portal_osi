@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : asistencia.AsPeriodo -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="asperiodo.obtenerMaximoPeriodoPlanilla">
+		SELECT Max (PeriodoPlanilla)
+		FROM
+		SGCORESYS.AS_Periodo
+		WHERE Estado = 'A'
+	</sql-query>
+
+	<sql-query name="asperiodo.obtenerCantidad">
+		SELECT Count (1)
+		FROM SGCORESYS.AS_Periodo
+		WHERE ( Estado = 'A' )
+		AND
+		(:p_fechadesde between FechaDesde and
+		FechaHasta )
+		AND
+		(:p_fechahasta between FechaDesde and FechaHasta )
+	</sql-query>
+
+	<sql-query name="asperiodo.obtenerRangoFechas">
+		SELECT
+		Max (FechaDesde) as "fechadesde",
+		Max (FechaHasta) as "fechahasta"
+		FROM SGCORESYS.AS_Periodo
+		WHERE substr(PeriodoPlanilla,0,6) = :p_periodo
+	</sql-query>
+
+	<sql-query name="asperiodo.fasperiodoactivo">
+		<![CDATA[
+		SELECT 
+			c.nombrecompleto as "nombrecompleto", 
+			d.descripcion as "descripcion"
+		FROM SGCORESYS.as_periodo a,SGCORESYS.empleadomast b, 
+		 	SGCORESYS.personamast c, SGCORESYS.pr_tipoplanilla d
+		WHERE a.tipoplanilla = b.tipoplanilla AND
+			b.empleado = c.persona AND
+			a.tipoplanilla = d.tipoplanilla AND
+			((a.fechadesde <=:p_fechadesde  and :p_fechadesde < a.fechahasta + 1) or
+            (a.fechadesde <=:p_fechahasta  and :p_fechahasta < a.fechahasta + 1) or
+            (a.fechadesde >:p_fechadesde  and :p_fechahasta > a.fechahasta)) AND
+            b.empleado =:p_empleado AND
+            a.estado = 'I'
+            ]]>
+	</sql-query>
+
+	<sql-query name="asperiodo.obtenerCantidadPorEmpleado">
+		<![CDATA[
+			select
+				count(*)
+			from sgcoresys.as_periodo, 
+				 sgcoresys.empleadomast
+			where	as_periodo.tipoplanilla = empleadomast.tipoplanilla
+				and empleado = :p_empleado
+				and as_periodo.estado = 'A'
+				and :p_fecha <= fechahasta
+				and :p_fechafin >= fechadesde
+            ]]>
+	</sql-query>
+	
+	<sql-query name="asperiodo.obtenerCantidadPorEmpleadoNoAdmin">
+		<![CDATA[
+			select
+				count(*)
+			from sgcoresys.as_periodo, 
+				 sgcoresys.empleadomast
+			where	as_periodo.tipoplanilla = empleadomast.tipoplanilla
+				and empleado = :p_empleado
+				and as_periodo.estado_prog = 'A'
+				and :p_fecha <= fechahasta
+				and :p_fechafin >= fechadesde
+            ]]>
+	</sql-query>
+
+	<sql-query name="asperiodo.obtenerPeriodoActivo">
+		<![CDATA[
+			SELECT 
+				substr(Max (PeriodoPlanilla),1,6) as "periodoplanilla"
+			FROM 
+				SGCORESYS.AS_Periodo
+			WHERE 
+				TipoPlanilla = :p_tipoplanilla AND 
+				Estado = 'A'
+            ]]>
+	</sql-query>
+
+</hibernate-mapping>

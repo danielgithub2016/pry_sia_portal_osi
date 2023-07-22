@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : logistica.WhTransacciondetalle
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="whtransacciondetalle.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+    </sql-query>
+    
+    <!-- syfinan.dw_wh_importacion_detail_select -->
+	<sql-query name="whtransacciondetalle.DwWhImportacionDetailSelect">
+		  SELECT WH_TRANSACCIONDETALLE.ITEM as "item",   
+	         WH_TRANSACCIONDETALLE.CONDICION as "condicion",   
+	         WH_ITEMMAST.DESCRIPCIONLOCAL as "descripcionlocal",   
+	         WH_TRANSACCIONDETALLE.CANTIDAD as "cantidad",   
+	         WH_TRANSACCIONDETALLE.UNIDADCODIGO as "unidadcodigo",   
+	         WH_TRANSACCIONDETALLE.SECUENCIA as "secuencia",   
+	         WH_TRANSACCIONDETALLE.COMPANIASOCIO as "companiasocio",   
+	         WH_TRANSACCIONDETALLE.NUMERODOCUMENTO as "numerodocumento",   
+	         WH_TRANSACCIONDETALLE.TIPODOCUMENTO as "tipodocumento",   
+	         WH_TRANSACCIONDETALLE.REFERENCIANUMERODOCUMENTO as "referencianumerodocumento",   
+	         WH_TRANSACCIONDETALLE.REFERENCIASECUENCIA as "referenciasecuencia",   
+	         WH_ORDENCOMPRADETALLE.PRECIOUNITARIO as "preciounitario",
+	         round(WH_TRANSACCIONDETALLE.CANTIDAD *  WH_ORDENCOMPRADETALLE.PRECIOUNITARIO,2) as "total"  
+	    FROM sgcoresys.WH_TRANSACCIONDETALLE,   
+	         sgcoresys.WH_ITEMMAST,   
+	         sgcoresys.WH_TRANSACCIONHEADER,   
+	         sgcoresys.WH_ORDENCOMPRADETALLE  
+	   WHERE ( WH_ITEMMAST.ITEM = WH_TRANSACCIONDETALLE.ITEM ) and  
+	         ( WH_TRANSACCIONHEADER.COMPANIASOCIO = WH_TRANSACCIONDETALLE.COMPANIASOCIO ) and  
+	         ( WH_TRANSACCIONHEADER.TIPODOCUMENTO = WH_TRANSACCIONDETALLE.TIPODOCUMENTO ) and  
+	         ( WH_TRANSACCIONHEADER.NUMERODOCUMENTO = WH_TRANSACCIONDETALLE.NUMERODOCUMENTO ) and  
+	         ( WH_TRANSACCIONDETALLE.REFERENCIACOMPANIASOCIO = WH_ORDENCOMPRADETALLE.COMPANIASOCIO ) and  
+	         ( WH_TRANSACCIONDETALLE.REFERENCIANUMERODOCUMENTO = WH_ORDENCOMPRADETALLE.NUMEROORDEN ) and  
+	         ( WH_TRANSACCIONDETALLE.REFERENCIASECUENCIA = WH_ORDENCOMPRADETALLE.SECUENCIA ) and  
+	         ( ( WH_TransaccionDetalle.CompaniaSocio = :companiasocio ) AND  
+	         ( WH_TransaccionHeader.TransaccionCodigo = 'MIT' ) AND  
+	         ( WH_TransaccionHeader.Estado = 'PR' ) AND  
+	         ( WH_TransaccionHeader.ValorizacionPendienteFlag = 'S' ) AND  
+	         ( WH_TransaccionDetalle.ReferenciaNumeroDocumento =  :numeroorden ) AND  
+	         ( WH_TransaccionDetalle.ReferenciaTipoDocumento = 'NS' ) ) 
+	</sql-query>
+	
+</hibernate-mapping>

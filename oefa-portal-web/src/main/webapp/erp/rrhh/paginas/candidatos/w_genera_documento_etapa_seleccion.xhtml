@@ -1,0 +1,128 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="content">
+		<h:form id="frmGeneraDocumento">
+			<p:growl life="#{msg.generico_tiempo_growl}" />
+			<p:panel>
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-2"
+					styleClass="ui-panelgrid-blank">
+					
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-5,ui-grid-col-8"
+						styleClass="ui-panelgrid-blank" style="width:400px;" >
+						
+						<h:outputLabel value="EVALUACION"
+								style="color:MidnightBlue;font-weight: bold; " />
+						<p:selectOneMenu
+							value="#{cwHrRequerimientoCandidatosGeneraDocumento.lstEvaluacion}"
+							var="tp" id="cboEvaluacion">
+							<f:selectItems value="#{cwHrRequerimientoCandidatosGeneraDocumento.lstEvaluacion}"
+								var="e" itemLabel="#{e.descripcion}" itemValue="#{e}" />
+<!-- 							<p:column> -->
+<!-- 								<p:outputLabel value="#{tp.evaluacion}" /> -->
+<!-- 							</p:column> -->
+							<p:column>
+								<p:outputLabel value="#{tp.descripcion}" />
+							</p:column>
+						</p:selectOneMenu>
+
+						<h:outputLabel value="Fecha"
+								style="color:MidnightBlue;font-weight: bold; " />
+						<p:calendar pattern="dd/MM/yyyy" locale="es" navigator="true"
+							showButtonPanel="true" mask="true"
+							converterMessage="Formato incorrecto. El formato debe ser dd/MM/yyyy">
+						</p:calendar>
+						<h:outputLabel value="Hora"
+								style="color:MidnightBlue;font-weight: bold; " />
+						<p:calendar mask="true" styleClass="controlCajaTextoHora" pattern="HH:mm"
+							locale="es" title="Hora" timeOnly="true"
+							converterMessage="El formato de Hora debe ser HH:mm. Ejem: 07:30">
+						</p:calendar>
+						<h:outputLabel value="Lugar"
+								style="color:MidnightBlue;font-weight: bold; "/>
+						<p:inputText id="txtLugar" onkeypress="return validarIngreso(event,'L');" />
+						<h:outputLabel value="Nota"
+								style="color:MidnightBlue;font-weight: bold; "/>
+						<p:inputText id="txtNota" onkeypress="return validarIngreso(event,'L');" />
+						<h:outputLabel value="Minutos"
+								style="color:MidnightBlue;font-weight: bold; "/>
+						<p:inputText id="txtMinutos" onkeypress="return validarIngreso(event,'N');"/>
+																	
+						</p:panelGrid>
+						
+					<p:panelGrid columns="1" layout="grid"
+						columnClasses="ui-grid-col-2,ui-grid-col-2"
+						styleClass="ui-panelgrid-blank">
+						<p:commandButton value="Aceptar" styleClass="botonTextoImagen">
+						</p:commandButton>
+
+						<p:commandButton value="Cancelar" styleClass="botonTextoImagen">
+						</p:commandButton>
+					</p:panelGrid>
+				</p:panelGrid>	
+				<p:panelGrid columns="2" layout="grid"
+								columnClasses="ui-grid-col-5,ui-grid-col-4"
+								styleClass="ui-panelgrid-blank">
+					<h:panelGrid columns="3" layout="grid"
+								columnClasses="ui-grid-col-0,ui-grid-col-30" 
+								cellpadding="2" cellspacing="4"
+								style="width:100%; color:MidnightBlue;font-weight: bold;font-size:12px;">						
+								<p:dataList value="#{cwHrRequerimientoCandidatosGeneraDocumento.lstRequerimiento}"
+								 var="req" type="ordered" style="width:100%; " >
+						        #{req.descripcion}	
+						    	</p:dataList>
+						    	<p:dataList value="#{cwHrRequerimientoCandidatosGeneraDocumento.lstRequerimiento}"
+								 var="req" type="definition" style="width:400px" >
+						        <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" />						        				        					    	
+						    	</p:dataList>	
+
+<!-- 						    	<ui:repeat value="#{cwHrRequerimientoCandidatosGeneraDocumento.lstRequerimiento}" var="req"> -->
+<!-- 							        <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">						  			 -->
+<!-- 							                <h:panelGrid columns="2" cellpadding="1"> -->
+<!-- 							                    <h:outputText value="#{req.descripcion}" style="font-weight: bold"/>				 -->
+<!-- 							                </h:panelGrid> -->
+<!-- 							                <h:panelGrid columns="2" cellpadding="1"> -->
+<!-- 							                <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" />	 -->
+<!-- 							                </h:panelGrid> -->
+<!-- 							        </h:panelGrid> -->
+<!-- 							    </ui:repeat>	 -->
+							    
+<!-- 						    <p:selectManyCheckbox id="listarequerimiento" value="#{cwHrRequerimientoCandidatosGeneraDocumento.lstRequerimiento}"  -->
+<!-- 						    	layout="grid" columns="1"> -->
+<!-- 							        <f:selectItems value="#{cwHrRequerimientoCandidatosGeneraDocumento.lstRequerimiento}" var="req"  -->
+<!-- 							        itemLabel="#{req.descripcion}" itemValue="#{req.requerimiento}" /> -->
+<!-- 						    </p:selectManyCheckbox> -->
+					</h:panelGrid>	
+					
+					<p:panelGrid columns="1" layout="grid" style="width:100%"
+						 columnClasses="ui-grid-col-4,ui-grid-col-4"
+						 styleClass="ui-panelgrid-blank">
+							<p:panelGrid  columns="1" layout="grid" style="width:380px" >
+							<h:outputLabel value="Correo para aptos"
+								style="color:MidnightBlue;font-weight: bold; " />
+								<h:inputTextarea disabled="true" style="width:350px;height:100px"
+								 value="A través de este correo tenemos el agrado de informarle que ha aprobado la etapa, en ese sentido, lo invitamos a participar en la sgte. etapa la cual se realizará según el siguiente detalle:">
+								</h:inputTextarea>
+							</p:panelGrid >
+							
+							<p:panelGrid columns="1" layout="grid" style="width:380px">
+							<h:outputLabel value="Correo para No Aptos"
+								style="color:MidnSightBlue;font-weight: bold; " />
+								<h:inputTextarea disabled="true" style="width:350px;height:100px"
+								 value="none">
+								</h:inputTextarea>
+							</p:panelGrid>
+					</p:panelGrid>
+						
+						
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+			</ui:define>
+</ui:composition>

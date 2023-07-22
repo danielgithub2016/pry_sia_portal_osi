@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.presupuesto.dominio.BuPca" table="SGCORESYS.BU_PCA">
+		<composite-id name="pk"
+			class="net.royal.erp.presupuesto.dominio.BuPcaPk">
+			<key-property name="ano" type="string">
+				<column name="ANO" length="4" />
+			</key-property>
+			<key-property name="numpca" type="integer">
+				<column name="NUMPCA" />
+			</key-property>
+		</composite-id>
+		<property name="fuentefinanciamiento" type="string">
+			<column name="FUENTEFINANCIMIENTO" length="50" />
+		</property>
+		<property name="categoriagasto" type="string">
+			<column name="CATEGORIAGASTO" length="50" />
+		</property>
+		<property name="clasificador" type="string">
+			<column name="CLASIFICADOR" length="50" />
+		</property>
+		<property name="montoinicial" type="big_decimal">
+			<column name="MONTOINICIAL" length="20" />
+		</property>
+		<property name="estado" type="string">
+			<column name="ESTADO" length="2" />
+		</property>
+		<property name="ultimoUsuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+		<property name="ultimaFechaModif" type="timestamp">
+			<column name="ULTIMAFECHAMODIF" />
+		</property>
+	</class>
+</hibernate-mapping>

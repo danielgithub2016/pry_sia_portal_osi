@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : asmain.w_as_vacacionesutilizacion_rpt2 -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<!-- asmain.df_as_empleados_autorizado -->
+	<sql-query name="asmain.DwQuery1EmpleadosAutorizados">
+		DELETE
+		FROM sgcoresys.AS_EMPLEADOS_AUTORIZADOS
+		where sid =:str_global_gv_sid
+	</sql-query>
+
+	<!-- asmain.df_as_empleados_autorizado -->
+	<sql-query name="asmain.DwQuery2EmpleadosAutorizados">
+
+		INSERT
+		INTO SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+		(sid, usuario, empleado)
+		SELECT distinct :str_global_gv_sid,
+		:str_global_gv_userid, a.empleado
+		FROM SGCORESYS.empleadomast a
+		left
+		join SGCORESYS.as_carnetidentificacion b
+		on (a.empleado = b.empleado)
+		WHERE
+		a.empleado NOT IN (SELECT empleado FROM
+		SGCORESYS.AS_EMPLEADOS_AUTORIZADOS WHERE sid=:str_global_gv_sid and
+		empleado = a.empleado ) AND
+		(a.companiasocio in (select Companyowner
+		from SGCORESYS.SeguridadAutorizacionCompania
+		where
+		Usuario=:str_global_gv_userid or usuario in (select a.perfil
+		from
+		SGCORESYS.SeguridadPerfilUsuario a
+		where a.usuario
+		=:str_global_gv_userid))
+		or
+		( :w_administrador = 'S' ))
+		AND
+		( ( 'S' =
+		(select max(valortexto)
+		from SGCORESYS.as_seguridad
+		where
+		(usuario=:str_global_gv_userid or usuario in (select a.perfil
+		from
+		SGCORESYS.SeguridadPerfilUsuario a
+		where a.usuario
+		=:str_global_gv_userid)) and
+		(ConceptoSeguridad='ALLTIPOPL') ) )
+		or
+		(a.tipoplanilla in (select valortexto
+		from SGCORESYS.as_seguridad
+		where
+		(usuario=:str_global_gv_userid or usuario in (select a.perfil
+		from
+		SGCORESYS.SeguridadPerfilUsuario a
+		where a.usuario
+		=:str_global_gv_userid)) and
+		( ConceptoSeguridad='TIPOPL')))
+		or
+		(
+		:w_administrador = 'S' ))
+		AND
+		( ( 'S' = (select max(valortexto)
+		from
+		SGCORESYS.as_seguridad
+		where (usuario=:str_global_gv_userid or usuario
+		in (select a.perfil
+		from SGCORESYS.SeguridadPerfilUsuario a
+		where
+		a.usuario =:str_global_gv_userid)) and
+		(ConceptoSeguridad='ALLSUCURS')
+		) )
+		or
+		(a.sucursal in (select valortexto
+		from SGCORESYS.as_seguridad
+		where (usuario=:str_global_gv_userid or usuario in (select a.perfil
+		from SGCORESYS.SeguridadPerfilUsuario a
+		where a.usuario
+		=:str_global_gv_userid)) and
+		( ConceptoSeguridad='TIPOSU')))
+		or
+		(
+		:w_administrador = 'S' ))
+
+		AND
+
+
+		( ( 'S' = (select max(valortexto)
+		from
+		SGCORESYS.as_seguridad
+		where (usuario=:str_global_gv_userid or usuario
+		in (select a.perfil
+		from SGCORESYS.SeguridadPerfilUsuario a
+		where
+		a.usuario =:str_global_gv_userid)) and
+		(ConceptoSeguridad='ALLAREA') )
+		)
+		or
+		(b.area in (select valornumero
+		from SGCORESYS.as_seguridad
+		where
+		(usuario=:str_global_gv_userid or usuario in (select a.perfil
+		from
+		SGCORESYS.SeguridadPerfilUsuario a
+		where a.usuario
+		=:str_global_gv_userid)) and
+		( ConceptoSeguridad='TIPOAR')))
+		or
+		( b.area in (select area from SGCORESYS.as_area
+		where
+		empleadoresponsable = :str_global_gv_vendor OR
+		empleadoresponsable2 =
+		:str_global_gv_vendor or
+		empleadoresponsable3 = :str_global_gv_vendor
+		or
+		empleadoresponsable4 = :str_global_gv_vendor
+		UNION
+		SELECT area
+		FROM
+		SGCORESYS.as_area
+		WHERE areapadre IN (SELECT area
+		FROM sgcoresys.as_area
+		where empleadoresponsable = :str_global_gv_vendor OR
+		empleadoresponsable2 = :str_global_gv_vendor or
+		empleadoresponsable3 =
+		:str_global_gv_vendor or
+		empleadoresponsable4 = :str_global_gv_vendor)
+		union 
+		SELECT e3.dptoareaoperativa
+		FROM
+		SGCORESYS.empleadomast e3
+		WHERE 
+		e3.empleado = :str_global_gv_vendor and
+		e3.FLG_JEFATURAASISTENTE = '02'
+		))
+		or
+		( :w_administrador = 'S' ))
+
+		GROUP BY a.empleado
+	</sql-query>
+
+	<!-- asmain.df_as_empleados_autorizado -->
+	<sql-query name="asmain.DwQuery3EmpleadosAutorizados">
+		insert into
+		SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+		(sid, usuario, empleado)
+		select
+		:str_global_gv_sid, :str_global_gv_userid, a.empleado
+		from
+		SGCORESYS.empleadomast a
+		where a.empleado =:str_global_gv_vendor and
+		not exists (select 1
+		from SGCORESYS.AS_EMPLEADOS_AUTORIZADOS b
+		where
+		b.sid =:str_global_gv_sid and
+		b.empleado = a.empleado)
+	</sql-query>
+
+	<sql-query name="asmain.FAsFechasactivasPeriodo">
+		SELECT
+		Min (FechaDesde) as "fechadesde",
+		Max
+		(FechaHasta) as "fechahasta"
+		FROM SGCORESYS.AS_Periodo
+		WHERE Estado =
+		'A'
+	</sql-query>
+
+	<sql-query name="asmain.FAsFechasactivasPeriodoNoAdmin">
+		SELECT
+		Min (FechaDesde) as "fechadesde",
+		Max
+		(FechaHasta) as "fechahasta"
+		FROM SGCORESYS.AS_Periodo
+		WHERE Estado_Prog
+		= 'A'
+	</sql-query>
+
+</hibernate-mapping>

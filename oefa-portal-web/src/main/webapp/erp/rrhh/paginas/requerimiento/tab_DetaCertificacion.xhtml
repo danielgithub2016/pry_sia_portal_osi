@@ -1,0 +1,122 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panel style="width:100%">
+		<h:panelGrid columns="1" style="border-spacing:0px;">
+			<h:panelGrid columns="2" style="border-spacing:0px;">
+
+				<h:panelGrid columns="1" style="border-spacing:0px;">
+
+					<h:outputLabel value="Certificación"
+						style="font-size:11px; font-family:Open sans,sans-serif; font-weight: bold;color:#800000;margin:10px" />
+					<h:panelGrid columns="3" style="border-spacing:0px;">
+						<h:outputLabel value="Documento" />
+
+						<p:selectOneMenu style="width:100px">
+						</p:selectOneMenu>
+
+						<p:inputText style="width:140px" />
+					</h:panelGrid>
+
+				</h:panelGrid>
+				<h:panelGrid columns="2" style="border-spacing:0px;">
+
+					<h:panelGrid columns="2" style="border-spacing:0px;">
+						<h:outputLabel value="No. Certificacion" />
+
+						<h:panelGrid columns="2">
+							<p:inputText style="width:150px" />
+
+							<p:inputText style="width:100px" />
+						</h:panelGrid>
+
+						<h:outputLabel value="Fecha" />
+
+						<p:inputText style="width:150px" />
+					</h:panelGrid>
+
+
+					<h:panelGrid columns="2" style="border-spacing:0px;">
+						<h:outputLabel value="Estado" />
+
+						<p:inputText style="width:150px" />
+
+						<h:outputLabel value="Periodo" />
+
+						<p:inputText style="width:150px" />
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:panelGrid>
+
+			<p:separator />
+
+			<h:panelGrid columns="2" style="border-spacing:0px;">
+				<h:panelGrid columns="1" style="border-spacing:0px;">
+
+					<h:panelGrid columns="2" style="border-spacing:0px;">
+						<h:outputLabel value="Tipo Certificacion" />
+
+						<p:selectOneMenu style="width:230px">
+						</p:selectOneMenu>
+
+						<h:outputLabel value="Proveedor" />
+
+						<h:panelGrid columns="2" style="border-spacing:0px;">
+							<p:inputText style="width:90px" />
+
+							<p:inputText style="width:200px" />
+						</h:panelGrid>
+
+						<h:outputLabel value="Rubro" />
+
+						<p:selectOneMenu style="width:200px">
+						</p:selectOneMenu>
+
+					</h:panelGrid>
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="1" style="border-spacing:0px;">
+					<h:panelGrid columns="2" style="border-spacing:0px;">
+						<h:outputLabel value="Centro Costo" />
+						<h:panelGrid columns="2">
+							<p:inputText style="width:140px" />
+
+							<p:inputText style="width:200px" />
+						</h:panelGrid>
+
+						<h:outputLabel value="Moneda" />
+						<h:panelGrid columns="2">
+							<p:inputText style="width:140px" />
+
+							<p:inputText style="width:200px" />
+						</h:panelGrid>
+
+						<h:outputLabel value="Moneda Local" />
+
+						<h:panelGrid columns="3" style="border-spacing:0px;">
+							<p:inputText style="width:170px" />
+
+							<h:outputLabel value="T/C" />
+							<p:inputText style="width:140px" />
+						</h:panelGrid>
+					</h:panelGrid>
+
+				</h:panelGrid>
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" style="border-spacing:0px;">
+				<h:outputLabel value="Observacion" />
+
+				<p:inputText style="width:500px" />
+			</h:panelGrid>
+
+		</h:panelGrid>
+
+	</p:panel>
+
+</ui:composition>

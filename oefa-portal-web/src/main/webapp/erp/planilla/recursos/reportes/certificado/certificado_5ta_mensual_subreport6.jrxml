@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado_5ta_mensual_subreport6" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="6e621c27-b9a2-4741-bbb6-b7cf1cbcd31b">
+	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="EJERCICIO_FISCAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{EJERCICIO_FISCAL}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{COMPANIA}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EMPLEADO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{EMPLEADO}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select 'REMUNERACON ANUAL' as rango
+	,PR_ImpuestoRenta.EstimadoSueldoAnual  as importe
+FROM
+SGCORESYS.PR_ImpuestoRenta
+    INNER JOIN SGCORESYS.PersonaMast
+        ON (PR_ImpuestoRenta.Empleado = PersonaMast.Persona)
+WHERE
+( PR_ImpuestoRenta.CompaniaSocio = $P{COMPANIA} ) and
+( PR_ImpuestoRenta.EjercicioFiscal = (Select Max(PR_ImpuestoRenta.EjercicioFiscal)
+                                        FROM SGCORESYS.PR_ImpuestoRenta WHERE
+                                        ( PR_ImpuestoRenta.CompaniaSocio = $P{COMPANIA} ) and
+                                        ( substr(PR_ImpuestoRenta.EjercicioFiscal,1,4) = substr($P{EJERCICIO_FISCAL},1,4) ) and
+                                        ( PR_ImpuestoRenta.Empleado = $P{EMPLEADO} )  ))
+ and ( PR_ImpuestoRenta.Empleado = 1 )
+union all
+select 'DEDUCCION 7 UIT' , (monto*7)*-1 from SGCORESYS.pr_valoresmiscelaneos where codigo = 'UITANU' AND PERIODO =(select substr(max(periodo),1,6) from SGCORESYS.pr_planillaempleado where companiasocio =$P{COMPANIA})]]>
+	</queryString>
+	<field name="RANGO" class="java.lang.String"/>
+	<field name="IMPORTE" class="java.math.BigDecimal"/>
+	<variable name="TOTAL_IMPORTE" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTE}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="110" height="15" forecolor="#333333" uuid="0d0042f4-dfb7-404e-8bdb-45f57d744fb4"/>
+				<box leftPadding="5" rightPadding="0">
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RANGO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="110" y="0" width="110" height="15" forecolor="#333333" uuid="b2c8659c-2dd9-4ea3-bb4b-167de9967ed2"/>
+				<box rightPadding="5">
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IMPORTE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="13">
+			<staticText>
+				<reportElement x="0" y="0" width="110" height="13" forecolor="#000000" uuid="1cd268d3-c2d5-4692-98b4-29db548d629d"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RENTA NETA]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="110" y="0" width="110" height="13" forecolor="#333333" uuid="e21e7d5e-20ea-4166-9011-15a3952d9c44"/>
+				<box rightPadding="5">
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{TOTAL_IMPORTE} < 0 ? new BigDecimal(0) : $V{TOTAL_IMPORTE} )]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

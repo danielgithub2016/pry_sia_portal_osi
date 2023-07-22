@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : servicios.u_vtb
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- servicios.dw_ma_combustible_select -->
+    <sql-query name="servicios.DwMaCombustibleSelect">
+    </sql-query>
+
+    <!-- servicios.dw_ma_op_centrocosto_select -->
+    <sql-query name="servicios.DwMaOpCentrocostoSelect">
+    </sql-query>
+
+    <!-- servicios.dw_ma_op_centrocosto_select_position -->
+    <sql-query name="servicios.DwMaOpCentrocostoSelectPosition">
+    </sql-query>
+
+    <!-- servicios.dw_ma_op_formatovehiculo_select -->
+    <sql-query name="servicios.DwMaOpFormatovehiculoSelect">
+    </sql-query>
+
+    <!-- servicios.dw_ma_op_formatovehiculo_select_vale -->
+    <sql-query name="servicios.DwMaOpFormatovehiculoSelectVale">
+    </sql-query>
+
+    <!-- servicios.dw_op_002_vales_edit -->
+    <sql-query name="servicios.DwOp002ValesEdit">
+    </sql-query>
+
+    <!-- servicios.dw_op_002_vales_edit_precio -->
+    <sql-query name="servicios.DwOp002ValesEditPrecio">
+    </sql-query>
+
+    <!-- servicios.dw_op_002_vales_generate_position -->
+    <sql-query name="servicios.DwOp002ValesGeneratePosition">
+    </sql-query>
+
+    <!-- servicios.dw_op_002_vales_import -->
+    <sql-query name="servicios.DwOp002ValesImport">
+    </sql-query>
+
+    <!-- servicios.dw_op_002_vales_import_data -->
+    <sql-query name="servicios.DwOp002ValesImportData">
+    </sql-query>
+
+    <!-- servicios.dw_op_002_vales_import_pos -->
+    <sql-query name="servicios.DwOp002ValesImportPos">
+    </sql-query>
+
+    <!-- servicios.dw_op_002_vales_list -->
+    <sql-query name="servicios.DwOp002ValesList">
+    </sql-query>
+
+    <!-- servicios.dw_op_002_vales_list_generate -->
+    <sql-query name="servicios.DwOp002ValesListGenerate">
+    </sql-query>
+
+    <!-- servicios.dw_op_002_vales_list_generate_ok -->
+    <sql-query name="servicios.DwOp002ValesListGenerateOk">
+    </sql-query>
+
+    <!-- servicios.dw_op_002_vales_position -->
+    <sql-query name="servicios.DwOp002ValesPosition">
+    </sql-query>
+
+    <!-- servicios.dw_sv_salareserva_edit -->
+    <sql-query name="servicios.DwSvSalareservaEdit">
+    </sql-query>
+
+    <!-- servicios.dw_sv_salareserva_list -->
+    <sql-query name="servicios.DwSvSalareservaList">
+    </sql-query>
+
+    <!-- servicios.dw_sv_salareserva_list_pos -->
+    <sql-query name="servicios.DwSvSalareservaListPos">
+    </sql-query>
+
+</hibernate-mapping>

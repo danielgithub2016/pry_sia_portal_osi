@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.seguridad.dominio.Empleadomast" table="SGCORESYS.EMPLEADOMAST">
+        <composite-id name="pk" class="net.royal.seguridad.dominio.EmpleadomastPk">
+            <key-property name="empleado" type="integer">
+                <column name="EMPLEADO" length="22" />
+            </key-property>
+            <key-property name="companiasocio" type="string">
+                <column name="COMPANIASOCIO" length="8" />
+            </key-property>
+        </composite-id>
+        <property name="tipopago" type="string">
+            <column name="TIPOPAGO" length="2" />
+        </property>
+        <property name="tipotrabajador" type="string">
+            <column name="TIPOTRABAJADOR" length="2" />
+        </property>
+        <property name="tipoplanilla" type="string">
+            <column name="TIPOPLANILLA" length="2" />
+        </property>
+        <property name="raza" type="string">
+            <column name="RAZA" length="3" />
+        </property>
+        <property name="religion" type="string">
+            <column name="RELIGION" length="3" />
+        </property>
+        <property name="tipovisa" type="string">
+            <column name="TIPOVISA" length="3" />
+        </property>
+        <property name="visafechainicio" type="timestamp">
+            <column name="VISAFECHAINICIO" length="7" />
+        </property>
+        <property name="visafechaexpiracion" type="timestamp">
+            <column name="VISAFECHAEXPIRACION" length="7" />
+        </property>
+        <property name="serviciomilitardesde" type="timestamp">
+            <column name="SERVICIOMILITARDESDE" length="7" />
+        </property>
+        <property name="serviciomilitarhasta" type="timestamp">
+            <column name="SERVICIOMILITARHASTA" length="7" />
+        </property>
+        <property name="numeroarchivo" type="string">
+            <column name="NUMEROARCHIVO" length="10" />
+        </property>
+        <property name="unidadnegocioasignada" type="string">
+            <column name="UNIDADNEGOCIOASIGNADA" length="4" />
+        </property>
+        <property name="locaciondepago" type="string">
+            <column name="LOCACIONDEPAGO" length="4" />
+        </property>
+        <property name="responsableempleado" type="string">
+            <column name="RESPONSABLEEMPLEADO" length="4" />
+        </property>
+        <property name="responsablejefe" type="string">
+            <column name="RESPONSABLEJEFE" length="4" />
+        </property>
+        <property name="responsablesueldo" type="string">
+            <column name="RESPONSABLESUELDO" length="4" />
+        </property>
+        <property name="codigousuario" type="string">
+            <column name="CODIGOUSUARIO" length="20" />
+        </property>
+        <property name="tipoasistenciasocial" type="string">
+            <column name="TIPOASISTENCIASOCIAL" length="3" />
+        </property>
+        <property name="centroasistenciasocial" type="string">
+            <column name="CENTROASISTENCIASOCIAL" length="100" />
+        </property>
+        <property name="tipocarnetasistenciasocial" type="string">
+            <column name="TIPOCARNETASISTENCIASOCIAL" length="2" />
+        </property>
+        <property name="carnetasistenciasocial" type="string">
+            <column name="CARNETASISTENCIASOCIAL" length="20" />
+        </property>
+        <property name="tipopension" type="string">
+            <column name="TIPOPENSION" length="3" />
+        </property>
+        <property name="fechainiciopension" type="timestamp">
+            <column name="FECHAINICIOPENSION" length="7" />
+        </property>
+        <property name="fechaterminopension" type="timestamp">
+            <column name="FECHATERMINOPENSION" length="7" />
+        </property>
+        <property name="codigoafp" type="string">
+            <column name="CODIGOAFP" length="3" />
+        </property>
+        <property name="numeroafp" type="string">
+            <column name="NUMEROAFP" length="20" />
+        </property>
+        <property name="bancocts" type="string">
+            <column name="BANCOCTS" length="3" />
+        </property>
+        <property name="tipocuentacts" type="string">
+            <column name="TIPOCUENTACTS" length="3" />
+        </property>
+        <property name="tipomonedacts" type="string">
+            <column name="TIPOMONEDACTS" length="2" />
+        </property>
+        <property name="numerocuentacts" type="string">
+            <column name="NUMEROCUENTACTS" length="40" />
+        </property>
+        <property name="estadoempleado" type="string">
+            <column name="ESTADOEMPLEADO" length="1" />
+        </property>
+        <property name="fechaingreso" type="timestamp">
+            <column name="FECHAINGRESO" length="7" />
+        </property>
+        <property name="fechaultimaplanilla" type="timestamp">
+            <column name="FECHAULTIMAPLANILLA" length="7" />
+        </property>
+        <property name="tipocontrato" type="string">
+            <column name="TIPOCONTRATO" length="2" />
+        </property>
+        <property name="fechainiciocontrato" type="timestamp">
+            <column name="FECHAINICIOCONTRATO" length="7" />
+        </property>
+        <property name="fechafincontrato" type="timestamp">
+            <column name="FECHAFINCONTRATO" length="7" />
+        </property>
+        <property name="fechacese" type="timestamp">
+            <column name="FECHACESE" length="7" />
+        </property>
+        <property name="razoncese" type="string">
+            <column name="RAZONCESE" length="30" />
+        </property>
+        <property name="motivocese" type="integer">
+            <column name="MOTIVOCESE" length="22" />
+        </property>
+        <property name="contratista" type="integer">
+            <column name="CONTRATISTA" length="22" />
+        </property>
+        <property name="centrocostos" type="string">
+            <column name="CENTROCOSTOS" length="10" />
+        </property>
+        <property name="afe" type="string">
+            <column name="AFE" length="15" />
+        </property>
+        <property name="deptoorganizacion" type="string">
+            <column name="DEPTOORGANIZACION" length="3" />
+        </property>
+        <property name="departamentooperacional" type="string">
+            <column name="DEPARTAMENTOOPERACIONAL" length="10" />
+        </property>
+        <property name="tipohorario" type="integer">
+            <column name="TIPOHORARIO" length="22" />
+        </property>
+        <property name="gradosalario" type="string">
+            <column name="GRADOSALARIO" length="3" />
+        </property>
+        <property name="cargo" type="string">
+            <column name="CARGO" length="3" />
+        </property>
+        <property name="posicion" type="string">
+            <column name="POSICION" length="6" />
+        </property>
+        <property name="nivelacceso" type="string">
+            <column name="NIVELACCESO" length="3" />
+        </property>
+        <property name="flagipssvida" type="string">
+            <column name="FLAGIPSSVIDA" length="1" />
+        </property>
+        <property name="flagacctrabajo" type="string">
+            <column name="FLAGACCTRABAJO" length="1" />
+        </property>
+        <property name="flagsindicato" type="string">
+            <column name="FLAGSINDICATO" length="1" />
+        </property>
+        <property name="flagcooperativa" type="string">
+            <column name="FLAGCOOPERATIVA" length="1" />
+        </property>
+        <property name="flagretencionjudicial" type="string">
+            <column name="FLAGRETENCIONJUDICIAL" length="1" />
+        </property>
+        <property name="flagimpuestorenta" type="string">
+            <column name="FLAGIMPUESTORENTA" length="1" />
+        </property>
+        <property name="flagreingresos" type="string">
+            <column name="FLAGREINGRESOS" length="1" />
+        </property>
+        <property name="flagcomision" type="string">
+            <column name="FLAGCOMISION" length="1" />
+        </property>
+        <property name="correointerno" type="string">
+            <column name="CORREOINTERNO" length="50" />
+        </property>
+        <property name="sueldoactuallocal" type="integer">
+            <column name="SUELDOACTUALLOCAL" length="22" />
+        </property>
+        <property name="sueldoactualdolar" type="integer">
+            <column name="SUELDOACTUALDOLAR" length="22" />
+        </property>
+        <property name="sueldoanteriorlocal" type="integer">
+            <column name="SUELDOANTERIORLOCAL" length="22" />
+        </property>
+        <property name="sueldoanteriordolar" type="integer">
+            <column name="SUELDOANTERIORDOLAR" length="22" />
+        </property>
+        <property name="monedapago" type="string">
+            <column name="MONEDAPAGO" length="2" />
+        </property>
+        <property name="perfil" type="integer">
+            <column name="PERFIL" length="22" />
+        </property>
+        <property name="nivelsalario" type="string">
+            <column name="NIVELSALARIO" length="3" />
+        </property>
+        <property name="fechaliquidacion" type="timestamp">
+            <column name="FECHALIQUIDACION" length="7" />
+        </property>
+        <property name="fechareingreso" type="timestamp">
+            <column name="FECHAREINGRESO" length="7" />
+        </property>
+        <property name="unidadreplicacion" type="string">
+            <column name="UNIDADREPLICACION" length="10" />
+        </property>
+        <property name="codigocargo" type="integer">
+            <column name="CODIGOCARGO" length="22" />
+        </property>
+        <property name="ultimafechapagovacacion" type="timestamp">
+            <column name="ULTIMAFECHAPAGOVACACION" length="7" />
+        </property>
+        <property name="ultimousuario" type="string">
+            <column name="ULTIMOUSUARIO" length="20" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="locacionasignada" type="string">
+            <column name="LOCACIONASIGNADA" length="4" />
+        </property>
+        <property name="empleadorelacionado" type="integer">
+            <column name="EMPLEADORELACIONADO" length="22" />
+        </property>
+        <property name="departamentoorganizacional" type="string">
+            <column name="DEPARTAMENTOORGANIZACIONAL" length="5" />
+        </property>
+        <property name="tarjetadecredito" type="string">
+            <column name="TARJETADECREDITO" length="20" />
+        </property>
+        <property name="sucursal" type="string">
+            <column name="SUCURSAL" length="4" />
+        </property>
+        <property name="ruccentroasistenciasocial" type="string">
+            <column name="RUCCENTROASISTENCIASOCIAL" length="20" />
+        </property>
+        <property name="actividad" type="string">
+            <column name="ACTIVIDAD" length="8" />
+        </property>
+        <property name="gerencia" type="integer">
+            <column name="GERENCIA" length="22" />
+        </property>
+        <property name="subgerencia" type="integer">
+            <column name="SUBGERENCIA" length="22" />
+        </property>
+        <property name="plantillaconcepto" type="integer">
+            <column name="PLANTILLACONCEPTO" length="22" />
+        </property>
+        <property name="ultimafechamodif" type="timestamp">
+            <column name="ULTIMAFECHAMODIF" length="7" />
+        </property>
+        <property name="redondeoacuenta" type="big_decimal">
+            <column name="REDONDEOACUENTA" length="22" />
+        </property>
+        <property name="flagsmf" type="string">
+            <column name="FLAGSMF" length="1" />
+        </property>
+        <property name="firmadigitalizada" type="string">
+            <column name="FIRMADIGITALIZADA" length="100" />
+        </property>
+        <property name="provincia" type="string">
+            <column name="PROVINCIA" length="3" />
+        </property>
+        <property name="posicionorganigrama" type="integer">
+            <column name="POSICIONORGANIGRAMA" length="22" />
+        </property>
+        <property name="planta" type="string">
+            <column name="PLANTA" length="6" />
+        </property>
+        <property name="flagjefedepartamento" type="string">
+            <column name="FLAGJEFEDEPARTAMENTO" length="1" />
+        </property>
+        <property name="flagporcentaje" type="string">
+            <column name="FLAGPORCENTAJE" length="1" />
+        </property>
+        <property name="centroriesgosctr" type="string">
+            <column name="CENTRORIESGOSCTR" length="1" />
+        </property>
+        <property name="tipopensionjubilacion" type="string">
+            <column name="TIPOPENSIONJUBILACION" length="1" />
+        </property>
+        <property name="flagtrabajadorpensionista" type="string">
+            <column name="FLAGTRABAJADORPENSIONISTA" length="1" />
+        </property>
+        <property name="flagsctrsalud" type="string">
+            <column name="FLAGSCTRSALUD" length="1" />
+        </property>
+        <property name="flagsctrpension" type="string">
+            <column name="FLAGSCTRPENSION" length="1" />
+        </property>
+        <property name="flagdiscapacidad" type="string">
+            <column name="FLAGDISCAPACIDAD" length="1" />
+        </property>
+        <property name="flagsujetocontrol" type="string">
+            <column name="FLAGSUJETOCONTROL" length="1" />
+        </property>
+        <property name="flagsindicalizado" type="string">
+            <column name="FLAGSINDICALIZADO" length="1" />
+        </property>
+        <property name="flagdomiciliado" type="string">
+            <column name="FLAGDOMICILIADO" length="1" />
+        </property>
+        <property name="flagdeconfianza" type="string">
+            <column name="FLAGDECONFIANZA" length="1" />
+        </property>
+        <property name="empleadoant" type="string">
+            <column name="EMPLEADOANT" length="20" />
+        </property>
+        <property name="asignacionfamiliar" type="string">
+            <column name="ASIGNACIONFAMILIAR" length="1" />
+        </property>
+        <property name="ordenservicio" type="string">
+            <column name="ORDENSERVICIO" length="20" />
+        </property>
+        <property name="fechabajaeps" type="timestamp">
+            <column name="FECHABAJAEPS" length="7" />
+        </property>
+        <property name="tiporemuneracionrtps" type="string">
+            <column name="TIPOREMUNERACIONRTPS" length="1" />
+        </property>
+        <property name="municipalidadnacimiento" type="string">
+            <column name="MUNICIPALIDADNACIMIENTO" length="6" />
+        </property>
+        <property name="establecimientortps" type="string">
+            <column name="ESTABLECIMIENTORTPS" length="4" />
+        </property>
+        <property name="proveedorintermediacion" type="integer">
+            <column name="PROVEEDORINTERMEDIACION" length="22" />
+        </property>
+        <property name="niveleducativortps" type="string">
+            <column name="NIVELEDUCATIVORTPS" length="2" />
+        </property>
+        <property name="flagacctrabajop" type="string">
+            <column name="FLAGACCTRABAJOP" length="1" />
+        </property>
+        <property name="sucursalbanconacion" type="string">
+            <column name="SUCURSALBANCONACION" length="4" />
+        </property>
+        <property name="grupoocupacional" type="integer">
+            <column name="GRUPOOCUPACIONAL" length="22" />
+        </property>
+        <property name="cliente" type="integer">
+            <column name="CLIENTE" length="22" />
+        </property>
+        <property name="clienteunidad" type="integer">
+            <column name="CLIENTEUNIDAD" length="22" />
+        </property>
+        <property name="tareonivel" type="integer">
+            <column name="TAREONIVEL" length="22" />
+        </property>
+        <property name="empleadonivel" type="integer">
+            <column name="EMPLEADONIVEL" length="22" />
+        </property>
+        <property name="tipopuesto" type="integer">
+            <column name="TIPOPUESTO" length="22" />
+        </property>
+        <property name="estadonivelacion" type="string">
+            <column name="ESTADONIVELACION" length="2" />
+        </property>
+        <property name="flagregimenalternativo" type="string">
+            <column name="FLAGREGIMENALTERNATIVO" length="1" />
+        </property>
+        <property name="flagjornadamaxima" type="string">
+            <column name="FLAGJORNADAMAXIMA" length="1" />
+        </property>
+        <property name="flaghorarionocturno" type="string">
+            <column name="FLAGHORARIONOCTURNO" length="1" />
+        </property>
+        <property name="flagotrosquinta" type="string">
+            <column name="FLAGOTROSQUINTA" length="1" />
+        </property>
+        <property name="flagquintaexonerada" type="string">
+            <column name="FLAGQUINTAEXONERADA" length="1" />
+        </property>
+        <property name="situacionespecial" type="string">
+            <column name="SITUACIONESPECIAL" length="1" />
+        </property>
+        <property name="flagmadreresponsabilidad" type="string">
+            <column name="FLAGMADRERESPONSABILIDAD" length="1" />
+        </property>
+        <property name="flagcentroformacion" type="string">
+            <column name="FLAGCENTROFORMACION" length="1" />
+        </property>
+        <property name="tipomodalidadformativa" type="string">
+            <column name="TIPOMODALIDADFORMATIVA" length="2" />
+        </property>
+        <property name="prestadorservicio" type="string">
+            <column name="PRESTADORSERVICIO" length="1" />
+        </property>
+        <property name="fechavacaciones" type="timestamp">
+            <column name="FECHAVACACIONES" length="7" />
+        </property>
+        <property name="formato2" type="string">
+            <column name="FORMATO_2" length="3" />
+        </property>
+        <property name="aprobadornivelacion" type="integer">
+            <column name="APROBADORNIVELACION" length="22" />
+        </property>
+        <property name="solicitadornivelacion" type="integer">
+            <column name="SOLICITADORNIVELACION" length="22" />
+        </property>
+        <property name="flagasegurapension" type="string">
+            <column name="FLAGASEGURAPENSION" length="1" />
+        </property>
+        <property name="categoriaocupacional" type="string">
+            <column name="CATEGORIAOCUPACIONAL" length="2" />
+        </property>
+        <property name="flagconveniodobletrib" type="string">
+            <column name="FLAGCONVENIODOBLETRIB" length="1" />
+        </property>
+        <property name="empleadorepresentante" type="integer">
+            <column name="EMPLEADOREPRESENTANTE" length="22" />
+        </property>
+        <property name="budgetcategory" type="string">
+            <column name="BUDGETCATEGORY" length="20" />
+        </property>
+        <property name="codigounidad" type="integer">
+            <column name="CODIGOUNIDAD" length="22" />
+        </property>
+        <property name="responsableunidad" type="integer">
+            <column name="RESPONSABLEUNIDAD" length="22" />
+        </property>
+        <property name="jefeunidad" type="integer">
+            <column name="JEFEUNIDAD" length="22" />
+        </property>
+        <property name="horalectiva" type="big_decimal">
+            <column name="HORALECTIVA" length="22" />
+        </property>
+        <property name="nivel" type="string">
+            <column name="NIVEL" length="20" />
+        </property>
+        <property name="condicionLaboral" type="string">
+            <column name="CONDICION_LABORAL" length="1" />
+        </property>
+        <property name="tipoPagohora" type="string">
+            <column name="TIPO_PAGOHORA" length="5" />
+        </property>
+        <property name="porcentaje" type="integer">
+            <column name="PORCENTAJE" length="22" />
+        </property>
+        <property name="jefedepartamento" type="integer">
+            <column name="JEFEDEPARTAMENTO" length="22" />
+        </property>
+        <property name="tipoplanillaop" type="string">
+            <column name="TIPOPLANILLAOP" length="2" />
+        </property>
+        <property name="nivelremunerativo" type="string">
+            <column name="NIVELREMUNERATIVO" length="1" />
+        </property>
+        <property name="catcodigo" type="string">
+            <column name="CATCODIGO" length="3" />
+        </property>
+        <property name="catnivel" type="integer">
+            <column name="CATNIVEL" length="22" />
+        </property>
+        <property name="gradosalarioencargado" type="string">
+            <column name="GRADOSALARIOENCARGADO" length="3" />
+        </property>
+        <property name="codigocargoencargado" type="integer">
+            <column name="CODIGOCARGOENCARGADO" length="22" />
+        </property>
+        <property name="tipogasto" type="integer">
+            <column name="TIPOGASTO" length="22" />
+        </property>
+        <property name="cargoencargado" type="string">
+            <column name="CARGOENCARGADO" length="3" />
+        </property>
+        <property name="dptoorganizacionencargado" type="string">
+            <column name="DPTOORGANIZACIONENCARGADO" length="3" />
+        </property>
+        <property name="jefequienreporta" type="integer">
+            <column name="JEFEQUIENREPORTA" length="22" />
+        </property>
+        <property name="tipoprofesional" type="string">
+            <column name="TIPOPROFESIONAL" length="3" />
+        </property>
+        <property name="dptoareaoperativa" type="integer">
+            <column name="DPTOAREAOPERATIVA" length="22" />
+        </property>
+        <property name="foto" type="string">
+            <column name="FOTO" length="30" />
+        </property>
+        <property name="ultimousuarioAs" type="string">
+            <column name="ULTIMOUSUARIO_AS" length="20" />
+        </property>
+        <property name="ultimafechamodifAs" type="timestamp">
+            <column name="ULTIMAFECHAMODIF_AS" length="7" />
+        </property>
+        <property name="empleadosuplencia" type="string">
+            <column name="EMPLEADOSUPLENCIA" length="1" />
+        </property>
+        <property name="fotografia" type="binary">
+            <column name="FOTOGRAFIA" length="4000" />
+        </property>
+        <property name="tipocomisionafp" type="string">
+            <column name="TIPOCOMISIONAFP" length="1" />
+        </property>
+        <property name="cosajuzgada" type="string">
+            <column name="COSAJUZGADA" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

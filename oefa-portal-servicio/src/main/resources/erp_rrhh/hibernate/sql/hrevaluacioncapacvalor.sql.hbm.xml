@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : rrhh.HrEvaluacioncapacvalor
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+<sql-query name="hrevaluacioncapacvalor.dwhrevaluacioncapacvalorlist">
+		<![CDATA[
+			SELECT 
+				HR_evaluacioncapacVALOR.Valor as "valor",   
+				HR_evaluacioncapacVALOR.Descripcion as "descripcion",   
+				HR_evaluacioncapacVALOR.Secuencia as "secuencia",
+				HR_evaluacioncapacVALOR.FlagAprobado as "flagaprobado",
+				ROWNUM as "total"
+			FROM SGCORESYS.HR_evaluacioncapacVALOR  
+			WHERE HR_evaluacioncapacVALOR.Evaluacion = :par_evaluacion
+		]]>
+	</sql-query>
+    
+</hibernate-mapping>

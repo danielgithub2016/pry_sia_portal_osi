@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="wmaaccostcenterselectonecode">
+		<style>
+.ui-tabs .ui-tabs-nav li a {
+	float: left;
+	padding: .0em 1em 0em 0em;
+	text-decoration: none;
+}
+</style>
+
+
+		<p:panel>
+
+			<h:panelGrid columns="4"  width="100%">
+				<h:panelGrid columns="1" styleClass="columnGridMiddle">
+					<p:selectOneRadio layout="grid" columns="2"
+						value="#{cwMaAcCostcenterSelectMaster.dw_position.codigodescripcionflag}">
+						<f:selectItem itemLabel="Código" itemValue="C" />
+						<f:selectItem itemLabel="Descripción" itemValue="D" />
+						<p:ajax update=":wmaaccostcenterselectonecode" />
+					</p:selectOneRadio>
+				</h:panelGrid>
+
+				<h:panelGrid columns="1" >
+					<p:focus for="txtcostcenter" />
+					<p:inputText style="width:200px;" id="txtcostcenter"
+						value="#{cwMaAcCostcenterSelectMaster.dw_position.costcenter}" onkeypress="return noAcepto(event);" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" >
+					<p:selectBooleanCheckbox
+						value="#{cwMaAcCostcenterSelectMaster.dw_position.buscarflagBoolean}" />
+					<h:outputLabel value="Buscar Dentro" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" >
+					<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+						icon="buscar" update="@form"
+						action="#{cwMaAcCostcenterSelectMaster.buscar}" />
+
+					<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+						onclick="PF('popSelectorCostos').hide()" icon="cancelar" />
+				</h:panelGrid>
+			</h:panelGrid>
+		</p:panel>
+
+		<p:spacer width="1" height="20"></p:spacer>
+
+		<h:outputLabel value="De dobleclick para seleccionar un C. Costos"
+			style="font-size:11px; font-family:Open sans,sans-serif; font-weight: bold;color:#800000" />
+
+		<p:tabView id="tabView" dynamic="true"
+			activeIndex="#{cwMaAcCostcenterSelectMaster.tabActivo}">
+			<p:ajax event="tabChange"
+				listener="#{cwMaAcCostcenterSelectMaster.onTabChange}" />
+
+			<p:tab id="Autorizados"
+				disabled="#{cwMaAcCostcenterSelectMaster.validaTab1}">
+				<f:facet name="title">
+					<h:panelGrid columns="2">
+						<p:graphicImage
+							value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/table_add.png" />
+						<h:outputText value="C.C. Autorizados" />
+					</h:panelGrid>
+				</f:facet>
+				<ui:include src="tab_autorizados.xhtml" />
+			</p:tab>
+
+			<p:tab id="Supervisados"
+				disabled="#{cwMaAcCostcenterSelectMaster.validaTab2}">
+				<f:facet name="title">
+					<h:panelGrid columns="2">
+						<p:graphicImage
+							value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1300.bmp" />
+						<h:outputText value="C.C.Supervisados" />
+					</h:panelGrid>
+				</f:facet>
+				<ui:include src="tab_supervisados.xhtml" />
+			</p:tab>
+
+			<p:tab id="Empleados"
+				disabled="#{cwMaAcCostcenterSelectMaster.validaTab3}">
+				<f:facet name="title">
+					<h:panelGrid columns="2">
+						<p:graphicImage
+							value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/btn_iper_trabajador.png" />
+						<h:outputText value="C.C.Empleados" />
+					</h:panelGrid>
+				</f:facet>
+				<ui:include src="tab_empleados.xhtml" />
+			</p:tab>
+		</p:tabView>
+	</h:form>
+</ui:composition>

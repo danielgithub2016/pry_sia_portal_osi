@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrEvaluacionempleado" table="SGCORESYS.HR_EVALUACIONEMPLEADO">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrEvaluacionempleadoPk">
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+            <key-property name="secuenciaeval" type="integer">
+                <column name="SECUENCIAEVAL" length="22" />
+            </key-property>
+            <key-property name="empleado" type="integer">
+                <column name="EMPLEADO" length="22" />
+            </key-property>
+            <key-property name="empleadoevaluador" type="integer">
+                <column name="EMPLEADOEVALUADOR" length="22" />
+            </key-property>
+        </composite-id>
+        
+        <property name="fechaevaluacion" type="timestamp">
+            <column name="FECHAEVALUACION" length="7" />
+        </property>
+        <property name="periodo" type="string">
+            <column name="PERIODO" length="6" />
+        </property>
+        <property name="totalpuntos" type="big_decimal">
+            <column name="TOTALPUNTOS" length="22" />
+        </property>
+        <property name="unidadreplicacion" type="string">
+            <column name="UNIDADREPLICACION" length="4" />
+        </property>
+        <property name="unidadnegocio" type="string">
+            <column name="UNIDADNEGOCIO" length="4" />
+        </property>
+        <property name="centrocostos" type="string">
+            <column name="CENTROCOSTOS" length="10" />
+        </property>
+        <property name="comentario" type="string">
+            <column name="COMENTARIO" length="255" />
+        </property>
+        <property name="codigopuesto" type="integer">
+            <column name="CODIGOPUESTO" length="22" />
+        </property>
+        <property name="fechadesde" type="timestamp">
+            <column name="FECHADESDE" length="7" />
+        </property>
+        <property name="fechahasta" type="timestamp">
+            <column name="FECHAHASTA" length="7" />
+        </property>
+        <property name="tiempopuesto" type="string">
+            <column name="TIEMPOPUESTO" length="20" />
+        </property>
+        <property name="gradosalario" type="string">
+            <column name="GRADOSALARIO" length="3" />
+        </property>
+        <property name="comentarioevaluado" type="string">
+            <column name="COMENTARIOEVALUADO" length="255" />
+        </property>
+        <property name="deptoorganizacion" type="string">
+            <column name="DEPTOORGANIZACION" length="3" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="2" />
+        </property>
+        <property name="empleadogerente" type="big_decimal">
+            <column name="EMPLEADOGERENTE" length="22" />
+        </property>
+        <property name="totalpuntosfuncion" type="big_decimal">
+            <column name="TOTALPUNTOSFUNCION" length="22" />
+        </property>
+        <property name="datoevaluacionintegral" type="integer">
+            <column name="DATOEVALUACIONINTEGRAL" length="22" />
+        </property>
+        <property name="totalpuntosmetas" type="big_decimal">
+            <column name="TOTALPUNTOSMETAS" length="22" />
+        </property>
+        <property name="relacionempleadoevaluador" type="string">
+            <column name="RELACIONEMPLEADOEVALUADOR" length="50" />
+        </property>
+        <property name="totalpuntospotencial" type="big_decimal">
+            <column name="TOTALPUNTOSPOTENCIAL" length="22" />
+        </property>
+        <property name="empleadosupervisor" type="big_decimal">
+            <column name="EMPLEADOSUPERVISOR" length="22" />
+        </property>
+        <property name="comentariosupervisor" type="string">
+            <column name="COMENTARIOSUPERVISOR" length="255" />
+        </property>
+        <property name="flagpresento" type="string">
+            <column name="FLAGPRESENTO" length="1" />
+        </property>
+        <property name="tipoevaluador" type="string">
+            <column name="TIPOEVALUADOR" length="3" />
+        </property>
+        <property name="evaluado" type="string">
+            <column name="EVALUADO" length="1" />
+        </property>
+        <property name="evaluador" type="string">
+            <column name="EVALUADOR" length="1" />
+        </property>
+        <property name="jefeOrgano" type="string">
+            <column name="JEFE_ORGANO" length="1" />
+        </property>
+        <property name="comentariorevisor" type="string">
+            <column name="COMENTARIOREVISOR" length="255" />
+        </property>
+    </class>
+</hibernate-mapping>

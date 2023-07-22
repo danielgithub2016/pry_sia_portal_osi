@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:outputLabel value="Asignación de rol jefe"
+		style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+
+	<p:panel header="DATOS SIGED">
+		<p:panelGrid columns="2" id="grdEmpleadoAsignacionArea"
+			style="border-spacing:0px;"
+			columnClasses="ui-grid-col-5,ui-grid-col-7" layout="grid"
+			styleClass="ui-panelgrid-blank">
+
+			<h:outputLabel value="Area Siged"
+				style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;" />
+
+			<p:selectOneMenu
+				requiredMessage="El campo Area Siged es obligatorio." filter="true"
+				filterMatchMode="contains" required="true"
+				disabled="#{cwAsAutorizacionPreprocesoHextraEditSIGED.puedeEditarPermisosSIGED}"
+				valueChangeListener="#{cwAsAutorizacionPreprocesoHextraEditSIGED.mostrarJefeAsistenteSegunArea}"
+				value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.nuevaBandeja.idAreaSIGED}">
+
+				<f:selectItem itemLabel="--Seleccione--" />
+				<f:selectItems
+					value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.listaAreasSIGED}"
+					var="area" itemValue="#{area.idArea}" itemLabel="#{area.nombre}" />
+				<p:ajax update="@form" />
+			</p:selectOneMenu>
+
+			<h:outputLabel value="Jefe actual:"
+				style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;" />
+
+			<h:outputLabel
+				value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.empleadoJefeArea.nombrecompleto}"
+				style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;" />
+
+			<h:outputLabel value="Asistente actual:"
+				style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;" />
+
+			<h:outputLabel
+				value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.empleadoAsistenteArea.nombrecompleto}"
+				style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;" />
+
+		</p:panelGrid>
+	</p:panel>
+
+
+</ui:composition>

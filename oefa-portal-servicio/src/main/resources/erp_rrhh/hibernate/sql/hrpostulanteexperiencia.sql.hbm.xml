@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : rrhh.HrPostulanteexperiencia
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="hrpostulanteexperiencia.tiempoexperienciapostulante">
+		<![CDATA[
+		SELECT SUM(SGCORESYS.FN_HR_DIASATIEMPO(FECHAHASTA - FECHADESDE)) as "numerosolicitado"
+		         FROM SGCORESYS.HR_POSTULANTEEXPERIENCIA WHERE POSTULANTE = :par_postulante AND (CODIGOPUESTO = :par_puesto
+		              OR CODIGOPUESTO IN(SELECT CODIGOPUESTOSIMILAR FROM SGCORESYS.HR_PUESTOSIMILAR WHERE CODIGOPUESTO = :par_puesto))
+		              AND (SELECT COUNT(1) FROM SGCORESYS.HR_PUESTOEXPERIENCIA WHERE 
+		                    (CODIGOPUESTO = :par_puesto OR CODIGOPUESTO IN(SELECT CODIGOPUESTOSIMILAR FROM SGCORESYS.HR_PUESTOSIMILAR WHERE CODIGOPUESTO = :par_puesto))
+		                    AND AREAEXPERIENCIA LIKE  '%'|| HR_POSTULANTEEXPERIENCIA.AREAEXPERIENCIA || '%' ) > 0 	
+		]]>
+    </sql-query>
+    
+    <sql-query name="hrpostulanteexperiencia.tiempoexperienciapostulanteins">
+		<![CDATA[
+		SELECT SUM(SGCORESYS.FN_HR_DIASATIEMPO(SYSDATE - (SELECT MIN(FECHABACHILLER) FROM SGCORESYS.HR_POSTULANTEINSTRUCCION WHERE POSTULANTE = A.POSTULANTE AND NIVELACADEMICO IN('BAC','TIT')))) as "numerosolicitado"
+    		FROM SGCORESYS.HR_POSTULANTEINSTRUCCION A WHERE A.POSTULANTE = :par_postulante
+		]]>
+    </sql-query>
+</hibernate-mapping>

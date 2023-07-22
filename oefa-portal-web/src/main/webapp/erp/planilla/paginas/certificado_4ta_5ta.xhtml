@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+
+	<ui:define name="title">
+		<h2>
+			Certificados</h2>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="certificadoForm">
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+			<p:panel>
+				<p:panelGrid columns="6" layout="grid"
+					columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3"
+					styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Empleado" />
+					<p:inputText disabled="true"
+						value="${usuario.idPersona} - ${usuario.nombreCompleto}" />
+
+					<p:outputLabel value="Área Operativa" />
+					<p:inputText value="${usuario.areaCodigo} - ${usuario.areaNombre}"
+						disabled="true" />
+
+					<p:outputLabel value="Centro de Costos" />
+					<p:inputText
+						value="${usuario.centroCostosCodigo} - ${usuario.centroCostosNombre}"
+						disabled="true" />
+
+					<p:outputLabel value="Puesto" />
+					<p:inputText
+						value="${usuario.cargoCodigo} - ${usuario.cargoNombre}"
+						disabled="true" />
+
+					<p:outputLabel value="Sucursal" />
+					<p:inputText
+						value="${usuario.sucursalCodigo} - ${usuario.sucursalNombre}"
+						disabled="true" />
+
+					<p:outputLabel value="Unidad de Negocio" />
+					<p:inputText
+						value="${usuario.unidadNegocioCodigo} - ${usuario.unidadNegocioNombre}"
+						disabled="true" />
+
+				</p:panelGrid>
+				<p:panelGrid columns="6" layout="grid"
+					columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3"
+					styleClass="ui-panelgrid-blank">
+
+					<p:outputLabel value="Planilla" id="lblPlanilla" />
+					<p:selectOneMenu id="cboPlanilla"
+						disabled="#{cCertificado4ta5ta.all_planilla}"
+						value="#{cCertificado4ta5ta.planilla}">
+						<f:selectItems value="#{cCertificado4ta5ta.listaTipoPlanilla}"
+							var="tipoplanilla" itemValue="#{tipoplanilla.pk.tipoplanilla}"
+							itemLabel="#{tipoplanilla.pk.tipoplanilla} - #{tipoplanilla.descripcion}" />
+						<p:ajax listener="#{cCertificado4ta5ta.listarPeriodoXPlanilla}"
+							update="@form" />
+					</p:selectOneMenu>
+
+
+
+					<p:outputLabel value="Periodo" id="lblPeriodo" />
+					<p:selectOneMenu id="cboPeriodo"
+						disabled="#{cCertificado4ta5ta.all_periodo}"
+						value="#{cCertificado4ta5ta.periodo}">
+						<f:selectItems value="#{cCertificado4ta5ta.listaPeriodos}"
+							var="periodo" itemValue="#{periodo.pk.periodo}"
+							itemLabel="#{periodo.pk.periodo}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel id="lblCertificado" value="Certificado" />
+
+
+					<p:selectOneRadio id="rbnCertificado"
+						value="#{cCertificado4ta5ta.certificado}">
+						<f:selectItem itemLabel="4ta Categoría" itemValue="4ta" />
+						<f:selectItem itemLabel="5ta Categoría" itemValue="5ta" />
+					</p:selectOneRadio>
+
+					<p:selectOneRadio id="rbnTipo" value="#{cCertificado4ta5ta.tipo}">
+						<f:selectItem itemLabel="Anual" itemValue="ANUAL" />
+						<f:selectItem itemLabel="Mensual" itemValue="MENSUAL" />
+					</p:selectOneRadio>
+
+				</p:panelGrid>
+
+
+			</p:panel>
+
+			<p:panelGrid layout="grid" columns="6"
+				styleClass="ui-panelgrid-blank">
+
+				<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+					icon="buscar" action="#{cCertificado4ta5ta.buscar}" update="@form"
+					style="float: right; margin-top: 5px; margin-bottom: 5px;"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();" />
+
+			</p:panelGrid>
+
+			<pe:documentViewer value="#{cCertificado4ta5ta.reporte}"
+				style="width:100%;height:600px;" page="1" />
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

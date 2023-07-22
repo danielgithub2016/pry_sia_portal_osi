@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dDesempenocomparativo" language="groovy" pageWidth="310" pageHeight="300" columnWidth="310" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a4611fef-800f-46d1-9975-7869a2206799">
+	<property name="ireport.zoom" value="3.993000000000001"/>
+	<property name="ireport.x" value="328"/>
+	<property name="ireport.y" value="0"/>
+	<style name="miestilo1">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{VALOR}>0]]></conditionExpression>
+			<style forecolor="#87CEEB" backcolor="#87CEEB"/>
+		</conditionalStyle>
+	</style>
+	<style name="miestilo2">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{VALOR}>1]]></conditionExpression>
+			<style forecolor="#87CEEB" backcolor="#87CEEB"/>
+		</conditionalStyle>
+	</style>
+	<style name="miestilo3">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{VALOR}>2]]></conditionExpression>
+			<style forecolor="#87CEEB" backcolor="#87CEEB"/>
+		</conditionalStyle>
+	</style>
+	<style name="miestilo4">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{VALOR}>3]]></conditionExpression>
+			<style forecolor="#87CEEB" backcolor="#87CEEB"/>
+		</conditionalStyle>
+	</style>
+	<style name="miestilo5">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{VALOR}>4]]></conditionExpression>
+			<style forecolor="#87CEEB" backcolor="#87CEEB"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="parCompanyowner" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEmpleado" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parSecuencia" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEvaluador" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_area" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Fabrica\\Desarrollo\\DesarrolloProductos\\OEFAMIGRA\\oefa-portal-web\\src\\main\\webapp\\erp\\rrhh\\recursos\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	a.empleado,
+	a.secuencia ,
+	a.companyowner,
+	a.secuenciaeval ,
+	a.factor ,
+	a.descripcion ,
+	a.calificacion as valor,
+	a.unidadnegocio ,
+	a.tipo ,
+	a.factorsecuencia  ,
+	a.plantilla ,
+	c.descripcion as area,
+	a.areaponderacion,
+	a.factorponderacion,
+	a.FactorParticipacion,
+	b.area,
+	NVL(b.valorrequerido,0) as valorrequerido,
+	NVL(b.valorminimoesperado,0) as valorminimoesperado,
+	b.descripcion as competencia,
+	b.tipocompetencia,
+	(select max(OrdenFactor) from SGCORESYS.HR_PlantillaFactorEvaluacion where Plantilla = a.Plantilla and Factor = a.Factor) as OrdenFactor,
+	b.OrdenPlantilla,
+	a.ValorCompetencia ,
+	a.ValorHastaCompetencia,
+	a.ValorCompetencia as MinimoValor,
+	(select max(descripcion) from SGCORESYS.HR_FactorValor  where factor= a.Factor and secuencia=b.valorrequerido ) as DesValorRequerido,
+	(select max(descripcion) from SGCORESYS.HR_FactorValor  where factor= a.Factor and (valor=a.calificacion)) as DesValorRegistrado,
+(SELECT
+            round(sum(aa.calificacion)/ count(aa.empleado),2) as "promedio"
+        FROM
+            SGCORESYS.hr_detalleevaluacion aa
+                inner join SGCORESYS.hr_factoresevaluacion b on (b.factor = aa.factor)
+                left join SGCORESYS.hr_evaluacionarea c on (b.area = c.area)
+                left join SGCORESYS.HR_EvaluacionPeriodo d on (d.SecuenciaEval = aa.SecuenciaEval and d.CompanyOwner = aa.CompanyOwner)
+                LEFT JOIN SGCORESYS.empleadomast f ON (f.EMPLEADO = aa.EMPLEADO AND F.COMPANIASOCIO = aa.COMPANYOWNER)
+        WHERE
+            b.FlagConcepto = 'N' and
+            aa.Tipo = 'N' AND
+            f.cargo = (SELECT cargo FROM SGCORESYS.EMPLEADOMAST WHERE EMPLEADO = $P{parEmpleado} AND COMPANIASOCIO = $P{parCompanyowner})    and
+            aa.companyowner         = $P{parCompanyowner}  AND
+            aa.SecuenciaEval     = $P{parSecuencia} AND
+            aa.factor =a.factor ) as desProm,
+
+	b.OrdenPlantilla
+FROM
+	SGCORESYS.hr_detalleevaluacion a
+		inner join SGCORESYS.hr_factoresevaluacion b on (b.factor = a.factor)
+		left join SGCORESYS.hr_evaluacionarea c on (b.area = c.area)
+		left join SGCORESYS.HR_EvaluacionPeriodo d on (d.SecuenciaEval = a.SecuenciaEval and d.CompanyOwner = a.CompanyOwner)
+WHERE
+	b.FlagConcepto = 'N' and
+	a.Tipo = 'N' and
+	a.companyowner		 = $P{parCompanyowner}  and
+	a.Empleado			 = $P{parEmpleado}  and
+	a.SecuenciaEval	 = $P{parSecuencia}  and
+	a.EmpleadoEvaluador= $P{parEvaluador} and
+          c.area=$P{p_area}
+ order by factor asc]]>
+	</queryString>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="COMPANYOWNER" class="java.lang.String"/>
+	<field name="SECUENCIAEVAL" class="java.math.BigDecimal"/>
+	<field name="FACTOR" class="java.math.BigDecimal"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="VALOR" class="java.lang.Double"/>
+	<field name="UNIDADNEGOCIO" class="java.lang.String"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="FACTORSECUENCIA" class="java.math.BigDecimal"/>
+	<field name="PLANTILLA" class="java.lang.String"/>
+	<field name="AREA" class="java.lang.String"/>
+	<field name="AREAPONDERACION" class="java.math.BigDecimal"/>
+	<field name="FACTORPONDERACION" class="java.math.BigDecimal"/>
+	<field name="FACTORPARTICIPACION" class="java.math.BigDecimal"/>
+	<field name="VALORREQUERIDO" class="java.math.BigDecimal"/>
+	<field name="VALORMINIMOESPERADO" class="java.math.BigDecimal"/>
+	<field name="COMPETENCIA" class="java.lang.String"/>
+	<field name="TIPOCOMPETENCIA" class="java.lang.String"/>
+	<field name="ORDENFACTOR" class="java.math.BigDecimal"/>
+	<field name="ORDENPLANTILLA" class="java.math.BigDecimal"/>
+	<field name="VALORCOMPETENCIA" class="java.math.BigDecimal"/>
+	<field name="VALORHASTACOMPETENCIA" class="java.math.BigDecimal"/>
+	<field name="MINIMOVALOR" class="java.math.BigDecimal"/>
+	<field name="DESVALORREQUERIDO" class="java.lang.String"/>
+	<field name="DESVALORREGISTRADO" class="java.lang.String"/>
+	<field name="DESPROM" class="java.math.BigDecimal"/>
+	<variable name="sumValor" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALOR}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="70">
+			<rectangle>
+				<reportElement x="0" y="1" width="308" height="69" forecolor="#CCCCCC" uuid="7fdc6959-25e0-454e-b2d5-abe9ee62b0a8"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="5" y="4" width="100" height="26" uuid="368d17b5-763a-4784-a39e-e59a1af44af5"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPETENCIA}!=null?$F{COMPETENCIA}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="111" y="18" width="18" height="12" forecolor="#000099" uuid="02003a14-fe52-4406-b6e3-ad0b4fbdb033"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VALOR}!=null?$F{VALOR}:""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="131" y="4" width="55" height="12" forecolor="#CC0000" uuid="6e7a7b42-e6b7-4cff-b2e1-603604dc9c00"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESVALORREQUERIDO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="111" y="4" width="18" height="12" forecolor="#CC0000" uuid="d1377dce-9a45-4dcc-8b6f-4fdaa69dceaf"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VALORREQUERIDO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="131" y="18" width="55" height="12" forecolor="#000099" uuid="a9fba292-6142-4ac5-ad91-71148db58066"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESVALORREGISTRADO}!=null?$F{DESVALORREGISTRADO}:""]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="107" y="1" width="1" height="34" uuid="ce05432f-6ca3-4bfe-8209-881470baeda6"/>
+			</line>
+			<subreport>
+				<reportElement x="188" y="2" width="101" height="19" uuid="317283d9-600e-4853-969b-003a8621d467"/>
+				<subreportParameter name="PAR_COMPANYOWNER">
+					<subreportParameterExpression><![CDATA[$P{parCompanyowner}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_EMPLEADO">
+					<subreportParameterExpression><![CDATA[$P{parEmpleado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_SECUENCIA">
+					<subreportParameterExpression><![CDATA[$P{parSecuencia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_EVALUADOR">
+					<subreportParameterExpression><![CDATA[$P{parEvaluador}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_FACTOR">
+					<subreportParameterExpression><![CDATA[$F{FACTOR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reporteBarra.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="188" y="30" width="101" height="21" uuid="8ae12311-c9e8-45ce-9f85-5f63abe0aa8b"/>
+				<subreportParameter name="PAR_COMPANYOWNER">
+					<subreportParameterExpression><![CDATA[$P{parCompanyowner}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_EMPLEADO">
+					<subreportParameterExpression><![CDATA[$P{parEmpleado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_SECUENCIA">
+					<subreportParameterExpression><![CDATA[$P{parSecuencia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_EVALUADOR">
+					<subreportParameterExpression><![CDATA[$P{parEvaluador}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_FACTOR">
+					<subreportParameterExpression><![CDATA[$F{FACTOR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reporteBarraProm.jasper"]]></subreportExpression>
+			</subreport>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="111" y="33" width="18" height="12" forecolor="#0000CC" backcolor="#0000CC" uuid="5ecc4167-8a6b-4b66-896e-c5628b17cb67"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESPROM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

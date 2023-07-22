@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrEvaluacioncandidatohist" table="SGCORESYS.HR_EVALUACIONCANDIDATOHIST">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrEvaluacioncandidatohistPk">
+            <key-property name="fecha" type="timestamp">
+                <column name="FECHA" length="7" />
+            </key-property>
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+            <key-property name="postulante" type="string">
+                <column name="POSTULANTE" length="10" />
+            </key-property>
+            <key-property name="requerimiento" type="string">
+                <column name="REQUERIMIENTO" length="10" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+            <key-property name="evaluacion" type="integer">
+                <column name="EVALUACION" length="22" />
+            </key-property>
+            <key-property name="factor" type="integer">
+                <column name="FACTOR" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="valor1" type="integer">
+            <column name="VALOR1" length="22" />
+        </property>
+        <property name="valor2" type="integer">
+            <column name="VALOR2" length="22" />
+        </property>
+        <property name="valor3" type="integer">
+            <column name="VALOR3" length="22" />
+        </property>
+        <property name="valor4" type="integer">
+            <column name="VALOR4" length="22" />
+        </property>
+        <property name="valor5" type="integer">
+            <column name="VALOR5" length="22" />
+        </property>
+        <property name="valor6" type="integer">
+            <column name="VALOR6" length="22" />
+        </property>
+        <property name="valor7" type="integer">
+            <column name="VALOR7" length="22" />
+        </property>
+        <property name="valor8" type="integer">
+            <column name="VALOR8" length="22" />
+        </property>
+        <property name="valor9" type="integer">
+            <column name="VALOR9" length="22" />
+        </property>
+        <property name="valor10" type="integer">
+            <column name="VALOR10" length="22" />
+        </property>
+        <property name="empleado" type="integer">
+            <column name="EMPLEADO" length="22" />
+        </property>
+        <property name="area" type="string">
+            <column name="AREA" length="3" />
+        </property>
+        <property name="descripcionarea" type="string">
+            <column name="DESCRIPCIONAREA" length="100" />
+        </property>
+        <property name="descripcionfactor" type="string">
+            <column name="DESCRIPCIONFACTOR" length="500" />
+        </property>
+        <property name="empleadoevaluador" type="integer">
+            <column name="EMPLEADOEVALUADOR" length="22" />
+        </property>
+        <property name="nombreeval" type="string">
+            <column name="NOMBREEVAL" length="100" />
+        </property>
+        <property name="ordenplantillafactor" type="integer">
+            <column name="ORDENPLANTILLAFACTOR" length="22" />
+        </property>
+        <property name="tipo" type="string">
+            <column name="TIPO" length="1" />
+        </property>
+        <property name="tipocompetenciafactor" type="string">
+            <column name="TIPOCOMPETENCIAFACTOR" length="1" />
+        </property>
+        <property name="valorminimoesperado" type="integer">
+            <column name="VALORMINIMOESPERADO" length="22" />
+        </property>
+        <property name="valorrequerido" type="integer">
+            <column name="VALORREQUERIDO" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

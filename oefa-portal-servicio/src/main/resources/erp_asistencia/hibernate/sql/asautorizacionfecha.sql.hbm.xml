@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : asistencia.AsAccesosdiarios -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="asautorizacion.eliminarAutorizacionFecha">
+		<![CDATA[
+			DELETE 
+				FROM SGCORESYS.AS_AutorizacionFecha 
+			WHERE Empleado = :p_empleado 
+			AND desde = :p_fecha
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacionfecha.obtenercantidadAutorizacionFecha">
+		<![CDATA[
+			SELECT	
+				COUNT(*)
+			FROM 	
+				sgcoresys.AS_AUTORIZACIONFECHA 
+			WHERE 	
+				Empleado = :p_empleado
+				AND DESDE = :p_desde
+ 		]]>
+	</sql-query>
+
+
+
+
+</hibernate-mapping>

@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panel style="height:500px;">
+		<h:panelGrid style="border-spacing:0px;margin-bottom:5px;" columns="2"
+			width="100%" columnClasses="columnGridBottom">
+
+			<h:panelGrid style="border-spacing:0px;" columns="4">
+				<p:spacer />
+				<p:spacer />
+				<p:spacer />
+				<p:commandButton value="Imprimir Carta  de Compromiso"
+					style="margin-bottom: 5px;margin-top: 37px;" />
+
+				<p:commandButton value="Seleccionar Empleado" />
+				<p:commandButton value="Eliminar" />
+				<p:commandButton value="Imprimir Solicitud" />
+				<p:commandButton value="Registrar Cursos  Aprobados"
+					style="width: 180px;" />
+			</h:panelGrid>
+
+			<p:panel>
+				<h:panelGrid style="border-spacing:0px;" columns="3">
+					<h:panelGrid style="border-spacing:0px;" columns="2">
+						<p:outputLabel value="Asunto" />
+						<p:inputText style="width:400px;" />
+						<p:outputLabel value="Detalle" />
+						<p:inputTextarea
+							style="width:400px;min-width:400px;max-width:400px;height:30px;max-height:30px;min-height:30px;" />
+					</h:panelGrid>
+					<p:commandButton value="Enviar" style="width:60px;height:60px;" />
+				</h:panelGrid>
+			</p:panel>
+
+		</h:panelGrid>
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			paginator="true" paginatorPosition="bottom" scrollWidth="1080"
+			scrollable="true" scrollHeight="340" tableStyle="width:1500px;"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+			<p:column headerText="#" width="10"></p:column>
+			<p:column headerText="" width="20"></p:column>
+			<p:column headerText="Empleado" width="150"></p:column>
+			<p:column headerText="Tipo de Contrato" width="100"></p:column>
+			<p:column headerText="Centro de Costos" width="100"></p:column>
+			<p:column headerText="Constancia" width="60"></p:column>
+			<p:column headerText="Total días" width="40"></p:column>
+			<p:column headerText="Total horas" width="40"></p:column>
+			<p:column headerText="Días asistidos" width="50"></p:column>
+			<p:column headerText="Aprobado?" width="60"></p:column>
+			<p:column headerText="No Descuenta?" width="60"></p:column>
+			<p:column headerText="Nota" width="60"></p:column>
+			<p:column headerText="Importe Gastos" width="60"></p:column>
+			<p:column headerText="Recepción Carta Compromiso" width="80"></p:column>
+			<p:column headerText="Comentario" width="250"></p:column>
+			<p:column headerText="Correo" width="250"></p:column>
+		</p:dataTable>
+
+	</p:panel>
+
+</ui:composition>

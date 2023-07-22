@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Dw_requisitos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e95ec0e2-0e1b-4b6b-ad3d-91a69b262d15">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PAR_PUESTO" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT HR_PUESTOEMPRESA.CODIGOPUESTO,
+      HR_PUESTOEMPRESA.GRADOSALARIO,
+      HR_PUESTOEMPRESA.DESCRIPCION,
+      HR_PUESTOEMPRESA.DESCRIPCIONINGLES,
+      HR_PUESTOEMPRESA.COMENTARIOS,
+      HR_PUESTOEMPRESA.ESTADO,
+      HR_PUESTOEMPRESA.ULTIMOUSUARIO,
+      HR_PUESTOEMPRESA.ULTIMAFECHAMODIF,
+      HR_PUESTOEMPRESA.UNIDADNEGOCIO,
+      HR_PUESTOEMPRESA.UNIDADREPLICACION,
+      HR_PUESTOEMPRESA.TIPOPUESTO,
+      HR_PUESTOEMPRESA.CATEGORIAFUNCIONAL,
+      HR_PUESTOEMPRESA.PUESTOSUPERIOR,
+      HR_PUESTOEMPRESA.PLANTILLAEVALUACION,
+      HR_PUESTOEMPRESA.PLANTILLADOCUMENTO,
+      HR_PUESTOEMPRESA.GRUPOOCUPACIONAL,
+      HR_PUESTOEMPRESA.CODIGOCAP,
+      HR_PUESTOEMPRESA.PLANTILLAPOTENCIAL,
+      HR_PUESTOEMPRESA.PLANTILLAENTREGAS,
+      HR_PUESTOEMPRESA.LINEACARRERA,
+      HR_PUESTOEMPRESA.CODIGORTPS,
+      HR_PUESTOEMPRESA.CFLAGESDIRECTIVO,
+      HR_PUESTOEMPRESA.CFLAGESCONFIANZA,
+      HR_PUESTOEMPRESA.CLASIFICADORCARGO,
+      HR_PUESTOEMPRESA.CODIGOPUESTOCONFIANZA,
+      HR_PUESTOEMPRESA.CENTROCOSTO  ,
+        HR_PUESTOEMPRESA.CURSOMINIMO,
+        HR_PUESTOEMPRESA.CURSOMAXIMO,
+        HR_PUESTOEMPRESA.CURSOUNITARIO,
+        HR_PUESTOEMPRESA.EXPERIENCIAMINIMO,
+        HR_PUESTOEMPRESA.EXPERIENCIAMAXIMO,
+        HR_PUESTOEMPRESA.EXPERIENCIAUNITARIO,
+        HR_PUESTOEMPRESA.FAMILIAPUESTO,
+        HR_PUESTOEMPRESA.FLAGPUESTOPRACTICANTE,
+        HR_PUESTOEMPRESA.CODIGOPOSICION,
+        HR_PUESTOEMPRESA.RPT_FORMACION,
+        HR_PUESTOEMPRESA.RPT_EXPERIENCIA,
+        HR_PUESTOEMPRESA.RPT_CONOCIMIENTOS
+ FROM SGCORESYS.HR_PUESTOEMPRESA
+WHERE HR_PuestoEmpresa.CodigoPuesto = $P{PAR_PUESTO} /* :par_puesto */]]>
+	</queryString>
+	<field name="CODIGOPUESTO" class="java.math.BigDecimal"/>
+	<field name="GRADOSALARIO" class="java.lang.String"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="DESCRIPCIONINGLES" class="java.lang.String"/>
+	<field name="COMENTARIOS" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<field name="ULTIMOUSUARIO" class="java.lang.String"/>
+	<field name="ULTIMAFECHAMODIF" class="java.sql.Timestamp"/>
+	<field name="UNIDADNEGOCIO" class="java.lang.String"/>
+	<field name="UNIDADREPLICACION" class="java.lang.String"/>
+	<field name="TIPOPUESTO" class="java.math.BigDecimal"/>
+	<field name="CATEGORIAFUNCIONAL" class="java.lang.String"/>
+	<field name="PUESTOSUPERIOR" class="java.math.BigDecimal"/>
+	<field name="PLANTILLAEVALUACION" class="java.lang.String"/>
+	<field name="PLANTILLADOCUMENTO" class="java.math.BigDecimal"/>
+	<field name="GRUPOOCUPACIONAL" class="java.math.BigDecimal"/>
+	<field name="CODIGOCAP" class="java.lang.String"/>
+	<field name="PLANTILLAPOTENCIAL" class="java.lang.String"/>
+	<field name="PLANTILLAENTREGAS" class="java.lang.String"/>
+	<field name="LINEACARRERA" class="java.lang.String"/>
+	<field name="CODIGORTPS" class="java.lang.String"/>
+	<field name="CFLAGESDIRECTIVO" class="java.lang.String"/>
+	<field name="CFLAGESCONFIANZA" class="java.lang.String"/>
+	<field name="CLASIFICADORCARGO" class="java.lang.String"/>
+	<field name="CODIGOPUESTOCONFIANZA" class="java.lang.String"/>
+	<field name="CENTROCOSTO" class="java.lang.String"/>
+	<field name="CURSOMINIMO" class="java.math.BigDecimal"/>
+	<field name="CURSOMAXIMO" class="java.math.BigDecimal"/>
+	<field name="CURSOUNITARIO" class="java.math.BigDecimal"/>
+	<field name="EXPERIENCIAMINIMO" class="java.math.BigDecimal"/>
+	<field name="EXPERIENCIAMAXIMO" class="java.math.BigDecimal"/>
+	<field name="EXPERIENCIAUNITARIO" class="java.math.BigDecimal"/>
+	<field name="FAMILIAPUESTO" class="java.lang.String"/>
+	<field name="FLAGPUESTOPRACTICANTE" class="java.lang.String"/>
+	<field name="CODIGOPOSICION" class="java.math.BigDecimal"/>
+	<field name="RPT_FORMACION" class="java.lang.String"/>
+	<field name="RPT_EXPERIENCIA" class="java.lang.String"/>
+	<field name="RPT_CONOCIMIENTOS" class="java.lang.String"/>
+	<title>
+		<band height="353" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="285" uuid="7755236f-8c5a-41d0-b90b-02caffc1b2cb"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="22" backcolor="#CCCCCC" uuid="5057b993-42a1-480d-9ea6-b0d3aa6d3086"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="5" width="555" height="17" uuid="fcd735d2-4748-4283-857b-74d5ae06782f"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REQUISITOS MÍNIMOS]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="104" width="555" height="92" uuid="8a8758ee-349b-49f0-8333-7c99d4712c37"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="22" width="138" height="263" uuid="28b016e7-5043-4a2a-ad50-c02b69e796bf"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="41" width="138" height="20" uuid="0cf3320c-5c29-448e-aeee-5edc34552d78"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Formación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="61" width="138" height="20" uuid="41a5d7c8-641c-4a84-b5ff-22982da8e69f"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Académica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="132" width="138" height="20" uuid="aee7a18a-cf1c-4945-9a2f-926af89c46eb"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Experiencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="152" width="138" height="20" uuid="772e123c-7c35-432f-afd1-67de4b0cacce"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Laboral]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="230" width="138" height="20" uuid="6eb6f590-eb30-4bde-b86c-554ab212b348"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Conocimientos]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="149" y="22" width="396" height="82" uuid="7bf5d7f5-fcb1-4dbb-a0bb-337a7f8e854c"/>
+				<textFieldExpression><![CDATA[$F{RPT_FORMACION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="149" y="104" width="396" height="92" uuid="da8eaa9b-0931-4bc7-9141-99b77bb0a2aa"/>
+				<textFieldExpression><![CDATA[$F{RPT_EXPERIENCIA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="149" y="196" width="396" height="89" uuid="23df78b9-554c-401c-acaa-adf44374caa9"/>
+				<textFieldExpression><![CDATA[$F{RPT_CONOCIMIENTOS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

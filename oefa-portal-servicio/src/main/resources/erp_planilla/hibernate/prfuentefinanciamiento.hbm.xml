@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.planilla.dominio.PrFuentefinanciamiento"
+		table="SGCORESYS.PR_FUENTEFINANCIAMIENTO">
+		<composite-id name="pk"
+			class="net.royal.erp.planilla.dominio.PrFuentefinanciamientoPk">
+			<key-property name="ano" type="string">
+				<column name="ANO" length="4" />
+			</key-property>
+			<key-property name="companiasocio" type="string">
+				<column name="COMPANIASOCIO" length="8" />
+			</key-property>
+			<key-property name="fuentefinanciamiento" type="string">
+				<column name="FUENTEFINANCIAMIENTO" length="10" />
+			</key-property>
+		</composite-id>
+		<property name="estado" type="string">
+			<column name="ESTADO" length="1" />
+		</property>
+		<property name="descripcion" type="string">
+			<column name="DESCRIPCION" length="100" />
+		</property>
+		<property name="ultimoUsuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+		<property name="ultimaFechaModif" type="timestamp">
+			<column name="ULTIMAFECHAMODIF" />
+		</property>
+
+	</class>
+</hibernate-mapping>

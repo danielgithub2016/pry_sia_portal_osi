@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.sistema.dominio.SySession" table="SGCORESYS.SY_SESSION">
+        <composite-id name="pk" class="net.royal.erp.sistema.dominio.SySessionPk">
+            <key-property name="usuario" type="string">
+                <column name="USUARIO" length="30" />
+            </key-property>
+            <key-property name="audsid" type="integer">
+                <column name="AUDSID" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="programname" type="string">
+            <column name="PROGRAMNAME" length="100" />
+        </property>
+        <property name="hostname" type="string">
+            <column name="HOSTNAME" length="50" />
+        </property>
+        <property name="ntusername" type="string">
+            <column name="NTUSERNAME" length="50" />
+        </property>
+        <property name="loginame" type="string">
+            <column name="LOGINAME" length="20" />
+        </property>
+        <property name="ipaddress" type="string">
+            <column name="IPADDRESS" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

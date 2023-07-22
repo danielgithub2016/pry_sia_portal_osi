@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.presupuesto.dominio.BuEjercicio" table="SGCORESYS.BU_EJERCICIO">
+        <composite-id name="pk" class="net.royal.erp.presupuesto.dominio.BuEjercicioPk">
+            <key-property name="ano" type="string">
+                <column name="ANO" length="4" />
+            </key-property>
+            <key-property name="ejercicio" type="string">
+                <column name="EJERCICIO" length="6" />
+            </key-property>
+            <key-property name="tipopresupuesto" type="string">
+                <column name="TIPOPRESUPUESTO" length="2" />
+            </key-property>
+        </composite-id>
+        <property name="descripcionlocal" type="string">
+            <column name="DESCRIPCIONLOCAL" length="50" />
+        </property>
+        <property name="descripcioningles" type="string">
+            <column name="DESCRIPCIONINGLES" length="50" />
+        </property>
+        <property name="tipoejercicio" type="string">
+            <column name="TIPOEJERCICIO" length="1" />
+        </property>
+        <property name="fechapreparacion" type="timestamp">
+            <column name="FECHAPREPARACION" length="7" />
+        </property>
+        <property name="fechaaprobacion" type="timestamp">
+            <column name="FECHAAPROBACION" length="7" />
+        </property>
+        <property name="preparadapor" type="integer">
+            <column name="PREPARADAPOR" length="22" />
+        </property>
+        <property name="aprobadapor" type="integer">
+            <column name="APROBADAPOR" length="22" />
+        </property>
+        <property name="ejerciciorealasociado" type="string">
+            <column name="EJERCICIOREALASOCIADO" length="6" />
+        </property>
+        <property name="ejerciciocommitmentasociado" type="string">
+            <column name="EJERCICIOCOMMITMENTASOCIADO" length="6" />
+        </property>
+        <property name="documentoreferencia" type="string">
+            <column name="DOCUMENTOREFERENCIA" length="20" />
+        </property>
+        <property name="periododesde" type="string">
+            <column name="PERIODODESDE" length="6" />
+        </property>
+        <property name="periodohasta" type="string">
+            <column name="PERIODOHASTA" length="6" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="2" />
+        </property>
+        <property name="presupuestoteoricoflag" type="string">
+            <column name="PRESUPUESTOTEORICOFLAG" length="1" />
+        </property>
+        <property name="itemcodigogrupo" type="string">
+            <column name="ITEMCODIGOGRUPO" length="2" />
+        </property>
+        <property name="ejercicioprincipalasociado" type="string">
+            <column name="EJERCICIOPRINCIPALASOCIADO" length="6" />
+        </property>
+        <property name="unidadestipoejercicio" type="string">
+            <column name="UNIDADESTIPOEJERCICIO" length="1" />
+        </property>
+        <property name="nomenclatura" type="string">
+            <column name="NOMENCLATURA" length="3" />
+        </property>
+        <property name="centrocostoflag" type="string">
+            <column name="CENTROCOSTOFLAG" length="1" />
+        </property>
+        <property name="aplicacionorigen" type="string">
+            <column name="APLICACIONORIGEN" length="2" />
+        </property>
+    </class>
+</hibernate-mapping>

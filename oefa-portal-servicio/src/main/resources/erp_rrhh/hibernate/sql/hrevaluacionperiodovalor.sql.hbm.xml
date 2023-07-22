@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : rrhh.HrEvaluacionperiodovalor
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="hrevaluacionperiodovalor.listarEvaluacionPeriodoEvaluar">
+		<![CDATA[
+			SELECT 
+				hr_EvaluacionPeriodoValor.Valor as "valor",   
+				hr_EvaluacionPeriodoValor.Descripcion as "descripcion",   
+				hr_EvaluacionPeriodoValor.Secuencia as "secuencia" ,
+				hr_EvaluacionPeriodoValor.Explicacion as "explicacion",
+				hr_EvaluacionPeriodoValor.Explicacion2 as "explicacion2",
+				ROWNUM AS "total"
+				FROM 
+				SGCORESYS.hr_EvaluacionPeriodoValor  
+				WHERE 
+				hr_EvaluacionPeriodoValor.SecuenciaEval = :secuenciaeval   
+		]]>
+    </sql-query>
+
+</hibernate-mapping>

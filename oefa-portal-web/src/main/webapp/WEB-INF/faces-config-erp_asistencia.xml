@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+
+	<application>
+		<resource-bundle>
+			<base-name>erp_asistencia.messages</base-name>
+			<var>msgAS</var>
+		</resource-bundle>
+	</application>
+
+	<!-- Modulo de Asistencia -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>wasautorizacionpreprocesoaprobacion</from-outcome>
+			<to-view-id>/erp/asistencia/paginas/w_as_autorizacion_preproceso_aprobacion.xhtml</to-view-id>			
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+		<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>wasautorizacionpreprocesoaprobacionSIGED</from-outcome>
+			<to-view-id>/erp/asistencia/paginas/w_as_autorizacion_preproceso_aprobacion_siged.xhtml</to-view-id>			
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>waslistacompensacionhoras</from-outcome>
+			<to-view-id>/erp/asistencia/paginas/w_as_listado_horas_compensadas.xhtml</to-view-id>			
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>w_as_marcar</from-outcome>
+			<to-view-id>/erp/asistencia/paginas/w_as_marcar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>w_as_rep_001_reporteoficialministerio</from-outcome>
+			<to-view-id>/erp/asistencia/paginas/w_as_rep_001_reporteoficialministerio.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>w_as_compania_select</from-outcome>
+			<to-view-id>/erp/asistencia/paginas/w_as_compania_select.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>w_as_compania_select_individual</from-outcome>
+			<to-view-id>/erp/asistencia/paginas/w_as_centro_costo_select.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>w_as_empleado_select</from-outcome>
+			<to-view-id>/erp/asistencia/paginas/w_as_empleado_select.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>w_as_empleado_select_multiple</from-outcome>
+			<to-view-id>/erp/asistencia/paginas/w_as_empleado_select_multiple.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>w_as_reporte_saldo_feriado</from-outcome>
+			<to-view-id>/erp/asistencia/paginas/w_reporte_saldo_feriado.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>w_as_autorizacion_preproceso_hextra_edit</from-outcome>
+			<to-view-id>/erp/asistencia/paginas/w_as_autorizacion_preproceso_hextra_edit.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+		<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>w_as_autorizacion_preproceso_hextra_edit_siged</from-outcome>
+			<to-view-id>/erp/asistencia/paginas/w_as_autorizacion_preproceso_hextra_edit_siged.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>w_as_rep_001_marcarempleado</from-outcome>
+			<to-view-id>/erp/asistencia/paginas/w_as_rep_001_marcarempleado.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+	<!-- Reprogramacion de Vacaciones -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>wasreprogramacionvacaciones</from-outcome>
+			<to-view-id>/erp/asistencia/paginas/w_as_autorizacion_reprogramacion_vacaciones.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>wasreprogramacionvacacionesedit</from-outcome>
+			<to-view-id>/erp/asistencia/paginas/w_as_autorizacion_reprogramacion_vacaciones_edit.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+</faces-config>

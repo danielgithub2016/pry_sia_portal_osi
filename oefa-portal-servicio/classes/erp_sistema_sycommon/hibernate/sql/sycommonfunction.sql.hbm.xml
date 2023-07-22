@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : sycommon. -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<!-- 	BORRAR   f_sql_read_parametrosmast_$ -->
+	<sql-query name="SycommonFuncion.fsqlreadparametrosmast">
+		SELECT ParametrosMast.Texto as "texto"
+		FROM
+		sgcoresys.ParametrosMast
+		WHERE ( ParametrosMast.CompaniaCodigo =
+		:par_company ) AND
+		( ParametrosMast.AplicacionCodigo = :par_application
+		) AND
+		( ParametrosMast.ParametroClave = :par_key )
+
+	</sql-query>
+
+
+	<!-- f_sql_read_parametrosmast_# -->
+	<sql-query name="SycommonFuncion.fsqlreadparametrosmastN">
+		SELECT ParametrosMast.Numero as "numero"
+		FROM
+		sgcoresys.ParametrosMast
+		WHERE ( ParametrosMast.CompaniaCodigo =
+		:par_company ) AND
+		( ParametrosMast.AplicacionCodigo = :par_application
+		) AND
+		( ParametrosMast.ParametroClave = :par_key )
+
+	</sql-query>
+
+	<!-- SycommonFuncion.f_sql_get_rate 01 -->
+	<sql-query name="SycommonFuncion.fsqlgetrate01">
+		SELECT exchangerate.sbsrate as "sbsrate"
+		FROM
+		SGCORESYS.exchangerate
+		WHERE exchangerate.period = :w_period
+	</sql-query>
+
+	<!--<sql-query name="SycommonFuncion.w_open">
+		SELECT personagrupo as "personagrupo",
+		descripcionlocal as "descripcionlocal",
+		descripcioningles as
+		"descripcioningles",
+		estado as "estado",
+		codigointerno as
+		"codigointerno",
+		generarnumeracionflag as "generarnumeracionflag"
+		FROM sgcoresys.MA_PersonaGrupo
+		WHERE MA_PersonaGrupo.PersonaGrupo =:iv_type
+	</sql-query>-->
+
+	<!-- f_sql_read_user_autorizacion02 -->
+	<sql-query name="SycommonFuncion.fsqlreaduserautorizacion02">
+		SELECT
+		Max(SeguridadAutorizaciones.AplicacionCodigo)
+		as "aplicacioncodigo"
+		FROM sgcoresys.SeguridadAutorizaciones,
+		sgcoresys.SeguridadPerfilUsuario
+		WHERE
+		(
+		SeguridadAutorizaciones.AplicacionCodigo =:par_aplicacion) AND
+		(
+		SeguridadAutorizaciones.Grupo = :par_grupo) AND
+		(
+		SeguridadAutorizaciones.Usuario = SeguridadPerfilUsuario.Perfil) AND
+		(
+		SeguridadAutorizaciones.Concepto = :par_concepto) AND
+		(
+		LOWER(SeguridadPerfilUsuario.Usuario) = LOWER(:par_user)) AND
+		(
+		SeguridadPerfilUsuario.Estado = 'A')
+	</sql-query>
+
+	<!-- f_sql_read_cierrediario_horario -->
+	<sql-query name="SycommonFuncion.fsqlreadcierrediariohorario">
+		SELECT AC_CierreDiario.FechaString as
+		"fechastring"
+		FROM sgcoresys.AC_CierreDiario
+		WHERE (
+		AC_CierreDiario.CompaniaSocio = :str_global_gv_companyowner ) AND
+		(
+		AC_CierreDiario.FechaString =:w_fecha ) AND
+		( AC_CierreDiario.Estado =
+		'N' )
+	</sql-query> 
+
+	<!-- f_sql_read_cierrediario_horario 01 -->
+	<sql-query name="SycommonFuncion.fsqlreadcierrediariohorario01">
+		SELECT Usuario.HoraInicio,
+		Usuario.HoraFin
+		FROM sgcoresys.Usuario
+		WHERE LOWER(Usuario.Usuario) = LOWER(:str_global_gv_userid)
+	</sql-query>
+
+	<sql-query name="SycommonFuncion.fsqlreadcostcenterreferencia02">
+		SELECT AC_CostCenterMst.ReferenciaFiscal02 as
+		"referenciafiscal02"
+		FROM SGCORESYS.AC_CostCenterMst
+		WHERE
+		AC_CostCenterMst.CostCenter = :par_costcenter
+	</sql-query>
+
+	<!-- f_sql_validate_persona_unidadnegocio 
+	<sql-query name="SycommonFuncion.fsqlvalidatepersonaunidadnegocio">
+		SELECT PersonaMast.Persona as "persona"
+		FROM
+		SGCORESYS.PersonaMast,
+		SGCORESYS.MA_PersonaUnidadNegocio
+		WHERE
+		PersonaMast.Persona = MA_PersonaUnidadNegocio.Persona AND
+		PersonaMast.Persona =:par_persona AND
+		MA_PersonaUnidadNegocio.UnidadNegocio = :par_unidadnegocio
+	</sql-query>-->
+	
+	
+
+	<sql-query name="SycommonFuncion.fsqlreadmonedamastname">
+		SELECT MonedaMast.DescripcionCorta as "descripcioncorta"
+		FROM SGCORESYS.MonedaMast
+		WHERE MonedaMast.MonedaCodigo = :par_currency
+	</sql-query>
+
+</hibernate-mapping>

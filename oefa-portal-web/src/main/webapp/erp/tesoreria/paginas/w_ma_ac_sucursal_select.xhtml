@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form id="wmaacsucursal">
+		<p:panel>
+			<h:panelGrid columns="4" style="border-spacing:0px;">
+				<p:selectOneRadio layout="grid" columns="2"
+					style="margin-top: -3px;"
+					value="#{cwMaAcSucursalSelect.dw_position.tipo}">
+					<f:selectItem itemLabel="Código" itemValue="S" />
+					<f:selectItem itemLabel="Descripción" itemValue="D" />
+					<p:ajax update=":wmaacsucursal" />
+				</p:selectOneRadio>
+				<p:outputLabel value="Busqueda:" id="lblBusqueda"
+					style="margin-left: 50px;" />
+				<p:focus for="txtBusqueda" />
+				<p:inputText id="txtBusqueda" style="margin-left:10px;"
+					value="#{cwMaAcSucursalSelect.dw_position.descripcion}" />
+			</h:panelGrid>
+
+		</p:panel>
+
+		<h:panelGrid columns="3" width="100%">
+			<h:outputLabel value="De dobleclick para seleccionar una Sucursal" />
+			<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+				action="#{cwMaAcSucursalSelect.buscar}" icon="buscar" />
+			<p:commandButton value="Cancelar" icon="cancelar"
+				styleClass="botonTextoImagen" onclick="PF('popSucursal').hide()" />
+
+		</h:panelGrid>
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			paginator="true" paginatorPosition="bottom" scrollable="true"
+			scrollHeight="200" rows="20" scrollWidth="435px"
+			tableStyle="width:435px" lazy="true" id="tblSucursal"
+			value="#{cwMaAcSucursalSelect.dw_list}" var="c"
+			selection="#{cwMaAcSucursalSelect.registroSeleccionado}"
+			selectionMode="single" rowKey="#{c.pk.sucursal}"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+			<p:ajax event="rowDblselect"
+				listener="#{cwMaAcSucursalSelect.onRowSelectList}"
+				partialSubmit="true" process="@this" />
+
+			<p:column headerText="Sucursal">
+				<h:outputText value="#{c.pk.sucursal}" />
+			</p:column>
+
+			<p:column headerText="Descripción">
+				<h:outputText value="#{c.descripcionlocal}" />
+			</p:column>
+
+		</p:dataTable>
+
+	</h:form>
+</ui:composition>

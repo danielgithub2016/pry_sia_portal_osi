@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="requerimiento_post_comparativo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3b047da2-b518-4dd1-89ba-82f12aba2a68">
+	<property name="ireport.zoom" value="1.2100000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="96"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="PAR_REQUERIMIENTO" class="java.lang.String"/>
+	<parameter name="PAR_COMPANIA" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Fabrica\\Desarrollo\\DesarrolloProductos\\ROYAL\\JAVA\\OEFA\\oefa-portal-web\\src\\main\\webapp\\erp\\rrhh\\recursos\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_PUESTO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+    HR_EvaluacionPostulante.Postulante CodPostulante,
+    CASE WHEN SUBSTR(HR_EvaluacionPostulante.Postulante,0,4) <> 'INTE' THEN
+        RTRIM(ApellidoPaterno) || ' ' || RTRIM(ApellidoMaterno) || ', ' || RTRIM(Nombres)
+    ELSE
+        (select nombrecompleto from SGCORESYS.personamast where persona = TO_NUMBER(SUBSTR(HR_EvaluacionPostulante.Postulante,0,6)))
+    END AS NombrePostulante,
+    HR_EvaluacionPostulante.Requerimiento,
+    HR_EvaluacionPostulante.CompanyOwner,
+    HR_Evaluacion.descripcion, HR_EvalRequerimiento.reclutamientoetapa,
+    case
+		when HR_Evaluacion.TipoEval = '1' then ((select descripcion from SGCORESYS.hr_factorvalor where factor = HR_EvaluacionPostulante.factor and secuencia = HR_EvaluacionPostulante.secuenciacompetencia))
+          when HR_Evaluacion.TipoEval = '2' then (HR_EvaluacionPostulante.comentario)
+		when HR_Evaluacion.TipoEval = '3' then (SELECT CASE WHEN FLAG_FORMACION = 'A' AND FLAG_OTROSESTUDIOS = 'A' AND FLAG_EXPERIENCIA = 'A' THEN 'APTO' ELSE 'NO APTO' END
+			FROM SGCORESYS.HR_POSREQUER WHERE REQUERIMIENTO = HR_EvaluacionPostulante.Requerimiento AND COMPANYOWNER = HR_EvaluacionPostulante.CompanyOwner AND POSTULANTE = HR_EvaluacionPostulante.Postulante)
+          else to_char(ROUND(SUM(HR_EvaluacionPostulante.puntaje),2)) end despuntaje,
+    case when HR_Evaluacion.TipoEval = '0' then SUM(ROUND(HR_EvaluacionPostulante.puntaje,2)) end puntaje,
+    HR_Evaluacion.TipoEval as tipoevaluacion , HR_POSREQUER.estado,
+    (SELECT VALORREQUERIDO FROM SGCORESYS.HR_FACTORESEVALUACION A
+    WHERE A.FACTOR = HR_EvaluacionPostulante.FACTOR) REQUERIDO,
+    to_number(HR_EVALREQUERIMIENTO.PLANTILLAEVALUACION) + 1 plantillaevaluacion
+FROM
+    SGCORESYS.HR_EvaluacionPostulante
+        LEFT JOIN SGCORESYS.HR_Postulantes ON HR_Postulantes.Postulante = HR_EvaluacionPostulante.Postulante
+        JOIN SGCORESYS.HR_EvalRequerimiento ON HR_EvalRequerimiento.Secuencia = HR_EvaluacionPostulante.Secuencia and HR_EvalRequerimiento.Requerimiento = HR_EvaluacionPostulante.Requerimiento
+            and HR_EvalRequerimiento.CompanyOwner = HR_EvaluacionPostulante.CompanyOwner
+        JOIN SGCORESYS.HR_Evaluacion ON HR_Evaluacion.Evaluacion = HR_EvalRequerimiento.Evaluacion
+        JOIN SGCORESYS.HR_POSREQUER ON HR_EvaluacionPostulante.postulante = HR_POSREQUER.postulante and HR_EvaluacionPostulante.Requerimiento = HR_POSREQUER.Requerimiento
+            and HR_EvaluacionPostulante.CompanyOwner = HR_POSREQUER.CompanyOwner
+WHERE
+    HR_EvaluacionPostulante.Requerimiento = $P{PAR_REQUERIMIENTO} AND HR_EvaluacionPostulante.CompanyOwner = $P{PAR_COMPANIA}
+GROUP BY
+    HR_EvaluacionPostulante.Postulante,
+    HR_EvaluacionPostulante.Secuencia,
+    HR_EvaluacionPostulante.Secuencia_2,
+    RTRIM(ApellidoPaterno) || ' ' || RTRIM(ApellidoMaterno) || ', ' || RTRIM(Nombres),
+    HR_Evaluacion.Descripcion,
+    HR_Evaluacion.TipoEval,
+    HR_EvaluacionPostulante.Requerimiento,
+    HR_EvaluacionPostulante.CompanyOwner, HR_EvaluacionPostulante.comentario, HR_Evaluacion.TipoEval, HR_EvaluacionPostulante.factor, HR_EvaluacionPostulante.secuenciacompetencia,HR_EvalRequerimiento.reclutamientoetapa
+    , HR_POSREQUER.estado,HR_EVALREQUERIMIENTO.PLANTILLAEVALUACION
+ORDER BY
+    HR_EvaluacionPostulante.Postulante,
+    HR_EvalRequerimiento.reclutamientoetapa,
+    HR_EvaluacionPostulante.Secuencia_2]]>
+	</queryString>
+	<field name="CODPOSTULANTE" class="java.lang.String"/>
+	<field name="NOMBREPOSTULANTE" class="java.lang.String"/>
+	<field name="REQUERIMIENTO" class="java.lang.String"/>
+	<field name="COMPANYOWNER" class="java.lang.String"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="RECLUTAMIENTOETAPA" class="java.math.BigDecimal"/>
+	<field name="DESPUNTAJE" class="java.lang.String"/>
+	<field name="PUNTAJE" class="java.math.BigDecimal"/>
+	<field name="TIPOEVALUACION" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<field name="REQUERIDO" class="java.math.BigDecimal"/>
+	<field name="PLANTILLAEVALUACION" class="java.math.BigDecimal"/>
+	<variable name="variable1" class="java.math.BigDecimal" incrementType="Report" calculation="Sum">
+		<variableExpression><![CDATA[($F{DESPUNTAJE}.contains("APTO") ? new BigDecimal(0) : new BigDecimal($F{DESPUNTAJE}))]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="75" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="32" width="555" height="20" forecolor="#333333" uuid="7a7d2ba7-04c8-4bbb-81ee-6f307ab48300"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESULTADO DE EVALUACIÓN DE POSTULANTES]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="411" y="0" width="144" height="20" forecolor="#333333" uuid="912ff120-6abb-4344-958b-bde5d8fa2a46"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="63" splitType="Stretch">
+			<staticText>
+				<reportElement x="26" y="11" width="125" height="20" forecolor="#333333" uuid="d6233473-5f6a-42ea-9194-269690d9ed46"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REQUERIMIENTO	: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="31" width="125" height="20" forecolor="#333333" uuid="05abac8e-55ca-43ca-acc8-9be76f9f70f9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PUESTO		:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="164" y="11" width="247" height="20" forecolor="#333333" uuid="c47170f4-eb42-4d8b-a8f0-36850935bfba"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{REQUERIMIENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="31" width="247" height="20" forecolor="#333333" uuid="fe52261e-5b57-48ce-ad11-bd366e93937c"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{PAR_PUESTO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<summary>
+		<band height="181" splitType="Stretch">
+			<crosstab>
+				<reportElement x="0" y="14" width="555" height="87" uuid="3cdb7662-7140-436f-990c-8030f55b5680"/>
+				<crosstabHeaderCell>
+					<cellContents>
+						<rectangle>
+							<reportElement style="Crosstab Data Text" x="69" y="0" width="148" height="30" backcolor="#C0E2D1" uuid="1c4fbbe6-8260-4c25-966c-e76635b79c38"/>
+							<graphicElement>
+								<pen lineWidth="0.5"/>
+							</graphicElement>
+						</rectangle>
+						<rectangle>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="69" height="30" backcolor="#C0E2D1" uuid="456e9bf6-34e6-46cd-ae94-5ff8bbfba6f7"/>
+							<graphicElement>
+								<pen lineWidth="0.5"/>
+							</graphicElement>
+						</rectangle>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="69" y="0" width="148" height="30" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="aa6b10d5-95cb-4376-8e0f-d6c8ca19aa23"/>
+							<textElement verticalAlignment="Middle">
+								<font size="8" isBold="true"/>
+							</textElement>
+							<text><![CDATA[NOMBRE POSTULANTE]]></text>
+						</staticText>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="69" height="30" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="0393ed10-019b-46ec-9962-d9236d53c480"/>
+							<textElement verticalAlignment="Middle">
+								<font size="8" isBold="true"/>
+							</textElement>
+							<text><![CDATA[CÓDIGO POSTULANTE]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="CODPOSTULANTE" width="69">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{CODPOSTULANTE}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents>
+							<textField>
+								<reportElement style="Crosstab Data Text" positionType="Float" mode="Opaque" x="0" y="0" width="69" height="28" forecolor="#333333" backcolor="#FFFFFF" uuid="23dcbf28-2e42-4d5a-99f7-ce8de1ab910e"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{CODPOSTULANTE}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="NOMBREPOSTULANTE" width="148" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{NOMBREPOSTULANTE}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="148" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="31f5eaae-3a93-458f-86b1-c62c17e1ef71"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{NOMBREPOSTULANTE}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="DESCRIPCION" height="30">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[($F{RECLUTAMIENTOETAPA} > 3 ? 4 : $F{PLANTILLAEVALUACION}) + " - " + $F{DESCRIPCION}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="96" height="30" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#C0E2D1" uuid="1fc261cf-b13b-4172-a427-d0fa52e0ed57"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{DESCRIPCION}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="PUNTAJEMeasure" class="java.math.BigDecimal" calculation="Sum">
+					<measureExpression><![CDATA[($F{ESTADO} == "E" ? new BigDecimal(0) : (($F{TIPOEVALUACION} == "1" || $F{TIPOEVALUACION} == "3" && $F{PUNTAJE} == null) ? (($F{DESPUNTAJE} == "NO APTO") ? new BigDecimal(0) : new BigDecimal(1)) : ($F{TIPOEVALUACION} == "4" ? ($F{DESPUNTAJE}.contains("APTO") ? new BigDecimal(0) : new BigDecimal($F{DESPUNTAJE}).divide($F{REQUERIDO}) * new BigDecimal(2) )  : new BigDecimal($F{DESPUNTAJE}).divide($F{REQUERIDO}) * new BigDecimal(4) )))]]></measureExpression>
+				</measure>
+				<measure name="measure1" class="java.lang.String">
+					<measureExpression><![CDATA[(($F{ESTADO} == "E" ? new BigDecimal(0) : (($F{TIPOEVALUACION} == "1" || $F{TIPOEVALUACION} == "3" && $F{PUNTAJE} == null) ? (($F{DESPUNTAJE} == "NO APTO") ? new BigDecimal(0) : new BigDecimal(1)) : ($F{TIPOEVALUACION} == "4" ? ($F{DESPUNTAJE}.contains("APTO") ? new BigDecimal(0) : new BigDecimal($F{DESPUNTAJE}).divide($F{REQUERIDO}) * new BigDecimal(2) )  : new BigDecimal($F{DESPUNTAJE}).divide($F{REQUERIDO}) * new BigDecimal(4) ))) == 0 ? "NO APTO" : "APTO")]]></measureExpression>
+				</measure>
+				<crosstabCell width="96" height="28">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="96" height="28" forecolor="#333333" uuid="4d2a1c5e-3d00-437c-af06-40c518706455">
+								<printWhenExpression><![CDATA[($V{PUNTAJEMeasure} != 0 && $V{PUNTAJEMeasure} != 1)]]></printWhenExpression>
+							</reportElement>
+							<textElement verticalAlignment="Middle">
+								<font size="8" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{PUNTAJEMeasure}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="96" height="28" forecolor="#333333" uuid="d40f40f2-f403-4135-a81e-f256ad12e291">
+								<printWhenExpression><![CDATA[($V{PUNTAJEMeasure} == 0 || $V{PUNTAJEMeasure} == 1)]]></printWhenExpression>
+							</reportElement>
+							<textElement verticalAlignment="Middle">
+								<font size="8" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{measure1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="96" height="0" rowTotalGroup="NOMBREPOSTULANTE">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" height="28" columnTotalGroup="DESCRIPCION">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" height="0" rowTotalGroup="NOMBREPOSTULANTE" columnTotalGroup="DESCRIPCION">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="CODPOSTULANTE">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="CODPOSTULANTE" columnTotalGroup="DESCRIPCION">
+					<cellContents/>
+				</crosstabCell>
+			</crosstab>
+			<subreport>
+				<reportElement x="0" y="138" width="53" height="25" uuid="123360a1-f117-44a3-a910-0ee30d26711b"/>
+				<subreportParameter name="PAR_COMPANIA">
+					<subreportParameterExpression><![CDATA[$P{PAR_COMPANIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PAR_REQUERIMIENTO">
+					<subreportParameterExpression><![CDATA[$P{PAR_REQUERIMIENTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["requerimiento_post_comparativo_leyenda.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

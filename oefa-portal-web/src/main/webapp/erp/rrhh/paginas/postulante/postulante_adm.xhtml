@@ -1,0 +1,132 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>Administración de postulantes</h2>
+	</ui:define>
+	<ui:define name="content">
+
+		<h:form id="frmEncuestas_lista">
+			<p:growl autoUpdate="true" life="#{msg.generico_tiempo_growl}"
+				widgetVar="growlWV" />
+			<p:panelGrid columns="6" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-1,ui-grid-col-2,ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-1"
+				layout="grid" styleClass="ui-panelgrid-blank">
+				<p:outputLabel value="Documento" />
+				<p:inputText maxlength="15"
+					value="#{cHrAdmPostulantes.filtro.documento}" />
+
+				<p:outputLabel value="Nombre" />
+				<p:inputText value="#{cHrAdmPostulantes.filtro.nombrecompleto}" />
+
+				<p:commandButton value="Buscar" icon="buscar" style="float:right;"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					styleClass="botonTextoImagen" action="#{cHrAdmPostulantes.buscar}"
+					update="@(form)" />
+				<p:commandButton value="Nuevo" icon="nuevo" style="float:right;"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					styleClass="botonTextoImagen" action="#{cHrAdmPostulantes.nuevo}"
+					update="@(form)" />
+
+			</p:panelGrid>
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				id="tblpostulantes" lazy="true" paginatorPosition="bottom"
+				paginator="true" rowKey="#{p.postulante}" scrollable="true"
+				scrollHeight="440" rows="20" reflow="true"
+				currentPageReportTemplate="Registro: {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+				value="#{cHrAdmPostulantes.lstPostulantes}" var="p">
+
+				<p:column headerText="Código" width="40"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{p.postulante}" />
+				</p:column>
+
+				<p:column headerText="Documento" width="40"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{p.documento}" />
+				</p:column>
+
+				<p:column headerText="Nombres" width="100">
+					<h:outputText value="#{p.nombres}" />
+				</p:column>
+
+				<p:column headerText="Apellido paterno" width="100">
+					<h:outputText value="#{p.apellidopaterno}" />
+				</p:column>
+
+				<p:column headerText="Apellido materno" width="100">
+					<h:outputText value="#{p.apellidomaterno}" />
+				</p:column>
+
+				<p:column headerText="Correo electrónico" width="100">
+					<h:outputText value="#{p.direccionelectronica}" />
+				</p:column>
+
+				<p:column headerText="Teléfono/celular" width="100">
+					<h:outputText value="#{p.telefono} / #{p.celularlocal}" />
+				</p:column>
+
+				<p:column headerText="Acción" width="100">
+					<p:commandLink action="#{cHrAdmPostulantes.mostrarTipoConvocatoria}"
+						immediate="true" title="Postular"
+						styleClass="columnatablaCentro">
+						<f:setPropertyActionListener target="#{cHrAdmPostulantes.dtoHrPostulantes}"
+							value="#{p}" />
+						<h:graphicImage
+							value="/comun/recursos/imagenes/mantenimiento/btn_seleccionar.png" />
+					</p:commandLink>
+				</p:column>
+
+
+			</p:dataTable>
+		</h:form>
+
+
+		<p:dialog id="dgTipoConvocatoria" width="600" resizable="false"
+			widgetVar="popTipoConvocatoria" modal="true" appendTo="@(body)"
+			header="Tipo de Convocatoria">
+
+			<h:form id="frmTipoConvocatoria">
+
+
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="ui-panelgrid-blank"
+					columnClasses="ui-grid-col-4,ui-grid-col-8">
+					<p:outputLabel value="Tipo de convocatoria" />
+					<p:selectOneMenu id="comboTipoConvocatoria" required="true"
+						styleClass="controlListaDesplegableMediano"
+						requiredMessage="Debe seleccionar un tipo de convocatoria"
+						value="#{cHrAdmPostulantes.tipoconvocatoria}">
+						<f:selectItem itemLabel="--Selecciones--" />
+						<f:selectItem itemLabel="CAS" itemValue="C" />
+						<f:selectItem itemLabel="LSC" itemValue="E" />
+						<f:selectItem itemLabel="Practicante" itemValue="P" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+
+				<p:panelGrid columns="3" layout="grid"
+					styleClass="ui-panelgrid-blank"
+					columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2">
+					<p:commandButton value="Aceptar"
+						onstart="PF('bUI').block()" oncomplete="PF('bUI').unblock()"
+						update="@form" icon="ui-icon-check"
+						action="#{cHrAdmPostulantes.editar}" />
+					<p:spacer />
+					<p:commandButton value="#{msg.boton_cancelar}" immediate="true"
+						onclick="PF('popTipoConvocatoria').hide();"
+						icon="ui-icon-arrowreturnthick-1-w" />
+				</p:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+
+	</ui:define>
+</ui:composition>

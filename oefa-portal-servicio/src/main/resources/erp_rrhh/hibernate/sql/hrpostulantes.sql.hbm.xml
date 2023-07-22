@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : rrhh.HrPostulantes -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="postulante.hrpostulantes.validarDocumento">
+		<![CDATA[
+				SELECT COUNT (*) FROM sgcoresys.Hr_Postulantes
+			        where
+			        documento = :documento AND
+			        tipodocumento = :tipodocumento
+		]]>
+	</sql-query>
+
+	<sql-query name="postulante.hrpostulantes.obtenerInformacionByCredenciales">
+		<![CDATA[
+				select
+			        POSTULANTE  as "postulante",
+			        UNIDADREPLICACION  as "unidadreplicacion",
+			        POSTULANTENUMERO  as "postulantenumero",
+			        SERVICE  as "service",
+			        APELLIDOPATERNO  as "apellidopaterno",
+			        APELLIDOMATERNO  as "apellidomaterno",
+			        NOMBRES  as "nombres",
+			        DEPARTAMENTO  as "departamento",
+			        PROVINCIA  as "provincia",
+			        PAIS  as "pais",
+			        FECHANACIMIENTO  as "fechanacimiento",
+			        SEXO  as "sexo",
+			        DIRECCION  as "direccion",
+			        DISTRITO  as "distrito",
+			        TELEFONO as "telefono",
+			        TIPODOCUMENTO  as "tipodocumento",
+			        DOCUMENTO  as "documento",
+			        LIBRETAELECTORAL  as "libretaelectoral",
+			        LIBRETAMILITAR  as "libretamilitar",
+			        DOCUMENTOFISCAL  as "documentofiscal",
+			        TIPOBREVETE  as "tipobrevete",
+			        BREVETE  as "brevete",
+			        CARNETASISTENCIASOCIAL  as "carnetasistenciasocial",
+			        CARNETEXTRANJERIA  as "carnetextranjeria",
+			        PESO  as "peso",
+			        TALLA  as "talla",
+			        GRUPOSANGUINEO  as "gruposanguineo",
+			        ESTADOCIVIL  as "estadocivil",
+			        FECHAESTADOCIVIL  as "fechaestadocivil",
+			        OTROESTADOCIVIL  as "otroestadocivil",
+			        SITUACIONDOMICILIO  as "situaciondomicilio",
+			        OTROSITUACIONDOMICILIO  as "otrosituaciondomicilio",
+			        IMPEDIMENTOS  as "impedimentos",
+			        FLAGACTBENEFICAS  as "flagactbeneficas",
+			        ACTBENEFICAS as "actbeneficas",
+			        FLAGACTCULTURALES  as "flagactculturales",
+			        ACTCULTURALES  as "actculturales",
+			        FLAGACTRELIGIOSAS  as "flagactreligiosas",
+			        ACTRELIGIOSAS  as "actreligiosas",
+			        FLAGACTLABORALES  as "flagactlaborales",
+			        ACTLABORALES  as "actlaborales",
+			        FLAGACTDEPORTIVAS  as "flagactdeportivas",
+			        ACTDEPORTIVAS as "actdeportivas",
+			        FLAGACTSOCIALES  as "flagactsociales",
+			        ACTSOCIALES  as "actsociales",
+			        INFORMACIONADICIONAL  as "informacionadicional",
+			        FLAGTRABAJOFUERA  as "flagtrabajofuera",
+			        FECHAREGISTROINICIAL  as "fecharegistroinicial",
+			        FUENTERECLUTAMIENTO  as "fuentereclutamiento",
+			        CODIGOAUXILIAR  as "codigoauxiliar",
+			        DIRECCIONELECTRONICA  as "direccionelectronica",
+			        ESTADO  as "estado",
+			        UNIDADNEGOCIO  as "unidadnegocio",
+			        TIPOCALLE  as "tipocalle",
+			        NOMBRECALLE  as "nombrecalle",
+			        NUMERO  "numero",
+			        NUMDEP  as "numdep",
+			        MANZANA  as "manzana",
+			        LOTE  as "lote",
+			        INTERIOR  as "interior",
+			        SECTOR  as "sector",
+			        URBANIZACION  as "urbanizacion",
+			        PROVINCIADOMICILIO  as "provinciadomicilio",
+			        ULTIMOUSUARIO  as "ultimoUsuario",
+			        ULTIMAFECHAMODIF  as "ultimaFechaModif",
+			        OBJETIVOGENERAL  as "objetivogeneral",
+			        DEPARTAMENTONACIMIENTO  as  "departamentonacimiento",
+			        PROVINCIANACIMIENTO as "provincianacimiento",
+			        DISTRITONACIMIENTO  as "distritonacimiento",
+			        APELLIDOCASADA  as "apellidocasada",
+			        LUGARNACIMIENTO  as "lugarnacimiento",
+			        CELULARLOCAL  as "celularlocal",
+			        DIRECCIONEXTRANJERA  as "direccionextranjera",
+			        PAISEXTRANJERO  as "paisextranjero",
+			        DEPARTAMENTOEXTRANJERO  as "departamentoextranjero",
+			        PROVINCIAEXTRANJERA  as "provinciaextranjera",
+			        CODIGOPOSTALEXTRANJERO  as "codigopostalextranjero",
+			        TELEFONOEXTRANJERO  as "telefonoextranjero",
+			        CELULAREXTRANJERO  as "celularextranjero",
+			        NOMBREEMERGENCIA1  as "nombreemergencia1",
+			        DIRECCIONEMERGENCIA1  as "direccionemergencia1",
+			        TELEFONOEMERGENCIA1  as "telefonoemergencia1",
+			        CELULAREMERGENCIA1  as "celularemergencia1",
+			        PARENTESCOEMERGENCIA1  as "parentescoemergencia1",
+			        NOMBREEMERGENCIA2  as "nombreemergencia2",
+			        DIRECCIONEMERGENCIA2 as "direccionemergencia2",
+			        TELEFONOEMERGENCIA2  as "telefonoemergencia2",
+			        CELULAREMERGENCIA2  as "celularemergencia2",
+			        PARENTESCOEMERGENCIA2  as "parentescoemergencia2",
+			        REQUERIMIENTO  as "requerimiento",
+			        COMPANYOWNER  as "companyowner",
+			        REFERENCIA  as "referencia",
+			        CLAVE   as "clave",
+			        RAZA  as "raza",
+			        RELIGION  as "religion",
+			        LICENCIACONDUCIRFECHA  as "licenciaconducirfecha",
+			        POSEEAUTO  as "poseeauto",
+			        MONTOBRUTO  as "montobruto",
+			        NUMEROCONCURSO  as "numeroconcurso",
+			        FOTO as "fotoimagen"
+			        from sgcoresys.Hr_Postulantes
+			        where
+					documento =      :nroDocumento AND
+					tipodocumento = :tipoDocumento AND
+					nvl(clave,'0') =     :clave
+		]]>
+	</sql-query>
+
+
+	<sql-query name="postulante.hrpostulantes.guadarCambioClave">
+		<![CDATA[
+    		UPDATE
+				sgcoresys.Hr_Postulantes
+				SET CLAVE = :clave
+				WHERE POSTULANTE =:postulante
+				]]>
+	</sql-query>
+
+	<sql-query name="postulante.hrpostulantes.getListarVacantes">
+		<![CDATA[
+    		SELECT
+			        REQ.COMPANYOWNER as "companyowner",
+			        REQ.REQUERIMIENTO as "requerimiento",
+			        REQ.CODIGOPUESTO as "codigopuesto",
+			        RO.INICIOVIGENCIA as "iniciovigencia",
+			        RO.FINVIGENCIA as "finvigencia",
+			        PUE.DESCRIPCION AS "descripcionpuesto",
+			        REQ.FECHAPUBLICACION as "fechadesde",
+			        REQ.FECHALIMITE as "fechahasta",
+			        REQ.NUMEROPENDIENTE AS "vacante",
+			        REQ.CONCURSO as "concurso",
+			        REQ.CONVOCATORIA as "convocatoria",
+			        CC.LOCALNAME as "localname",
+			        PE.DESCRIPCION AS "posempdescripcion",
+			        REQ.NIVELSERVICIO as "nivelservicio"
+		        FROM
+		        sgcoresys.HR_REQUERIMIENTO REQ     INNER JOIN sgcoresys.HR_PUESTOEMPRESA   PUE
+		        		ON REQ.CODIGOPUESTO = PUE.CODIGOPUESTO
+		        INNER JOIN    sgcoresys.HR_REQUERIMIENTOOBSERVACION RO
+		        		ON REQ.REQUERIMIENTO =  RO.REQUERIMIENTO
+		        LEFT JOIN sgcoresys.HR_POSICIONEMPRESA PE
+		        		ON  PE.CODIGOPOSICION = REQ.CODIGOPOSICIONSOLICITANTE
+		        LEFT JOIN  sgcoresys.AC_COSTCENTERMST CC
+		        		ON REQ.CENTROCOSTO = CC.COSTCENTER
+		        WHERE
+		     	REQ.ESTADO = 'OA' AND
+		        REQ.TIPOREQUERIMIENTO = 'C' AND 
+		        NVL(REQ.FLAGDESIERTO,'N') = 'N' AND
+		        REQ.NIVELSERVICIO IS NOT NULL AND
+		        REQ.FECHAPUBLICACION <= SYSDATE
+				]]>
+	</sql-query>
+
+	<sql-query name="postulante.hrpostulantes.getListaPostulanteRequerimiento">
+		<![CDATA[
+		select requerimiento as "requerimiento", companyowner as "companyowner", postulante  as "postulante" from
+		sgcoresys.HR_PosRequer
+		WHERE postulante = :postulante
+				]]>
+	</sql-query>
+
+	<sql-query name="postulante.hrpostulantes.snpInsertarposrequer">
+			<![CDATA[
+			CALL SGCORESYS.SP_hr_insertarposrequer(:requerimiento,
+																		:companyowner ,
+																		:postulante , 
+																		:estado , 
+																		:etapa ,
+																		:tipopostulante ,
+																		:unidadnegocio , 
+																		:puntaje , 
+																		:observaciones ,
+																		:fechapostulante , 
+																		:variaberemunerativa , 
+																		:secuencia ,
+																		:condvarrem , 
+																		:observacionesfinales , 
+																		:secuencia2 ,
+																		:ultimoUsuario , 
+																		:ultimaFechaModif , '' )
+			]]>
+	</sql-query>
+
+	<sql-query name="postulante.hrpostulantes.getListaTablaPuestoFormacion">
+			<![CDATA[
+				SELECT
+			        MDNA.DESCRIPCION AS "nivelacademicodescripcion",
+			        CAST(MD.DESCRIPCIONLOCAL AS character varying(80)) AS "area"
+			        FROM
+			        SGCORESYS.HR_PUESTOFORMACION CT
+			        INNER JOIN
+			        sgcoresys.MA_MISCELANEOSDETALLE MD ON
+			        MD.CODIGOELEMENTO = CT.AREA AND
+			        MD.CODIGOTABLA = 'AREAS' AND
+			        MD.APLICACIONCODIGO = 'HR' AND
+			        MD.COMPANIA = '999999'
+			        INNER JOIN sgcoresys.HR_GRADOINSTRUCCION MDNA ON
+			        MDNA.GRADOINSTRUCCION = CT.NIVELACADEMICO AND
+			        CT.CODIGOPUESTO =:codigopuesto
+			]]>
+	</sql-query>
+
+	<sql-query name="postulante.hrpostulantes.getListaTablaPuestoIdiomas">
+			<![CDATA[
+				SELECT
+				        IM.DESCRIPCIONLOCAL as "descripcionlocal",
+				        PI.NIVELLECTURA as "nivellectura",
+				        PI.NIVELORAL as "niveloral",
+				        PI.NIVELESCRITURA as "nivelescritura",
+				        PI.NIVELGENERAL as "nivelgeneral"
+				        FROM sgcoresys.HR_PUESTOIDIOMAS PI
+				        INNER JOIN sgcoresys.HR_IDIOMASMAST
+				        IM
+				        ON PI.IDIOMA = IM.IDIOMA
+				        WHERE
+				        CODIGOPUESTO = :codigopuesto
+			]]>
+	</sql-query>
+
+	<sql-query name="postulante.hrpostulantes.getListaTablaPuestoInformatica">
+			<![CDATA[
+				SELECT CAST(MD.DESCRIPCIONLOCAL AS character varying(80))
+				        AS "curso", NIVEL as "nivel"
+				        FROM sgcoresys.HR_PUESTOINFORMATICA CT
+				        INNER JOIN
+				        sgcoresys.MA_MISCELANEOSDETALLE MD ON
+				        MD.CODIGOELEMENTO =
+				        CT.INFORMATICA AND
+				        MD.CODIGOTABLA = 'INFORMAT' AND
+				        MD.APLICACIONCODIGO =
+				        'HR' AND
+				        MD.COMPANIA = '999999' AND
+				        CT.CODIGOPUESTO = :codigopuesto
+			]]>
+	</sql-query>
+
+	<sql-query name="postulante.hrpostulantes.getListaFuncionesPuesto">
+		<![CDATA[
+			SELECT COMENTARIOS as "comentarios"
+		        FROM sgcoresys.HR_PUESTOFUNCIONES
+		        WHERE
+		        CODIGOPUESTO =:codigopuesto
+		]]>
+	</sql-query>
+
+	<sql-query name="postulante.hrpostulantes.getListaTablaPuestoExperienciaExterna">
+		<![CDATA[
+			SELECT CAST(MD.DESCRIPCIONLOCAL AS
+		        character varying(80)) AS "area", ( CASE
+		        MESES WHEN NULL THEN 0 ELSE
+		        MESES END ) AS "meses",
+		        (CASE FLAGNECESARIO
+		        WHEN 'S' THEN 'Si'
+		        ELSE 'No'
+		        END) AS "flagnecesario"
+		        FROM sgcoresys.HR_PUESTOEXPERIENCIA PE
+		        INNER JOIN
+		        sgcoresys.MA_MISCELANEOSDETALLE MD
+		        ON PE.AREAEXPERIENCIA = MD.CODIGOELEMENTO
+		        WHERE CODIGOPUESTO = :codigopuesto AND
+		        TIPOEXPERIENCIA = 'EXTERNA' AND
+		        MD.APLICACIONCODIGO = 'HR' AND
+		        MD.CODIGOTABLA = 'AREAEXPER'
+		]]>
+	</sql-query>
+	
+	<sql-query name="postulante.hrpostulantes.contarPaginacion">
+		<![CDATA[
+				SELECT COUNT (*) FROM sgcoresys.Hr_Postulantes
+				where 1=1
+		]]>
+	</sql-query>
+	
+		<sql-query name="postulante.hrpostulantes.listarPaginacion">
+		<![CDATA[
+				select
+			        POSTULANTE  as "postulante",
+			        UNIDADREPLICACION  as "unidadreplicacion",
+			        POSTULANTENUMERO  as "postulantenumero",
+			        SERVICE  as "service",
+			        APELLIDOPATERNO  as "apellidopaterno",
+			        APELLIDOMATERNO  as "apellidomaterno",
+			        NOMBRES  as "nombres",
+			        DEPARTAMENTO  as "departamento",
+			        PROVINCIA  as "provincia",
+			        PAIS  as "pais",
+			        FECHANACIMIENTO  as "fechanacimiento",
+			        SEXO  as "sexo",
+			        DIRECCION  as "direccion",
+			        DISTRITO  as "distrito",
+			        TELEFONO as "telefono",
+			        TIPODOCUMENTO  as "tipodocumento",
+			        DOCUMENTO  as "documento",
+			        LIBRETAELECTORAL  as "libretaelectoral",
+			        LIBRETAMILITAR  as "libretamilitar",
+			        DOCUMENTOFISCAL  as "documentofiscal",
+			        TIPOBREVETE  as "tipobrevete",
+			        BREVETE  as "brevete",
+			        CARNETASISTENCIASOCIAL  as "carnetasistenciasocial",
+			        CARNETEXTRANJERIA  as "carnetextranjeria",
+			        PESO  as "peso",
+			        TALLA  as "talla",
+			        GRUPOSANGUINEO  as "gruposanguineo",
+			        ESTADOCIVIL  as "estadocivil",
+			        FECHAESTADOCIVIL  as "fechaestadocivil",
+			        OTROESTADOCIVIL  as "otroestadocivil",
+			        SITUACIONDOMICILIO  as "situaciondomicilio",
+			        OTROSITUACIONDOMICILIO  as "otrosituaciondomicilio",
+			        IMPEDIMENTOS  as "impedimentos",
+			        FLAGACTBENEFICAS  as "flagactbeneficas",
+			        ACTBENEFICAS as "actbeneficas",
+			        FLAGACTCULTURALES  as "flagactculturales",
+			        ACTCULTURALES  as "actculturales",
+			        FLAGACTRELIGIOSAS  as "flagactreligiosas",
+			        ACTRELIGIOSAS  as "actreligiosas",
+			        FLAGACTLABORALES  as "flagactlaborales",
+			        ACTLABORALES  as "actlaborales",
+			        FLAGACTDEPORTIVAS  as "flagactdeportivas",
+			        ACTDEPORTIVAS as "actdeportivas",
+			        FLAGACTSOCIALES  as "flagactsociales",
+			        ACTSOCIALES  as "actsociales",
+			        INFORMACIONADICIONAL  as "informacionadicional",
+			        FLAGTRABAJOFUERA  as "flagtrabajofuera",
+			        FECHAREGISTROINICIAL  as "fecharegistroinicial",
+			        FUENTERECLUTAMIENTO  as "fuentereclutamiento",
+			        CODIGOAUXILIAR  as "codigoauxiliar",
+			        DIRECCIONELECTRONICA  as "direccionelectronica",
+			        ESTADO  as "estado",
+			        UNIDADNEGOCIO  as "unidadnegocio",
+			        TIPOCALLE  as "tipocalle",
+			        NOMBRECALLE  as "nombrecalle",
+			        NUMERO  "numero",
+			        NUMDEP  as "numdep",
+			        MANZANA  as "manzana",
+			        LOTE  as "lote",
+			        INTERIOR  as "interior",
+			        SECTOR  as "sector",
+			        URBANIZACION  as "urbanizacion",
+			        PROVINCIADOMICILIO  as "provinciadomicilio",
+			        ULTIMOUSUARIO  as "ultimoUsuario",
+			        ULTIMAFECHAMODIF  as "ultimaFechaModif",
+			        OBJETIVOGENERAL  as "objetivogeneral",
+			        DEPARTAMENTONACIMIENTO  as  "departamentonacimiento",
+			        PROVINCIANACIMIENTO as "provincianacimiento",
+			        DISTRITONACIMIENTO  as "distritonacimiento",
+			        APELLIDOCASADA  as "apellidocasada",
+			        LUGARNACIMIENTO  as "lugarnacimiento",
+			        CELULARLOCAL  as "celularlocal",
+			        DIRECCIONEXTRANJERA  as "direccionextranjera",
+			        PAISEXTRANJERO  as "paisextranjero",
+			        DEPARTAMENTOEXTRANJERO  as "departamentoextranjero",
+			        PROVINCIAEXTRANJERA  as "provinciaextranjera",
+			        CODIGOPOSTALEXTRANJERO  as "codigopostalextranjero",
+			        TELEFONOEXTRANJERO  as "telefonoextranjero",
+			        CELULAREXTRANJERO  as "celularextranjero",
+			        NOMBREEMERGENCIA1  as "nombreemergencia1",
+			        DIRECCIONEMERGENCIA1  as "direccionemergencia1",
+			        TELEFONOEMERGENCIA1  as "telefonoemergencia1",
+			        CELULAREMERGENCIA1  as "celularemergencia1",
+			        PARENTESCOEMERGENCIA1  as "parentescoemergencia1",
+			        NOMBREEMERGENCIA2  as "nombreemergencia2",
+			        DIRECCIONEMERGENCIA2 as "direccionemergencia2",
+			        TELEFONOEMERGENCIA2  as "telefonoemergencia2",
+			        CELULAREMERGENCIA2  as "celularemergencia2",
+			        PARENTESCOEMERGENCIA2  as "parentescoemergencia2",
+			        REQUERIMIENTO  as "requerimiento",
+			        COMPANYOWNER  as "companyowner",
+			        REFERENCIA  as "referencia",
+			        CLAVE   as "clave",
+			        RAZA  as "raza",
+			        RELIGION  as "religion",
+			        LICENCIACONDUCIRFECHA  as "licenciaconducirfecha",
+			        POSEEAUTO  as "poseeauto",
+			        MONTOBRUTO  as "montobruto",
+			        NUMEROCONCURSO  as "numeroconcurso"
+			        from sgcoresys.Hr_Postulantes
+			        where 1=1
+		]]>
+	</sql-query>
+	
+</hibernate-mapping>

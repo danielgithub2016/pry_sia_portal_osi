@@ -1,0 +1,46 @@
+Manifest-Version: 1.0
+Class-Path: oefa-framework-web.jar jasperreports-6.1.1.jar commons-bea
+ nutils-1.9.0.jar commons-logging-1.1.1.jar commons-collections-3.2.1.
+ jar commons-digester-2.1.jar itext-2.1.7.jar jcommon-1.0.23.jar jfree
+ chart-1.0.19.jar xml-apis-1.3.02.jar ecj-4.3.1.jar castor-xml-1.3.3.j
+ ar castor-core-1.3.3.jar commons-lang-2.6.jar javax.inject-1.jar stax
+ -1.2.0.jar stax-api-1.0.1.jar stax-api-1.0-2.jar spring-context-4.2.1
+ .RELEASE.jar spring-aop-4.2.1.RELEASE.jar aopalliance-1.0.jar spring-
+ beans-4.2.1.RELEASE.jar spring-core-4.2.1.RELEASE.jar spring-expressi
+ on-4.2.1.RELEASE.jar jackson-core-2.1.4.jar jackson-databind-2.1.4.ja
+ r jackson-annotations-2.1.4.jar lucene-core-4.5.1.jar lucene-analyzer
+ s-common-4.5.1.jar lucene-queryparser-4.5.1.jar lucene-queries-4.5.1.
+ jar lucene-sandbox-4.5.1.jar jakarta-regexp-1.4.jar olap4j-0.9.7.309-
+ JS-3.jar core-2.3.0.jar mail-1.4.7.jar activation-1.1.jar log4j-1.2.1
+ 7.jar groovy-all-2.3.6.jar commons-jexl-2.1.1.jar jxls-core-1.0.5.jar
+  poi-3.7.jar commons-codec-1.2.jar poi-ooxml-3.10.1.jar poi-ooxml-sch
+ emas-3.10.1.jar xmlbeans-2.6.0.jar dom4j-1.6.1.jar quartz-2.2.0.jar c
+ 3p0-0.9.1.1.jar slf4j-api-1.6.6.jar hibernate-validator-5.1.3.Final.j
+ ar validation-api-1.1.0.Final.jar jboss-logging-3.1.3.GA.jar classmat
+ e-1.0.0.jar commons-fileupload-1.3.jar commons-io-2.2.jar rome-1.0.ja
+ r jdom-1.0.jar twitter4j-core-3.0.5.jar atmosphere-runtime-2.2.2.jar 
+ slf4j-simple-1.6.1.jar all-themes-1.0.10.jar primefaces-extensions-3.
+ 2.0.jar primefaces-5.2.jar gson-2.2.4.jar commons-lang3-3.1.jar resou
+ rces-ckeditor-3.2.0.jar barbecue-1.5-beta1.jar hibernate-core-4.3.11.
+ Final.jar jboss-logging-annotations-1.2.0.Beta1.jar jboss-transaction
+ -api_1.2_spec-1.0.0.Final.jar hibernate-commons-annotations-4.0.5.Fin
+ al.jar hibernate-jpa-2.1-api-1.0.0.Final.jar javassist-3.18.1-GA.jar 
+ antlr-2.7.7.jar jandex-1.1.0.Final.jar hibernate-ehcache-4.3.11.Final
+ .jar ehcache-core-2.4.3.jar hibernate-c3p0-4.3.11.Final.jar c3p0-0.9.
+ 2.1.jar mchange-commons-java-0.2.3.4.jar spring-context-support-4.2.1
+ .RELEASE.jar spring-tx-4.2.1.RELEASE.jar spring-test-4.2.1.RELEASE.ja
+ r spring-orm-4.2.1.RELEASE.jar spring-jdbc-4.2.1.RELEASE.jar spring-j
+ ms-4.2.1.RELEASE.jar spring-messaging-4.2.1.RELEASE.jar spring-web-4.
+ 2.1.RELEASE.jar spring-aspects-4.2.1.RELEASE.jar aspectjweaver-1.8.6.
+ jar spring-webmvc-4.2.1.RELEASE.jar javax.servlet.jsp-api-2.2.1.jar j
+ avax.el-api-2.2.1.jar javax.servlet-api-3.0.1.jar jsf-api-2.2.12.jar 
+ jsf-impl-2.2.12.jar jstl-api-1.2.jar servlet-api-2.3.jar jsp-api-2.1.
+ jar jcaptcha-all-1.0-RC-2.0.1.jar axis2-1.6.2.jar axis2-kernel-1.6.2.
+ jar axiom-api-1.2.13.jar geronimo-activation_1.1_spec-1.1.jar geronim
+ o-javamail_1.4_spec-1.7.1.jar jaxen-1.1.3.jar geronimo-stax-api_1.0_s
+ pec-1.0.1.jar apache-mime4j-core-0.7.2.jar axiom-impl-1.2.13.jar wstx
+ -asl-3.2.9.jar geronimo-ws-metadata_2.0_spec-1.1.2.jar geronimo-jta_1
+ .1_spec-1.1.jar commons-httpclient-3.1.jar wsdl4j-1.6.2.jar XmlSchema
+ -1.4.7.jar neethi-3.0.2.jar woden-api-1.0M9.jar woden-impl-dom-1.0M9.
+ jar woden-impl-commons-1.0M9.jar jsr311-api-1.0.jar
+

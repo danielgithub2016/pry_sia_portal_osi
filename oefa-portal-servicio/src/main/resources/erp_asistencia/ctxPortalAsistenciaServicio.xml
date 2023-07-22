@@ -1,0 +1,177 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+	xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
+	xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans 
+    	http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://jax-ws.dev.java.net/spring/core 
+        http://jax-ws.dev.java.net/spring/core.xsd
+		http://jax-ws.dev.java.net/spring/servlet 
+		http://jax-ws.dev.java.net/spring/servlet.xsd">
+
+	<bean id="BeanFactoryErpAs" class="net.royal.erp.asistencia.factory.FactoryErpAsImpl"
+		scope="singleton">
+		
+		<property name="accommonDatawindow">
+			<ref bean="BeanServicioAccommonDatawindow" />
+		</property>
+		
+		<property name="ascommonDatawindow">
+			<ref bean="BeanServicioAscommonDatawindow" />
+		</property>
+		<property name="ascommonFuncion">
+			<ref bean="BeanServicioAscommonFuncion" />
+		</property>
+		<property name="asmainDatawindow">
+			<ref bean="BeanServicioAsmainDatawindow" />
+		</property>
+		<property name="asmainFuncion">
+			<ref bean="BeanServicioAsmainFuncion" />
+		</property>
+		<property name="asmastDatawindow">
+			<ref bean="BeanServicioAsmastDatawindow" />
+		</property>
+		
+		<property name="asoracleDatawindow">
+			<ref bean="BeanServicioAsoracleDatawindow" />
+		</property>
+		
+		
+		
+		
+		<property name="asrepusFuncion">
+			<ref bean="BeanServicioAsrepusFuncion" />
+		</property>
+		
+		<property name="asuserFuncion">
+			<ref bean="BeanServicioAsuserFuncion" />
+		</property>
+		
+		<property name="hrcommonFuncion">
+			<ref bean="BeanServicioHrcommonFuncion" />
+		</property>
+		
+		<property name="syclassFuncion">
+			<ref bean="BeanServicioSyclassFuncion" />
+		</property>
+		
+		<property name="sycommFuncion">
+			<ref bean="BeanServicioSycommFuncion" />
+		</property>
+		<property name="sylockDatawindow">
+			<ref bean="BeanServicioSylockDatawindow" />
+		</property>
+		<property name="sylockFuncion">
+			<ref bean="BeanServicioSylockFuncion" />
+		</property>
+		<property name="symastDatawindow">
+			<ref bean="BeanServicioSymastDatawindow" />
+		</property>
+	</bean>
+
+	<bean id="BeanFactoryErpAsistencia"
+		class="net.royal.erp.asistencia.factory.FactoryErpAsistenciaImpl"
+		scope="singleton">
+		<property name="aS">
+			<ref bean="BeanFactoryErpAs" />
+		</property>
+
+		<property name="asAccesosdiariosServicio">
+			<ref bean="BeanServicioAsAccesosdiarios" />
+		</property>
+
+		<property name="asAreaServicio">
+			<ref bean="BeanServicioAsArea" />
+		</property>
+
+		<property name="asCarnetidentificacionServicio">
+			<ref bean="BeanServicioAsCarnetidentificacion" />
+		</property>
+
+		<property name="asConceptoaccesoServicio">
+			<ref bean="BeanServicioAsConceptoacceso" />
+		</property>
+
+		<property name="asConceptoaccesosistemaServicio">
+			<ref bean="BeanServicioAsConceptoaccesosistema" />
+		</property>
+
+		<property name="asEmpleadoexcepcionServicio">
+			<ref bean="BeanServicioAsEmpleadoexcepcion" />
+		</property>
+
+		<property name="asEmpleadoexcepciondetalleServicio">
+			<ref bean="BeanServicioAsEmpleadoexcepciondetalle" />
+		</property>
+
+		<property name="asEmpleadosAutorizadosServicio">
+			<ref bean="BeanServicioAsEmpleadosAutorizados" />
+		</property>
+
+		<property name="asEventoServicio">
+			<ref bean="BeanServicioAsEvento" />
+		</property>
+
+		<property name="asEventousuarioServicio">
+			<ref bean="BeanServicioAsEventousuario" />
+		</property>
+
+		<property name="asIntervaloaccesoServicio">
+			<ref bean="BeanServicioAsIntervaloacceso" />
+		</property>
+
+		<property name="asPeriodoServicio">
+			<ref bean="BeanServicioAsPeriodo" />
+		</property>
+
+		<property name="asTipodiaasistenciaServicio">
+			<ref bean="BeanServicioAsTipodiaasistencia" />
+		</property>
+
+		<property name="asTipodiamovimientoServicio">
+			<ref bean="BeanServicioAsTipodiamovimiento" />
+		</property>
+
+		<property name="asTipohorarioServicio">
+			<ref bean="BeanServicioAsTipohorario" />
+		</property>
+
+		<property name="asAutorizacionServicio">
+			<ref bean="BeanServicioAsAutorizacion" />
+		</property>
+
+		<property name="terminalServicio">
+			<ref bean="BeanServicioTerminal" />
+		</property>
+		
+		<property name="asAsistenciadiariaServicio">
+			<ref bean="BeanServicioAsAsistenciadiaria"/>
+		</property>
+		
+		<property name="asEmpleadoexcepcionsolicitudServicio">
+			<ref bean="BeanServicioAsEmpleadoexcepcionsolicitud"/>
+		</property>
+
+		<property name="asAutorizacionfechaServicio">
+			<ref bean="BeanServicioAsAutorizacionfecha"/>
+		</property>
+		
+		<property name="asDetallesigedServicio">
+			<ref bean="BeanServicioAsDetallesiged" />
+		</property>
+		
+	</bean>
+
+</beans>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.MaCts" table="SGCORESYS.MA_CTS">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.MaCtsPk">
+            <key-property name="numerocts" type="integer">
+                <column name="NUMEROCTS" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="regimen" type="string">
+            <column name="REGIMEN" length="1" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="100" />
+        </property>
+        <property name="fechainicio" type="timestamp">
+            <column name="FECHAINICIO" length="7" />
+        </property>
+        <property name="fechafin" type="timestamp">
+            <column name="FECHAFIN" length="7" />
+        </property>
+        <property name="fechapago" type="timestamp">
+            <column name="FECHAPAGO" length="7" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="estadocts" type="string">
+            <column name="ESTADOCTS" length="1" />
+        </property>
+        <property name="periodoplanilla" type="string">
+            <column name="PERIODOPLANILLA" length="8" />
+        </property>
+        <property name="tasaefectivaanual" type="big_decimal">
+            <column name="TASAEFECTIVAANUAL" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

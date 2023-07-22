@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.seguridad.dominio.Clientemast" table="SGCORESYS.CLIENTEMAST">
+        <composite-id name="pk" class="net.royal.seguridad.dominio.ClientemastPk">
+            <key-property name="cliente" type="integer">
+                <column name="CLIENTE" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="clasificacion" type="string">
+            <column name="CLASIFICACION" length="1" />
+        </property>
+        <property name="ingresomensual" type="integer">
+            <column name="INGRESOMENSUAL" length="22" />
+        </property>
+        <property name="esgarante" type="string">
+            <column name="ESGARANTE" length="1" />
+        </property>
+        <property name="lineacreditomoneda" type="string">
+            <column name="LINEACREDITOMONEDA" length="2" />
+        </property>
+        <property name="lineacredito" type="integer">
+            <column name="LINEACREDITO" length="22" />
+        </property>
+        <property name="tipoactividad" type="string">
+            <column name="TIPOACTIVIDAD" length="1" />
+        </property>
+        <property name="cantidaddependientes" type="integer">
+            <column name="CANTIDADDEPENDIENTES" length="22" />
+        </property>
+        <property name="totalacumulado" type="integer">
+            <column name="TOTALACUMULADO" length="22" />
+        </property>
+        <property name="formadepago" type="string">
+            <column name="FORMADEPAGO" length="3" />
+        </property>
+        <property name="tiposervicio" type="string">
+            <column name="TIPOSERVICIO" length="6" />
+        </property>
+        <property name="numerodiascobranza" type="integer">
+            <column name="NUMERODIASCOBRANZA" length="22" />
+        </property>
+        <property name="resoluciondirectoral" type="string">
+            <column name="RESOLUCIONDIRECTORAL" length="15" />
+        </property>
+        <property name="licenciafechadesde" type="timestamp">
+            <column name="LICENCIAFECHADESDE" length="7" />
+        </property>
+        <property name="licenciafechahasta" type="timestamp">
+            <column name="LICENCIAFECHAHASTA" length="7" />
+        </property>
+        <property name="practicotmcflag" type="string">
+            <column name="PRACTICOTMCFLAG" length="1" />
+        </property>
+        <property name="licencianumero" type="string">
+            <column name="LICENCIANUMERO" length="15" />
+        </property>
+        <property name="pagoefectivoflag" type="string">
+            <column name="PAGOEFECTIVOFLAG" length="1" />
+        </property>
+        <property name="suspensionflag" type="string">
+            <column name="SUSPENSIONFLAG" length="1" />
+        </property>
+        <property name="tipofacturacion" type="string">
+            <column name="TIPOFACTURACION" length="3" />
+        </property>
+        <property name="tipoventa" type="string">
+            <column name="TIPOVENTA" length="3" />
+        </property>
+        <property name="conceptofacturacion" type="string">
+            <column name="CONCEPTOFACTURACION" length="3" />
+        </property>
+        <property name="vendedor" type="integer">
+            <column name="VENDEDOR" length="22" />
+        </property>
+        <property name="centrocosto" type="string">
+            <column name="CENTROCOSTO" length="10" />
+        </property>
+        <property name="formafacturacion" type="string">
+            <column name="FORMAFACTURACION" length="2" />
+        </property>
+        <property name="tipocliente" type="string">
+            <column name="TIPOCLIENTE" length="3" />
+        </property>
+        <property name="rutadespacho" type="string">
+            <column name="RUTADESPACHO" length="4" />
+        </property>
+        <property name="tipodocumento" type="string">
+            <column name="TIPODOCUMENTO" length="2" />
+        </property>
+        <property name="personacontacto" type="string">
+            <column name="PERSONACONTACTO" length="50" />
+        </property>
+        <property name="estadocliente" type="string">
+            <column name="ESTADOCLIENTE" length="3" />
+        </property>
+        <property name="unidadnegocio" type="string">
+            <column name="UNIDADNEGOCIO" length="3" />
+        </property>
+        <property name="tiponegocio" type="string">
+            <column name="TIPONEGOCIO" length="3" />
+        </property>
+        <property name="tipoemision" type="string">
+            <column name="TIPOEMISION" length="4" />
+        </property>
+        <property name="mercado" type="string">
+            <column name="MERCADO" length="1" />
+        </property>
+        <property name="fecharegistro" type="timestamp">
+            <column name="FECHAREGISTRO" length="7" />
+        </property>
+        <property name="usuarioweb" type="string">
+            <column name="USUARIOWEB" length="15" />
+        </property>
+        <property name="pwdweb" type="string">
+            <column name="PWDWEB" length="15" />
+        </property>
+        <property name="email" type="string">
+            <column name="EMAIL" length="255" />
+        </property>
+        <property name="garanteclasificacion" type="string">
+            <column name="GARANTECLASIFICACION" length="1" />
+        </property>
+        <property name="garantedocumento" type="string">
+            <column name="GARANTEDOCUMENTO" length="20" />
+        </property>
+        <property name="garantenombre" type="string">
+            <column name="GARANTENOMBRE" length="50" />
+        </property>
+        <property name="nacionalidad" type="string">
+            <column name="NACIONALIDAD" length="1" />
+        </property>
+        <property name="lineacreditofechavencimiento" type="timestamp">
+            <column name="LINEACREDITOFECHAVENCIMIENTO" length="7" />
+        </property>
+        <property name="garantedireccion" type="string">
+            <column name="GARANTEDIRECCION" length="100" />
+        </property>
+        <property name="fechavencimientologica" type="string">
+            <column name="FECHAVENCIMIENTOLOGICA" length="2" />
+        </property>
+        <property name="financiamientotasa" type="integer">
+            <column name="FINANCIAMIENTOTASA" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

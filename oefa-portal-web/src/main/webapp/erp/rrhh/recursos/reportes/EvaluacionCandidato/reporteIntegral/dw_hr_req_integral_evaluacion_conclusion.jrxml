@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dw_hr_req_integral_evaluacion_conclusion" language="groovy" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ed4e3de7-7579-4db0-ad73-36f565ae3434">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="par_requerimiento" class="java.lang.String"/>
+	<parameter name="par_compania" class="java.lang.String"/>
+	<parameter name="par_postulante" class="java.lang.String"/>
+	<parameter name="par_plantilla" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+HR_EvaluacionEtapa.Requerimiento ,
+HR_EvaluacionEtapa.Secuencia ,
+HR_EvaluacionEtapa.Secuencia_2 ,
+HR_EvaluacionEtapa.CompanyOwner ,
+HR_EvaluacionEtapa.Postulante ,
+
+HR_EvaluacionEtapa.Estado,
+HR_EvaluacionEtapa.FlagIncorporacion,
+
+(select HR_Evaluacion.Descripcion
+from HR_Evaluacion
+where HR_Evaluacion.Evaluacion = HR_EvalRequerimiento.Evaluacion) as Descripcion_Eval,
+
+(select HR_PuestoEmpresa.Descripcion
+from HR_PuestoEmpresa
+where HR_PuestoEmpresa.CodigoPuesto = HR_EvalRequerimiento_2.CodigoPuesto) as Descripcion_Puesto,
+
+HR_EvaluacionEtapa.UltimoUsuario ,
+HR_EvaluacionEtapa.UltimaFechaModif,
+(select descripcion from hr_puestoempresa where codigopuesto in(select codigocargo from empleadomast where empleado = HR_Requerimiento.empleadosolicitante)) as des_puestosolicitante
+FROM
+        HR_EvaluacionEtapa
+LEFT JOIN HR_EvalRequerimiento ON
+  ( HR_EvaluacionEtapa.Requerimiento    = HR_EvalRequerimiento.Requerimiento ) AND
+  ( HR_EvaluacionEtapa.Secuencia         = HR_EvalRequerimiento.Secuencia ) AND
+  ( HR_EvaluacionEtapa.CompanyOwner    = HR_EvalRequerimiento.CompanyOwner )
+LEFT JOIN HR_EvalRequerimiento_2 ON
+  ( HR_EvaluacionEtapa.Requerimiento    = HR_EvalRequerimiento_2.Requerimiento ) AND
+  ( HR_EvaluacionEtapa.Secuencia         = HR_EvalRequerimiento_2.Secuencia ) AND
+  ( HR_EvaluacionEtapa.Secuencia_2         = HR_EvalRequerimiento_2.Secuencia_2 ) AND
+  ( HR_EvaluacionEtapa.CompanyOwner    = HR_EvalRequerimiento_2.CompanyOwner )
+join HR_Requerimiento on
+ ( HR_Requerimiento.Requerimiento    = HR_EvalRequerimiento.Requerimiento ) AND
+  ( HR_Requerimiento.CompanyOwner    = HR_EvalRequerimiento.CompanyOwner )
+WHERE
+  ( HR_EvaluacionEtapa.CompanyOwner             = $P{par_compania} ) AND
+  ( HR_EvaluacionEtapa.Requerimiento             = $P{par_requerimiento} ) AND
+  ( HR_EvaluacionEtapa.Postulante                 = $P{par_postulante} ) AND
+  ( HR_EvalRequerimiento.PlantillaEvaluacion     = $P{par_plantilla} )]]>
+	</queryString>
+	<field name="REQUERIMIENTO" class="java.lang.String"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="SECUENCIA_2" class="java.math.BigDecimal"/>
+	<field name="COMPANYOWNER" class="java.lang.String"/>
+	<field name="POSTULANTE" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<field name="FLAGINCORPORACION" class="java.lang.String"/>
+	<field name="DESCRIPCION_EVAL" class="java.lang.String"/>
+	<field name="DESCRIPCION_PUESTO" class="java.lang.String"/>
+	<field name="ULTIMOUSUARIO" class="java.lang.String"/>
+	<field name="ULTIMAFECHAMODIF" class="java.sql.Timestamp"/>
+	<field name="DES_PUESTOSOLICITANTE" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="6" y="4" width="61" height="20" uuid="ae5fb658-29cf-41e2-8918-76d677d09aa5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONCLUSIÓN - ]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="385" y="5" width="20" height="18" uuid="12b33306-042d-4a07-be40-0fec729d2fd8"/>
+			</rectangle>
+			<textField>
+				<reportElement x="67" y="4" width="284" height="20" uuid="b8a55a21-53bd-4715-b3dc-ff18327fa2a8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{DESCRIPCION_PUESTO}==null)? $F{DES_PUESTOSOLICITANTE}:$F{DESCRIPCION_PUESTO}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="466" y="5" width="20" height="18" uuid="ff0b0e6c-1933-40a8-8de2-a93167d9e193"/>
+			</rectangle>
+			<textField>
+				<reportElement x="385" y="0" width="20" height="27" uuid="d39fdde5-85ab-4155-9bbb-6837217f6fe2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{FLAGINCORPORACION}=="S")? "X":""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="466" y="0" width="20" height="27" uuid="dcadbbf6-091c-41af-a717-4d4e0778bfad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{FLAGINCORPORACION}=="N")? "X":""]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

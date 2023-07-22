@@ -1,0 +1,149 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form id="whrempleadoselectmultiplesincia">
+		<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+		<p:panel>
+			<h:panelGrid columns="4" width="100%">
+
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Centro de Costos" />
+					<p:selectBooleanCheckbox id="idChkCentroCosto"
+						value="#{cwHrEmpleadoSelectMultipleSincia.dw_ccosto.allcosto}">
+						<p:ajax update=":whrempleadoselectmultiplesincia:idCboCentroCosto" />
+					</p:selectBooleanCheckbox>
+				</h:panelGrid>
+
+				<p:selectOneMenu id="idCboCentroCosto" style="width:220px"
+					value="#{cwHrEmpleadoSelectMultipleSincia.dw_ccosto.ccosto}"
+					var="cd" converter="AcCostcenter"
+					disabled="#{cwHrEmpleadoSelectMultipleSincia.dw_ccosto.allcosto}">
+					<f:selectItem itemLabel="" />
+					<f:selectItems value="#{cwHrEmpleadoSelectMultipleSincia.w_child}"
+						var="a" itemLabel="#{a.localname}" itemValue="#{a}" />
+					<p:column>
+						<p:outputLabel value="#{cd.pk.costcenter}" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="#{cd.localname}" />
+					</p:column>
+				</p:selectOneMenu>
+
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Cargo Estructural" />
+					<p:selectBooleanCheckbox id="idChkCargoEstructural"
+						style="margin-left: 10px;"
+						value="#{cwHrEmpleadoSelectMultipleSincia.dw_ccosto.allcargo}">
+						<p:ajax
+							update=":whrempleadoselectmultiplesincia:idCboCargoEstructural" />
+					</p:selectBooleanCheckbox>
+				</h:panelGrid>
+
+				<p:selectOneMenu id="idCboCargoEstructural" style="width:220px"
+					value="#{cwHrEmpleadoSelectMultipleSincia.dw_ccosto.cargo}"
+					var="ca" converter="HrCargosmast"
+					disabled="#{cwHrEmpleadoSelectMultipleSincia.dw_ccosto.allcargo}">
+					<f:selectItem itemLabel="" />
+					<f:selectItems
+						value="#{cwHrEmpleadoSelectMultipleSincia.dwc_cargo}" var="b"
+						itemLabel="#{b.descripcionlocal}" itemValue="#{b}" />
+					<p:column>
+						<p:outputLabel value="#{ca.pk.cargo}" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="#{ca.descripcionlocal}" />
+					</p:column>
+				</p:selectOneMenu>
+
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Área Operativa" />
+					<p:selectBooleanCheckbox id="idChkAreaOperativa"
+						value="#{cwHrEmpleadoSelectMultipleSincia.dw_ccosto.all_areaoperativa}">
+						<p:ajax
+							update=":whrempleadoselectmultiplesincia:idCboAreaOperativa" />
+					</p:selectBooleanCheckbox>
+				</h:panelGrid>
+
+				<p:selectOneMenu id="idCboAreaOperativa" style="width:220px"
+					value="#{cwHrEmpleadoSelectMultipleSincia.dw_ccosto.areaoperativa}"
+					var="ao" converter="cvtAsArea"
+					disabled="#{cwHrEmpleadoSelectMultipleSincia.dw_ccosto.all_areaoperativa}">
+					<f:selectItem itemLabel="" />
+					<f:selectItems
+						value="#{cwHrEmpleadoSelectMultipleSincia.dwc_areaoperativa}"
+						var="c" itemLabel="#{c.nombre}" itemValue="#{c}" />
+					<p:column>
+						<p:outputLabel value="#{ao.pk.area}" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="#{ao.nombre}" />
+					</p:column>
+				</p:selectOneMenu>
+
+
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="3">
+				<p:selectOneMenu id="idFiltro" style="width:100px"
+					value="#{cwHrEmpleadoSelectMultipleSincia.iobusqueda}">
+					<f:selectItem itemLabel="Persona" itemValue="P" />
+					<f:selectItem itemLabel="Nombre Completo" itemValue="N" />
+				</p:selectOneMenu>
+
+				<p:inputText id="txtFiltro" style="margin-left: 15px; width:210px;"
+					value="#{cwHrEmpleadoSelectMultipleSincia.txtbusqueda}" />
+
+			</h:panelGrid>
+
+		</p:panel>
+
+		<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+			icon="buscar" process="@form"
+			style="float: right; margin-top: 5px; margin-bottom: 5px;"
+			action="#{cwHrEmpleadoSelectMultipleSincia.wf_filtro}"
+			update=":whrempleadoselectmultiplesincia:idEmpleadoSelect" />
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			paginator="true" paginatorPosition="bottom" scrollHeight="240"
+			scrollWidth="780" tableStyle="width:780px;" scrollable="true"
+			lazy="true" value="#{cwHrEmpleadoSelectMultipleSincia.dw_list}"
+			selection="#{cwHrEmpleadoSelectMultipleSincia.registroSeleccionado}"
+			rowKey="#{c.total}" id="idEmpleadoSelect" var="c"
+			rowStyleClass="#{list.estilo}" rows="10"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+			<p:column headerText="Código" width="50">
+				<h:outputText value="#{c.persona}" />
+			</p:column>
+
+			<p:column headerText="Nombre" width="180">
+				<h:outputText value="#{c.nombrecompleto}" />
+			</p:column>
+
+			<p:column headerText="Cargo Estructural" width="200">
+				<h:outputText value="#{c.cargo}" />
+			</p:column>
+
+			<p:column headerText="Selec." selectionMode="multiple" width="20">
+			</p:column>
+
+		</p:dataTable>
+
+		<h:panelGrid columns="2" width="100%">
+			<p:commandButton value="Aceptar" styleClass="botonTextoImagen"
+				style="float: right; margin-left: 500px;" icon="aceptar"
+				action="#{cwHrEmpleadoSelectMultipleSincia.wf_armardata}" />
+			<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+				style="float: right;" icon="cancelar"
+				action="#{cwHrEmpleadoSelectMultipleSincia.cerrar}"
+				onclick="PF('popEmpleadoSelect').hide()" />
+		</h:panelGrid>
+
+	</h:form>
+</ui:composition>

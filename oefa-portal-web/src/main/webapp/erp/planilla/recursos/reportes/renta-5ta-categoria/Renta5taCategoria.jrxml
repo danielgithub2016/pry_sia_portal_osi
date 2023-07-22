@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Renta5taCategoria" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="16146ee3-78e2-4211-906c-a54f70ac735a">
+	<property name="ireport.zoom" value="1.2100000000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="59"/>
+	<parameter name="PERIODO_FISCAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{PERIODO_FISCAL}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIPO_PLANILLA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{TIPO_PLANILLA}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+PR_ImpuestoRenta.Empleado,
+personaant ,
+PR_ImpuestoRenta.EjercicioFiscal,
+PR_ImpuestoRenta.AcumuladoSueldo + nvl(PR_ImpuestoRenta.AcumuladoSueldoInteno,0) AS acumuladosueldo,
+PR_ImpuestoRenta.AcumuladoRetencion AS acumuladoretencion,
+PR_ImpuestoRenta.MesSueldo AS messueldo,
+PR_ImpuestoRenta.MesRetencion AS mesretencion,
+PR_ImpuestoRenta.SueldoActual + nvl(PR_ImpuestoRenta.SueldoActualInterno,0) AS sueldoactual,
+PR_ImpuestoRenta.EstimadoSueldoAnual + nvl(PR_ImpuestoRenta.EstimadoSueldoAnualInterno,0) AS EstimadoSueldoAnual,
+PR_ImpuestoRenta.EstimadoRetencionAnual AS estimadoretencionanual,
+PR_ImpuestoRenta.EstimadoRentaTrabajo AS estimadorentatrabajo,
+PR_ImpuestoRenta.EstimadoImpuestoAnual AS estimadoimpuestoanual,
+PR_ImpuestoRenta.EstimadoImpuestoMensual AS estimadoimpuestomensual,
+PersonaMast.NombreCompleto,
+'        ' AS parPeriodo,
+'        ' AS parCompaniaSocio,
+'          ' AS parUsuario,
+PR_ImpuestoRenta.PeriodosaDescontar,
+round(PR_ImpuestoRenta.AcumuladoRetencionUtilizado,2) AS acumuladoretencionutilizado
+FROM
+PersonaMast
+    INNER JOIN PR_ImpuestoRenta
+        ON (PersonaMast.Persona = PR_ImpuestoRenta.Empleado)
+    INNER JOIN EmpleadoMast
+        ON (    EmpleadoMast.Empleado = PR_ImpuestoRenta.Empleado and
+                EmpleadoMast.CompaniaSocio = PR_ImpuestoRenta.CompaniaSocio )
+    INNER JOIN PR_TipoPlanilla
+        ON (PR_TipoPlanilla.tipoplanilla = EmpleadoMast.tipoplanilla)
+WHERE
+(  PR_ImpuestoRenta.EjercicioFiscal = $P{PERIODO_FISCAL} ) AND
+EmpleadoMast.Estado = 'A' AND PR_TipoPlanilla.tipoplanilla = $P{TIPO_PLANILLA}
+ORDER BY
+NombreCompleto]]>
+	</queryString>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="PERSONAANT" class="java.lang.String"/>
+	<field name="EJERCICIOFISCAL" class="java.lang.String"/>
+	<field name="ACUMULADOSUELDO" class="java.math.BigDecimal"/>
+	<field name="ACUMULADORETENCION" class="java.math.BigDecimal"/>
+	<field name="MESSUELDO" class="java.math.BigDecimal"/>
+	<field name="MESRETENCION" class="java.math.BigDecimal"/>
+	<field name="SUELDOACTUAL" class="java.math.BigDecimal"/>
+	<field name="ESTIMADOSUELDOANUAL" class="java.math.BigDecimal"/>
+	<field name="ESTIMADORETENCIONANUAL" class="java.math.BigDecimal"/>
+	<field name="ESTIMADORENTATRABAJO" class="java.math.BigDecimal"/>
+	<field name="ESTIMADOIMPUESTOANUAL" class="java.math.BigDecimal"/>
+	<field name="ESTIMADOIMPUESTOMENSUAL" class="java.math.BigDecimal"/>
+	<field name="NOMBRECOMPLETO" class="java.lang.String"/>
+	<field name="PARPERIODO" class="java.lang.String"/>
+	<field name="PARCOMPANIASOCIO" class="java.lang.String"/>
+	<field name="PARUSUARIO" class="java.lang.String"/>
+	<field name="PERIODOSADESCONTAR" class="java.math.BigDecimal"/>
+	<field name="ACUMULADORETENCIONUTILIZADO" class="java.math.BigDecimal"/>
+	<variable name="AcumuladoImpuestoTotal" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{ESTIMADOIMPUESTOMENSUAL}]]></variableExpression>
+	</variable>
+	<variable name="AcumuladoSueldoActual" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SUELDOACTUAL}]]></variableExpression>
+	</variable>
+	<variable name="AcumuladoRetencion" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{MESRETENCION}]]></variableExpression>
+	</variable>
+	<variable name="TotalReg" class="java.lang.String" calculation="Count">
+		<variableExpression><![CDATA[$F{EMPLEADO}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="109" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="67" height="20" forecolor="#333333" uuid="cff9bd46-5423-48e0-a0eb-1e65fb98a548"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Periodo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="33" width="356" height="20" forecolor="#333333" uuid="f64e16b1-4b3c-4757-b539-cc25f89afe42"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cálculo del Impuesto a la Quinta Categoría]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="77" width="100" height="20" forecolor="#333333" uuid="9338ce47-c078-4faf-bad1-da8171855c1d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Renta Básica : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="118" y="77" width="100" height="20" forecolor="#333333" uuid="74e0837e-6bef-4936-b936-b4b3df4e554f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ESTIMADORENTATRABAJO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="682" y="0" width="120" height="20" forecolor="#333333" uuid="75ffc0b3-18c6-47fa-b636-4590decd6382"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="682" y="20" width="80" height="20" forecolor="#333333" uuid="4e6f0fa8-dbce-41f0-ae72-e0082fa4cba0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="765" y="20" width="37" height="20" forecolor="#333333" uuid="9c761c37-3a9d-47ec-ad64-53dbe83fd3c2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="67" y="0" width="100" height="20" forecolor="#333333" uuid="f15ff7dd-1905-4e95-9a19-0f029a1cfa58"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PERIODO_FISCAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="72" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="40" width="38" height="20" forecolor="#333333" uuid="52992f69-f32e-4803-8aae-e0e0ad7c1bf3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="51" y="40" width="51" height="20" forecolor="#333333" uuid="ed6fc821-3d1b-4c79-b29f-c27f6a0dbc1a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="40" width="51" height="20" forecolor="#333333" uuid="b30a1851-1ad8-444d-83ac-4564f877384f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Remun.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="296" y="40" width="60" height="20" forecolor="#333333" uuid="2cdd2890-194c-4f1e-b919-7310ea440d64"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Retención]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="40" width="53" height="20" forecolor="#333333" uuid="63262346-bc6f-430c-9a8c-2706a3544e06"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Retención]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="40" width="67" height="20" forecolor="#333333" uuid="935c7c3a-0106-47d7-bcce-5e2c222b1a21"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Remun.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="596" y="40" width="53" height="20" forecolor="#333333" uuid="b36137a1-ba2b-4939-b5f4-f73ba2d65618"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Retención]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="528" y="40" width="58" height="20" forecolor="#333333" uuid="ed6ce579-5c9d-4c13-b0e1-9ff54b749bac"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Remun.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="14" width="126" height="20" forecolor="#333333" uuid="c2d9f858-a366-4a32-9be8-95ff4d4b0fc1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Acumulado]]></text>
+			</staticText>
+			<line>
+				<reportElement x="230" y="39" width="126" height="1" uuid="c463a548-ee6d-4440-ac2e-c6872c025a86"/>
+			</line>
+			<line>
+				<reportElement x="367" y="39" width="141" height="1" uuid="9ab4e412-191c-4413-bd62-064f28bd15f8"/>
+			</line>
+			<staticText>
+				<reportElement x="367" y="14" width="141" height="20" forecolor="#333333" uuid="1dde7bd1-735f-4c91-9753-38ad76e682d7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Periodo Actual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="518" y="14" width="200" height="20" forecolor="#333333" uuid="5522644a-a58b-46ce-ace8-e92aeb913500"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Proyectado Anual]]></text>
+			</staticText>
+			<line>
+				<reportElement x="518" y="39" width="200" height="1" uuid="fef7361e-8178-4a2b-9e36-8c55a67b2efb"/>
+			</line>
+			<staticText>
+				<reportElement x="660" y="40" width="58" height="20" forecolor="#333333" uuid="25ca16b1-d637-46b7-a22e-99667a443564"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Impuesto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="736" y="9" width="54" height="26" forecolor="#333333" uuid="f9c183f3-28b0-4b35-8565-6d81b7418175"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Impuesto Mensual]]></text>
+			</staticText>
+			<line>
+				<reportElement x="736" y="39" width="66" height="1" uuid="435bf1a1-550d-427d-8b69-2b58bd5d8e56"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="51" y="0" width="179" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="2f3874ac-b510-4519-8d98-070f44c2a43a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRECOMPLETO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="242" y="0" width="51" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="25357c84-677c-44e8-a891-8de30bccef16"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ACUMULADOSUELDO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="296" y="0" width="60" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="c2bca793-9c0d-4351-b602-04f5c96e4786"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ACUMULADORETENCIONUTILIZADO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="528" y="0" width="58" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="cd313633-662f-486f-af3e-c526384489f0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ESTIMADOSUELDOANUAL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="596" y="0" width="53" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="0ebe68aa-3971-47b2-94b9-89d475cf70a8"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ESTIMADORETENCIONANUAL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="660" y="0" width="58" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="7625df78-10a9-43fa-919b-7dd20c75e8a1"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ESTIMADOIMPUESTOANUAL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="736" y="0" width="66" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="e3e2485d-19ce-46aa-9998-5c6b3ad3a117"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ESTIMADOIMPUESTOMENSUAL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="377" y="0" width="67" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="f27a3172-1e40-4180-9056-4a7b823fc3ff"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUELDOACTUAL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="454" y="0" width="43" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="30dc5f8b-e63c-4580-a6ff-20be57127759"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MESRETENCION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="38" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="1b135aa7-3936-489b-a703-76d13c24fdb5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PERSONAANT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="63" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="736" y="17" width="66" height="20" forecolor="#333333" uuid="c8729719-4adb-4d23-a5cf-dd2940b8510f"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{AcumuladoImpuestoTotal}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="736" y="16" width="66" height="1" forecolor="#333333" uuid="5c57e0ff-2000-4909-9c36-3ebd81428838"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="377" y="17" width="67" height="1" forecolor="#333333" uuid="5b6d535a-ec3e-4613-9573-52510cee3d9b"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="377" y="18" width="67" height="20" forecolor="#333333" uuid="d9fbb5ef-455b-47d7-83f6-1f645005e8ba"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{AcumuladoSueldoActual}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="454" y="18" width="43" height="20" forecolor="#333333" uuid="8732545d-a865-4918-9c97-0ff02e08d300"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{AcumuladoRetencion}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="444" y="17" width="53" height="1" forecolor="#333333" uuid="c03340b6-457c-4611-862e-013dc8cb090b"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="hrrepus.FSqlGetMaximNivelsalarial">
+    <![CDATA[
+    	SELECT    SalarioMaximo as "salariomaximo",SalarioMinimo as "salariominimo"
+			FROM        SGCORESYS.HR_GradoSalarioMast
+			WHERE    HR_GradoSalarioMast.GradoSalario = :par_grado      
+    ]]>
+	</sql-query>
+	
+	<sql-query name="hrrepus.obtenerMontoLocal">
+    	<![CDATA[
+    		SELECT 
+    			MontoLocal as "montolocal"
+    		FROM 
+    			SGCORESYS.PR_EmpleadoConcepto 
+    		WHERE 
+    			Empleado = :p_empleado AND 
+	            Concepto = :p_concepto AND 
+	            TipoAplicacion = 'P'  
+    	]]>
+	</sql-query>
+	
+	<sql-query name="hrrepus.obtenerMonto">
+    	<![CDATA[
+    		select (Monto /
+			(select Monto
+				FROM SGCORESYS.PR_ValoresMiscelaneos 
+				where codigo = 'PASFA' and periodo = :p_periodo))  as "monto"
+			FROM 
+				SGCORESYS.PR_ValoresMiscelaneos, 
+				SGCORESYS.PR_ConceptoPersonalEmpleado 
+			where 
+				codigo = 'IML' and 
+				periodo = :p_periodo AND 
+				PR_ConceptoPersonalEmpleado.Concepto = 'FAMI' AND 
+				PR_ConceptoPersonalEmpleado.Valor = 1 AND Empleado = :p_empleado
+    	]]>
+	</sql-query>
+
+</hibernate-mapping>

@@ -1,0 +1,191 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>Plataforma de Entrevistas CAS</h2>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="frmReporte_Postulante">
+			<p:panelGrid columns="4" layout="grid"
+				columnClasses="ui-grid-col-3,ui-grid-col-5,ui-grid-col-2,ui-grid-col-2">
+				<p:row>
+					<p:column colspan="3" style="text-align: left;">
+						<p:outputLabel value="Apellidos y Nombres del Candidato" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="5">
+						<p:outputLabel value="#{cHrEntrevistaCAS.nompostulante}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="2" style="text-align: left;">
+						<p:outputLabel value="Puntaje Promedio" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="2">
+						<p:outputLabel value="#{cHrEntrevistaCAS.promedio}" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<p:panelGrid columns="2" layout="grid"
+				columnClasses="ui-grid-col-4,ui-grid-col-8">
+				<p:row>
+					<p:column colspan="4" style="text-align: left;">
+						<p:outputLabel value="Cargo de la Plaza" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="8">
+						<p:outputLabel value="#{cHrEntrevistaCAS.puesto}" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<p:panelGrid columns="4" layout="grid"
+				columnClasses="ui-grid-col-2,ui-grid-col-6,ui-grid-col-2,ui-grid-col-2">
+				<p:row>
+					<p:column colspan="2" style="text-align: left;">
+						<p:outputLabel value="Área" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="6">
+						<p:outputLabel value="#{cHrEntrevistaCAS.unidad}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="2" style="text-align: left;">
+						<p:outputLabel value="Fecha" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="2">
+						<p:outputLabel value="#{cHrEntrevistaCAS.fecha}" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<p:panelGrid columns="6" layout="grid"
+				columnClasses="ui-grid-col-3,ui-grid-col-4,ui-grid-col-1,ui-grid-col-2,ui-grid-col-1,ui-grid-col-1">
+				<p:row>
+					<p:column colspan="3" style="text-align: left;">
+						<p:outputLabel value="Tipo de Proceso" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="4">
+						<p:outputLabel value="CONVOCATORIA CAS" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="1" style="text-align: left;">
+						<p:outputLabel value="N°" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="2">
+						<p:outputLabel value="#{cHrEntrevistaCAS.proceso}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="1" style="text-align: left;">
+						<p:outputLabel value="Hora" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="1">
+						<p:outputLabel value="#{cHrEntrevistaCAS.hora}" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<BR />
+			<BR />
+			<p:dataTable emptyMessage="Este proceso no contiene Puntuación"
+				id="dtAptitudes" value="#{cHrEntrevistaCAS.lstEntrPostEval}"
+				var="rowa">
+				<p:column headerText="CRITERIOS DE EVALUACIÓN" width="160"
+					styleClass="columnatablaIzquierda">
+					<h:outputText value="#{rowa.aptitud}" />
+				</p:column>
+				<c:if test="#{cHrEntrevistaCAS.tipo_sg == '1'}">
+					<p:column
+						headerText="#{cHrEntrevistaCAS.nombre_tipo_sg} - Entrevistador de SG"
+						width="80" styleClass="columnatablaCentro">
+						<h:outputText value="#{rowa.ptipo_sg}" />
+					</p:column>
+				</c:if>
+				<c:if test="#{cHrEntrevistaCAS.tipo_pd == '1'}">
+					<p:column
+						headerText="#{cHrEntrevistaCAS.nombre_tipo_pd} - Entrevistador de PD"
+						width="80" styleClass="columnatablaCentro">
+						<h:outputText value="#{rowa.ptipo_pd}" />
+					</p:column>
+				</c:if>
+				<c:if test="#{cHrEntrevistaCAS.tipo_oa == '1'}">
+					<p:column
+						headerText="#{cHrEntrevistaCAS.nombre_tipo_oa} - Entrevistador de OA"
+						width="80" styleClass="columnatablaCentro">
+						<h:outputText value="#{rowa.ptipo_oa}" />
+					</p:column>
+				</c:if>
+				<c:if test="#{cHrEntrevistaCAS.tipo_au == '1'}">
+					<p:column
+						headerText="#{cHrEntrevistaCAS.nombre_tipo_au} Entrevistador de AU"
+						width="80" styleClass="columnatablaCentro">
+						<h:outputText value="#{rowa.ptipo_au}" />
+					</p:column>
+				</c:if>
+				<c:if test="#{cHrEntrevistaCAS.tipo_rh == '1'}">
+					<p:column
+						headerText="#{cHrEntrevistaCAS.nombre_tipo_rh} - Entrevistador de RRHH"
+						width="80" styleClass="columnatablaCentro">
+						<h:outputText value="#{rowa.ptipo_rh}" />
+					</p:column>
+				</c:if>
+			</p:dataTable>
+			<p:dataTable emptyMessage="Este proceso no contiene Puntuación"
+				id="dtSumAptitudes" rows="1"
+				value="#{cHrEntrevistaCAS.lstEntrPostEval}" var="rowa">
+				<p:column width="160" styleClass="columnatablaIzquierda">
+					<h:outputText value="Totales" />
+				</p:column>
+				<c:if test="#{cHrEntrevistaCAS.tipo_sg eq 1}">
+					<p:column width="80" styleClass="columnatablaCentro">
+						<h:outputText value="#{cHrEntrevistaCAS.sumtipo_sg}" />
+					</p:column>
+				</c:if>
+				<c:if test="#{cHrEntrevistaCAS.tipo_pd eq 1}">
+					<p:column width="80" styleClass="columnatablaCentro">
+						<h:outputText value="#{cHrEntrevistaCAS.sumtipo_pd}" />
+					</p:column>
+				</c:if>
+				<c:if test="#{cHrEntrevistaCAS.tipo_oa eq 1}">
+					<p:column width="80" styleClass="columnatablaCentro">
+						<h:outputText value="#{cHrEntrevistaCAS.sumtipo_oa}" />
+					</p:column>
+				</c:if>
+				<c:if test="#{cHrEntrevistaCAS.tipo_au eq 1}">
+					<p:column width="80" styleClass="columnatablaCentro">
+						<h:outputText value="#{cHrEntrevistaCAS.sumtipo_au}" />
+					</p:column>
+				</c:if>
+				<c:if test="#{cHrEntrevistaCAS.tipo_rh eq 1}">
+					<p:column width="80" styleClass="columnatablaCentro">
+						<h:outputText value="#{cHrEntrevistaCAS.sumtipo_rh}" />
+					</p:column>
+				</c:if>
+			</p:dataTable>
+			<BR />
+			<div class="ui-grid-col-3">
+				<p:commandButton value="Ir a Lista de Postulantes" update="@form"
+					styleClass="botonTextoImagenGrande" id="regresar"
+					action="#{cHrEntrevistaCAS.ingresar}" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.presupuesto.dominio.BuComponentemeta" table="SGCORESYS.BU_COMPONENTEMETA">
+        <composite-id name="pk" class="net.royal.erp.presupuesto.dominio.BuComponentemetaPk">
+            <key-property name="companiasocio" type="string">
+                <column name="COMPANIASOCIO" length="8" />
+            </key-property>
+            <key-property name="ano" type="string">
+                <column name="ANO" length="4" />
+            </key-property>
+            <key-property name="version" type="integer">
+                <column name="VERSION" length="22" />
+            </key-property>
+            <key-property name="componente" type="string">
+                <column name="COMPONENTE" length="50" />
+            </key-property>
+            <key-property name="meta" type="integer">
+                <column name="META" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="importemeta" type="integer">
+            <column name="IMPORTEMETA" length="22" />
+        </property>
+        <property name="unidadmedida" type="string">
+            <column name="UNIDADMEDIDA" length="6" />
+        </property>
+        <property name="finalidad" type="integer">
+            <column name="FINALIDAD" length="22" />
+        </property>
+        <property name="ubigeo" type="string">
+            <column name="UBIGEO" length="6" />
+        </property>
+        <property name="mes01" type="integer">
+            <column name="MES01" length="22" />
+        </property>
+        <property name="mes02" type="integer">
+            <column name="MES02" length="22" />
+        </property>
+        <property name="mes03" type="integer">
+            <column name="MES03" length="22" />
+        </property>
+        <property name="mes04" type="integer">
+            <column name="MES04" length="22" />
+        </property>
+        <property name="mes05" type="integer">
+            <column name="MES05" length="22" />
+        </property>
+        <property name="mes06" type="integer">
+            <column name="MES06" length="22" />
+        </property>
+        <property name="mes07" type="integer">
+            <column name="MES07" length="22" />
+        </property>
+        <property name="mes08" type="integer">
+            <column name="MES08" length="22" />
+        </property>
+        <property name="mes09" type="integer">
+            <column name="MES09" length="22" />
+        </property>
+        <property name="mes10" type="integer">
+            <column name="MES10" length="22" />
+        </property>
+        <property name="mes11" type="integer">
+            <column name="MES11" length="22" />
+        </property>
+        <property name="mes12" type="integer">
+            <column name="MES12" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="2" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="500" />
+        </property>
+    </class>
+</hibernate-mapping>

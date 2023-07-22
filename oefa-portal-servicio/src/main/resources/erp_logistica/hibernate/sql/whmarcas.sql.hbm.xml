@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : logistica.WhMarcas
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="whmarcas.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+    </sql-query>
+    
+    <sql-query name="whmarcas.DwMaWhMarcasSelect">
+    	SELECT 
+			WH_Marcas.MarcaCodigo as "marcacodigo",   
+			WH_Marcas.DescripcionLocal as "descripcionlocal"  
+		FROM 
+			SGCORESYS.WH_Marcas  
+		WHERE 
+			WH_Marcas.Estado = 'A'    
+    </sql-query>
+    
+</hibernate-mapping>

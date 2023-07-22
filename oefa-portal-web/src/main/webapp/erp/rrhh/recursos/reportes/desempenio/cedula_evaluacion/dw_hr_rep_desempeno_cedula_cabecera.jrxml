@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dw_hr_rep_desempeno_cedula_cabecera" language="groovy" pageWidth="550" pageHeight="120" columnWidth="550" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="01d14f5e-140c-4f85-8f71-614128e9f280">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="196"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PAR_COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_SECUENCIA" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_EVALUADO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PAR_EVALUADOR" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+(SELECT AS_AREA.NOMBRE FROM SGCORESYS.AS_AREA  JOIN SGCORESYS.EMPLEADOMAST  ON AS_AREA.AREA = EMPLEADOMAST.DPTOAREAOPERATIVA WHERE EMPLEADOMAST.EMPLEADO = A.EMPLEADO) AS AREAOPE_NOMBRE_1,
+(SELECT * FROM (SELECT AS_AREA.NOMBRE FROM SGCORESYS.AS_AREA JOIN SGCORESYS.HR_SUELDOS HRSUEL  ON AS_AREA.AREA = HRSUEL.DPTOAREAOPERATIVAANT WHERE HRSUEL.EMPLEADO = $P{PAR_EVALUADO}
+AND ROWNUM = 1 AND HRSUEL.DPTOAREAOPERATIVA <> HRSUEL.DPTOAREAOPERATIVAANT  ORDER BY HRSUEL.SECUENCIA DESC) WHERE ROWNUM = 1 ) AS AREAOPE_NOMBRE_2,
+(SELECT * FROM (SELECT AS_AREA.NOMBRE  FROM SGCORESYS.AS_AREA  JOIN SGCORESYS.HR_SUELDOS  ON AS_AREA.AREA = HR_SUELDOS.DPTOAREAOPERATIVAANT WHERE HR_SUELDOS.EMPLEADO = $P{PAR_EVALUADO}
+         ORDER BY HR_SUELDOS.SECUENCIA DESC) WHERE ROWNUM = 1) AS AREAOPE_NOMBRE_3,
+(select PersonaMast.NombreCompleto from SGCORESYS.PersonaMast
+where PersonaMast.Persona =  A.EMPLEADOEVALUADOR) AS EVALUADOR_NOMBRE,
+(select PersonaMast.NombreCompleto from SGCORESYS.PersonaMast
+where PersonaMast.Persona =  A.EMPLEADO) AS EVALUADO_NOMBRE,
+B.FECHAEVALUACION AS FECHA_EVALUACION, A.EMPLEADOEVALUADOR AS EVALUADOR, A.EMPLEADO AS EVALUADO, UPPER(E.DESCRIPCION) AS PUESTO_EVALUADOR, UPPER(F.DESCRIPCION) AS PUESTO_EVALUADO,
+H.DESCRIPCIONLOCAL AS CARGO_ESTRUCTURAL,
+CASE D.TIPOTRABAJADOR WHEN '01' THEN F.CODIGOCAP WHEN '02' THEN CAST(MAX(G.NUMEROSECUENCIA) AS VARCHAR2(20)) END AS NUM_SERVICIO,
+CASE WHEN LENGTH(D.FECHAREINGRESO) > 0 THEN D.FECHAREINGRESO ELSE D.FECHAINGRESO END AS FECHAINGRESO
+FROM SGCORESYS.HR_DETALLEEVALUACION A
+JOIN SGCORESYS.HR_EVALUACIONEMPLEADO B ON  A.COMPANYOWNER = B.COMPANYOWNER AND A.SECUENCIAEVAL = B.SECUENCIAEVAL AND A.EMPLEADO = B.EMPLEADO AND A.EMPLEADOEVALUADOR = B.EMPLEADOEVALUADOR
+JOIN SGCORESYS.EMPLEADOMAST C ON A.EMPLEADOEVALUADOR = C.EMPLEADO
+JOIN SGCORESYS.EMPLEADOMAST D ON A.EMPLEADO = D.EMPLEADO
+LEFT JOIN SGCORESYS.HR_PUESTOEMPRESA E ON C.CODIGOCARGO = E.CODIGOPUESTO
+LEFT JOIN SGCORESYS.HR_PUESTOEMPRESA F ON D.CODIGOCARGO = F.CODIGOPUESTO
+LEFT JOIN SGCORESYS.HR_CONTRATOS G ON G.EMPLEADO = D.EMPLEADO AND G.COMPANIASOCIO = D.COMPANIASOCIO
+LEFT JOIN SGCORESYS.HR_CARGOSMAST H ON D.CARGO = H.CARGO
+WHERE
+A.COMPANYOWNER =$P{PAR_COMPANIA}
+AND A.SECUENCIAEVAL =$P{PAR_SECUENCIA}
+AND A.EMPLEADO = $P{PAR_EVALUADO}
+AND A.EMPLEADOEVALUADOR = $P{PAR_EVALUADOR}
+GROUP BY B.FECHAEVALUACION, A.EMPLEADOEVALUADOR, A.EMPLEADO, E.DESCRIPCION, F.DESCRIPCION, H.DESCRIPCIONLOCAL, D.TIPOTRABAJADOR, F.CODIGOCAP, D.FECHAINGRESO, D.FECHAREINGRESO]]>
+	</queryString>
+	<field name="AREAOPE_NOMBRE_1" class="java.lang.String"/>
+	<field name="AREAOPE_NOMBRE_2" class="java.lang.String"/>
+	<field name="AREAOPE_NOMBRE_3" class="java.lang.String"/>
+	<field name="EVALUADOR_NOMBRE" class="java.lang.String"/>
+	<field name="EVALUADO_NOMBRE" class="java.lang.String"/>
+	<field name="FECHA_EVALUACION" class="java.sql.Timestamp"/>
+	<field name="EVALUADOR" class="java.math.BigDecimal"/>
+	<field name="EVALUADO" class="java.math.BigDecimal"/>
+	<field name="PUESTO_EVALUADOR" class="java.lang.String"/>
+	<field name="PUESTO_EVALUADO" class="java.lang.String"/>
+	<field name="CARGO_ESTRUCTURAL" class="java.lang.String"/>
+	<field name="NUM_SERVICIO" class="java.lang.String"/>
+	<field name="FECHAINGRESO" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="120" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="550" height="15" backcolor="#CCCCCC" uuid="1652c477-c21a-4a10-a299-a2372290c189"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="550" height="15" uuid="4f29de7b-130a-4951-8f62-ed9a2cfe999a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SERVIDOR QUE EVALÚA]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="15" width="90" height="12" uuid="6906a90a-34fe-4ffb-a29a-f1c4a38ece63"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="15" width="87" height="12" uuid="893d5261-8d90-48cb-a717-54242b86fc5b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE :]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="27" width="90" height="12" uuid="6ea7426c-31cc-4f89-bb12-247a98110b3a"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="27" width="87" height="12" uuid="3d5ba3ea-b0b4-4473-bb9b-0de6d6589206"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PUESTO :]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="39" width="90" height="12" uuid="e46a460d-352d-4666-a4b1-19955f4f409f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="39" width="87" height="12" uuid="963be78b-376b-4c0d-b039-2ba71455ff61"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ÁREA OPERATIVA :]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="90" y="15" width="460" height="12" uuid="78c6c200-e7e4-4b48-8dcf-b9600189d3c6"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="90" y="27" width="460" height="12" uuid="ff576065-0e3a-4a77-ad79-4b326964c8b4"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="90" y="39" width="460" height="12" uuid="daf0222f-024f-49a4-86be-6806baf71b75"/>
+			</rectangle>
+			<textField>
+				<reportElement x="97" y="15" width="453" height="12" uuid="7ddc0da2-d6bf-4647-aa6e-dc18fef5a6d6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EVALUADOR_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="97" y="27" width="453" height="12" uuid="1dacf325-d8a2-47bb-8096-ad011b70f36f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PUESTO_EVALUADOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="97" y="39" width="453" height="12" uuid="7b9307e2-c3a8-4a37-80aa-397e7304ffc9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AREAOPE_NOMBRE_1}!=null?$F{AREAOPE_NOMBRE_1}:$F{AREAOPE_NOMBRE_2}!=null?$F{AREAOPE_NOMBRE_2}:$F{AREAOPE_NOMBRE_3}!=null?$F{AREAOPE_NOMBRE_3}:""]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="58" width="550" height="15" backcolor="#CCCCCC" uuid="9819a412-e0cb-4356-b7a0-408a8ee084ff"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="58" width="550" height="15" uuid="6d59a968-6e2c-4e89-981c-757ed9edb57f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SERVIDOR EVALUADO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="73" width="90" height="12" uuid="1428ba23-cd33-42cc-bf4c-bf12232eaeb9"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="73" width="87" height="12" uuid="93eac919-b750-4597-808c-4078fb7be229"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE :]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="85" width="90" height="12" uuid="22fedd72-05de-48de-9865-d76585d16456"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="85" width="87" height="12" uuid="b01542b0-dc67-4168-98b0-e6d4fe287140"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PUESTO :]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="97" width="90" height="12" uuid="75205a64-0436-4205-af91-0716a13523df"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="97" width="87" height="12" uuid="33e37565-6a97-4538-8cac-8bfed7405715"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NUM. SERVICIO :]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="90" y="73" width="460" height="12" uuid="c1d73f07-fd22-4bec-ba06-e15f34833af7"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="90" y="85" width="460" height="12" uuid="6dbb1ad2-3b7f-4b45-9733-0c1bb1efdef0"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="90" y="97" width="137" height="12" uuid="3c2d866d-42b8-4aae-a2fb-0a3ad0f05fa0"/>
+			</rectangle>
+			<textField>
+				<reportElement x="97" y="73" width="453" height="12" uuid="32d0fe90-785a-42ef-9902-87486e7796f3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EVALUADO_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="97" y="85" width="453" height="12" uuid="d9223470-b2a5-42a0-905f-58e83bf84170"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PUESTO_EVALUADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="97" y="97" width="130" height="12" uuid="67d902c8-4c6b-4e5a-b989-2af4b2031242"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NUM_SERVICIO}!=null?$F{NUM_SERVICIO}:""]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="227" y="97" width="106" height="12" uuid="0d36e79c-e4de-4738-bd0c-9b8b6714e52d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="230" y="97" width="103" height="12" uuid="0414eb3d-4506-421a-af84-9f8b35f98fae"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA DE INGRESO :]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="333" y="97" width="100" height="12" uuid="c492e9cd-8368-41db-9ca3-67ae13fc9703"/>
+			</rectangle>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="333" y="97" width="100" height="12" uuid="b41814be-5ef3-49fb-aa3e-11eb9f476e61"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHAINGRESO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

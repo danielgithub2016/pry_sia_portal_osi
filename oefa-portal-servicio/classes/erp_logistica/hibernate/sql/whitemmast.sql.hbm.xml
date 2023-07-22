@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : logistica.WhItemmast -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- USAR   whitemmast.xxxxxxxxxxx  -->
+	
+	<!-- syfinan.dw_ma_wh_item_select_alternativo -->
+	<sql-query name="whitemmast.DwMaWhItemSelectAlternativo">
+	SELECT 
+		WH_ItemAlternativo.Secuencia as "secuencia",   
+		WH_ItemAlternativo.ItemAlternativo as "itemalternativo",   
+		WH_ItemMast.DescripcionLocal as "descripcionlocal" 
+		FROM 
+		sgcoresys.WH_ItemAlternativo
+			INNER JOIN sgcoresys.WH_ItemMast  
+				ON (WH_ItemAlternativo.ItemAlternativo = WH_ItemMast.Item)
+		WHERE 
+		( WH_ItemAlternativo.Item = :item ) 
+	</sql-query>
+	
+	<!-- syfinan.dw_wh_item_stock_item -->
+	<sql-query name="whitemmast.DwWhItemStockItem">
+	SELECT 
+		WH_ItemMast.Item as "item",   
+		WH_ItemMast.Linea as "linea",   
+		WH_ItemMast.Familia as "familia",   
+		WH_ItemMast.SubFamilia as "subfamilia",   
+		WH_ItemMast.SubFamiliaInferior as "subfamiliainferior",   
+		WH_ItemMast.DescripcionLocal as "descripcionlocal",   
+		WH_ItemMast.DescripcionIngles as "descripcioningles",   
+		WH_ItemMast.DescripcionCompleta as "descripcioncompleta",   
+		WH_ItemMast.MarcaCodigo as "marcacodigo",   
+		WH_ItemMast.CodigoInterno as "codigointerno",   
+		WH_ItemMast.UnidadCodigo as "unidadcodigo",   
+		WH_ItemMast.Modelo as "modelo",   
+		WH_ItemMast.ItemTipo as "itemtipo" 
+		FROM 
+		sgcoresys.WH_ItemMast  
+		WHERE 
+		WH_ItemMast.Item = :item
+	</sql-query>
+	
+	<!-- syfinan.dw_ma_wh_item_select_list_stock -->
+	<sql-query name="whitemmast.DwMaWhItemSelectListStock">
+		SELECT 
+			row_number() OVER (ORDER BY WH_ItemMast.Item) as "secuencia",
+			WH_ItemMast.DescripcionLocal as "descripcionlocal",   
+			WH_ItemMast.Item as "item",   
+			WH_ItemMast.UnidadCodigo as "unidadcodigo", 
+			UNIDADESMAST.DESCRIPCIONCORTA  as "unidaddescripcion",
+			WH_ItemMast.CodigoInterno as "codigointerno",   
+			WH_ItemAlmacenLote.Condicion as "condicion",   
+			sum(WH_ItemAlmacenLote.StockActual) as "stockactual",   
+			WH_ItemMast.ItemTipo as "itemtipo",   
+			WH_ItemMast.ItemProcedencia as "itemprocedencia",
+			WH_ItemProcedencia.DescripcionLocal as "itemprocedencianombre",   
+			WH_ItemMast.Linea as "linea",   
+			WH_ItemMast.Familia as "familia",   
+			WH_ItemMast.SubFamilia as "subfamilia",   
+			WH_ItemMast.Dimensiones as "dimensiones",   
+			WH_ItemMast.NumeroDeParte  as "numerodeparte" ,
+			WH_ItemTipo.DescripcionLocal as "descripcionlocaltipo"
+		  FROM 
+            SGCORESYS.WH_ItemMast
+            INNER JOIN SGCORESYS.WH_ItemAlmacenLote  ON 
+            (WH_ItemMast.Item = WH_ItemAlmacenLote.Item)
+            LEFT JOIN SGCORESYS.WH_ItemTipo ON
+            (WH_ItemMast.ItemTipo = WH_ItemTipo.ItemTipo)
+            LEFT JOIN SGCORESYS.WH_ItemProcedencia ON
+            (WH_ItemProcedencia.ItemProcedencia = WH_ItemMast.ItemProcedencia 
+            AND WH_ItemProcedencia.Estado = 'A' )
+            LEFT JOIN SGCORESYS.UnidadesMast ON
+            (UnidadesMast.UNIDADCODIGO = WH_ItemMast.UnidadCodigo 
+            AND UnidadesMast.Estado = 'A')
+	</sql-query>
+	
+	<!-- syfinan.dw_ma_wh_item_select_list -->
+	<sql-query name="whitemmast.DwMaWhItemSelectList">
+		SELECT 
+			row_number() OVER (ORDER BY WH_ItemMast.Item) as "secuencia",
+			WH_ItemMast.DescripcionLocal as "descripcionlocal",   
+			WH_ItemMast.Item as "item",   
+			WH_ItemMast.UnidadCodigo as "unidadcodigo",   
+			WH_ItemMast.CodigoInterno as "codigointerno",   
+			WH_ItemMast.Dimensiones as "dimensiones",   
+			WH_ItemMast.Linea as "linea",   
+			WH_ItemMast.Familia as "familia",   
+			WH_ItemMast.SubFamilia as "subfamilia",   
+			WH_ItemMast.MarcaCodigo as "marcacodigo",
+			WH_ItemTipo.DescripcionLocal as "descripcionlocaltipo" 
+		FROM 
+			SGCORESYS.WH_ItemMast  
+			LEFT JOIN SGCORESYS.WH_ItemTipo ON
+			(WH_ItemMast.ItemTipo = WH_ItemTipo.ItemTipo)
+	</sql-query>
+	
+	<!-- syfinan.dw_ma_wh_item_select_alternativo Contar-->
+	<sql-query name="whitemmast.DwMaWhItemSelectAlternativoConteo">
+		SELECT 
+			count(1)
+			FROM 
+			sgcoresys.WH_ItemAlternativo
+				INNER JOIN sgcoresys.WH_ItemMast  
+					ON (WH_ItemAlternativo.ItemAlternativo = WH_ItemMast.Item)
+			WHERE 
+			( WH_ItemAlternativo.Item = :item ) 
+	</sql-query>
+	
+    <sql-query name="whitemmast.obtenerUnidadCodigo">
+		 SELECT 
+		 	WH_ItemMast.UnidadCodigo as "unidadcodigo"
+    	FROM 
+    		SGCORESYS.WH_ItemMast  
+   		WHERE 
+   			WH_ItemMast.Item = :p_item
+    </sql-query>
+    
+     <sql-query name="whitemmast.obtenerItemTipo">
+		 SELECT 
+		 	WH_ItemMast.ItemTipo as "itemtipo"
+		 FROM 
+		 	SGCORESYS.WH_ItemMast  
+		 WHERE 
+		 	WH_ItemMast.Item = :p_item   
+    </sql-query>
+    
+    <sql-query name="whitemmast.fSqlValidateItem">
+		SELECT WH_ItemMast.Item as "item"
+		FROM sgcoresys.WH_ItemMast
+		WHERE WH_ItemMast.Item = :p_item
+
+	</sql-query>
+    
+    <!-- syfinan.dw_ma_itemmast_retrieve -->
+	<sql-query name="whitemmast.DwMaItemmastRetrieve">
+	SELECT
+		WH_ITEMMAST.ITEM as "item",
+		WH_ITEMMAST.ITEMTIPO as "itemtipo",
+		WH_ITEMMAST.MARCACODIGO as "marcacodigo",
+		WH_ITEMMAST.LINEA as "linea",
+		WH_ITEMMAST.FAMILIA as "familia",
+		WH_ITEMMAST.SUBFAMILIA as "subfamilia",
+		WH_ITEMMAST.DESCRIPCIONLOCAL as "descripcionlocal",
+		WH_ITEMMAST.DESCRIPCIONINGLES as "descripcioningles",
+		WH_ITEMMAST.DESCRIPCIONCOMPLETA as "descripcioncompleta",
+		WH_ITEMMAST.NUMERODEPARTE as "numerodeparte",
+		WH_ITEMMAST.CODIGOINTERNO as "codigointerno",
+		WH_ITEMMAST.UNIDADCODIGO as "unidadcodigo",
+		WH_ITEMMAST.UNIDADCODIGODOBLE as "unidadcodigodoble",
+		WH_ITEMMAST.PARTIDAARANCELARIA as "partidaarancelaria",
+		WH_ITEMMAST.MODELO as "modelo",
+		WH_ITEMMAST.COLOR as "color",
+		WH_ITEMMAST.CODIGOBARRAS as "codigobarras",
+		WH_ITEMMAST.CODIGOBARRASFABRICANTE as "codigobarrasfabricante",
+		WH_ITEMMAST.MONEDACODIGO as "monedacodigo",
+		WH_ITEMMAST.PRECIOCOSTO as "preciocosto",
+		WH_ITEMMAST.PRECIOUNITARIOLOCAL as "preciounitariolocal",
+		WH_ITEMMAST.PRECIOUNITARIODOLARES as "preciounitariodolares",
+		WH_ITEMMAST.ITEMPRECIOFLAG as "itemprecioflag",
+		WH_ITEMMAST.ITEMPRECIOCODIGO as "itempreciocodigo",
+		WH_ITEMMAST.DISPONIBLEVENTAFLAG as "disponibleventaflag",
+		WH_ITEMMAST.ITEMPROCEDENCIA as "itemprocedencia",
+		WH_ITEMMAST.MANEJOXLOTEFLAG as "manejoxloteflag",
+		WH_ITEMMAST.MANEJOXSERIEFLAG as "manejoxserieflag",
+		WH_ITEMMAST.MANEJOXKITFLAG as "manejoxkitflag",
+		WH_ITEMMAST.AFECTOIMPUESTOVENTASFLAG as "afectoimpuestoventasflag",
+		WH_ITEMMAST.AFECTOIMPUESTO2FLAG as "afectoimpuesto2flag",
+		WH_ITEMMAST.REQUISICIONAMIENTOAUTOMATICOFL as "requisicionamientoautomaticofl",
+		WH_ITEMMAST.DISPONIBLETRANSFERENCIAFLAG as
+		"disponibletransferenciaflag",
+		WH_ITEMMAST.DISPONIBLECONSUMOFLAG as "disponibleconsumoflag",
+		WH_ITEMMAST.FORMULARIOFLAG as "formularioflag",
+		WH_ITEMMAST.FORMULARIONROJUEGOS as "formularionrojuegos",
+		WH_ITEMMAST.MANEJOXUNIDADFLAG as "manejoxunidadflag",
+		WH_ITEMMAST.ISOAPLICABLEFLAG as "isoaplicableflag",
+		WH_ITEMMAST.CANTIDADDOBLEFLAG as "cantidaddobleflag",
+		WH_ITEMMAST.ISONORMAINTERNA as "isonormainterna",
+		WH_ITEMMAST.UNIDADREPLICACION as "unidadreplicacion",
+		WH_ITEMMAST.IMAGEFILE as "imagefile",
+		WH_ITEMMAST.MAPAFILE as "mapafile",
+		WH_ITEMMAST.CUENTAINVENTARIO as "cuentainventario",
+		WH_ITEMMAST.CUENTAGASTO as "cuentagasto",
+		WH_ITEMMAST.CUENTAINVERSION as "cuentainversion",
+		WH_ITEMMAST.CUENTASERVICIOTECNICO as "cuentaserviciotecnico",
+		WH_ITEMMAST.CUENTASALIDATERCEROS as "cuentasalidaterceros",
+		WH_ITEMMAST.ELEMENTOGASTO as "elementogasto",
+		WH_ITEMMAST.ELEMENTOINVERSION as "elementoinversion",
+		WH_ITEMMAST.PARTIDAPRESUPUESTAL as "partidapresupuestal",
+		WH_ITEMMAST.FLUJODECAJA as "flujodecaja",
+		WH_ITEMMAST.LOTEDECOMPRA as "lotedecompra",
+		WH_ITEMMAST.LOTEDEDESPACHO as "lotededespacho",
+		WH_ITEMMAST.PERIODICIDADCOMPRAMESES as "periodicidadcomprameses",
+		WH_ITEMMAST.ESPECIFICACIONTECNICA as "especificaciontecnica",
+		WH_ITEMMAST.DIMENSIONES as "dimensiones",
+		WH_ITEMMAST.FACTOREQUIVALENCIACOMERCIAL as "factorequivalenciacomercial",
+		WH_ITEMMAST.ABCCODIGO as "abccodigo",
+		WH_ITEMMAST.INVENTARIOTOLERANCIA as "inventariotolerancia",
+		WH_ITEMMAST.ESTADO as "estado",
+		WH_ITEMMAST.ULTIMAFECHAMODIF as "ultimafechamodif",
+		WH_ITEMMAST.ULTIMOUSUARIO as "ultimousuario",
+		WH_CLASEFAMILIA.DESCRIPCIONLOCAL as "descripcionlocalclasefamilia",
+		WH_CLASEFAMILIA.ELEMENTOGASTO as "elementogastoclasefamilia",
+		WH_CLASEFAMILIA.MEDICINAGRUPOAFLAG as "medicinagrupoaflag",
+		WH_CLASEFAMILIA.MEDICINAGRUPOHFLAG as "medicinagrupohflag",
+		WH_CLASEFAMILIA.MEDICINAGRUPOEFLAG as "medicinagrupoeflag",
+		WH_CLASEFAMILIA.MEDICINAGRUPORFLAG as "medicinagruporflag",
+		WH_ITEMMAST.UNIDADCOMPRA as "unidadcompra",
+		WH_ITEMMAST.CLASIFICACIONCOMERCIAL as "clasificacioncomercial",
+		WH_ITEMMAST.REFERENCIAFISCAL02 as "referenciafiscal02",
+		WH_ITEMMAST.LOTEDECOMPRAKG as "lotedecomprakg",
+		WH_ITEMMAST.ACTIVOFIJOFLAG as "activofijoflag",
+		WH_ITEMMAST.REFERENCIAFISCALINGRESO02 as "referenciafiscalingreso02"
+	FROM SGCORESYS.WH_ITEMMAST,
+		SGCORESYS.WH_CLASEFAMILIA
+		WHERE ( WH_ItemMast.linea = WH_ClaseFamilia.linea (+)) and
+		( WH_ItemMast.familia = WH_ClaseFamilia.familia (+)) and
+		( ( WH_ItemMast.Item = :p_item ) )    
+	</sql-query>
+    
+</hibernate-mapping>

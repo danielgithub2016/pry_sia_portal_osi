@@ -1,0 +1,1103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : asistencia.AsAccesosdiarios -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="asautorizacion.obtenercantidad">
+		<![CDATA[
+			SELECT count(*) 		
+            from sgcoresys.as_autorizacion a
+            inner join sgcoresys.as_conceptoacceso c
+            on a.conceptoacceso = c.conceptoacceso
+            where 
+                    a.empleado = :p_empleado  
+                    AND (((   to_number(to_char(fecha,'YYYY')) * 10000000.00 * 1000.00 +    to_number(to_char(fecha,'MM')) * 10000000.00 * 10 +    to_number(to_char(fecha,'DD')) * 1000000) >= :p_ll_d_1  and  
+                             (    to_number(to_char(fecha,'YYYY')) * 10000000.00 * 1000.00 +    to_number(to_char(fecha,'MM')) * 10000000.00 * 10 +    to_number(to_char(fecha,'DD')) * 1000000) <= :p_ll_h_1)  
+                    or    (( to_number(to_char(fechafin,'YYYY')) * 10000000.00 * 1000.00 + to_number(to_char(fechafin,'MM')) * 10000000.00 * 10 + to_number(to_char(fechafin,'DD')) * 1000000) >= :p_ll_d_1 and
+                             (    to_number(to_char(fecha,'YYYY')) * 10000000.00 * 1000.00 +    to_number(to_char(fecha,'MM')) * 10000000.00 * 10 +     to_number(to_char(fecha,'DD')) * 1000000     ) <= :p_ll_h_1 ))         
+                    AND ((( to_number(to_char(desde,'HH24')) * 10000 + to_number(to_char(desde,'MI')) * 100.00 + to_number(to_char(desde,'SS'))) > :p_ll_d_2  and 
+                             ( to_number(to_char(desde,'HH24')) * 10000 + to_number(to_char(desde,'MI')) * 100.00 + to_number(to_char(desde,'SS')) ) < :p_ll_h_2) 
+                     or    (( to_number(to_char(hasta,'HH24')) * 10000 + to_number(to_char(hasta,'MI')) * 100.00 + to_number(to_char(hasta,'SS'))     ) > :p_ll_d_2 and
+                              ( to_number(to_char(desde,'HH24')) * 10000 + to_number(to_char(desde,'MI')) * 100.00 + to_number(to_char(desde,'SS')) ) < :p_ll_h_2 ))    
+                    AND (a.CONCEPTOACCESO = :p_conceptoacceso or  
+                            a.CONCEPTOACCESO = :p_similares_2 or a.CONCEPTOACCESO = :p_similares_3 or a.CONCEPTOACCESO = :p_similares_4 or a.CONCEPTOACCESO = :p_similares_5 or
+                            a.CONCEPTOACCESO = :p_similares_6 or a.CONCEPTOACCESO = :p_similares_7 or a.CONCEPTOACCESO = :p_similares_8  or :p_similares_2_all = 'S' )
+                    AND (a.CategoriaAutorizacion = :p_categoriaautorizacion or a.CategoriaAutorizacion = :p_similares  )     
+                    AND a.ESTADO in ('A', 'S')
+                    AND c.flagsiged <>'S'
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.obtenercantidadedicion">
+		<![CDATA[
+			SELECT count(*) 		
+            from sgcoresys.as_autorizacion
+            where 
+                    empleado = :p_empleado  
+                    AND (((   to_number(to_char(fecha,'YYYY')) * 10000000.00 * 1000.00 +    to_number(to_char(fecha,'MM')) * 10000000.00 * 10 +    to_number(to_char(fecha,'DD')) * 1000000) >= :p_ll_d_1  and  
+                             (    to_number(to_char(fecha,'YYYY')) * 10000000.00 * 1000.00 +    to_number(to_char(fecha,'MM')) * 10000000.00 * 10 +    to_number(to_char(fecha,'DD')) * 1000000) <= :p_ll_h_1)  
+                    or    (( to_number(to_char(fechafin,'YYYY')) * 10000000.00 * 1000.00 + to_number(to_char(fechafin,'MM')) * 10000000.00 * 10 + to_number(to_char(fechafin,'DD')) * 1000000) >= :p_ll_d_1 and
+                             (    to_number(to_char(fecha,'YYYY')) * 10000000.00 * 1000.00 +    to_number(to_char(fecha,'MM')) * 10000000.00 * 10 +     to_number(to_char(fecha,'DD')) * 1000000     ) <= :p_ll_h_1 ))         
+                    AND ((( to_number(to_char(desde,'HH24')) * 10000 + to_number(to_char(desde,'MI')) * 100.00 + to_number(to_char(desde,'SS'))) > :p_ll_d_2  and 
+                             ( to_number(to_char(desde,'HH24')) * 10000 + to_number(to_char(desde,'MI')) * 100.00 + to_number(to_char(desde,'SS')) ) < :p_ll_h_2) 
+                     or    (( to_number(to_char(hasta,'HH24')) * 10000 + to_number(to_char(hasta,'MI')) * 100.00 + to_number(to_char(hasta,'SS'))     ) > :p_ll_d_2 and
+                              ( to_number(to_char(desde,'HH24')) * 10000 + to_number(to_char(desde,'MI')) * 100.00 + to_number(to_char(desde,'SS')) ) < :p_ll_h_2 ))    
+                    AND (CONCEPTOACCESO = :p_conceptoacceso or  
+                            CONCEPTOACCESO = :p_similares_2 or CONCEPTOACCESO = :p_similares_3 or CONCEPTOACCESO = :p_similares_4 or CONCEPTOACCESO = :p_similares_5 or
+                            CONCEPTOACCESO = :p_similares_6 or CONCEPTOACCESO = :p_similares_7 or CONCEPTOACCESO = :p_similares_8  or :p_similares_2_all = 'S' )
+                    AND (CategoriaAutorizacion = :p_categoriaautorizacion or CategoriaAutorizacion = :p_similares  )     
+                    AND ESTADO in ('A', 'S')
+                    AND NOT(empleado = :p_empleado and
+						 to_char(fecha,'YYYYMMDD') = to_char(:p_fecha,'YYYYMMDD') and
+				 		 conceptoacceso = :p_conceptoacceso and
+				  		 ( to_number(to_char(desde,'HH24')) * 10000 + to_number(to_char(desde,'MI')) * 100.00 + to_number(to_char(desde,'SS')) ) = 
+				  		 ( to_number(to_char(:p_desde,'HH24')) * 10000 + to_number(to_char(:p_desde,'MI')) * 100.00 + to_number(to_char(:p_desde,'SS')) ) ) 
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.obtenercantidad2">
+		<![CDATA[
+			select 
+				count(*)
+			from 
+				SGCORESYS.as_autorizacion
+			where empleado = :p_empleado and
+				  fecha = :p_fecha  and
+				  conceptoacceso = :p_conceptoacceso and
+				  desde = :p_desde
+ 		]]>
+	</sql-query>
+
+
+	<sql-query name="asautorizacion.obtenercantidad3">
+		<![CDATA[
+			select 
+				count(*)
+			from 
+				SGCORESYS.as_autorizacion
+			where empleado = :p_empleado and
+				  fecha = :p_fecha  and
+				  conceptoacceso = :p_conceptoacceso and
+				  desde = :p_desde 
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.obtenerFechaVeces">
+		<![CDATA[
+			select 	
+				max(fecha) as "fecha", 
+				count(*) as "veces"
+			from		
+				as_autorizacion
+			where	
+				empleado = :p_empleado and
+				to_number(to_char(fecha,'YYYY')) = :p_year and
+				conceptoacceso = '25' and
+				fecha <> :p_fecha
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.eliminarAutorizacion">
+		<![CDATA[
+			DELETE FROM SGCORESYS.AS_Autorizacion 
+			WHERE Empleado = :p_empleado 
+					AND Fecha = :p_fecha 
+					AND ConceptoAcceso = :p_conceptoacceso
+					AND to_char(Desde, 'hh24:mi') = to_char(:p_fechadesde,'hh24:mi')
+ 		]]>
+	</sql-query>
+
+
+	<sql-query name="asautorizacion.obtenerEmpleado">
+		<![CDATA[
+			SELECT Empleado 
+			FROM SGCORESYS.AS_Autorizacion 
+			WHERE 
+				Empleado = :p_empleado 
+				and Desde = :p_desde1 
+				and Fecha = :p_fecha 
+				and SobretiempoPosicion = 1 
+				and ConceptoAcceso = :p_conceptoacceso
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.eliminarAutorizacion2">
+		<![CDATA[
+			DELETE FROM SGCORESYS.AS_Autorizacion 
+			WHERE 
+				Empleado = :p_empleado 
+				AND Fecha = :p_fechaoriginal 
+				AND Desde = :p_fechadesdeoriginal 
+				and SobretiempoPosicion = 1 
+				AND ConceptoAcceso = :p_conceptoaccesooriginal
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.insertarAutorizacion">
+		<![CDATA[
+			INSERT INTO SGCORESYS.AS_Autorizacion  // Solo 
+				(	Empleado, Fecha , 
+					FechaFin,  ConceptoAcceso, 
+					Desde, Hasta, 
+					Refrigerio, Periodo, 
+					Mandatorio, Observacion, 
+					SolicitadoPor, FechaSolicitud,					
+					UltimoUsuario, UltimaFechaModif, 
+					SobretiempoPosicion, Estado ,
+					ComportamientoSobretiempo,  CategoriaAutorizacion, TipoHorario,
+					FlagCorrido, RutaDocumento, 
+					TipoAutorizacion,
+					NroResolucion	
+				)
+				VALUES 
+				(	:p_empleado, :p_fecha, 
+					:p_fecha, :p_conceptoacceso, 
+					:p_desde1, :p_hasta1, 
+					:p_refrigerio, :p_periodo, 
+					:p_mandatorio, :p_observacion,					
+					:p_solicitadopor, :p_fechasolicitud, 					
+					:p_ultimousuario, :p_ultimafechamodif, 
+					:p_sobretiempo, :p_estado, 
+					:p_comportamientosobretiempo,  :p_categoriaautorizacion, :p_tipohorario,
+					:p_corrido, :p_ruta, :p_tipoautorizacion, :p_resolucion
+				)
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.actualizarAutorizacion">
+		<![CDATA[
+			UPDATE 
+				AS_Autorizacion 
+					SET Fecha = :p_fecha, 
+						FechaFin = :p_fechafin,
+						Desde = :p_desde1, 
+						Hasta = :p_hasta1, 
+						Refrigerio = :p_refrigerio, 
+						Periodo = :p_periodo, 
+						Mandatorio = :p_mandatorio, 
+						TipoHorario = :p_tipohorario,
+						Observacion = :p_observacion,
+						AutorizadoPor = :p_autorizadopor, 
+						UltimoUsuario = :p_ultimousuario, 
+						UltimaFechaModif = :p_ultimafechamodif,
+						RutaDocumento = :p_ruta,
+						NroResolucion = :p_resolucion
+					WHERE Empleado = :p_empleado 
+						and Fecha = :p_fecha2 
+						and Desde = :p_fechadesde 
+						and SobretiempoPosicion = 1 
+						AND ConceptoAcceso = :p_conceptoacceso
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.obtenerEmpleado2">
+		<![CDATA[
+			SELECT Empleado 
+			FROM SGCORESYS.AS_Autorizacion 
+			WHERE 
+				Empleado = :p_empleado 
+				and Fecha = :p_fecha 
+				and Desde = :p_desde1 
+				and ConceptoAcceso = :p_conceptoacceso
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.sp_as_autotizar_cambio_horario">
+		<![CDATA[
+				CALL SGCORESYS.sp_as_autotizar_cambio_horario(:p_empleado,:p_tipohorario,:p_fechainicio,:p_fechafin,:p_usuario,:p_terminal)
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarEmpleadosFeriadosGanados">
+		<![CDATA[
+			select
+			   nvl(count(empleado_01),0)
+			from (
+				SELECT
+                EmpleadoMast.empleado as empleado_01
+              FROM  SGCORESYS.AS_AsistenciaDiaria
+                    INNER JOIN  SGCORESYS.PersonaMast
+                         ON  AS_AsistenciaDiaria.Empleado = PersonaMast.Persona
+                    INNER JOIN SGCORESYS.EmpleadoMast
+                         ON  AS_AsistenciaDiaria.Empleado = EmpleadoMast.Empleado
+                    INNER JOIN  SGCORESYS.AS_CarnetIdentificacion
+                         ON AS_AsistenciaDiaria.Empleado = AS_CarnetIdentificacion.Empleado
+                                AND AS_CarnetIdentificacion.Estado = 'A'
+                  	INNER JOIN SGCORESYS.AS_ConceptoAcceso
+                         ON AS_AsistenciaDiaria.ConceptoAcceso = AS_ConceptoAcceso.ConceptoAcceso
+                    LEFT JOIN SGCORESYS.AC_CostCenterMst
+                         ON EmpleadoMast.CentroCostos = AC_CostCenterMst.CostCenter
+                    LEFT JOIN SGCORESYS.AS_Area
+                         ON AS_CarnetIdentificacion.Area = AS_Area.Area
+ 					LEFT JOIN SGCORESYS.COMPANYOWNER ON COMPANYOWNER.COMPANYOWNER= EmpleadoMast.CompaniaSocio
+                    LEFT JOIN SGCORESYS.COMPANIAMAST ON COMPANIAMAST.COMPANIACODIGO=COMPANYOWNER.COMPANY
+	        	WHERE     
+	        		(AS_ASISTENCIADIARIA.FlagCompensacion = '+' or AS_ASISTENCIADIARIA.FlagCompensacion = '-')
+                    AND ( AS_ASISTENCIADIARIA.ConceptoAcceso in ('HNAU','33') )
+                    and ((AS_AsistenciaDiaria.Fecha >=  :p_fecha_desde AND AS_AsistenciaDiaria.Fecha <=  :p_fecha_hasta) or :p_flagfiltroperiodo = 'N')
+                    and ( AS_ASISTENCIADIARIA.FECHA >= NVL(empleadomast.fechareingreso, empleadomast.fechaingreso ))
+					[P_ADICIONAL]
+        		)  Tablas_01
+			where 1 = 1
+					AND  ( empleado_01 in (select AS_EMPLEADOS_AUTORIZADOS.empleado
+                                            from SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+                                            where AS_EMPLEADOS_AUTORIZADOS.sid = :p_sid))
+
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarEmpleadosHorasGanadas">
+		<![CDATA[
+			select count(*)
+			from(
+			SELECT
+			registro.LocalName,
+			registro.COSTCENTER,
+			registro.DESCRIPCIONCORTA,
+			registro.DOCUMENTOFISCAL,
+			   SUM(registro.totalRegistros) AS totalRegistros,
+			   SUM(CASE WHEN registro.FlagCompensacion = '+' THEN registro.CantidadReal ELSE 0 END) AS CantidadRealpositivos,
+			   SUM(CASE WHEN registro.FlagCompensacion = '-' THEN registro.CantidadReal ELSE 0 END) AS CantidadRealnegativos,
+			   SUM(CASE WHEN registro.FlagCompensacion = '+' THEN registro.SaldoInicial ELSE 0 END) AS saldopositivos,
+			   SUM(CASE WHEN registro.FlagCompensacion = '-' THEN registro.SaldoInicial ELSE 0 END) AS saldonegativos
+			FROM
+			(
+			select
+			       Tablas_01.LocalName,
+			        COSTCENTER,
+			        DESCRIPCIONCORTA,
+			        DOCUMENTOFISCAL,
+			              Tablas_01.area,
+			                Tablas_01.CentroCostos,
+			                Tablas_01.sucursal,
+			                Tablas_01.cargo,
+			                Tablas_01.CodigoCargo,
+			                Tablas_01.tipoplanilla,
+			                Tablas_01.CompaniaSocio,
+			                SUM(total) as totalRegistros,
+			               Tablas_01.CantidadReal,
+			               Tablas_01.SaldoInicial,
+			               Tablas_01.FlagCompensacion,
+			               Tablas_01.empleado_01
+			from (
+			SELECT
+			             AC_CostCenterMst.LocalName,
+			             AC_COSTCENTERMST.COSTCENTER,
+			             COMPANIAMAST.DESCRIPCIONCORTA,
+			             COMPANIAMAST.DOCUMENTOFISCAL,
+			              as_carnetidentificacion.area,
+			                EmpleadoMast.CentroCostos,
+			                EmpleadoMast.sucursal,
+			                EmpleadoMast.cargo,
+			                Empleadomast.CodigoCargo,
+			                EmpleadoMast.tipoplanilla,
+			                EmpleadoMast.CompaniaSocio,
+			                SUM(1) as total,
+			                NVL(AS_ASISTENCIADIARIA.CantidadReal,0) AS CantidadReal,
+			                0 as SaldoInicial,
+			                AS_ASISTENCIADIARIA.FlagCompensacion,
+			               EmpleadoMast.empleado as empleado_01
+			
+			         FROM SGCORESYS.AS_ASISTENCIADIARIA,
+			               SGCORESYS.PersonaMast, SGCORESYS.AS_ConceptoAcceso, SGCORESYS.AS_CarnetIdentificacion,SGCORESYS.EmpleadoMast
+			                LEFT JOIN SGCORESYS.AC_CostCenterMst ON
+			                EmpleadoMast.CentroCostos = AC_CostCenterMst.CostCenter
+			                LEFT JOIN SGCORESYS.COMPANYOWNER ON COMPANYOWNER.COMPANYOWNER= EmpleadoMast.CompaniaSocio
+			                LEFT JOIN SGCORESYS.COMPANIAMAST ON COMPANIAMAST.COMPANIACODIGO=COMPANYOWNER.COMPANY
+			        WHERE ( AS_ASISTENCIADIARIA.EMPLEADO = PersonaMast.Persona ) and
+			                    ( AS_ASISTENCIADIARIA.EMPLEADO = AS_CarnetIdentificacion.EMPLEADO ) and
+			                    (AS_CarnetIdentificacion.Estado = 'A') and
+			                    (AS_ASISTENCIADIARIA.FlagCompensacion = '+' or AS_ASISTENCIADIARIA.FlagCompensacion = '-') and
+			                    AS_ConceptoAcceso.ConceptoAcceso = AS_AsistenciaDiaria.ConceptoAcceso
+			                    AND ( (AS_ASISTENCIADIARIA.ConceptoAcceso in ('HAUT')) or (AS_ConceptoAcceso.flagcompensa = 'S' and AS_ConceptoAcceso.ConceptoAcceso <>'33') )
+			                    and EmpleadoMast.Empleado = PersonaMast.Persona
+			                   and ((AS_AsistenciaDiaria.Fecha >= :p_fecha_desde AND AS_AsistenciaDiaria.Fecha <= :p_fecha_hasta) or :p_flagfiltroperiodo= 'N')
+			                    and ( AS_ASISTENCIADIARIA.FECHA >= NVL(empleadomast.fechareingreso, empleadomast.fechaingreso )   )
+			          GROUP BY
+			           AC_CostCenterMst.LocalName,
+			             AC_COSTCENTERMST.COSTCENTER,
+			             COMPANIAMAST.DESCRIPCIONCORTA,
+			             COMPANIAMAST.DOCUMENTOFISCAL,
+			              as_carnetidentificacion.area,
+			                EmpleadoMast.CentroCostos,
+			                EmpleadoMast.sucursal,
+			                EmpleadoMast.cargo,
+			                Empleadomast.CodigoCargo,
+			                EmpleadoMast.tipoplanilla,
+			                EmpleadoMast.CompaniaSocio,
+			               AS_ASISTENCIADIARIA.CantidadReal,
+			               AS_ASISTENCIADIARIA.FlagCompensacion,
+			               EmpleadoMast.empleado
+			
+			            UNION
+			
+			          SELECT
+			                        AC_CostCenterMst.LocalName,
+			                       AC_COSTCENTERMST.COSTCENTER,
+			                         COMPANIAMAST.DESCRIPCIONCORTA,
+			             COMPANIAMAST.DOCUMENTOFISCAL,
+			              as_carnetidentificacion.area,
+			                EmpleadoMast.CentroCostos,
+			                EmpleadoMast.sucursal,
+			                EmpleadoMast.cargo,
+			                Empleadomast.CodigoCargo,
+			                EmpleadoMast.tipoplanilla,
+			                EmpleadoMast.CompaniaSocio,
+			                SUM(1) as total,
+			                NVL( as_saldohoras.CantidadAuxiliar,0)AS CantidadReal,
+			                        0 as SaldoInicial,
+			                        '+',
+			
+			                        EmpleadoMast.empleado
+			                FROM SGCORESYS.as_saldohoras,
+			                        SGCORESYS.PersonaMast, SGCORESYS.AS_CarnetIdentificacion,SGCORESYS.EmpleadoMast
+			                        LEFT JOIN SGCORESYS.AC_CostCenterMst ON
+			                        EmpleadoMast.CentroCostos = AC_CostCenterMst.CostCenter
+			                        LEFT JOIN SGCORESYS.COMPANYOWNER ON COMPANYOWNER.COMPANYOWNER= EmpleadoMast.CompaniaSocio
+			                        LEFT JOIN SGCORESYS.COMPANIAMAST ON COMPANIAMAST.COMPANIACODIGO=COMPANYOWNER.COMPANY
+			                WHERE ( as_saldohoras.EMPLEADO = PersonaMast.Persona ) and
+			                         ( as_saldohoras.EMPLEADO = AS_CarnetIdentificacion.EMPLEADO ) and
+			                        (AS_CarnetIdentificacion.Estado = 'A')
+			                        and EmpleadoMast.Empleado = PersonaMast.Persona
+			                        and ((as_saldohoras.Fecha_saldo >=:p_fecha_desde AND as_saldohoras.Fecha_saldo <= :p_fecha_hasta) or :p_flagfiltroperiodo= 'N')
+			                        and ( as_saldohoras.FECHA_saldo >= NVL(empleadomast.fechareingreso, empleadomast.fechaingreso )   )
+			                        and as_saldohoras.CantidadAuxiliar > 0
+			                 GROUP BY
+			                       AC_CostCenterMst.LocalName,
+			                         AC_COSTCENTERMST.COSTCENTER,
+			                         COMPANIAMAST.DESCRIPCIONCORTA,
+			                         COMPANIAMAST.DOCUMENTOFISCAL,
+			                          as_carnetidentificacion.area,
+			                            EmpleadoMast.CentroCostos,
+			                            EmpleadoMast.sucursal,
+			                            EmpleadoMast.cargo,
+			                            Empleadomast.CodigoCargo,
+			                            EmpleadoMast.tipoplanilla,
+			                            EmpleadoMast.CompaniaSocio,
+			                           as_saldohoras.CantidadAuxiliar,
+			                          EmpleadoMast.empleado
+			             UNION
+			
+			              SELECT
+			                        AC_CostCenterMst.LocalName,
+			                        AC_COSTCENTERMST.COSTCENTER,
+			                          COMPANIAMAST.DESCRIPCIONCORTA,
+			             COMPANIAMAST.DOCUMENTOFISCAL,
+			              as_carnetidentificacion.area,
+			                EmpleadoMast.CentroCostos,
+			                EmpleadoMast.sucursal,
+			                EmpleadoMast.cargo,
+			                Empleadomast.CodigoCargo,
+			                EmpleadoMast.tipoplanilla,
+			                EmpleadoMast.CompaniaSocio,
+			                SUM(1) as total,
+			                abs(as_saldohoras.CantidadAuxiliar),
+			                        0 as SaldoInicial,
+			                        '-',
+			                   EmpleadoMast.empleado
+			                FROM SGCORESYS.as_saldohoras,
+			                        SGCORESYS.PersonaMast, SGCORESYS.AS_CarnetIdentificacion, SGCORESYS.EmpleadoMast
+			                        LEFT JOIN SGCORESYS.AC_CostCenterMst ON
+			                        EmpleadoMast.CentroCostos = AC_CostCenterMst.CostCenter
+			                        LEFT JOIN SGCORESYS.COMPANYOWNER ON COMPANYOWNER.COMPANYOWNER= EmpleadoMast.CompaniaSocio
+			                        LEFT JOIN SGCORESYS.COMPANIAMAST ON COMPANIAMAST.COMPANIACODIGO=COMPANYOWNER.COMPANY
+			                WHERE ( as_saldohoras.EMPLEADO = PersonaMast.Persona ) and
+			                         ( as_saldohoras.EMPLEADO = AS_CarnetIdentificacion.EMPLEADO ) and
+			                        (AS_CarnetIdentificacion.Estado = 'A')
+			                        and EmpleadoMast.Empleado = PersonaMast.Persona
+			                       and ((as_saldohoras.Fecha_saldo >= :p_fecha_desde AND as_saldohoras.Fecha_saldo <= :p_fecha_hasta) or :p_flagfiltroperiodo= 'N')
+			                        and ( as_saldohoras.FECHA_saldo >= NVL(empleadomast.fechareingreso, empleadomast.fechaingreso )   )
+			                        and as_saldohoras.CantidadAuxiliar < 0
+			                  GROUP BY
+			               AC_CostCenterMst.LocalName,
+			                 AC_COSTCENTERMST.COSTCENTER,
+			                 COMPANIAMAST.DESCRIPCIONCORTA,
+			                 COMPANIAMAST.DOCUMENTOFISCAL,
+			                  as_carnetidentificacion.area,
+			                EmpleadoMast.CentroCostos,
+			                EmpleadoMast.sucursal,
+			                EmpleadoMast.cargo,
+			                Empleadomast.CodigoCargo,
+			                EmpleadoMast.tipoplanilla,
+			                EmpleadoMast.CompaniaSocio,
+			                as_saldohoras.CantidadAuxiliar,
+			                EmpleadoMast.empleado
+			
+			              UNION
+			              select
+			det.LocalName,
+			det.COSTCENTER,
+			det.DESCRIPCIONCORTA,
+			det.DOCUMENTOFISCAL,
+			det.area,
+			det.CentroCostos,
+			det.sucursal,
+			det.cargo,
+			det.CodigoCargo,
+			det.tipoplanilla,
+			det.CompaniaSocio,
+			det.total,
+			det.cantidadreal,
+			(det.saldo2+  nvl((select sum(as_saldohoras.cantidadauxiliar)
+			                        from SGCORESYS.as_saldohoras
+			                        where as_saldohoras.empleado =det.empleado  and
+			                               as_saldohoras.fecha_saldo <:p_fecha_desde),0)) as     saldoinicial,
+			det.FlagCompensacion,
+			det.empleado
+			from (
+			  SELECT
+			                        AC_CostCenterMst.LocalName,
+			                        AC_COSTCENTERMST.COSTCENTER,
+			                        COMPANIAMAST.DESCRIPCIONCORTA,
+			                        COMPANIAMAST.DOCUMENTOFISCAL,
+			                         as_carnetidentificacion.area,
+			                EmpleadoMast.CentroCostos,
+			                EmpleadoMast.sucursal,
+			                EmpleadoMast.cargo,
+			                Empleadomast.CodigoCargo,
+			                EmpleadoMast.tipoplanilla,
+			                EmpleadoMast.CompaniaSocio,
+			                SUM(1) as total,
+			                0 AS cantidadreal,
+			               abs(sum(AS_ASISTENCIADIARIA.CantidadReal * case when AS_ASISTENCIADIARIA.FlagCompensacion = '+' then 1 else -1 end)) as saldo2,
+			               CASE SIGN(sum(AS_ASISTENCIADIARIA.CantidadReal * case when AS_ASISTENCIADIARIA.FlagCompensacion = '+' then 1 else -1 end)) WHEN -1 THEN '-' ELSE '+' END as FlagCompensacion,
+			               EmpleadoMast.empleado
+			             FROM SGCORESYS.AS_ASISTENCIADIARIA,SGCORESYS.PersonaMast,
+			                       SGCORESYS.AS_ConceptoAcceso, SGCORESYS.AS_CarnetIdentificacion , SGCORESYS.EmpleadoMast
+			                        LEFT JOIN SGCORESYS.AC_CostCenterMst ON
+			                        EmpleadoMast.CentroCostos = AC_CostCenterMst.CostCenter
+			                        LEFT JOIN SGCORESYS.COMPANYOWNER ON COMPANYOWNER.COMPANYOWNER= EmpleadoMast.CompaniaSocio
+			                        LEFT JOIN SGCORESYS.COMPANIAMAST ON COMPANIAMAST.COMPANIACODIGO=COMPANYOWNER.COMPANY
+			               WHERE ( AS_ASISTENCIADIARIA.EMPLEADO = PersonaMast.Persona ) and
+			                         ( AS_ASISTENCIADIARIA.EMPLEADO = AS_CarnetIdentificacion.EMPLEADO ) and
+			                        (AS_CarnetIdentificacion.Estado = 'A') and
+			                        (AS_ASISTENCIADIARIA.FlagCompensacion = '+' or AS_ASISTENCIADIARIA.FlagCompensacion = '-') and
+			                        AS_ConceptoAcceso.ConceptoAcceso = AS_AsistenciaDiaria.ConceptoAcceso
+			                        AND ( (AS_ASISTENCIADIARIA.ConceptoAcceso in ('HAUT')) or (AS_ConceptoAcceso.flagcompensa = 'S' and AS_ConceptoAcceso.ConceptoAcceso <>'33') )
+			                        and EmpleadoMast.Empleado = PersonaMast.Persona
+			                       and (((AS_AsistenciaDiaria.Fecha < :p_fecha_desde ) and :p_flagfiltroperiodo <> 'N') OR :p_flagfiltroperiodo = 'N')
+			                        and ( AS_ASISTENCIADIARIA.FECHA >= NVL(empleadomast.fechareingreso, empleadomast.fechaingreso )   )
+			                        AND :p_flagfiltroperiodo = 'F'
+			
+			            GROUP BY
+			                     AC_CostCenterMst.LocalName,
+			                      AC_COSTCENTERMST.COSTCENTER,
+			                      COMPANIAMAST.DESCRIPCIONCORTA,
+			                      COMPANIAMAST.DOCUMENTOFISCAL,
+			                       as_carnetidentificacion.area,
+			                EmpleadoMast.CentroCostos,
+			                EmpleadoMast.sucursal,
+			                EmpleadoMast.cargo,
+			                Empleadomast.CodigoCargo,
+			                EmpleadoMast.tipoplanilla,
+			                EmpleadoMast.CompaniaSocio,
+			                cantidadreal,
+			                 EmpleadoMast.empleado
+			) det
+			
+			GROUP BY
+			det.LocalName,
+			det.COSTCENTER,
+			det.DESCRIPCIONCORTA,
+			det.DOCUMENTOFISCAL,
+			det.area,
+			det.CentroCostos,
+			det.sucursal,
+			det.cargo,
+			det.CodigoCargo,
+			det.tipoplanilla,
+			det.CompaniaSocio,
+			det.total,
+			det.cantidadreal,
+			det.FlagCompensacion,
+			det.saldo2,
+			det.empleado
+			 UNION
+			           SELECT
+			                AC_CostCenterMst.LocalName,
+			                AC_COSTCENTERMST.COSTCENTER,
+			                COMPANIAMAST.DESCRIPCIONCORTA,
+			                COMPANIAMAST.DOCUMENTOFISCAL,
+			                 as_carnetidentificacion.area,
+			                EmpleadoMast.CentroCostos,
+			                EmpleadoMast.sucursal,
+			                EmpleadoMast.cargo,
+			                Empleadomast.CodigoCargo,
+			                EmpleadoMast.tipoplanilla,
+			                EmpleadoMast.CompaniaSocio,
+			                SUM(1) as total,
+			                0 as cantidadreal,
+			                    abs(sum(as_saldohoras.CantidadAuxiliar)) as saldoinicial,
+			                    CASE SIGN(sum(as_saldohoras.CantidadAuxiliar )) WHEN -1 THEN '-' ELSE '+' END,
+			             EmpleadoMast.empleado
+			            FROM SGCORESYS.as_saldohoras,
+			                        SGCORESYS.PersonaMast, SGCORESYS.AS_CarnetIdentificacion ,SGCORESYS. EmpleadoMast
+			                        LEFT JOIN SGCORESYS.AC_CostCenterMst ON
+			                        EmpleadoMast.CentroCostos = AC_CostCenterMst.CostCenter
+			                        LEFT JOIN SGCORESYS.COMPANYOWNER ON COMPANYOWNER.COMPANYOWNER= EmpleadoMast.CompaniaSocio
+			                        LEFT JOIN SGCORESYS.COMPANIAMAST ON COMPANIAMAST.COMPANIACODIGO=COMPANYOWNER.COMPANY
+			            WHERE ( as_saldohoras.EMPLEADO = PersonaMast.Persona ) and
+			                         ( as_saldohoras.EMPLEADO = AS_CarnetIdentificacion.EMPLEADO ) and
+			                        (AS_CarnetIdentificacion.Estado = 'A') and
+			                        as_saldohoras.tipo = '2'
+			                        and EmpleadoMast.Empleado = PersonaMast.Persona
+			                        and ( as_saldohoras.Fecha_Saldo >= NVL(empleadomast.fechareingreso, empleadomast.fechaingreso )   )
+			                       and (((as_saldohoras.Fecha_Saldo < :p_fecha_desde ) and :p_flagfiltroperiodo <> 'N') OR :p_flagfiltroperiodo= 'N')
+			                        AND :p_flagfiltroperiodo='F'
+			            GROUP BY
+			                        AC_CostCenterMst.LocalName,
+			                         AC_COSTCENTERMST.COSTCENTER,
+			                         COMPANIAMAST.DESCRIPCIONCORTA,
+			                        COMPANIAMAST.DOCUMENTOFISCAL,
+			                         as_carnetidentificacion.area,
+			                EmpleadoMast.CentroCostos,
+			                EmpleadoMast.sucursal,
+			                EmpleadoMast.cargo,
+			                Empleadomast.CodigoCargo,
+			                EmpleadoMast.tipoplanilla,
+			                EmpleadoMast.CompaniaSocio,
+			               EmpleadoMast.empleado
+			)  Tablas_01
+			where 1 = 1
+			AND  ( empleado_01 in (select AS_EMPLEADOS_AUTORIZADOS.empleado
+			                                            from SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+			                                            where AS_EMPLEADOS_AUTORIZADOS.sid =:p_sid))
+			   [P_ADICIONAL]
+			   GROUP BY
+			     Tablas_01.LocalName,
+			        COSTCENTER,
+			        DESCRIPCIONCORTA,
+			        DOCUMENTOFISCAL,
+			              Tablas_01.area,
+			                Tablas_01.CentroCostos,
+			                Tablas_01.sucursal,
+			                Tablas_01.cargo,
+			                Tablas_01.CodigoCargo,
+			                Tablas_01.tipoplanilla,
+			                Tablas_01.CompaniaSocio,
+			                Tablas_01.CantidadReal,
+			                Tablas_01.SaldoInicial,
+			                Tablas_01.FlagCompensacion,
+			                Tablas_01.empleado_01
+			  ) registro
+			  GROUP BY
+			    registro.LocalName,
+			    registro.COSTCENTER,
+			    registro.DESCRIPCIONCORTA,
+			registro.DOCUMENTOFISCAL
+			  ORDER BY  registro.LocalName
+			  )
+			]]>
+	</sql-query>
+
+
+	<sql-query name="asautorizacion.listarlicenciassingoce">
+		<![CDATA[
+			 SELECT
+			     AU.FECHA as "fecha",
+                 AU.FECHAFIN as "fechahasta"
+       		 FROM 
+       		 	SGCORESYS.AS_AUTORIZACION AU
+	         WHERE 1=1
+		        AND to_char(AU.FECHA,'YYYY') = to_char(sysdate,'YYYY')
+		        AND AU.ESTADO <> 'R'
+		        AND AU.CONCEPTOACCESO = '14'
+		        AND AU.EMPLEADO = :p_empleado
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarlicencias">
+		<![CDATA[
+			 SELECT
+			     count(*)
+       		 FROM 
+       		 	SGCORESYS.AS_AUTORIZACION AU
+	         WHERE 1=1
+		        AND NOT ((AU.FECHA > :p_fecha AND AU.FECHA > :p_fechafin ) OR
+                    (AU.FECHAFIN < :p_fecha AND AU.FECHAFIN < :p_fechafin))
+		        AND AU.ESTADO <> 'R'
+		        AND AU.CONCEPTOACCESO in( '241','32','35','14','21','39','37')
+		        AND AU.EMPLEADO = :p_empleado
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.obtenermaximodesde">
+		<![CDATA[
+			 SELECT 	
+			 	Max(DESDE) as "fecha"
+			 FROM 	
+			    sgcoresys.AS_AUTORIZACION 
+			 WHERE 	
+			 	EMPLEADO = :p_empleado
+				AND ConceptoAcceso = 'OMI2'
+				AND to_char(FECHA,'YYYYMMDD') = to_char(:p_fecha ,'YYYYMMDD')
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.obtenerlicenciasempleadoPorFecha">
+		<![CDATA[
+			SELECT 
+			 	FechaInicio as "desde",
+			 	FechaFinal as "hasta"
+			FROM 
+				sgcoresys.HR_Licencias 
+			WHERE 	
+				HR_Licencias.Empleado = :p_empleado
+			    AND 
+			    NOT(( HR_Licencias.FechaInicio > :p_fechainicio AND HR_Licencias.FechaInicio > :p_fechafin) OR 
+				 ( HR_Licencias.FechaFinal < :p_fechainicio AND HR_Licencias.FechaFinal < :p_fechafin))
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.obtenervacacionesempleadoPorFecha">
+		<![CDATA[
+			 SELECT 	
+			 	FechaInicio as "desde",
+			 	FechaFin as "hasta"
+			 FROM 	
+			 	sgcoresys.PR_VacacionUtilizacion 
+			 WHERE 	
+			 	PR_VacacionUtilizacion.tipoutilizacion <> 'SEF'
+			    AND PR_VacacionUtilizacion.Empleado = :p_empleado
+			    AND PR_VacacionUtilizacion.NumeroPeriodo = :p_numeroperiodo
+			    AND 
+			    NOT(( PR_VacacionUtilizacion.FechaInicio > :p_fechainicio AND PR_VacacionUtilizacion.FechaInicio > :p_fechafin) OR 
+				 ( PR_VacacionUtilizacion.FechaFin < :p_fechainicio AND PR_VacacionUtilizacion.FechaFin < :p_fechafin))
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarvalidalicenciasempleado">
+		<![CDATA[
+			SELECT 
+			 	Count(1)
+			FROM 
+				sgcoresys.HR_Licencias 
+			WHERE 	
+				HR_Licencias.Empleado = :p_empleado
+			    AND 
+			    NOT(( HR_Licencias.FechaInicio > :p_fechainicio AND HR_Licencias.FechaInicio > :p_fechafin) OR 
+				 ( HR_Licencias.FechaFinal < :p_fechainicio AND HR_Licencias.FechaFinal < :p_fechafin))
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarvalidavacacionesempleado">
+		<![CDATA[
+			 SELECT 	
+			 	Count(*) 
+			 FROM 	
+			 	sgcoresys.PR_VacacionUtilizacion 
+			 WHERE 	
+			 	PR_VacacionUtilizacion.tipoutilizacion <> 'SEF'
+			    AND PR_VacacionUtilizacion.Empleado = :p_empleado
+			    AND PR_VacacionUtilizacion.NumeroPeriodo = :p_numeroperiodo
+			    AND 
+			    NOT(( PR_VacacionUtilizacion.FechaInicio > :p_fechainicio AND PR_VacacionUtilizacion.FechaInicio > :p_fechafin) OR 
+				 ( PR_VacacionUtilizacion.FechaFin < :p_fechainicio AND PR_VacacionUtilizacion.FechaFin < :p_fechafin))
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarPermisosSIGED">
+		<![CDATA[
+	  SELECT   
+             Count(1) 
+            FROM   
+             sgcoresys.as_autorizacion 
+            WHERE   
+              as_autorizacion.Empleado = :p_empleado AND
+              as_autorizacion.estado in ('S') AND 
+              as_autorizacion.CONCEPTOACCESO=:p_concepto
+              	]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarPermisosFechasSIGED">
+		<![CDATA[
+	  SELECT   
+             count(*) 
+            FROM   
+             sgcoresys.as_autorizacion a
+            WHERE   
+              a.Empleado = :p_empleado AND
+              a.estado in ('S','A') AND 
+              a.CONCEPTOACCESO=:p_concepto 
+              and NOT(( a.Fecha > to_date(:p_fechainicio,'dd/MM/yyyy') AND a.Fecha > to_date(:p_fechafin,'dd/MM/yyyy')) OR 
+	         ( a.FechaFin < to_date(:p_fechainicio,'dd/MM/yyyy') AND a.FechaFin < to_date(:p_fechafin,'dd/MM/yyyy')))
+	         AND ((a.Fecha <> to_date(:p_fechainioriginal,'dd/MM/yyyy') AND a.FechaFin <> to_date(:p_fechafinoriginal,'dd/MM/yyyy')) or :p_fechainioriginal is null)
+              	]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarSolicitudIngressoSST">
+		<![CDATA[
+			select
+			count(*)
+			from
+			SGCORESYS.T_MVC_SST_SOLICITUD S
+			JOIN SGCORESYS.T_MVD_SST_SOLICITUD_DETALLE D
+			ON S.NU_ID_SOLICITUD = D.NU_ID_SOLICITUD
+			where
+			S.ACTIVO = 1
+			AND S.TX_ESTADO IN ('A')
+			AND UPPER(S.TX_DOCUMENTO) = UPPER(:p_codigousuario)
+			AND TO_CHAR(D.FE_FECHA,'dd/MM/yyyy') = TO_CHAR(:p_fecha,'dd/MM/yyyy')
+			AND NVL(D.ANULADO,0) = 0
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarPapeletasEnFechas">
+		<![CDATA[
+			SELECT   
+	         Count(*) 
+	        FROM   
+	         sgcoresys.as_autorizacion 
+	        WHERE   
+	          as_autorizacion.Empleado = :p_empleado AND
+	          as_autorizacion.estado in ('A','S') AND 
+	          NOT(( as_autorizacion.Fecha > :p_fechainicio AND as_autorizacion.Fecha > :p_fechafin) OR 
+	         ( as_autorizacion.FechaFin < :p_fechainicio AND as_autorizacion.FechaFin < :p_fechafin))
+	         AND ((as_autorizacion.Fecha <> :p_fechainiorig AND as_autorizacion.FechaFin <> :p_fechafinorig) or
+	         :p_fechainiorig is null)
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarmaximoperiodovacaciones">
+		<![CDATA[
+			 SELECT   
+			 	MAX(NumeroPeriodo)  
+			 FROM 
+			 	sgcoresys.PR_VacacionUtilizacion 
+			 WHERE 
+			     Empleado = :p_empleado
+ 		]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.snp_Permiso_Onomastico">
+		<![CDATA[
+				CALL SGCORESYS.SNp_Permiso_Onomastico()
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarOmisionxMes">
+		<![CDATA[
+				select count(1)   
+		from sgcoresys.as_autorizacion where  
+		EMPLEADO=:p_empleado 
+		AND to_char(fecha,'YYYYMM')=:p_fechaomision
+		AND CONCEPTOACCESO='OMIS'	and estado in ('S','A')	
+
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.obtenerHorasSobreTiempo">
+		<![CDATA[
+				select 
+			       sum(round( case when (rec.hasta-rec.desde)<0 then ((rec.hasta +1)  - rec.desde) else (rec.hasta - rec.desde) end * (24),2)) as "horasSobretiempo1"
+				  from(	
+			    select 
+			        (case when au.desde > nvl((select min(ac.hora) from sgcoresys.as_accesosdiarios ac where au.empleado = ac.empleado and
+			           to_char(au.fecha,'DD/MM/YYYY') = to_char(ac.fecha,'DD/MM/YYYY') ),au.desde ) then au.desde else nvl((select min(ac.hora) from sgcoresys.as_accesosdiarios ac where au.empleado = ac.empleado and
+			           to_char(au.fecha,'DD/MM/YYYY') = to_char(ac.fecha,'DD/MM/YYYY') ),au.desde) end) as desde, 
+			           
+			           (case when au.hasta < nvl((select max(ac.hora) from sgcoresys.as_accesosdiarios ac where au.empleado = ac.empleado and
+			           to_char(au.fecha,'DD/MM/YYYY') = to_char(ac.fecha,'DD/MM/YYYY') ),au.hasta ) then au.hasta else nvl((select max(ac.hora) from sgcoresys.as_accesosdiarios ac where au.empleado = ac.empleado and
+			           to_char(au.fecha,'DD/MM/YYYY') = to_char(ac.fecha,'DD/MM/YYYY') ),au.hasta) end) as hasta
+							from sgcoresys.as_autorizacion au
+			        where 
+							au.empleado = :p_empleado 
+							AND au.fecha between :p_fechaniciosemestre and :p_fechafinsemestre
+							AND au.CONCEPTOACCESO='PAHE' and au.estado in ('S','A')
+			    ) rec   
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.obtenerMinutosSobreTiempo">
+		<![CDATA[
+				SELECT SUM(ROUND((HH.CANTIDAD*60),2)) as "minutosSobretiempo1"
+				FROM SGCORESYS.AS_ASISTENCIADIARIA HH
+				WHERE HH.EMPLEADO=:p_empleado 
+				AND HH.fecha between :p_fechaniciosemestre and :p_fechafinsemestre
+				AND HH.CONCEPTOACCESO IN ('TART')
+				AND EXISTS (
+				select 1 from SGCORESYS.AS_AUTORIZACION X
+				WHERE X.EMPLEADO=HH.EMPLEADO
+				AND X.CONCEPTOACCESO='PAHE'
+				AND X.FECHA=HH.FECHA
+				AND X.ESTADO IN ('S','A'))
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.obtenerMinutosSobreTiempo2">
+		<![CDATA[
+				SELECT SUM(ROUND((HH.CANTIDAD*60),2)) as "minutosSobretiempo2"
+					FROM SGCORESYS.AS_ASISTENCIADIARIA HH
+					WHERE HH.EMPLEADO= :p_empleado 
+					AND HH.fecha between :p_desde and :p_desde
+					AND HH.CONCEPTOACCESO IN ('TART')
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.obtenerHorasSobreTiempo2">
+		<![CDATA[
+				select 
+				sum(round((hasta - desde) * ( 24),2)) as "horasSobretiempo2"
+					from sgcoresys.as_autorizacion where  
+					EMPLEADO=:p_empleado 
+					AND to_char(fecha,'YYYYMMDD')=:p_desderegistro
+					AND CONCEPTOACCESO='PAHE'	and estado in ('S','A')	
+				
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.obtenerSobreTiempoAutorizado">
+		<![CDATA[
+		  SELECT NVL(SUM(ROUND((HH.CANTIDAD),2)),0) as "horasSobretiempo"
+				FROM SGCORESYS.AS_ASISTENCIADIARIA HH
+				WHERE 
+				HH.EMPLEADO=:p_empleado
+				AND HH.CONCEPTOACCESO IN ('HAUT')
+			]]>
+	</sql-query>
+
+
+	<sql-query name="asautorizacion.sumarConRes">
+		<![CDATA[
+		    SELECT 
+			desde as "desde", 
+			hasta as "hasta"
+			FROM SGCORESYS.AS_AUTORIZACION 
+				WHERE 
+				EMPLEADO= :p_empleado
+				AND CONCEPTOACCESO = :p_concepto
+				AND to_char(fecha,'MM/YYYY') = :p_aniomes
+				AND estado in ('S','A')
+			    and not (
+                to_char(fecha,'DD/MM/YYYY') = (:p_desde_orig) and 
+                to_char(fechafin,'DD/MM/YYYY') = (:p_hasta_orig)) 
+			]]>
+	</sql-query>
+
+
+	<sql-query name="asautorizacion.contarHijos">
+		<![CDATA[
+				select count(*) from sgcoresys.dependiente
+				where tipodependiente = 'H' and PERSONA = :p_empleado
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarPadresAbuelos">
+		<![CDATA[
+				select count(*) from sgcoresys.dependiente
+				where tipodependiente IN ('A','M','P') and PERSONA = :p_empleado
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarHijosCumpleanios">
+		<![CDATA[
+				select count(*) from sgcoresys.dependiente
+				where tipodependiente = 'H' and PERSONA = :p_empleado
+				and to_char(fechanacimiento,'DDMM') = to_char(:p_fecha,'DDMM')
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarHijosMeses">
+		<![CDATA[
+				select count(*) from sgcoresys.dependiente
+				where tipodependiente = 'H' 
+				and PERSONA = :p_empleado
+				and round((to_date(:p_fecha,'dd/MM/yyyy') - fechanacimiento)/30) <= :p_meses
+			]]>
+	</sql-query>
+
+
+
+	<sql-query name="asautorizacion.contarHijosConyugueCumpleanios">
+		<![CDATA[
+				select count(*) from sgcoresys.dependiente
+				where tipodependiente IN ('H','C') and PERSONA = :p_empleado
+				and to_char(fechanacimiento,'DDMM') = to_char(:p_fecha,'DDMM')
+			]]>
+	</sql-query>
+
+
+	<sql-query name="asautorizacion.contarCantidadEnfechasPorConcepto">
+		<![CDATA[
+		    SELECT 
+			count(*)
+			FROM SGCORESYS.AS_AUTORIZACION 
+				WHERE 
+				EMPLEADO= :p_empleado
+				AND CONCEPTOACCESO = :p_concepto
+				AND fecha between :p_fecha and :p_fechafin
+				AND estado in ('S','A')
+				AND Fecha <> :p_fechaorig
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarCantidadDiasPorConcepto">
+		<![CDATA[
+		    SELECT 
+			(fechafin - fecha) + 1
+			FROM SGCORESYS.AS_AUTORIZACION 
+				WHERE 
+				EMPLEADO= :p_empleado
+				AND CONCEPTOACCESO = :p_concepto
+				AND fecha between :p_fecha and :p_fechafin
+				AND estado in ('S','A')
+				AND Fecha <> :p_fechaorig
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarHorasEnfechasPorConcepto">
+		<![CDATA[
+		    SELECT 
+			sum(round( case when (hasta-desde)<0 then ((hasta +1)  - desde) else (hasta - desde) end * (24),2)) 
+			FROM SGCORESYS.AS_AUTORIZACION 
+				WHERE 
+				EMPLEADO= :p_empleado
+				AND CONCEPTOACCESO = :p_concepto
+				AND fecha between :p_fecha and :p_fechafin
+				AND estado in ('S','A')
+				AND (Fecha <> :p_fechaorig or :p_fechaorig is null)
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.contarEnfechasPorTicket">
+		<![CDATA[
+		    SELECT 
+			count(1)
+			FROM SGCORESYS.AS_AUTORIZACION a INNER JOIN
+				sgcoresys.as_conceptoacceso c
+				on a.conceptoacceso = c.conceptoacceso
+				WHERE 
+				a.EMPLEADO= :p_empleado
+				AND a.CONCEPTOACCESO = :p_concepto
+				AND a.fecha between :p_fecha and :p_fechafin
+				AND a.estado in ('S','A')
+				AND (a.Fecha <> :p_fechaorig or :p_fechaorig is null)
+			]]>
+	</sql-query>
+
+
+	<sql-query name="asautorizacion.listarSolicitudesPeriodo">
+		<![CDATA[
+		    SELECT 
+		    fecha as "fecha",
+		    fechafin as "fechahasta",
+			desde as "desde", 
+			hasta as "hasta"
+			FROM SGCORESYS.AS_AUTORIZACION 
+			WHERE 
+			EMPLEADO= :p_empleado
+			AND CONCEPTOACCESO = :p_concepto
+			AND estado in ('S','A')
+			and ((fecha <> :p_desde_orig and
+            fechafin <> :p_hasta_orig) or
+            :p_desde_orig is null) 
+            and periodo = :p_periodo
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.obtenerHoraGanadas">
+		<![CDATA[
+					SELECT   
+			            
+			            sum(as_AsistenciaDiaria.CantidadReal) as "horasSobretiempo1"
+			FROM SGCORESYS.as_AsistenciaDiaria   
+			        INNER JOIN SGCORESYS.EmpleadoMast on ( as_AsistenciaDiaria.Empleado = EmpleadoMast.Empleado )
+			        INNER JOIN SGCORESYS.Vw_as_EmpleadoMast ON (Vw_as_EmpleadoMast.Empleado = EmpleadoMast.Empleado)
+			        INNER JOIN SGCORESYS.PersonaMast ON ( EmpleadoMast.Empleado = PersonaMast.Persona )
+			        INNER JOIN SGCORESYS.as_conceptoacceso ON ( as_AsistenciaDiaria.ConceptoAcceso = as_conceptoacceso.ConceptoAcceso )
+			        INNER JOIN SGCORESYS.as_CarnetIdentificacion ON ( as_CarnetIdentificacion.Empleado = EmpleadoMast.Empleado )
+			WHERE  ( as_CarnetIdentificacion.Estado = 'A' ) 
+			                AND (Empleadomast.empleado = :p_empleado)
+			              AND     ( as_AsistenciaDiaria.Fecha between :p_fechainiciosemestre AND :p_fechafinsemestre  ) 
+			             AND    (( (AS_AsistenciaDiaria.ConJustificacion = 'S' AND  AS_AsistenciaDiaria.Justificacion = 'S') OR  (AS_AsistenciaDiaria.ConJustificacion = 'N')) OR     'N' = 'S')
+			             AND (AS_AsistenciaDiaria.conceptoAcceso = 'HAUT')
+			            AND (AS_AsistenciaDiaria.FLAGCOMPENSACION = '+')  
+	    ]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.obtenerHorasSobreTiempo3">
+		<![CDATA[
+				select 
+        		sum(round( case when (hasta-desde)<0 then ((hasta +1)  - desde) else (hasta - desde) end * (24),2)) as "horasSobretiempo2"
+				from sgcoresys.as_autorizacion where  
+				EMPLEADO= :p_empleado 
+				AND fecha between :p_fechainiciosemestre and :p_fechafinsemestre
+				AND CONCEPTOACCESO='PAHE'	and estado in ('S')
+			]]>
+	</sql-query>
+
+
+	<sql-query name="asautorizacion.obtenerHorasRefrigerioHistorico">
+		<![CDATA[
+				select 
+        		sum(round( case when (hasta-desde)<0 then ((hasta +1)  - desde) else (hasta - desde) end * (24),2)) as "horasSobretiempo2"
+				from sgcoresys.as_autorizacion where  
+				EMPLEADO= :p_empleado 
+				AND fecha between :p_fechainiciosemestre and :p_fechafinsemestre
+				AND CONCEPTOACCESO='PAHE'	and estado in ('S')
+			]]>
+	</sql-query>
+
+	<sql-query name="asautorizacion.listarPermisosCompensacion">
+		<![CDATA[
+			select 
+			au.EMPLEADO as "empleado",
+			au.DESDE as "desde",
+			au.HASTA as "hasta",
+			au.DESDERECUPERA as "desderecupera",
+			au.HASTARECUPERA as "hastarecupera",
+			ca.diascompensa as "diascompensa",
+			(SELECT sum(round( case when (rec.hasta-rec.desde)<0 then ((rec.hasta +1)  - rec.desde) else (rec.hasta - rec.desde) end * (24),2)) 
+			from(	
+			    select 
+			        (case when SGCORESYS.FN_HORARIO_EMPLEADO(au.empleado,ac2.fecha,'I') > nvl((select min(ac.hora) from sgcoresys.as_accesosdiarios ac where ac2.empleado = ac.empleado and
+			           to_char(ac2.fecha,'DD/MM/YYYY') = to_char(ac.fecha,'DD/MM/YYYY') ),SGCORESYS.FN_HORARIO_EMPLEADO(au.empleado,ac2.fecha,'I') ) then SGCORESYS.FN_HORARIO_EMPLEADO(au.empleado,ac2.fecha,'I') else nvl((select min(ac.hora) from sgcoresys.as_accesosdiarios ac where ac2.empleado = ac.empleado and
+			           to_char(ac2.fecha,'DD/MM/YYYY') = to_char(ac.fecha,'DD/MM/YYYY') ),SGCORESYS.FN_HORARIO_EMPLEADO(au.empleado,ac2.fecha,'I')) end) as desde, 
+			           (case when SGCORESYS.FN_HORARIO_EMPLEADO(au.empleado,ac2.fecha,'F') < nvl((select max(ac.hora) from sgcoresys.as_accesosdiarios ac where au.empleado = ac.empleado and
+			           to_char(ac2.fecha,'DD/MM/YYYY') = to_char(ac.fecha,'DD/MM/YYYY') ),SGCORESYS.FN_HORARIO_EMPLEADO(au.empleado,ac2.fecha,'F') ) then SGCORESYS.FN_HORARIO_EMPLEADO(au.empleado,ac2.fecha,'F') else nvl((select max(ac.hora) from sgcoresys.as_accesosdiarios ac where ac2.empleado = ac.empleado and
+			           to_char(ac2.fecha,'DD/MM/YYYY') = to_char(ac.fecha,'DD/MM/YYYY') ),SGCORESYS.FN_HORARIO_EMPLEADO(au.empleado,ac2.fecha,'F')) end) as hasta
+					   from sgcoresys.as_accesosdiarios ac2
+			        where 
+						ac2.empleado = au.empleado and
+						ac2.FECHA between au.HASTARECUPERA and au.DESDERECUPERA
+			    ) rec ) as "horascompensadas"
+			from sgcoresys.as_autorizacion au
+			inner join sgcoresys.as_conceptoacceso ca
+			on au.conceptoacceso = ca.conceptoacceso
+			where au.empleado = :p_empleado 
+			AND au.CONCEPTOACCESO IN ('75','76','06','19','83','84','85') 
+			AND EXTRACT(YEAR FROM au.FECHA) = :p_anio and au.estado = 'A'	
+			AND au.DESDERECUPERA is not null
+			ORDER BY au.DESDERECUPERA
+			]]>
+	</sql-query>
+
+
+	<sql-query name="asautorizacion.listarPermisosViernesVerano">
+		<![CDATA[
+			select 
+			au.EMPLEADO as "empleado",
+			au.DESDE as "desde",
+			au.HASTA as "hasta",
+			au.DESDERECUPERA as "desderecupera",
+			au.HASTARECUPERA as "hastarecupera"
+			from sgcoresys.as_autorizacion au
+			where au.empleado = :p_empleado 
+			AND au.CONCEPTOACCESO IN ('86') 
+			AND ((au.DESDERECUPERA between :p_desde and :p_hasta) or
+			     (au.HASTARECUPERA between :p_desde and :p_hasta))
+			ORDER BY au.DESDERECUPERA
+			]]>
+	</sql-query>
+
+
+	<sql-query name="asautorizacion.obtenerHorarioEmpleado">
+		<![CDATA[
+			SELECT 
+				SGCORESYS.FN_HORARIO_EMPLEADO(:p_empleado,to_date(:p_fecha,'dd/MM/yyyy'),:p_tipo) as "desde"
+			FROM dual
+			]]>
+	</sql-query>
+
+</hibernate-mapping>

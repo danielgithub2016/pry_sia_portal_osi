@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="wasautorizacionpreprocesoaprobacion::#erp#asistencia#paginas#w_as_autorizacion_preproceso_aprobacion.xhtml"
+    NAME="output"
+    PATH="/erp/asistencia/paginas/w_as_autorizacion_preproceso_aprobacion.xhtml"
+    TARGET="rules:#erp#asistencia#paginas#w_as_autorizacion_preproceso_aprobacion.xhtml"
+    TITLE="wasautorizacionpreprocesoaprobacion" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:1" PATH="*" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:1" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="w_as_marcar::#erp#asistencia#paginas#w_as_marcar.xhtml"
+    NAME="output" PATH="/erp/asistencia/paginas/w_as_marcar.xhtml"
+    TARGET="rules:#erp#asistencia#paginas#w_as_marcar.xhtml"
+    TITLE="w_as_marcar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#erp#asistencia#paginas#w_as_marcar.xhtml"
+  PATH="/erp/asistencia/paginas/w_as_marcar.xhtml" SHAPE="240,145,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#asistencia#paginas#w_as_autorizacion_preproceso_aprobacion.xhtml"
+  PATH="/erp/asistencia/paginas/w_as_autorizacion_preproceso_aprobacion.xhtml"
+  SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:2" PATH="*" SHAPE="32,241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:2" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="w_as_rep_001_reporteoficialministerio::#erp#asistencia#paginas#w_as_rep_001_reporteoficialministerio.xhtml"
+    NAME="output"
+    PATH="/erp/asistencia/paginas/w_as_rep_001_reporteoficialministerio.xhtml"
+    TARGET="rules:#erp#asistencia#paginas#w_as_rep_001_reporteoficialministerio.xhtml"
+    TITLE="w_as_rep_001_reporteoficialministerio" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#erp#asistencia#paginas#w_as_rep_001_reporteoficialministerio.xhtml"
+  PATH="/erp/asistencia/paginas/w_as_rep_001_reporteoficialministerio.xhtml"
+  SHAPE="240,257,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:3" PATH="*" SHAPE="32,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:3" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="w_as_compania_select::#erp#asistencia#paginas#w_as_compania_select.xhtml"
+    NAME="output"
+    PATH="/erp/asistencia/paginas/w_as_compania_select.xhtml"
+    TARGET="rules:#erp#asistencia#paginas#w_as_compania_select.xhtml"
+    TITLE="w_as_compania_select" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:4" PATH="*" SHAPE="32,465,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:4" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="w_as_compania_select_individual::#erp#asistencia#paginas#w_as_centro_costo_select.xhtml"
+    NAME="output"
+    PATH="/erp/asistencia/paginas/w_as_centro_costo_select.xhtml"
+    TARGET="rules:#erp#asistencia#paginas#w_as_centro_costo_select.xhtml"
+    TITLE="w_as_compania_select_individual" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:5" PATH="*" SHAPE="32,577,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:5" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="w_as_empleado_select::#erp#asistencia#paginas#w_as_empleado_select.xhtml"
+    NAME="output"
+    PATH="/erp/asistencia/paginas/w_as_empleado_select.xhtml"
+    TARGET="rules:#erp#asistencia#paginas#w_as_empleado_select.xhtml"
+    TITLE="w_as_empleado_select" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:6" PATH="*" SHAPE="32,689,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:6" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="w_as_empleado_select_multiple::#erp#asistencia#paginas#w_as_empleado_select_multiple.xhtml"
+    NAME="output"
+    PATH="/erp/asistencia/paginas/w_as_empleado_select_multiple.xhtml"
+    TARGET="rules:#erp#asistencia#paginas#w_as_empleado_select_multiple.xhtml"
+    TITLE="w_as_empleado_select_multiple" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#erp#asistencia#paginas#w_as_empleado_select_multiple.xhtml"
+  PATH="/erp/asistencia/paginas/w_as_empleado_select_multiple.xhtml"
+  SHAPE="240,593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#asistencia#paginas#w_as_empleado_select.xhtml"
+  PATH="/erp/asistencia/paginas/w_as_empleado_select.xhtml"
+  SHAPE="240,481,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#asistencia#paginas#w_as_autorizacion_preproceso_hextra_edit.xhtml"
+  PATH="/erp/asistencia/paginas/w_as_autorizacion_preproceso_hextra_edit.xhtml"
+  SHAPE="240,705,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#asistencia#paginas#w_as_compania_select.xhtml"
+  PATH="/erp/asistencia/paginas/w_as_compania_select.xhtml"
+  SHAPE="240,369,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:7" PATH="*" SHAPE="32,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:7" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="w_as_reporte_saldo_feriado::#erp#asistencia#paginas#w_reporte_saldo_feriado.xhtml"
+    NAME="output"
+    PATH="/erp/asistencia/paginas/w_reporte_saldo_feriado.xhtml"
+    TARGET="rules:#erp#asistencia#paginas#w_reporte_saldo_feriado.xhtml"
+    TITLE="w_as_reporte_saldo_feriado" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#erp#asistencia#paginas#w_as_rep_001_marcarempleado.xhtml"
+  PATH="/erp/asistencia/paginas/w_as_rep_001_marcarempleado.xhtml"
+  SHAPE="240,817,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:8" PATH="*" SHAPE="32,913,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:8" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="w_as_autorizacion_preproceso_hextra_edit::#erp#asistencia#paginas#w_as_autorizacion_preproceso_hextra_edit.xhtml"
+    NAME="output"
+    PATH="/erp/asistencia/paginas/w_as_autorizacion_preproceso_hextra_edit.xhtml"
+    TARGET="rules:#erp#asistencia#paginas#w_as_autorizacion_preproceso_hextra_edit.xhtml"
+    TITLE="w_as_autorizacion_preproceso_hextra_edit" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:9" PATH="*" SHAPE="32,1137,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:9" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="w_as_rep_001_marcarempleado::#erp#asistencia#paginas#w_as_rep_001_marcarempleado.xhtml"
+    NAME="output"
+    PATH="/erp/asistencia/paginas/w_as_rep_001_marcarempleado.xhtml"
+    TARGET="rules:#erp#asistencia#paginas#w_as_rep_001_marcarempleado.xhtml"
+    TITLE="w_as_rep_001_marcarempleado" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#erp#asistencia#paginas#w_as_centro_costo_select.xhtml"
+  PATH="/erp/asistencia/paginas/w_as_centro_costo_select.xhtml"
+  SHAPE="240,929,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#asistencia#paginas#w_reporte_saldo_feriado.xhtml"
+  PATH="/erp/asistencia/paginas/w_reporte_saldo_feriado.xhtml"
+  SHAPE="240,1041,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:10" PATH="*" SHAPE="32,1025,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:10" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="wasreprogramacionvacaciones::#erp#asistencia#paginas#w_as_autorizacion_reprogramacion_vacaciones.xhtml"
+    NAME="output"
+    PATH="/erp/asistencia/paginas/w_as_autorizacion_reprogramacion_vacaciones.xhtml"
+    TARGET="rules:#erp#asistencia#paginas#w_as_autorizacion_reprogramacion_vacaciones.xhtml"
+    TITLE="wasreprogramacionvacaciones" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#erp#asistencia#paginas#w_as_autorizacion_reprogramacion_vacaciones.xhtml"
+  PATH="/erp/asistencia/paginas/w_as_autorizacion_reprogramacion_vacaciones.xhtml"
+  SHAPE="240,1265,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:11" PATH="*" SHAPE="32,1361,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:11" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="wasreprogramacionvacacionesedit::#erp#asistencia#paginas#w_as_autorizacion_reprogramacion_vacaciones_edit.xhtml"
+    NAME="output"
+    PATH="/erp/asistencia/paginas/w_as_autorizacion_reprogramacion_vacaciones_edit.xhtml"
+    TARGET="rules:#erp#asistencia#paginas#w_as_autorizacion_reprogramacion_vacaciones_edit.xhtml"
+    TITLE="wasreprogramacionvacacionesedit" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#erp#asistencia#paginas#w_as_autorizacion_reprogramacion_vacaciones_edit.xhtml"
+  PATH="/erp/asistencia/paginas/w_as_autorizacion_reprogramacion_vacaciones_edit.xhtml"
+  SHAPE="240,1377,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

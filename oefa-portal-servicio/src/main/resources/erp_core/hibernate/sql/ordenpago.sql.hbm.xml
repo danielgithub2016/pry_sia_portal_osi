@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : core.Ordenpago
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="ordenpago.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+    </sql-query>
+    
+    <sql-query name="ordenpago.DwCpOrdenpagoRetrieve">
+	select   ordenpago.sistemafuente as "sistemafuente",   
+    ordenpago.proveedor as "proveedor",   
+    ordenpago.tipodocumento as "tipodocumento",   
+    ordenpago.numerodocumento as "numerodocumento",   
+    ordenpago.pagara as "pagara",   
+    ordenpago.companiacodigo as "companiacodigo",   
+    ordenpago.cuentabancaria as "cuentabancaria",   
+    ordenpago.tipopago as "tipopago",   
+    ordenpago.chequeindividual as "chequeindividual",   
+    ordenpago.fechavencimiento as "fechavencimiento",   
+    ordenpago.monedadocumento as "monedadocumento",   
+    ordenpago.monedapago as "monedapago",   
+    ordenpago.montomoneda as "montomoneda",   
+    ordenpago.tipodecambio as "tipodecambio",   
+    ordenpago.batchnumber as "batchnumber",   
+    ordenpago.fechatransferencia as "fechatransferencia",   
+    ordenpago.estado as "estado",   
+    ordenpago.flujodecaja as "flujodecaja",   
+    ordenpago.cuentacontable as "cuentacontable",   
+    ordenpago.registronumero as "registronumero",   
+    ordenpago.voucher as "voucher",   
+    ordenpago.centrocostodestino as "centrocostodestino",   
+    ordenpago.fechadocumento as "fechadocumento",   
+    ordenpago.voucherdocumento as "voucherdocumento",   
+    ordenpago.suspensionflag as "suspensionflag",   
+    ordenpago.pagodiferidoflag as "pagodiferidoflag",   
+    ordenpago.cuentabancariadestino as "cuentabancariadestino",   
+    ordenpago.unidadreplicacion as "unidadreplicacion",   
+    ordenpago.unidadnegocio as "unidadnegocio" 
+from sgcoresys.ordenpago
+   WHERE ( OrdenPago.Proveedor = :proveedor ) AND  
+         ( OrdenPago.TipoDocumento = :tipodocumento ) AND  
+         ( OrdenPago.NumeroDocumento = :numerodocumento )  
+	</sql-query>
+</hibernate-mapping>

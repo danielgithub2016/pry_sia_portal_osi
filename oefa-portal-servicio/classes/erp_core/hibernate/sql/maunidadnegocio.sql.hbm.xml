@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : core.MaUnidadnegocio
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="maunidadnegocio.listaunidadnegocio">
+		SELECT 
+		UN.DESCRIPCIONLOCAL as "descripcion",
+		UN.UNIDADNEGOCIO as "unidadnegocio",
+		UN.ZONA as "ZONA" FROM MA_UNIDADNEGOCIO UN
+    </sql-query>
+    
+    <!-- maunidadnegocio.dw_ma_unidadnegocio_select_security 
+	<sql-query name="maunidadnegocio.DwMaUnidadnegocioSelectSecurity">
+		select ma_unidadnegocio.unidadnegocio as "unidadnegocio",
+		ma_unidadnegocio.zona as "zona",
+		ma_unidadnegocio.descripcionlocal as "descripcionlocal",
+		ma_unidadnegocio.companiasocio as "companiasocio",
+		ma_unidadnegocio.registropatronalplanilla as
+		"registropatronalplanilla"
+		from sgcoresys.ma_unidadnegocio,
+		sgcoresys.sy_seguridadautorizaciones
+		where (
+		ma_unidadnegocio.unidadnegocio =
+		sy_seguridadautorizaciones.concepto )
+		and
+		( ( ma_unidadnegocio.estado = 'A' ) and
+		(
+		sy_seguridadautorizaciones.aplicacioncodigo = 'SY' ) and
+		(
+		sy_seguridadautorizaciones.grupo = 'UNIDADNEGOCIO' ) and
+		(
+		LOWER(sy_seguridadautorizaciones.usuario) =LOWER(:par_usuario )) )
+		order by ma_unidadnegocio.unidadnegocio asc
+	</sql-query>-->
+</hibernate-mapping>

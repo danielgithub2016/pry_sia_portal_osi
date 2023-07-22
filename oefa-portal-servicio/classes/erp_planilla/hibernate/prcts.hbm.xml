@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.planilla.dominio.PrCts" table="SGCORESYS.PR_CTS">
+        <composite-id name="pk" class="net.royal.erp.planilla.dominio.PrCtsPk">
+            <key-property name="empleado" type="integer">
+                <column name="EMPLEADO" length="38" />
+            </key-property>
+            <key-property name="numerocts" type="integer">
+                <column name="NUMEROCTS" length="38" />
+            </key-property>
+        </composite-id>
+        
+        <property name="regimen" type="string">
+            <column name="REGIMEN" length="1" />
+        </property>
+        <property name="tipocancelacion" type="string">
+            <column name="TIPOCANCELACION" length="3" />
+        </property>
+        <property name="tipoplanilla" type="string">
+            <column name="TIPOPLANILLA" length="30" />
+        </property>
+        <property name="fechapago" type="timestamp">
+            <column name="FECHAPAGO" length="30" />
+        </property>
+        <property name="fechainicio" type="timestamp">
+            <column name="FECHAINICIO" length="30" />
+        </property>
+        <property name="fechafin" type="timestamp">
+            <column name="FECHAFIN" length="1" />
+        </property>
+        <property name="remuneracion" type="double">
+            <column name="REMUNERACION" length="20" />
+        </property>
+        <property name="iml" type="double">
+            <column name="IML" length="20" />
+        </property>
+        <property name="indemnizacionanual" type="double">
+            <column name="INDEMNIZACIONANUAL" length="20" />
+        </property>
+        <property name="tiempocancelar" type="string">
+            <column name="TIEMPOCANCELAR" length="6" />
+        </property>
+        <property name="tiempovalorizado" type="double">
+            <column name="TIEMPOVALORIZADO" length="20" />
+        </property>
+        <property name="inasistencias" type="integer">
+            <column name="INASISTENCIAS" length="38" />
+        </property>
+        <property name="manejolocalcts" type="string">
+            <column name="MANEJOLOCALCTS" length="1" />
+        </property>
+        <property name="banco" type="string">
+            <column name="BANCO" length="3" />
+        </property>
+        <property name="tipocuentacts" type="string">
+            <column name="TIPOCUENTACTS" length="3" />
+        </property>
+        <property name="monedacuentacts" type="string">
+            <column name="MONEDACUENTACTS" length="2" />
+        </property>
+        <property name="numerocuentacts" type="string">
+            <column name="NUMEROCUENTACTS" length="40" />
+        </property>
+        <property name="estadocts" type="string">
+            <column name="ESTADOCTS" length="1" />
+        </property>
+        <property name="tipocambio" type="integer">
+            <column name="TIPOCAMBIO" length="1" />
+        </property>
+        <property name="montolocal" type="double">
+            <column name="MONTOLOCAL" length="20" />
+        </property>
+        <property name="montodolar" type="double">
+            <column name="MONTODOLAR" length="20" />
+        </property>
+        <property name="monedacts" type="string">
+            <column name="MONEDACTS" length="2" />
+        </property>
+        <property name="flagtienedetalle" type="string">
+            <column name="FLAGTIENEDETALLE" length="1" />
+        </property>
+        <property name="companiasocio" type="string">
+            <column name="COMPANIASOCIO" length="8" />
+        </property>
+        <property name="retencionjudicial" type="double">
+            <column name="RETENCIONJUDICIAL" length="20" />
+        </property>
+        <property name="montointeres" type="double">
+            <column name="MONTOINTERES" length="20" />
+        </property>
+        <property name="fechacalculo" type="timestamp">
+            <column name="FECHACALCULO" length="30" />
+        </property>
+        <property name="interes" type="double">
+            <column name="INTERES" length="20" />
+        </property>
+        <property name="tasaefectivaanual" type="double">
+            <column name="TASAEFECTIVAANUAL" length="20" />
+        </property>
+        <property name="ultimousuario" type="string">
+            <column name="ULTIMOUSUARIO" length="20" />
+        </property>
+        <property name="ultimafechamodif" type="timestamp">
+            <column name="ULTIMAFECHAMODIF" length="30" />
+        </property>     
+        <property name="diastranscurridos" type="integer">
+            <column name="DIASTRANCURRIDOS" length="38" />
+        </property>
+        <property name="flgcargainicial" type="string">
+            <column name="FLGCARGAINICIAL" length="1" />
+        </property>
+        <property name="referenciafiscal01" type="string">
+            <column name="REFERENCIAFISCAL01" length="10" />
+        </property>
+        <property name="referenciafiscal02" type="string">
+            <column name="REFERENCIAFISCAL02" length="20" />
+        </property>
+        <property name="referenciafiscal03" type="string">
+            <column name="REFERENCIAFISCAL03" length="10" />
+        </property>
+        <property name="nivelservicio" type="string">
+            <column name="NIVELSERVICIO" length="4" />
+        </property>
+        <property name="centrocostos" type="string">
+            <column name="CENTROCOSTOS" length="4" />
+        </property>
+        <property name="locaciondepago" type="string">
+            <column name="LOCACIONDEPAGO" length="4" />
+        </property>
+        <property name="tipotrabajador" type="string">
+            <column name="TIPOTRABAJADOR" length="2" />
+        </property>
+        <property name="sucursal" type="string">
+            <column name="SUCURSAL" length="4" />
+        </property>
+        <property name="tipocontrato" type="string">
+            <column name="TIPOCONTRATO" length="2" />
+        </property>
+        <property name="perfil" type="integer">
+            <column name="PERFIL" length="1" />
+        </property>
+        <property name="afe" type="string">
+            <column name="AFE" length="15" />
+        </property>
+        <property name="tipopago" type="string">
+            <column name="TIPOPAGO" length="2" />
+        </property>
+    </class>
+</hibernate-mapping>

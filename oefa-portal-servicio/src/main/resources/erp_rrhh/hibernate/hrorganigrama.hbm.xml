@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrOrganigrama" table="SGCORESYS.HR_ORGANIGRAMA">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrOrganigramaPk">
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+            <key-property name="codigoorg" type="integer">
+                <column name="CODIGOORG" length="22" />
+            </key-property>
+            <key-property name="ano" type="integer">
+                <column name="ANO" length="22" />
+            </key-property>
+            <key-property name="tipoplanilla" type="string">
+                <column name="TIPOPLANILLA" length="2" />
+            </key-property>
+        </composite-id>
+        <property name="codigorama" type="string">
+            <column name="CODIGORAMA" length="10" />
+        </property>
+        <property name="codigopuesto" type="integer">
+            <column name="CODIGOPUESTO" length="22" />
+        </property>
+        <property name="codigoposicion" type="integer">
+            <column name="CODIGOPOSICION" length="22" />
+        </property>
+        <property name="posicionfinal" type="integer">
+            <column name="POSICIONFINAL" length="22" />
+        </property>
+        <property name="flagpuesto" type="string">
+            <column name="FLAGPUESTO" length="1" />
+        </property>
+        <property name="flagjefe" type="string">
+            <column name="FLAGJEFE" length="1" />
+        </property>
+        <property name="orden" type="integer">
+            <column name="ORDEN" length="22" />
+        </property>
+        <property name="unidadreplicacion" type="string">
+            <column name="UNIDADREPLICACION" length="4" />
+        </property>
+        <property name="numeroestandar" type="integer">
+            <column name="NUMEROESTANDAR" length="22" />
+        </property>
+        <property name="ordenpuesto" type="integer">
+            <column name="ORDENPUESTO" length="22" />
+        </property>
+        <property name="prevista" type="string">
+            <column name="PREVISTA" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

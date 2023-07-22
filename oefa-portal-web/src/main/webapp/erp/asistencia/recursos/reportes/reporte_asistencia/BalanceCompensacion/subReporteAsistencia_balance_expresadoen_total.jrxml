@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subReporteAsistencia_balance_vigentes_total" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c7af4320-c1ad-4c59-87fe-b9fde492a83a">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="956"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_mesesacompensar" class="java.lang.Integer"/>
+	<parameter name="p_empleado" class="java.math.BigDecimal"/>
+	<parameter name="p_fecha_desde" class="java.util.Date"/>
+	<parameter name="p_fecha_hasta" class="java.util.Date"/>
+	<parameter name="p_expresadoen" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select      registros.ExpresadoEn,
+            registros.DescripcionLocal,
+            registros.Fecha,
+            registros.FechaFin,
+            registros.Desde,
+            registros.Hasta,
+            sum(round(registros.Cantidad * 60)) as cantidad,
+            sgcoresys.f_cent2sex_texto(sum(registros.Cantidad)) as cantidadt,
+            registros.FechaSolicitud,
+            registros.SolicitadoPor,
+            registros.UltimaFechaModif
+from
+
+(
+SELECT                   AS_ConceptoAcceso.ExpresadoEn,
+                                         AS_ConceptoAcceso.DescripcionLocal,
+                                         AS_Autorizacion.Fecha,
+                                         AS_Autorizacion.FechaFin,
+                                         AS_Autorizacion.Desde,
+                                         AS_Autorizacion.Hasta,
+                                         AS_AutorizacionFecha.Cantidad,
+                                         AS_Autorizacion.FechaSolicitud,
+                                         AS_Autorizacion.SolicitadoPor,
+                                         AS_Autorizacion.UltimaFechaModif
+FROM                     sgcoresys.AS_Autorizacion
+                                         JOIN   sgcoresys.AS_ConceptoAcceso
+                                                          ON  (AS_Autorizacion.ConceptoAcceso = AS_ConceptoAcceso.ConceptoAcceso)
+                                         JOIN   sgcoresys.AS_AutorizacionFecha
+                                                          ON  (AS_AutorizacionFecha.Empleado = AS_Autorizacion.Empleado) AND
+                                                                        (AS_AutorizacionFecha.FechaSolicitud = AS_Autorizacion.Fecha) AND
+                                                                        (AS_AutorizacionFecha.Desde = AS_Autorizacion.Desde)
+WHERE           (AS_Autorizacion.CategoriaAutorizacion = 'COMP') AND
+                                        (AS_Autorizacion.Empleado = $P{p_empleado})  AND
+                                        (to_char(AS_Autorizacion.Fecha,'YYYYMMDD')  >= to_char($P{p_fecha_desde},'YYYYMMDD'))  AND (to_char(AS_Autorizacion.Fecha,'YYYYMMDD') <= to_char($P{p_fecha_hasta},'YYYYMMDD'))
+ORDER BY                 AS_ConceptoAcceso.ExpresadoEn,
+                                         AS_Autorizacion.Fecha
+ ) registros
+where registros.ExpresadoEn = $P{p_expresadoen}
+group by
+            registros.ExpresadoEn,
+            registros.DescripcionLocal,
+            registros.Fecha,
+            registros.FechaFin,
+            registros.Desde,
+            registros.Hasta,
+            registros.FechaSolicitud,
+            registros.SolicitadoPor,
+            registros.UltimaFechaModif]]>
+	</queryString>
+	<field name="EXPRESADOEN" class="java.lang.String"/>
+	<field name="DESCRIPCIONLOCAL" class="java.lang.String"/>
+	<field name="FECHA" class="java.sql.Timestamp"/>
+	<field name="FECHAFIN" class="java.sql.Timestamp"/>
+	<field name="DESDE" class="java.sql.Timestamp"/>
+	<field name="HASTA" class="java.sql.Timestamp"/>
+	<field name="CANTIDAD" class="java.math.BigDecimal"/>
+	<field name="CANTIDADT" class="java.lang.String"/>
+	<field name="FECHASOLICITUD" class="java.sql.Timestamp"/>
+	<field name="SOLICITADOPOR" class="java.lang.String"/>
+	<field name="ULTIMAFECHAMODIF" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<rectangle>
+				<reportElement x="280" y="2" width="103" height="20" uuid="8b748fef-9869-4900-a74b-4f474a3d9907"/>
+			</rectangle>
+			<line>
+				<reportElement x="332" y="2" width="1" height="20" uuid="e53c0c86-b4dc-4ffb-9b39-a709a1c35412"/>
+			</line>
+			<textField>
+				<reportElement x="280" y="3" width="50" height="19" forecolor="#990000" uuid="5d947841-4b03-41d3-8345-03ffe36708dc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="337" y="3" width="46" height="19" forecolor="#990000" uuid="26009b2c-6971-4f64-bf90-13651eebb4b3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTIDADT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="204" y="4" width="68" height="19" forecolor="#990000" uuid="7c9eddd7-4774-43ed-9fd4-c0a80c67edec"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Sub Total:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

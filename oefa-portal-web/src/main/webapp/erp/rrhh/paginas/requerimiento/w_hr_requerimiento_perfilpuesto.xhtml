@@ -1,0 +1,158 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panel rendered="false">
+		<p:panelGrid columns="1" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-12" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<center>
+				<p:outputLabel style="color:rgb(150,50,60)"
+					value="TEMAS A SER UTILIZADOS EN LA EVALUACIÓN DE CONOCIMIENTOS*" />
+			</center>
+			<p:inputTextarea maxlength="4000"
+				value="#{cWHrRequerimientoEdit.dw_requerimiento.temaevaluacionconocimiento}" />
+		</p:panelGrid>
+	</p:panel>
+
+
+	<h:form id="frmWHrRequerimientoPerfilPuesto">
+		<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+
+
+		<p:panelGrid columns="2" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-10,ui-grid-col-10" layout="grid"
+			styleClass="ui-panelgrid-blank">
+
+			<p:panel>
+
+				<p:panelGrid columns="2" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-2,ui-grid-col-3" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Perfil del Puesto*"
+						style="color:rgb(150,50,60)" />
+					<p:commandButton value="Agregar" icon="nuevo" disabled="true"
+						rendered="false" immediate="true" process="@form" update="@form"
+						action="#{cWHrRequerimientoEdit.nuevoFuncionesCas}" />
+					<p:outputLabel rendered="true" />
+				</p:panelGrid>
+
+				<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+					id="tblFuncionesCas" paginator="true" paginatorPosition="bottom"
+					reflow="true" scrollable="true" scrollHeight="400" rows="10"
+					sortBy="#{msg.generico_tabla_sinregistros}" var="funcas"
+					value="#{cWHrRequerimientoEdit.dw_funcionescas}"
+					currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+					paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+					<p:column headerText="Tipo de Requisito" width="60">
+						<h:outputText value="#{funcas.auxTipoRequisito}" />
+					</p:column>
+
+					<p:column headerText="Requisito" width="160">
+						<h:outputText value="#{funcas.funciondescripcion}" />
+					</p:column>
+
+					<p:column headerText="Detalle" width="200">
+						<h:outputText value="#{funcas.funcioncomentarios}" />
+					</p:column>
+
+					<p:column headerText="Acciones" width="70">
+						<p:panelGrid columns="2" style="border-spacing:0px;"
+							columnClasses="ui-grid-col-10,ui-grid-col-10" layout="grid"
+							styleClass="ui-panelgrid-blank">
+							<p:commandButton icon="editar" title="Editar"
+								rendered="#{cWHrRequerimientoEdit.opciones.ismostrarcbeditarfuncas}"
+								immediate="true"
+								action="#{cWHrRequerimientoEdit.editarFuncionesCas}"
+								process="@form">
+								<f:setPropertyActionListener
+									target="#{cWHrRequerimientoEdit.dw_funcionescasregistro}"
+									value="#{funcas}" />
+							</p:commandButton>
+							<p:commandButton icon="eliminar" process="@form" title="Eliminar"
+								immediate="true" partialSubmit="false" rendered="false"
+								action="#{cWHrRequerimientoEdit.eliminarFuncionesCas}"
+								update="@form">
+								<f:setPropertyActionListener
+									target="#{cWHrRequerimientoEdit.dw_funcionescasregistro}"
+									value="#{funcas}" />
+							</p:commandButton>
+						</p:panelGrid>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+			<p:panel>
+				<p:panelGrid columns="2" tyle="border-spacing:0px;"
+					columnClasses="ui-grid-col-3,ui-grid-col-3" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Funciones del Puesto*"
+						style="color:rgb(150,50,60)" />
+					<p:commandButton value="Agregar" icon="nuevo"
+						rendered="#{cWHrRequerimientoEdit.opciones.ismostrarcbagregarfuncasdet}"
+						immediate="true" process="@form"
+						action="#{cWHrRequerimientoEdit.nuevoFuncionesCasDet}" />
+					<p:outputLabel
+						rendered="#{!cWHrRequerimientoEdit.opciones.ismostrarcbagregarfuncasdet}" />
+					<p:commandButton value="Ver Reporte" icon="imprimir"
+						disabled="#{!cWHrRequerimientoEdit.mostrarReporte}"
+						rendered="false" id="btnReporte" immediate="true"
+						onclick="document.getElementById('frmWHrRequerimientoEdit:lnkReport').click()" />
+				</p:panelGrid>
+
+				<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+					id="tblFuncionesCasDet" paginator="true" paginatorPosition="bottom"
+					reflow="true" scrollable="true" scrollHeight="400" rows="10"
+					sortBy="#{msg.generico_tabla_sinregistros}" var="funcasdet"
+					value="#{cWHrRequerimientoEdit.dw_funcionescas_det}"
+					currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+					paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+					<p:column headerText="#" width="30" styleClass="columnatablaCentro">
+						<h:outputText value="#{funcasdet.pk.secuencia}" />
+					</p:column>
+
+					<p:column headerText="Descripción" width="300">
+						<h:outputText value="#{funcasdet.funciondescripcion}" />
+					</p:column>
+
+					<p:column headerText="Acciones" width="70">
+						<p:panelGrid columns="2" style="border-spacing:0px;"
+							columnClasses="ui-grid-col-12,ui-grid-col-12" layout="grid"
+							styleClass="ui-panelgrid-blank">
+							<p:commandButton icon="editar" title="Editar" immediate="true"
+								action="#{cWHrRequerimientoEdit.editarFuncionesCasDet}"
+								process="@form"
+								rendered="#{cWHrRequerimientoEdit.opciones.ismostrarcbagregarfuncasdet}">
+								<f:setPropertyActionListener
+									target="#{cWHrRequerimientoEdit.dw_funcionescasdetregistro}"
+									value="#{funcasdet}" />
+							</p:commandButton>
+							<p:commandButton icon="eliminar" process="@form" title="Eliminar"
+								immediate="true"
+								rendered="#{cWHrRequerimientoEdit.opciones.ismostrarcbeliminarfuncasdet}"
+								action="#{cWHrRequerimientoEdit.eliminarFuncionesCasDet}"
+								update="tblFuncionesCasDet">
+								<f:setPropertyActionListener
+									target="#{cWHrRequerimientoEdit.dw_funcionescasdetregistro}"
+									value="#{funcasdet}" />
+							</p:commandButton>
+							<p:outputLabel
+								rendered="#{!cWHrRequerimientoEdit.opciones.ismostrarcbeliminarfuncasdet}" />
+							<p:outputLabel
+								rendered="#{!cWHrRequerimientoEdit.opciones.ismostrarcbagregarfuncasdet}" />
+						</p:panelGrid>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+		</p:panelGrid>
+	</h:form>
+
+</ui:composition>

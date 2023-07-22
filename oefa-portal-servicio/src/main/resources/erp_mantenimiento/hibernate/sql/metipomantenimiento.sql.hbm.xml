@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : mantenimiento.MeTipomantenimiento
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="metipomantenimiento.xxxxxx">
+
+    </sql-query>
+    
+    <!-- famast.dw_me_ma_tipomantenimiento_select -->
+	<sql-query name="metipomantenimiento.DwMeMaTipomantenimientoSelect">
+		SELECT ME_TipoMantenimiento.TipoMantenimiento
+		as "tipomantenimiento",
+		ME_TipoMantenimiento.DescripcionLocal as "descripcionlocal",
+		ME_TipoMantenimientoGrupo.DescripcionLocal as "descripcionlocal1",
+		ME_TipoMantenimiento.TipoMantenimientoGrupo as "tipomantenimientogrupo"
+		FROM SGCORESYS.ME_TipoMantenimiento
+		LEFT OUTER JOIN SGCORESYS.ME_TipoMantenimientoGrupo
+		ON ME_TipoMantenimiento.TipoMantenimientoGrupo =
+		ME_TipoMantenimientoGrupo.TipoMantenimientoGrupo
+		WHERE ME_TipoMantenimiento.Estado = 'A'
+	</sql-query>
+    
+</hibernate-mapping>

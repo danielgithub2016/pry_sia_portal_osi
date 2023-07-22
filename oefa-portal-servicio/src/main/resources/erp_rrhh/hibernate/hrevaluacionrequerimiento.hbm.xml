@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.erp.rrhh.dominio.HrEvaluacionRequerimiento" table="SGCORESYS.HR_EVALREQUERIMIENTO_DATOS_DET">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrEvaluacionRequerimientoPk">
+            <key-property name="requerimiento" type="string">
+                <column name="REQUERIMIENTO" length="10" />
+            </key-property>
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+            <key-property name="evaluacion" type="integer">
+                <column name="EVALUACION" length="38" />
+            </key-property>
+            <key-property name="elemento" type="string">
+                <column name="ELEMENTO" length="10" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="4000" />
+        </property>
+        <property name="flagelemento" type="string">
+            <column name="FLAGELEMENTO" length="1" />
+        </property>
+        <property name="otro" type="string">
+            <column name="OTRO" length="4000" />
+        </property>
+
+  
+    </class>
+</hibernate-mapping>

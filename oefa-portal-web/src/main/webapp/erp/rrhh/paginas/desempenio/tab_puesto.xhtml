@@ -1,0 +1,154 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<p:panelGrid columns="2" style="border-spacing:0px;"
+		columnClasses="ui-grid-col-2,ui-grid-col-3" layout="grid"
+		styleClass="ui-panelgrid-blank">
+		<p:outputLabel value="Tipo de Puesto" id="lblTipoPuesto" />
+		<h:selectOneRadio id="rbnTipoPuesto"
+			value="#{cwHrPuestosEdit.dw_header.flagpuestopracticante}">
+			<f:selectItem itemLabel="CAS" itemValue="C" />
+			<f:selectItem itemLabel="CAP" itemValue="A" />
+			<f:selectItem itemLabel="Practicante" itemValue="P" />
+			<f:selectItem itemLabel="CPE" itemValue="E" />
+			<f:selectItem itemLabel="Otro" itemValue="O" />
+		</h:selectOneRadio>
+
+		<p:outputLabel value="Descripcion" id="lblDescripcion" />
+		<p:inputTextarea id="txtDescripcion"
+			value="#{cwHrPuestosEdit.dw_header.descripcion}" />
+
+		<p:outputLabel id="lblDefinicionPuesto" value="Definición del Puesto" />
+		<p:inputTextarea id="txtDefinicion"
+			value="#{cwHrPuestosEdit.dw_header.comentarios}" />
+
+		<p:panelGrid columns="2" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid"
+			styleClass="ui-panelgrid-blank">
+
+			<p:outputLabel value="Código MEF" />
+			<p:inputText value="#{cwHrPuestosEdit.dw_header.codigocap}" />
+
+		</p:panelGrid>
+
+		<p:panelGrid columns="2" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid"
+			styleClass="ui-panelgrid-blank">
+
+			<p:outputLabel value="Código interno" />
+			<p:inputText value="#{cwHrPuestosEdit.dw_header.codigointerno}" />
+
+		</p:panelGrid>
+
+		<p:outputLabel value="Unidad orgánica" />
+
+		<p:inputText value="#{cwHrPuestosEdit.unidadOrganica}" />
+
+
+		<p:outputLabel value="Rango Remunerativo" />
+
+		<p:inputText id="txtRangoRemunerativo"
+			value="#{cwHrPuestosEdit.gradosalario}" />
+
+
+		<p:outputLabel value="Cargo Estructural" id="idCargoEstructural" />
+		<p:inputText id="txtCargoEstructural"
+			value="#{cwHrPuestosEdit.clasificadorcargo}" />
+
+		<p:outputLabel value="Puesto Superior" id="idPuestoSuperior" />
+		<p:inputText id="txtPuestoSuperior"
+			value="#{cwHrPuestosEdit.puestosuperior}" />
+
+		<p:outputLabel value="Plantilla de entregas" id="idPlantillaEntregas" />
+		<p:inputText id="txtPlantillaEntregas"
+			value="#{cwHrPuestosEdit.entregaplantillas}" />
+
+		<p:outputLabel value="Código RTPS" id="idCodigo" />
+		<p:inputText id="txtCodigo" value="#{cwHrPuestosEdit.RTPS}" />
+
+		<p:outputLabel value="Clasificador Puesto" id="idClasificadorPuesto" />
+		<p:inputText id="txtClasificadorPuesto"
+			value="#{cwHrPuestosEdit.clasificadorpuesto}" />
+
+		<p:outputLabel value="Puesto Confianza" id="idPuestoConfianza" />
+		<p:inputText id="txtPuestoConfianza"
+			value="#{cwHrPuestosEdit.puestoconfianza}" />
+
+		<p:panelGrid columns="2" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-2,ui-grid-col-11" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<p:selectBooleanCheckbox id="chkPuestoConfianza"
+				value="#{cwHrPuestosEdit.dw_header.cflagesconfianza}" />
+			<p:outputLabel value="Puesto de Confianza" />
+		</p:panelGrid>
+
+		<p:panelGrid columns="2" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-2,ui-grid-col-11" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<p:selectBooleanCheckbox
+				value="#{cwHrPuestosEdit.dw_header.flagddjj eq 'S' ? true : false }" />
+			<p:outputLabel value="DDJJ" />
+		</p:panelGrid>
+
+	</p:panelGrid>
+
+	<p:panelGrid columns="2" style="border-spacing:0px;"
+		columnClasses="ui-grid-col-2,ui-grid-col-3" layout="grid"
+		styleClass="ui-panelgrid-blank">
+		<p:outputLabel value="Familia de Puesto" id="lblFamilia" />
+		<p:inputText id="idFamiliaPuesto"
+			value="#{cwHrPuestosEdit.fam_position.descripcionlocal}" />
+	</p:panelGrid>
+
+	<p:fieldset legend="Puntaje" id="flPuntaje">
+		<p:panelGrid columns="7" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-1,ui-grid-col-0.5,ui-grid-col-1,ui-grid-col-0.5,ui-grid-col-1,ui-grid-col-0.5,ui-grid-col-1"
+			layout="grid" styleClass="ui-panelgrid-blank">
+			<p:outputLabel value="Otros Estudios" id="lblEstudios" />
+			<p:outputLabel value="Mínimo" id="lblMinimo" />
+			<p:inputText id="txtMinimo"
+				value="#{cwHrPuestosEdit.dw_header.cursominimo}">
+				<f:convertNumber pattern="#0.00" />
+			</p:inputText>
+			<p:outputLabel value="Máximo" id="lblMaximo" />
+			<p:inputText id="txtMaximo" disabled="true"
+				value="#{cwHrPuestosEdit.dw_header.cursomaximo}">
+				<f:convertNumber pattern="#0.00" />
+			</p:inputText>
+			<p:outputLabel value="Unitario" id="lblUnitario" />
+			<p:inputText id="txtUnitario"
+				value="#{cwHrPuestosEdit.dw_header.cursounitario}">
+				<f:convertNumber pattern="#0.00" />
+			</p:inputText>
+		</p:panelGrid>
+		<p:outputLabel
+			value="El valor mínimo generado por el sistema es la mitad del máximo, si desea puede ingresar un valor mínimo por defecto." />
+	</p:fieldset>
+	<p:panelGrid columns="2" style="border-spacing:0px;"
+		columnClasses="ui-grid-col-1,ui-grid-col-2" layout="grid"
+		styleClass="ui-panelgrid-blank">
+		<p:outputLabel value="Estado" id="lblEstado" />
+		<p:selectOneRadio id="rbnEstado"
+			value="#{cwHrPuestosEdit.dw_header.estado}">
+			<f:selectItem itemLabel="Activo" itemValue="A" />
+			<f:selectItem itemLabel="Inactivo" itemValue="I" />
+		</p:selectOneRadio>
+
+		<p:outputLabel value="Última Modif." id="idUltimaModif" />
+		<p:panelGrid columns="2" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-10,ui-grid-col-10" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<p:inputText id="txtT1" disabled="true"
+				value="#{cwHrPuestosEdit.dw_header.ultimoUsuario}" />
+			<p:inputText id="txtT2" disabled="true"
+				value="#{cwHrPuestosEdit.dw_header.ultimaFechaModif}">
+				<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+			</p:inputText>
+		</p:panelGrid>
+	</p:panelGrid>
+</ui:composition>

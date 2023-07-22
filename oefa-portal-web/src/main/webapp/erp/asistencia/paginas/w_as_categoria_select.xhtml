@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+		<h:form id="wascategoriaselect">  
+			<h:panelGrid columns="2">
+				<p:selectOneMenu>
+				</p:selectOneMenu>
+
+				<p:inputText />
+
+			</h:panelGrid>
+			
+			<p:dataTable
+			emptyMessage="#{msg.generico_tabla_sinregistros}" paginator="true" paginatorPosition="bottom"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+			    <p:column headerText="Sel" width="5">
+			    </p:column>
+			    
+			    <p:column headerText="Categoria" width="50">
+			    </p:column>
+			    
+			    <p:column headerText="Descripcion" width="100">
+			    </p:column>
+			    
+			</p:dataTable>
+			
+			<h:panelGrid columns="2" width="100%">
+			  
+				<h:panelGrid columns="2" style="float:right">
+				   <p:commandButton value="Aceptar"  styleClass="botonTextoImagen"
+							icon="aprobar"/>
+				<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+							icon="cancelar"/>
+				</h:panelGrid>
+			  
+			
+			</h:panelGrid>
+			
+		</h:form>
+</ui:composition>

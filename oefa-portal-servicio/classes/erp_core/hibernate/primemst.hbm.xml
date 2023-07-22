@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Primemst" table="SGCORESYS.PRIMEMST">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.PrimemstPk">
+            <key-property name="prime" type="string">
+                <column name="PRIME" length="10" />
+            </key-property>
+
+            
+            <key-property name="plancontable" type="string">
+                <column name="PLANCONTABLE" length="4" />
+            </key-property>
+        </composite-id>
+        <property name="primetype" type="string">
+                <column name="PRIMETYPE" length="2" />
+            </property>
+        <property name="digitsnumber" type="integer">
+            <column name="DIGITSNUMBER" length="22" />
+        </property>
+        <property name="localname" type="string">
+            <column name="LOCALNAME" length="200" />
+        </property>
+        <property name="englishname" type="string">
+            <column name="ENGLISHNAME" length="200" />
+        </property>
+        <property name="elementrevaluation" type="string">
+            <column name="ELEMENTREVALUATION" length="6" />
+        </property>
+        <property name="responsible" type="string">
+            <column name="RESPONSIBLE" length="4" />
+        </property>
+        <property name="costcenterflag" type="string">
+            <column name="COSTCENTERFLAG" length="1" />
+        </property>
+        <property name="budgetflag" type="string">
+            <column name="BUDGETFLAG" length="1" />
+        </property>
+        <property name="primegroup" type="string">
+            <column name="PRIMEGROUP" length="3" />
+        </property>
+        <property name="status" type="string">
+            <column name="STATUS" length="1" />
+        </property>
+        <property name="lastuser" type="string">
+            <column name="LASTUSER" length="20" />
+        </property>
+        <property name="lastdate" type="timestamp">
+            <column name="LASTDATE" length="7" />
+        </property>
+        <property name="prime2" type="string">
+            <column name="PRIME2" length="2" />
+        </property>
+        <property name="costproductionclasification" type="string">
+            <column name="COSTPRODUCTIONCLASIFICATION" length="2" />
+        </property>
+        <property name="budgetincomeflag" type="string">
+            <column name="BUDGETINCOMEFLAG" length="1" />
+        </property>
+        <property name="budgetcostflag" type="string">
+            <column name="BUDGETCOSTFLAG" length="1" />
+        </property>
+        <property name="inventorydetailflag" type="string">
+            <column name="INVENTORYDETAILFLAG" length="1" />
+        </property>
+        <property name="codigofiscal" type="string">
+            <column name="CODIGOFISCAL" length="5" />
+        </property>
+    </class>
+</hibernate-mapping>

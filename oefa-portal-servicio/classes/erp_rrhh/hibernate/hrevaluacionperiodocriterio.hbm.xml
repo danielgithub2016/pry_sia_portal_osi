@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrEvaluacionperiodocriterio" table="SGCORESYS.HR_EVALUACIONPERIODOCRITERIO">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrEvaluacionperiodocriterioPk">
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+            <key-property name="secuenciaeval" type="integer">
+                <column name="SECUENCIAEVAL" length="22" />
+            </key-property>
+            <key-property name="periodo" type="string">
+                <column name="PERIODO" length="6" />
+            </key-property>
+            <key-property name="tipoevaluador" type="string">
+                <column name="TIPOEVALUADOR" length="3" />
+            </key-property>
+        </composite-id>
+        <property name="flagevaluacionintegral" type="string">
+            <column name="FLAGEVALUACIONINTEGRAL" length="1" />
+        </property>
+        <property name="flagdesempeno" type="string">
+            <column name="FLAGDESEMPENO" length="1" />
+        </property>
+        <property name="flagmetas" type="string">
+            <column name="FLAGMETAS" length="1" />
+        </property>
+        <property name="flagnecesidadcapacita" type="string">
+            <column name="FLAGNECESIDADCAPACITA" length="1" />
+        </property>
+        <property name="flagrevisionmetas" type="string">
+            <column name="FLAGREVISIONMETAS" length="1" />
+        </property>
+        <property name="flagpotencial" type="string">
+            <column name="FLAGPOTENCIAL" length="1" />
+        </property>
+        <property name="flagrevisionpotencial" type="string">
+            <column name="FLAGREVISIONPOTENCIAL" length="1" />
+        </property>
+        <property name="flagconceptual" type="string">
+            <column name="FLAGCONCEPTUAL" length="1" />
+        </property>
+        <property name="flagincidentescriticos" type="string">
+            <column name="FLAGINCIDENTESCRITICOS" length="1" />
+        </property>
+        <property name="flagdesempenio" type="string">
+            <column name="FLAGDESEMPENIO" length="1" />
+        </property>
+        <property name="flagfunciones" type="string">
+            <column name="FLAGFUNCIONES" length="1" />
+        </property>
+        <property name="flagdesempeno2" type="string">
+            <column name="FLAGDESEMPENO2" length="1" />
+        </property>
+        <property name="flagdespersonal" type="string">
+            <column name="FLAGDESPERSONAL" length="1" />
+        </property>
+        <property name="flagmedicion" type="string">
+            <column name="FLAGMEDICION" length="1" />
+        </property>
+        <property name="flagnecesidadcapacita2" type="string">
+            <column name="FLAGNECESIDADCAPACITA2" length="1" />
+        </property>
+        <property name="flagdecampo" type="string">
+            <column name="FLAGDECAMPO" length="1" />
+        </property>
+        <property name="flagrevision" type="string">
+            <column name="FLAGREVISION" length="1" />
+        </property>
+        <property name="flagcomentarios" type="string">
+            <column name="FLAGCOMENTARIOS" length="1" />
+        </property>
+        <property name="flagmejora" type="string">
+            <column name="FLAGMEJORA" length="1" />
+        </property>
+        <property name="pesodesempeno2" type="big_decimal">
+            <column name="PESODESEMPENO2" length="22" />
+        </property>
+        <property name="pesometas" type="big_decimal">
+            <column name="PESOMETAS" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

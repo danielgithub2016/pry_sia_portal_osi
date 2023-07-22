@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : core.Seguridadconcepto
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="seguridad.seguridadconcepto.obtenerfechaservidor">
+		SELECT SYSDATE as "ultimafechamodif" FROM DUAL
+    </sql-query>
+    
+    <sql-query name="seguridad.seguridadconcepto.listarConceptosPermitidosPorUsuario">
+		SELECT det.APLICACIONCODIGO "aplicacioncodigo", det.GRUPO "grupo", det.CONCEPTO "concepto"
+    FROM (
+        SELECT DISTINCT CON.APLICACIONCODIGO, CON.GRUPO, CON.CONCEPTO
+        FROM SGCORESYS.SEGURIDADAUTORIZACIONES AU
+            INNER JOIN SGCORESYS.SEGURIDADCONCEPTO CON
+            ON AU.APLICACIONCODIGO=CON.APLICACIONCODIGO
+            AND AU.GRUPO=CON.GRUPO
+            AND AU.CONCEPTO=CON.CONCEPTO
+        WHERE 1=1
+        AND AU.ESTADO='A'
+        AND NVL(CON.CONCEPTORELACION,'') LIKE 'SP%'
+        AND AU.USUARIO IN 
+        (
+        SELECT PER.PERFIL AS USUARIO 
+            FROM SGCORESYS.SEGURIDADPERFILUSUARIO PER
+            WHERE PER.ESTADO='A' AND PER.USUARIO = :p_usuario
+            UNION ALL
+        SELECT :p_usuario AS USUARIO FROM DUAL    
+        )
+        ) det
+	</sql-query>
+	
+</hibernate-mapping>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrFactoresevaluacion" table="SGCORESYS.HR_FACTORESEVALUACION">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrFactoresevaluacionPk">
+            <key-property name="factor" type="integer">
+                <column name="FACTOR" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="plantilla" type="string">
+            <column name="PLANTILLA" length="5" />
+        </property>
+        <property name="area" type="string">
+            <column name="AREA" length="3" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="500" />
+        </property>
+        <property name="descripcioningles" type="string">
+            <column name="DESCRIPCIONINGLES" length="100" />
+        </property>
+        <property name="flagconcepto" type="string">
+            <column name="FLAGCONCEPTO" length="1" />
+        </property>
+        <property name="tipovalor" type="string">
+            <column name="TIPOVALOR" length="1" />
+        </property>
+        <property name="valorminimo" type="integer">
+            <column name="VALORMINIMO" length="22" />
+        </property>
+        <property name="valormaximo" type="integer">
+            <column name="VALORMAXIMO" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="unidadnegocio" type="string">
+            <column name="UNIDADNEGOCIO" length="4" />
+        </property>
+        <property name="flagplantilla" type="string">
+            <column name="FLAGPLANTILLA" length="1" />
+        </property>
+        <property name="ordenplantilla" type="integer">
+            <column name="ORDENPLANTILLA" length="22" />
+        </property>
+        <property name="flagdesempenio" type="string">
+            <column name="FLAGDESEMPENIO" length="1" />
+        </property>
+        <property name="flagcapacitacion" type="string">
+            <column name="FLAGCAPACITACION" length="1" />
+        </property>
+        <property name="flagreclutamiento" type="string">
+            <column name="FLAGRECLUTAMIENTO" length="1" />
+        </property>
+        <property name="flagpuntajegeneral" type="string">
+            <column name="FLAGPUNTAJEGENERAL" length="1" />
+        </property>
+        <property name="explicacion" type="string">
+            <column name="EXPLICACION" length="255" />
+        </property>
+        <property name="flagpotencial" type="string">
+            <column name="FLAGPOTENCIAL" length="1" />
+        </property>
+        <property name="tipocompetencia" type="string">
+            <column name="TIPOCOMPETENCIA" length="1" />
+        </property>
+        <property name="nivelcompetencia" type="string">
+            <column name="NIVELCOMPETENCIA" length="1" />
+        </property>
+        <property name="valorrequerido" type="integer">
+            <column name="VALORREQUERIDO" length="22" />
+        </property>
+        <property name="valorminimoesperado" type="integer">
+            <column name="VALORMINIMOESPERADO" length="22" />
+        </property>
+        <property name="flagentrevista" type="string">
+            <column name="FLAGENTREVISTA" length="1" />
+        </property>
+        <property name="flagcompetencia" type="string">
+            <column name="FLAGCOMPETENCIA" length="15" />
+        </property>
+        <property name="flagcalificacion" type="string">
+            <column name="FLAGCALIFICACION" length="1" />
+        </property>
+        <property name="companyowner" type="string">
+            <column name="COMPANYOWNER" length="8" />
+        </property>
+        <property name="tipo" type="string">
+            <column name="TIPO" length="1" />
+        </property>
+        <property name="familiapuestoeval" type="string">
+            <column name="FAMILIAPUESTOEVAL" length="3" />
+        </property>
+        
+        <property name="factorant" type="integer">
+            <column name="FACTORANT"  />
+        </property>
+    </class>
+</hibernate-mapping>

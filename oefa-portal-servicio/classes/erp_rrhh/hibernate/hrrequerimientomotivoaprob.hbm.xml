@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrRequerimientomotivoAprob" table="SGCORESYS.HR_REQUERIMIENTOMOTIVO_APROB">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrRequerimientomotivoAprobPk">
+            <key-property name="motivo" type="string">
+                <column name="MOTIVO" length="10" />
+            </key-property>
+        </composite-id>
+        <property name="nivelesaprobacion" type="string">
+            <column name="NIVELESAPROBACION" length="30" />
+        </property>
+        <property name="nroniveles" type="integer">
+            <column name="NRONIVELES" length="22" />
+        </property>
+        <property name="posicionesresp" type="string">
+            <column name="POSICIONESRESP" length="30" />
+        </property>
+        <property name="ordenflujo" type="integer">
+            <column name="ORDENFLUJO" length="22" />
+        </property>
+        <property name="correoccInicio" type="string">
+            <column name="CORREOCC_INICIO" length="255" />
+        </property>
+        <property name="correoccFin" type="string">
+            <column name="CORREOCC_FIN" length="255" />
+        </property>
+        <property name="estadocorreo" type="integer">
+            <column name="ESTADOCORREO" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

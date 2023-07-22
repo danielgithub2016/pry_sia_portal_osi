@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrActividadbeneficiario" table="SGCORESYS.HR_ACTIVIDADBENEFICIARIO">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrActividadbeneficiarioPk">
+            <key-property name="actividad" type="string">
+                <column name="ACTIVIDAD" length="10" />
+            </key-property>
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+            <key-property name="tipoactividad" type="string">
+                <column name="TIPOACTIVIDAD" length="1" />
+            </key-property>
+            <key-property name="empleado" type="integer">
+                <column name="EMPLEADO" length="22" />
+            </key-property>
+            <key-property name="dependiente" type="integer">
+                <column name="DEPENDIENTE" length="22" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

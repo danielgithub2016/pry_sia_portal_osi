@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : asistencia.AsEmpleadoexcepciondetalle -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="asempleadoexcepciondetalle.obtenertipodia">
+     <![CDATA[
+		SELECT nvl(max(AS_EmpleadoExcepcionDetalle.TipoDia),0)
+	 	FROM SGCORESYS.AS_EmpleadoExcepcion, SGCORESYS.AS_EmpleadoExcepcionDetalle
+	 	WHERE	AS_EmpleadoExcepcion.Empleado = :p_empleado and 
+				AS_EmpleadoExcepcion.fecha <= :p_fecha and
+				AS_EmpleadoExcepcion.fechahasta >= :p_fecha and
+				AS_EmpleadoExcepcion.CLASEHORARIO = 'D' and
+				AS_EmpleadoExcepcion.FECHA = AS_EmpleadoExcepcionDetalle.FECHA and
+				AS_EmpleadoExcepcion.EMPLEADO = AS_EmpleadoExcepcionDetalle.EMPLEADO and
+				AS_EmpleadoExcepcion.CLASEHORARIO = AS_EmpleadoExcepcionDetalle.CLASEHORARIO
+	  ]]>
+	</sql-query>
+	
+	<sql-query name="asempleadoexcepciondetalle.obtenertipodia2">
+     <![CDATA[
+		SELECT nvl(max(AS_EmpleadoExcepcionDetalle.TipoHorario),0)
+	 	FROM SGCORESYS.AS_EmpleadoExcepcion, SGCORESYS.AS_EmpleadoExcepcionDetalle
+	 	WHERE	AS_EmpleadoExcepcion.Empleado = :p_empleado and 
+				AS_EmpleadoExcepcion.fecha <= :p_fecha and
+				AS_EmpleadoExcepcion.fechahasta >= :p_fecha and
+				AS_EmpleadoExcepcion.CLASEHORARIO = 'E' and
+				AS_EmpleadoExcepcion.FECHA = AS_EmpleadoExcepcionDetalle.FECHA and
+				AS_EmpleadoExcepcion.EMPLEADO = AS_EmpleadoExcepcionDetalle.EMPLEADO and
+				AS_EmpleadoExcepcion.CLASEHORARIO = AS_EmpleadoExcepcionDetalle.CLASEHORARIO
+	  ]]>
+	</sql-query>
+	
+
+	<sql-query name="asempleadoexcepciondetalle.obtenertipodiadescanso">
+     <![CDATA[
+		SELECT	
+			AS_TipoDiaAsistencia.TipoDia
+	    FROM     	
+	        sgcoresys.AS_EmpleadoExcepcion
+					JOIN 	sgcoresys.AS_EmpleadoExcepcionDetalle	
+							ON		AS_EmpleadoExcepcion.Empleado = AS_EmpleadoExcepcionDetalle.Empleado AND
+									AS_EmpleadoExcepcion.Fecha = AS_EmpleadoExcepcionDetalle.Fecha AND
+									AS_EmpleadoExcepcion.ClaseHorario = AS_EmpleadoExcepcionDetalle.ClaseHorario
+					JOIN	sgcoresys.AS_TipoHorario
+							ON		AS_TipoHorario.TipoHorario = AS_EmpleadoExcepcionDetalle.TipoHorario 
+					JOIN	sgcoresys.AS_TipoDiaAsistencia 	
+							ON		(
+									CASE (to_number (to_char (:p_fecha,'D')))
+									WHEN 	2
+									THEN	AS_TipoHorario.Lunes
+									WHEN 	3
+									THEN 	AS_TipoHorario.Martes
+									WHEN 	4
+									THEN 	AS_TipoHorario.Miercoles
+									WHEN 	5
+									THEN 	AS_TipoHorario.Jueves
+									WHEN 	6
+									THEN 	AS_TipoHorario.Viernes
+									WHEN 	7
+									THEN 	AS_TipoHorario.Sabado
+									WHEN 	1
+									THEN 	AS_TipoHorario.Domingo
+									END
+									)  = AS_TipoDiaAsistencia.TipoDia		
+	WHERE     	(AS_EmpleadoExcepcion.ClaseHorario = 'E') AND 
+				(AS_EmpleadoExcepcion.Empleado = :p_empleado) AND
+				(TO_CHAR(AS_EmpleadoExcepcion.fecha,'YYYYMMDD') <= TO_CHAR(:p_fecha,'YYYYMMDD') and
+				 TO_CHAR(AS_EmpleadoExcepcion.fechahasta,'YYYYMMDD') >= TO_CHAR(:p_fecha,'YYYYMMDD'))
+	  ]]>
+	</sql-query>
+	
+	
+	
+	
+	
+</hibernate-mapping>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.seguridad.dominio.Seguridadconcepto" table="SGCORESYS.SEGURIDADCONCEPTO">
+        <composite-id name="pk" class="net.royal.seguridad.dominio.SeguridadconceptoPk">
+            <key-property name="aplicacioncodigo" type="string">
+                <column name="APLICACIONCODIGO" length="2" />
+            </key-property>
+            <key-property name="grupo" type="string">
+                <column name="GRUPO" length="6" />
+            </key-property>
+            <key-property name="concepto" type="string">
+                <column name="CONCEPTO" length="6" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="100" />
+        </property>
+        <property name="visibleflag" type="string">
+            <column name="VISIBLEFLAG" length="1" />
+        </property>
+        <property name="tipodedetalle" type="string">
+            <column name="TIPODEDETALLE" length="1" />
+        </property>
+        <property name="tipodeobjeto" type="string">
+            <column name="TIPODEOBJETO" length="1" />
+        </property>
+        <property name="objeto" type="string">
+            <column name="OBJETO" length="50" />
+        </property>
+        <property name="tipodeacceso" type="string">
+            <column name="TIPODEACCESO" length="1" />
+        </property>
+        <property name="objetowindow" type="string">
+            <column name="OBJETOWINDOW" length="80" />
+        </property>
+        <property name="workflag" type="string">
+            <column name="WORKFLAG" length="1" />
+        </property>
+        <property name="workagregarflag" type="string">
+            <column name="WORKAGREGARFLAG" length="1" />
+        </property>
+        <property name="workmodificarflag" type="string">
+            <column name="WORKMODIFICARFLAG" length="1" />
+        </property>
+        <property name="workborrarflag" type="string">
+            <column name="WORKBORRARFLAG" length="1" />
+        </property>
+        <property name="ultimousuario" type="string">
+            <column name="ULTIMOUSUARIO" length="20" />
+        </property>
+        <property name="ultimafechamodif" type="timestamp">
+            <column name="ULTIMAFECHAMODIF" length="7" />
+        </property>
+        <property name="workaprobarflag" type="string">
+            <column name="WORKAPROBARFLAG" length="1" />
+        </property>
+        <property name="xestado" type="string">
+            <column name="XESTADO" length="1" />
+        </property>
+        <property name="descripcioningles" type="string">
+            <column name="DESCRIPCIONINGLES" length="30" />
+        </property>
+        <property name="webaction" type="string">
+            <column name="WEBACTION" length="20" />
+        </property>
+        <property name="webflag" type="string">
+            <column name="WEBFLAG" length="1" />
+        </property>
+        <property name="webgrupo" type="string">
+            <column name="WEBGRUPO" length="6" />
+        </property>
+        <property name="webpage" type="string">
+            <column name="WEBPAGE" length="50" />
+        </property>
+        <property name="webgruposecuencia" type="integer">
+            <column name="WEBGRUPOSECUENCIA" length="22" />
+        </property>    
+        <property name="conceptopadre" type="string">  
+            <column name="CONCEPTOPADRE" length="6" />
+        </property>
+      	<property name="conceptoRelacion" type="string">  
+            <column name="CONCEPTORELACION" length="14" />
+        </property>
+    </class>
+</hibernate-mapping>
+
+

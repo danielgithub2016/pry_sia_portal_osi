@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="whrevaluacionperiodolist::#erp#rrhh#paginas#desempenio#w_hr_evaluacionperiodo_list.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/desempenio/w_hr_evaluacionperiodo_list.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#desempenio#w_hr_evaluacionperiodo_list.xhtml"
+    TITLE="whrevaluacionperiodolist" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:1" PATH="*" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:1" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="whrevaluacionempleadoedit::#erp#rrhh#paginas#desempenio#w_hr_evaluacionempleado_edit.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/desempenio/w_hr_evaluacionempleado_edit.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#desempenio#w_hr_evaluacionempleado_edit.xhtml"
+    TITLE="whrevaluacionempleadoedit" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:2" PATH="*" SHAPE="32,241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:2" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="whrevaluacionperiodolistevaluar::#erp#rrhh#paginas#desempenio#w_hr_evaluacionperiodo_list_evaluar.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/desempenio/w_hr_evaluacionperiodo_list_evaluar.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#desempenio#w_hr_evaluacionperiodo_list_evaluar.xhtml"
+    TITLE="whrevaluacionperiodolistevaluar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:3" PATH="*" SHAPE="32,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:3" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="actividadLista::#erp#rrhh#paginas#actividades#actividades_lista.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/actividades/actividades_lista.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#actividades#actividades_lista.xhtml"
+    TITLE="actividadLista" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:4" PATH="*" SHAPE="32,465,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:4" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="encuestaLista::#erp#rrhh#paginas#encuesta#encuestas_lista.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/encuesta/encuestas_lista.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#encuesta#encuestas_lista.xhtml"
+    TITLE="encuestaLista" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:5" PATH="*" SHAPE="32,577,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:5" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="encuesta_ejecucion::#erp#rrhh#paginas#encuesta#encuesta_ejecucion.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/encuesta/encuesta_ejecucion.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#encuesta#encuesta_ejecucion.xhtml"
+    TITLE="encuesta_ejecucion" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:6" PATH="*" SHAPE="32,689,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:6" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="hr_requerimiento_edit::#erp#rrhh#paginas#requerimiento#w_hr_requerimiento_edit.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/requerimiento/w_hr_requerimiento_edit.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#requerimiento#w_hr_requerimiento_edit.xhtml"
+    TITLE="hr_requerimiento_edit" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:7" PATH="*" SHAPE="32,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:7" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="whrrequerimientolist::#erp#rrhh#paginas#requerimiento#w_hr_requerimiento_list.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/requerimiento/w_hr_requerimiento_list.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#requerimiento#w_hr_requerimiento_list.xhtml"
+    TITLE="whrrequerimientolist" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#desempenio#w_hr_evaluacionperiodo_list.xhtml"
+  PATH="/erp/rrhh/paginas/desempenio/w_hr_evaluacionperiodo_list.xhtml"
+  SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#desempenio#w_hr_evaluacionperiodo_list_evaluar.xhtml"
+  PATH="/erp/rrhh/paginas/desempenio/w_hr_evaluacionperiodo_list_evaluar.xhtml"
+  SHAPE="240,257,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#desempenio#w_hr_evaluacionempleado_edit.xhtml"
+  PATH="/erp/rrhh/paginas/desempenio/w_hr_evaluacionempleado_edit.xhtml"
+  SHAPE="240,145,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#requerimiento#w_hr_requerimiento_list.xhtml"
+  PATH="/erp/rrhh/paginas/requerimiento/w_hr_requerimiento_list.xhtml"
+  SHAPE="240,817,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#encuesta#encuesta_ejecucion.xhtml"
+  PATH="/erp/rrhh/paginas/encuesta/encuesta_ejecucion.xhtml"
+  SHAPE="240,593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#requerimiento#w_hr_requerimiento_edit.xhtml"
+  PATH="/erp/rrhh/paginas/requerimiento/w_hr_requerimiento_edit.xhtml"
+  SHAPE="240,705,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#encuesta#encuestas_lista.xhtml"
+  PATH="/erp/rrhh/paginas/encuesta/encuestas_lista.xhtml"
+  SHAPE="240,481,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#actividades#actividades_lista.xhtml"
+  PATH="/erp/rrhh/paginas/actividades/actividades_lista.xhtml"
+  SHAPE="240,369,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:8" PATH="*" SHAPE="32,913,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:8" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="cursosempleado::#erp#rrhh#paginas#ficha#cursos#cursos_listado.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/ficha/cursos/cursos_listado.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#ficha#cursos#cursos_listado.xhtml"
+    TITLE="cursosempleado" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="cursosdocumentolista::#erp#rrhh#paginas#ficha#cursos#cursos_documento_lista.xhtml"
+    NAME="output1"
+    PATH="/erp/rrhh/paginas/ficha/cursos/cursos_documento_lista.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#ficha#cursos#cursos_documento_lista.xhtml"
+    TITLE="cursosdocumentolista" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#ficha#cursos#cursos_listado.xhtml"
+  PATH="/erp/rrhh/paginas/ficha/cursos/cursos_listado.xhtml"
+  SHAPE="240,929,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:9" PATH="*" SHAPE="32,1169,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:9" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="w_pr_empleado_select::#erp#rrhh#paginas#requerimiento#w_pr_empleado_select.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/requerimiento/w_pr_empleado_select.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#requerimiento#w_pr_empleado_select.xhtml"
+    TITLE="w_pr_empleado_select" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:10" PATH="*" SHAPE="32,1281,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:10" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="w_requerimiento_reemplazo_mantenimiento::#erp#rrhh#paginas#requerimiento#w_requerimiento_reemplazo_mantenimiento.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/requerimiento/w_requerimiento_reemplazo_mantenimiento.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#requerimiento#w_requerimiento_reemplazo_mantenimiento.xhtml"
+    TITLE="w_requerimiento_reemplazo_mantenimiento" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:11" PATH="*" SHAPE="32,1393,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:11" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="w_hr_puestos_edit::#erp#rrhh#paginas#desempenio#w_hr_puestos_edit.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/desempenio/w_hr_puestos_edit.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#desempenio#w_hr_puestos_edit.xhtml"
+    TITLE="w_hr_puestos_edit" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:12" PATH="*" SHAPE="32,1505,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:12" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="evaluacion_candidatos_list::#erp#rrhh#paginas#candidatos#w_evaluacion_candidatos_list.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/candidatos/w_evaluacion_candidatos_list.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#candidatos#w_evaluacion_candidatos_list.xhtml"
+    TITLE="evaluacion_candidatos_list" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:13" PATH="*" SHAPE="32,1617,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:13" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="evaluacion_candidatos_edit::#erp#rrhh#paginas#candidatos#w_evaluacion_candidatos_edit.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/candidatos/w_evaluacion_candidatos_edit.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#candidatos#w_evaluacion_candidatos_edit.xhtml"
+    TITLE="evaluacion_candidatos_edit" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:14" PATH="*" SHAPE="32,1729,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:14" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="genera_documento_etapa_seleccion::#erp#rrhh#paginas#candidatos#w_genera_documento_etapa_seleccion.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/candidatos/w_genera_documento_etapa_seleccion.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#candidatos#w_genera_documento_etapa_seleccion.xhtml"
+    TITLE="genera_documento_etapa_seleccion" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#candidatos#w_evaluacion_candidatos_list.xhtml"
+  PATH="/erp/rrhh/paginas/candidatos/w_evaluacion_candidatos_list.xhtml"
+  SHAPE="240,1521,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#requerimiento#w_requerimiento_reemplazo_mantenimiento.xhtml"
+  PATH="/erp/rrhh/paginas/requerimiento/w_requerimiento_reemplazo_mantenimiento.xhtml"
+  SHAPE="240,1297,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#requerimiento#w_pr_empleado_select.xhtml"
+  PATH="/erp/rrhh/paginas/requerimiento/w_pr_empleado_select.xhtml"
+  SHAPE="240,1185,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#candidatos#w_evaluacion_candidatos_edit.xhtml"
+  PATH="/erp/rrhh/paginas/candidatos/w_evaluacion_candidatos_edit.xhtml"
+  SHAPE="240,1633,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#desempenio#w_hr_puestos_edit.xhtml"
+  PATH="/erp/rrhh/paginas/desempenio/w_hr_puestos_edit.xhtml"
+  SHAPE="240,1409,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#ficha#cursos#cursos_documento_lista.xhtml"
+  PATH="/erp/rrhh/paginas/ficha/cursos/cursos_documento_lista.xhtml"
+  SHAPE="256,1073,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#capacitacion#capacitacion_publicada_lista.xhtml"
+  PATH="/erp/rrhh/paginas/capacitacion/capacitacion_publicada_lista.xhtml"
+  SHAPE="240,1745,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:15" PATH="*" SHAPE="32,1841,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:15" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="capacitaciones_publicadas::#erp#rrhh#paginas#capacitacion#capacitacion_publicada_lista.xhtml"
+    NAME="output"
+    PATH="/erp/rrhh/paginas/capacitacion/capacitacion_publicada_lista.xhtml"
+    TARGET="rules:#erp#rrhh#paginas#capacitacion#capacitacion_publicada_lista.xhtml"
+    TITLE="capacitaciones_publicadas" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#erp#rrhh#paginas#candidatos#w_genera_documento_etapa_seleccion.xhtml"
+  PATH="/erp/rrhh/paginas/candidatos/w_genera_documento_etapa_seleccion.xhtml"
+  SHAPE="240,1857,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

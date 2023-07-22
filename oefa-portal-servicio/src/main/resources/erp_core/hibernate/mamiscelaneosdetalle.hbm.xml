@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.erp.core.dominio.MaMiscelaneosdetalle" table="SGCORESYS.MA_MISCELANEOSDETALLE">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.MaMiscelaneosdetallePk">
+            <key-property name="aplicacioncodigo" type="string">
+                <column name="APLICACIONCODIGO" length="2" />
+            </key-property>
+            <key-property name="codigotabla" type="string">
+                <column name="CODIGOTABLA" length="10" />
+            </key-property>
+            <key-property name="compania" type="string">
+                <column name="COMPANIA" length="6" />
+            </key-property>
+            <key-property name="codigoelemento" type="string">
+                <column name="CODIGOELEMENTO" length="10" />
+            </key-property>
+        </composite-id>
+        <property name="descripcionlocal" type="string">
+            <column name="DESCRIPCIONLOCAL" length="120" />
+        </property>
+        <property name="descripcionextranjera" type="string">
+            <column name="DESCRIPCIONEXTRANJERA" length="120" />
+        </property>
+        <property name="valornumerico" type="big_decimal">
+            <column name="VALORNUMERICO" length="22" />
+        </property>
+        <property name="valorcodigo1" type="string">
+            <column name="VALORCODIGO1" length="10" />
+        </property>
+        <property name="valorcodigo2" type="string">
+            <column name="VALORCODIGO2" length="10" />
+        </property>
+        <property name="valorcodigo3" type="string">
+            <column name="VALORCODIGO3" length="10" />
+        </property>
+        <property name="valorcodigo4" type="string">
+            <column name="VALORCODIGO4" length="10" />
+        </property>
+        <property name="valorcodigo5" type="string">
+            <column name="VALORCODIGO5" length="10" />
+        </property>
+        <property name="valorfecha" type="timestamp">
+            <column name="VALORFECHA" length="7" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="valorcodigo6" type="string">
+            <column name="VALORCODIGO6" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

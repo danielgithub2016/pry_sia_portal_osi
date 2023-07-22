@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : asistencia.AsAsistenciadiaria -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="asasistenciadiaria.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+	</sql-query>
+
+	<sql-query name="asasistenciadiaria.obtenerEmpleadosSeleccionados">
+	 <![CDATA[
+		select
+		Tablas_01.COSTCENTER as "codCentroCosto",
+		empleado_01 as "empleado"
+		from (
+		SELECT
+		AC_COSTCENTERMST.COSTCENTER,
+		EmpleadoMast.empleado as empleado_01
+		
+		FROM SGCORESYS.AS_AsistenciaDiaria
+		INNER JOIN SGCORESYS.PersonaMast
+		ON AS_AsistenciaDiaria.Empleado = PersonaMast.Persona
+
+		INNER JOIN SGCORESYS.EmpleadoMast
+		ON AS_AsistenciaDiaria.Empleado = EmpleadoMast.Empleado
+
+		INNER JOIN SGCORESYS.AS_CarnetIdentificacion
+		ON AS_AsistenciaDiaria.Empleado = AS_CarnetIdentificacion.Empleado
+		AND AS_CarnetIdentificacion.Estado = 'A'
+
+		INNER JOIN SGCORESYS.AS_ConceptoAcceso
+		ON AS_AsistenciaDiaria.ConceptoAcceso = AS_ConceptoAcceso.ConceptoAcceso
+
+		LEFT JOIN SGCORESYS.AC_CostCenterMst
+		ON EmpleadoMast.CentroCostos = AC_CostCenterMst.CostCenter
+
+		LEFT JOIN SGCORESYS.AS_Area
+		ON AS_CarnetIdentificacion.Area = AS_Area.Area
+		LEFT JOIN SGCORESYS.COMPANYOWNER ON COMPANYOWNER.COMPANYOWNER=
+		EmpleadoMast.CompaniaSocio
+		LEFT JOIN SGCORESYS.COMPANIAMAST ON
+		COMPANIAMAST.COMPANIACODIGO=COMPANYOWNER.COMPANY
+
+		WHERE (AS_ASISTENCIADIARIA.FlagCompensacion = '+' or
+		AS_ASISTENCIADIARIA.FlagCompensacion = '-')
+		AND ( AS_ASISTENCIADIARIA.ConceptoAcceso in ('HNAU','33') )
+		 and ((AS_AsistenciaDiaria.Fecha >=:p_fecha_desde AND AS_AsistenciaDiaria.Fecha <=:p_fecha_hasta) or
+        :p_flag_periodo= 'N')
+		and ( AS_ASISTENCIADIARIA.FECHA >= NVL(empleadomast.fechareingreso,
+		empleadomast.fechaingreso ))
+		[FILTROADICIONALES]
+
+		) Tablas_01
+		where 1 = 1
+		AND ( empleado_01 in (select AS_EMPLEADOS_AUTORIZADOS.empleado
+		from SGCORESYS.AS_EMPLEADOS_AUTORIZADOS
+		where AS_EMPLEADOS_AUTORIZADOS.sid =:p_sid))
+		GROUP BY
+		Tablas_01.COSTCENTER,
+		empleado_01
+		]]>
+	</sql-query>
+</hibernate-mapping>

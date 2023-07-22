@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.sistema.dominio.SyUnidadreplicacion" table="SGCORESYS.SY_UNIDADREPLICACION">
+        <composite-id name="pk" class="net.royal.erp.sistema.dominio.SyUnidadreplicacionPk">
+            <key-property name="unidadreplicacion" type="string">
+                <column name="UNIDADREPLICACION" length="4" />
+            </key-property>
+        </composite-id>
+        <property name="descripcionlocal" type="string">
+            <column name="DESCRIPCIONLOCAL" length="30" />
+        </property>
+        <property name="descripcionextranjera" type="string">
+            <column name="DESCRIPCIONEXTRANJERA" length="30" />
+        </property>
+        <property name="rangopersonainicio" type="integer">
+            <column name="RANGOPERSONAINICIO" length="22" />
+        </property>
+        <property name="rangopersonafin" type="integer">
+            <column name="RANGOPERSONAFIN" length="22" />
+        </property>
+        <property name="personaactual" type="integer">
+            <column name="PERSONAACTUAL" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

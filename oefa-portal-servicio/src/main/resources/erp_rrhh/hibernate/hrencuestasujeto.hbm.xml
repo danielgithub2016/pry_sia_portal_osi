@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.rrhh.dominio.HrEncuestasujeto" table="SGCORESYS.HR_ENCUESTASUJETO">
+		<composite-id name="pk"
+			class="net.royal.erp.rrhh.dominio.HrEncuestasujetoPk">
+			<key-property name="secuencia" type="integer">
+				<column name="SECUENCIA" length="22" />
+			</key-property>
+			<key-property name="sujeto" type="integer">
+				<column name="SUJETO" length="22" />
+			</key-property>
+			<key-property name="pregunta" type="integer">
+				<column name="PREGUNTA" length="22" />
+			</key-property>
+
+			<key-property name="companiasocio" type="string">
+				<column name="COMPANIASOCIO" length="8" />
+			</key-property>
+
+		</composite-id>
+
+		<property name="valor" type="integer">
+			<column name="VALOR" length="22" />
+		</property>
+		<property name="observacion" type="string">
+			<column name="OBSERVACION" length="4000" />
+		</property>
+
+		<property name="departamentooperacional" type="string">
+			<column name="DEPARTAMENTOOPERACIONAL" length="10" />
+		</property>
+		<property name="tipoplanilla" type="string">
+			<column name="TIPOPLANILLA" length="2" />
+		</property>
+		<property name="personasacargo" type="integer">
+			<column name="PERSONASACARGO" length="22" />
+		</property>
+		<property name="sexo" type="string">
+			<column name="SEXO" length="1" />
+		</property>
+		<property name="tiempodetrabajo" type="string">
+			<column name="TIEMPODETRABAJO" length="20" />
+		</property>
+		<property name="tipocontrato" type="string">
+			<column name="TIPOCONTRATO" length="2" />
+		</property>
+		<property name="areaposicion" type="integer">
+			<column name="AREAPOSICION" length="22" />
+		</property>
+		<property name="categoria" type="string">
+			<column name="CATEGORIA" length="3" />
+		</property>
+		<property name="sindicato" type="string">
+			<column name="SINDICATO" length="1" />
+		</property>
+		<property name="edad" type="string">
+			<column name="EDAD" length="20" />
+		</property>
+		<property name="encuestado" type="integer">
+			<column name="ENCUESTADO" length="22" />
+		</property>
+		<property name="dptoareaoperativa" type="integer">
+			<column name="DPTOAREAOPERATIVA" length="22" />
+		</property>
+
+		<property name="gradoinstruccion" type="string">
+			<column name="GRADOINSTRUCCION" length="5" />
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,91 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panelGrid columns="2" layout="grid"
+		columnClasses="ui-grid-col-2,ui-grid-col-2"
+		styleClass="ui-panelgrid-blank">
+		<p:commandButton value="Imprimir Detalle"
+			disabled="#{cwHrEvaluacionempleadoEdit.opciones.p1cb1_disable}"
+			action="#{cwHrDetalleEvaluacion.validarAntesImprimir}" update="@form"
+			icon="imprimir" />
+
+		<p:commandButton value="Gráfico" icon="verReporte" update="@form"
+			onclick="document.getElementById('frmEvaluacionEmpleado:tvDatos:grafico').click();"
+			disabled="#{cwHrEvaluacionempleadoEdit.opciones.p1cbimprimir_disable}" />
+
+		<h:commandLink target="_blank" style="display:none;"
+			action="#{cwHrDetalleEvaluacion.mostrarReporte}" id="grafico" />
+
+		<h:commandLink target="_blank" style="display:none;"
+			action="#{cwHrDetalleEvaluacion.mostrarReporteEva}" id="detalle" />
+
+	</p:panelGrid>
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		id="tblGrafico" sortBy="#{t.secuenciaeval}" reflow="true"
+		value="#{cwHrDetalleEvaluacion.dwGrafico}" var="t">
+		<p:subTable var="detalle" value="#{t.detallegrafico}" id="idGrafico">
+
+			<f:facet name="header">
+				<h:outputText value="#{t.descripcion}" />
+			</f:facet>
+
+			<p:column width="100">
+				<h:outputText value="#{detalle.descripcion2}" />
+			</p:column>
+
+			<p:column width="180">
+				<p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2,ui-grid-col-2"
+					styleClass="ui-panelgrid-blank">
+					<h:outputText
+						value="#{detalle.valorrequerido} #{detalle.desvalorrequerido}"
+						style="font-size: 11px; font-weight: bold; color: #990000;" />
+					<p:progressBar value="#{detalle.valorrequeridocolor}"
+						displayOnly="true" styleClass="idvalorRequerido" />
+
+					<h:outputText
+						value="#{detalle.calificacion} #{detalle.desvalorregistrado}"
+						style="font-size: 11px; font-weight: bold; color: blue; vertical-align: center;" />
+					<p:progressBar value="#{detalle.calificacioncolor}"
+						displayOnly="true" styleClass="idvalorRegistrado" />
+
+					<h:outputText value="#{detalle.promediocategoria}"
+						style="font-size: 11px;font-weight: bold;color: blue;">
+						<f:convertNumber minFractionDigits="2" maxFractionDigits="2"
+							locale="en" />
+					</h:outputText>
+					<p:progressBar value="#{detalle.promediocategoriacolor}"
+						displayOnly="true" styleClass="idvalorPromedio" />
+				</p:panelGrid>
+
+			</p:column>
+		</p:subTable>
+		<f:facet name="footer">
+			<table style="border-color: transparent;">
+				<tr>
+					<td class="columnatablaDerecha">Puntaje Total</td>
+					<td class="columnatablaDerecha"
+						style="width: 40px; font-size: 11px; font-weight: bold"><h:outputText
+							value="#{cwHrDetalleEvaluacion.cantCalificacionGrafico}">
+							<f:convertNumber minIntegerDigits="1" maxFractionDigits="2"
+								minFractionDigits="2" locale="#{msg.formato_numeros_punto}" />
+						</h:outputText></td>
+
+					<td class="columnatablaCentro">
+						#{cwHrDetalleEvaluacion.nivelGrafico}</td>
+
+				</tr>
+			</table>
+		</f:facet>
+
+	</p:dataTable>
+
+</ui:composition>
+
+
+
+

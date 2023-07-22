@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.seguridad.dominio.Tipocambiomast" table="SGCORESYS.TIPOCAMBIOMAST">
+        <composite-id name="pk" class="net.royal.seguridad.dominio.TipocambiomastPk">
+            <key-property name="monedacodigo" type="string">
+                <column name="MONEDACODIGO" length="2" />
+            </key-property>
+            <key-property name="monedacambiocodigo" type="string">
+                <column name="MONEDACAMBIOCODIGO" length="2" />
+            </key-property>
+            <key-property name="fechacambio" type="timestamp">
+                <column name="FECHACAMBIO" length="7" />
+            </key-property>
+        </composite-id>
+        <property name="fechacambiostring" type="string">
+            <column name="FECHACAMBIOSTRING" length="8" />
+        </property>
+        <property name="factor" type="java.math.BigDecimal">
+            <column name="FACTOR" length="22" />
+        </property>
+        <property name="factorcompra" type="java.math.BigDecimal">
+            <column name="FACTORCOMPRA" length="22" />
+        </property>
+        <property name="factorventa" type="java.math.BigDecimal">
+            <column name="FACTORVENTA" length="22" />
+        </property>
+        <property name="factorpromedio" type="java.math.BigDecimal">
+            <column name="FACTORPROMEDIO" length="22" />
+        </property>
+        <property name="factorcompraafp" type="java.math.BigDecimal">
+            <column name="FACTORCOMPRAAFP" length="22" />
+        </property>
+        <property name="factorventaafp" type="java.math.BigDecimal">
+            <column name="FACTORVENTAAFP" length="22" />
+        </property>
+        <property name="factorcomprasbs" type="java.math.BigDecimal">
+            <column name="FACTORCOMPRASBS" length="22" />
+        </property>
+        <property name="factorventasbs" type="java.math.BigDecimal">
+            <column name="FACTORVENTASBS" length="22" />
+        </property>
+        <property name="valorcuota" type="java.math.BigDecimal">
+            <column name="VALORCUOTA" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="tasatamex" type="java.math.BigDecimal">
+            <column name="TASATAMEX" length="22" />
+        </property>
+        <property name="tasatamn" type="java.math.BigDecimal">
+            <column name="TASATAMN" length="22" />
+        </property>
+        <property name="tasaanualtamex" type="java.math.BigDecimal">
+            <column name="TASAANUALTAMEX" length="22" />
+        </property>
+        <property name="tasaanualtamn" type="java.math.BigDecimal">
+            <column name="TASAANUALTAMN" length="22" />
+        </property>
+        <property name="factorcobranzacompra" type="java.math.BigDecimal">
+            <column name="FACTORCOBRANZACOMPRA" length="22" />
+        </property>
+        <property name="factorcobranzaventa" type="java.math.BigDecimal">
+            <column name="FACTORCOBRANZAVENTA" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

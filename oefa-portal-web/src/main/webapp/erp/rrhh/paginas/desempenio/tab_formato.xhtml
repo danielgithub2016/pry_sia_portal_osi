@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:tabView id="idtabForma" dynamic="true" 
+			activeIndex="#{cwHrPuestosEdit.tabActivo1}">
+		<p:ajax event="tabChange" listener="#{cwHrPuestosEdit.onTabChange2}" />
+		<p:tab id="tVistaPrevia">
+			<f:facet name="title" >
+				<h:panelGrid columns="2">
+					<h:outputText value="Vista Previa" />
+				</h:panelGrid>
+			</f:facet>
+			<ui:include src="tab_tVistaPrevia.xhtml" >
+				<p:ajax update=":whrpuestosedit:tabView:idtabForma:tVistaPrevia" />
+			</ui:include>
+		</p:tab>
+
+		<p:tab id="tRequisitoMinimo">
+			<f:facet name="title">
+				<h:panelGrid columns="2">
+					<h:outputText value="Requisitos Mínimos" />
+				</h:panelGrid>
+			</f:facet>
+			<ui:include src="tab_tRequisitoMinimo.xhtml">
+				<p:ajax update=":whrpuestosedit:tabView:idtabForma:tRequisitoMinimo" />
+			</ui:include>
+		</p:tab>
+
+	</p:tabView>
+
+</ui:composition>
+
+
+
+
+

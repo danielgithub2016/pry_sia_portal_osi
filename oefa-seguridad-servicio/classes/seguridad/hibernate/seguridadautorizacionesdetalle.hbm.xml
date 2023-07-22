@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.seguridad.dominio.Seguridadautorizacionesdetalle" table="SGCORESYS.SEGURIDADAUTORIZACIONESDETALLE">
+        <composite-id name="pk" class="net.royal.seguridad.dominio.SeguridadautorizacionesdetallePk">
+            <key-property name="aplicacioncodigo" type="string">
+                <column name="APLICACIONCODIGO" length="2" />
+            </key-property>
+            <key-property name="grupo" type="string">
+                <column name="GRUPO" length="6" />
+            </key-property>
+            <key-property name="concepto" type="string">
+                <column name="CONCEPTO" length="6" />
+            </key-property>
+            <key-property name="detallecodigo" type="string">
+                <column name="DETALLECODIGO" length="6" />
+            </key-property>
+            <key-property name="usuario" type="string">
+                <column name="USUARIO" length="20" />
+            </key-property>
+        </composite-id>
+        <property name="conceptocodigo" type="string">
+            <column name="CONCEPTOCODIGO" length="3" />
+        </property>
+        <property name="ultimousuario" type="string">
+            <column name="ULTIMOUSUARIO" length="20" />
+        </property>
+        <property name="ultimafechamodif" type="timestamp">
+            <column name="ULTIMAFECHAMODIF" length="7" />
+        </property>
+    </class>
+</hibernate-mapping>

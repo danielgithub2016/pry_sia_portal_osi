@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+
+	<application>
+		<resource-bundle>
+			<base-name>erp_rrhh.messages</base-name>
+			<var>msgHR</var>
+		</resource-bundle>
+	</application>
+
+	<!-- Modulo Evaluacion Desempeño -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>whrevaluacionperiodolist</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/desempenio/w_hr_evaluacionperiodo_list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>whrevaluacionempleadoedit</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/desempenio/w_hr_evaluacionempleado_edit.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>whrevaluacionperiodolistevaluar</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/desempenio/w_hr_evaluacionperiodo_list_evaluar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>actividadLista</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/actividades/actividades_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>reporteProceso02</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/entrevista/reporte_ProcesoSIA.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>reportePostulante02</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/entrevista/reporte_PostulanteSIA.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>reporteProceso</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/entrevista/reporte_Proceso.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>reportePostulante</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/entrevista/reporte_Postulante.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>encuestaLista</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/encuesta/encuestas_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>puntajeLista</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/entrevista/evaluacion_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>postulanteLista</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/entrevista/postulante_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>entrevistaLista</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/entrevista/entrevista_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>evaluacionLista</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/evaluacion/evaluacion_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>postulantesListaEval</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/evaluacion/postulante_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>evaluacionSalaCEU</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/sala_ceu/sala_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>postulantesSalaCEU</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/sala_ceu/sala_postulante_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>evaluacionListaCEU</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/evaluacion_ceu/evaluacion_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+			<from-view-id>*</from-view-id>
+			<navigation-case>
+				<from-outcome>evaluacionListaFIFA</from-outcome>
+				<to-view-id>/erp/rrhh/paginas/evaluacion_fifa/evaluacion_lista.xhtml</to-view-id>
+				<redirect />
+			</navigation-case>
+		</navigation-rule>
+		<navigation-rule>
+			<from-view-id>*</from-view-id>
+			<navigation-case>
+				<from-outcome>postulantesListaEvalFIFA</from-outcome>
+				<to-view-id>/erp/rrhh/paginas/evaluacion_fifa/postulante_lista.xhtml</to-view-id>
+				<redirect />
+			</navigation-case>
+		</navigation-rule>
+		
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>postulantesListaEvalCEU</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/evaluacion_ceu/postulante_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		
+
+		<navigation-case>
+			<from-outcome>evaluacionSalaFIFA</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/sala_fifa/sala_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>postulantesSalaFIFA</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/sala_fifa/sala_postulante_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+	</navigation-rule>
+
+
+
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>encuesta_ejecucion</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/encuesta/encuesta_ejecucion.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>hr_requerimiento_edit</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/requerimiento/w_hr_requerimiento_edit.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>whrrequerimientolist</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/requerimiento/w_hr_requerimiento_list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cursosempleado</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/ficha/cursos/cursos_listado.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cursosdocumentolista</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/ficha/cursos/cursos_documento_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>w_pr_empleado_select</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/requerimiento/w_pr_empleado_select.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>w_requerimiento_reemplazo_mantenimiento</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/requerimiento/w_requerimiento_reemplazo_mantenimiento.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>w_hr_puestos_edit</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/desempenio/w_hr_puestos_edit.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>evaluacion_candidatos_list</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/candidatos/w_evaluacion_candidatos_list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>evaluacion_candidatos_edit</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/candidatos/w_evaluacion_candidatos_edit.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>genera_documento_etapa_seleccion</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/candidatos/w_genera_documento_etapa_seleccion.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>capacitaciones_publicadas</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/capacitacion/capacitacion_publicada_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>capacitaciones_docpendiente</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/capacitacion/capacitacion_docpendientes_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>postulantesAdm</from-outcome>
+			<to-view-id>/erp/rrhh/paginas/postulante/postulante_adm.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+	</navigation-rule>
+
+
+
+
+</faces-config>

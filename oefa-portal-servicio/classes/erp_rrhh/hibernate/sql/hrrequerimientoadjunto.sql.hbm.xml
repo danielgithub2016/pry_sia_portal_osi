@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : rrhh.HrActividad -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="hrrequerimientoadjunto.eliminarArchivo">
+		<![CDATA[
+			delete from SGCORESYS.HR_REQUERIMIENTOADJUNTO where
+             requerimiento=:p_requerimiento and companyowner=:p_compania
+		]]>
+	</sql-query>
+
+</hibernate-mapping>

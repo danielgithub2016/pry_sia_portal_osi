@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : asmast.w_pr_ubicaciongeografica_select -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<!-- asmast.dddw_as_area_select -->
+	<sql-query name="asmast.DddwAsAreaSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_bonificacion_campo_select -->
+	<sql-query name="asmast.DddwAsBonificacionCampoSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_bonificacioncurso_select -->
+	<sql-query name="asmast.DddwAsBonificacioncursoSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_cargoempresa -->
+	<sql-query name="asmast.DddwAsCargoempresa">
+	</sql-query>
+
+	<!-- asmast.dddw_as_categoriafuncional -->
+	<sql-query name="asmast.DddwAsCategoriafuncional">
+	</sql-query>
+
+	<!-- asmast.dddw_as_conceptoacceso_select -->
+	<sql-query name="asmast.DddwAsConceptoaccesoSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_conceptoacceso_select_gnral -->
+	<sql-query name="asmast.DddwAsConceptoaccesoSelectGnral">
+	</sql-query>
+	
+	<sql-query name="asmast.DddwAsConceptoaccesoSelectPreSiged">
+		SELECT AS_ConceptoAcceso.ConceptoAcceso as
+		"conceptoacceso",
+		AS_ConceptoAcceso.DescripcionLocal as
+		"descripcionlocal",
+		AS_ConceptoAcceso.ConceptoAccesoSistema as
+		"conceptoaccesosistema",
+		nvl
+		(AS_ConceptoAcceso.FlagCompensa, 'N') as
+		"flagcompensa",
+		AS_ConceptoAcceso.ExpresadoEn as "expresadoen",
+		nvl
+		(AS_ConceptoAcceso.FlagOtrosPermisos, 'N') as "flagotrospermisos",
+		nvl
+		(AS_ConceptoAcceso.FlagArchivo, 'N') as "flagarchivo",
+		nvl
+		(AS_ConceptoAcceso.FlagHorasMaximo, 'N') as "flaghorasmaximo",
+		nvl(AS_ConceptoAcceso.FlagHorasMaximoAnio, 'N') as
+		"flaghorasmaximoanio",
+		nvl(AS_ConceptoAcceso.FlagHorasMinimo, 'N') as
+		"flaghorasminimo",
+		nvl
+		(AS_ConceptoAcceso.FlagMinutosMinimo, 'N') as
+		"flagminutosminimo",
+		nvl
+		(AS_ConceptoAcceso.FlagTopeDias, 'N') as
+		"flagtopedias",
+		AS_ConceptoAcceso.CantidadTopeDias as
+		"cantidadtopedias",
+		AS_ConceptoAcceso.CantidadHorasMaximo as
+		"cantidadhorasmaximo",
+		AS_ConceptoAcceso.CantidadHorasMaximoAnio as
+		"cantidadhorasmaximoanio",
+		AS_ConceptoAcceso.CantidadHorasMinimo as
+		"cantidadhorasminimo",
+		AS_ConceptoAcceso.CantidadMinutosMinimo as
+		"cantidadminutosminimo",
+		AS_ConceptoAcceso.FlagNoRechazaAprobado as
+		"flagnorechazaaprobado",
+		AS_ConceptoAcceso.FlagFechaInferior as
+		"flagfechainferior",
+		AS_ConceptoAcceso.FlagTieneResolucion as
+		"flagtieneresolucion",
+		AS_ConceptoAcceso.numerohorasmesesrestriccion as
+		"numerohorasmesesrestriccion",
+		AS_ConceptoAcceso.fechainiciorestriccion as "fechainiciorestriccion",
+		AS_ConceptoAcceso.cantmaxanio as "cantmaxanio",
+		nvl(AS_ConceptoAcceso.FlagDiasMaximo, 'N') as "flagdiasmaximo",
+		AS_ConceptoAcceso.CantidadDiasMaximo as "cantidaddiasmaximo",
+		AS_ConceptoAcceso.flagvacaciones as
+		"flagvacaciones",
+		AS_ConceptoAcceso.ANOLIMITE as "anolimite",
+		AS_ConceptoAcceso.DIASCOMPENSA as "diascompensa",
+		AS_ConceptoAcceso.fechaLimite as
+		"fechaLimite"
+		FROM
+		SGCORESYS.
+		AS_ConceptoAcceso
+		WHERE (
+		AS_ConceptoAcceso.Estado = 'A' )
+		AND AS_CONCEPTOACCESO.FLAGSIGED = 'S'
+		ORDER BY AS_ConceptoAcceso.DescripcionLocal
+	</sql-query>
+
+	<!-- asmast.dddw_as_conceptoacceso_select_pre -->
+	<sql-query name="asmast.DddwAsConceptoaccesoSelectPre">
+		SELECT AS_ConceptoAcceso.ConceptoAcceso as
+		"conceptoacceso",
+		AS_ConceptoAcceso.DescripcionLocal as
+		"descripcionlocal",
+		AS_ConceptoAcceso.ConceptoAccesoSistema as
+		"conceptoaccesosistema",
+		AS_ConceptoAccesoSistema.Descripcion as
+		"descripcion",
+		nvl
+		(AS_ConceptoAcceso.FlagCompensa, 'N') as
+		"flagcompensa",
+		AS_ConceptoAcceso.ExpresadoEn as "expresadoen",
+		nvl
+		(AS_ConceptoAcceso.FlagOtrosPermisos, 'N') as "flagotrospermisos",
+		nvl
+		(AS_ConceptoAcceso.FlagArchivo, 'N') as "flagarchivo",
+		nvl
+		(AS_ConceptoAcceso.FlagHorasMaximo, 'N') as "flaghorasmaximo",
+		nvl(AS_ConceptoAcceso.FlagHorasMaximoAnio, 'N') as
+		"flaghorasmaximoanio",
+		nvl(AS_ConceptoAcceso.FlagHorasMinimo, 'N') as
+		"flaghorasminimo",
+		nvl
+		(AS_ConceptoAcceso.FlagMinutosMinimo, 'N') as
+		"flagminutosminimo",
+		nvl
+		(AS_ConceptoAcceso.FlagTopeDias, 'N') as
+		"flagtopedias",
+		AS_ConceptoAcceso.CantidadTopeDias as
+		"cantidadtopedias",
+		AS_ConceptoAcceso.CantidadHorasMaximo as
+		"cantidadhorasmaximo",
+		AS_ConceptoAcceso.CantidadHorasMaximoAnio as
+		"cantidadhorasmaximoanio",
+		AS_ConceptoAcceso.CantidadHorasMinimo as
+		"cantidadhorasminimo",
+		AS_ConceptoAcceso.CantidadMinutosMinimo as
+		"cantidadminutosminimo",
+		AS_ConceptoAcceso.FlagNoRechazaAprobado as
+		"flagnorechazaaprobado",
+		AS_ConceptoAcceso.FlagFechaInferior as
+		"flagfechainferior",
+		AS_ConceptoAcceso.FlagTieneResolucion as
+		"flagtieneresolucion",
+		AS_ConceptoAcceso.numerohorasmesesrestriccion as
+		"numerohorasmesesrestriccion",
+		AS_ConceptoAcceso.fechainiciorestriccion as "fechainiciorestriccion",
+		AS_ConceptoAcceso.cantmaxanio as "cantmaxanio",
+		nvl(AS_ConceptoAcceso.FlagDiasMaximo, 'N') as "flagdiasmaximo",
+		AS_ConceptoAcceso.CantidadDiasMaximo as "cantidaddiasmaximo",
+		AS_ConceptoAcceso.flagvacaciones as
+		"flagvacaciones",
+		AS_ConceptoAcceso.ANOLIMITE as "anolimite",
+		AS_ConceptoAcceso.DIASCOMPENSA as "diascompensa",
+		AS_ConceptoAcceso.fechaLimite as
+		"fechaLimite"
+		FROM
+		SGCORESYS.
+		AS_ConceptoAcceso,
+		SGCORESYS.AS_ConceptoAccesoSistema
+		WHERE (
+		AS_ConceptoAcceso.ConceptoAccesoSistema =
+		AS_ConceptoAccesoSistema.ConceptoSistema )
+		AND (
+		AS_ConceptoAcceso.Estado = 'A' )
+		AND (
+		AS_ConceptoAcceso.ConceptoAccesoSistema in ('FALT','PERM') or
+		AS_ConceptoAcceso.ConceptoAcceso = 'PAHE' OR
+		AS_ConceptoAcceso.ConceptoAcceso = 'OMIS')
+		<!-- AND (AS_ConceptoAcceso.ANOLIMITE >= extract(year from sysdate)) -->
+		AND ( ( 'S' = (
+		SELECT
+		MAX(AS_Seguridad.valortexto)
+		FROM
+		SGCORESYS.AS_Seguridad
+		WHERE
+		AS_Seguridad.usuario=:p_usuario
+		AND
+		AS_Seguridad.ConceptoSeguridad='ALLCONCEPT'
+		)
+		OR 'S' = (
+		SELECT
+		MAX(AS_Seguridad.valortexto)
+		FROM SGCORESYS.AS_Seguridad
+		WHERE
+		AS_Seguridad.usuario IN (
+		SELECT Perfil
+		FROM
+		SGCORESYS.SeguridadperfilUsuario
+		WHERE Usuario = :p_usuario)
+		AND
+		AS_Seguridad.ConceptoSeguridad='ALLCONCEPT'
+		)
+		)
+		OR (
+		AS_ConceptoAcceso.ConceptoAcceso IN (
+		SELECT AS_Seguridad.valortexto
+		FROM SGCORESYS.AS_Seguridad
+		WHERE AS_Seguridad.usuario=:p_usuario
+		AND
+		AS_Seguridad.ConceptoSeguridad='TIPOCO'
+		)
+		OR
+		AS_ConceptoAcceso.ConceptoAcceso IN (
+		SELECT AS_Seguridad.valortexto
+		FROM SGCORESYS.AS_Seguridad
+		WHERE AS_Seguridad.usuario IN (
+		SELECT
+		Perfil
+		FROM SGCORESYS.SeguridadperfilUsuario
+		WHERE Usuario = :p_usuario)
+		AND AS_Seguridad.ConceptoSeguridad='TIPOCO'
+		)
+		)
+		or ( :p_administrador =
+		'S' ) )
+		ORDER BY AS_ConceptoAcceso.DescripcionLocal
+	</sql-query>
+
+	<!-- asmast.dddw_as_conceptoacceso_select_pre_2 -->
+	<sql-query name="asmast.DddwAsConceptoaccesoSelectPre2">
+	</sql-query>
+
+	<!-- asmast.dddw_as_conceptoacceso_select_report -->
+	<sql-query name="asmast.DddwAsConceptoaccesoSelectReport">
+	</sql-query>
+
+	<!-- asmast.dddw_as_conceptoacceso_select_sustit -->
+	<sql-query name="asmast.DddwAsConceptoaccesoSelectSustit">
+	</sql-query>
+
+	<!-- asmast.dddw_as_conceptoacceso_select_todos -->
+	<sql-query name="asmast.DddwAsConceptoaccesoSelectTodos">
+	</sql-query>
+
+	<!-- asmast.dddw_as_conceptoaccesosistema_select -->
+	<sql-query name="asmast.DddwAsConceptoaccesosistemaSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_costcenter -->
+	<sql-query name="asmast.DddwAsCostcenter">
+	</sql-query>
+
+	<!-- asmast.dddw_as_cursos_docentes_select -->
+	<sql-query name="asmast.DddwAsCursosDocentesSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_cursosespecialidad_select -->
+	<sql-query name="asmast.DddwAsCursosespecialidadSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_division -->
+	<sql-query name="asmast.DddwAsDivision">
+	</sql-query>
+
+	<!-- asmast.dddw_as_empleado_select -->
+	<sql-query name="asmast.DddwAsEmpleadoSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_empleadosmast_select_carnets -->
+	<sql-query name="asmast.DddwAsEmpleadosmastSelectCarnets">
+		SELECT
+		cast(PersonaMast.Persona as number(10))
+		as "persona",
+		PersonaMast.NombreCompleto as "nombrecompleto",
+		EmpleadoMast.CompaniaSocio as "companiasocio"
+		FROM
+		SGCORESYS.PersonaMast, SGCORESYS.EmpleadoMast
+		WHERE (
+		PersonaMast.Persona = EmpleadoMast.Empleado ) and
+		( (
+		PersonaMast.Estado = 'A' ) AND
+		( PersonaMast.EsEmpleado = 'S' ) AND
+		(
+		EmpleadoMast.Estado = 'A' ) )
+		ORDER BY PersonaMast.NombreCompleto ASC,
+		PersonaMast.Persona DESC
+	</sql-query>
+
+	<!-- asmast.dddw_as_especialidad_select -->
+	<sql-query name="asmast.DddwAsEspecialidadSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_especialidadfase_select -->
+	<sql-query name="asmast.DddwAsEspecialidadfaseSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_evento_select -->
+	<sql-query name="asmast.DddwAsEventoSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_fasecurso_select -->
+	<sql-query name="asmast.DddwAsFasecursoSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_intervaloacceso_select -->
+	<sql-query name="asmast.DddwAsIntervaloaccesoSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_oficina_sucursal -->
+	<sql-query name="asmast.DddwAsOficinaSucursal">
+	</sql-query>
+
+	<!-- asmast.dddw_as_periodoprograma_select -->
+	<sql-query name="asmast.DddwAsPeriodoprogramaSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_periodoprogramapago_select -->
+	<sql-query name="asmast.DddwAsPeriodoprogramapagoSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_programa_select -->
+	<sql-query name="asmast.DddwAsProgramaSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_sustitucionevento_select -->
+	<sql-query name="asmast.DddwAsSustitucioneventoSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_tempus_terminal -->
+	<sql-query name="asmast.DddwAsTempusTerminal">
+		SELECT
+		VW_AS_TERMINALMAST.IDTERMINAL as
+		"idterminal" ,
+		VW_AS_TERMINALMAST.NOMBRETERMINAL as "nombreterminal"
+		FROM
+		sgcoresys.VW_AS_TERMINALMAST
+		ORDER BY VW_AS_TERMINALMAST.IDTERMINAL
+	</sql-query>
+
+	<!-- asmast.dddw_as_tipodiaasistencia_activo_select -->
+	<sql-query name="asmast.DddwAsTipodiaasistenciaActivoSelect">
+	</sql-query>
+
+	<!-- asmast.dddw_as_tipodiaasistencia_select -->
+	<sql-query name="asmast.DddwAsTipodiaasistenciaSelect">
+		SELECT DISTINCT
+		AS_TIPODIAASISTENCIA.TIPODIA
+		as "tipodia",
+		AS_TIPODIAASISTENCIA.DESCRIPCIONLOCAL as
+		"descripcionlocal",
+		(SELECT MIN(horainicio)
+		from
+		SGCORESYS.AS_TipoDiaMovimiento
+		where AS_TipoDiaMovimiento.TIPODIA =
+		AS_TIPODIAASISTENCIA.TIPODIA
+		AND INTERVALOACCESO = 'TRAB') AS
+		"horainicio",
+		(SELECT MAX(horafin)
+		from
+		SGCORESYS.AS_TipoDiaMovimiento
+		where AS_TipoDiaMovimiento.TIPODIA =
+		AS_TIPODIAASISTENCIA.TIPODIA
+		AND
+		INTERVALOACCESO = 'TRAB') AS "horafin",
+		(SELECT
+		(SUM (
+		((To_Number(
+		to_char( HORAFIN,'HH24'))
+		*60 *60 ) +
+		(To_Number( to_char(
+		HORAFIN,'MI')) * 60) +
+		(To_Number(
+		to_char( HORAFIN,'SS')))
+		-
+		(
+		(To_Number( to_char(HORAINICIO,'HH24')) *60
+		*60 ) +
+		(To_Number(
+		to_char(HORAINICIO,'MI')) * 60) +
+		(To_Number(
+		to_char(HORAINICIO,'SS'))
+		))
+		))/3600) from
+		SGCORESYS.AS_TipoDiaMovimiento
+		where
+		AS_TipoDiaMovimiento.TIPODIA =
+		AS_TIPODIAASISTENCIA.TIPODIA
+		AND
+		INTERVALOACCESO = 'TRAB') AS "suma",
+		(SELECT
+		(SUM (
+		((To_Number( to_char(
+		HORAFIN,'HH24')) *60 *60 ) +
+		(To_Number( to_char( HORAFIN,'MI')) * 60)
+		+
+		(To_Number( to_char(
+		HORAFIN,'SS')))
+		-
+		(
+		(To_Number(
+		to_char(HORAINICIO,'HH24')) *60 *60 ) +
+		(To_Number(
+		to_char(HORAINICIO,'MI')) * 60) +
+		(To_Number(
+		to_char(HORAINICIO,'SS'))
+		))
+		))/3600) from
+		SGCORESYS.AS_TipoDiaMovimiento
+		where
+		AS_TipoDiaMovimiento.TIPODIA =
+		AS_TIPODIAASISTENCIA.TIPODIA
+		AND
+		INTERVALOACCESO = 'REFR') AS
+		"sumarefrigerio"
+		FROM
+		SGCORESYS.AS_TIPODIAASISTENCIA
+		GROUP BY
+		AS_TIPODIAASISTENCIA.TIPODIA,
+		AS_TIPODIAASISTENCIA.DESCRIPCIONLOCAL
+		ORDER BY
+		AS_TIPODIAASISTENCIA.DESCRIPCIONLOCAL
+	</sql-query>
+
+	<!-- asmast.dddw_as_tipohorario_select -->
+	<sql-query name="asmast.DddwAsTipohorarioSelect">
+	</sql-query>
+
+	<!-- asmast.dw_as_area_edit -->
+	<sql-query name="asmast.DwAsAreaEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_area_list -->
+	<sql-query name="asmast.DwAsAreaList">
+	</sql-query>
+
+	<!-- asmast.dw_as_bonificacion_condicion_edit -->
+	<sql-query name="asmast.DwAsBonificacionCondicionEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_bonificacionconcepto_list -->
+	<sql-query name="asmast.DwAsBonificacionconceptoList">
+	</sql-query>
+
+	<!-- asmast.dw_as_bonificacioncurso_edit -->
+	<sql-query name="asmast.DwAsBonificacioncursoEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_bonificacioncurso_list -->
+	<sql-query name="asmast.DwAsBonificacioncursoList">
+	</sql-query>
+
+	<!-- asmast.dw_as_carnet_select -->
+	<sql-query name="asmast.DwAsCarnetSelect">
+	</sql-query>
+
+	<!-- asmast.dw_as_carnetidentificacion -->
+	<sql-query name="asmast.DwAsCarnetidentificacion">
+	</sql-query>
+
+	<!-- asmast.dw_as_carnets_edit -->
+	<sql-query name="asmast.DwAsCarnetsEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_carnets_list -->
+	<sql-query name="asmast.DwAsCarnetsList">
+	</sql-query>
+
+	<!-- asmast.dw_as_carnets_movimiento_edit -->
+	<sql-query name="asmast.DwAsCarnetsMovimientoEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_carnets_noasistencia -->
+	<sql-query name="asmast.DwAsCarnetsNoasistencia">
+	</sql-query>
+
+	<!-- asmast.dw_as_clasehorario_edit -->
+	<sql-query name="asmast.DwAsClasehorarioEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_conceptoacceso_edit -->
+	<sql-query name="asmast.DwAsConceptoaccesoEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_conceptoacceso_list2 -->
+	<sql-query name="asmast.DwAsConceptoaccesoList2">
+	</sql-query>
+
+	<!-- asmast.dw_as_conceptoaccesosistema_edit -->
+	<sql-query name="asmast.DwAsConceptoaccesosistemaEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_conceptoaccesosistema_list -->
+	<sql-query name="asmast.DwAsConceptoaccesosistemaList">
+	</sql-query>
+
+	<!-- asmast.dw_as_correo_edit -->
+	<sql-query name="asmast.DwAsCorreoEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_correo_list -->
+	<sql-query name="asmast.DwAsCorreoList">
+	</sql-query>
+
+	<!-- asmast.dw_as_curso_cursor -->
+	<sql-query name="asmast.DwAsCursoCursor">
+	</sql-query>
+
+	<!-- asmast.dw_as_cursoprofesor_edit -->
+	<sql-query name="asmast.DwAsCursoprofesorEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_cursos_docentes_edit -->
+	<sql-query name="asmast.DwAsCursosDocentesEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_cursos_docentes_list -->
+	<sql-query name="asmast.DwAsCursosDocentesList">
+	</sql-query>
+
+	<!-- asmast.dw_as_cursos_docentes_select -->
+	<sql-query name="asmast.DwAsCursosDocentesSelect">
+	</sql-query>
+
+	<!-- asmast.dw_as_cursosespecialidad_edit -->
+	<sql-query name="asmast.DwAsCursosespecialidadEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_cursosfechas_edit -->
+	<sql-query name="asmast.DwAsCursosfechasEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_departamentosxusuario_select -->
+	<sql-query name="asmast.DwAsDepartamentosxusuarioSelect">
+	</sql-query>
+
+	<!-- asmast.dw_as_empleado_select -->
+	<sql-query name="asmast.DwAsEmpleadoSelect">
+	</sql-query>
+
+	<!-- asmast.dw_as_empleadomast_list -->
+	<sql-query name="asmast.DwAsEmpleadomastList">
+	</sql-query>
+
+	<!-- asmast.dw_as_especialidad_edit -->
+	<sql-query name="asmast.DwAsEspecialidadEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_especialidad_list -->
+	<sql-query name="asmast.DwAsEspecialidadList">
+	</sql-query>
+
+	<!-- asmast.dw_as_excepcion_edit -->
+	<sql-query name="asmast.DwAsExcepcionEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_excepcion_list -->
+	<sql-query name="asmast.DwAsExcepcionList">
+	</sql-query>
+
+	<!-- asmast.dw_as_excepcion_list_2 -->
+	<sql-query name="asmast.DwAsExcepcionList2">
+	</sql-query>
+
+	<!-- asmast.dw_as_excepcion_list_2_mes -->
+	<sql-query name="asmast.DwAsExcepcionList2Mes">
+	</sql-query>
+
+	<!-- asmast.dw_as_excepcion_list_2_tipodia -->
+	<sql-query name="asmast.DwAsExcepcionList2Tipodia">
+	</sql-query>
+
+	<!-- asmast.dw_as_exepcion_cursoxdiasemana -->
+	<sql-query name="asmast.DwAsExepcionCursoxdiasemana">
+	</sql-query>
+
+	<!-- asmast.dw_as_exepciondetalle_list -->
+	<sql-query name="asmast.DwAsExepciondetalleList">
+	</sql-query>
+
+	<!-- asmast.dw_as_exepciondetalle_list_2 -->
+	<sql-query name="asmast.DwAsExepciondetalleList2">
+	</sql-query>
+
+	<!-- asmast.dw_as_external_periodo -->
+	<sql-query name="asmast.DwAsExternalPeriodo">
+	</sql-query>
+
+	<!-- asmast.dw_as_fase_edit -->
+	<sql-query name="asmast.DwAsFaseEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_horario_dinamico_ext -->
+	<sql-query name="asmast.DwAsHorarioDinamicoExt">
+	</sql-query>
+
+	<!-- asmast.dw_as_intervaloacceso_edit -->
+	<sql-query name="asmast.DwAsIntervaloaccesoEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_intervaloacceso_edit_detalle -->
+	<sql-query name="asmast.DwAsIntervaloaccesoEditDetalle">
+	</sql-query>
+
+	<!-- asmast.dw_as_intervaloacceso_list -->
+	<sql-query name="asmast.DwAsIntervaloaccesoList">
+	</sql-query>
+
+	<!-- asmast.dw_as_intervaloaccesoplantilla_edit -->
+	<sql-query name="asmast.DwAsIntervaloaccesoplantillaEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_intervaloaccesoplantilla_edit_det -->
+	<sql-query name="asmast.DwAsIntervaloaccesoplantillaEditDet">
+	</sql-query>
+
+	<!-- asmast.dw_as_intervaloaccesoplantilla_list -->
+	<sql-query name="asmast.DwAsIntervaloaccesoplantillaList">
+	</sql-query>
+
+	<!-- asmast.dw_as_periodo_edit -->
+	<sql-query name="asmast.DwAsPeriodoEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_periodo_list -->
+	<sql-query name="asmast.DwAsPeriodoList">
+	</sql-query>
+
+	<!-- asmast.dw_as_periodo_select -->
+	<sql-query name="asmast.DwAsPeriodoSelect">
+	</sql-query>
+
+	<!-- asmast.dw_as_periodoprogramapago_edit -->
+	<sql-query name="asmast.DwAsPeriodoprogramapagoEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_programa_edit -->
+	<sql-query name="asmast.DwAsProgramaEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_programa_list -->
+	<sql-query name="asmast.DwAsProgramaList">
+	</sql-query>
+
+	<!-- asmast.dw_as_programaperiodo_edit -->
+	<sql-query name="asmast.DwAsProgramaperiodoEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_reprogramacion_empleado_external -->
+	<sql-query name="asmast.DwAsReprogramacionEmpleadoExternal">
+	</sql-query>
+
+	<!-- asmast.dw_as_reprogramacionhorario_edit -->
+	<sql-query name="asmast.DwAsReprogramacionhorarioEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_reprogramacionhorario_insert -->
+	<sql-query name="asmast.DwAsReprogramacionhorarioInsert">
+	</sql-query>
+
+	<!-- asmast.dw_as_terminal_edit -->
+	<sql-query name="asmast.DwAsTerminalEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_tiemposervicio_list -->
+	<sql-query name="asmast.DwAsTiemposervicioList">
+	</sql-query>
+
+	<!-- asmast.dw_as_tipodiaasistencia_edit -->
+	<sql-query name="asmast.DwAsTipodiaasistenciaEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_tipodiaasistencia_list -->
+	<sql-query name="asmast.DwAsTipodiaasistenciaList">
+	</sql-query>
+
+	<!-- asmast.dw_as_tipodiamovimientos_list -->
+	<sql-query name="asmast.DwAsTipodiamovimientosList">
+	</sql-query>
+
+	<!-- asmast.dw_as_tipohorario_edit -->
+	<sql-query name="asmast.DwAsTipohorarioEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_tipohorario_list -->
+	<sql-query name="asmast.DwAsTipohorarioList">
+	</sql-query>
+
+	<!-- asmast.dw_as_tipohorario_proceso -->
+	<sql-query name="asmast.DwAsTipohorarioProceso">
+	</sql-query>
+
+	<!-- asmast.dw_as_tipohorarioestatico_edit -->
+	<sql-query name="asmast.DwAsTipohorarioestaticoEdit">
+	</sql-query>
+
+	<!-- asmast.dw_as_usuario_select -->
+	<sql-query name="asmast.DwAsUsuarioSelect">
+	</sql-query>
+
+	<!-- asmast.dw_ma_as_conceptoacceso_edit -->
+	<sql-query name="asmast.DwMaAsConceptoaccesoEdit">
+	</sql-query>
+
+	<!-- asmast.dw_ma_hr_departamento_select -->
+	<sql-query name="asmast.DwMaHrDepartamentoSelect">
+	</sql-query>
+
+	<!-- asmast.dw_ma_pr_calendarioferiados_edit -->
+	<sql-query name="asmast.DwMaPrCalendarioferiadosEdit">
+	</sql-query>
+
+	<!-- asmast.dw_ma_pr_calendarioferiados_filtro -->
+	<sql-query name="asmast.DwMaPrCalendarioferiadosFiltro">
+	</sql-query>
+
+	<!-- asmast.dw_ma_pr_calendarioferiados_list -->
+	<sql-query name="asmast.DwMaPrCalendarioferiadosList">
+	</sql-query>
+
+	<!-- asmast.dw_ma_pr_empleadomast_list_external -->
+	<sql-query name="asmast.DwMaPrEmpleadomastListExternal">
+	</sql-query>
+
+	<!-- asmast.dw_ma_pr_feriado_periodo6_select -->
+	<sql-query name="asmast.DwMaPrFeriadoPeriodo6Select">
+	</sql-query>
+
+	<!-- asmast.dw_ma_pr_feriadorecuperar_list -->
+	<sql-query name="asmast.DwMaPrFeriadorecuperarList">
+	</sql-query>
+
+	<!-- asmast.dw_pr_empleado_select -->
+	<sql-query name="asmast.DwPrEmpleadoSelect">
+	<![CDATA[
+		SELECT 
+			PersonaMast.Persona as "persona",   
+			PersonaMast.NombreCompleto as "nombrecompleto",   
+			EmpleadoMast.TipoContrato as "tipocontrato",  
+			EmpleadoMast.Empleado as "empleado",   
+			PersonaMast.PersonaAnt as "personaant",
+			EmpleadoMast.EstadoEmpleado as "estadoempleado",
+			EmpleadoMast.Estado as "estado",
+			EmpleadoMast.CentroCostos as "centrocostos",
+			EmpleadoMast.CompaniaSocio as "companiasocio",
+			EmpleadoMast.TipoPlanilla as "tipoplanilla" 
+			FROM 
+			sgcoresys.EmpleadoMast 
+			Left JOIN sgcoresys.Personamast
+			ON (PersonaMast.Persona =EmpleadoMast.Empleado)
+			WHERE
+			( PersonaMast.EsEmpleado = 'S' or  PersonaMast.EsOtro = 'S')
+			and (EmpleadoMast.CentroCostos like :p_centrocosto or EmpleadoMast.CentroCostos is null)
+			and EmpleadoMast.TipoPlanilla like :p_tipoplanilla
+			and UPPER(PersonaMast.NombreCompleto) like UPPER(:p_apellido)
+			and PersonaMast.Persona like :p_codigo
+			and EmpleadoMast.estadoempleado <> :p_estadoempleado
+			and EmpleadoMast.Estado like :p_estado 
+			and ((PersonaMast.Persona >=0 and :p_negativo <> 'S') or (PersonaMast.Persona < 0 and :p_negativo = 'S')  )
+			ORDER BY  PersonaMast.NombreCompleto ASC
+ 		]]>
+	</sql-query>
+
+	<!-- asmast.dw_pr_empleadoconcepto_tipoproceso -->
+	<sql-query name="asmast.DwPrEmpleadoconceptoTipoproceso">
+	</sql-query>
+
+</hibernate-mapping>

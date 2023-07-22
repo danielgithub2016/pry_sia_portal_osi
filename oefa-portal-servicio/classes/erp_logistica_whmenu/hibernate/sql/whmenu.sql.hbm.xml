@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : whmenu.w_siaf_wh_po_list
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- whmenu.ds_wh_presupuestounidades_edit -->
+    <sql-query name="whmenu.DsWhPresupuestounidadesEdit">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_acusete_po -->
+    <sql-query name="whmenu.DwWhAcusetePo">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_acusete_po_personas -->
+    <sql-query name="whmenu.DwWhAcusetePoPersonas">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_acusete_so -->
+    <sql-query name="whmenu.DwWhAcuseteSo">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_anulacion_co -->
+    <sql-query name="whmenu.DwWhAnulacionCo">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_anulacion_co_detail -->
+    <sql-query name="whmenu.DwWhAnulacionCoDetail">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_anulacion_co_requisition -->
+    <sql-query name="whmenu.DwWhAnulacionCoRequisition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_anulacion_co_vencimiento -->
+    <sql-query name="whmenu.DwWhAnulacionCoVencimiento">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_anulacion_po_contrato_vencimiento -->
+    <sql-query name="whmenu.DwWhAnulacionPoContratoVencimiento">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_anulacion_po_header -->
+    <sql-query name="whmenu.DwWhAnulacionPoHeader">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_anulacion_po_requisition -->
+    <sql-query name="whmenu.DwWhAnulacionPoRequisition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_anulacion_po_requisition_qt -->
+    <sql-query name="whmenu.DwWhAnulacionPoRequisitionQt">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_anulacion_po_requisition_update -->
+    <sql-query name="whmenu.DwWhAnulacionPoRequisitionUpdate">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_anulacion_position -->
+    <sql-query name="whmenu.DwWhAnulacionPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_anulacion_requisition_header -->
+    <sql-query name="whmenu.DwWhAnulacionRequisitionHeader">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_anulacion_so_detail -->
+    <sql-query name="whmenu.DwWhAnulacionSoDetail">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_anulacion_so_header -->
+    <sql-query name="whmenu.DwWhAnulacionSoHeader">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_anulacion_so_requisition -->
+    <sql-query name="whmenu.DwWhAnulacionSoRequisition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_automatic_requisition -->
+    <sql-query name="whmenu.DwWhAutomaticRequisition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_automatic_requisition_balance -->
+    <sql-query name="whmenu.DwWhAutomaticRequisitionBalance">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_automatic_requisition_criterio -->
+    <sql-query name="whmenu.DwWhAutomaticRequisitionCriterio">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_automatic_requisition_filtro -->
+    <sql-query name="whmenu.DwWhAutomaticRequisitionFiltro">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_automatic_requisition_itemalmacen -->
+    <sql-query name="whmenu.DwWhAutomaticRequisitionItemalmacen">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_automatic_requisition_po -->
+    <sql-query name="whmenu.DwWhAutomaticRequisitionPo">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_automatic_requisition_position -->
+    <sql-query name="whmenu.DwWhAutomaticRequisitionPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_comercial_interfase -->
+    <sql-query name="whmenu.DwWhComercialInterfase">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_inventario_filter -->
+    <sql-query name="whmenu.DwWhCommodityInventarioFilter">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_inventario_list -->
+    <sql-query name="whmenu.DwWhCommodityInventarioList">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_inventario_position -->
+    <sql-query name="whmenu.DwWhCommodityInventarioPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_kardex_detail -->
+    <sql-query name="whmenu.DwWhCommodityKardexDetail">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_kardex_position -->
+    <sql-query name="whmenu.DwWhCommodityKardexPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_activos -->
+    <sql-query name="whmenu.DwWhCommodityTransactionActivos">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_codigobarras -->
+    <sql-query name="whmenu.DwWhCommodityTransactionCodigobarras">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_detail -->
+    <sql-query name="whmenu.DwWhCommodityTransactionDetail">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_edit -->
+    <sql-query name="whmenu.DwWhCommodityTransactionEdit">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_list -->
+    <sql-query name="whmenu.DwWhCommodityTransactionList">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_list_posit -->
+    <sql-query name="whmenu.DwWhCommodityTransactionListPosit">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_print -->
+    <sql-query name="whmenu.DwWhCommodityTransactionPrint">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_print_activo -->
+    <sql-query name="whmenu.DwWhCommodityTransactionPrintActivo">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_whse_ing_det -->
+    <sql-query name="whmenu.DwWhCommodityTransactionWhseIngDet">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_whse_ingreso -->
+    <sql-query name="whmenu.DwWhCommodityTransactionWhseIngreso">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_whse_positio -->
+    <sql-query name="whmenu.DwWhCommodityTransactionWhsePositio">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_whse_rq_det -->
+    <sql-query name="whmenu.DwWhCommodityTransactionWhseRqDet">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_whse_rq_hdr -->
+    <sql-query name="whmenu.DwWhCommodityTransactionWhseRqHdr">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_whse_sal_det -->
+    <sql-query name="whmenu.DwWhCommodityTransactionWhseSalDet">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_whse_salida -->
+    <sql-query name="whmenu.DwWhCommodityTransactionWhseSalida">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_whse_tra_det -->
+    <sql-query name="whmenu.DwWhCommodityTransactionWhseTraDet">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_commodity_transaction_whse_transfe -->
+    <sql-query name="whmenu.DwWhCommodityTransactionWhseTransfe">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit -->
+    <sql-query name="whmenu.DwWhContratoEdit">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit_clasificacion -->
+    <sql-query name="whmenu.DwWhContratoEditClasificacion">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit_detail -->
+    <sql-query name="whmenu.DwWhContratoEditDetail">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit_devolucion -->
+    <sql-query name="whmenu.DwWhContratoEditDevolucion">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit_garantia -->
+    <sql-query name="whmenu.DwWhContratoEditGarantia">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit_obligaciones -->
+    <sql-query name="whmenu.DwWhContratoEditObligaciones">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit_ordencompra -->
+    <sql-query name="whmenu.DwWhContratoEditOrdencompra">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit_ordenservicio -->
+    <sql-query name="whmenu.DwWhContratoEditOrdenservicio">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit_pago -->
+    <sql-query name="whmenu.DwWhContratoEditPago">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit_penalidad -->
+    <sql-query name="whmenu.DwWhContratoEditPenalidad">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit_penalidad_ordencompra -->
+    <sql-query name="whmenu.DwWhContratoEditPenalidadOrdencompra">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit_penalidad_servicio -->
+    <sql-query name="whmenu.DwWhContratoEditPenalidadServicio">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit_requisicion -->
+    <sql-query name="whmenu.DwWhContratoEditRequisicion">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit_vencimiento -->
+    <sql-query name="whmenu.DwWhContratoEditVencimiento">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit_vencimiento_position -->
+    <sql-query name="whmenu.DwWhContratoEditVencimientoPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_edit_voucher -->
+    <sql-query name="whmenu.DwWhContratoEditVoucher">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_generation_default -->
+    <sql-query name="whmenu.DwWhContratoGenerationDefault">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_print -->
+    <sql-query name="whmenu.DwWhContratoPrint">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_print_conformidad -->
+    <sql-query name="whmenu.DwWhContratoPrintConformidad">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_print_constancia -->
+    <sql-query name="whmenu.DwWhContratoPrintConstancia">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_print_contratos -->
+    <sql-query name="whmenu.DwWhContratoPrintContratos">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_print_mora_oc -->
+    <sql-query name="whmenu.DwWhContratoPrintMoraOc">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_print_mora_os -->
+    <sql-query name="whmenu.DwWhContratoPrintMoraOs">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_print_oc -->
+    <sql-query name="whmenu.DwWhContratoPrintOc">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_print_os -->
+    <sql-query name="whmenu.DwWhContratoPrintOs">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_print_penalidad -->
+    <sql-query name="whmenu.DwWhContratoPrintPenalidad">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_print_position -->
+    <sql-query name="whmenu.DwWhContratoPrintPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_print_rebaja -->
+    <sql-query name="whmenu.DwWhContratoPrintRebaja">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_print_rebaja_oc -->
+    <sql-query name="whmenu.DwWhContratoPrintRebajaOc">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_print_vencimiento -->
+    <sql-query name="whmenu.DwWhContratoPrintVencimiento">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_word -->
+    <sql-query name="whmenu.DwWhContratoWord">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contrato_word_detalle -->
+    <sql-query name="whmenu.DwWhContratoWordDetalle">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contratos_generation_list -->
+    <sql-query name="whmenu.DwWhContratosGenerationList">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contratos_generation_list2 -->
+    <sql-query name="whmenu.DwWhContratosGenerationList2">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contratos_generation_list_oc_req -->
+    <sql-query name="whmenu.DwWhContratosGenerationListOcReq">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contratos_generation_list_requisic -->
+    <sql-query name="whmenu.DwWhContratosGenerationListRequisic">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contratos_generation_po_detail -->
+    <sql-query name="whmenu.DwWhContratosGenerationPoDetail">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contratos_generation_po_distribut -->
+    <sql-query name="whmenu.DwWhContratosGenerationPoDistribut">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contratos_generation_po_header -->
+    <sql-query name="whmenu.DwWhContratosGenerationPoHeader">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contratos_generation_position -->
+    <sql-query name="whmenu.DwWhContratosGenerationPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contratos_generation_position5 -->
+    <sql-query name="whmenu.DwWhContratosGenerationPosition5">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contratos_generation_so_detail -->
+    <sql-query name="whmenu.DwWhContratosGenerationSoDetail">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contratos_generation_so_header -->
+    <sql-query name="whmenu.DwWhContratosGenerationSoHeader">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contratos_list -->
+    <sql-query name="whmenu.DwWhContratosList">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_contratos_list_position -->
+    <sql-query name="whmenu.DwWhContratosListPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_doctor_cierre_0 -->
+    <sql-query name="whmenu.DwWhDoctorCierre0">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_doctor_kardex_0 -->
+    <sql-query name="whmenu.DwWhDoctorKardex0">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_doctor_list -->
+    <sql-query name="whmenu.DwWhDoctorList">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_doctor_list_detail -->
+    <sql-query name="whmenu.DwWhDoctorListDetail">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_doctor_list_detail_balance -->
+    <sql-query name="whmenu.DwWhDoctorListDetailBalance">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_doctor_position -->
+    <sql-query name="whmenu.DwWhDoctorPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_doctor_transaccion -->
+    <sql-query name="whmenu.DwWhDoctorTransaccion">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_doctor_transaccion_position -->
+    <sql-query name="whmenu.DwWhDoctorTransaccionPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_doctor_zero_position -->
+    <sql-query name="whmenu.DwWhDoctorZeroPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_inflacion_process_detail -->
+    <sql-query name="whmenu.DwWhInflacionProcessDetail">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_inflacion_process_export_item -->
+    <sql-query name="whmenu.DwWhInflacionProcessExportItem">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_inflacion_process_kardex -->
+    <sql-query name="whmenu.DwWhInflacionProcessKardex">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_inflacion_process_position -->
+    <sql-query name="whmenu.DwWhInflacionProcessPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_inflacion_process_report -->
+    <sql-query name="whmenu.DwWhInflacionProcessReport">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_inflacion_process_report2 -->
+    <sql-query name="whmenu.DwWhInflacionProcessReport2">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_item_recepcion_pendiente -->
+    <sql-query name="whmenu.DwWhItemRecepcionPendiente">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_item_recepcion_pendiente_position -->
+    <sql-query name="whmenu.DwWhItemRecepcionPendientePosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_itemserie_edit -->
+    <sql-query name="whmenu.DwWhItemserieEdit">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_monthly_statistics_position -->
+    <sql-query name="whmenu.DwWhMonthlyStatisticsPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_ordencomprarequisicion_edit -->
+    <sql-query name="whmenu.DwWhOrdencomprarequisicionEdit">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_pagos_os -->
+    <sql-query name="whmenu.DwWhPagosOs">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_pagos_po -->
+    <sql-query name="whmenu.DwWhPagosPo">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_pagos_position -->
+    <sql-query name="whmenu.DwWhPagosPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_process_documents_oc -->
+    <sql-query name="whmenu.DwWhProcessDocumentsOc">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_process_documents_oc_req -->
+    <sql-query name="whmenu.DwWhProcessDocumentsOcReq">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_process_documents_os -->
+    <sql-query name="whmenu.DwWhProcessDocumentsOs">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_process_documents_os_req -->
+    <sql-query name="whmenu.DwWhProcessDocumentsOsReq">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_process_documents_ost -->
+    <sql-query name="whmenu.DwWhProcessDocumentsOst">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_process_documents_ost_req -->
+    <sql-query name="whmenu.DwWhProcessDocumentsOstReq">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_process_documents_position -->
+    <sql-query name="whmenu.DwWhProcessDocumentsPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_process_documents_req_list -->
+    <sql-query name="whmenu.DwWhProcessDocumentsReqList">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_process_documents_req_oc -->
+    <sql-query name="whmenu.DwWhProcessDocumentsReqOc">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_process_documents_req_os -->
+    <sql-query name="whmenu.DwWhProcessDocumentsReqOs">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_process_documents_req_st -->
+    <sql-query name="whmenu.DwWhProcessDocumentsReqSt">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_rep_099_contratos_list -->
+    <sql-query name="whmenu.DwWhRep099ContratosList">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_ajusteinventario -->
+    <sql-query name="whmenu.DwWhVoucherAjusteinventario">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_aplicacion_position -->
+    <sql-query name="whmenu.DwWhVoucherAplicacionPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_consumo_gasto_input -->
+    <sql-query name="whmenu.DwWhVoucherConsumoGastoInput">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_consumo_gasto_output -->
+    <sql-query name="whmenu.DwWhVoucherConsumoGastoOutput">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_consumo_gasto_summary -->
+    <sql-query name="whmenu.DwWhVoucherConsumoGastoSummary">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_consumo_gasto_tabla -->
+    <sql-query name="whmenu.DwWhVoucherConsumoGastoTabla">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_consumo_gasto_tesoro -->
+    <sql-query name="whmenu.DwWhVoucherConsumoGastoTesoro">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_consumo_inventario -->
+    <sql-query name="whmenu.DwWhVoucherConsumoInventario">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_consumo_inventario_almacen -->
+    <sql-query name="whmenu.DwWhVoucherConsumoInventarioAlmacen">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_consumo_inventario_cond -->
+    <sql-query name="whmenu.DwWhVoucherConsumoInventarioCond">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_consumo_inventario_tabla -->
+    <sql-query name="whmenu.DwWhVoucherConsumoInventarioTabla">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_consumo_inventario_tesoro -->
+    <sql-query name="whmenu.DwWhVoucherConsumoInventarioTesoro">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_consumo_kardex_gasto -->
+    <sql-query name="whmenu.DwWhVoucherConsumoKardexGasto">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_consumo_kardex_inventario -->
+    <sql-query name="whmenu.DwWhVoucherConsumoKardexInventario">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_conversion -->
+    <sql-query name="whmenu.DwWhVoucherConversion">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_costoventas -->
+    <sql-query name="whmenu.DwWhVoucherCostoventas">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_costoventas_inventario -->
+    <sql-query name="whmenu.DwWhVoucherCostoventasInventario">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_costoventas_venta -->
+    <sql-query name="whmenu.DwWhVoucherCostoventasVenta">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_generation_position -->
+    <sql-query name="whmenu.DwWhVoucherGenerationPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_guia_merma -->
+    <sql-query name="whmenu.DwWhVoucherGuiaMerma">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_importacion -->
+    <sql-query name="whmenu.DwWhVoucherImportacion">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_importacion_cuenta -->
+    <sql-query name="whmenu.DwWhVoucherImportacionCuenta">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_importacion_detail -->
+    <sql-query name="whmenu.DwWhVoucherImportacionDetail">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_position -->
+    <sql-query name="whmenu.DwWhVoucherPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_provision_difcambio -->
+    <sql-query name="whmenu.DwWhVoucherProvisionDifcambio">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_provision_difcambio_obliga -->
+    <sql-query name="whmenu.DwWhVoucherProvisionDifcambioObliga">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_provision_item -->
+    <sql-query name="whmenu.DwWhVoucherProvisionItem">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_provision_mensual_position -->
+    <sql-query name="whmenu.DwWhVoucherProvisionMensualPosition">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_provision_po_distribution -->
+    <sql-query name="whmenu.DwWhVoucherProvisionPoDistribution">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_provision_so_distribution -->
+    <sql-query name="whmenu.DwWhVoucherProvisionSoDistribution">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_transferencia -->
+    <sql-query name="whmenu.DwWhVoucherTransferencia">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_transferencia_item -->
+    <sql-query name="whmenu.DwWhVoucherTransferenciaItem">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_transformacion -->
+    <sql-query name="whmenu.DwWhVoucherTransformacion">
+    </sql-query>
+
+    <!-- whmenu.dw_wh_voucher_voucherno -->
+    <sql-query name="whmenu.DwWhVoucherVoucherno">
+    </sql-query>
+
+</hibernate-mapping>

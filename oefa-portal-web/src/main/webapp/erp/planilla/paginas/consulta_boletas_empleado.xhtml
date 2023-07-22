@@ -1,0 +1,133 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>
+			Consulta de Boletas
+		</h2>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="frmReporteSucursales">
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+			
+			<!-- <p:outputLabel value="Compañia Socio" />
+				<p:inputText value="#{cConsultaBoletasEmpleado.companiasocio}"  /> -->
+			<!-- <p:panelGrid columns="1" layout="grid" id="grdFiltros" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-3">
+				
+				<p:outputLabel value="Empleado" />
+				<p:selectOneMenu
+					value="#{cConsultaBoletasEmpleado.empleado}"
+					filter="true" filterMatchMode="contains">
+					<f:selectItems 
+						value="#{cConsultaBoletasEmpleado.listaEmpleados}"
+						var="empleado" itemValue="#{empleado.pk.persona}"
+						itemLabel="#{empleado.nombrecompleto}" />
+					
+				</p:selectOneMenu>
+			</p:panelGrid> -->
+			
+			<p:panelGrid columns="6" layout="grid"
+			columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3"
+			styleClass="ui-panelgrid-blank">
+			<p:outputLabel value="Empleado" />
+			<p:inputText disabled="true"
+				value="${usuario.idPersona} - ${usuario.nombreCompleto}" />
+
+			<p:outputLabel value="Área Operativa" />
+			<p:inputText value="${usuario.areaCodigo} - ${usuario.areaNombre}"
+				disabled="true" />
+
+			<p:outputLabel value="Centro de Costos" />
+			<p:inputText
+				value="${usuario.centroCostosCodigo} - ${usuario.centroCostosNombre}"
+				disabled="true" />
+
+			<p:outputLabel value="Puesto" />
+			<p:inputText value="${usuario.cargoCodigo} - ${usuario.cargoNombre}"
+				disabled="true" />
+
+			<p:outputLabel value="Sucursal" />
+			<p:inputText
+				value="${usuario.sucursalCodigo} - ${usuario.sucursalNombre}"
+				disabled="true" />
+
+			<p:outputLabel value="Unidad de Negocio" />
+			<p:inputText
+				value="${usuario.unidadNegocioCodigo} - ${usuario.unidadNegocioNombre}"
+				disabled="true" />
+
+		</p:panelGrid>
+			
+			<p:panelGrid columns="1" layout="grid" id="grdBotones" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-2">
+				<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+					icon="buscar" update="@form" onstart="PF('bUI').block();"
+					oncomplete="PF('bUI').unblock();"
+					action="#{cConsultaBoletasEmpleado.buscar}" />
+			</p:panelGrid>
+			
+			<p:panelGrid columns="1" layout="grid" id="grdEmpleado" styleClass="ui-panelgrid-blank" >
+				<p:outputLabel value="BOLETAS OFICIALES : #{cConsultaBoletasEmpleado.nombreEmpleado} " />
+			</p:panelGrid>
+			
+			<p:dataTable id="tbBoletas" emptyMessage="#{msg.generico_tabla_sinregistros}" paginator="true"
+					paginatorPosition="bottom" rows="5" reflow="true" selection="#{cConsultaBoletasEmpleado.boletaSeleccionada}" selectionMode="single" rowKey="#{boleta.COMPOSITEKEY}"
+					value="#{cConsultaBoletasEmpleado.listaBoletasEmpleado}" var="boleta" 
+					currentPageReportTemplate="#{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+					paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " >
+			
+				<p:ajax event="rowDblselect" listener="#{cConsultaBoletasEmpleado.onRowSelect}" update="@(form)" onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();" />
+			
+				<p:column headerText="Compañia Socio" >
+					<h:outputText value="#{boleta.COMPANIASOCIO}" />
+				</p:column>
+				
+				<p:column headerText="Periodo" >
+					<h:outputText value="#{boleta.PERIODO}" />
+				</p:column>
+				
+				<p:column headerText="Planilla" >
+					<h:outputText value="#{boleta.TIPOPLANILLA}" />
+				</p:column>
+				
+				<p:column headerText="Proceso" >
+					<h:outputText value="#{boleta.TIPOPROCESO}" />
+				</p:column>
+				
+				<p:column headerText="Ingresos" >
+					<h:outputText value="#{boleta.INGRESOS}" />
+				</p:column>
+				
+				<p:column headerText="Egresos" >
+					<h:outputText value="#{boleta.EGRESOS}" />
+				</p:column>
+				
+				<p:column headerText="Neto" >
+					<h:outputText value="#{boleta.NETO}" />
+				</p:column>
+				
+				<p:column headerText="Patronales" >
+					<h:outputText value="#{boleta.PATRONALES}" />
+				</p:column>
+				
+				<p:columnGroup type="footer">
+		            <p:row>
+		                <p:column colspan="4" />
+		                <p:column footerText="Total Ingresos : S/. #{cConsultaBoletasEmpleado.totalIngresos}" />
+		                <p:column footerText="Total Egresos : S/. #{cConsultaBoletasEmpleado.totalEgresos}" />
+		                <p:column footerText="Total Neto : S/. #{cConsultaBoletasEmpleado.totalNeto}" />
+		                <p:column footerText="Total Patronales : S/. #{cConsultaBoletasEmpleado.totalPatronales}" />
+		            </p:row>
+		        </p:columnGroup>
+				
+			</p:dataTable>
+			
+			<pe:documentViewer value="#{cConsultaBoletasEmpleado.reporte}" style="width:100%;height:650px;" />
+
+		</h:form>
+	</ui:define>
+</ui:composition>

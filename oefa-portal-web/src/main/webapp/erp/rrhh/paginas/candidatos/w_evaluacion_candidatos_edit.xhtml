@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="content">
+		<h:form id="frmCandidatosEdit">
+		
+			<h:commandLink id="lnkReportInforme" target="_blank" style="display:none;" 
+				immediate="true" action="#{cwHrRequerimientoCandidatosEdit.verInforme}" />
+			<h:commandLink id="lnkReportFinalistas" target="_blank" style="display:none;" 		
+				immediate="true" action="#{cwHrRequerimientoCandidatosEdit.verFinalistas}" />
+			<h:commandLink id="lnkReportReporteI" target="_blank" style="display:none;" 
+				immediate="true" action="#{cwHrRequerimientoCandidatosEdit.verReporteIntegral}" />
+			<h:commandLink id="lnkReportFormato" target="_blank" style="display:none;" 
+				immediate="true" action="#{cwHrRequerimientoCandidatosEdit.imprimirFormato}" />
+				
+			<p:growl life="#{msg.generico_tiempo_growl}" />
+
+			<p:tabView id="tabview" dynamic="true">
+
+				<p:tab id="tCandidato">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<h:outputText value="Candidatos" />
+						</h:panelGrid>
+					</f:facet>
+					<ui:include src="/erp/rrhh/paginas/candidatos/tab_candidatos.xhtml" />
+				</p:tab>
+
+				<p:tab id="tComparativo">
+					<f:facet name="title">
+						<h:panelGrid columns="2">
+							<h:outputText value="Comparativo" />
+						</h:panelGrid>
+					</f:facet>
+
+				</p:tab>
+			</p:tabView>
+
+		</h:form>
+			</ui:define>
+</ui:composition>

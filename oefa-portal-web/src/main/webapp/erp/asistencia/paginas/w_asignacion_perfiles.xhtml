@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:outputLabel value="Configuración de Perfiles"
+		style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+	<p:panel  header="DATOS SIGED" style="#{cwAsAutorizacionPreprocesoHextraEditSIGED.puedeEditarPermisosSIGED ? 'pointer-events:none' : null}">
+		<ui:repeat 
+			value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.listaPerfilesSIGED}"
+			var="perfil">
+
+			<p:panelGrid columns="1" id="grdEmpleadoFuncion"
+				style="border-spacing:0px;" columnClasses="ui-grid-col-12"
+				layout="grid" styleClass="ui-panelgrid-blank">
+
+				<p:panelGrid columns="2" cellpadding="1">
+					<p:selectBooleanCheckbox itemIndex="#{perfil.idPerfil}"
+						disabled="#{perfil.perfilSeleccionadoLectura}"
+						value="#{perfil.perfilSeleccionado}" />
+					<p:outputLabel value="#{perfil.nombre}" />
+				</p:panelGrid>
+
+			</p:panelGrid>
+
+		</ui:repeat>
+	</p:panel>
+
+</ui:composition>

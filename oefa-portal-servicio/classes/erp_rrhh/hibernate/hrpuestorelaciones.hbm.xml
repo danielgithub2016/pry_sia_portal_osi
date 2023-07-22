@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrPuestorelaciones" table="SGCORESYS.HR_PUESTORELACIONES">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrPuestorelacionesPk">
+            <key-property name="codigopuesto" type="integer">
+                <column name="CODIGOPUESTO" length="22" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+            <key-property name="tiporelacion" type="string">
+                <column name="TIPORELACION" length="1" />
+            </key-property>
+        </composite-id>
+        <property name="enterelacionado" type="string">
+            <column name="ENTERELACIONADO" length="100" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

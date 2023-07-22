@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panelGrid columns="3" style="border-spacing:0px;"
+		columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid"
+		styleClass="ui-panelgrid-blank">
+
+		<p:commandButton icon="archivo" value="Agregar"
+			title="Adjuntar Archivo" immediate="true"
+			action="#{cWHrRequerimientoEdit.nuevoArchivo}">
+			<f:setPropertyActionListener
+				target="#{cwWhDocumentoArchivoList.iMantenimientoReferencia}"
+				value="#{cWHrRequerimientoEdit}" />
+			<f:setPropertyActionListener
+				target="#{cwWhDocumentoArchivoList.nombreTipoBusqueda}"
+				value="cargarArchivo" />
+			<f:setPropertyActionListener
+				target="#{cwWhDocumentoArchivoList.nombreContenedorRefrescar}"
+				value="frmWHrRequerimientoEdit:tvWHrRequerimientoEdit:dtArchivos" />
+			<f:setPropertyActionListener
+				target="#{cwWhDocumentoArchivoList.isrequierecomentario}"
+				value="false" />
+			<f:setPropertyActionListener
+				target="#{cwWhDocumentoArchivoList.isIformeFinal}" value="false" />
+		</p:commandButton>
+
+	</p:panelGrid>
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		id="dtArchivos" paginator="true" paginatorPosition="bottom" rows="15"
+		reflow="true" var="row"
+		value="#{cWHrRequerimientoEdit.lstArchivosAdjuntos}"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+		<p:column headerText="N°" width="20" styleClass="columnatablaDerecha">
+			<h:outputLabel value="#{row.pk.secuencia}" />
+		</p:column>
+
+		<p:column headerText="Fecha" width="20"
+			styleClass="columnatablaDerecha">
+			<h:outputLabel value="#{row.fecha}">
+				<f:convertDateTime pattern="#{msg.formato_fecha_fecha}"
+					timeZone="#{msg.formato_fecha_timezone}" />
+			</h:outputLabel>
+		</p:column>
+
+		<p:column headerText="Ruta" width="120">
+			<h:outputLabel value="#{row.ruta}" />
+		</p:column>
+
+		<p:column headerText="Acción" width="10">
+			<p:panelGrid columns="2">
+
+				<h:commandLink title="Ver" target="_blank" immediate="true"
+					action="#{cWHrRequerimientoEdit.verDocumento}">
+					<f:setPropertyActionListener value="#{row}"
+						target="#{cWHrRequerimientoEdit.archivoSeleccionado}" />
+					<h:graphicImage
+						value="/comun/recursos/imagenes/mantenimiento/btn_preview1_16.png" />
+				</h:commandLink>
+
+				<p:commandLink title="Eliminar Archivo"
+					action="#{cWHrRequerimientoEdit.eliminarArchivo}">
+					<f:setPropertyActionListener value="#{row}"
+						target="#{cWHrRequerimientoEdit.archivoSeleccionado}" />
+					<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+						icon="alerta" message="#{msg.generico_listar_preguntaeliminar}" />
+					<h:graphicImage
+						value="/comun/recursos/imagenes/mantenimiento/btn_eliminar1_16.png" />
+				</p:commandLink>
+
+
+			</p:panelGrid>
+		</p:column>
+
+	</p:dataTable>
+
+</ui:composition>
+

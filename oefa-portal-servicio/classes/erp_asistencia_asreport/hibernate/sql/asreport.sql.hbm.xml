@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : asreport.w_pr_vacaciones_reporte
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- asreport.ds_as_trasferencia_rep -->
+    <sql-query name="asreport.DsAsTrasferenciaRep">
+    </sql-query>
+
+    <!-- asreport.dw_ac_rep_901_autorizaciones_aplicacion -->
+    <sql-query name="asreport.DwAcRep901AutorizacionesAplicacion">
+    </sql-query>
+
+    <!-- asreport.dw_ac_rep_901_autorizaciones_checklist -->
+    <sql-query name="asreport.DwAcRep901AutorizacionesChecklist">
+    </sql-query>
+
+    <!-- asreport.dw_ac_rep_901_autorizaciones_perfil -->
+    <sql-query name="asreport.DwAcRep901AutorizacionesPerfil">
+    </sql-query>
+
+    <!-- asreport.dw_ac_rep_901_autorizaciones_position -->
+    <sql-query name="asreport.DwAcRep901AutorizacionesPosition">
+    </sql-query>
+
+    <!-- asreport.dw_ac_rep_901_autorizaciones_usuario -->
+    <sql-query name="asreport.DwAcRep901AutorizacionesUsuario">
+    </sql-query>
+
+    <!-- asreport.dw_ac_rep_901_autorizaciones_usuario_pos -->
+    <sql-query name="asreport.DwAcRep901AutorizacionesUsuarioPos">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_balance_comp_copia -->
+    <sql-query name="asreport.DwAsAsistenciaBalanceCompCopia">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_balance_compensacion -->
+    <sql-query name="asreport.DwAsAsistenciaBalanceCompensacion">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_balance_compensacion_c1 -->
+    <sql-query name="asreport.DwAsAsistenciaBalanceCompensacionC1">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_balance_compensacion_c2 -->
+    <sql-query name="asreport.DwAsAsistenciaBalanceCompensacionC2">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_balance_compensacion_cl -->
+    <sql-query name="asreport.DwAsAsistenciaBalanceCompensacionCl">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_crosstab_diario_ext_2 -->
+    <sql-query name="asreport.DwAsAsistenciaCrosstabDiarioExt2">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_crosstab_diario_externa -->
+    <sql-query name="asreport.DwAsAsistenciaCrosstabDiarioExterna">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_crosstab_mensual_sex_min -->
+    <sql-query name="asreport.DwAsAsistenciaCrosstabMensualSexMin">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_he_no_autorizadas -->
+    <sql-query name="asreport.DwAsAsistenciaHeNoAutorizadas">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_horas_compensadas_cli -->
+    <sql-query name="asreport.DwAsAsistenciaHorasCompensadasCli">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_horas_compensadas_cli_d -->
+    <sql-query name="asreport.DwAsAsistenciaHorasCompensadasCliD">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_informe -->
+    <sql-query name="asreport.DwAsAsistenciaInforme">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_informe1 -->
+    <sql-query name="asreport.DwAsAsistenciaInforme1">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_informe_por_conc_plla -->
+    <sql-query name="asreport.DwAsAsistenciaInformePorConcPlla">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_informe_por_conc_pllahe -->
+    <sql-query name="asreport.DwAsAsistenciaInformePorConcPllahe">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_informe_por_concepto -->
+    <sql-query name="asreport.DwAsAsistenciaInformePorConcepto">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_resumen -->
+    <sql-query name="asreport.DwAsAsistenciaResumen">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_resumen_filtro -->
+    <sql-query name="asreport.DwAsAsistenciaResumenFiltro">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_resumen_filtro_sustento -->
+    <sql-query name="asreport.DwAsAsistenciaResumenFiltroSustento">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_resumen_sobretiempo_sus -->
+    <sql-query name="asreport.DwAsAsistenciaResumenSobretiempoSus">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_salidas_nocturnas -->
+    <sql-query name="asreport.DwAsAsistenciaSalidasNocturnas">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_salidas_nocturnas_ext -->
+    <sql-query name="asreport.DwAsAsistenciaSalidasNocturnasExt">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistencia_sin_eventos -->
+    <sql-query name="asreport.DwAsAsistenciaSinEventos">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistenciadiaria_planillas_rpt -->
+    <sql-query name="asreport.DwAsAsistenciadiariaPlanillasRpt">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistenciadiaria_rpt_semana -->
+    <sql-query name="asreport.DwAsAsistenciadiariaRptSemana">
+    </sql-query>
+
+    <!-- asreport.dw_as_asistenciadiaria_rpt_sum -->
+    <sql-query name="asreport.DwAsAsistenciadiariaRptSum">
+    </sql-query>
+
+    <!-- asreport.dw_as_bonificaciones_crosstab -->
+    <sql-query name="asreport.DwAsBonificacionesCrosstab">
+    </sql-query>
+
+    <!-- asreport.dw_as_cursoxempleado_detalle_report -->
+    <sql-query name="asreport.DwAsCursoxempleadoDetalleReport">
+    </sql-query>
+
+    <!-- asreport.dw_as_cursoxempleado_principal_report -->
+    <sql-query name="asreport.DwAsCursoxempleadoPrincipalReport">
+    </sql-query>
+
+    <!-- asreport.dw_as_cursoxempleado_report -->
+    <sql-query name="asreport.DwAsCursoxempleadoReport">
+    </sql-query>
+
+    <!-- asreport.dw_as_datoscarnet_rpt -->
+    <sql-query name="asreport.DwAsDatoscarnetRpt">
+    </sql-query>
+
+    <!-- asreport.dw_as_estadistica -->
+    <sql-query name="asreport.DwAsEstadistica">
+    </sql-query>
+
+    <!-- asreport.dw_as_estadistica_mensual -->
+    <sql-query name="asreport.DwAsEstadisticaMensual">
+    </sql-query>
+
+    <!-- asreport.dw_as_estadisticacurso_cabecera -->
+    <sql-query name="asreport.DwAsEstadisticacursoCabecera">
+    </sql-query>
+
+    <!-- asreport.dw_as_estadisticacurso_report -->
+    <sql-query name="asreport.DwAsEstadisticacursoReport">
+    </sql-query>
+
+    <!-- asreport.dw_as_estadisticacurso_report_bk -->
+    <sql-query name="asreport.DwAsEstadisticacursoReportBk">
+    </sql-query>
+
+    <!-- asreport.dw_as_horario_rpt -->
+    <sql-query name="asreport.DwAsHorarioRpt">
+    </sql-query>
+
+    <!-- asreport.dw_as_horario_rpt_filtro -->
+    <sql-query name="asreport.DwAsHorarioRptFiltro">
+    </sql-query>
+
+    <!-- asreport.dw_as_horario_rpt_xcc -->
+    <sql-query name="asreport.DwAsHorarioRptXcc">
+    </sql-query>
+
+    <!-- asreport.dw_as_horario_rpt_xhorario -->
+    <sql-query name="asreport.DwAsHorarioRptXhorario">
+    </sql-query>
+
+    <!-- asreport.dw_as_horarioexcepcion -->
+    <sql-query name="asreport.DwAsHorarioexcepcion">
+    </sql-query>
+
+    <!-- asreport.dw_as_horarioexcepcion_reporte -->
+    <sql-query name="asreport.DwAsHorarioexcepcionReporte">
+    </sql-query>
+
+    <!-- asreport.dw_as_impresion_fotochecks_otro -->
+    <sql-query name="asreport.DwAsImpresionFotochecksOtro">
+    </sql-query>
+
+    <!-- asreport.dw_as_impresion_fotochecks_otro_filtro -->
+    <sql-query name="asreport.DwAsImpresionFotochecksOtroFiltro">
+    </sql-query>
+
+    <!-- asreport.dw_as_impresion_fotochecks_rep_otro -->
+    <sql-query name="asreport.DwAsImpresionFotochecksRepOtro">
+    </sql-query>
+
+    <!-- asreport.dw_as_marcaciones_dinamicas_accesos -->
+    <sql-query name="asreport.DwAsMarcacionesDinamicasAccesos">
+    </sql-query>
+
+    <!-- asreport.dw_as_marcaciones_dinamicas_accesos2 -->
+    <sql-query name="asreport.DwAsMarcacionesDinamicasAccesos2">
+    </sql-query>
+
+    <!-- asreport.dw_as_marcaciones_dinamicas_horario -->
+    <sql-query name="asreport.DwAsMarcacionesDinamicasHorario">
+    </sql-query>
+
+    <!-- asreport.dw_as_marcaciones_dinamicas_rpt -->
+    <sql-query name="asreport.DwAsMarcacionesDinamicasRpt">
+    </sql-query>
+
+    <!-- asreport.dw_as_marcaciones_impares_rpt_back -->
+    <sql-query name="asreport.DwAsMarcacionesImparesRptBack">
+    </sql-query>
+
+    <!-- asreport.dw_as_marcaciones_rpt -->
+    <sql-query name="asreport.DwAsMarcacionesRpt">
+    </sql-query>
+
+    <!-- asreport.dw_as_marcaciones_rpt_din -->
+    <sql-query name="asreport.DwAsMarcacionesRptDin">
+    </sql-query>
+
+    <!-- asreport.dw_as_marcaciones_rpt_nup -->
+    <sql-query name="asreport.DwAsMarcacionesRptNup">
+    </sql-query>
+
+    <!-- asreport.dw_as_nofiscalizados_rpt -->
+    <sql-query name="asreport.DwAsNofiscalizadosRpt">
+    </sql-query>
+
+    <!-- asreport.dw_as_rep_001_empleado -->
+    <sql-query name="asreport.DwAsRep001Empleado">
+    </sql-query>
+
+    <!-- asreport.dw_as_rep_001_excepcion -->
+    <sql-query name="asreport.DwAsRep001Excepcion">
+    </sql-query>
+
+    <!-- asreport.dw_as_rep_001_faltadia -->
+    <sql-query name="asreport.DwAsRep001Faltadia">
+    </sql-query>
+
+    <!-- asreport.dw_as_rep_001_inasistencia -->
+    <sql-query name="asreport.DwAsRep001Inasistencia">
+    </sql-query>
+
+    <!-- asreport.dw_as_rep_001_licencias -->
+    <sql-query name="asreport.DwAsRep001Licencias">
+    </sql-query>
+
+    <!-- asreport.dw_as_rep_001_marca -->
+    <sql-query name="asreport.DwAsRep001Marca">
+    </sql-query>
+
+    <!-- asreport.dw_as_rep_001_marca_new -->
+    <sql-query name="asreport.DwAsRep001MarcaNew">
+    </sql-query>
+
+    <!-- asreport.dw_as_rep_001_reporteoficialministerio -->
+    <sql-query name="asreport.DwAsRep001Reporteoficialministerio">
+    </sql-query>
+
+    <!-- asreport.dw_as_rep_001_sobretiempo -->
+    <sql-query name="asreport.DwAsRep001Sobretiempo">
+    </sql-query>
+
+    <!-- asreport.dw_as_rep_001_tipohorario -->
+    <sql-query name="asreport.DwAsRep001Tipohorario">
+    </sql-query>
+
+    <!-- asreport.dw_as_rep_001_vacacion -->
+    <sql-query name="asreport.DwAsRep001Vacacion">
+    </sql-query>
+
+    <!-- asreport.dw_as_rep_002_tipo_horario -->
+    <sql-query name="asreport.DwAsRep002TipoHorario">
+    </sql-query>
+
+    <!-- asreport.dw_as_rep_tiemposxactividad -->
+    <sql-query name="asreport.DwAsRepTiemposxactividad">
+    </sql-query>
+
+    <!-- asreport.dw_as_rep_tiemposxactividad_ext -->
+    <sql-query name="asreport.DwAsRepTiemposxactividadExt">
+    </sql-query>
+
+    <!-- asreport.dw_as_reporte_autorizacion_preproceso -->
+    <sql-query name="asreport.DwAsReporteAutorizacionPreproceso">
+    </sql-query>
+
+    <!-- asreport.dw_as_reporte_faltas_consecutivas -->
+    <sql-query name="asreport.DwAsReporteFaltasConsecutivas">
+    </sql-query>
+
+    <!-- asreport.dw_as_reporteoficialministerio_detallado -->
+    <sql-query name="asreport.DwAsReporteoficialministerioDetallado">
+    </sql-query>
+
+    <!-- asreport.dw_as_top -->
+    <sql-query name="asreport.DwAsTop">
+    </sql-query>
+
+    <!-- asreport.dw_as_trasferencia_rep -->
+    <sql-query name="asreport.DwAsTrasferenciaRep">
+    </sql-query>
+
+    <!-- asreport.dw_as_trasferencia_rep_totconcepto -->
+    <sql-query name="asreport.DwAsTrasferenciaRepTotconcepto">
+    </sql-query>
+
+    <!-- asreport.dw_fecha_faltas_consecutivas -->
+    <sql-query name="asreport.DwFechaFaltasConsecutivas">
+    </sql-query>
+
+    <!-- asreport.dw_pr_mes -->
+    <sql-query name="asreport.DwPrMes">
+    </sql-query>
+
+    <!-- asreport.dw_pr_personalcumpleanos -->
+    <sql-query name="asreport.DwPrPersonalcumpleanos">
+    </sql-query>
+
+    <!-- asreport.dw_pr_reporte_vacaciones -->
+    <sql-query name="asreport.DwPrReporteVacaciones">
+    </sql-query>
+
+    <!-- asreport.dw_pr_vacaciones_pago_reporte -->
+    <sql-query name="asreport.DwPrVacacionesPagoReporte">
+    </sql-query>
+
+    <!-- asreport.dw_pr_vacaciones_reporte_external -->
+    <sql-query name="asreport.DwPrVacacionesReporteExternal">
+    </sql-query>
+
+    <!-- asreport.dw_pr_vacaciones_reporte_external_emplea -->
+    <sql-query name="asreport.DwPrVacacionesReporteExternalEmplea">
+    </sql-query>
+
+    <!-- asreport.dw_pr_vacaciones_resumen_reporte -->
+    <sql-query name="asreport.DwPrVacacionesResumenReporte">
+    </sql-query>
+
+    <!-- asreport.dw_pr_vacaciones_resumenxperiodo_pago -->
+    <sql-query name="asreport.DwPrVacacionesResumenxperiodoPago">
+    </sql-query>
+
+    <!-- asreport.dw_pr_vacaciones_resumenxperiodo_reporte -->
+    <sql-query name="asreport.DwPrVacacionesResumenxperiodoReporte">
+    </sql-query>
+
+    <!-- asreport.dw_pr_vacaciones_utilizacion_reporte -->
+    <sql-query name="asreport.DwPrVacacionesUtilizacionReporte">
+    </sql-query>
+
+</hibernate-mapping>

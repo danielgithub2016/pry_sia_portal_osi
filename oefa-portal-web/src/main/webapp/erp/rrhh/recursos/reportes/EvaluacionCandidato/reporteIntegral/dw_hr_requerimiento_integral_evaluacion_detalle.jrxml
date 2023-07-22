@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dw_hr_requerimiento_integral_evaluacion_sub" language="groovy" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ad63e819-e096-4762-9335-1c845fe3668e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="par_compania" class="java.lang.String"/>
+	<parameter name="par_requerimiento" class="java.lang.String"/>
+	<parameter name="par_postulante" class="java.lang.String"/>
+	<parameter name="par_plantilla" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\valenzuelad\\Desktop\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_area" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT  HR_EvaluacionPostulante.Requerimiento ,
+        HR_EvaluacionPostulante.CompanyOwner ,
+        HR_EvaluacionPostulante.Postulante ,
+        HR_EvalRequerimiento.PlantillaEvaluacion,
+        HR_EvaluacionPostulante.Factor,
+        Upper(HR_FactoresEvaluacion.Descripcion) AS Descripcion,
+        Upper(HR_EvaluacionArea.Descripcion) AS DesGrupo,
+        HR_EvaluacionArea.Orden,
+        (Sum(HR_EvaluacionPostulante.Puntaje)/Count(HR_EvaluacionPostulante.Factor)) AS Promedio,
+        HR_FactoresEvaluacion.ValorRequerido,
+        HR_EvaluacionPostulante.ValorHastaCompetencia,
+        HR_EvaluacionPostulante.ValorCompetencia,
+        HR_Requerimiento.CodigoPuesto,
+        HR_EvaluacionPostulante.ValorCompetencia,
+        HR_EvaluacionPostulante.ValorHastaCompetencia
+
+FROM    HR_EvaluacionPostulante
+        LEFT JOIN HR_FactoresEvaluacion
+            ON    HR_EvaluacionPostulante.Factor = HR_FactoresEvaluacion.Factor
+        LEFT JOIN HR_EvaluacionArea
+            ON  HR_FactoresEvaluacion.Area = HR_EvaluacionArea.Area
+        LEFT JOIN HR_Requerimiento
+            ON   HR_EvaluacionPostulante.Requerimiento = HR_Requerimiento.Requerimiento
+
+        LEFT JOIN HR_EvalRequerimiento
+            ON    ( HR_EvaluacionPostulante.Requerimiento    = HR_EvalRequerimiento.Requerimiento ) AND
+                ( HR_EvaluacionPostulante.Secuencia     = HR_EvalRequerimiento.Secuencia ) AND
+                ( HR_EvaluacionPostulante.CompanyOwner    = HR_EvalRequerimiento.CompanyOwner )
+
+WHERE         ( HR_EvaluacionPostulante.CompanyOwner    = $P{par_compania}) AND
+                  ( HR_EvaluacionPostulante.Requerimiento    = $P{par_requerimiento}) AND
+                  ( HR_EvaluacionPostulante.Postulante         = $P{par_postulante}) AND
+                HR_FactoresEvaluacion.FlagCalificacion         IN (1,2) AND
+                  HR_EvalRequerimiento.PlantillaEvaluacion = $P{par_plantilla} AND
+                 HR_FactoresEvaluacion.Area = $P{par_area}
+
+GROUP BY     HR_EvaluacionPostulante.Requerimiento ,
+                HR_EvaluacionPostulante.CompanyOwner ,
+                HR_EvaluacionPostulante.Postulante ,
+                HR_EvaluacionPostulante.factor,
+                HR_FactoresEvaluacion.Descripcion ,
+                HR_FactoresEvaluacion.ValorRequerido,
+                HR_EvaluacionArea.Descripcion,
+                HR_EvaluacionPostulante.ValorHastaCompetencia,
+                HR_EvaluacionPostulante.ValorCompetencia,
+                HR_Requerimiento.CodigoPuesto,
+                HR_EvaluacionArea.Orden,
+                HR_EvalRequerimiento.PlantillaEvaluacion
+order by  9 desc, HR_EvaluacionPostulante.factor]]>
+	</queryString>
+	<field name="REQUERIMIENTO" class="java.lang.String"/>
+	<field name="COMPANYOWNER" class="java.lang.String"/>
+	<field name="POSTULANTE" class="java.lang.String"/>
+	<field name="PLANTILLAEVALUACION" class="java.lang.String"/>
+	<field name="FACTOR" class="java.math.BigDecimal"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="DESGRUPO" class="java.lang.String"/>
+	<field name="ORDEN" class="java.math.BigDecimal"/>
+	<field name="PROMEDIO" class="java.math.BigDecimal"/>
+	<field name="VALORREQUERIDO" class="java.math.BigDecimal"/>
+	<field name="VALORHASTACOMPETENCIA" class="java.lang.Double"/>
+	<field name="VALORCOMPETENCIA" class="java.lang.Double"/>
+	<field name="CODIGOPUESTO" class="java.math.BigDecimal"/>
+	<group name="grupo1">
+		<groupExpression><![CDATA[$F{DESGRUPO}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="2" width="555" height="29" uuid="1372e818-3de3-40ca-b9a9-18650724231f"/>
+			</rectangle>
+			<textField pattern="###0.00">
+				<reportElement x="474" y="4" width="67" height="25" uuid="e47eb04b-5598-4019-a691-3a88fe7c0dd3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROMEDIO}]]></textFieldExpression>
+			</textField>
+			<barChart>
+				<chart isShowLegend="false">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="208" y="4" width="267" height="25" uuid="b7474c24-e917-457c-b5c5-6cd2d143a90f"/>
+					<chartTitle position="Top"/>
+					<chartSubtitle/>
+					<chartLegend position="Top"/>
+				</chart>
+				<categoryDataset>
+					<dataset resetType="None"/>
+					<categorySeries>
+						<seriesExpression><![CDATA["serie1"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{REQUERIMIENTO}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{VALORREQUERIDO}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["serie2"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{REQUERIMIENTO}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{PROMEDIO}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true" isShowTickLabels="false" isShowTickMarks="false">
+					<plot orientation="Horizontal">
+						<seriesColor seriesOrder="0" color="#993300"/>
+						<seriesColor seriesOrder="1" color="#66CCFF"/>
+					</plot>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat labelColor="#FFFFFF" tickLabelColor="#FFFFFF" verticalTickLabels="false" axisLineColor="#FFFFFF"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#FFFFFF" tickLabelColor="#FFFFFF" verticalTickLabels="false" axisLineColor="#FFFFFF"/>
+					</valueAxisFormat>
+					<domainAxisMinValueExpression><![CDATA[1]]></domainAxisMinValueExpression>
+					<domainAxisMaxValueExpression><![CDATA[5]]></domainAxisMaxValueExpression>
+				</barPlot>
+			</barChart>
+			<textField>
+				<reportElement x="6" y="4" width="201" height="25" uuid="166268e4-4d71-4f5a-9755-2d5376c1f1a4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

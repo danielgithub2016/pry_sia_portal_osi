@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<p:panel style="height:500px;">
+		<h:panelGrid columns="2" styleClass="columnGrid">
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				scrollWidth="260" scrollable="true" scrollHeight="100"
+				tableStyle="width:240px;"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+				<p:column headerText="Evaluación" width="150"></p:column>
+				<p:column headerText="Estado" width="50"></p:column>
+			</p:dataTable>
+			<h:panelGrid>
+				<p:commandButton value="Insertar" />
+				<p:commandButton value="Eliminar" />
+			</h:panelGrid>
+		</h:panelGrid>
+
+		<h:panelGrid columns="5">
+			<h:panelGrid style="border-spacing:0px;" width="260">
+				<p:outputLabel value="Evaluación de participantes" />
+			</h:panelGrid>
+			<p:commandButton value="Imprimir" />
+			<p:commandButton value="Eliminar" />
+			<p:commandButton value="Actualizar" />
+			<p:commandButton value="Calificar" />
+		</h:panelGrid>
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			scrollWidth="1100" scrollable="true" scrollHeight="200"
+			tableStyle="width:1080px;"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+			<p:column width="5" />
+			<p:column width="200" headerText="Nombres" />
+			<p:column width="150" headerText="Evaluación" />
+			<p:column width="100" headerText="Calificación" />
+			<p:column width="300" headerText="Comentario" />
+			<f:facet name="footer">
+				<table style="border-color: transparent;">
+					<tr>
+						<td align="right"><h:outputText value="Promedio" /></td>
+						<td align="right" width="125"><h:outputText value="19.99" /></td>
+						<td width="373"></td>
+					</tr>
+				</table>
+			</f:facet>
+		</p:dataTable>
+	</p:panel>
+</ui:composition>

@@ -1,0 +1,123 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>Evaluaciones de Conocimientos CAS</h2>
+	</ui:define>
+	<ui:define name="content">
+		<!--  <ui:include src="../usuarioActual01.xhtml" />-->
+		<h:form id="frmEvaluacion_lista">
+			<p:growl autoUpdate="true" life="#{msg.generico_tiempo_growl}"
+				widgetVar="growlWV" />
+			<p:panel header="#{msg.generico_filtros}" rendered="true">
+				<h:panelGrid columns="5" width="50%">
+					<p:outputLabel value="Convocatoria" />
+					<p:inputText value="#{cHrEvaluacionesCAS.convocatoria}" />
+					<p:outputLabel value="Puesto" />
+					<p:inputText value="#{cHrEvaluacionesCAS.despuesto}" />
+					<p:commandButton value="Buscar" icon="buscar" style="float:right;"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+						styleClass="botonTextoImagen"
+						action="#{cHrEvaluacionesCAS.buscarParam}" update="@(form)" />
+				</h:panelGrid>
+			</p:panel>
+			<p:dataTable
+				emptyMessage="En este momento no existen Evaluaciones de Conocimientos para evaluar."
+				id="dtEncuestas" paginator="true" paginatorPosition="bottom"
+				rows="15" reflow="true" value="#{cHrEvaluacionesCAS.lstDatos}"
+				var="row"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+				<p:column headerText="Convocatoria" width="80"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.nro_requerimiento}" />
+				</p:column>
+				<p:column headerText="Puesto" width="150"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.puesto}" />
+				</p:column>
+				<p:column headerText="Unidad Orgánica" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.unidad}" />
+				</p:column>
+				<p:column headerText="Estado" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.estado}" />
+				</p:column>
+				<p:column headerText="N° Total de Postulantes Aptos" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.n_partotal}" />
+				</p:column>
+				<p:column headerText="N° de Grupo" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.n_grupo}" />
+				</p:column>
+				<p:column headerText="N° de Postulantes a Evaluar del Grupo"
+					width="60" styleClass="columnatablaCentro">
+					<h:outputText value="#{row.n_partgrupo}" />
+				</p:column>
+				<p:column headerText="N° Postulantes que Iniciaron del Grupo"
+					width="60" styleClass="columnatablaCentro">
+					<h:outputText value="#{row.n_partgrupoini}" />
+				</p:column>
+				<p:column headerText="N° Total de Postulantes Evaluados" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.n_partotaleval}" />
+				</p:column>
+				<p:column headerText="Acciones" width="40"
+					styleClass="columnatableCentro">
+					<p:commandButton type="icon" icon="ui-icon-circle-triangle-e"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+						title="Iniciar Evaluación" rendered="#{row.n_estado == '1'}"
+						action="#{cHrEvaluacionesCAS.iniciar}">
+						<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+							icon="alerta"
+							message="#{row.valor_n == '0'? 
+								'No hay ningun postulante con asistencia, ¿Está seguro de iniciar la evaluación de conocimientos?':
+								row.valor_n == row.n_partgrupo? 
+									'¿Está seguro de iniciar la evaluación de conocimientos?':
+									'Hay algunos postulantes sin asistencia, ¿Está seguro de iniciar la evaluación de conocimientos?'									
+								 }" />
+						<f:setPropertyActionListener
+							target="#{cHrEvaluacionesCAS.registroSeleccionado}"
+							value="#{row}" />
+					</p:commandButton>
+					<p:commandButton type="icon" icon="ui-icon-circle-close"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+						title="Finalizar evaluación" rendered="#{row.n_estado == '2'}"
+						action="#{cHrEvaluacionesCAS.finalizar}">
+						<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+							icon="alerta"
+							message="¿Está seguro de finalizar la evaluación de conocimientos?" />
+						<f:setPropertyActionListener
+							target="#{cHrEvaluacionesCAS.registroSeleccionado}"
+							value="#{row}" />
+					</p:commandButton>
+
+					<p:commandButton type="icon" icon="ui-icon-person"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+						title="Registrar Asistencia" rendered="#{row.n_estado == '1'}"
+						action="#{cHrEvaluacionesCAS.verPost}">
+						<f:setPropertyActionListener
+							target="#{cHrEvaluacionesCAS.registroSeleccionado}"
+							value="#{row}" />
+					</p:commandButton>
+					<p:commandButton type="icon" icon="ui-icon-person"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+						title="Registrar Asistencia" rendered="#{row.n_estado == '2'}"
+						action="#{cHrEvaluacionesCAS.verPost2}">
+						<f:setPropertyActionListener
+							target="#{cHrEvaluacionesCAS.registroSeleccionado}"
+							value="#{row}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

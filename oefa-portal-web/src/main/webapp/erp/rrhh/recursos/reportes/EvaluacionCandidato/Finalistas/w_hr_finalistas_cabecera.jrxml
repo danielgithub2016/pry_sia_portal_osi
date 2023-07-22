@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_hr_finalistas_cabecera" language="groovy" pageWidth="595" pageHeight="600" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d17bd19e-adbd-44bd-8615-c5d0e9281d6b">
+	<property name="ireport.zoom" value="0.9090909090909127"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="26"/>
+	<parameter name="secuencia" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="secuencia2" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="requerimiento" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT POST.Postulante, ApellidoPaterno ||  ' '||  ApellidoMaterno ||  ' ' ||  Nombres AS Nombre, FechaNacimiento,
+( select max(DescripcionLocal) from ma_miscelaneosdetalle where CodigoTabla = 'TIPODOCI' and CodigoElemento = POST.TipoDocumento ) AS TipoDocumento,
+POST.Documento, EVETAPA.Observaciones, EVETAPA.ObservacionFinEtapa ,
+( SELECT max(NombreCompleto) FROM PersonaMast INNER JOIN EmpleadoMast ON PersonaMast.Persona = EmpleadoMast.Empleado
+    WHERE EmpleadoMast.CodigoCargo = REQ2.CodigoPuesto )  AS Evaluador
+FROM hr_evaluacionetapa EVETAPA
+    INNER JOIN HR_Postulantes POST ON EVETAPA.POSTULANTE = POST.Postulante
+    INNER JOIN HR_Requerimiento REQ ON EVETAPA.Requerimiento = REQ.Requerimiento
+    INNER JOIN hr_evalrequerimiento_2 REQ2 ON EVETAPA.Requerimiento = REQ2.Requerimiento and
+                    EVETAPA.secuencia =  REQ2.secuencia and
+                    EVETAPA.secuencia_2 =  REQ2.secuencia_2
+WHERE
+    EVETAPA.Secuencia = $P{secuencia} AND
+    REQ.Requerimiento = $P{requerimiento} AND
+    EVETAPA.Secuencia_2 = $P{secuencia2}]]>
+	</queryString>
+	<field name="POSTULANTE" class="java.lang.String"/>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="FECHANACIMIENTO" class="java.sql.Timestamp"/>
+	<field name="TIPODOCUMENTO" class="java.lang.String"/>
+	<field name="DOCUMENTO" class="java.lang.String"/>
+	<field name="OBSERVACIONES" class="java.lang.String"/>
+	<field name="OBSERVACIONFINETAPA" class="java.lang.String"/>
+	<field name="EVALUADOR" class="java.lang.String"/>
+	<detail>
+		<band height="409">
+			<rectangle>
+				<reportElement stretchType="RelativeToTallestObject" x="36" y="203" width="454" height="193" isPrintWhenDetailOverflows="true" uuid="da717cf0-cb34-4448-904b-747afb6feecc"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToTallestObject" x="36" y="203" width="454" height="15" isPrintWhenDetailOverflows="true" backcolor="#E3E3E3" uuid="6dc67e2e-1823-4ea5-9347-e994cda667e1"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToTallestObject" x="36" y="300" width="454" height="13" isPrintWhenDetailOverflows="true" backcolor="#E3E3E3" uuid="8124ea74-b6b6-42b1-a352-4f0937569256"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="40" y="203" width="450" height="15" uuid="90f4c851-cff9-4b69-b3b4-da0c40c20c11"/>
+				<text><![CDATA[Observaciones durante la entrevista/evaluación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="300" width="447" height="13" uuid="91acc3c7-6d34-4c93-91c7-22b1d30dd93b"/>
+				<text><![CDATA[Observación]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="37" y="218" width="453" height="82" isPrintWhenDetailOverflows="true" uuid="6c8f4256-a7c4-4d75-968e-610e969cc172"/>
+				<textFieldExpression><![CDATA[$F{OBSERVACIONES}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="40" y="313" width="447" height="83" isPrintWhenDetailOverflows="true" uuid="0878e528-a979-4396-8d0a-9daf614a70b4"/>
+				<textFieldExpression><![CDATA[$F{OBSERVACIONFINETAPA}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="36" y="68" width="454" height="46" uuid="0fb2032d-c452-421b-99e7-7f514a8f77a3"/>
+				<subreportParameter name="postulante">
+					<subreportParameterExpression><![CDATA[$F{POSTULANTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["w_hr_finalistas_experiencia.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="36" y="134" width="454" height="52" uuid="8675cd49-29a7-4d6a-acdc-c834a140a4c3"/>
+				<subreportParameter name="postulante">
+					<subreportParameterExpression><![CDATA[$F{POSTULANTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["w_hr_finalistas_educacion.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="40" y="0" width="100" height="20" uuid="6e48b2ad-ce57-4a6e-8583-6265988f5493"/>
+				<textElement>
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Candidato:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="30" width="100" height="20" uuid="c5df9f4e-d0dd-43b5-b739-c7ddb9feee47"/>
+				<textElement>
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Evaluador:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="155" y="0" width="312" height="20" uuid="2bfe4387-9e53-4568-8b9b-787f85ef3e20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="155" y="30" width="312" height="20" uuid="f7171010-384b-451b-8719-6bd4522a56e1"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EVALUADOR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

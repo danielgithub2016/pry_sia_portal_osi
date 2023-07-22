@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Tipodocumentocxp" table="SGCORESYS.TIPODOCUMENTOCXP">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.TipodocumentocxpPk">
+            <key-property name="tipodocumento" type="string">
+                <column name="TIPODOCUMENTO" length="2" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="40" />
+        </property>
+        <property name="cuentacontablelocal" type="string">
+            <column name="CUENTACONTABLELOCAL" length="20" />
+        </property>
+        <property name="cuentacontabledolares" type="string">
+            <column name="CUENTACONTABLEDOLARES" length="20" />
+        </property>
+        <property name="cuentacontableservlocal" type="string">
+            <column name="CUENTACONTABLESERVLOCAL" length="20" />
+        </property>
+        <property name="cuentacontableservdolares" type="string">
+            <column name="CUENTACONTABLESERVDOLARES" length="20" />
+        </property>
+        <property name="adelantocuentalocal" type="string">
+            <column name="ADELANTOCUENTALOCAL" length="20" />
+        </property>
+        <property name="adelantocuentadolares" type="string">
+            <column name="ADELANTOCUENTADOLARES" length="20" />
+        </property>
+        <property name="esadelanto" type="string">
+            <column name="ESADELANTO" length="1" />
+        </property>
+        <property name="esfiscal" type="string">
+            <column name="ESFISCAL" length="1" />
+        </property>
+        <property name="generarprovisionflag" type="string">
+            <column name="GENERARPROVISIONFLAG" length="1" />
+        </property>
+        <property name="adelantomultipleflag" type="string">
+            <column name="ADELANTOMULTIPLEFLAG" length="1" />
+        </property>
+        <property name="codigofiscal" type="string">
+            <column name="CODIGOFISCAL" length="2" />
+        </property>
+        <property name="regimenfiscal" type="string">
+            <column name="REGIMENFISCAL" length="1" />
+        </property>
+        <property name="transacciondelsistemaflag" type="string">
+            <column name="TRANSACCIONDELSISTEMAFLAG" length="1" />
+        </property>
+        <property name="formatoedicion" type="string">
+            <column name="FORMATOEDICION" length="14" />
+        </property>
+        <property name="vouchertipo" type="string">
+            <column name="VOUCHERTIPO" length="2" />
+        </property>
+        <property name="vouchertipomateriales" type="string">
+            <column name="VOUCHERTIPOMATERIALES" length="2" />
+        </property>
+        <property name="voucherclasificacion" type="string">
+            <column name="VOUCHERCLASIFICACION" length="4" />
+        </property>
+        <property name="controlpresupuestalflag" type="string">
+            <column name="CONTROLPRESUPUESTALFLAG" length="1" />
+        </property>
+        <property name="controlpresupaplicableflag" type="string">
+            <column name="CONTROLPRESUPAPLICABLEFLAG" length="1" />
+        </property>
+        <property name="negativoflag" type="string">
+            <column name="NEGATIVOFLAG" length="1" />
+        </property>
+        <property name="normalflag" type="string">
+            <column name="NORMALFLAG" length="1" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="interfasebancariaflag" type="string">
+            <column name="INTERFASEBANCARIAFLAG" length="1" />
+        </property>
+        <property name="clasificacion" type="string">
+            <column name="CLASIFICACION" length="2" />
+        </property>
+        <property name="retencionigvflag" type="string">
+            <column name="RETENCIONIGVFLAG" length="1" />
+        </property>
+        <property name="codigosiaf" type="string">
+            <column name="CODIGOSIAF" length="3" />
+        </property>
+        <property name="controlpresupuestalfiltroflag" type="string">
+            <column name="CONTROLPRESUPUESTALFILTROFLAG" length="1" />
+        </property>
+        <property name="descripcioningles" type="string">
+            <column name="DESCRIPCIONINGLES" length="20" />
+        </property>
+        <property name="prepagorevisionflag" type="string">
+            <column name="PREPAGOREVISIONFLAG" length="1" />
+        </property>
+        <property name="aplicanoafectoflag" type="string">
+            <column name="APLICANOAFECTOFLAG" length="1" />
+        </property>
+        <property name="fiscalgrupo" type="string">
+            <column name="FISCALGRUPO" length="3" />
+        </property>
+        <property name="plancontable" type="string">
+            <column name="PLANCONTABLE" length="4" />
+        </property>
+    </class>
+</hibernate-mapping>

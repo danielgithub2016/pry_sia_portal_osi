@@ -1,0 +1,218 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panelGrid columns="2" style="border-spacing:0px;"
+		columnClasses="ui-grid-col-10,ui-grid-col-10" layout="grid"
+		styleClass="ui-panelgrid-blank">
+		<p:panelGrid columns="1" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-10" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<p:fieldset legend="Formación Académica">
+				<h:selectOneRadio
+					disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+					value="#{cWHrRequerimientoEdit.dw_funcionesprac.flagformacion}">
+					<f:selectItem itemValue="U" itemLabel="Universitario" />
+					<f:selectItem itemValue="T" itemLabel="Técnico" />
+				</h:selectOneRadio>
+			</p:fieldset>
+
+			<p:fieldset legend="Nivel Académico">
+				<p:panelGrid columns="3" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-6,ui-grid-col-1,ui-grid-col-3"
+					layout="grid" styleClass="ui-panelgrid-blank">
+					<h:selectOneRadio
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.flagnivelacademico}">
+						<f:selectItem itemValue="B" itemLabel="Egresado/Bachuller" />
+						<f:selectItem itemValue="E" itemLabel="Estudiante" />
+						<p:ajax update="cbociclo" />
+					</h:selectOneRadio>
+
+					<p:outputLabel value="Ciclo" />
+					<p:selectOneMenu id="cbociclo"
+						disabled="#{cWHrRequerimientoEdit.dw_funcionesprac.flagnivelacademico != 'E'}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.ciclo}">
+						<f:selectItem itemValue="1" itemLabel="I" />
+						<f:selectItem itemValue="2" itemLabel="II" />
+						<f:selectItem itemValue="3" itemLabel="III" />
+						<f:selectItem itemValue="4" itemLabel="IV" />
+						<f:selectItem itemValue="5" itemLabel="V" />
+						<f:selectItem itemValue="6" itemLabel="VI" />
+						<f:selectItem itemValue="7" itemLabel="VII" />
+						<f:selectItem itemValue="8" itemLabel="VIII" />
+						<f:selectItem itemValue="9" itemLabel="IX" />
+						<f:selectItem itemValue="10" itemLabel="X" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+			</p:fieldset>
+
+			<p:panel>
+				<p:panelGrid columns="2" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-2,ui-grid-col-6" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Profesión" />
+					<p:inputText
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.profesion}" />
+					<p:outputLabel value="Conocimientos" />
+					<p:inputText
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.conocimientos}" />
+				</p:panelGrid>
+			</p:panel>
+
+			<p:fieldset legend="Herramientas Informáticas">
+				<p:panelGrid columns="3" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-2,ui-grid-col-1,ui-grid-col-12"
+					layout="grid" styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Word" />
+					<p:selectBooleanCheckbox
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.auxiliarisflagword}" />
+					<h:selectOneRadio
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.flagnivelword}">
+						<f:selectItem itemValue="B" itemLabel="Básico" />
+						<f:selectItem itemValue="I" itemLabel="Intermedio" />
+						<f:selectItem itemValue="A" itemLabel="Avanzado" />
+					</h:selectOneRadio>
+
+
+					<p:outputLabel value="Excel" />
+					<p:selectBooleanCheckbox
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.auxiliarisflagexcel}" />
+					<h:selectOneRadio
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.flagnivelexcel}">
+						<f:selectItem itemValue="B" itemLabel="Básico" />
+						<f:selectItem itemValue="I" itemLabel="Intermedio" />
+						<f:selectItem itemValue="A" itemLabel="Avanzado" />
+					</h:selectOneRadio>
+
+
+					<p:outputLabel value="Power Point" />
+					<p:selectBooleanCheckbox
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.auxiliarisflagpowerpoint}" />
+					<h:selectOneRadio
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.flagnivelpowerpoint}">
+						<f:selectItem itemValue="B" itemLabel="Básico" />
+						<f:selectItem itemValue="I" itemLabel="Intermedio" />
+						<f:selectItem itemValue="A" itemLabel="Avanzado" />
+					</h:selectOneRadio>
+
+					<p:outputLabel value="Otro" />
+					<p:selectBooleanCheckbox
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.auxiliarisflagotro}">
+						<p:ajax update="txtOtroInformatica" />
+					</p:selectBooleanCheckbox>
+
+					<p:panelGrid columns="2" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-6,ui-grid-col-12" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<p:inputText id="txtOtroInformatica"
+							disabled="#{!cWHrRequerimientoEdit.dw_funcionesprac.auxiliarisflagotro}"
+							value="#{cWHrRequerimientoEdit.dw_funcionesprac.otroinformatica}" />
+						<h:selectOneRadio
+							disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+							value="#{cWHrRequerimientoEdit.dw_funcionesprac.flagnivelotroinformatica}">
+							<f:selectItem itemValue="B" itemLabel="Básico" />
+							<f:selectItem itemValue="I" itemLabel="Intermedio" />
+							<f:selectItem itemValue="A" itemLabel="Avanzado" />
+						</h:selectOneRadio>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:fieldset>
+		</p:panelGrid>
+
+		<p:panelGrid columns="1" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-10" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<p:fieldset legend="Conocimientos de Otros Idiomas">
+				<p:panelGrid columns="3" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-2,ui-grid-col-1,ui-grid-col-12"
+					layout="grid" styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Indispensable" />
+					<p:selectBooleanCheckbox
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.auxiliarisflagindispensableidioma}" />
+					<h:selectOneRadio
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.flagnivelindispensableidioma}">
+						<f:selectItem itemValue="B" itemLabel="Básico" />
+						<f:selectItem itemValue="I" itemLabel="Intermedio" />
+						<f:selectItem itemValue="A" itemLabel="Avanzado" />
+					</h:selectOneRadio>
+
+
+					<p:outputLabel value="Ingles" />
+					<p:selectBooleanCheckbox
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.auxiliarisflagingles}" />
+					<h:selectOneRadio
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.flagnivelingles}">
+						<f:selectItem itemValue="B" itemLabel="Básico" />
+						<f:selectItem itemValue="I" itemLabel="Intermedio" />
+						<f:selectItem itemValue="A" itemLabel="Avanzado" />
+					</h:selectOneRadio>
+
+
+					<p:outputLabel value="Otro" />
+					<p:selectBooleanCheckbox
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.auxiliarisflagotroidioma}">
+						<p:ajax update="txtOtroIdioma" />
+					</p:selectBooleanCheckbox>
+					<p:panelGrid columns="2" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-6,ui-grid-col-12" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<p:inputText id="txtOtroIdioma"
+							disabled="#{!cWHrRequerimientoEdit.dw_funcionesprac.auxiliarisflagotroidioma}"
+							value="#{cWHrRequerimientoEdit.dw_funcionesprac.otroidioma}" />
+						<h:selectOneRadio columns="3"
+							disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+							value="#{cWHrRequerimientoEdit.dw_funcionesprac.flagnivelotroidioma}">
+							<f:selectItem itemValue="B" itemLabel="Básico" />
+							<f:selectItem itemValue="I" itemLabel="Intermedio" />
+							<f:selectItem itemValue="A" itemLabel="Avanzado" />
+						</h:selectOneRadio>
+					</p:panelGrid>
+
+				</p:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Experiencia Requerida">
+				<p:panelGrid columns="2" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-4,ui-grid-col-10" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:selectBooleanCheckbox itemLabel="Indispensable"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.auxiliarisflagexperiencia}"
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}">
+						<p:ajax update="txtTiempo" />
+					</p:selectBooleanCheckbox>
+					<p:panelGrid columns="2" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<p:outputLabel value="Tiempo" />
+						<p:inputText id="txtTiempo"
+							disabled="#{!cWHrRequerimientoEdit.dw_funcionesprac.auxiliarisflagexperiencia}"
+							value="#{cWHrRequerimientoEdit.dw_funcionesprac.tiempoexperiencia}" />
+					</p:panelGrid>
+					<p:outputLabel value="Detalle Rubro y/o tema" />
+					<p:inputTextarea cols="50"
+						disabled="#{!cWHrRequerimientoEdit.opciones.ishabilitardwfuncionesprac}"
+						value="#{cWHrRequerimientoEdit.dw_funcionesprac.detalle}" />
+				</p:panelGrid>
+			</p:fieldset>
+
+		</p:panelGrid>
+	</p:panelGrid>
+</ui:composition>

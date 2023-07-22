@@ -1,0 +1,1270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : whstock.w_wh_rep_742_transacciones -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<!-- whstock.dw_bu_budget_unit_validation_list -->
+	<sql-query name="whstock.DwBuBudgetUnitValidationList">
+	</sql-query>
+
+	<!-- whstock.dw_cp_compromiso_confirm_edit -->
+	<sql-query name="whstock.DwCpCompromisoConficompaniasociormEdit">
+	</sql-query>
+
+	<!-- whstock.dw_cp_compromiso_confirm_edit_position -->
+	<sql-query name="whstock.DwCpCompromisoConfirmEditPosition">
+	</sql-query>
+
+	<!-- whstock.dw_cp_compromiso_confirm_list -->
+	<sql-query name="whstock.DwCpCompromisoConfirmList">
+	</sql-query>
+
+	<!-- whstock.dw_cp_compromiso_confirm_list_detail -->
+	<sql-query name="whstock.DwCpCompromisoConfirmListDetail">
+	</sql-query>
+
+	<!-- whstock.dw_cp_compromiso_confirm_list_position -->
+	<sql-query name="whstock.DwCpCompromisoConfirmListPosition">
+	</sql-query>
+
+	<!-- whstock.dw_cp_compromiso_confirm_list_undo -->
+	<sql-query name="whstock.DwCpCompromisoConfirmListUndo">
+	</sql-query>
+
+	<!-- whstock.dw_cp_compromiso_confirm_oxr -->
+	<sql-query name="whstock.DwCpCompromisoConfirmOxr">
+	</sql-query>
+
+	<!-- whstock.dw_cp_compromiso_confirm_report -->
+	<sql-query name="whstock.DwCpCompromisoConfirmReport">
+	</sql-query>
+
+	<!-- whstock.dw_cp_compromiso_confirm_report_position -->
+	<sql-query name="whstock.DwCpCompromisoConfirmReportPosition">
+	</sql-query>
+
+	<!-- whstock.dw_cp_compromiso_confirm_report_rq -->
+	<sql-query name="whstock.DwCpCompromisoConfirmReportRq">
+	</sql-query>
+
+	<!-- whstock.dw_ma_wh_commodity_consulta -->
+	<sql-query name="whstock.DwMaWhCommodityConsulta">
+	</sql-query>
+
+	<!-- whstock.dw_ma_wh_commodity_consulta_detail -->
+	<sql-query name="whstock.DwMaWhCommodityConsultaDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_activo_fijo -->
+	<sql-query name="whstock.DwWhActivoFijo">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_edit_detail -->
+	<sql-query name="whstock.DwWhBuyerEditDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_edit_detail_clasificacion -->
+	<sql-query name="whstock.DwWhBuyerEditDetailClasificacion">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_edit_detail_last_cot -->
+	<sql-query name="whstock.DwWhBuyerEditDetailLastCot">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_edit_detail_obs -->
+	<sql-query name="whstock.DwWhBuyerEditDetailObs">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_edit_detail_proveedor -->
+	<sql-query name="whstock.DwWhBuyerEditDetailProveedor">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_edit_lap_detail -->
+	<sql-query name="whstock.DwWhBuyerEditLapDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_edit_lap_position -->
+	<sql-query name="whstock.DwWhBuyerEditLapPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_edit_position -->
+	<sql-query name="whstock.DwWhBuyerEditPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_edit_print -->
+	<sql-query name="whstock.DwWhBuyerEditPrint">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_edit_req_cot -->
+	<sql-query name="whstock.DwWhBuyerEditReqCot">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_edit_req_distrib -->
+	<sql-query name="whstock.DwWhBuyerEditReqDistrib">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_list_commodity -->
+	<sql-query name="whstock.DwWhBuyerListCommodity">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_list_item -->
+	<sql-query name="whstock.DwWhBuyerListItem">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_list_position -->
+	<sql-query name="whstock.DwWhBuyerListPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_x_req_edit_items -->
+	<sql-query name="whstock.DwWhBuyerXReqEditItems">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_x_req_edit_prov -->
+	<sql-query name="whstock.DwWhBuyerXReqEditProv">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_x_req_edit_req_cot -->
+	<sql-query name="whstock.DwWhBuyerXReqEditReqCot">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_x_req_edit_requisicion -->
+	<sql-query name="whstock.DwWhBuyerXReqEditRequisicion">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_x_req_list_aux -->
+	<sql-query name="whstock.DwWhBuyerXReqListAux">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_x_req_list_detail -->
+	<sql-query name="whstock.DwWhBuyerXReqListDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_buyer_x_req_list_position -->
+	<sql-query name="whstock.DwWhBuyerXReqListPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_co_generation_detail -->
+	<sql-query name="whstock.DwWhCoGenerationDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_co_generation_header -->
+	<sql-query name="whstock.DwWhCoGenerationHeader">
+	</sql-query>
+
+	<!-- whstock.dw_wh_co_generation_header_cf -->
+	<sql-query name="whstock.DwWhCoGenerationHeaderCf">
+	</sql-query>
+
+	<!-- whstock.dw_wh_co_generation_requisicion -->
+	<sql-query name="whstock.DwWhCoGenerationRequisicion">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_browse_kardex -->
+	<sql-query name="whstock.DwWhCommodityBrowseKardex">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_browse_position -->
+	<sql-query name="whstock.DwWhCommodityBrowsePosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_browse_requisicion -->
+	<sql-query name="whstock.DwWhCommodityBrowseRequisicion">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_browse_stock -->
+	<sql-query name="whstock.DwWhCommodityBrowseStock">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_browse_stock_detail -->
+	<sql-query name="whstock.DwWhCommodityBrowseStockDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_edit -->
+	<sql-query name="whstock.DwWhCommodityEdit">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_edit_detail -->
+	<sql-query name="whstock.DwWhCommodityEditDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_edit_requisicion -->
+	<sql-query name="whstock.DwWhCommodityEditRequisicion">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_edit_requisicion_ing -->
+	<sql-query name="whstock.DwWhCommodityEditRequisicionIng">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_list -->
+	<sql-query name="whstock.DwWhCommodityList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_list_position -->
+	<sql-query name="whstock.DwWhCommodityListPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_reversa_edit_po -->
+	<sql-query name="whstock.DwWhCommodityReversaEditPo">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_reversa_edit_po_detail -->
+	<sql-query name="whstock.DwWhCommodityReversaEditPoDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_reversa_edit_rq -->
+	<sql-query name="whstock.DwWhCommodityReversaEditRq">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_reversa_edit_rq_detail -->
+	<sql-query name="whstock.DwWhCommodityReversaEditRqDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_reversa_edit_rq_ing -->
+	<sql-query name="whstock.DwWhCommodityReversaEditRqIng">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_reversa_list_po -->
+	<sql-query name="whstock.DwWhCommodityReversaListPo">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_reversa_list_position -->
+	<sql-query name="whstock.DwWhCommodityReversaListPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_reversa_list_position_po -->
+	<sql-query name="whstock.DwWhCommodityReversaListPositionPo">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_reversa_list_position_rq -->
+	<sql-query name="whstock.DwWhCommodityReversaListPositionRq">
+	</sql-query>
+
+	<!-- whstock.dw_wh_commodity_reversa_list_rq -->
+	<sql-query name="whstock.DwWhCommodityReversaListRq">
+	</sql-query>
+
+	<!-- whstock.dw_wh_contratos_generation_valid -->
+	<sql-query name="whstock.DwWhContratosGenerationValid">
+	</sql-query>
+
+	<!-- whstock.dw_wh_controlcalidad_print_acepatdo -->
+	<sql-query name="whstock.DwWhControlcalidadPrintAcepatdo">
+	</sql-query>
+
+	<!-- whstock.dw_wh_controlcalidad_print_completo -->
+	<sql-query name="whstock.DwWhControlcalidadPrintCompleto">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cotizacion_edit_requisicion -->
+	<sql-query name="whstock.DwWhCotizacionEditRequisicion">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_edit_others -->
+	<sql-query name="whstock.DwWhCuadroComparativoEditOthers">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_position -->
+	<sql-query name="whstock.DwWhCuadroComparativoPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_position1 -->
+	<sql-query name="whstock.DwWhCuadroComparativoPosition1">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_pr_prov_cotiz -->
+	<sql-query name="whstock.DwWhCuadroComparativoPrProvCotiz">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_pr_prov_nocotiz -->
+	<sql-query name="whstock.DwWhCuadroComparativoPrProvNocotiz">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_pr_report -->
+	<sql-query name="whstock.DwWhCuadroComparativoPrReport">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_pr_report2 -->
+	<sql-query name="whstock.DwWhCuadroComparativoPrReport2">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_pr_retrieve -->
+	<sql-query name="whstock.DwWhCuadroComparativoPrRetrieve">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_pr_retrieve_upd -->
+	<sql-query name="whstock.DwWhCuadroComparativoPrRetrieveUpd">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_pr_summary -->
+	<sql-query name="whstock.DwWhCuadroComparativoPrSummary">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_preorden_hmc -->
+	<sql-query name="whstock.DwWhCuadroComparativoPreordenHmc">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_process -->
+	<sql-query name="whstock.DwWhCuadroComparativoProcess">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_process_aux -->
+	<sql-query name="whstock.DwWhCuadroComparativoProcessAux">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_process_bk -->
+	<sql-query name="whstock.DwWhCuadroComparativoProcessBk">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_prov_cotiz -->
+	<sql-query name="whstock.DwWhCuadroComparativoProvCotiz">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_prov_nocotiz -->
+	<sql-query name="whstock.DwWhCuadroComparativoProvNocotiz">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_proveedor -->
+	<sql-query name="whstock.DwWhCuadroComparativoProveedor">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_report -->
+	<sql-query name="whstock.DwWhCuadroComparativoReport">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_report_detailed -->
+	<sql-query name="whstock.DwWhCuadroComparativoReportDetailed">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_retrieve -->
+	<sql-query name="whstock.DwWhCuadroComparativoRetrieve">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativo_summary -->
+	<sql-query name="whstock.DwWhCuadroComparativoSummary">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_comparativoxproveedor -->
+	<sql-query name="whstock.DwWhCuadroComparativoxproveedor">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_informe_report_prov -->
+	<sql-query name="whstock.DwWhCuadroInformeReportProv">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_informe_report_req -->
+	<sql-query name="whstock.DwWhCuadroInformeReportReq">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_informe_report_source -->
+	<sql-query name="whstock.DwWhCuadroInformeReportSource">
+	</sql-query>
+
+	<!-- whstock.dw_wh_cuadro_informe_report_source_em -->
+	<sql-query name="whstock.DwWhCuadroInformeReportSourceEm">
+	</sql-query>
+
+	<!-- whstock.dw_wh_ordenserviciorequisicion_edit -->
+	<sql-query name="whstock.DwWhOrdenserviciorequisicionEdit">
+	</sql-query>
+
+	<!-- whstock.dw_wh_packing_ingreso_po -->
+	<sql-query name="whstock.DwWhPackingIngresoPo">
+	</sql-query>
+
+	<!-- whstock.dw_wh_packing_ingreso_position -->
+	<sql-query name="whstock.DwWhPackingIngresoPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_packing_ingreso_requisicion -->
+	<sql-query name="whstock.DwWhPackingIngresoRequisicion">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_amounts_detail -->
+	<sql-query name="whstock.DwWhPoAmountsDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_amounts_distribution -->
+	<sql-query name="whstock.DwWhPoAmountsDistribution">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_amounts_header -->
+	<sql-query name="whstock.DwWhPoAmountsHeader">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_base_itemproveedor -->
+	<sql-query name="whstock.DwWhPoBaseItemproveedor">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_base_poreq -->
+	<sql-query name="whstock.DwWhPoBasePoreq">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_coments -->
+	<sql-query name="whstock.DwWhPoComents">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_consignacion_detail -->
+	<sql-query name="whstock.DwWhPoConsignacionDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_consignacion_list -->
+	<sql-query name="whstock.DwWhPoConsignacionList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_consignacion_po_detail -->
+	<sql-query name="whstock.DwWhPoConsignacionPoDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_consignacion_po_list -->
+	<sql-query name="whstock.DwWhPoConsignacionPoList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_consignacion_position -->
+	<sql-query name="whstock.DwWhPoConsignacionPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_detail_date -->
+	<sql-query name="whstock.DwWhPoDetailDate">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_detail_date_position -->
+	<sql-query name="whstock.DwWhPoDetailDatePosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_detail_descrip -->
+	<sql-query name="whstock.DwWhPoDetailDescrip">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_distribution_list -->
+	<sql-query name="whstock.DwWhPoDistributionList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_distribution_sequence -->
+	<sql-query name="whstock.DwWhPoDistributionSequence">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_fechaentrega_list -->
+	<sql-query name="whstock.DwWhPoFechaentregaList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_generation_edit_detail -->
+	<sql-query name="whstock.DwWhPoGenerationEditDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_generation_edit_distribution -->
+	<sql-query name="whstock.DwWhPoGenerationEditDistribution">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_generation_edit_header -->
+	<sql-query name="whstock.DwWhPoGenerationEditHeader">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_generation_lap_list_detail -->
+	<sql-query name="whstock.DwWhPoGenerationLapListDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_generation_lap_list_header -->
+	<sql-query name="whstock.DwWhPoGenerationLapListHeader">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_generation_list3_detail -->
+	<sql-query name="whstock.DwWhPoGenerationList3Detail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_generation_list3_header -->
+	<sql-query name="whstock.DwWhPoGenerationList3Header">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_generation_list_detail -->
+	<sql-query name="whstock.DwWhPoGenerationListDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_generation_list_detail_cot -->
+	<sql-query name="whstock.DwWhPoGenerationListDetailCot">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_generation_list_header -->
+	<sql-query name="whstock.DwWhPoGenerationListHeader">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_generation_list_header_cot -->
+	<sql-query name="whstock.DwWhPoGenerationListHeaderCot">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_generation_list_position -->
+	<sql-query name="whstock.DwWhPoGenerationListPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_importacion_auxiliar -->
+	<sql-query name="whstock.DwWhPoImportacionAuxiliar">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_importacion_header -->
+	<sql-query name="whstock.DwWhPoImportacionHeader">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_importacion_incoterm -->
+	<sql-query name="whstock.DwWhPoImportacionIncoterm">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_importacion_incoterm_retrieve -->
+	<sql-query name="whstock.DwWhPoImportacionIncotermRetrieve">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_importacion_voucher -->
+	<sql-query name="whstock.DwWhPoImportacionVoucher">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_item_list -->
+	<sql-query name="whstock.DwWhPoItemList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_item_list_position -->
+	<sql-query name="whstock.DwWhPoItemListPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_list -->
+	<sql-query name="whstock.DwWhPoList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_list_detalle -->
+	<sql-query name="whstock.DwWhPoListDetalle">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_list_distribucion -->
+	<sql-query name="whstock.DwWhPoListDistribucion">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_list_ordencompra -->
+	<sql-query name="whstock.DwWhPoListOrdencompra">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_list_position -->
+	<sql-query name="whstock.DwWhPoListPosition">
+	</sql-query>
+
+	<!-- FALTA MAPEAR whstock.dw_wh_po_list_securitycia -->
+	<sql-query name="whstock.DwWhPoListSecurity">
+		SELECT
+		WH_NivelAprobacion.NivelAprobacion as "nivelaprobacion",
+		WH_NivelAprobacion.MontoDesde as "montodesde",
+		WH_NivelAprobacion.MontoHasta as "montohasta",
+		WH_NivelAprobacion.ContratoFlag as "contratoflag",
+		WH_NivelAprobacion.BoletaFlag as "boletaflag"
+		FROM
+		SGCORESYS.WH_NivelAprobacion
+		INNER JOIN SGCORESYS.WH_PersonaNivel
+		ON (WH_NivelAprobacion.TipoNivel = WH_PersonaNivel.TipoNivel AND
+		WH_NivelAprobacion.TipoDocumento = WH_PersonaNivel.TipoDocumento AND
+		WH_NivelAprobacion.Secuencia = WH_PersonaNivel.Secuencia)
+		INNER JOIN SGCORESYS.EmpleadoMast
+		ON (EmpleadoMast.Empleado = WH_PersonaNivel.Persona)
+		WHERE
+		( WH_PersonaNivel.TipoDocumento = :p_tipodocumento ) AND
+		( EmpleadoMast.CodigoUsuario = :p_userid )
+		ORDER BY 2 ASC
+
+	</sql-query>
+
+	<!-- FALTA MAPEAR whstock.dw_wh_po_list_securitycia -->
+	<sql-query name="whstock.DwWhPoListSecuritycia">
+		SELECT
+		WH_NivelAprobacionCompania.NivelAprobacion as "nivelaprobacion",
+		WH_NivelAprobacionCompania.MontoDesde as "montodesde",
+		WH_NivelAprobacionCompania.MontoHasta as "montohasta",
+		WH_NivelAprobacionCompania.CompaniaSocio as "companiasocio",
+		EmpleadoMast.CodigoUsuario as "codigousuario",
+		WH_NivelAprobacionCompania.MonedaCodigo as "monedacodigo"
+		FROM
+		SGCORESYS.WH_PersonaNivelCompania
+		INNER JOIN SGCORESYS.EmpleadoMast
+		ON (WH_PersonaNivelCompania.Persona = EmpleadoMast.Empleado )
+		INNER JOIN SGCORESYS.WH_NivelAprobacionCompania
+		ON (WH_PersonaNivelCompania.TipoNivel =
+		WH_NivelAprobacionCompania.TipoNivel AND
+		WH_PersonaNivelCompania.TipoDocumento =
+		WH_NivelAprobacionCompania.TipoDocumento AND
+		WH_PersonaNivelCompania.Secuencia =
+		WH_NivelAprobacionCompania.Secuencia AND
+		WH_NivelAprobacionCompania.CompaniaSocio =
+		WH_PersonaNivelCompania.CompaniaSocio)
+		WHERE
+		( ( WH_PersonaNivelCompania.TipoDocumento = :p_tipodocumento ) AND
+		( EmpleadoMast.CodigoUsuario = :p_userid ) AND
+		( WH_PersonaNivelCompania.CompaniaSocio = :p_compania ) )
+		ORDER BY
+		2 ASC,
+		3 ASC
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_preorden_report -->
+	<sql-query name="whstock.DwWhPoPreordenReport">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_preorden_report_compania -->
+	<sql-query name="whstock.DwWhPoPreordenReportCompania">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_preorden_report_position -->
+	<sql-query name="whstock.DwWhPoPreordenReportPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_print_massive_list -->
+	<sql-query name="whstock.DwWhPoPrintMassiveList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_print_massive_packing -->
+	<sql-query name="whstock.DwWhPoPrintMassivePacking">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_print_massive_position -->
+	<sql-query name="whstock.DwWhPoPrintMassivePosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report -->
+	<sql-query name="whstock.DwWhPoReport">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_coments -->
+	<sql-query name="whstock.DwWhPoReportComents">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_descripcion -->
+	<sql-query name="whstock.DwWhPoReportDescripcion">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_distribution -->
+	<sql-query name="whstock.DwWhPoReportDistribution">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_filtros -->
+	<sql-query name="whstock.DwWhPoReportFiltros">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_filtros_detail -->
+	<sql-query name="whstock.DwWhPoReportFiltrosDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_foreign -->
+	<sql-query name="whstock.DwWhPoReportForeign">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_foreign_detail -->
+	<sql-query name="whstock.DwWhPoReportForeignDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_importacion -->
+	<sql-query name="whstock.DwWhPoReportImportacion">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_importacion_flete -->
+	<sql-query name="whstock.DwWhPoReportImportacionFlete">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_numerocotizacion -->
+	<sql-query name="whstock.DwWhPoReportNumerocotizacion">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_ordentrabajo -->
+	<sql-query name="whstock.DwWhPoReportOrdentrabajo">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_packing -->
+	<sql-query name="whstock.DwWhPoReportPacking">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_packing_consolidado -->
+	<sql-query name="whstock.DwWhPoReportPackingConsolidado">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_position -->
+	<sql-query name="whstock.DwWhPoReportPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_requisition -->
+	<sql-query name="whstock.DwWhPoReportRequisition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_report_textil -->
+	<sql-query name="whstock.DwWhPoReportTextil">
+	</sql-query>
+
+	<!-- whstock.dw_wh_po_requisition_retrieve -->
+	<sql-query name="whstock.DwWhPoRequisitionRetrieve">
+	</sql-query>
+
+	<!-- whstock.dw_wh_proveedor_assign_select -->
+	<sql-query name="whstock.DwWhProveedorAssignSelect">
+	</sql-query>
+
+	<!-- whstock.dw_wh_proveedor_assign_select_comm -->
+	<sql-query name="whstock.DwWhProveedorAssignSelectComm">
+	</sql-query>
+
+	<!-- whstock.dw_wh_proveedor_assign_select_item -->
+	<sql-query name="whstock.DwWhProveedorAssignSelectItem">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_list_com_cot_detail -->
+	<sql-query name="whstock.DwWhQuotationListComCotDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_list_com_cot_summary -->
+	<sql-query name="whstock.DwWhQuotationListComCotSummary">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_list_com_po_detail -->
+	<sql-query name="whstock.DwWhQuotationListComPoDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_list_com_po_summary -->
+	<sql-query name="whstock.DwWhQuotationListComPoSummary">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_list_com_pro_detail -->
+	<sql-query name="whstock.DwWhQuotationListComProDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_list_position -->
+	<sql-query name="whstock.DwWhQuotationListPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_list_stk_com_summary -->
+	<sql-query name="whstock.DwWhQuotationListStkComSummary">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_list_stk_cot_detail -->
+	<sql-query name="whstock.DwWhQuotationListStkCotDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_list_stk_cot_summary -->
+	<sql-query name="whstock.DwWhQuotationListStkCotSummary">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_list_stk_po_detail -->
+	<sql-query name="whstock.DwWhQuotationListStkPoDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_list_stk_po_sumary -->
+	<sql-query name="whstock.DwWhQuotationListStkPoSumary">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_list_stk_pro_detail -->
+	<sql-query name="whstock.DwWhQuotationListStkProDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_list_stk_pro_summary -->
+	<sql-query name="whstock.DwWhQuotationListStkProSummary">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_commodity -->
+	<sql-query name="whstock.DwWhQuotationVendorCommodity">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_datos -->
+	<sql-query name="whstock.DwWhQuotationVendorDatos">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_edit_cuadro -->
+	<sql-query name="whstock.DwWhQuotationVendorEditCuadro">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_edit_cuadro_gr -->
+	<sql-query name="whstock.DwWhQuotationVendorEditCuadroGr">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_edit_import -->
+	<sql-query name="whstock.DwWhQuotationVendorEditImport">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_edit_inv_cond -->
+	<sql-query name="whstock.DwWhQuotationVendorEditInvCond">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_edit_invitacion -->
+	<sql-query name="whstock.DwWhQuotationVendorEditInvitacion">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_edit_invitaciones -->
+	<sql-query name="whstock.DwWhQuotationVendorEditInvitaciones">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_edit_ixp -->
+	<sql-query name="whstock.DwWhQuotationVendorEditIxp">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_edit_position -->
+	<sql-query name="whstock.DwWhQuotationVendorEditPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_edit_precio_requ -->
+	<sql-query name="whstock.DwWhQuotationVendorEditPrecioRequ">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_edit_precios -->
+	<sql-query name="whstock.DwWhQuotationVendorEditPrecios">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_edit_precios_especial -->
+	<sql-query name="whstock.DwWhQuotationVendorEditPreciosEspecial">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_edit_precios_gr -->
+	<sql-query name="whstock.DwWhQuotationVendorEditPreciosGr">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_edit_proveedor -->
+	<sql-query name="whstock.DwWhQuotationVendorEditProveedor">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_edit_reqdet -->
+	<sql-query name="whstock.DwWhQuotationVendorEditReqdet">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_edit_requ_detail -->
+	<sql-query name="whstock.DwWhQuotationVendorEditRequDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_item -->
+	<sql-query name="whstock.DwWhQuotationVendorItem">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_list -->
+	<sql-query name="whstock.DwWhQuotationVendorList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_list_detail -->
+	<sql-query name="whstock.DwWhQuotationVendorListDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_list_position -->
+	<sql-query name="whstock.DwWhQuotationVendorListPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_print -->
+	<sql-query name="whstock.DwWhQuotationVendorPrint">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotation_vendor_print_bk -->
+	<sql-query name="whstock.DwWhQuotationVendorPrintBk">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotations_free_edit -->
+	<sql-query name="whstock.DwWhQuotationsFreeEdit">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotations_free_list -->
+	<sql-query name="whstock.DwWhQuotationsFreeList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_quotations_free_list_position -->
+	<sql-query name="whstock.DwWhQuotationsFreeListPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_req_mov_cant -->
+	<sql-query name="whstock.DwWhReqMovCant">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisicion_pendiente_edit_detail -->
+	<sql-query name="whstock.DwWhRequisicionPendienteEditDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisicion_pendiente_list -->
+	<sql-query name="whstock.DwWhRequisicionPendienteList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisicion_pendiente_list_item -->
+	<sql-query name="whstock.DwWhRequisicionPendienteListItem">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisicion_pendiente_list_reqxcot -->
+	<sql-query name="whstock.DwWhRequisicionPendienteListReqxcot">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisicion_pendiente_position -->
+	<sql-query name="whstock.DwWhRequisicionPendientePosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_avance_edit -->
+	<sql-query name="whstock.DwWhRequisitionAvanceEdit">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_avance_history -->
+	<sql-query name="whstock.DwWhRequisitionAvanceHistory">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_avance_list -->
+	<sql-query name="whstock.DwWhRequisitionAvanceList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_avance_position -->
+	<sql-query name="whstock.DwWhRequisitionAvancePosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_base_qt -->
+	<sql-query name="whstock.DwWhRequisitionBaseQt">
+		SELECT 
+			WH_Cotizacion.FechaDocumento as "fechadocumento",   
+			WH_Cotizacion.MonedaCodigo as "monedacodigo",   
+			WH_Cotizacion.PrecioUnitario as "preciounitario"  
+		FROM 
+			SGCORESYS.WH_RequisicionCotizacion 
+			INNER JOIN SGCORESYS.WH_RequisicionDetalle
+				ON (WH_RequisicionCotizacion.CompaniaSocio = WH_RequisicionDetalle.CompaniaSocio AND
+					 WH_RequisicionCotizacion.RequisicionNumero = WH_RequisicionDetalle.RequisicionNumero)
+			INNER JOIN SGCORESYS.WH_Cotizacion
+			ON (WH_RequisicionCotizacion.CompaniaSocio = WH_Cotizacion.CompaniaSocio AND
+				 WH_RequisicionCotizacion.CotizacionSecuencia = WH_Cotizacion.CotizacionSecuencia)
+		WHERE 
+			( WH_RequisicionCotizacion.Secuencia = WH_RequisicionDetalle.Secuencia ) and  
+			(WH_Cotizacion.CompaniaSocio = :p_compania ) AND  
+			WH_Cotizacion.PrecioUnitario > 0   
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_cot -->
+	<sql-query name="whstock.DwWhRequisitionCot">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_alm_pos2 -->
+	<sql-query name="whstock.DwWhRequisitionDespachoAlmPos2">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_alm_requ -->
+	<sql-query name="whstock.DwWhRequisitionDespachoAlmRequ">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_almacen -->
+	<sql-query name="whstock.DwWhRequisitionDespachoAlmacen">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_almacen_cd -->
+	<sql-query name="whstock.DwWhRequisitionDespachoAlmacenCd">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_almacen_cd_d -->
+	<sql-query name="whstock.DwWhRequisitionDespachoAlmacenCdD">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_almacen_det -->
+	<sql-query name="whstock.DwWhRequisitionDespachoAlmacenDet">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_almacen_item -->
+	<sql-query name="whstock.DwWhRequisitionDespachoAlmacenItem">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_almacen_posit -->
+	<sql-query name="whstock.DwWhRequisitionDespachoAlmacenPosit">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_almacen_requ -->
+	<sql-query name="whstock.DwWhRequisitionDespachoAlmacenRequ">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_cd_activofijo -->
+	<sql-query name="whstock.DwWhRequisitionDespachoCdActivofijo">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_cd_detail -->
+	<sql-query name="whstock.DwWhRequisitionDespachoCdDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_cd_print -->
+	<sql-query name="whstock.DwWhRequisitionDespachoCdPrint">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_packing -->
+	<sql-query name="whstock.DwWhRequisitionDespachoPacking">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_packing_copy -->
+	<sql-query name="whstock.DwWhRequisitionDespachoPackingCopy">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_packing_detai -->
+	<sql-query name="whstock.DwWhRequisitionDespachoPackingDetai">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_packing_item -->
+	<sql-query name="whstock.DwWhRequisitionDespachoPackingItem">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_transfer_item -->
+	<sql-query name="whstock.DwWhRequisitionDespachoTransferItem">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_despacho_transfer_requ -->
+	<sql-query name="whstock.DwWhRequisitionDespachoTransferRequ">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_detail_retrieve -->
+	<sql-query name="whstock.DwWhRequisitionDetailRetrieve">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_detail_transfer_update -->
+	<sql-query name="whstock.DwWhRequisitionDetailTransferUpdate">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_detail_update -->
+	<sql-query name="whstock.DwWhRequisitionDetailUpdate">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_distribucion -->
+	<sql-query name="whstock.DwWhRequisitionDistribucion">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_distribution_global -->
+	<sql-query name="whstock.DwWhRequisitionDistributionGlobal">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_distribution_list -->
+	<sql-query name="whstock.DwWhRequisitionDistributionList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_distribution_sequence -->
+	<sql-query name="whstock.DwWhRequisitionDistributionSequence">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_header_update -->
+	<sql-query name="whstock.DwWhRequisitionHeaderUpdate">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_import -->
+	<sql-query name="whstock.DwWhRequisitionImport">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_almac_cd -->
+	<sql-query name="whstock.DwWhRequisitionIngresoAlmacCd">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_almac_cd_deta -->
+	<sql-query name="whstock.DwWhRequisitionIngresoAlmacCdDeta">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_almac_detail -->
+	<sql-query name="whstock.DwWhRequisitionIngresoAlmacDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_almac_pack_det -->
+	<sql-query name="whstock.DwWhRequisitionIngresoAlmacPackDet">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_almac_packing -->
+	<sql-query name="whstock.DwWhRequisitionIngresoAlmacPacking">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_almac_po_line -->
+	<sql-query name="whstock.DwWhRequisitionIngresoAlmacPoLine">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_almacen_brow -->
+	<sql-query name="whstock.DwWhRequisitionIngresoAlmacenBrow">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_almacen_item -->
+	<sql-query name="whstock.DwWhRequisitionIngresoAlmacenItem">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_almacen_item_f -->
+	<sql-query name="whstock.DwWhRequisitionIngresoAlmacenItemF">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_almacen_porequ -->
+	<sql-query name="whstock.DwWhRequisitionIngresoAlmacenPorequ">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_almacen_pos_2 -->
+	<sql-query name="whstock.DwWhRequisitionIngresoAlmacenPos2">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_almacen_posit -->
+	<sql-query name="whstock.DwWhRequisitionIngresoAlmacenPosit">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_almacen_requ -->
+	<sql-query name="whstock.DwWhRequisitionIngresoAlmacenRequ">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_almacen_requ_f -->
+	<sql-query name="whstock.DwWhRequisitionIngresoAlmacenRequF">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_almc_pack_item -->
+	<sql-query name="whstock.DwWhRequisitionIngresoAlmcPackItem">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_cc_detail -->
+	<sql-query name="whstock.DwWhRequisitionIngresoCcDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_cc_header -->
+	<sql-query name="whstock.DwWhRequisitionIngresoCcHeader">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_cd_detail -->
+	<sql-query name="whstock.DwWhRequisitionIngresoCdDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_cd_header -->
+	<sql-query name="whstock.DwWhRequisitionIngresoCdHeader">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_guia_detail -->
+	<sql-query name="whstock.DwWhRequisitionIngresoGuiaDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_guia_header -->
+	<sql-query name="whstock.DwWhRequisitionIngresoGuiaHeader">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_st_material -->
+	<sql-query name="whstock.DwWhRequisitionIngresoStMaterial">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_ingreso_st_producto -->
+	<sql-query name="whstock.DwWhRequisitionIngresoStProducto">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_item_list -->
+	<sql-query name="whstock.DwWhRequisitionItemList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_item_list_position -->
+	<sql-query name="whstock.DwWhRequisitionItemListPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_lap -->
+	<sql-query name="whstock.DwWhRequisitionLap">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_list -->
+	<sql-query name="whstock.DwWhRequisitionList">
+		 <![CDATA[
+		SELECT
+		rownum as "secuencia",
+		WH_Requisiciones.CompaniaSocio as "companiasocio",
+		WH_Requisiciones.RequisicionNumero as "requisicionnumero",
+		WH_Requisiciones.FechaPreparacion as "fechapreparacion",
+		WH_Requisiciones.Clasificacion as "clasificacion",
+		WH_Requisiciones.Estado as "estado",
+		0 AS "oc",
+		WH_Requisiciones.MonedaCodigo as "monedacodigo",
+		WH_Requisiciones.PrecioTotal as "preciototal",
+		WH_Requisiciones.CuantiaMonetariaPendienteFlag as "cuantiamonetariapendienteflag",
+		WH_Requisiciones.Comentarios as "comentario",
+		WH_Requisiciones.DireccionDestino as "direcciondestino",
+		WH_Requisiciones.Responsable as "responsable",
+		SY_CampoCalculado.Flag01 as "flag01",
+		WH_ClasificacionRequOrden.DescripcionLocal as "descripcionlocal",
+		AC_CostCenterMst.LocalName as "localname",
+		WH_AlmacenMast.DescripcionLocal as "descripcionlocalalmacen",
+		WH_Requisiciones.AlmacenCodigo as "almacencodigo",
+		WH_Requisiciones.CotizadoFlag as "cotizadoflag",
+		WH_Requisiciones.Sucursal as "sucursal",
+		AC_Sucursal.DESCRIPCIONLOCAL as "descripcionsucursal", 
+		WH_Requisiciones.TransaccionOperacion as "transaccionoperacion",
+		WH_ItemClasificacionComercial.DescripcionLocal as "descripcionlocalitemclasi",
+		PersonaMast.NombreCompleto as "personarevisiontecnica",
+		WH_Requisiciones.RevisionTecnicaPor as "revisiontecnicapor"
+		FROM
+		SGCORESYS.WH_Requisiciones
+		LEFT JOIN SGCORESYS.WH_ClasificacionRequOrden ON
+		(WH_Requisiciones.Clasificacion =
+		WH_ClasificacionRequOrden.Clasificacion)
+		LEFT JOIN
+		SGCORESYS.WH_AlmacenMast ON
+		(WH_Requisiciones.AlmacenCodigo = WH_AlmacenMast.AlmacenCodigo)
+		LEFT JOIN SGCORESYS.AC_CostCenterMst
+		ON
+		(WH_Requisiciones.DefaultPrime = AC_CostCenterMst.CostCenter)
+		LEFT JOIN sgcoresys.WH_ItemClasificacionComercial 
+		ON 
+		(WH_Requisiciones.TransaccionOperacion = WH_ItemClasificacionComercial.ClasificacionComercial 
+		AND WH_ItemClasificacionComercial.Estado = 'A')
+		LEFT JOIN SGCORESYS.PERSONAMAST
+		ON
+		(WH_Requisiciones.RevisionTecnicaPor = PERSONAMAST.Persona)
+		LEFT JOIN SGCORESYS.AC_SUCURSAL
+        ON  
+        (WH_Requisiciones.Sucursal = AC_Sucursal.SUCURSAL  AND AC_Sucursal.Estado = 'A'),
+		SGCORESYS.SY_CampoCalculado
+		WHERE
+		( WH_Requisiciones.RequisicionNumero >= nvl(:p_requisicionnumero,WH_Requisiciones.RequisicionNumero) ) AND
+		( SY_CampoCalculado.RegistroNumero = 1 )  
+		 ]]>
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_list_position -->
+	<sql-query name="whstock.DwWhRequisitionListPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_report -->
+	<sql-query name="whstock.DwWhRequisitionReport">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_report_so -->
+	<sql-query name="whstock.DwWhRequisitionReportSo">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_report_with_account -->
+	<sql-query name="whstock.DwWhRequisitionReportWithAccount">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_review -->
+	<sql-query name="whstock.DwWhRequisitionReview">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_review_list -->
+	<sql-query name="whstock.DwWhRequisitionReviewList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_review_position -->
+	<sql-query name="whstock.DwWhRequisitionReviewPosition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_transferencia_list -->
+	<sql-query name="whstock.DwWhRequisitionTransferenciaList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_requisition_x_cot -->
+	<sql-query name="whstock.DwWhRequisitionXCot">
+	</sql-query>
+
+	<!-- whstock.dw_wh_so_generation_detail -->
+	<sql-query name="whstock.DwWhSoGenerationDetail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_so_generation_header -->
+	<sql-query name="whstock.DwWhSoGenerationHeader">
+	</sql-query>
+
+	<!-- whstock.dw_wh_so_generation_list3_detail -->
+	<sql-query name="whstock.DwWhSoGenerationList3Detail">
+	</sql-query>
+
+	<!-- whstock.dw_wh_so_generation_list3_header -->
+	<sql-query name="whstock.DwWhSoGenerationList3Header">
+	</sql-query>
+
+	<!-- whstock.dw_wh_so_print_massive_list -->
+	<sql-query name="whstock.DwWhSoPrintMassiveList">
+	</sql-query>
+
+	<!-- whstock.dw_wh_so_report_ordentrabajo -->
+	<sql-query name="whstock.DwWhSoReportOrdentrabajo">
+	</sql-query>
+
+	<!-- whstock.dw_wh_so_report_requisition -->
+	<sql-query name="whstock.DwWhSoReportRequisition">
+	</sql-query>
+
+	<!-- whstock.dw_wh_transaction_cd_print -->
+	<sql-query name="whstock.DwWhTransactionCdPrint">
+	</sql-query>
+
+	<!-- whstock.dw_wh_transaction_print_activo_by_key -->
+	<sql-query name="whstock.DwWhTransactionPrintActivoByKey">
+	</sql-query>
+
+</hibernate-mapping>

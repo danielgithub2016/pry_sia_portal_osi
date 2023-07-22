@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Tipopago" table="SGCORESYS.TIPOPAGO">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.TipopagoPk">
+            <key-property name="tipopago" type="string">
+                <column name="TIPOPAGO" length="2" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="40" />
+        </property>
+        <property name="restringidoflag" type="string">
+            <column name="RESTRINGIDOFLAG" length="1" />
+        </property>
+        <property name="cartaflag" type="string">
+            <column name="CARTAFLAG" length="1" />
+        </property>
+        <property name="generarnumeracionflag" type="string">
+            <column name="GENERARNUMERACIONFLAG" length="1" />
+        </property>
+        <property name="entregableflag" type="string">
+            <column name="ENTREGABLEFLAG" length="1" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="vouchersumarizadoflag" type="string">
+            <column name="VOUCHERSUMARIZADOFLAG" length="1" />
+        </property>
+        <property name="disponiblefeederflag" type="string">
+            <column name="DISPONIBLEFEEDERFLAG" length="1" />
+        </property>
+        <property name="codigosiaf" type="string">
+            <column name="CODIGOSIAF" length="3" />
+        </property>
+        <property name="descripcioningles" type="string">
+            <column name="DESCRIPCIONINGLES" length="40" />
+        </property>
+        <property name="generarcomisionflag" type="string">
+            <column name="GENERARCOMISIONFLAG" length="1" />
+        </property>
+        <property name="cuentacomision" type="string">
+            <column name="CUENTACOMISION" length="20" />
+        </property>
+        <property name="montocomisionlocal" type="integer">
+            <column name="MONTOCOMISIONLOCAL" length="22" />
+        </property>
+        <property name="montocomisionextranjera" type="integer">
+            <column name="MONTOCOMISIONEXTRANJERA" length="22" />
+        </property>
+        <property name="generarinterfaseflag" type="string">
+            <column name="GENERARINTERFASEFLAG" length="1" />
+        </property>
+        <property name="tipopagortps" type="string">
+            <column name="TIPOPAGORTPS" length="1" />
+        </property>
+        <property name="codigofiscal" type="string">
+            <column name="CODIGOFISCAL" length="3" />
+        </property>
+        <property name="cuentaorden" type="string">
+            <column name="CUENTAORDEN" length="20" />
+        </property>
+        <property name="cuentaordenhaber" type="string">
+            <column name="CUENTAORDENHABER" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

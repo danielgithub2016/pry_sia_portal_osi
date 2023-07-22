@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+		<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-10,ui-grid-col-2">
+			<h:outputLabel
+				value="Hacer Click en el botón para Calificar y ver Detalle de la Competencia"
+				style="font-size:11px; font-family:Open sans,sans-serif; font-weight: bold;color:DarkBlue" />
+
+
+			<p:commandButton value="Actualizar Plantilla" icon="procesar"
+				style="float:rigth"
+				disabled="#{cwHrEvaluacionempleadoEdit.opciones.p1cb2_disable}"
+				action="#{cwHrDetalleEvaluacion.obtenerPlantilla}"
+				styleClass="botonTextoImagenGrande" />
+		</p:panelGrid>
+
+		<p:dataTable id="tblDetalle" var="lst" scrollable="true"
+			emptyMessage="#{msg.generico_tabla_sinregistros}"  reflow="true"
+			tableStyle="#{cwHrEvaluacionempleadoEdit.opciones.dw1_disable ? 'pointer-events:none' : null}"
+			value="#{cwHrDetalleEvaluacion.dw1}">
+
+			<p:columnGroup type="header">
+				<p:row>
+					<p:column headerText="Descripción" width="300" />
+					<p:column headerText=" " width="30"
+						styleClass="columnatablaDerecha" />
+					<p:column headerText="Acción" width="30" />
+				</p:row>
+			</p:columnGroup>
+
+			<p:subTable var="details" value="#{lst.detalle}" id="idsubtable">
+				<f:facet name="header">
+					<h:panelGrid columns="1" style="background:silver;">
+						<h:outputText value="#{lst.competencias}" style="color:maroon;" />
+						<h:outputText value="#{lst.factor_des}" style="color:black;" />
+					</h:panelGrid>
+
+				</f:facet>
+
+				<p:column width="300">
+					<h:outputText value=" #{details.explicacionfactor}" />
+				</p:column>
+
+				<p:column width="30" styleClass="columnatablaCentro">
+					<h:outputText value="#{lst.calificacionBoolean}" />
+				</p:column>
+
+				<p:column headerText="Acción" width="30"
+					styleClass="columnatablaCentro">
+					<p:commandButton icon="editar" update="@form"
+						action="#{cwHrDetalleEvaluacion.verCalificacion}">
+						<f:setPropertyActionListener
+							target="#{cwHrDetalleEvaluacion.registroSeleccionado}"
+							value="#{details}"></f:setPropertyActionListener>
+						<f:setPropertyActionListener
+							target="#{cwFactoresCompetenciaCalificar.nombreContenedorRefrescar}"
+							value="frmEvaluacionEmpleado:tvDatos:tblDetalle" />
+						<f:setPropertyActionListener
+							target="#{cwFactoresCompetenciaCalificar.iMantenimientoReferencia}"
+							value="#{cwHrDetalleEvaluacion}" />
+						<f:setPropertyActionListener
+							target="#{cwFactoresCompetenciaCalificar.nombreVentanaEmergente}"
+							value="popComptencias" />
+					</p:commandButton>
+				</p:column>
+
+			</p:subTable>
+
+			<f:facet name="footer">
+				<table style="border-color: rgb(112, 168, 210);">
+					<tr>
+						<td class="columnatablaIzquierda">Evaluaciones :
+							#{cwHrDetalleEvaluacion.cantEvaluaciones}</td>
+
+						<td class="columnatablaCentro">
+							#{cwHrDetalleEvaluacion.nivel}</td>
+
+					</tr>
+				</table>
+			</f:facet>
+
+		</p:dataTable>
+</ui:composition>

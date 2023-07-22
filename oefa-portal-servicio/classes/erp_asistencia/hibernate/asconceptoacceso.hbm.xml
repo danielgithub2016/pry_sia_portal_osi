@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.asistencia.dominio.AsConceptoacceso"
+		table="SGCORESYS.AS_CONCEPTOACCESO">
+		<composite-id name="pk"
+			class="net.royal.erp.asistencia.dominio.AsConceptoaccesoPk">
+			<key-property name="conceptoacceso" type="string">
+				<column name="CONCEPTOACCESO" length="5" />
+			</key-property>
+		</composite-id>
+		<property name="descripcionlocal" type="string">
+			<column name="DESCRIPCIONLOCAL" length="40" />
+		</property>
+		<property name="descripcionextranjera" type="string">
+			<column name="DESCRIPCIONEXTRANJERA" length="40" />
+		</property>
+		<property name="conceptoaccesosistema" type="string">
+			<column name="CONCEPTOACCESOSISTEMA" length="4" />
+		</property>
+		<property name="tipoconceptoacceso" type="string">
+			<column name="TIPOCONCEPTOACCESO" length="1" />
+		</property>
+		<property name="conceptoplanilla" type="string">
+			<column name="CONCEPTOPLANILLA" length="4" />
+		</property>
+		<property name="expresadoen" type="string">
+			<column name="EXPRESADOEN" length="1" />
+		</property>
+		<property name="estado" type="string">
+			<column name="ESTADO" length="1" />
+		</property>
+		<property name="flagparasustitucion" type="string">
+			<column name="FLAGPARASUSTITUCION" length="1" />
+		</property>
+		<property name="mandatorio" type="string">
+			<column name="MANDATORIO" length="1" />
+		</property>
+		<property name="pagarrefrigerio" type="string">
+			<column name="PAGARREFRIGERIO" length="1" />
+		</property>
+		<property name="flagcompensa" type="string">
+			<column name="FLAGCOMPENSA" length="1" />
+		</property>
+		<property name="flagotrospermisos" type="string">
+			<column name="FLAGOTROSPERMISOS" length="1" />
+		</property>
+		<property name="nivelesaprobacion" type="string">
+			<column name="NIVELESAPROBACION" length="30" />
+		</property>
+		<property name="nroniveles" type="integer">
+			<column name="NRONIVELES" length="22" />
+		</property>
+		<property name="posicionesresp" type="string">
+			<column name="POSICIONESRESP" length="30" />
+		</property>
+		<property name="ordenflujo" type="integer">
+			<column name="ORDENFLUJO" length="22" />
+		</property>
+		<property name="flagsobret" type="string">
+			<column name="FLAGSOBRET" length="1" />
+		</property>
+		<property name="flagcompen" type="string">
+			<column name="FLAGCOMPEN" length="1" />
+		</property>
+		<property name="flag25" type="string">
+			<column name="FLAG25" length="1" />
+		</property>
+		<property name="flag35" type="string">
+			<column name="FLAG35" length="1" />
+		</property>
+		<property name="flag100" type="string">
+			<column name="FLAG100" length="1" />
+		</property>
+		<property name="conceptortps" type="string">
+			<column name="CONCEPTORTPS" length="2" />
+		</property>
+		<property name="gruporeporte01" type="string">
+			<column name="GRUPOREPORTE01" length="30" />
+		</property>
+		<property name="flagfechainferior" type="string">
+			<column name="FLAGFECHAINFERIOR" length="1" />
+		</property>
+		<property name="flagtopedias" type="string">
+			<column name="FLAGTOPEDIAS" length="1" />
+		</property>
+		<property name="flagarchivo" type="string">
+			<column name="FLAGARCHIVO" length="1" />
+		</property>
+		<property name="flagtieneresolucion" type="string">
+			<column name="FLAGTIENERESOLUCION" length="1" />
+		</property>
+		<property name="cantidadtopedias" type="integer">
+			<column name="CANTIDADTOPEDIAS" />
+		</property>
+
+		<property name="flagtienetopediasfi" type="string">
+			<column name="FLAGTIENETOPEDIASFI" length="1" />
+		</property>
+		<property name="cantidadtopediasfi" type="integer">
+			<column name="CANTIDADTOPEDIASFI" />
+		</property>
+
+		<property name="flagtienetopediasap" type="string">
+			<column name="FLAGTIENETOPEDIASAP" length="1" />
+		</property>
+		<property name="cantidadtopediasap" type="integer">
+			<column name="CANTIDADTOPEDIASAP" />
+		</property>
+
+		<property name="flagnumerosrestriccion" type="string">
+			<column name="flagnumerosrestriccion" />
+		</property>
+
+		<property name="cantidadmesesrestriccion" type="big_decimal">
+			<column name="cantidadmesesrestriccion" />
+		</property>
+
+		<property name="numerohorasmesesrestriccion" type="big_decimal">
+			<column name="numerohorasmesesrestriccion" />
+		</property>
+
+		<property name="fechainiciorestriccion" type="timestamp">
+			<column name="fechainiciorestriccion" />
+		</property>
+
+		<property name="flagUnDia" type="string">
+			<column name="flagUnDia" />
+		</property>
+
+		<property name="cantidadminutosminimo" type="big_decimal">
+			<column name="cantidadminutosminimo" />
+		</property>
+
+		<property name="flagAprobacionURH" type="string">
+			<column name="flagAprobacionURH" length="1" />
+		</property>
+		
+		<property name="flagaprobacionsst" type="string">
+			<column name="flagaprobacionsst" length="1" />
+		</property>
+
+		<property name="diasanticipacion" type="big_decimal">
+			<column name="diasanticipacion" />
+		</property>
+
+		<property name="flagdiasanticipacion" type="string">
+			<column name="flagdiasanticipacion" length="1" />
+		</property>
+
+		<property name="flagcorreocopiaaprob" type="string">
+			<column name="flagcorreocopiaaprob" length="1" />
+		</property>
+
+		<property name="correocopiaaprob" type="string">
+			<column name="correocopiaaprob" length="50" />
+		</property>
+
+		<property name="flagticket" type="string">
+			<column name="flagticket" length="1" />
+		</property>
+
+	</class>
+</hibernate-mapping>

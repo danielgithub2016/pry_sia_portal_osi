@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : asistencia.AsTipodiaasistencia
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="astipodiaasistencia.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+    </sql-query>
+    
+    <sql-query name="astipodiaasistencia.obtenerdescripcion">
+		SELECT 
+			AS_TIPODIAASISTENCIA.DESCRIPCIONLOCAL as "descripcionlocal" 
+		FROM 
+			SGCORESYS.AS_TIPODIAASISTENCIA
+		WHERE
+			AS_TIPODIAASISTENCIA.TIPODIA = :p_tipodia
+    </sql-query>
+</hibernate-mapping>

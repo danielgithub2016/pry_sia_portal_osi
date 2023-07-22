@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : rrhh.HrRequerimiento -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="hrrequerimiento.secuenciaNextEval">
+		select sgcoresys.hr_requerimiento_seq.nextval
+		from dual
+	</sql-query>
+
+	<sql-query name="hrrequerimiento.obtenerFechaHoraServidor">
+		select sysdate as "fechasolicitud" from dual
+	</sql-query>
+
+	<sql-query name="hrrequerimiento.obtenerFlgPublicado">
+		SELECT CAST(FLAGPUBLICADO as varchar(2)) AS
+		"flagpublicado"
+		FROM
+		SGCORESYS.HR_EVALREQUERIMIENTO
+		WHERE REQUERIMIENTO =
+		:p_requerimiento
+		AND COMPANYOWNER = :p_companyowner
+		AND SECUENCIA =
+		:p_secuencia
+	</sql-query>
+
+	<sql-query name="hrrequerimiento.obtenerEvaluacion">
+		SELECT COUNT(*)
+		FROM
+		SGCORESYS.HR_EVALREQUERIMIENTO
+		WHERE REQUERIMIENTO = :p_requerimiento
+		AND COMPANYOWNER = :p_companyowner AND SECUENCIA = :p_secuencia
+		AND
+		:p_fecha BETWEEN TO_CHAR(FECHAEVALUACIONDESDE,'YYYYMMDD')
+		AND
+		TO_CHAR(FECHAEVALUACIONHASTA,'YYYYMMDD')
+
+	</sql-query>
+
+	<sql-query name="hrrequerimiento.obtenercantidadPost">
+		SELECT COUNT(*) FROM SGCORESYS.HR_POSREQUER
+		WHERE REQUERIMIENTO = :p_requerimiento
+		AND COMPANYOWNER =
+		:p_companyowner AND ESTADO IN('P','V')
+		AND SECUENCIA
+		IN(SELECT SECUENCIA
+		FROM SGCORESYS.HR_EVALREQUERIMIENTO_2
+		WHERE REQUERIMIENTO =
+		:p_requerimiento
+		AND COMPANYOWNER = :p_companyowner
+		AND
+		(EMPLEADOEVALUADOR = :p_evaluador OR EMPLEADOSUPLENTE =
+		:p_evaluador))
+	</sql-query>
+
+	<sql-query name="hrrequerimiento.requerimientoListado">
+       <![CDATA[
+            SELECT HR_Requerimiento.Requerimiento AS "requerimiento",
+                       HR_Requerimiento.EmpleadoSolicitante AS "empleadosolicitante",
+                       PERSONAMAST.NOMBRECOMPLETO as "nombrecompleto",
+                       HR_Requerimiento.CodigoPosicionSolicitante AS "codigoposicionsolicitante",
+                       HR_Requerimiento.CodigoPuesto AS "codigopuesto",
+                       HR_Requerimiento.FechaSolicitud AS "fechasolicitud",
+                       HR_Requerimiento.UnidadNegocio AS "unidadnegocio",
+                       HR_Requerimiento.NumeroSolicitado AS "numerosolicitado",
+                       HR_Requerimiento.NumeroPendiente AS "numeropendiente",
+                       HR_Requerimiento.Estado AS "estado",
+                       HR_Requerimiento.TIPOTRABAJADOR as "tipotrabajador",
+                       HR_Requerimiento.CompanyOwner AS "companyowner",
+                       COMPANYOWNER.DESCRIPTION as "description",
+                       HR_PuestoEmpresa.Descripcion AS "descripcion",
+                       HR_PosicionEmpresa.Descripcion AS "descripcionposicion",
+                       hr_requerimientoobservacion.InicioVigencia AS "iniciovigencia",
+                       hr_requerimientoobservacion.FinVigencia AS "finvigencia",
+                       HR_Requerimiento.fechalimite AS "fechalimite",
+                
+                  (SELECT count(1)
+                   FROM SGCORESYS.HR_EvalRequerimiento_2 b,
+                        SGCORESYS.HR_PosRequer c
+                   WHERE b.Requerimiento = HR_Requerimiento.Requerimiento
+                     AND b.CompanyOwner = HR_Requerimiento.CompanyOwner
+                     AND ((b.flagcodigopuesto = 'S'
+                           AND HR_Requerimiento.CodigoPuestoSolicitante = :par_codigopuesto)
+                          OR (NVL(b.flagcodigopuesto, 'N') <> 'S'
+                              AND b.CodigoPuesto = :par_codigopuesto))
+                     AND b.Requerimiento= c.Requerimiento
+                     AND b.CompanyOwner = c.CompanyOwner
+                     AND c.Secuencia = b.Secuencia
+                     AND c.Secuencia_2 = b.Secuencia_2
+                     AND c.Estado = 'P' ) AS "cf_pendientes",
+                       HR_Requerimiento.numeroconcurso AS "numeroconcurso",
+                       HR_REQUERIMIENTO.CONVOCATORIA AS "convocatoria",
+                       HR_REQUERIMIENTO.CONCURSO AS "concurso",
+                       HR_REQUERIMIENTO.FECHAENVIO AS "fechaenvio",
+                       SGCORESYS.FN_FECHA_DIA_UTIL(HR_REQUERIMIENTO.FECHAENVIO) AS "fechaquiebre",
+                       FLAGDESIERTO AS "flagdesierto",
+                       MOTIVODESIERTO AS "motivodesierto",
+                       FECHARESULTADO AS "fecharesultado",
+                
+                  (SELECT nvl(numeroestandar,0)
+                   FROM SGCORESYS.hr_organigrama
+                   WHERE HR_Requerimiento.CodigoPuesto = hr_organigrama.CodigoPuesto
+                     AND HR_organigrama.companyowner = HR_Requerimiento.companyowner
+                     AND HR_organigrama.tipoplanilla = (CASE WHEN
+                                                          (SELECT ParametrosMast.Texto
+                                                           FROM SGCORESYS.ParametrosMast
+                                                           WHERE (ParametrosMast.CompaniaCodigo = '999999')
+                                                             AND (ParametrosMast.AplicacionCodigo = 'HR')
+                                                             AND (ParametrosMast.ParametroClave = 'PARTOMORG')) = 'S' THEN
+                                                          (SELECT ParametrosMast.EXPLICACION
+                                                           FROM SGCORESYS.ParametrosMast
+                                                           WHERE (ParametrosMast.CompaniaCodigo = '999999')
+                                                             AND (ParametrosMast.AplicacionCodigo = 'HR')
+                                                             AND (ParametrosMast.ParametroClave = 'PARTOMORG')) ELSE HR_Requerimiento.tipoplanilla END)
+                     AND hr_organigrama.CodigoPuesto > 0
+                     AND ano IN
+                       (SELECT numero
+                        FROM SGCORESYS.parametrosmast
+                        WHERE parametroclave = 'ORGAN_YEAR')) AS "puesto_vacante",
+                       FECHAPUBLICACION AS "fechapublicacion"
+                FROM SGCORESYS.HR_Requerimiento
+                LEFT OUTER JOIN SGCORESYS.HR_PuestoEmpresa ON (HR_Requerimiento.CodigoPuesto = HR_PuestoEmpresa.CodigoPuesto)
+                LEFT OUTER JOIN SGCORESYS.HR_PosicionEmpresa ON (HR_PosicionEmpresa.CodigoPosicion = HR_Requerimiento.CodigoPosicionSolicitante)
+                LEFT OUTER JOIN SGCORESYS.hr_requerimientoobservacion ON (hr_requerimientoobservacion.Requerimiento = HR_Requerimiento.Requerimiento
+                 AND hr_requerimientoobservacion.CompanyOwner = HR_Requerimiento.CompanyOwner)
+                INNER JOIN  SGCORESYS.companyowner ON COMPANYOWNER.COMPANYOWNER=HR_REQUERIMIENTO.COMPANYOWNER
+                INNER JOIN SGCORESYS.PersonaMast ON PERSONAMAST.PERSONA=HR_REQUERIMIENTO.EMPLEADOSOLICITANTE
+                
+                WHERE 1=1
+					and
+					((
+					    (
+					        (
+					            (:par_empleado in(SELECT EMPLEADOEVALUADOR FROM SGCORESYS.HR_EVALREQUERIMIENTO_2 WHERE REQUERIMIENTO = HR_Requerimiento.Requerimiento AND COMPANYOWNER = HR_Requerimiento.CompanyOwner
+					                and secuencia in(SELECT SECUENCIA FROM SGCORESYS.HR_POSREQUER WHERE REQUERIMIENTO = HR_Requerimiento.Requerimiento AND COMPANYOWNER = HR_Requerimiento.CompanyOwner)))
+					            OR
+					            (:par_empleado in(SELECT EMPLEADOSUPLENTE FROM SGCORESYS.HR_EVALREQUERIMIENTO_2 WHERE REQUERIMIENTO = HR_Requerimiento.Requerimiento AND COMPANYOWNER = HR_Requerimiento.CompanyOwner
+					                and secuencia in(SELECT SECUENCIA FROM SGCORESYS.HR_POSREQUER WHERE REQUERIMIENTO = HR_Requerimiento.Requerimiento AND COMPANYOWNER = HR_Requerimiento.CompanyOwner)))  
+					          )
+					          and :par_validacion1 = 'N'
+					    )
+					    or :par_validacion1 = 'S'
+					) or :par_validacion2 = 'S')
+					and 
+					(
+						 :par_validacion1 = 'S'
+						or (HR_Requerimiento.centrocosto in (select empleadomast.centrocostos from SGCORESYS.empleadomast where empleadomast.empleado = :par_empleado ))
+					
+					)
+                
+                 AND  NVL(HR_Requerimiento.CompanyOwner,0)=NVL(:p_compania,NVL(HR_Requerimiento.CompanyOwner,0))
+                 AND NVL(HR_Requerimiento.convocatoria,0)=NVL(:p_convocatoria,NVL(HR_Requerimiento.convocatoria,0)) 
+                 AND NVL(HR_Requerimiento.Concurso,0)=NVL(:p_concurso,NVL(HR_Requerimiento.Concurso,0)) 
+                 AND NVL(HR_Requerimiento.Requerimiento,0)=NVL(:p_numero,NVL(HR_Requerimiento.Requerimiento ,0))
+                 AND NVL(HR_Requerimiento.CodigoPuesto,0)=NVL(:p_codigoPuesto,NVL(HR_Requerimiento.CodigoPuesto,0))
+                 AND NVL(HR_Requerimiento.tipoplanilla,0)=NVL(:p_tipoplanilla,NVL(HR_Requerimiento.tipoplanilla,0))
+                 AND NVL( HR_Requerimiento.CodigoPosicionSolicitante,0)=NVL(:p_codigoPosicionSolicitante,NVL( HR_Requerimiento.CodigoPosicionSolicitante,0))
+                 AND NVL(HR_Requerimiento.empleadoresponsable,0)=NVL(:p_empleadoresponsable,NVL(HR_Requerimiento.empleadoresponsable,0))
+                 AND NVL(HR_Requerimiento.tiporequerimiento,0)=NVL(:p_tiporequerimiento,NVL(HR_Requerimiento.tiporequerimiento,0))
+                 [FILTROESTADO]
+                 [FILTRODESIERTO]
+                 [FILTROFECHAS]
+            ]]>
+	</sql-query>
+
+	<sql-query name="hrrequerimiento.listarTipoPlanillaCandidatos">
+		<![CDATA[
+		         SELECT 
+                        PR_TipoPlanilla.TipoPlanilla as "tipoplanilla",   
+                        PR_TipoPlanilla.Descripcion as "descripcion",   
+                        PR_TipoPlanilla.ClasePago  as "clasepago"
+                        FROM 
+                        SGCORESYS.PR_TipoPlanilla  
+                        WHERE 
+                        NVL(PR_TipoPlanilla.TipoPlanilla,'XX') =NVL(:tiposdePlanilla, NVL(PR_TipoPlanilla.TipoPlanilla,'XX'))
+                        ORDER BY 
+                        PR_TipoPlanilla.Descripcion ASC 
+		]]>
+	</sql-query>
+
+	<sql-query name="hrrequerimiento.obtenermetapresupuestal">
+		select
+		PR_METAPRESUPUESTAL.meta as "meta" ,
+		PR_METAPRESUPUESTAL.descripcion as "descripcion",
+		PR_COMPONENTEPRESUPUESTAL.descripcion as "componente"
+		FROM
+		sgcoresys.PR_METAPRESUPUESTAL
+		JOIN sgcoresys.PR_COMPONENTEPRESUPUESTAL
+		ON PR_METAPRESUPUESTAL.COMPONENTE =
+		PR_COMPONENTEPRESUPUESTAL.COMPONENTE
+		AND PR_METAPRESUPUESTAL.ANO = PR_COMPONENTEPRESUPUESTAL.ANO
+		where
+		PR_METAPRESUPUESTAL.Companiasocio=:p_companiasocio AND
+		PR_METAPRESUPUESTAL.Ano=:p_ano and
+		PR_COMPONENTEPRESUPUESTAL.ESTADO = 'A'
+		ORDER BY
+		PR_METAPRESUPUESTAL.meta
+	</sql-query>
+
+	<sql-query name="hrrequerimiento.esFeriado">
+
+		SELECT
+		COUNT(1) AS "secuencia"
+		FROM
+		SGCORESYS.PR_CALENDARIOFERIADOS
+		WHERE
+		FECHAMESDIA = :diamesanio AND
+		ALLSUCURSAL = 'S' AND
+		ESTADO = 'A'
+
+	</sql-query>
+
+	<sql-query name="hrrequerimiento.insertarDocAprobacion">
+		insert into
+		sgcoresys.HR_RequerimientoDocAprobacion (REQUERIMIENTO,
+		COMPANIA,
+		SECUENCIAL, IDGRUPOAPROBACION, RESPONSABLE,
+		INDICADORAPROBACION,
+		FECHAAPROBACION, COMENTARIO, ESTADO,
+		USUARIOCREACION, FECHACREACION,
+		USUARIOMODIFICACION,
+		FECHAMODIFICACION)
+		values (:p_requerimiento,
+		:p_companyowner, (select nvl(max(rda1.SECUENCIAL),0) + 1 from
+		sgcoresys.HR_RequerimientoDocAprobacion rda1 where
+		rda1.REQUERIMIENTO =
+		:p_requerimiento and rda1.COMPANIA = :p_companyowner ), 0,
+		:p_empleadosolicitante, 2, sysdate,
+		'RV', 'A', :p_usuario,
+		sysdate,
+		:p_usuario,sysdate)
+	</sql-query>
+
+
+	<sql-query name="hrrequerimiento.obtenerUsuariosEnvio">
+		select
+		ADET.USUARIO as "usuarioAprobacion",
+		E.CORREOINTERNO as "correoInterno"
+		from sgcoresys.SY_APROBACIONNIVELES
+		A
+		JOIN sgcoresys.SY_APROBACIONNIVELES_DET ADET
+		ON A.CODIGO=ADET.CODIGO
+		JOIN
+		sgcoresys.EMPLEADOMAST E
+		ON E.EMPLEADO = ADET.USUARIO
+		WHERE
+		A.CODIGOPROCESO = 1 AND
+		ADET.NIVEL = 1
+	</sql-query>
+
+
+	<sql-query name="hrrequerimiento.listarseguimiento">
+		SELECT
+		HR_RequerimientoDocAprobacion.Compania
+		as "compania",
+		HR_RequerimientoDocAprobacion.Requerimiento as
+		"requerimiento",
+		HR_RequerimientoDocAprobacion.Secuencial as
+		"secuencial",
+		HR_RequerimientoDocAprobacion.Responsable as
+		"responsable",
+		PersonaMast.NombreCompleto as "nombrecompleto",
+		HR_RequerimientoDocAprobacion.IndicadorAprobacion as
+		"indicadorAprobacion",
+		HR_RequerimientoDocAprobacion.FechaAprobacion as
+		"fechaaprobacion",
+		HR_RequerimientoDocAprobacion.Comentario as
+		"comentario",
+		cast(HR_RequerimientoDocAprobacion.Estado as varchar(1))
+		as "estado"
+		FROM
+		sgcoresys.HR_RequerimientoDocAprobacion
+		LEFT JOIN
+		sgcoresys.PersonaMast ON (
+		PersonaMast.persona =
+		HR_RequerimientoDocAprobacion.Responsable )
+		WHERE
+		(
+		HR_RequerimientoDocAprobacion.Compania = '01000000' ) AND
+		(
+		HR_RequerimientoDocAprobacion.Requerimiento = :p_requerimiento )
+	</sql-query>
+
+
+
+
+	<sql-query name="hrrequerimiento.listarFlagTipoSecuencia">
+		select
+		cast(p.flagtipopuesto as varchar(1)) as "flagTipopuesto",
+		er.secuencia as "secuencia"
+		from
+		sgcoresys.hr_requerimiento r join
+		sgcoresys.hr_puestoempresa p
+		on
+		r.codigopuesto = p.codigopuesto join
+		sgcoresys.hr_evalrequerimiento er
+		on r.requerimiento = er.requerimiento
+		where r.requerimiento =
+		:p_requerimiento and er.evaluacion =
+		:p_evaluacion
+	</sql-query>
+
+
+
+
+</hibernate-mapping>

@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : sysiaf.
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- sysiaf.dddw_siaf_companyowner -->
+    <sql-query name="sysiaf.DddwSiafCompanyowner">
+    </sql-query>
+
+    <!-- sysiaf.dw_auxiliar_master_edit -->
+    <sql-query name="sysiaf.DwAuxiliarMasterEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_codigo_descripcion -->
+    <sql-query name="sysiaf.DwBuCertificacionCodigoDescripcion">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_compromiso -->
+    <sql-query name="sysiaf.DwBuCertificacionCompromiso">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_compromiso_ap -->
+    <sql-query name="sysiaf.DwBuCertificacionCompromisoAp">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_compromiso_ca -->
+    <sql-query name="sysiaf.DwBuCertificacionCompromisoCa">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_compromiso_cr -->
+    <sql-query name="sysiaf.DwBuCertificacionCompromisoCr">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_compromiso_eje -->
+    <sql-query name="sysiaf.DwBuCertificacionCompromisoEje">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_compromiso_eje_val -->
+    <sql-query name="sysiaf.DwBuCertificacionCompromisoEjeVal">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_compromiso_modify -->
+    <sql-query name="sysiaf.DwBuCertificacionCompromisoModify">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_compromiso_modify_list -->
+    <sql-query name="sysiaf.DwBuCertificacionCompromisoModifyList">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_detail_saldo -->
+    <sql-query name="sysiaf.DwBuCertificacionDetailSaldo">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_edit -->
+    <sql-query name="sysiaf.DwBuCertificacionEdit">
+     <![CDATA[
+    	 SELECT  
+            BU_CERTIFICACIONDETALLE.REFERENCIAFISCAL01 as "referenciafiscal01",           
+            BU_CERTIFICACIONDETALLE.REFERENCIAFISCAL02 as "referenciafiscal02" ,           
+            BU_CERTIFICACIONDETALLE.REFERENCIAFISCAL03 as "referenciafiscal03" ,           
+            BU_CERTIFICACIONDETALLE.NIVELSERVICIO as "nivelservicio" ,           
+            BU_CERTIFICACIONDETALLE.COMPONENTE as "componente",           
+            BU_CERTIFICACIONDETALLE.MONTO as "monto" ,           
+            SY_CAMPOCALCULADO.MONTO01  as "monto01",           
+            SY_CAMPOCALCULADO.MONTO02 as "monto02",           
+            SY_CAMPOCALCULADO.DESCRIPCION01 as "descripcion01",           
+            SY_CAMPOCALCULADO.DESCRIPCION02 as "descripcion02" ,           
+            SY_CAMPOCALCULADO.DESCRIPCION03 as "descripcion03" ,           
+            SY_CAMPOCALCULADO.DESCRIPCION04 as "descripcion04" ,           
+            SY_CAMPOCALCULADO.MONTO03 as "monto03"  
+            FROM
+            SGCORESYS.BU_CERTIFICACIONDETALLE ,           
+            SGCORESYS.SY_CAMPOCALCULADO      
+            WHERE 
+            ( BU_CertificacionDetalle.CompaniaSocio = :CompaniaSocio ) and
+            ( BU_CertificacionDetalle.Ano = :Ano ) and          
+            ( BU_CertificacionDetalle.NumeroDocumento = :NumeroDocumento ) and          
+            ( BU_CertificacionDetalle.Secuencia = :Secuencia ) and          
+            ( BU_CertificacionDetalle.Movimiento = :Movimiento ) and          
+            ( BU_CertificacionDetalle.Monto <> 0 )   
+    ]]>
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_edit_ajuste -->
+    <sql-query name="sysiaf.DwBuCertificacionEditAjuste">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_edit_cr -->
+    <sql-query name="sysiaf.DwBuCertificacionEditCr">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_edit_cr_browse -->
+    <sql-query name="sysiaf.DwBuCertificacionEditCrBrowse">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_edit_crso_browse -->
+    <sql-query name="sysiaf.DwBuCertificacionEditCrsoBrowse">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_edit_detail -->
+    <sql-query name="sysiaf.DwBuCertificacionEditDetail">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_edit_document -->
+    <sql-query name="sysiaf.DwBuCertificacionEditDocument">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_edit_flujo -->
+    <sql-query name="sysiaf.DwBuCertificacionEditFlujo">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_edit_historia -->
+    <sql-query name="sysiaf.DwBuCertificacionEditHistoria">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_edit_mes -->
+    <sql-query name="sysiaf.DwBuCertificacionEditMes">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_edit_mes_data -->
+    <sql-query name="sysiaf.DwBuCertificacionEditMesData">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_edit_short -->
+    <sql-query name="sysiaf.DwBuCertificacionEditShort">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_list -->
+    <sql-query name="sysiaf.DwBuCertificacionList">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_list_modify -->
+    <sql-query name="sysiaf.DwBuCertificacionListModify">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_list_position -->
+    <sql-query name="sysiaf.DwBuCertificacionListPosition">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_presupuesto_det -->
+    <sql-query name="sysiaf.DwBuCertificacionPresupuestoDet">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_presupuesto_select_01 -->
+    <sql-query name="sysiaf.DwBuCertificacionPresupuestoSelect01">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_presupuesto_select_02 -->
+    <sql-query name="sysiaf.DwBuCertificacionPresupuestoSelect02">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_presupuesto_select_all -->
+    <sql-query name="sysiaf.DwBuCertificacionPresupuestoSelectAll">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_presupuesto_select_ns -->
+    <sql-query name="sysiaf.DwBuCertificacionPresupuestoSelectNs">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_process_list_ade -->
+    <sql-query name="sysiaf.DwBuCertificacionProcessListAde">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_process_list_cc -->
+    <sql-query name="sysiaf.DwBuCertificacionProcessListCc">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_process_list_co -->
+    <sql-query name="sysiaf.DwBuCertificacionProcessListCo">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_process_list_position -->
+    <sql-query name="sysiaf.DwBuCertificacionProcessListPosition">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_process_list_rq -->
+    <sql-query name="sysiaf.DwBuCertificacionProcessListRq">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_saldo -->
+    <sql-query name="sysiaf.DwBuCertificacionSaldo">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_saldo_cr -->
+    <sql-query name="sysiaf.DwBuCertificacionSaldoCr">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_saldo_pca -->
+    <sql-query name="sysiaf.DwBuCertificacionSaldoPca">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_saldo_position -->
+    <sql-query name="sysiaf.DwBuCertificacionSaldoPosition">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_select -->
+    <sql-query name="sysiaf.DwBuCertificacionSelect">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_certificacion_select_position -->
+    <sql-query name="sysiaf.DwBuCertificacionSelectPosition">
+    </sql-query>
+
+    <!-- sysiaf.dw_bu_pca_distribucion_vs_certificacion -->
+    <sql-query name="sysiaf.DwBuPcaDistribucionVsCertificacion">
+    </sql-query>
+
+    <!-- sysiaf.dw_co_009_documento_import_error -->
+    <sql-query name="sysiaf.DwCo009DocumentoImportError">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_compromiso_short_obligacion -->
+    <sql-query name="sysiaf.DwCpCompromisoShortObligacion">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_obligacion_rebaja_arqueocaja -->
+    <sql-query name="sysiaf.DwCpObligacionRebajaArqueocaja">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_obligacion_rebaja_cobranza -->
+    <sql-query name="sysiaf.DwCpObligacionRebajaCobranza">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_obligacion_rebaja_cobranza_detail -->
+    <sql-query name="sysiaf.DwCpObligacionRebajaCobranzaDetail">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_obligacion_rebaja_cobranza_doc -->
+    <sql-query name="sysiaf.DwCpObligacionRebajaCobranzaDoc">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_obligacion_rebaja_devolucion_ap -->
+    <sql-query name="sysiaf.DwCpObligacionRebajaDevolucionAp">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_obligacion_rebaja_doc_edit -->
+    <sql-query name="sysiaf.DwCpObligacionRebajaDocEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_obligacion_rebaja_doc_edit_detail -->
+    <sql-query name="sysiaf.DwCpObligacionRebajaDocEditDetail">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_obligacion_rebaja_edit -->
+    <sql-query name="sysiaf.DwCpObligacionRebajaEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_obligacion_rebaja_edit_detail -->
+    <sql-query name="sysiaf.DwCpObligacionRebajaEditDetail">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_obligacion_rebaja_pago_distrib -->
+    <sql-query name="sysiaf.DwCpObligacionRebajaPagoDistrib">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_obligacion_rebaja_pago_distrib_pp -->
+    <sql-query name="sysiaf.DwCpObligacionRebajaPagoDistribPp">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_obligacion_rebaja_position -->
+    <sql-query name="sysiaf.DwCpObligacionRebajaPosition">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_obligacion_rebaja_transaccion_banco -->
+    <sql-query name="sysiaf.DwCpObligacionRebajaTransaccionBanco">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_payment_print_check_dev_ingreso_onp -->
+    <sql-query name="sysiaf.DwCpPaymentPrintCheckDevIngresoOnp">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_payment_print_check_dev_onp -->
+    <sql-query name="sysiaf.DwCpPaymentPrintCheckDevOnp">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_process_doc_position -->
+    <sql-query name="sysiaf.DwCpProcessDocPosition">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_process_documents_arq_caja -->
+    <sql-query name="sysiaf.DwCpProcessDocumentsArqCaja">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_process_documents_arqueo -->
+    <sql-query name="sysiaf.DwCpProcessDocumentsArqueo">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_process_documents_cob_doc -->
+    <sql-query name="sysiaf.DwCpProcessDocumentsCobDoc">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_process_documents_cp_detail -->
+    <sql-query name="sysiaf.DwCpProcessDocumentsCpDetail">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_process_documents_cp_list -->
+    <sql-query name="sysiaf.DwCpProcessDocumentsCpList">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_process_documents_ejecucion -->
+    <sql-query name="sysiaf.DwCpProcessDocumentsEjecucion">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_process_documents_import -->
+    <sql-query name="sysiaf.DwCpProcessDocumentsImport">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_process_documents_import_pos -->
+    <sql-query name="sysiaf.DwCpProcessDocumentsImportPos">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_process_documents_obl_detail -->
+    <sql-query name="sysiaf.DwCpProcessDocumentsOblDetail">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_process_documents_obl_list -->
+    <sql-query name="sysiaf.DwCpProcessDocumentsOblList">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_process_documents_pago_detail -->
+    <sql-query name="sysiaf.DwCpProcessDocumentsPagoDetail">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_process_documents_pago_list -->
+    <sql-query name="sysiaf.DwCpProcessDocumentsPagoList">
+    </sql-query>
+
+    <!-- sysiaf.dw_cp_siaf_obligacion_edit_amount -->
+    <sql-query name="sysiaf.DwCpSiafObligacionEditAmount">
+    </sql-query>
+
+    <!-- sysiaf.dw_ma_ac_referenciafiscal_select_descrip2 -->
+    <sql-query name="sysiaf.DwMaAcReferenciafiscalSelectDescrip2">
+    </sql-query>
+
+    <!-- sysiaf.dw_ma_ac_referenciafiscal_tree_descrip -->
+    <sql-query name="sysiaf.DwMaAcReferenciafiscalTreeDescrip">
+    </sql-query>
+
+    <!-- sysiaf.dw_ma_bu_certificacion_flujo -->
+    <sql-query name="sysiaf.DwMaBuCertificacionFlujo">
+    </sql-query>
+
+    <!-- sysiaf.dw_ma_bu_estado_cr_select -->
+    <sql-query name="sysiaf.DwMaBuEstadoCrSelect">
+    </sql-query>
+
+    <!-- sysiaf.dw_ma_bu_etapa_cr_select -->
+    <sql-query name="sysiaf.DwMaBuEtapaCrSelect">
+    </sql-query>
+
+    <!-- sysiaf.dw_ma_bu_tipocertificacion_select -->
+    <sql-query name="sysiaf.DwMaBuTipocertificacionSelect">
+    </sql-query>
+
+    <!-- sysiaf.dw_ma_bu_tipooperacion_select -->
+    <sql-query name="sysiaf.DwMaBuTipooperacionSelect">
+    </sql-query>
+
+    <!-- sysiaf.dw_ma_bu_tipooperacion_tipo_select -->
+    <sql-query name="sysiaf.DwMaBuTipooperacionTipoSelect">
+    </sql-query>
+
+    <!-- sysiaf.dw_ma_bu_tipooperacion_tipodocu_select -->
+    <sql-query name="sysiaf.DwMaBuTipooperacionTipodocuSelect">
+    </sql-query>
+
+    <!-- sysiaf.dw_ma_maestromiscelaneo_select_tipocert -->
+    <sql-query name="sysiaf.DwMaMaestromiscelaneoSelectTipocert">
+    </sql-query>
+
+    <!-- sysiaf.dw_ma_maestromiscelaneo_select_tipooper -->
+    <sql-query name="sysiaf.DwMaMaestromiscelaneoSelectTipooper">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_cabecera -->
+    <sql-query name="sysiaf.DwSiafCabecera">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_cp_compromiso_distribucion_edit -->
+    <sql-query name="sysiaf.DwSiafCpCompromisoDistribucionEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_cp_obligacion_edit -->
+    <sql-query name="sysiaf.DwSiafCpObligacionEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_cp_obligacion_edit_cp -->
+    <sql-query name="sysiaf.DwSiafCpObligacionEditCp">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_cp_so_edit -->
+    <sql-query name="sysiaf.DwSiafCpSoEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_cp_so_list -->
+    <sql-query name="sysiaf.DwSiafCpSoList">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_cp_so_list_position -->
+    <sql-query name="sysiaf.DwSiafCpSoListPosition">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_cp_so_list_position_siga -->
+    <sql-query name="sysiaf.DwSiafCpSoListPositionSiga">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_area -->
+    <sql-query name="sysiaf.DwSiafDataArea">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_banco -->
+    <sql-query name="sysiaf.DwSiafDataBanco">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_ciclo -->
+    <sql-query name="sysiaf.DwSiafDataCiclo">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_convenio -->
+    <sql-query name="sysiaf.DwSiafDataConvenio">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_cta_cte -->
+    <sql-query name="sysiaf.DwSiafDataCtaCte">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_documento -->
+    <sql-query name="sysiaf.DwSiafDataDocumento">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_documento_giro -->
+    <sql-query name="sysiaf.DwSiafDataDocumentoGiro">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_fase -->
+    <sql-query name="sysiaf.DwSiafDataFase">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_fuente_financiamiento -->
+    <sql-query name="sysiaf.DwSiafDataFuenteFinanciamiento">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_mes_ejecucion -->
+    <sql-query name="sysiaf.DwSiafDataMesEjecucion">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_mes_ejecucion_anterior -->
+    <sql-query name="sysiaf.DwSiafDataMesEjecucionAnterior">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_modalidad_compra -->
+    <sql-query name="sysiaf.DwSiafDataModalidadCompra">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_moneda -->
+    <sql-query name="sysiaf.DwSiafDataMoneda">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_organismo -->
+    <sql-query name="sysiaf.DwSiafDataOrganismo">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_origen -->
+    <sql-query name="sysiaf.DwSiafDataOrigen">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_tipo_compromiso -->
+    <sql-query name="sysiaf.DwSiafDataTipoCompromiso">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_tipo_giro -->
+    <sql-query name="sysiaf.DwSiafDataTipoGiro">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_tipo_operacion -->
+    <sql-query name="sysiaf.DwSiafDataTipoOperacion">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_tipo_pago -->
+    <sql-query name="sysiaf.DwSiafDataTipoPago">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_tipo_proceso -->
+    <sql-query name="sysiaf.DwSiafDataTipoProceso">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_tipo_proveedor -->
+    <sql-query name="sysiaf.DwSiafDataTipoProveedor">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_tipo_recurso -->
+    <sql-query name="sysiaf.DwSiafDataTipoRecurso">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_data_unidad_ejecutora -->
+    <sql-query name="sysiaf.DwSiafDataUnidadEjecutora">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_detalle -->
+    <sql-query name="sysiaf.DwSiafDetalle">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_error_interfaz -->
+    <sql-query name="sysiaf.DwSiafErrorInterfaz">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_estado_adelanto_edit -->
+    <sql-query name="sysiaf.DwSiafEstadoAdelantoEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_estado_asignaciones_edit -->
+    <sql-query name="sysiaf.DwSiafEstadoAsignacionesEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_estado_cajachica_edit -->
+    <sql-query name="sysiaf.DwSiafEstadoCajachicaEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_estado_cobranza_edit -->
+    <sql-query name="sysiaf.DwSiafEstadoCobranzaEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_estado_factura_edit -->
+    <sql-query name="sysiaf.DwSiafEstadoFacturaEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_estado_obligacion_detalle_edit -->
+    <sql-query name="sysiaf.DwSiafEstadoObligacionDetalleEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_estado_obligacion_edit -->
+    <sql-query name="sysiaf.DwSiafEstadoObligacionEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_estado_obligacion_edit_co -->
+    <sql-query name="sysiaf.DwSiafEstadoObligacionEditCo">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_estado_ordencompra_edit -->
+    <sql-query name="sysiaf.DwSiafEstadoOrdencompraEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_estado_ordenservicio_edit -->
+    <sql-query name="sysiaf.DwSiafEstadoOrdenservicioEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_estado_pagos_edit -->
+    <sql-query name="sysiaf.DwSiafEstadoPagosEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_estado_planilla_edit -->
+    <sql-query name="sysiaf.DwSiafEstadoPlanillaEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_estado_reportegastos_edit -->
+    <sql-query name="sysiaf.DwSiafEstadoReportegastosEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_int_anulacion_cab -->
+    <sql-query name="sysiaf.DwSiafIntAnulacionCab">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_int_comprometido_cab -->
+    <sql-query name="sysiaf.DwSiafIntComprometidoCab">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_int_comprometido_cab_ds -->
+    <sql-query name="sysiaf.DwSiafIntComprometidoCabDs">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_int_comprometido_det -->
+    <sql-query name="sysiaf.DwSiafIntComprometidoDet">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_int_comprometido_det_1 -->
+    <sql-query name="sysiaf.DwSiafIntComprometidoDet1">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_int_comprometido_det_ds -->
+    <sql-query name="sysiaf.DwSiafIntComprometidoDetDs">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_int_comprometido_not -->
+    <sql-query name="sysiaf.DwSiafIntComprometidoNot">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_int_comprometido_temp -->
+    <sql-query name="sysiaf.DwSiafIntComprometidoTemp">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_int_rebajas_cab -->
+    <sql-query name="sysiaf.DwSiafIntRebajasCab">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_interfase_edit -->
+    <sql-query name="sysiaf.DwSiafInterfaseEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_interfase_edit_det -->
+    <sql-query name="sysiaf.DwSiafInterfaseEditDet">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_interfase_edit_not -->
+    <sql-query name="sysiaf.DwSiafInterfaseEditNot">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_interfase_list -->
+    <sql-query name="sysiaf.DwSiafInterfaseList">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_interfase_list_position -->
+    <sql-query name="sysiaf.DwSiafInterfaseListPosition">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_rebajas_oc_os_list -->
+    <sql-query name="sysiaf.DwSiafRebajasOcOsList">
+    </sql-query>
+
+    <!-- sysiaf.dw_siaf_rebajas_oc_os_position -->
+    <sql-query name="sysiaf.DwSiafRebajasOcOsPosition">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_ade -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionAde">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_asign -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionAsign">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_caja -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionCaja">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_co_vence -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionCoVence">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_cobranza_ref -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionCobranzaRef">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_comercial -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionComercial">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_contrato -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionContrato">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_cp -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionCp">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_cp_a -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionCpA">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_cp_detail -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionCpDetail">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_cp_detail_a -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionCpDetailA">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_cp_fase -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionCpFase">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_fase_c -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionFaseC">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_header -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionHeader">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_invoice -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionInvoice">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_invoice_cp -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionInvoiceCp">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_invoice_ref -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionInvoiceRef">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_list -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionList">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_ordencompra -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionOrdencompra">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_ordenserv -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionOrdenserv">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_paym -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionPaym">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_paym_cp -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionPaymCp">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_paym_pp -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionPaymPp">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_paym_ref -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionPaymRef">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_requerimiento -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionRequerimiento">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_saldo -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionSaldo">
+    </sql-query>
+
+    <!-- sysiaf.dw_sy_documento_distribucion_so_detalle -->
+    <sql-query name="sysiaf.DwSyDocumentoDistribucionSoDetalle">
+    </sql-query>
+
+    <!-- sysiaf.dw_wh_licitacion_tipomast_select -->
+    <sql-query name="sysiaf.DwWhLicitacionTipomastSelect">
+    </sql-query>
+
+    <!-- sysiaf.dw_wh_requisicion_adicional_edit -->
+    <sql-query name="sysiaf.DwWhRequisicionAdicionalEdit">
+    </sql-query>
+
+    <!-- sysiaf.dw_wh_requisition_detail_short -->
+    <sql-query name="sysiaf.DwWhRequisitionDetailShort">
+    </sql-query>
+
+    <!-- sysiaf.dw_wh_requisition_short_header -->
+    <sql-query name="sysiaf.DwWhRequisitionShortHeader">
+    </sql-query>
+
+</hibernate-mapping>

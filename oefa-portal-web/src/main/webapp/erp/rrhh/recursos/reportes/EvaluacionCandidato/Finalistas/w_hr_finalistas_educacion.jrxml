@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_hr_finalistas_experiencias" language="groovy" pageWidth="595" pageHeight="110" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5cc5d550-49fc-45c8-89f6-6fca436ba342">
+	<property name="ireport.zoom" value="1.464100000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="postulante" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+p.Postulante,p.Secuencia,p.NivelAcademico,p.CentroEstudios,
+p.OtroCentroEstudios,p.Nivel,p.Area,p.Carrera,p.FechaDesde,
+p.FechaHasta,0 AS libre,
+p.UltimaFechaModif,p.UltimoUsuario,g.DESCRIPCION as academico,c.DESCRIPCION as centro,
+h.DESCRIPCION as carreras
+FROM
+HR_PostulanteInstruccion p JOIN HR_GradoInstruccion g
+ON p.NIVELACADEMICO=g.GRADOINSTRUCCION JOIN HR_CentroEstudios c
+ON p.CENTROESTUDIOS=c.CENTRO JOIN HR_Profesion h
+ON h.PROFESION=p.CARRERA
+WHERE
+p.Postulante = $P{postulante}]]>
+	</queryString>
+	<field name="POSTULANTE" class="java.lang.String"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="NIVELACADEMICO" class="java.lang.String"/>
+	<field name="CENTROESTUDIOS" class="java.math.BigDecimal"/>
+	<field name="OTROCENTROESTUDIOS" class="java.lang.String"/>
+	<field name="NIVEL" class="java.lang.String"/>
+	<field name="AREA" class="java.lang.String"/>
+	<field name="CARRERA" class="java.lang.String"/>
+	<field name="FECHADESDE" class="java.sql.Timestamp"/>
+	<field name="FECHAHASTA" class="java.sql.Timestamp"/>
+	<field name="LIBRE" class="java.math.BigDecimal"/>
+	<field name="ULTIMAFECHAMODIF" class="java.sql.Timestamp"/>
+	<field name="ULTIMOUSUARIO" class="java.lang.String"/>
+	<field name="ACADEMICO" class="java.lang.String"/>
+	<field name="CENTRO" class="java.lang.String"/>
+	<field name="CARRERAS" class="java.lang.String"/>
+	<detail>
+		<band height="70" splitType="Stretch">
+			<rectangle>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="22" width="455" height="40" isPrintWhenDetailOverflows="true" uuid="3d3532de-7f27-4200-a096-32515124b4f9"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="455" height="22" backcolor="#E3E3E3" uuid="680ae628-5abc-4e13-98ba-8b9cb3309357"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="5" y="2" width="450" height="20" uuid="5cca97d7-c5f1-46fa-ba1d-543d01ba590d"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Educación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="22" width="108" height="14" uuid="e3bdf43d-3bd4-4746-8bcf-39338841fff5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nivel Academico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="145" y="22" width="143" height="14" uuid="d4f8f317-d9e0-4b66-a2d4-c10fe1fbae91"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Centro de Estudios]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="288" y="22" width="167" height="15" uuid="b8fb69ad-8d62-4fcd-9043-4e3195d586a9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carrera]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="5" y="37" width="32" height="25" isPrintWhenDetailOverflows="true" uuid="925fc816-f69e-4b73-87ff-a07fd5741bec"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SECUENCIA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="37" y="37" width="108" height="25" isPrintWhenDetailOverflows="true" uuid="434609e1-4655-4ed5-804e-f757c9a4c6cc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ACADEMICO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="145" y="36" width="143" height="26" isPrintWhenDetailOverflows="true" uuid="6caa477b-655e-4235-bf2d-95a3cb57344d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CENTRO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="288" y="37" width="167" height="25" isPrintWhenDetailOverflows="true" uuid="465b7bbe-140b-422a-8ac9-896c441d97dd"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CARRERAS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

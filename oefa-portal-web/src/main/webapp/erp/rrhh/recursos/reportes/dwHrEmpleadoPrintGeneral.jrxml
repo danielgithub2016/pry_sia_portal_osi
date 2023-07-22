@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dwHrEmpleadoPrintGeneral" language="groovy" pageWidth="204" pageHeight="842" columnWidth="204" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="01bf207e-3ff5-49ae-8d81-2387c621fc71">
+	<property name="ireport.zoom" value="1.366026910730141"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nombreEvaluado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cargoEvaluado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="areaOperativaEvaluado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombreEvaluador" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cargoEvaluador" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEmpleado" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parSecuencia" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parEvaluador" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="calificacion" class="java.math.BigDecimal"/>
+	<parameter name="resultadoEvaluacion" class="java.lang.String"/>
+	<parameter name="nombreEvaluacion" class="java.lang.String"/>
+	<parameter name="par_tiempoServicio" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+HR_EvaluacionEmpleado.Empleado,
+HR_EvaluacionEmpleado.CompanyOwner,
+companyowner.description,
+HR_EvaluacionEmpleado.SecuenciaEval,
+HR_EvaluacionEmpleado.FechaEvaluacion,
+HR_EvaluacionEmpleado.EmpleadoEvaluador,
+HR_EvaluacionEmpleado.TotalPuntos,
+HR_EvaluacionEmpleado.TotalPuntosFuncion,
+HR_EvaluacionEmpleado.TotalPuntosMetas,
+HR_EvaluacionEmpleado.UnidadReplicacion,
+HR_EvaluacionEmpleado.UnidadNegocio,
+HR_EvaluacionEmpleado.UltimoUsuario,
+HR_EvaluacionEmpleado.UltimaFechaModif,
+HR_EvaluacionEmpleado.CentroCostos,
+HR_EvaluacionEmpleado.Estado,
+HR_EvaluacionEmpleado.Comentario,
+'0' as codigoempleado,
+'0' as codigoevaluador,
+HR_EvaluacionPeriodo.Periodo,
+HR_EvaluacionPeriodo.FechaInicio,
+HR_EvaluacionPeriodo.FechaFin,
+HR_EvaluacionEmpleado.ComentarioEvaluado,
+HR_EvaluacionEmpleado.EmpleadoGerente,
+'0' as codigogerente,
+HR_EvaluacionPeriodo.FlagEvaluacionIntegral,
+HR_EvaluacionPeriodo.FlagMetas,
+HR_EvaluacionPeriodo.FlagNecesidadCapacita,
+HR_EvaluacionPeriodo.FlagRevisionMetas,
+HR_EvaluacionPeriodo.FlagPotencial,
+HR_EvaluacionPeriodo.FlagRevisionPotencial,
+HR_EvaluacionPeriodo.FlagDesempeno  ,
+EmpleadoMast.Fechaingreso,
+EmpleadoMast.fotografia,
+(select EmpleadoEvaluador  from SGCORESYS.HR_EvaluacionEmpleado
+where secuenciaeval = $P{parSecuencia}
+and tipoevaluador = 'RV'
+and empleado = $P{parEmpleado}) as Revisor,
+
+(SELECT LTRIM(RTRIM(FAMILIAPUESTO)) FROM SGCORESYS.HR_PUESTOEMPRESA WHERE CODIGOPUESTO = EmpleadoMast.codigocargo) as familia
+FROM
+
+SGCORESYS.HR_EvaluacionEmpleado
+JOIN SGcoresys.companyowner ON companyowner.CompanyOwner=HR_EvaluacionEmpleado.CompanyOwner,
+SGCORESYS.HR_EvaluacionPeriodo,
+SGCORESYS.EmpleadoMast
+
+WHERE
+ HR_EvaluacionEmpleado.SecuenciaEval= HR_EvaluacionPeriodo.SecuenciaEval  and
+ HR_EvaluacionEmpleado.Empleado= $P{parEmpleado}  AND
+ HR_EvaluacionEmpleado.SecuenciaEval= $P{parSecuencia}   and
+ HR_EvaluacionEmpleado.EmpleadoEvaluador=$P{parEvaluador}  and
+ HR_EvaluacionEmpleado.Empleado= EmpleadoMast.Empleado]]>
+	</queryString>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="COMPANYOWNER" class="java.lang.String"/>
+	<field name="DESCRIPTION" class="java.lang.String"/>
+	<field name="SECUENCIAEVAL" class="java.math.BigDecimal"/>
+	<field name="FECHAEVALUACION" class="java.sql.Timestamp"/>
+	<field name="EMPLEADOEVALUADOR" class="java.math.BigDecimal"/>
+	<field name="TOTALPUNTOS" class="java.lang.Double"/>
+	<field name="TOTALPUNTOSFUNCION" class="java.math.BigDecimal"/>
+	<field name="TOTALPUNTOSMETAS" class="java.lang.Double"/>
+	<field name="UNIDADREPLICACION" class="java.lang.String"/>
+	<field name="UNIDADNEGOCIO" class="java.lang.String"/>
+	<field name="ULTIMOUSUARIO" class="java.lang.String"/>
+	<field name="ULTIMAFECHAMODIF" class="java.sql.Timestamp"/>
+	<field name="CENTROCOSTOS" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<field name="COMENTARIO" class="java.lang.String"/>
+	<field name="CODIGOEMPLEADO" class="java.lang.String"/>
+	<field name="CODIGOEVALUADOR" class="java.lang.String"/>
+	<field name="PERIODO" class="java.lang.String"/>
+	<field name="FECHAINICIO" class="java.sql.Timestamp"/>
+	<field name="FECHAFIN" class="java.sql.Timestamp"/>
+	<field name="COMENTARIOEVALUADO" class="java.lang.String"/>
+	<field name="EMPLEADOGERENTE" class="java.math.BigDecimal"/>
+	<field name="CODIGOGERENTE" class="java.lang.String"/>
+	<field name="FLAGEVALUACIONINTEGRAL" class="java.lang.String"/>
+	<field name="FLAGMETAS" class="java.lang.String"/>
+	<field name="FLAGNECESIDADCAPACITA" class="java.lang.String"/>
+	<field name="FLAGREVISIONMETAS" class="java.lang.String"/>
+	<field name="FLAGPOTENCIAL" class="java.lang.String"/>
+	<field name="FLAGREVISIONPOTENCIAL" class="java.lang.String"/>
+	<field name="FLAGDESEMPENO" class="java.lang.String"/>
+	<field name="FECHAINGRESO" class="java.sql.Timestamp"/>
+	<field name="FOTOGRAFIA" class="java.awt.Image"/>
+	<field name="REVISOR" class="java.math.BigDecimal"/>
+	<field name="FAMILIA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="421" splitType="Stretch">
+			<rectangle>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="204" height="420" isPrintWhenDetailOverflows="true" uuid="f582d551-5ead-4151-82cc-476b8bb77c53"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="163" width="27" height="10" isPrintWhenDetailOverflows="true" uuid="2b18ce2a-8b06-4014-b2c4-bf667267d946"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Puesto:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="134" width="85" height="10" isPrintWhenDetailOverflows="true" uuid="82ec3687-265b-4194-b85e-eeab59d4b8fb"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre del Evaluado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="193" width="71" height="10" isPrintWhenDetailOverflows="true" uuid="a55c773c-2a80-461a-9199-84fce2e5117e"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Familia de Puesto:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="92" y="117" width="95" height="10" isPrintWhenDetailOverflows="true" uuid="0362d109-382a-4133-92be-b501f4fb0ced"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMPLEADO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="9" y="396" width="190" height="10" isPrintWhenDetailOverflows="true" uuid="58634662-9848-4d8e-9a59-e0c8704cbc2a"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMENTARIOEVALUADO}!=null?$F{COMENTARIOEVALUADO}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="310" width="90" height="10" isPrintWhenDetailOverflows="true" uuid="99ae57c4-b626-4ced-aa06-29fa0891afe9"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código del Evaluador:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="107" y="310" width="93" height="10" isPrintWhenDetailOverflows="true" uuid="2aa6d739-5616-49a7-bb45-49207a9312ed"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMPLEADOEVALUADOR}!=null?$F{EMPLEADOEVALUADOR}:""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="9" y="175" width="186" height="10" isPrintWhenDetailOverflows="true" uuid="9d413687-f579-417d-a044-9091c00c64d3"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cargoEvaluado}!=null?$P{cargoEvaluado}:""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="9" y="235" width="186" height="10" isPrintWhenDetailOverflows="true" uuid="d7364c31-6bbd-44b7-83ef-441f814ad20f"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{areaOperativaEvaluado}!=null?$P{areaOperativaEvaluado}:""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="9" y="205" width="186" height="10" isPrintWhenDetailOverflows="true" uuid="9f19d8b4-3143-4cce-b7af-599b2aaa9dce"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FAMILIA}!=null?$F{FAMILIA}:""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="9" y="339" width="190" height="10" isPrintWhenDetailOverflows="true" uuid="de4b2e4b-64ef-44da-b844-14815c3938dc"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombreEvaluador}!=null?$P{nombreEvaluador}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="326" width="112" height="10" isPrintWhenDetailOverflows="true" uuid="4ec80c9e-085f-4b54-bcf7-581a4e50773e"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre del Evaluador:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="9" y="295" width="185" height="11" isPrintWhenDetailOverflows="true" uuid="a9e6d396-0226-4277-960f-7b0050f5c3e1"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMENTARIO}!=null?$F{COMENTARIO}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="87" width="49" height="10" isPrintWhenDetailOverflows="true" uuid="f1a500da-2acb-4c2c-a9c2-2c0a1ca0eea8"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Evaluación:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="355" width="71" height="10" isPrintWhenDetailOverflows="true" uuid="1f4afa39-beb0-4097-b388-021907796070"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Puesto:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="9" y="368" width="190" height="10" isPrintWhenDetailOverflows="true" uuid="91e19ba8-e80e-4e2e-ba12-7e11bf6cd7bf"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cargoEvaluador}!=null?$P{cargoEvaluador}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="385" width="125" height="10" isPrintWhenDetailOverflows="true" uuid="2c2b5e24-8291-4db9-a81e-e415d9e0a781"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comentario del Evaluador:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="9" y="146" width="185" height="10" isPrintWhenDetailOverflows="true" uuid="0c883373-ca7c-487f-8a22-dab91a15506a"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombreEvaluado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="117" width="82" height="10" isPrintWhenDetailOverflows="true" uuid="46e429d5-348b-46de-9f65-034f4b937127"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código del Empleado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="223" width="71" height="10" isPrintWhenDetailOverflows="true" uuid="d3dde248-d128-414a-aab9-bf6e9fffbd9e"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Área Operativa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="282" width="112" height="10" isPrintWhenDetailOverflows="true" uuid="dc3c49f2-d61e-424a-a30e-f4e19618b04c"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comentario del Evaluado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="252" width="82" height="10" isPrintWhenDetailOverflows="true" uuid="8a26707c-536f-48b9-81f5-504ce10ba620"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tiempo de Servicio:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="9" y="99" width="190" height="12" isPrintWhenDetailOverflows="true" uuid="eef65b5b-e021-4178-95d6-77a536e85e1e"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombreEvaluacion}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="9" y="265" width="185" height="10" isPrintWhenDetailOverflows="true" uuid="77d92f52-d46e-4947-b555-14d132248196"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{par_tiempoServicio}!=null?$P{par_tiempoServicio}:""]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="69" y="7" width="66" height="80" uuid="7e8fc251-d067-4baf-8f40-de106e0bc98a"/>
+				<imageExpression><![CDATA[$F{FOTOGRAFIA}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+</jasperReport>

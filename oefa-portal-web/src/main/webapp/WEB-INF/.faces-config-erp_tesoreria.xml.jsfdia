@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="programacion::#erp#tesoreria#paginas#calendariopagos#programacion_mantenimiento.xhtml"
+    NAME="output"
+    PATH="/erp/tesoreria/paginas/calendariopagos/programacion_mantenimiento.xhtml"
+    TARGET="rules:#erp#tesoreria#paginas#calendariopagos#programacion_mantenimiento.xhtml"
+    TITLE="programacion" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:1" PATH="*" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:1" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="programacionLista::#erp#tesoreria#paginas#calendariopagos#programacion_lista.xhtml"
+    NAME="output"
+    PATH="/erp/tesoreria/paginas/calendariopagos/programacion_lista.xhtml"
+    TARGET="rules:#erp#tesoreria#paginas#calendariopagos#programacion_lista.xhtml"
+    TITLE="programacionLista" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:2" PATH="*" SHAPE="32,241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:2" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="consolidacion::#erp#tesoreria#paginas#calendariopagos#calendario.xhtml"
+    NAME="output"
+    PATH="/erp/tesoreria/paginas/calendariopagos/calendario.xhtml"
+    TARGET="rules:#erp#tesoreria#paginas#calendariopagos#calendario.xhtml"
+    TITLE="consolidacion" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:3" PATH="*" SHAPE="32,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:3" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="consolidaciondetalle::#erp#tesoreria#paginas#calendariopagos#calendario_mantenimiento.xhtml"
+    NAME="output"
+    PATH="/erp/tesoreria/paginas/calendariopagos/calendario_mantenimiento.xhtml"
+    TARGET="rules:#erp#tesoreria#paginas#calendariopagos#calendario_mantenimiento.xhtml"
+    TITLE="consolidaciondetalle" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:4" PATH="*" SHAPE="32,465,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:4" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="wcpreportegastoslist::#erp#tesoreria#paginas#w_cp_reportegastos_list.xhtml"
+    NAME="output"
+    PATH="/erp/tesoreria/paginas/w_cp_reportegastos_list.xhtml"
+    TARGET="rules:#erp#tesoreria#paginas#w_cp_reportegastos_list.xhtml"
+    TITLE="wcpreportegastoslist" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:5" PATH="*" SHAPE="32,577,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:5" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="wcpgastoadelantoedit::#erp#tesoreria#paginas#w_cp_gastoadelanto_edit.xhtml"
+    NAME="output"
+    PATH="/erp/tesoreria/paginas/w_cp_gastoadelanto_edit.xhtml"
+    TARGET="rules:#erp#tesoreria#paginas#w_cp_gastoadelanto_edit.xhtml"
+    TITLE="wcpgastoadelantoedit" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:6" PATH="*" SHAPE="32,689,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:6" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="wcpgastoadelantodescuento::#erp#tesoreria#paginas#w_cp_gastoadelanto_descuento.xhtml"
+    NAME="output"
+    PATH="/erp/tesoreria/paginas/w_cp_gastoadelanto_descuento.xhtml"
+    TARGET="rules:#erp#tesoreria#paginas#w_cp_gastoadelanto_descuento.xhtml"
+    TITLE="wcpgastoadelantodescuento" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:7" PATH="*" SHAPE="32,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:7" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="wcpreportegastosedit::#erp#tesoreria#paginas#w_cp_reportegastos_edit.xhtml"
+    NAME="output"
+    PATH="/erp/tesoreria/paginas/w_cp_reportegastos_edit.xhtml"
+    TARGET="rules:#erp#tesoreria#paginas#w_cp_reportegastos_edit.xhtml"
+    TITLE="wcpreportegastosedit" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#erp#tesoreria#paginas#w_cp_gastoadelanto_edit.xhtml"
+  PATH="/erp/tesoreria/paginas/w_cp_gastoadelanto_edit.xhtml"
+  SHAPE="240,593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#tesoreria#paginas#w_cp_gastoadelanto_descuento.xhtml"
+  PATH="/erp/tesoreria/paginas/w_cp_gastoadelanto_descuento.xhtml"
+  SHAPE="240,705,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#tesoreria#paginas#w_cp_reportegastos_list.xhtml"
+  PATH="/erp/tesoreria/paginas/w_cp_reportegastos_list.xhtml"
+  SHAPE="240,481,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#tesoreria#paginas#w_cp_reportegastos_edit.xhtml"
+  PATH="/erp/tesoreria/paginas/w_cp_reportegastos_edit.xhtml"
+  SHAPE="240,817,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#tesoreria#paginas#calendariopagos#calendario.xhtml"
+  PATH="/erp/tesoreria/paginas/calendariopagos/calendario.xhtml"
+  SHAPE="240,257,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#tesoreria#paginas#calendariopagos#programacion_lista.xhtml"
+  PATH="/erp/tesoreria/paginas/calendariopagos/programacion_lista.xhtml"
+  SHAPE="240,145,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#tesoreria#paginas#calendariopagos#calendario_mantenimiento.xhtml"
+  PATH="/erp/tesoreria/paginas/calendariopagos/calendario_mantenimiento.xhtml"
+  SHAPE="240,369,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#tesoreria#paginas#calendariopagos#programacion_mantenimiento.xhtml"
+  PATH="/erp/tesoreria/paginas/calendariopagos/programacion_mantenimiento.xhtml"
+  SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

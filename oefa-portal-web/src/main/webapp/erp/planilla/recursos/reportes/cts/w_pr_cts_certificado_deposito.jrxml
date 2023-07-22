@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_pr_cts_certificado_deposito" language="groovy" pageWidth="665" pageHeight="940" columnWidth="625" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="3384f785-4ca7-471a-bfd4-b28d8e874df6">
+	<property name="ireport.zoom" value="0.9313819845887408"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1349"/>
+	<parameter name="empleado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cts" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Logo" class="java.lang.String"/>
+	<parameter name="montoLetra" class="java.lang.String"/>
+	<parameter name="PATH_MARCA_DE_AGUA" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT EmpleadoMast.Empleado as Empleado,
+            (SELECT NOMBRES || ' ' || APELLIDOPATERNO || ' ' || APELLIDOMATERNO FROM sgcoresys.PersonaMast , sgcoresys.empleadomast WHERE persona = empleado and Persona = ( SELECT ParametrosMast.Numero FROM sgcoresys.ParametrosMast
+            WHERE ( ParametrosMast.CompaniaCodigo ='999999') AND ( ParametrosMast.AplicacionCodigo = 'PR' ) AND ( ParametrosMast.ParametroClave ='RESPONSCTS')))
+             as Responsable,
+             (SELECT DOCUMENTO FROM sgcoresys.PersonaMast , sgcoresys.empleadomast WHERE persona = empleado and Persona = ( SELECT ParametrosMast.Numero FROM sgcoresys.ParametrosMast
+            WHERE ( ParametrosMast.CompaniaCodigo ='999999') AND ( ParametrosMast.AplicacionCodigo = 'PR' ) AND ( ParametrosMast.ParametroClave ='RESPONSCTS')))
+             as ResponsableDocumento,
+             (SELECT descripcion FROM sgcoresys.HR_PuestoEmpresa WHERE codigopuesto = (SELECT CODIGOCARGO FROM sgcoresys.PersonaMast , sgcoresys.empleadomast WHERE persona = empleado and
+             Persona = (SELECT ParametrosMast.Numero FROM sgcoresys.ParametrosMast WHERE ( ParametrosMast.CompaniaCodigo ='999999') AND ( ParametrosMast.AplicacionCodigo = 'PR' ) AND
+            (ParametrosMast.ParametroClave ='RESPONSCTS')))) as ResponsableCargo,
+            (SELECT Firma FROM sgcoresys.PersonaMast , sgcoresys.empleadomast WHERE persona = empleado and Persona = ( SELECT ParametrosMast.Numero FROM sgcoresys.ParametrosMast
+            WHERE ( ParametrosMast.CompaniaCodigo ='999999') AND ( ParametrosMast.AplicacionCodigo = 'PR' ) AND ( ParametrosMast.ParametroClave ='RESPONSCTS')))
+             as Firma,
+         PersonaMast.Nombres || ' ' || PersonaMast.ApellidoPaterno  || ' ' || PersonaMast.ApellidoMaterno as NombreCompleto,
+         PersonaMast.PersonaAnt,
+         EmpleadoMast.FechaInicioContrato,
+         PR_CTS.FechaInicio as FechaInicio,
+         PR_CTS.FechaFin as FechaFin,
+         PR_CTS.Remuneracion,
+         PR_CTS.IML,
+         PR_CTS.IndemnizacionAnual,
+        PR_CTS.TiempoaCancelar as TiempoACancelar,
+         PR_CTS.TiempoValorizado as Tiempovalorizado,
+         PR_CTS.TipoCambio as TipoCambio ,
+         PR_CTS.MontoLocal,
+         PR_CTS.MontoDolar as MontoDolar,
+         (case when substr(PR_CTSDetalle.Descripcion, -1) ='*' then Substr (PR_CTSDetalle.Descripcion, 2,30) else PR_CTSDetalle.Descripcion end) as Descripcion,
+         PR_CTSDetalle.MontoLocal as detallemontolocal,
+         PR_CTS.MonedaCuentaCTS,
+         PR_CTS.Banco,
+         PR_CTS.NumeroCTS,
+         PR_CTS.EstadoCTS as EstadoCTS,
+         PR_CTS.FechaPago as PR_FechaPago,
+         MA_CTS.FechaPago  as MA_FechaPago,
+         EmpleadoMast.FechaIngreso as FechaIngreso,
+        EmpleadoMast.UnidadNegocioAsignada as Area,
+        EmpleadoMast.FechaCese as FechaCese,
+        EmpleadoMast.EstadoEmpleado  as EstadoEmpleado,
+         PR_CTS.TipoCancelacion,
+         PR_CTS.NumeroCuentaCTS as numerocuentacts,
+         EmpleadoMast.CentroCostos,
+         EmpleadoMast.Cargo,
+         MA_UnidadNegocio.RegistroPatronalPlanilla,
+        Secuencia,
+         Banco.Descripcioncorta as bancodes,
+         PersonaMast.documento as Documento,
+        upper(CompaniaMast.DescripcionLarga) as Empleador,
+        CompaniaMast.DocumentoFiscal as Ruc,
+        CompaniaMast.DireccionComun as Direccion,
+        CompaniaMast.descripcionlarga as descripcionlarga,
+        EmpleadoMast.CodigoCargo as Cargo,
+        NVL(PR_CTS.MontoInteres,0) as MontoInteres,
+        NVL(PR_CTS.retencionjudicial,0) as retencionjudicial,
+        personaMast.TipoDocumento as TipoDocumento,
+        (Select rtrim(x.descripcionlocal) from sgcoresys.ma_miscelaneosdetalle x where x.codigotabla='TIPODOCI' and x.aplicacioncodigo='HR' and x.codigoelemento=personaMast.TipoDocumento)
+        as DesTipoDocumento,
+        PersonaMast.sexo   ,
+        to_char(PR_CTS.FechaPago, 'dd')||' de '||CASE to_char(PR_CTS.FechaPago, 'mm')
+                                                WHEN '01' THEN 'Enero'
+                                                WHEN '02' THEN 'Febrero'
+                                                WHEN '03' THEN 'Marzo'
+                                                WHEN '04' THEN 'Abril'
+                                                WHEN '05' THEN 'Mayo'
+                                                WHEN '06' THEN 'Junio'
+                                                WHEN '07' THEN 'Julio'
+                                                WHEN '08' THEN 'Agosto'
+                                                WHEN '09' THEN 'Setiembre'
+                                                WHEN '10' THEN 'Octubre'
+                                                WHEN '11' THEN 'Noviembre'
+                                                WHEN '12' THEN 'Diciembre'
+                                          END    as fechades,
+            EmpleadoMast.CompaniaSocio,
+            EmpleadoMast.TipoPlanilla,
+            to_char(PR_CTS.FechaInicio,'yyyymm')  || to_char(PR_CTS.FechaInicio,'mm')  PeriodoInicio,
+            to_char(PR_CTS.FechaFin,'yyyymm')  || to_char(PR_CTS.FechaFin,'mm') PeriodoFinal,
+(SELECT ParametrosMast.Explicacion FROM sgcoresys.ParametrosMast WHERE ( ParametrosMast.CompaniaCodigo = 999999 ) AND
+         ( ParametrosMast.AplicacionCodigo = 'PR' ) AND  ( ParametrosMast.ParametroClave = (SELECT 'ANIOTI'||TO_CHAR(SYSDATE,'YYYY')  FROM DUAL))) as titulo
+    FROM sgcoresys.PR_CTS
+        INNER JOIN sgcoresys.PR_CTSDetalle
+            ON (    PR_CTS.Empleado = PR_CTSDetalle.Empleado and
+                    PR_CTS.CompaniaSocio = PR_CTSDetalle.CompaniaSocio and
+                    PR_CTS.NumeroCTS = PR_CTSDetalle.NumeroCTS )
+        INNER JOIN sgcoresys.EmpleadoMast
+            ON (     PR_CTS.Empleado = EmpleadoMast.Empleado and
+                    PR_CTS.CompaniaSocio = EmpleadoMast.CompaniaSocio )
+         INNER JOIN sgcoresys.PersonaMast
+            ON ( EmpleadoMast.Empleado = PersonaMast.Persona )
+         INNER JOIN sgcoresys.CompaniaMast
+             ON ( substr(PR_CTS.CompaniaSocio,1,6) = CompaniaMast.companiacodigo )
+        left JOIN sgcoresys.Banco
+            ON ( Banco.Banco = PR_CTS.Banco )
+         LEFT JOIN sgcoresys.MA_UnidadNegocio
+            ON ( EmpleadoMast.LocaciondePago = MA_UnidadNegocio.UnidadNegocio )
+         LEFT JOIN sgcoresys.MA_CTS
+             ON ( PR_CTS.NumeroCTS = MA_CTS.NumeroCTS)
+   WHERE ( PR_CTS.NumeroCTS = $P{cts})  and (EmpleadoMast.CodigoUsuario=$P{empleado}) and
+            ( pr_ctsdetalle.montolocal <> 0  OR substr(PR_CTSDetalle.Descripcion,-1) = '*')]]>
+	</queryString>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="RESPONSABLE" class="java.lang.String"/>
+	<field name="RESPONSABLEDOCUMENTO" class="java.lang.String"/>
+	<field name="RESPONSABLECARGO" class="java.lang.String"/>
+	<field name="FIRMA" class="oracle.sql.BLOB"/>
+	<field name="NOMBRECOMPLETO" class="java.lang.String"/>
+	<field name="PERSONAANT" class="java.lang.String"/>
+	<field name="FECHAINICIOCONTRATO" class="java.sql.Timestamp"/>
+	<field name="FECHAINICIO" class="java.sql.Timestamp"/>
+	<field name="FECHAFIN" class="java.sql.Timestamp"/>
+	<field name="REMUNERACION" class="java.math.BigDecimal"/>
+	<field name="IML" class="java.math.BigDecimal"/>
+	<field name="INDEMNIZACIONANUAL" class="java.math.BigDecimal"/>
+	<field name="TIEMPOACANCELAR" class="java.lang.String"/>
+	<field name="TIEMPOVALORIZADO" class="java.math.BigDecimal"/>
+	<field name="TIPOCAMBIO" class="java.lang.Double"/>
+	<field name="MONTOLOCAL" class="java.math.BigDecimal"/>
+	<field name="MONTODOLAR" class="java.math.BigDecimal"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="DETALLEMONTOLOCAL" class="java.math.BigDecimal"/>
+	<field name="MONEDACUENTACTS" class="java.lang.String"/>
+	<field name="BANCO" class="java.lang.String"/>
+	<field name="NUMEROCTS" class="java.math.BigDecimal"/>
+	<field name="ESTADOCTS" class="java.lang.String"/>
+	<field name="PR_FECHAPAGO" class="java.sql.Timestamp"/>
+	<field name="MA_FECHAPAGO" class="java.sql.Timestamp"/>
+	<field name="FECHAINGRESO" class="java.sql.Timestamp"/>
+	<field name="AREA" class="java.lang.String"/>
+	<field name="FECHACESE" class="java.sql.Timestamp"/>
+	<field name="ESTADOEMPLEADO" class="java.lang.String"/>
+	<field name="TIPOCANCELACION" class="java.lang.String"/>
+	<field name="NUMEROCUENTACTS" class="java.lang.String"/>
+	<field name="CENTROCOSTOS" class="java.lang.String"/>
+	<field name="CARGO" class="java.lang.String"/>
+	<field name="REGISTROPATRONALPLANILLA" class="java.lang.String"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="BANCODES" class="java.lang.String"/>
+	<field name="DOCUMENTO" class="java.lang.String"/>
+	<field name="EMPLEADOR" class="java.lang.String"/>
+	<field name="RUC" class="java.lang.String"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="DESCRIPCIONLARGA" class="java.lang.String"/>
+	<field name="MONTOINTERES" class="java.math.BigDecimal"/>
+	<field name="RETENCIONJUDICIAL" class="java.math.BigDecimal"/>
+	<field name="TIPODOCUMENTO" class="java.lang.String"/>
+	<field name="DESTIPODOCUMENTO" class="java.lang.String"/>
+	<field name="SEXO" class="java.lang.String"/>
+	<field name="FECHADES" class="java.lang.String"/>
+	<field name="COMPANIASOCIO" class="java.lang.String"/>
+	<field name="TIPOPLANILLA" class="java.lang.String"/>
+	<field name="PERIODOINICIO" class="java.lang.String"/>
+	<field name="PERIODOFINAL" class="java.lang.String"/>
+	<field name="TITULO" class="java.lang.String"/>
+	<variable name="SUMADETALLEMONTOTOTAL" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{DETALLEMONTOLOCAL}]]></variableExpression>
+	</variable>
+	<variable name="MONTODEPOSITAR" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{TIEMPOVALORIZADO}+$F{MONTOINTERES}-$F{RETENCIONJUDICIAL}]]></variableExpression>
+	</variable>
+	<variable name="DIADIACANCELAR" class="java.lang.Integer">
+		<variableExpression><![CDATA[$F{TIEMPOACANCELAR}]]></variableExpression>
+	</variable>
+	<variable name="ruc" class="java.lang.String">
+		<initialValueExpression><![CDATA[$F{RUC}==""?"XXXXXX":$F{RUC}]]></initialValueExpression>
+	</variable>
+	<variable name="direccion" class="java.lang.String">
+		<initialValueExpression><![CDATA[$F{DIRECCION}==""?"XXXXXXXX":$F{DIRECCION}]]></initialValueExpression>
+	</variable>
+	<variable name="sexo" class="java.lang.String">
+		<initialValueExpression><![CDATA[$F{SEXO}=="M"?"al Sr. ":"a la Sra. "]]></initialValueExpression>
+	</variable>
+	<variable name="ncuenta" class="java.lang.String">
+		<initialValueExpression><![CDATA[$F{NUMEROCUENTACTS}==""?"XXXXXXX":$F{NUMEROCUENTACTS}]]></initialValueExpression>
+	</variable>
+	<variable name="monedac" class="java.lang.String">
+		<initialValueExpression><![CDATA[$F{MONEDACUENTACTS}=="LO"?"SOLES":"DÓLARES"]]></initialValueExpression>
+	</variable>
+	<variable name="banco" class="java.lang.String">
+		<initialValueExpression><![CDATA[$F{BANCO}==""?"XXXXXXX":$F{BANCODES}]]></initialValueExpression>
+	</variable>
+	<variable name="simbolo" class="java.lang.String">
+		<initialValueExpression><![CDATA[$F{MONEDACUENTACTS}=="LO"?"S/.":"US"]]></initialValueExpression>
+	</variable>
+	<background>
+		<band height="860">
+			<image scaleImage="RetainShape" hAlign="Center" isLazy="true">
+				<reportElement x="21" y="114" width="583" height="626" uuid="cc597d71-5d86-4d3b-adcd-f21397d62438"/>
+				<imageExpression><![CDATA[$P{PATH_MARCA_DE_AGUA}]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="110" splitType="Stretch">
+			<staticText>
+				<reportElement x="27" y="86" width="562" height="20" uuid="5904621f-ec3b-40bd-8fe3-f9f0fc11882c"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LIQUIDACIÓN DE DEPÓSITO DE COMPENSACIÓN POR TIEMPO DE SERVICIOS (CTS)' ]]></text>
+			</staticText>
+			<image onErrorType="Blank">
+				<reportElement x="46" y="0" width="543" height="50" uuid="b0e71118-97bd-4701-8853-ed682cb40fa1"/>
+				<imageExpression><![CDATA[$P{Logo}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="80" y="50" width="483" height="20" uuid="814067c4-5988-4f58-9a7a-8464ad984736"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TITULO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="135" splitType="Stretch">
+			<textField>
+				<reportElement x="19" y="15" width="573" height="120" uuid="72a5ce26-b688-483c-b32f-c22e30ea563e"/>
+				<textElement textAlignment="Justified">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["El "+ $F{DESCRIPCIONLARGA} +", con RUC N° "+$V{ruc}+", domiciliado en "+$V{direccion}+
+",  debidamente representado por "+$F{RESPONSABLE}+", identificado(a) con Documento Nacional de Identidad N° "+
+$F{RESPONSABLEDOCUMENTO}+" en calidad de "+$F{RESPONSABLECARGO}+", en aplicación del artículo 24° del TUO del D.Leg. N° 650,"+
+" Ley de Compensación por Tiempo de Servicios, aprobado mediante el D.S. N° 001-97-TR, otorga "+$V{sexo}+$F{NOMBRECOMPLETO}+
+", la presente constancia de deposito de su Compensación por Tiempo de Servicios en la cuenta de CTS N°  "+$V{ncuenta}+", en moneda "+
+$V{monedac}+" en "+$V{banco}+", por el siguiente periodo y monto: "]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="117" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="10" y="0" width="600" height="60" uuid="78cdd904-a6a4-4648-824a-c76e976b7c1f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="381" y="9" width="100" height="20" uuid="8236c6c8-f4f2-4000-b04f-904f2ee692be"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA INGRESO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="29" width="100" height="20" uuid="8ea77c2b-7b95-48d9-b558-70d06d3950f9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA CESE]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="493" y="29" width="100" height="20" uuid="33464ed0-6bcd-4be7-95b2-0cfcc3ea66c3"/>
+				<textFieldExpression><![CDATA[$F{FECHACESE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="496" y="9" width="100" height="20" uuid="e1e9eb51-619c-45f3-8f75-b6809e47f38d"/>
+				<textFieldExpression><![CDATA[$F{FECHAINGRESO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="36" y="29" width="100" height="20" uuid="f4f714cd-6cbb-4f7b-88a1-eccc209ab442"/>
+				<textFieldExpression><![CDATA[$F{ESTADOEMPLEADO}==0?$F{MA_FECHAPAGO}:$F{PR_FECHAPAGO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="367" y="0" width="1" height="62" uuid="9f47a5a3-03b8-43f2-a0d5-4cfc95c296eb"/>
+			</line>
+			<staticText>
+				<reportElement x="36" y="62" width="176" height="20" uuid="f8764a42-43b0-4bf9-a20d-c5850374dd24"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONCEPTOS REMUNERATIVOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="84" width="100" height="20" uuid="269c3d90-c7e0-4cb7-a629-b600d603ba39"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONCEPTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="499" y="82" width="100" height="20" uuid="f36348fb-521d-47f8-a17a-716dc02e6622"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MONTO]]></text>
+			</staticText>
+			<line>
+				<reportElement stretchType="RelativeToTallestObject" x="10" y="62" width="1" height="51" isPrintWhenDetailOverflows="true" uuid="b9df9d63-132c-4805-a656-06fcee0c8c01"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToTallestObject" x="609" y="62" width="1" height="51" isPrintWhenDetailOverflows="true" uuid="4bff1c85-13c4-4f71-8819-f1da3f3f2659"/>
+			</line>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" x="10" y="107" width="599" height="9" isPrintWhenDetailOverflows="true" uuid="1c31ab2e-1b2b-4a7c-a589-86c7e835b1c2"/>
+				<subreportParameter name="empleado">
+					<subreportParameterExpression><![CDATA[$P{empleado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cts">
+					<subreportParameterExpression><![CDATA[$P{cts}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["w_pr_cts_certificado_deposito_detalle.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="36" y="9" width="100" height="20" uuid="bc7f1dba-00f2-4e9e-a34c-a341e9a0156d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<columnFooter>
+		<band height="497">
+			<rectangle>
+				<reportElement mode="Transparent" x="10" y="33" width="599" height="453" uuid="967bb6bf-b779-4e8c-8062-081e7f73d04e"/>
+			</rectangle>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="499" y="0" width="100" height="20" uuid="5fe7615e-d949-458e-a9bd-19d81cd0f3d6"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUMADETALLEMONTOTOTAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="269" y="0" width="112" height="20" uuid="9d9d938a-8af3-4e84-aa47-563fc6739d58"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REM. COMPUTABLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="66" width="220" height="20" uuid="3826214a-4619-4012-9718-d0bc98e62bac"/>
+				<text><![CDATA[FECHA DE TÉRMINO DEL PERIODO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="86" width="220" height="20" uuid="fe39f054-cd52-4fd2-a441-ca015403bdca"/>
+				<text><![CDATA[FECHA DE INICIO DEL PERIODO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="106" width="220" height="20" uuid="f351187f-7c68-4006-a830-2612a340654d"/>
+				<text><![CDATA[DÍAS PENDIENTES DEL PERIODO ANTERIOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="126" width="100" height="20" uuid="7b2d5747-864b-430d-9bf7-06308cc078c8"/>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="263" y="49" width="17" height="17" uuid="6988c4ec-86b3-49bd-9ad1-cfaeaf88e73f"/>
+				<text><![CDATA[DÍA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="49" width="31" height="17" uuid="5651781f-2c00-4a17-8886-0c2420dd8125"/>
+				<text><![CDATA[MES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="49" width="34" height="17" uuid="df889258-17ab-499a-a758-b76e5fd0d2cc"/>
+				<text><![CDATA[AÑO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="49" width="127" height="31" uuid="b4e23c93-6a4d-4405-8aaf-c625906301ab"/>
+				<text><![CDATA[REM. COMPUTABLE PARA
+LIQUIDAR EL PERIODO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="80" width="127" height="20" uuid="f38ee415-3f9e-4120-9fce-328bbf695948"/>
+				<text><![CDATA[MONTO DE CTS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="120" width="127" height="20" uuid="a9a0ca43-ecea-4f00-a378-63d372ec2313"/>
+				<text><![CDATA[RETENCIÓN JUDICIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="140" width="127" height="20" uuid="73e8be26-201a-4eb2-88fa-80847694b121"/>
+				<text><![CDATA[MONTO A DEPOSITAR]]></text>
+			</staticText>
+			<line>
+				<reportElement x="10" y="172" width="600" height="1" uuid="09a752cf-05a4-48c1-9b24-2b091a61fc9a"/>
+			</line>
+			<staticText>
+				<reportElement x="372" y="173" width="158" height="20" uuid="934b249d-f335-43ac-ba7b-3e70ea68ba19"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONSTANCIA DE RECEPCIÓN:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="10" y="173" width="357" height="20" uuid="8e08fce6-a24c-4b0c-890a-e2f508a4313a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="10" y="253" width="357" height="44" uuid="e7048ff9-1b95-4a56-bdbc-7a537075d7a1"/>
+			</rectangle>
+			<line>
+				<reportElement x="75" y="193" width="1" height="60" uuid="bb414865-dcc3-44ed-ae06-89440e456997"/>
+			</line>
+			<line>
+				<reportElement x="140" y="193" width="1" height="60" uuid="2e61d4a1-7dbb-48d6-98e0-524ecc5f6c4e"/>
+			</line>
+			<line>
+				<reportElement x="239" y="193" width="1" height="60" uuid="cc0f90b2-32f3-41dc-b029-771d9c90be87"/>
+			</line>
+			<staticText>
+				<reportElement x="16" y="375" width="100" height="20" uuid="bb94455d-1e12-41c6-9689-3a2c15bdb5df"/>
+				<text><![CDATA[FIRMAS:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="110" y="425" width="212" height="1" uuid="bd64b3e9-ff3b-4f89-9d00-c070b9cc52dc"/>
+			</line>
+			<line>
+				<reportElement x="381" y="424" width="212" height="1" uuid="fc648f13-d91e-466d-9df2-9a0d01e72d59"/>
+			</line>
+			<staticText>
+				<reportElement x="76" y="204" width="63" height="20" uuid="74338314-2516-4dba-9446-53a539258ced"/>
+				<text><![CDATA[MESES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="76" y="224" width="64" height="20" uuid="3d5c4f77-a4cc-47d7-977d-76b17d68e89d">
+					<printWhenExpression><![CDATA[!$F{TIEMPOACANCELAR}.substring(1,2).equals('0')]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[DIAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="205" width="99" height="12" uuid="1f60434c-9539-488d-b208-788d3a697822"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MONTO A DEPOSITAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="253" width="112" height="20" uuid="48b13b23-6e79-4fc3-a823-c5af655631a3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MONTO DEPOSITADO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="504" y="140" width="100" height="1" uuid="aeac749b-a520-4e37-965b-be915af7ff24"/>
+			</line>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="525" y="50" width="79" height="30" uuid="ad7f7625-76a2-46c7-b988-191ecc2a7450"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{SUMADETALLEMONTOTOTAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="525" y="80" width="79" height="20" uuid="8c87f4dc-477f-471e-8111-3c9f063afea8"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{TIEMPOVALORIZADO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="507" y="120" width="97" height="20" uuid="b825af65-e6e1-4b7c-abd2-0b39a7ed981f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{RETENCIONJUDICIAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd" isBlankWhenNull="true">
+				<reportElement x="263" y="69" width="17" height="20" uuid="5d9f7625-4ce1-43fe-83be-eb5821c5991e"/>
+				<textFieldExpression><![CDATA[$F{FECHAFIN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy" isBlankWhenNull="true">
+				<reportElement x="333" y="88" width="34" height="20" uuid="a154aef9-169c-489e-a3c2-76a7650b3336"/>
+				<textFieldExpression><![CDATA[$F{FECHAINICIO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="507" y="141" width="97" height="20" uuid="5a4d2d38-7946-487e-871e-158676387660"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{MONTODEPOSITAR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="263" y="205" width="100" height="20" uuid="d61f59a6-6b74-4381-9d6c-ddd94a3e8af8"/>
+				<textFieldExpression><![CDATA[$V{MONTODEPOSITAR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="180" y="253" width="100" height="20" uuid="33658011-08c9-4328-91bd-dd0b451674d3"/>
+				<textFieldExpression><![CDATA[$V{MONTODEPOSITAR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd" isBlankWhenNull="true">
+				<reportElement x="263" y="89" width="17" height="20" uuid="50429d1d-e523-4f6a-979e-c4c38d5ebdc5"/>
+				<textFieldExpression><![CDATA[$F{FECHAINICIO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM" isBlankWhenNull="true">
+				<reportElement x="299" y="69" width="30" height="20" uuid="35083c2d-5a1b-499e-acad-ff02549e6a49"/>
+				<textFieldExpression><![CDATA[$F{FECHAFIN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM" isBlankWhenNull="true">
+				<reportElement x="299" y="89" width="30" height="20" uuid="bdfe3f3f-2cee-4349-93e9-1a80401a3520"/>
+				<textFieldExpression><![CDATA[$F{FECHAINICIO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy" isBlankWhenNull="true">
+				<reportElement x="333" y="68" width="34" height="20" uuid="a6eab650-e1ee-491b-bdc7-fbaefd68af59"/>
+				<textFieldExpression><![CDATA[$F{FECHAFIN}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="16" y="224" width="56" height="20" uuid="9ac14fa4-01ed-4bbe-986c-1e361fa6e683">
+					<printWhenExpression><![CDATA[!$F{TIEMPOACANCELAR}.substring(1,2).equals('0')]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{TIEMPOACANCELAR}.substring(1,2)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="16" y="204" width="55" height="20" uuid="1f94b5ae-aaac-4984-98ae-0c3511f17805"/>
+				<textFieldExpression><![CDATA[$F{TIEMPOACANCELAR}.substring(3,4)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="298" y="126" width="31" height="20" uuid="f9f724d8-6e64-4a4f-bf38-6fce6b56690c"/>
+				<textFieldExpression><![CDATA[$F{TIEMPOACANCELAR}.substring(3,4)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="263" y="126" width="17" height="20" uuid="3b39d223-62aa-4093-87a0-9c563b89a652"/>
+				<textFieldExpression><![CDATA[$F{TIEMPOACANCELAR}.substring(1,2)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="333" y="125" width="31" height="20" uuid="b60a9463-8ff4-4184-9e53-8fb9f8305375"/>
+				<textFieldExpression><![CDATA[$F{TIEMPOACANCELAR}.substring(5,6)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="381" y="442" width="212" height="16" uuid="3c3d871e-4d35-4475-afed-537a0493fbf5"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRECOMPLETO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="381" y="426" width="212" height="16" uuid="819a6ece-6f84-40b8-ba2d-097785a0d619"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DNI : "+$F{DOCUMENTO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="80" y="457" width="271" height="16" uuid="00fc5e3d-5da3-4fbd-9677-8c1193d949c0"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMPLEADOR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="80" y="427" width="271" height="16" uuid="0c528c0a-2876-4861-8e88-b809bb62a429"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RESPONSABLE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="80" y="442" width="271" height="16" uuid="c9126f73-cf8a-4760-a242-de367f8a09d6"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RESPONSABLECARGO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="241" y="205" width="22" height="20" uuid="e879886f-9c7a-4ebd-a87f-4e104cd3fa73"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{MONEDACUENTACTS}=="LO"?"S/.":"US"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="20" y="273" width="344" height="20" uuid="802e9d40-d17c-4837-91cd-08f7175f9d84"/>
+				<textFieldExpression><![CDATA[$P{montoLetra}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="132" y="253" width="24" height="20" uuid="2564b0c9-21ba-484d-93af-c32d2a9fbfae"/>
+				<text><![CDATA[M.N]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement x="180" y="313" width="136" height="44" uuid="e0c77315-1f3d-4dec-b8a7-03fd38b1a7e1"/>
+				<imageExpression><![CDATA[$F{FIRMA}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="507" y="50" width="18" height="30" uuid="8d63d178-0543-408a-9b5d-786ea4e259d1"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{MONEDACUENTACTS}=="LO"?"S/.":"US"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="507" y="80" width="18" height="20" uuid="acc5a6df-ffe4-471e-9b44-716f42dd9990"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{MONEDACUENTACTS}=="LO"?"S/.":"US"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToTallestObject" x="609" y="0" width="1" height="33" isPrintWhenDetailOverflows="true" uuid="9622f611-626c-4d99-a839-bc247f20fce5"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToTallestObject" x="10" y="0" width="1" height="33" isPrintWhenDetailOverflows="true" uuid="9ab3c8f8-bea1-44c3-bf4d-34a315e1d13d"/>
+			</line>
+			<line>
+				<reportElement x="366" y="34" width="1" height="452" uuid="9dc58b88-8f4a-492c-84f5-257ec28027e8"/>
+			</line>
+			<staticText>
+				<reportElement x="20" y="49" width="220" height="20" uuid="1b811383-3108-4833-8900-c4eada200cbc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERIODO DE SERVICIOS QUE SE CANCELA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="173" width="356" height="20" uuid="32d0c426-2094-462f-9cc5-e94edcb10454"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEPÓSITO DE LA CTS CON EFECTO CANCELATORIO]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>

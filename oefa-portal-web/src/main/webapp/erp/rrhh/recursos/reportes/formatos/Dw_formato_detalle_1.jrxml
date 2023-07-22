@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Dw_formato_detalle_1" language="groovy" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="34d5c98d-ed54-4b9d-9212-2f502c04509a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="par_puesto" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT HR_FuncionesPuesto.CodigoFuncion,
+         HR_FuncionesPuesto.CodigoPuesto,
+         HR_FuncionesPuesto.Funcion,
+         HR_FuncionesPuesto.Descripcion,
+         HR_FuncionesPuesto.DescripcionIngles,
+         rtrim(HR_FuncionesPuesto.Comentarios)||chr(13) as comentarios,
+         HR_FuncionesPuesto.Estado,
+         HR_FuncionesPuesto.UltimoUsuario,
+         HR_FuncionesPuesto.UltimaFechaModif,
+         HR_FuncionesPuesto.UnidadReplicacion,
+         HR_FuncionesPuesto.FactorParticipacion
+FROM SGCORESYS.HR_PuestoFunciones HR_FuncionesPuesto
+WHERE
+HR_FuncionesPuesto.CodigoPuesto = $P{par_puesto} /*:par_puesto */]]>
+	</queryString>
+	<field name="CODIGOFUNCION" class="java.math.BigDecimal"/>
+	<field name="CODIGOPUESTO" class="java.math.BigDecimal"/>
+	<field name="FUNCION" class="java.lang.String"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="DESCRIPCIONINGLES" class="java.lang.String"/>
+	<field name="COMENTARIOS" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<field name="ULTIMOUSUARIO" class="java.lang.String"/>
+	<field name="ULTIMAFECHAMODIF" class="java.sql.Timestamp"/>
+	<field name="UNIDADREPLICACION" class="java.lang.String"/>
+	<field name="FACTORPARTICIPACION" class="java.math.BigDecimal"/>
+	<detail>
+		<band height="37">
+			<textField>
+				<reportElement x="1" y="2" width="117" height="20" uuid="ac5ff240-0c9c-44a9-a97a-86273875694c"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CODIGOFUNCION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="118" y="0" width="437" height="37" uuid="cbf059c8-6f99-4b68-b2ad-8f5ee48096af"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMENTARIOS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:outputLabel value="Historial de Vacaciones del Empleado"
+		style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		value="#{cHistorialVacaciones.lstPeriodoVacion}" paginator="false"
+		paginatorPosition="bottom" scrollHeight="100" var="reg"
+		scrollable="true"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+		<p:column headerText="Sel" width="10" styleClass="columnatablaCentro">
+			<p:commandButton title="Ver Utilización" immediate="true"
+				action="#{cHistorialVacaciones.verUtilizacion}" update="@form"
+				icon="ui-icon-search">
+				<f:setPropertyActionListener
+					target="#{cHistorialVacaciones.nroperiodo}"
+					value="#{reg.nroperiodo}" />
+			</p:commandButton>
+		</p:column>
+
+		<p:column headerText="Nro. Periodo" width="30"
+			styleClass="columnatablaCentro">
+			<p:outputLabel value="#{reg.nroperiodo}" />
+		</p:column>
+
+		<p:column headerText="Año" width="100" styleClass="columnatablaCentro">
+			<p:outputLabel value="#{reg.anoTexto}" />
+		</p:column>
+
+	</p:dataTable>
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		value="#{cHistorialVacaciones.lstVacacionUtilizacion}"
+		paginator="false" paginatorPosition="bottom" scrollHeight="150"
+		var="reg" scrollable="true" id="tblUtilizacion"
+		sortBy="#{msg.generico_tabla_sinregistros}"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+
+		<p:column headerText="Periodo" width="30" styleClass="columnatablaCentro">
+			<p:outputLabel value="#{reg.nroperiodo}" />
+		</p:column>
+		<p:column headerText="Inicio" width="50"
+			styleClass="columnatablaCentro">
+			<h:outputLabel value="#{reg.fechainicio}">
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+			</h:outputLabel>
+		</p:column>
+
+		<p:column headerText="Fin" width="50" styleClass="columnatablaCentro">
+			<h:outputLabel value="#{reg.fechafin}">
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+			</h:outputLabel>
+		</p:column>
+
+		<p:column headerText="Utilización" width="70">
+			<p:outputLabel value="#{reg.utilizacionNombre}" />
+		</p:column>
+
+		<p:column headerText="Días" width="40"
+			styleClass="columnatablaDerecha">
+			<p:outputLabel value="#{reg.dias}" />
+		</p:column>
+
+		<p:summaryRow>
+			<p:column style="text-align:right" colspan="4">
+				<h:outputText value="Total:" />
+			</p:column>
+			<p:column style="text-align:right">
+				<h:outputText value="#{cHistorialVacaciones.totalDias}" />
+			</p:column>
+		</p:summaryRow>
+	</p:dataTable>
+
+</ui:composition>

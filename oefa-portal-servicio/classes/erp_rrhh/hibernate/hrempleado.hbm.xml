@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.erp.rrhh.dominio.HrEmpleado" table="SGCORESYS.HR_EMPLEADO">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrEmpleadoPk">
+            <key-property name="empleado" type="integer">
+                <column name="EMPLEADO" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="postulante" type="string">
+            <column name="POSTULANTE" length="10" />
+        </property>
+        <property name="numerocontrato" type="string">
+            <column name="NUMEROCONTRATO" length="10" />
+        </property>
+        <property name="fechaestadocivil" type="timestamp">
+            <column name="FECHAESTADOCIVIL" length="7" />
+        </property>
+        <property name="fechadefuncion" type="timestamp">
+            <column name="FECHADEFUNCION" length="7" />
+        </property>
+        <property name="nivelgerencia" type="string">
+            <column name="NIVELGERENCIA" length="1" />
+        </property>
+        <property name="gruposanguineo" type="string">
+            <column name="GRUPOSANGUINEO" length="1" />
+        </property>
+        <property name="peso" type="big_decimal">
+            <column name="PESO" length="22" />
+        </property>
+        <property name="talla" type="big_decimal">
+            <column name="TALLA" length="22" />
+        </property>
+        <property name="otroestadocivil" type="string">
+            <column name="OTROESTADOCIVIL" length="30" />
+        </property>
+        <property name="situaciondomicilio" type="string">
+            <column name="SITUACIONDOMICILIO" length="1" />
+        </property>
+        <property name="otrasituaciondomicilio" type="string">
+            <column name="OTRASITUACIONDOMICILIO" length="30" />
+        </property>
+        <property name="impedimentos" type="string">
+            <column name="IMPEDIMENTOS" length="100" />
+        </property>
+        <property name="flagactbeneficas" type="string">
+            <column name="FLAGACTBENEFICAS" length="1" />
+        </property>
+        <property name="actbeneficas" type="string">
+            <column name="ACTBENEFICAS" length="30" />
+        </property>
+        <property name="flagactculturales" type="string">
+            <column name="FLAGACTCULTURALES" length="1" />
+        </property>
+        <property name="actculturales" type="string">
+            <column name="ACTCULTURALES" length="30" />
+        </property>
+        <property name="flagactreligiosas" type="string">
+            <column name="FLAGACTRELIGIOSAS" length="1" />
+        </property>
+        <property name="actreligiosas" type="string">
+            <column name="ACTRELIGIOSAS" length="30" />
+        </property>
+        <property name="flagactlaborales" type="string">
+            <column name="FLAGACTLABORALES" length="1" />
+        </property>
+        <property name="actlaborales" type="string">
+            <column name="ACTLABORALES" length="30" />
+        </property>
+        <property name="flagactdeportivas" type="string">
+            <column name="FLAGACTDEPORTIVAS" length="1" />
+        </property>
+        <property name="actdeportivas" type="string">
+            <column name="ACTDEPORTIVAS" length="30" />
+        </property>
+        <property name="flagactsociales" type="string">
+            <column name="FLAGACTSOCIALES" length="1" />
+        </property>
+        <property name="actsociales" type="string">
+            <column name="ACTSOCIALES" length="30" />
+        </property>
+        <property name="informacionadicional" type="string">
+            <column name="INFORMACIONADICIONAL" length="200" />
+        </property>
+        <property name="flagtrabajofuera" type="string">
+            <column name="FLAGTRABAJOFUERA" length="1" />
+        </property>
+        <property name="flagdeconfianza" type="string">
+            <column name="FLAGDECONFIANZA" length="3" />
+        </property>
+        <property name="flagprestamovacacional" type="string">
+            <column name="FLAGPRESTAMOVACACIONAL" length="1" />
+        </property>
+        <property name="flagbonificacion" type="string">
+            <column name="FLAGBONIFICACION" length="1" />
+        </property>
+        <property name="flagprestacionsalud" type="string">
+            <column name="FLAGPRESTACIONSALUD" length="1" />
+        </property>
+        <property name="fechaacumulacion" type="timestamp">
+            <column name="FECHAACUMULACION" length="7" />
+        </property>
+        <property name="gradoinstruccion" type="integer">
+            <column name="GRADOINSTRUCCION" length="22" />
+        </property>
+        <property name="profesion" type="integer">
+            <column name="PROFESION" length="22" />
+        </property>
+        <property name="anexo" type="string">
+            <column name="ANEXO" length="10" />
+        </property>
+        <property name="estamento" type="integer">
+            <column name="ESTAMENTO" length="22" />
+        </property>
+        <property name="vigencia" type="string">
+            <column name="VIGENCIA" length="4" />
+        </property>
+        <property name="gerencia" type="integer">
+            <column name="GERENCIA" length="22" />
+        </property>
+        <property name="subgerencia" type="integer">
+            <column name="SUBGERENCIA" length="22" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="OBSERVACIONES" length="255" />
+        </property>
+        <property name="posicion" type="integer">
+            <column name="POSICION" length="22" />
+        </property>
+        <property name="provincianacimiento" type="string">
+            <column name="PROVINCIANACIMIENTO" length="3" />
+        </property>
+        <property name="gastoplanilla" type="integer">
+            <column name="GASTOPLANILLA" length="22" />
+        </property>
+        <property name="distritonacimiento" type="string">
+            <column name="DISTRITONACIMIENTO" length="3" />
+        </property>
+        <property name="registrofiscal" type="integer">
+            <column name="REGISTROFISCAL" length="22" />
+        </property>
+        <property name="licenciaconducirfecha" type="timestamp">
+            <column name="LICENCIACONDUCIRFECHA" length="7" />
+        </property>
+        <property name="paisnacimiento" type="string">
+            <column name="PAISNACIMIENTO" length="3" />
+        </property>
+        <property name="nombrecarnet" type="string">
+            <column name="NOMBRECARNET" length="100" />
+        </property>
+        <property name="carnetsegurosocialna" type="string">
+            <column name="CARNETSEGUROSOCIALNA" length="25" />
+        </property>
+        <property name="direccionextranjera" type="string">
+            <column name="DIRECCIONEXTRANJERA" length="100" />
+        </property>
+        <property name="paisextranjero" type="string">
+            <column name="PAISEXTRANJERO" length="3" />
+        </property>
+        <property name="departamentoextranjero" type="string">
+            <column name="DEPARTAMENTOEXTRANJERO" length="3" />
+        </property>
+        <property name="provinciaextranjera" type="string">
+            <column name="PROVINCIAEXTRANJERA" length="3" />
+        </property>
+        <property name="codigopostalextranjero" type="string">
+            <column name="CODIGOPOSTALEXTRANJERO" length="3" />
+        </property>
+        <property name="telefonoextranjero" type="string">
+            <column name="TELEFONOEXTRANJERO" length="15" />
+        </property>
+        <property name="celularextranjero" type="string">
+            <column name="CELULAREXTRANJERO" length="15" />
+        </property>
+        <property name="nombreemergencia" type="string">
+            <column name="NOMBREEMERGENCIA" length="50" />
+        </property>
+        <property name="direccionemergencia" type="string">
+            <column name="DIRECCIONEMERGENCIA" length="60" />
+        </property>
+        <property name="telefonoemergencia" type="string">
+            <column name="TELEFONOEMERGENCIA" length="60" />
+        </property>
+        <property name="parentescoemergencia" type="string">
+            <column name="PARENTESCOEMERGENCIA" length="10" />
+        </property>
+        <property name="puntoorigen" type="string">
+            <column name="PUNTOORIGEN" length="50" />
+        </property>
+        <property name="celularemergencia" type="string">
+            <column name="CELULAREMERGENCIA" length="15" />
+        </property>
+        <property name="apellidocasada" type="string">
+            <column name="APELLIDOCASADA" length="40" />
+        </property>
+        <property name="apellidocarnet" type="string">
+            <column name="APELLIDOCARNET" length="40" />
+        </property>
+        <property name="puestocarnet" type="string">
+            <column name="PUESTOCARNET" length="60" />
+        </property>
+        <property name="flaglicenciaensenanza" type="string">
+            <column name="FLAGLICENCIAENSENANZA" length="1" />
+        </property>
+        <property name="lugarlicenciaensenanza" type="string">
+            <column name="LUGARLICENCIAENSENANZA" length="50" />
+        </property>
+        <property name="codigomacschool" type="string">
+            <column name="CODIGOMACSCHOOL" length="20" />
+        </property>
+        <property name="flagobservadoraula" type="string">
+            <column name="FLAGOBSERVADORAULA" length="1" />
+        </property>
+        <property name="flagdocencia" type="string">
+            <column name="FLAGDOCENCIA" length="1" />
+        </property>
+        <property name="poseeauto" type="string">
+            <column name="POSEEAUTO" length="1" />
+        </property>
+        <property name="donante" type="string">
+            <column name="DONANTE" length="1" />
+        </property>
+        <property name="fechaingresoorganizacion" type="timestamp">
+            <column name="FECHAINGRESOORGANIZACION" length="7" />
+        </property>
+        <property name="fasemadurez" type="string">
+            <column name="FASEMADUREZ" length="1" />
+        </property>
+        <property name="carnetsegurosocialex" type="string">
+            <column name="CARNETSEGUROSOCIALEX" length="25" />
+        </property>
+        <property name="flagrcm" type="string">
+            <column name="FLAGRCM" length="1" />
+        </property>
+        <property name="fechasmf" type="timestamp">
+            <column name="FECHASMF" length="7" />
+        </property>
+        <property name="flagsmf" type="string">
+            <column name="FLAGSMF" length="1" />
+        </property>
+        <property name="tipovivienda" type="string">
+            <column name="TIPOVIVIENDA" length="1" />
+        </property>
+        <property name="padecede" type="string">
+            <column name="PADECEDE" length="100" />
+        </property>
+        <property name="alergicoa" type="string">
+            <column name="ALERGICOA" length="100" />
+        </property>
+        <property name="medicamentoemergencia" type="string">
+            <column name="MEDICAMENTOEMERGENCIA" length="50" />
+        </property>
+        <property name="lugarexpedicioncedula" type="string">
+            <column name="LUGAREXPEDICIONCEDULA" length="20" />
+        </property>
+        <property name="departamentonacimiento" type="string">
+            <column name="DEPARTAMENTONACIMIENTO" length="3" />
+        </property>
+        <property name="fechaingresovacaciones" type="timestamp">
+            <column name="FECHAINGRESOVACACIONES" length="7" />
+        </property>
+        <property name="numeroregistrocivil" type="string">
+            <column name="NUMEROREGISTROCIVIL" length="15" />
+        </property>
+        <property name="fechasolicitudagua" type="timestamp">
+            <column name="FECHASOLICITUDAGUA" length="7" />
+        </property>
+        <property name="resolucionagua" type="string">
+            <column name="RESOLUCIONAGUA" length="20" />
+        </property>
+        <property name="direcciondescuentoagua" type="string">
+            <column name="DIRECCIONDESCUENTOAGUA" length="100" />
+        </property>
+        <property name="cuentabancariadescuentoagua" type="string">
+            <column name="CUENTABANCARIADESCUENTOAGUA" length="20" />
+        </property>
+        <property name="tiposervicio3" type="string">
+            <column name="TIPOSERVICIO3" length="10" />
+        </property>
+        <property name="condicion" type="string">
+            <column name="CONDICION" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

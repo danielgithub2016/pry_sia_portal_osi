@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>Plataforma de Entrevistas CAS</h2>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="frmEvaluacion_lista">
+			<p:growl autoUpdate="true" life="#{msg.generico_tiempo_growl}"
+				widgetVar="growlWV" />
+			<h:panelGrid columns="2" width="100%" rendered="false"
+				style="padding-top: 5px;padding-bottom: 5px;">
+				<p:commandButton value="Buscar" icon="buscar" style="float:right;"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					styleClass="botonTextoImagen" action="#{cHrEntrevistaCAS.buscar}"
+					update="@(form)" />
+			</h:panelGrid>
+			<p:dataTable
+				emptyMessage="En este momento no existen Entrevistas para iniciar."
+				id="dtEntrevista" paginator="true" paginatorPosition="bottom"
+				rows="15" reflow="true" value="#{cHrEntrevistaCAS.lstEntr}"
+				var="row"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+				<p:column headerText="Convocatoria" width="80"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.nro_requerimiento}" />
+				</p:column>
+				<p:column headerText="Puesto" width="150"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.puesto}" />
+				</p:column>
+				<p:column headerText="Unidad Orgánica" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.unidad}" />
+				</p:column>
+				<p:column headerText="Fecha Entrevista" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.fecha}" />
+				</p:column>
+				<p:column headerText="Estado" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.estado}" />
+				</p:column>
+				<p:column headerText="N° Total de Postulantes Aptos" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.n_partaptos}" />
+				</p:column>
+				<p:column headerText="N° Total de Postulantes Entrevistados"
+					width="60" styleClass="columnatablaCentro">
+					<h:outputText value="#{row.n_partentrevistados}" />
+				</p:column>
+				<p:column headerText="Acciones" width="40"
+					styleClass="columnatableCentro">
+					<p:commandButton type="icon" icon="ui-icon-newwin"
+						title="Ver Postulantes" action="#{cHrEntrevistaCAS.ingresar}">
+						<f:setPropertyActionListener
+							target="#{cHrEntrevistaCAS.registroSeleccionado}" value="#{row}" />
+					</p:commandButton>
+					<p:commandButton type="icon" icon="ui-icon-print"
+						title="Reporte de Resultados" rendered="#{row.n_estado == '3'}"
+						action="#{cHrEntrevistaCAS.reportexProc}">
+						<f:setPropertyActionListener
+							target="#{cHrEntrevistaCAS.registroSeleccionado}" value="#{row}" />
+					</p:commandButton>					
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

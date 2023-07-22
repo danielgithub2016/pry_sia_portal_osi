@@ -1,0 +1,191 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panel style="height:500px;width:1110px;">
+		<h:panelGrid style="border-spacing:0px;margin-bottom:5px;" columns="2"
+			width="70%" columnClasses="columnGridBottom">
+			<p:outputLabel value="Participante:" />
+			<p:outputLabel value="Resumen" />
+
+			<h:panelGrid style="border-spacing:0px;" columns="4">
+				<p:spacer />
+				<p:spacer />
+				<p:spacer />
+				<p:spacer />
+
+				<p:commandButton value="Copiar Horario"
+					style="margin-top: 88px;font-style: italic;" />
+				<p:commandButton value="Agregar" />
+				<p:commandButton value="Eliminar" />
+				<p:commandButton value="Generar Resumen" />
+			</h:panelGrid>
+
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				scrollWidth="400" scrollable="true" scrollHeight="100"
+				tableStyle="width:380px;"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+				<p:column headerText="#" width="10"></p:column>
+				<p:column headerText="Período" width="50"></p:column>
+				<p:column headerText="Días" width="50"></p:column>
+				<p:column headerText="Horas" width="50"></p:column>
+				<p:column headerText="Minutos" width="50"></p:column>
+			</p:dataTable>
+
+		</h:panelGrid>
+		<p:outputLabel value="Detalle de los horarios por lapsos de fechas" />
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			paginator="true" paginatorPosition="bottom" scrollWidth="780"
+			scrollable="true" scrollHeight="150" tableStyle="width:760px;"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+			<f:facet name="header">
+				<table style="border-color: transparent;">
+					<tr>
+						<td width="200"><h:panelGrid columns="4"
+								style="margin-left: -17px;border-color: transparent;">
+								<h:outputText value="#" />
+								<p:inputText style="width:15px;" />
+								<h:outputText value="Estado" />
+								<p:selectOneMenu
+									style="width:60px;position: absolute;margin-top: -10px;margin-left: -20px;"></p:selectOneMenu>
+								<h:outputText value="Días" />
+								<p:inputText style="width:15px;" />
+								<h:outputText value="Horas" />
+								<p:inputText style="width:15px;" />
+							</h:panelGrid></td>
+						<td><p:fieldset legend="Fin de Semana (Sábado y Domingo)"
+								style="width:500px;background: transparent;">
+								<p:selectOneRadio columns="4">
+									<f:selectItem itemLabel="No incluir" />
+									<f:selectItem itemLabel="Incluir" />
+									<f:selectItem itemLabel="Sólo 	Sábado" />
+									<f:selectItem itemLabel="Sólo 	Domingo" />
+								</p:selectOneRadio>
+							</p:fieldset></td>
+					</tr>
+				</table>
+
+
+				<table style="border-color: transparent;">
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>
+
+							<table style="border-color: transparent;">
+								<tr>
+									<td><h:outputText value="L" /></td>
+									<td><p:selectBooleanCheckbox /></td>
+								</tr>
+							</table>
+
+						</td>
+						<td>
+
+							<table style="border-color: transparent;">
+								<tr>
+									<td><h:outputText value="M" /></td>
+									<td><p:selectBooleanCheckbox /></td>
+								</tr>
+							</table>
+
+						</td>
+						<td>
+
+							<table style="border-color: transparent;">
+								<tr>
+									<td><h:outputText value="Mi" /></td>
+									<td><p:selectBooleanCheckbox /></td>
+								</tr>
+							</table>
+
+						</td>
+						<td>
+
+							<table style="border-color: transparent;">
+								<tr>
+									<td><h:outputText value="J" /></td>
+									<td><p:selectBooleanCheckbox /></td>
+								</tr>
+							</table>
+
+						</td>
+						<td>
+
+							<table style="border-color: transparent;">
+								<tr>
+									<td><h:outputText value="V" /></td>
+									<td><p:selectBooleanCheckbox /></td>
+								</tr>
+							</table>
+
+						</td>
+						<td>
+
+							<table style="border-color: transparent;">
+								<tr>
+									<td><h:outputText value="S" /></td>
+									<td><p:selectBooleanCheckbox /></td>
+								</tr>
+							</table>
+
+						</td>
+						<td>
+
+							<table style="border-color: transparent;">
+								<tr>
+									<td><h:outputText value="D" /></td>
+									<td><p:selectBooleanCheckbox /></td>
+								</tr>
+							</table>
+
+						</td>
+					</tr>
+
+					<tr>
+						<td><h:outputText value="Desde" /></td>
+						<td><p:inputText
+								style="width:70px;position: absolute;margin-left: -28px;margin-top: -9px;"
+								value="00/00/0000" /></td>
+						<td><h:outputText value="De" /></td>
+						<td><h:outputText value="00:00" /></td>
+						<td><h:outputText value="00:00" /></td>
+						<td><h:outputText value="00:00" /></td>
+						<td><h:outputText value="00:00" /></td>
+						<td><h:outputText value="00:00" /></td>
+						<td><h:outputText value="00:00" /></td>
+						<td><h:outputText value="00:00" /></td>
+					</tr>
+
+					<tr>
+						<td><h:outputText value="Hasta" /></td>
+						<td><p:inputText
+								style="width:70px;position: absolute;margin-left: -28px;margin-top: -9px;"
+								value="00/00/0000" /></td>
+						<td><h:outputText value="A" /></td>
+						<td><h:outputText value="00:00" /></td>
+						<td><h:outputText value="00:00" /></td>
+						<td><h:outputText value="00:00" /></td>
+						<td><h:outputText value="00:00" /></td>
+						<td><h:outputText value="00:00" /></td>
+						<td><h:outputText value="00:00" /></td>
+						<td><h:outputText value="00:00" /></td>
+					</tr>
+
+				</table>
+
+
+			</f:facet>
+		</p:dataTable>
+
+	</p:panel>
+
+</ui:composition>

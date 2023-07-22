@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : whuser.
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- whuser.dw_cp_compromiso_confirm_report_onp -->
+    <sql-query name="whuser.DwCpCompromisoConfirmReportOnp">
+    </sql-query>
+
+    <!-- whuser.dw_cp_compromiso_so_report_bnb -->
+    <sql-query name="whuser.DwCpCompromisoSoReportBnb">
+    </sql-query>
+
+    <!-- whuser.dw_cp_compromiso_so_report_cal -->
+    <sql-query name="whuser.DwCpCompromisoSoReportCal">
+    </sql-query>
+
+    <!-- whuser.dw_cp_compromiso_so_report_enapu -->
+    <sql-query name="whuser.DwCpCompromisoSoReportEnapu">
+    </sql-query>
+
+    <!-- whuser.dw_cp_compromiso_so_report_goldsgym -->
+    <sql-query name="whuser.DwCpCompromisoSoReportGoldsgym">
+    </sql-query>
+
+    <!-- whuser.dw_cp_compromiso_so_report_iasa -->
+    <sql-query name="whuser.DwCpCompromisoSoReportIasa">
+    </sql-query>
+
+    <!-- whuser.dw_cp_compromiso_so_report_onp -->
+    <sql-query name="whuser.DwCpCompromisoSoReportOnp">
+    </sql-query>
+
+    <!-- whuser.dw_cp_compromiso_so_report_onp_detail -->
+    <sql-query name="whuser.DwCpCompromisoSoReportOnpDetail">
+    </sql-query>
+
+    <!-- whuser.dw_cp_compromiso_so_report_onp_footer -->
+    <sql-query name="whuser.DwCpCompromisoSoReportOnpFooter">
+    </sql-query>
+
+    <!-- whuser.dw_cp_compromiso_so_report_opermin -->
+    <sql-query name="whuser.DwCpCompromisoSoReportOpermin">
+    </sql-query>
+
+    <!-- whuser.dw_cp_compromiso_so_report_sedalib -->
+    <sql-query name="whuser.DwCpCompromisoSoReportSedalib">
+    </sql-query>
+
+    <!-- whuser.dw_cp_compromiso_so_report_sedalib_bk -->
+    <sql-query name="whuser.DwCpCompromisoSoReportSedalibBk">
+    </sql-query>
+
+    <!-- whuser.dw_cp_compromiso_so_report_sedapar -->
+    <sql-query name="whuser.DwCpCompromisoSoReportSedapar">
+    </sql-query>
+
+    <!-- whuser.dw_cp_compromiso_so_report_sedapar_comm -->
+    <sql-query name="whuser.DwCpCompromisoSoReportSedaparComm">
+    </sql-query>
+
+    <!-- whuser.dw_gldgym_articulos -->
+    <sql-query name="whuser.DwGldgymArticulos">
+    </sql-query>
+
+    <!-- whuser.dw_gldgym_articuloskit -->
+    <sql-query name="whuser.DwGldgymArticuloskit">
+    </sql-query>
+
+    <!-- whuser.dw_gldgym_update_articulos -->
+    <sql-query name="whuser.DwGldgymUpdateArticulos">
+    </sql-query>
+
+    <!-- whuser.dw_ma_persona_direccion_select -->
+    <sql-query name="whuser.DwMaPersonaDireccionSelect">
+    </sql-query>
+
+    <!-- whuser.dw_ma_unidadesmast_equivalencia_list -->
+    <sql-query name="whuser.DwMaUnidadesmastEquivalenciaList">
+    </sql-query>
+
+    <!-- whuser.dw_ma_wh_item_iasa_edit -->
+    <sql-query name="whuser.DwMaWhItemIasaEdit">
+    </sql-query>
+
+    <!-- whuser.dw_ma_wh_item_iasa_edit2 -->
+    <sql-query name="whuser.DwMaWhItemIasaEdit2">
+    </sql-query>
+
+    <!-- whuser.dw_ma_wh_item_retrieve_codigointerno -->
+    <sql-query name="whuser.DwMaWhItemRetrieveCodigointerno">
+    </sql-query>
+
+    <!-- whuser.dw_wh_calculo_ppm_interfase -->
+    <sql-query name="whuser.DwWhCalculoPpmInterfase">
+    </sql-query>
+
+    <!-- whuser.dw_wh_calculo_ppm_list -->
+    <sql-query name="whuser.DwWhCalculoPpmList">
+    </sql-query>
+
+    <!-- whuser.dw_wh_calculo_ppm_list2 -->
+    <sql-query name="whuser.DwWhCalculoPpmList2">
+    </sql-query>
+
+    <!-- whuser.dw_wh_calculo_ppm_pricezero -->
+    <sql-query name="whuser.DwWhCalculoPpmPricezero">
+    </sql-query>
+
+    <!-- whuser.dw_wh_calculo_ppm_transaccion_intermedio -->
+    <sql-query name="whuser.DwWhCalculoPpmTransaccionIntermedio">
+    </sql-query>
+
+    <!-- whuser.dw_wh_calculo_ppm_voucher_position -->
+    <sql-query name="whuser.DwWhCalculoPpmVoucherPosition">
+    </sql-query>
+
+    <!-- whuser.dw_wh_calculo_precio_on_line -->
+    <sql-query name="whuser.DwWhCalculoPrecioOnLine">
+    </sql-query>
+
+    <!-- whuser.dw_wh_calculo_precio_on_line_position -->
+    <sql-query name="whuser.DwWhCalculoPrecioOnLinePosition">
+    </sql-query>
+
+    <!-- whuser.dw_wh_cierrediario -->
+    <sql-query name="whuser.DwWhCierrediario">
+    </sql-query>
+
+    <!-- whuser.dw_wh_contrato_print_bancosol -->
+    <sql-query name="whuser.DwWhContratoPrintBancosol">
+    </sql-query>
+
+    <!-- whuser.dw_wh_controlcalidad_confirmacion_print_resumen_bk -->
+    <sql-query name="whuser.DwWhControlcalidadConfirmacionPrintResumenBk">
+    </sql-query>
+
+    <!-- whuser.dw_wh_guiaremision_report_goldsgym -->
+    <sql-query name="whuser.DwWhGuiaremisionReportGoldsgym">
+    </sql-query>
+
+    <!-- whuser.dw_wh_guiaremision_report_sedalib -->
+    <sql-query name="whuser.DwWhGuiaremisionReportSedalib">
+    </sql-query>
+
+    <!-- whuser.dw_wh_insert_quotation_item_proveedor -->
+    <sql-query name="whuser.DwWhInsertQuotationItemProveedor">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_bancosol -->
+    <sql-query name="whuser.DwWhPoReportBancosol">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_bancosol_detalle -->
+    <sql-query name="whuser.DwWhPoReportBancosolDetalle">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_bancosol_distribucion -->
+    <sql-query name="whuser.DwWhPoReportBancosolDistribucion">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_bnb -->
+    <sql-query name="whuser.DwWhPoReportBnb">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_cal -->
+    <sql-query name="whuser.DwWhPoReportCal">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_goldsgym -->
+    <sql-query name="whuser.DwWhPoReportGoldsgym">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_iasa -->
+    <sql-query name="whuser.DwWhPoReportIasa">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_iasa_foreing -->
+    <sql-query name="whuser.DwWhPoReportIasaForeing">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_onp -->
+    <sql-query name="whuser.DwWhPoReportOnp">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_onp_detail -->
+    <sql-query name="whuser.DwWhPoReportOnpDetail">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_onp_detail_ok -->
+    <sql-query name="whuser.DwWhPoReportOnpDetailOk">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_onp_footer -->
+    <sql-query name="whuser.DwWhPoReportOnpFooter">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_onp_ok -->
+    <sql-query name="whuser.DwWhPoReportOnpOk">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_onp_prueba -->
+    <sql-query name="whuser.DwWhPoReportOnpPrueba">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_opermin -->
+    <sql-query name="whuser.DwWhPoReportOpermin">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_sedalib -->
+    <sql-query name="whuser.DwWhPoReportSedalib">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_sedalib_bk -->
+    <sql-query name="whuser.DwWhPoReportSedalibBk">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_sedalib_coment -->
+    <sql-query name="whuser.DwWhPoReportSedalibComent">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_sedapar -->
+    <sql-query name="whuser.DwWhPoReportSedapar">
+    </sql-query>
+
+    <!-- whuser.dw_wh_po_report_sedapar_requisicion -->
+    <sql-query name="whuser.DwWhPoReportSedaparRequisicion">
+    </sql-query>
+
+    <!-- whuser.dw_wh_quotation_vendor_print_bancosol -->
+    <sql-query name="whuser.DwWhQuotationVendorPrintBancosol">
+    </sql-query>
+
+    <!-- whuser.dw_wh_quotation_vendor_print_goldsgym -->
+    <sql-query name="whuser.DwWhQuotationVendorPrintGoldsgym">
+    </sql-query>
+
+    <!-- whuser.dw_wh_quotation_vendor_print_sedalib -->
+    <sql-query name="whuser.DwWhQuotationVendorPrintSedalib">
+    </sql-query>
+
+    <!-- whuser.dw_wh_quotation_vendor_print_sedalib_ca -->
+    <sql-query name="whuser.DwWhQuotationVendorPrintSedalibCa">
+    </sql-query>
+
+    <!-- whuser.dw_wh_quotation_vendor_print_sedalib_pr -->
+    <sql-query name="whuser.DwWhQuotationVendorPrintSedalibPr">
+    </sql-query>
+
+    <!-- whuser.dw_wh_requisition_import_filer -->
+    <sql-query name="whuser.DwWhRequisitionImportFiler">
+    </sql-query>
+
+    <!-- whuser.dw_wh_requisition_report_onp -->
+    <sql-query name="whuser.DwWhRequisitionReportOnp">
+    </sql-query>
+
+    <!-- whuser.dw_wh_requisition_report_sedalib -->
+    <sql-query name="whuser.DwWhRequisitionReportSedalib">
+    </sql-query>
+
+    <!-- whuser.dw_wh_st_prin_iasa -->
+    <sql-query name="whuser.DwWhStPrinIasa">
+    </sql-query>
+
+    <!-- whuser.dw_wh_transaction_print_onp_ni -->
+    <sql-query name="whuser.DwWhTransactionPrintOnpNi">
+    </sql-query>
+
+    <!-- whuser.dw_wh_transaction_print_onp_ns -->
+    <sql-query name="whuser.DwWhTransactionPrintOnpNs">
+    </sql-query>
+
+    <!-- whuser.dw_wh_transaction_print_sedalib -->
+    <sql-query name="whuser.DwWhTransactionPrintSedalib">
+    </sql-query>
+
+</hibernate-mapping>

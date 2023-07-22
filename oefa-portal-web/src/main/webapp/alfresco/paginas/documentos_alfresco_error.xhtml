@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/comun/plantillas/main_alfresco.xhtml">
+
+	<ui:define name="content">
+
+		<div style="width: 100%; height: 100%; background-color: white">
+			<h:form id="frmDocumentosAlfrescoError">
+				<h:panelGrid>
+					<h:graphicImage style="cursor:pointer;"
+						value="/alfresco/recursos/imagenes/logo_alfresco.PNG" width="120" />
+					<p:outputLabel value="No se encontró el Documento en Alfresco" />
+				</h:panelGrid>
+			</h:form>
+		</div>
+	</ui:define>
+
+
+</ui:composition>
+

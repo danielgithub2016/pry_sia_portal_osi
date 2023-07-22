@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		tableStyle="#{cwHrEvaluacionempleadoEdit.opciones.dwcomentario_disable ? 'pointer-events:none' : null}"
+		value="#{cwHrComentarios.dwcomentario}" var="row" reflow="true"
+		selection="#{cwHrComentarios.registroSeleccionado}"
+		selectionMode="single" rowKey="#{row.pk.secuencia}"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+		<p:column headerText="Pregunta" width="350">
+			<h:outputText value="#{row.descripcion}" />
+		</p:column>
+		<p:column headerText="Comentarios" width="500">
+			<h:outputText value="#{row.comentarios}" />
+		</p:column>
+		<f:facet name="footer">
+			<table style="border-color: transparent;"></table>
+		</f:facet>
+	</p:dataTable>
+
+</ui:composition>

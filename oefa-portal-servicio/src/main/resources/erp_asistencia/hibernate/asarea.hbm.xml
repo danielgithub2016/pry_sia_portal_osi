@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+	<class name="net.royal.erp.asistencia.dominio.AsArea" table="SGCORESYS.AS_AREA">
+		<composite-id name="pk"
+			class="net.royal.erp.asistencia.dominio.AsAreaPk">
+			<key-property name="area" type="integer">
+				<column name="AREA" length="22" />
+			</key-property>
+		</composite-id>
+		<property name="nombre" type="string">
+			<column name="NOMBRE" length="100" />
+		</property>
+		<property name="areapadre" type="integer">
+			<column name="AREAPADRE" length="22" />
+		</property>
+		<property name="diarotacion" type="integer">
+			<column name="DIAROTACION" length="22" />
+		</property>
+		<property name="ultimarotacion" type="timestamp">
+			<column name="ULTIMAROTACION" length="7" />
+		</property>
+		<property name="horario" type="integer">
+			<column name="HORARIO" length="22" />
+		</property>
+		<property name="empleadoresponsable" type="integer">
+			<column name="EMPLEADORESPONSABLE" length="22" />
+		</property>
+		<property name="empleadoresponsable2" type="integer">
+			<column name="EMPLEADORESPONSABLE2" length="22" />
+		</property>
+		<property name="empleadoresponsable3" type="integer">
+			<column name="EMPLEADORESPONSABLE3" length="22" />
+		</property>
+		<property name="empleadoresponsable4" type="integer">
+			<column name="EMPLEADORESPONSABLE4" length="22" />
+		</property>
+
+		<property name="flagcorreoresponsable1" type="string">
+			<column name="FLAGCORREORESPONSABLE1" length="1" />
+		</property>
+		<property name="flagcorreoresponsable2" type="string">
+			<column name="FLAGCORREORESPONSABLE2" length="1" />
+		</property>
+		<property name="flagcorreoresponsable3" type="string">
+			<column name="FLAGCORREORESPONSABLE3" length="1" />
+		</property>
+		<property name="flagcorreoresponsable4" type="string">
+			<column name="FLAGCORREORESPONSABLE4" length="1" />
+		</property>
+		<property name="empleadoaprobador" type="integer">
+			<column name="EMPLEADOAPROBADOR" length="22" />
+		</property>
+		<property name="empleadoaprobador2" type="integer">
+			<column name="EMPLEADOAPROBADOR2" length="22" />
+		</property>
+		<property name="empleadoaprobador3" type="integer">
+			<column name="EMPLEADOAPROBADOR3" length="22" />
+		</property>
+		<property name="empleadoaprobador4" type="integer">
+			<column name="EMPLEADOAPROBADOR4" length="22" />
+		</property>
+		<property name="flagcorreoaprobador1" type="string">
+			<column name="FLAGCORREOAPROBADOR1" length="1" />
+		</property>
+		<property name="flagcorreoaprobador2" type="string">
+			<column name="flagcorreoaprobador2" length="1" />
+		</property>
+		<property name="flagcorreoaprobador3" type="string">
+			<column name="flagcorreoaprobador3" length="1" />
+		</property>
+		<property name="flagcorreoaprobador4" type="string">
+			<column name="flagcorreoaprobador4" length="1" />
+		</property>
+
+		<property name="estado" type="string">
+			<column name="ESTADO" length="1" />
+		</property>
+		<property name="empleadovisador" type="integer">
+			<column name="EMPLEADOVISADOR" length="22" />
+		</property>
+		<property name="flagexondirectiva" type="string">
+			<column name="FLGEXONDIRECTIVA" length="1" />
+		</property>
+		<property name="nNroHoras" type="integer">
+			<column name="N_NRO_HORAS" length="22" />
+		</property>
+		<property name="flgmarcacionpresencial" type="string">
+			<column name="FLG_MARCA_PRESENCIAL" length="1" />
+		</property>
+		
+		
+	</class>
+</hibernate-mapping>

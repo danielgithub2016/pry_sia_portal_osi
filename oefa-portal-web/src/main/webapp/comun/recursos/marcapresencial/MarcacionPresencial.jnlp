@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" codebase="http://localhost:8080/oefa-portal-web/comun/recursos/marcapresencial" href="MarcacionPresencial.jnlp" >
+<information>
+	<title>Marcación presencial</title>
+	<vendor>Oficina de tecnología de la información</vendor>
+	<description>Ejecutable para la marca presencial de colaboradores del OEFA</description>
+</information>
+<resources>
+	<j2se version="5.0+" />
+	<jar href="MarcacionPresencial.jar" />
+</resources>
+
+<application-desc main-class="pe.gob.oefa.marcacionsia.AccesMarkFromOEFA">
+</application-desc>
+</jnlp>

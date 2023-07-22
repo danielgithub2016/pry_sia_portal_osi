@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : core.Afemst
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    
+    <sql-query name="afemst.account">
+		SELECT afemst.Account as "account"
+		 FROM SGCORESYS.afemst  
+		WHERE afemst.afe = :p_centrocosto
+    </sql-query>
+    
+    	<!-- symast01.dw_ac_afe_select_list -->
+	<sql-query name="afemst.DwAcAfeSelectList">
+		SELECT
+		afemst.localname as "localname",
+		afemst.status as "status",
+		afemst.afe as "afe",
+		afemst.afetype as
+		"afetype",
+		afemst.InternalNumber as "internalnumber",
+		rownum as
+		"rowkey"
+		FROM
+		SGCORESYS.afemst
+	</sql-query>
+
+	<!-- symast01.dw_ac_afe_select_list CONTAR -->
+	<sql-query name="afemst.DwAcAfeSelectListConteo">
+		SELECT
+		count(1)
+		FROM
+		SGCORESYS.afemst
+
+	</sql-query>
+	
+	
+	<!-- symast01.dw_ac_afe_select_security_list -->
+	<sql-query name="afemst.DwAcAfeSelectSecurityList">
+		SELECT
+		afemst.localname as "localname",
+		afemst.status as "status",
+		afemst.afe as "afe",
+		afemst.afetype as
+		"afetype"
+		FROM
+		SGCORESYS.afemst INNER JOIN
+		SGCORESYS.SY_SeguridadAutorizaciones ON ( afemst.afe =
+		SY_SeguridadAutorizaciones.Concepto)
+	</sql-query>
+
+	<!-- symast01.dw_ac_afe_select_security_list CONTAR -->
+	<sql-query name="afemst.DwAcAfeSelectSecurityListConteo">
+		SELECT
+		count(1)
+		FROM
+		SGCORESYS.afemst INNER JOIN
+		SGCORESYS.SY_SeguridadAutorizaciones ON ( afemst.afe =
+		SY_SeguridadAutorizaciones.Concepto)
+	</sql-query>
+    
+</hibernate-mapping>

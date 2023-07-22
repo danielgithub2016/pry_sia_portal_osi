@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<p:panelGrid columns="1" layout="grid" columnClasses="ui-grid-col-2"
+		styleClass="ui-panelgrid-blank">
+		<p:commandButton value="Imprimir" icon="imprimir"
+			onclick="document.getElementById('frmEvaluacionEmpleado:tvDatos:lnkImprimir').click();" />
+		<h:commandLink target="_blank" style="display:none;" value="imprímeme"
+			action="#{cwHrRevisionMetasObjetivos.mostrarReporte}"
+			id="lnkImprimir" />
+	</p:panelGrid>
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		widgetVar="tableRevMetasObj" var="row"
+		style="#{cwHrEvaluacionempleadoEdit.opciones.dw6_disable ? 'pointer-events:none' : null}"
+		value="#{cwHrRevisionMetasObjetivos.dw6}" rowIndexVar="index"
+		id="dtRevMetasObj" reflow="true"
+		selection="#{cwHrRevisionMetasObjetivos.registroSeleccionado}"
+		selectionMode="single" rowKey="#{row.pk.secuencia}"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+		<p:ajax event="rowSelect" />
+		<p:column headerText="" width="10" styleClass="columnatablaCentro">
+			<h:outputText value="#{index+1}" />
+		</p:column>
+		<p:column headerText="Objetivos y Metas establecidos" width="390">
+			<h:outputText value="#{row.descripcion}" />
+		</p:column>
+		<p:column headerText="Periodo" width="100"
+			styleClass="columnatablaCentro">
+			<p:inputMask mask="9999-99" value="#{row.periodo}"
+				style="font-weight: normal;box-shadow: inset 0 0px 0px #8f8f8f;color:black;border:none;background-color: transparent;" />
+		</p:column>
+		<p:column headerText="% Esperado" width="70"
+			styleClass="columnatablaDerecha">
+			<h:outputText value="#{row.factorparticipacion}">
+				<f:convertNumber minIntegerDigits="1" maxFractionDigits="2"
+					minFractionDigits="2" locale="#{msg.formato_numeros_punto}" />
+			</h:outputText>
+		</p:column>
+		<p:column headerText="Calificación" width="70"
+			styleClass="columnatablaDerecha">
+			<h:outputText value="#{row.calificacion}">
+				<f:convertNumber minIntegerDigits="1" maxFractionDigits="2"
+					minFractionDigits="2" locale="#{msg.formato_numeros_punto}" />
+			</h:outputText>
+		</p:column>
+		<p:column headerText="Plazo" width="350">
+			<h:outputText value="#{row.plazo}" />
+		</p:column>
+
+		<p:column width="40" styleClass="columnatablaCentro"
+			headerText="Acción">
+			<p:commandButton type="image" icon="editar"
+				action="#{cwHrRevisionMetasObjetivos.editar}">
+				<f:setPropertyActionListener
+					target="#{cwHrRevisionMetasObjetivos.registroSeleccionado}"
+					value="#{row}" />
+
+				<f:setPropertyActionListener
+					target="#{cwHrRevisionMetasObjetivosSelector.nombreVentanaEmergente}"
+					value="popRevisionMetasObj" />
+			</p:commandButton>
+
+		</p:column>
+
+		<p:column filterBy="#{row.eliminado}" width="0">
+			<f:facet name="filter">
+				<p:inputText value="N" style="height:1px;"/>
+			</f:facet>
+		</p:column>
+
+		<f:facet name="footer">
+			<table style="border-color: transparent;">
+				<tr>
+					<td align="right"><h:outputText value="Total:" /></td>
+					<td width="69" align="right"><h:outputText
+							value="#{cwHrRevisionMetasObjetivos.dw6totalcalificacion}" /></td>
+					<td ></td>
+				</tr>
+			</table>
+		</f:facet>
+	</p:dataTable>
+
+</ui:composition>

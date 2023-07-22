@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : logistica.WhRequisitiondistribucion
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    
+    <sql-query name="whrequisitiondistribucion.obtenerLineaMaximo">
+		SELECT NVL(MAX(WH_REQUISITIONDISTRIBUCION.LINEA),0) + 1
+		FROM
+		SGCORESYS.WH_REQUISITIONDISTRIBUCION
+		WHERE
+		WH_REQUISITIONDISTRIBUCION.COMPANIASOCIO = :p_companiasocio AND
+		WH_REQUISITIONDISTRIBUCION.REQUISICIONNUMERO = :p_numerorequisicion AND
+		WH_REQUISITIONDISTRIBUCION.SECUENCIA = :p_secuencia
+    </sql-query>
+</hibernate-mapping>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Responsiblemst" table="SGCORESYS.RESPONSIBLEMST">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.ResponsiblemstPk">
+            <key-property name="responsible" type="string">
+                <column name="RESPONSIBLE" length="4" />
+            </key-property>
+        </composite-id>
+        <property name="nextresponsible" type="string">
+            <column name="NEXTRESPONSIBLE" length="4" />
+        </property>
+        <property name="localname" type="string">
+            <column name="LOCALNAME" length="50" />
+        </property>
+        <property name="englishname" type="string">
+            <column name="ENGLISHNAME" length="50" />
+        </property>
+        <property name="vendor" type="integer">
+            <column name="VENDOR" length="22" />
+        </property>
+        <property name="responsabilitylevel" type="integer">
+            <column name="RESPONSABILITYLEVEL" length="22" />
+        </property>
+        <property name="status" type="string">
+            <column name="STATUS" length="1" />
+        </property>
+        <property name="lastuser" type="string">
+            <column name="LASTUSER" length="20" />
+        </property>
+        <property name="lastdate" type="timestamp">
+            <column name="LASTDATE" length="7" />
+        </property>
+        <property name="authorizedamount" type="integer">
+            <column name="AUTHORIZEDAMOUNT" length="22" />
+        </property>
+        <property name="amountinvoices" type="integer">
+            <column name="AMOUNTINVOICES" length="22" />
+        </property>
+        <property name="amountrequisitions" type="integer">
+            <column name="AMOUNTREQUISITIONS" length="22" />
+        </property>
+        <property name="amountadvances" type="integer">
+            <column name="AMOUNTADVANCES" length="22" />
+        </property>
+        <property name="amountothers01" type="integer">
+            <column name="AMOUNTOTHERS01" length="22" />
+        </property>
+        <property name="amountothers02" type="integer">
+            <column name="AMOUNTOTHERS02" length="22" />
+        </property>
+        <property name="amountothers03" type="integer">
+            <column name="AMOUNTOTHERS03" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

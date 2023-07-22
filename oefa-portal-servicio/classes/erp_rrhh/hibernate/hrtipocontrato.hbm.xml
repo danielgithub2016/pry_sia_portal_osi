@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrTipocontrato" table="SGCORESYS.HR_TIPOCONTRATO">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrTipocontratoPk">
+            <key-property name="tipocontrato" type="string">
+                <column name="TIPOCONTRATO" length="2" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="100" />
+        </property>
+        <property name="flagplanillas" type="string">
+            <column name="FLAGPLANILLAS" length="1" />
+        </property>
+        <property name="flagfechavencimiento" type="string">
+            <column name="FLAGFECHAVENCIMIENTO" length="1" />
+        </property>
+        <property name="flagservice" type="string">
+            <column name="FLAGSERVICE" length="1" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="flagpracticas" type="string">
+            <column name="FLAGPRACTICAS" length="1" />
+        </property>
+        <property name="tiempovencimiento" type="string">
+            <column name="TIEMPOVENCIMIENTO" length="6" />
+        </property>
+        <property name="carta" type="string">
+            <column name="CARTA" length="5" />
+        </property>
+        <property name="tipocontratortps" type="string">
+            <column name="TIPOCONTRATORTPS" length="2" />
+        </property>
+        <property name="codigoauxiliar" type="string">
+            <column name="CODIGOAUXILIAR" length="2" />
+        </property>
+        <property name="flagtiempoparcial" type="string">
+            <column name="FLAGTIEMPOPARCIAL" length="1" />
+        </property>
+        <property name="tipocontratoanterior" type="string">
+            <column name="TIPOCONTRATOANTERIOR" length="10" />
+        </property>
+        <property name="tieneperiodoprueba" type="string">
+            <column name="TIENEPERIODOPRUEBA" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

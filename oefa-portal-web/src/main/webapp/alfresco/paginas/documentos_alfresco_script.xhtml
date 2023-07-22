@@ -1,0 +1,198 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="ui-fluid">
+		<h:form id="frmAlfresco">
+			<p:growl life="#{msg.generico_tiempo_growl}" />
+
+			<p:panel>
+
+				<div class="ui-messages ui-widget" aria-live="polite"
+					data-global="false" data-summary="data-summary"
+					data-detail="data-detail" data-severity="all,error"
+					data-redisplay="true">
+					<div class="ui-messages-info ui-corner-all">
+						<span class="ui-messages-info-icon"></span>
+						<ul>
+							<li><span class="ui-messages-info-summary"></span><span
+								class="ui-messages-info-detail">Tamaño Max:
+									#{cDocumentoAlfrescoMantenimiento.tamanioArchivo} </span></li>
+						</ul>
+					</div>
+				</div>
+
+				<p:panelGrid columns="1" columnClasses="ui-grid-col-12"
+					layout="grid" styleClass="ui-panelgrid-blank">
+					<input type="file" id="upload" style="width: 100%" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="1" columnClasses="ui-grid-col-10"
+					layout="grid" styleClass="ui-panelgrid-blank">
+
+					<p:outputLabel id="lblError"
+						value="#{cDocumentoAlfrescoMantenimiento.documento.error}" />
+
+					<h:inputHidden id="hid_uuid"
+						value="#{cDocumentoAlfrescoMantenimiento.uidRespuesta}" />
+					<h:inputHidden id="hid_cod"
+						value="#{cDocumentoAlfrescoMantenimiento.codRespuesta}" />
+				</p:panelGrid>
+			</p:panel>
+
+			<p:panel>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6"
+					layout="grid" styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Aceptar" process="@form" icon="guardar"
+						rendered="false" styleClass="botonTextoImagenGrande"
+						onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+						action="#{cDocumentoAlfrescoMantenimiento.guardar}" />
+
+					<button id="btnAceptar"
+						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left botonTextoImagen">
+						<span class="ui-button-icon-left ui-icon ui-c guardar"></span> <span
+							class="ui-button-text ui-c">Aceptar</span>
+
+					</button>
+
+					<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+						icon="cancelar" immediate="true"
+						rendered="#{cDocumentoAlfrescoMantenimiento.ismostrarbtncancelar}"
+						onclick="PF('popDocumentoMantenimiento').hide()" />
+				</p:panelGrid>
+			</p:panel>
+			<p:commandButton id="btnRespuesta" style="display:none;"
+				process="@(all)"
+				action="#{cDocumentoAlfrescoMantenimiento.guardarDesdeJS}"></p:commandButton>
+
+
+		</h:form>
+	</div>
+
+	<script type="text/javascript">
+		$(function() {
+			var nombrearchivo = '';
+			var bytearchivo = '';
+	
+			document.getElementById('btnAceptar')
+				.addEventListener('click', function(e) {
+					e.preventDefault();
+					PrimeFaces.widgets.bUI.block();
+					makeCorsRequest();
+				});
+	
+			document.getElementById('upload').addEventListener('change', function() {
+				var reader = new FileReader();
+				PrimeFaces.widgets.bUI.block();
+	
+	
+				reader.onloadend = function() {
+					nombrearchivo = document.getElementById('upload').value.replace(/^.*[\\\/]/, '')
+					var res = reader.result;
+					bytearchivo = res.substr(res.indexOf(',') + 1, res.length - res.indexOf(','));
+					PrimeFaces.widgets.bUI.unblock();
+				}
+				reader.readAsDataURL(this.files[0]);
+	
+			}, false);
+	
+			function createCORSRequest(method, url) {
+				var xhr = new XMLHttpRequest();
+				if ("withCredentials" in xhr) {
+					xhr.open(method, url, true);
+				} else if (typeof XDomainRequest != "undefined") {
+					xhr = new XDomainRequest();
+					xhr.open(method, url);
+				} else {
+					xhr = null;
+				}
+				return xhr;
+			}
+	
+			parseXml = function(val) {
+				var o = 0;
+	
+				if (document.implementation)
+					o = 1;
+				if (document.implementation.createDocument)
+					o = 2;
+	
+				if (o == 2) {
+					xmlDoc = new DOMParser().parseFromString(val, 'text/xml');
+				} else if (window.ActiveXObject) {
+					xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+					xmlDoc.loadXML(val);
+				} else {
+					alert('Your browser can\'t handle this script');
+					return null;
+				}
+				return xmlDoc;
+			}
+	
+			devolverRespuesta = function(respuesta) {
+				var xml = parseXml(respuesta);
+				var uid = null;
+				var mensaje = null,
+					codmsg = null;
+				if (xml.getElementsByTagName("uuid")[0]) {
+					uid = xml.getElementsByTagName("uuid")[0].firstChild.nodeValue;
+				}
+	
+				mensaje = xml.getElementsByTagName("cadMsg")[0].firstChild.nodeValue;
+				codmsg = xml.getElementsByTagName("codMsg")[0].firstChild.nodeValue;
+	
+				document.getElementById("frmAlfresco:lblError").innerHTML = mensaje;
+				document.getElementById("frmAlfresco:hid_uuid").value = uid;
+				document.getElementById("frmAlfresco:hid_cod").value = codmsg;
+				PrimeFaces.widgets.bUI.unblock();
+	
+				if (codmsg == 'ok')
+					document.getElementById('frmAlfresco:btnRespuesta').click();
+				else
+					alert("Servicio Web: " + mensaje);
+				
+			}
+	
+			function makeCorsRequest() {
+				// 10.0.0.75:8280/WS_CMS/ws_cms;
+				var url = 'http://publico.oefa.gob.pe:8080/WS_CMS/ws_cms';
+				
+				var envelope = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.oefa.gob.pe/">' +
+					'<soapenv:Header/>' +
+					'<soapenv:Body>' +
+					'<ws:registrarDocumento>' +
+					'<key>SIARRHH20160602hv8SOAJ258XCVsYHGFGSjic113akl11487HBCn0602</key>' +
+					'<nomFile>' + nombrearchivo + '</nomFile>' +
+					'<ruta>PRUEBAS</ruta>' +
+					'<file>' + bytearchivo + '</file>' +
+					'</ws:registrarDocumento>' +
+					'</soapenv:Body>' +
+					'</soapenv:Envelope>';
+	
+				var xhr = createCORSRequest('POST', url);
+	
+				if (!xhr) {
+					return;
+				}
+	
+				xhr.onload = function() {
+					if (xhr.status === 200) {
+						devolverRespuesta(xhr.response);
+					}
+				}
+	
+				xhr.onerror = function() {
+					console("error");
+				}
+	
+				xhr.setRequestHeader('Content-Type', 'text/xml;charset=utf-8');
+				xhr.send(envelope);
+			}
+		});
+	</script>
+
+
+
+</ui:composition>

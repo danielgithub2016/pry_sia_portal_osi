@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : logistica.WhOrdencompradetalle
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="whordencompradetalle.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+    </sql-query>
+    
+    <!-- syfinan.dw_wh_item_stock_controlcalidad -->
+	<sql-query name="whordencompradetalle.DwWhItemStockControlcalidad">
+	SELECT 
+		WH_ControlCalidad.CompaniaSocio as "companiasocio",   
+		WH_ControlCalidad.ControlNumero as "controlnumero",   
+		WH_ControlCalidadDetalle.AreaCodigo as "areacodigo",   
+		WH_ControlCalidad.NumeroOrden as "numeroorden",   
+		WH_ControlCalidadDetalle.Estado as "estado",   
+		WH_ControlCalidadDetalle.CantidadAceptada as "cantidadaceptada",   
+		WH_ControlCalidadDetalle.CantidadRecibida as "cantidadrecibida",   
+		WH_ControlCalidad.FechaPreparacion as "fechapreparacion",
+    	rownum as "rowkey"
+		FROM 
+		sgcoresys.WH_ControlCalidadDetalle
+			INNER JOIN sgcoresys.WH_ControlCalidad
+				ON (WH_ControlCalidadDetalle.CompaniaSocio = WH_ControlCalidad.CompaniaSocio AND 
+					 WH_ControlCalidadDetalle.ControlNumero = WH_ControlCalidad.ControlNumero)
+			INNER JOIN sgcoresys.WH_OrdenCompraDetalle  
+				ON (WH_ControlCalidadDetalle.CompaniaSocio = WH_OrdenCompraDetalle.CompaniaSocio AND
+					 WH_ControlCalidadDetalle.Secuencia = WH_OrdenCompraDetalle.Secuencia AND
+					 WH_OrdenCompraDetalle.NumeroOrden = WH_ControlCalidad.NumeroOrden) 
+	</sql-query>
+    
+    <!-- syfinan.dw_wh_item_stock_controlcalidad -->
+	<sql-query name="whordencompradetalle.DwWhItemStockControlcalidadConteo">
+	SELECT 
+		count(1)
+		FROM 
+		sgcoresys.WH_ControlCalidadDetalle
+			INNER JOIN sgcoresys.WH_ControlCalidad
+				ON (WH_ControlCalidadDetalle.CompaniaSocio = WH_ControlCalidad.CompaniaSocio AND 
+					 WH_ControlCalidadDetalle.ControlNumero = WH_ControlCalidad.ControlNumero)
+			INNER JOIN sgcoresys.WH_OrdenCompraDetalle  
+				ON (WH_ControlCalidadDetalle.CompaniaSocio = WH_OrdenCompraDetalle.CompaniaSocio AND
+					 WH_ControlCalidadDetalle.Secuencia = WH_OrdenCompraDetalle.Secuencia AND
+					 WH_OrdenCompraDetalle.NumeroOrden = WH_ControlCalidad.NumeroOrden) 
+	</sql-query>
+    
+</hibernate-mapping>

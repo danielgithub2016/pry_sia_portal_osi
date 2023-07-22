@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.MaPersonagrupo" table="SGCORESYS.MA_PERSONAGRUPO">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.MaPersonagrupoPk">
+            <key-property name="personagrupo" type="string">
+                <column name="PERSONAGRUPO" length="3" />
+            </key-property>
+        </composite-id>
+        <property name="descripcionlocal" type="string">
+            <column name="DESCRIPCIONLOCAL" length="50" />
+        </property>
+        <property name="descripcioningles" type="string">
+            <column name="DESCRIPCIONINGLES" length="50" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="codigointerno" type="string">
+            <column name="CODIGOINTERNO" length="15" />
+        </property>
+        <property name="generarnumeracionflag" type="string">
+            <column name="GENERARNUMERACIONFLAG" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

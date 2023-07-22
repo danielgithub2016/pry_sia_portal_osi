@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.erp.rrhh.dominio.HrEncuestapregunta" table="SGCORESYS.HR_ENCUESTAPREGUNTA">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrEncuestapreguntaPk">
+            <key-property name="pregunta" type="integer">
+                <column name="PREGUNTA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="500" />
+        </property>
+        <property name="area" type="string">
+            <column name="AREA" length="10" />
+        </property>
+        <property name="valorminimo" type="integer">
+            <column name="VALORMINIMO" length="22" />
+        </property>
+        <property name="valormaximo" type="integer">
+            <column name="VALORMAXIMO" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="leyenda" type="string">
+            <column name="LEYENDA" length="500" />
+        </property>
+        <property name="tipo" type="string">
+            <column name="TIPO" length="1" />
+        </property>
+        <property name="flagpersonacargo" type="string">
+            <column name="FLAGPERSONACARGO" length="1" />
+        </property>
+        <property name="secuencia" type="integer">
+            <column name="SECUENCIA" length="22" />
+        </property>
+        <property name="tipoencuesta" type="string">
+            <column name="TIPOENCUESTA" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

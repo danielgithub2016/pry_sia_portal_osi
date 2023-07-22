@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrRequerimientopuestoest" table="SGCORESYS.HR_REQUERIMIENTOPUESTOEST">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrRequerimientopuestoestPk">
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+            <key-property name="requerimiento" type="string">
+                <column name="REQUERIMIENTO" length="10" />
+            </key-property>
+            <key-property name="codigopuesto" type="integer">
+                <column name="CODIGOPUESTO" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="informatica" type="string">
+            <column name="INFORMATICA" length="10" />
+        </property>
+        <property name="nivel" type="string">
+            <column name="NIVEL" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

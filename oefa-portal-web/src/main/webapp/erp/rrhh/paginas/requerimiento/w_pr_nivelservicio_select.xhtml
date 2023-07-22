@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="ui-fluid">
+		<h:form id="wprnivelservicioselect">
+
+			<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+				paginatorPosition="bottom" paginator="true" scrollable="true"
+				scrollHeight="200" reflow="true" rowKey="#{d.pk}"
+				selection="#{cwPrNivelServicioSelect.registroSeleccionado}"
+				selectionMode="single" style="max-width:700px"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+				value="#{cwPrNivelServicioSelect.dw_1list}" var="d">
+
+				<p:ajax event="rowDblselect"
+					listener="#{cwPrNivelServicioSelect.onRowSelect}" />
+
+				<p:column headerText="Entidad" width="20">
+					<h:outputText value="#{d.pk.companiasocio}" />
+				</p:column>
+
+				<p:column headerText="Nivel Servicio" width="30">
+					<h:outputText value="#{d.pk.nivelservicio}" />
+				</p:column>
+
+				<p:column headerText="Descripcion" width="150">
+					<h:outputText value="#{d.descripcion}" />
+				</p:column>
+
+				<p:column headerText="Tipo Servicio" width="50">
+					<h:outputText value="#{d.tiposervicio}" />
+				</p:column>
+
+				<p:column headerText="Estado" width="30">
+					<h:outputText value="#{d.estado.equals('A')?'Activo':'Inactivo'}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-3"
+				layout="grid" styleClass="ui-panelgrid-blank">
+
+				<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+					action="#{cwPrNivelServicioSelect.buscar}" update="@form"
+					icon="buscar" process="@this" />
+				<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+					icon="cancelar"
+					onclick="PF('popSelectorNivelServicioSelect').hide()" />
+
+			</p:panelGrid>
+		</h:form>
+	</div>
+</ui:composition>

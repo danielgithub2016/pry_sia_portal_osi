@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Tipocambiomast" table="SGCORESYS.TIPOCAMBIOMAST">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.TipocambiomastPk">
+            <key-property name="monedacodigo" type="string">
+                <column name="MONEDACODIGO" length="2" />
+            </key-property>
+            <key-property name="monedacambiocodigo" type="string">
+                <column name="MONEDACAMBIOCODIGO" length="2" />
+            </key-property>
+            <key-property name="fechacambio" type="timestamp">
+                <column name="FECHACAMBIO" length="7" />
+            </key-property>
+        </composite-id>
+        
+        <property name="fechacambiostring" type="string">
+            <column name="FECHACAMBIOSTRING" length="8" />
+        </property>
+        <property name="factor" type="big_decimal">
+            <column name="FACTOR" length="22" />
+        </property>
+        <property name="factorcompra" type="big_decimal">
+            <column name="FACTORCOMPRA" length="22" />
+        </property>
+        <property name="factorventa" type="big_decimal">
+            <column name="FACTORVENTA" length="22" />
+        </property>
+        <property name="factorpromedio" type="big_decimal">
+            <column name="FACTORPROMEDIO" length="22" />
+        </property>
+        <property name="factorcompraafp" type="big_decimal">
+            <column name="FACTORCOMPRAAFP" length="22" />
+        </property>
+        <property name="factorventaafp" type="big_decimal">
+            <column name="FACTORVENTAAFP" length="22" />
+        </property>
+        <property name="factorcomprasbs" type="big_decimal">
+            <column name="FACTORCOMPRASBS" length="22" />
+        </property>
+        <property name="factorventasbs" type="big_decimal">
+            <column name="FACTORVENTASBS" length="22" />
+        </property>
+        <property name="valorcuota" type="big_decimal">
+            <column name="VALORCUOTA" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="tasatamex" type="integer">
+            <column name="TASATAMEX" length="22" />
+        </property>
+        <property name="tasatamn" type="integer">
+            <column name="TASATAMN" length="22" />
+        </property>
+        <property name="tasaanualtamex" type="integer">
+            <column name="TASAANUALTAMEX" length="22" />
+        </property>
+        <property name="tasaanualtamn" type="integer">
+            <column name="TASAANUALTAMN" length="22" />
+        </property>
+        <property name="factorcobranzacompra" type="integer">
+            <column name="FACTORCOBRANZACOMPRA" length="22" />
+        </property>
+        <property name="factorcobranzaventa" type="integer">
+            <column name="FACTORCOBRANZAVENTA" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

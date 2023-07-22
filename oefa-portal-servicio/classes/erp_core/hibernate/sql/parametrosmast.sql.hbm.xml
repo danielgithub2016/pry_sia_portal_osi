@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : core.Parametrosmast -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="parametrosmast.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+	</sql-query>
+	<sql-query name="parametrosmast.fsqlreadparametrosmast">
+		SELECT ParametrosMast.Texto as "texto"
+		FROM
+		sgcoresys.ParametrosMast
+		WHERE ( ParametrosMast.CompaniaCodigo =
+		:par_company ) AND
+		( ParametrosMast.AplicacionCodigo = :par_application
+		) AND
+		( ParametrosMast.ParametroClave = :par_key )
+
+	</sql-query>
+</hibernate-mapping>

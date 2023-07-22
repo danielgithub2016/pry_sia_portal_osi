@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_hr_ficha_evaluacion_cabecera" language="groovy" pageWidth="580" pageHeight="140" columnWidth="580" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="03fbb23a-1f40-4d9e-adb9-8d83e07971f1">
+	<property name="ireport.zoom" value="1.6105100000000057"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="requerimiento" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="compania" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="postulante" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="secuencia" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+    a.postulante as postulante,
+    case
+        when (select apellidopaterno || ' ' || apellidomaterno || ' ' || nombres from HR_Postulantes where postulante = a.postulante) is null then
+            (select nombrecompleto from personamast where persona = RIGHT(a.postulante,6))
+        else
+            (select apellidopaterno || ' ' || apellidomaterno || ' ' || nombres from HR_Postulantes where postulante = a.postulante)
+        end as nombre,
+    (select direccioncomun from companiamast where companiacodigo = left(d.companyowner,6)) as direccion,
+    a.entrevistador as entrevistador,
+    d.numeroconcurso as numeroconcurso,
+    (SELECT Descripcion FROM HR_PuestoEmpresa WHERE CodigoPuesto = d.codigopuesto) as puesto,
+    a.requerimiento as requerimiento, d.CodigoPosicionSolicitante,e.localname,f.DESCRIPCION,d.CONVOCATORIA,g.FECHAPOSTULANTE
+from
+    HR_EvaluacionPostulante a, HR_FactoresEvaluacion b, HR_FactorValor c, hr_requerimiento d, ac_costcentermst e,
+    bu_nivelserviciomst f,hr_posrequer g
+where
+    a.factor = b.factor and a.factor = c.factor and a.requerimiento = d.requerimiento and e.COSTCENTER=d.CENTROCOSTO
+    and f.NIVELSERVICIO=d.NIVELSERVICIO and g.REQUERIMIENTO=d.requerimiento
+    and a.requerimiento = $P{requerimiento} and a.companyowner = $P{compania} and a.secuencia = $P{secuencia} and a.postulante = $P{postulante}]]>
+	</queryString>
+	<field name="POSTULANTE" class="java.lang.String"/>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="ENTREVISTADOR" class="java.math.BigDecimal"/>
+	<field name="NUMEROCONCURSO" class="java.lang.String"/>
+	<field name="PUESTO" class="java.lang.String"/>
+	<field name="REQUERIMIENTO" class="java.lang.String"/>
+	<field name="CODIGOPOSICIONSOLICITANTE" class="java.math.BigDecimal"/>
+	<field name="LOCALNAME" class="java.lang.String"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="CONVOCATORIA" class="java.lang.String"/>
+	<field name="FECHAPOSTULANTE" class="java.sql.Timestamp"/>
+	<columnHeader>
+		<band height="134">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="130" uuid="c7c87767-7043-426e-9a6a-16744d9af4fd"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="64" width="555" height="1" uuid="4addd72e-58e3-4f6f-83f5-35d4db14468b"/>
+			</line>
+			<line>
+				<reportElement x="0" y="99" width="555" height="1" uuid="fb900323-c7ac-46f7-8736-153a41c32557"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="167" y="34" width="211" height="30" isPrintWhenDetailOverflows="true" uuid="b4dd68b8-ffb6-4db3-be1b-19593c42c466"/>
+				<textFieldExpression><![CDATA[$F{PUESTO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="156" y="1" width="1" height="129" uuid="f42d7740-1d57-48e6-9bc4-50d40b59559c"/>
+			</line>
+			<line>
+				<reportElement x="0" y="30" width="555" height="1" uuid="eb74b080-d182-45b8-97c3-1689f025c3ba"/>
+			</line>
+			<line>
+				<reportElement x="421" y="30" width="1" height="100" uuid="30588654-204d-4257-979d-f1c35a37eb7a"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="167" y="0" width="388" height="20" isPrintWhenDetailOverflows="true" uuid="f1a9ecfe-4278-4104-ab27-1ecec0288ffe"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="377" y="31" width="1" height="99" uuid="999d5e19-e8ce-4425-bc30-dbb8c10c53e5"/>
+			</line>
+			<textField isStretchWithOverflow="true" pattern="HH.mm">
+				<reportElement x="426" y="100" width="129" height="20" isPrintWhenDetailOverflows="true" uuid="b272544c-f111-45fd-a238-30aaf469fbe1"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{FECHAPOSTULANTE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement x="167" y="99" width="211" height="20" isPrintWhenDetailOverflows="true" uuid="0ef77568-c8ed-40ee-889d-1eb60f5bc0d8"/>
+				<textFieldExpression><![CDATA[$F{FECHAPOSTULANTE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="167" y="65" width="211" height="33" isPrintWhenDetailOverflows="true" uuid="d2a82878-750c-4b40-9fa1-ab3ace90d7ea"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="426" y="64" width="129" height="34" isPrintWhenDetailOverflows="true" uuid="13dddd54-27de-48d1-bfa9-39373b3ba97c"/>
+				<textFieldExpression><![CDATA[$F{CONVOCATORIA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="426" y="31" width="129" height="33" isPrintWhenDetailOverflows="true" uuid="1c46dd0b-599e-4926-bd79-cf410e14dc72"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOCALNAME}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="1" y="65" width="155" height="34" backcolor="#F0F0F0" uuid="0111d3ae-8b0d-4a90-b042-09a513f64b13"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="100" width="155" height="29" backcolor="#F0F0F0" uuid="d48a52c2-9565-4b7d-9169-98d02529d796"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="31" width="155" height="33" backcolor="#F0F0F0" uuid="cb4b9547-d87c-42ae-9b91-887ef10b3ab7"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="31" width="146" height="33" uuid="47a92fc4-cb07-4d08-ad42-8ff6a7b209d5"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cargo al que postula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="65" width="146" height="34" uuid="58fef9ac-0782-42d1-a03f-85261abc9265"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de Proceso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="99" width="146" height="34" uuid="3d05382d-68eb-4f4e-b49f-1db74db37f5c"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha(aa-mm-dd)]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="378" y="31" width="43" height="33" backcolor="#F0F0F0" uuid="442930e3-6733-4ae6-aff6-56a6faf85e64"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="378" y="65" width="43" height="34" backcolor="#F0F0F0" uuid="a1ccfa93-abd5-40c7-8db9-f793e14265c4"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="378" y="100" width="43" height="29" backcolor="#F0F0F0" uuid="8a1bd2e6-f7b1-4854-9066-4f3279e2c1d9"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="381" y="98" width="35" height="20" uuid="35d97d34-b028-4634-9941-f0a38f0f2f86"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="31" width="35" height="21" uuid="f321b332-207f-4ef2-832b-09f847459642"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Área]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="65" width="35" height="21" uuid="89ebed75-5541-43e9-8759-8014930a6dcc"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="2" y="1" width="154" height="29" backcolor="#F0F0F0" uuid="22777937-b93e-404a-91c7-6b78c7397078"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="1" width="146" height="29" uuid="c0da67b8-ab65-498d-8c4e-3654039789ce"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellidos y nombres del postulante]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+</jasperReport>

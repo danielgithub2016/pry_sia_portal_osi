@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.seguridad.dominio.Impuestos" table="SGCORESYS.IMPUESTOS">
+        <composite-id name="pk" class="net.royal.seguridad.dominio.ImpuestosPk">
+            <key-property name="impuesto" type="string">
+                <column name="IMPUESTO" length="3" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="40" />
+        </property>
+        <property name="tipoimpuesto" type="string">
+            <column name="TIPOIMPUESTO" length="1" />
+        </property>
+        <property name="factorporcentaje" type="java.math.BigDecimal">
+            <column name="FACTORPORCENTAJE" length="22" />
+        </property>
+        <property name="cuentacontablelocal" type="string">
+            <column name="CUENTACONTABLELOCAL" length="20" />
+        </property>
+        <property name="cuentacontabledolares" type="string">
+            <column name="CUENTACONTABLEDOLARES" length="20" />
+        </property>
+        <property name="signo" type="string">
+            <column name="SIGNO" length="1" />
+        </property>
+        <property name="exportableflag" type="string">
+            <column name="EXPORTABLEFLAG" length="1" />
+        </property>
+        <property name="exportabletipodecambio" type="string">
+            <column name="EXPORTABLETIPODECAMBIO" length="1" />
+        </property>
+        <property name="certificadorentaflag" type="string">
+            <column name="CERTIFICADORENTAFLAG" length="1" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="montonoafectoflag" type="string">
+            <column name="MONTONOAFECTOFLAG" length="1" />
+        </property>
+        <property name="cuentacontablerevlocal" type="string">
+            <column name="CUENTACONTABLEREVLOCAL" length="20" />
+        </property>
+        <property name="cuentacontablerevdolares" type="string">
+            <column name="CUENTACONTABLEREVDOLARES" length="20" />
+        </property>
+        <property name="voucherprovisionflag" type="string">
+            <column name="VOUCHERPROVISIONFLAG" length="1" />
+        </property>
+        <property name="montoimponibleflag" type="string">
+            <column name="MONTOIMPONIBLEFLAG" length="1" />
+        </property>
+        <property name="montoexonerado" type="integer">
+            <column name="MONTOEXONERADO" length="22" />
+        </property>
+        <property name="codigointerno" type="string">
+            <column name="CODIGOINTERNO" length="6" />
+        </property>
+    </class>
+</hibernate-mapping>

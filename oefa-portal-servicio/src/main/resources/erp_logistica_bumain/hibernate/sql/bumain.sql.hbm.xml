@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : bumain.w_reporteador
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- bumain.dddw_bu_centrocosto -->
+    <sql-query name="bumain.DddwBuCentrocosto">
+    </sql-query>
+
+    <!-- bumain.dw_bu_clasificadores_niveles -->
+    <sql-query name="bumain.DwBuClasificadoresNiveles">
+    </sql-query>
+
+    <!-- bumain.dw_bu_clasificadores_niveles_superiores -->
+    <sql-query name="bumain.DwBuClasificadoresNivelesSuperiores">
+    </sql-query>
+
+    <!-- bumain.dw_bu_clasificadores_niveles2 -->
+    <sql-query name="bumain.DwBuClasificadoresNiveles2">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_areas -->
+    <sql-query name="bumain.DwBuDddwAreas">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_areas_crea_demandas -->
+    <sql-query name="bumain.DwBuDddwAreasCreaDemandas">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_areas_crea_demandas2 -->
+    <sql-query name="bumain.DwBuDddwAreasCreaDemandas2">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_areas_genera_bd -->
+    <sql-query name="bumain.DwBuDddwAreasGeneraBd">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_areas_genera_ns -->
+    <sql-query name="bumain.DwBuDddwAreasGeneraNs">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_clasificacion -->
+    <sql-query name="bumain.DwBuDddwClasificacion">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_clasificadorcomponente -->
+    <sql-query name="bumain.DwBuDddwClasificadorcomponente">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_componente_centrocosto_list -->
+    <sql-query name="bumain.DwBuDddwComponenteCentrocostoList">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_componentecentrocosto -->
+    <sql-query name="bumain.DwBuDddwComponentecentrocosto">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_componentemeta -->
+    <sql-query name="bumain.DwBuDddwComponentemeta">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_componentes -->
+    <sql-query name="bumain.DwBuDddwComponentes">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_departamento -->
+    <sql-query name="bumain.DwBuDddwDepartamento">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_distrito -->
+    <sql-query name="bumain.DwBuDddwDistrito">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_fuente -->
+    <sql-query name="bumain.DwBuDddwFuente">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_fuente_rubro -->
+    <sql-query name="bumain.DwBuDddwFuenteRubro">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_fuente2 -->
+    <sql-query name="bumain.DwBuDddwFuente2">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_niveles -->
+    <sql-query name="bumain.DwBuDddwNiveles">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_periodos -->
+    <sql-query name="bumain.DwBuDddwPeriodos">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_pliegos -->
+    <sql-query name="bumain.DwBuDddwPliegos">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_poiunidadmedida -->
+    <sql-query name="bumain.DwBuDddwPoiunidadmedida">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_provincia -->
+    <sql-query name="bumain.DwBuDddwProvincia">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_referencia_fiscal -->
+    <sql-query name="bumain.DwBuDddwReferenciaFiscal">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_referencia_fiscal_planilla_pensiones -->
+    <sql-query name="bumain.DwBuDddwReferenciaFiscalPlanillaPensiones">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_sectores -->
+    <sql-query name="bumain.DwBuDddwSectores">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_tiporeferenciafiscalnivel -->
+    <sql-query name="bumain.DwBuDddwTiporeferenciafiscalnivel">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_unidades_ejecutoras -->
+    <sql-query name="bumain.DwBuDddwUnidadesEjecutoras">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_usuario -->
+    <sql-query name="bumain.DwBuDddwUsuario">
+    </sql-query>
+
+    <!-- bumain.dw_bu_dddw_version -->
+    <sql-query name="bumain.DwBuDddwVersion">
+    </sql-query>
+
+    <!-- bumain.dw_bu_ex_area -->
+    <sql-query name="bumain.DwBuExArea">
+    </sql-query>
+
+    <!-- bumain.dw_bu_ex_area_crea_demandas -->
+    <sql-query name="bumain.DwBuExAreaCreaDemandas">
+    </sql-query>
+
+    <!-- bumain.dw_bu_ex_area_genera_bd -->
+    <sql-query name="bumain.DwBuExAreaGeneraBd">
+    </sql-query>
+
+    <!-- bumain.dw_bu_ex_area_genera_ns -->
+    <sql-query name="bumain.DwBuExAreaGeneraNs">
+    </sql-query>
+
+    <!-- bumain.dw_bu_ex_clasificacion -->
+    <sql-query name="bumain.DwBuExClasificacion">
+    </sql-query>
+
+    <!-- bumain.dw_bu_ex_componente -->
+    <sql-query name="bumain.DwBuExComponente">
+    </sql-query>
+
+    <!-- bumain.dw_bu_ex_componentecentrocosto -->
+    <sql-query name="bumain.DwBuExComponentecentrocosto">
+    </sql-query>
+
+    <!-- bumain.dw_bu_ex_nivel -->
+    <sql-query name="bumain.DwBuExNivel">
+    </sql-query>
+
+    <!-- bumain.dw_bu_ex_periodos -->
+    <sql-query name="bumain.DwBuExPeriodos">
+    </sql-query>
+
+    <!-- bumain.dw_bu_ex_referenciafiscal -->
+    <sql-query name="bumain.DwBuExReferenciafiscal">
+    </sql-query>
+
+    <!-- bumain.dw_bu_ex_unidad_ejecutora -->
+    <sql-query name="bumain.DwBuExUnidadEjecutora">
+    </sql-query>
+
+    <!-- bumain.dw_bu_ex_version -->
+    <sql-query name="bumain.DwBuExVersion">
+    </sql-query>
+
+</hibernate-mapping>

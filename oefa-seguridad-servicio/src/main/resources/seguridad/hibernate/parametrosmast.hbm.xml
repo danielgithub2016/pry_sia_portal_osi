@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.seguridad.dominio.Parametrosmast" table="SGCORESYS.PARAMETROSMAST">
+        <composite-id name="pk" class="net.royal.seguridad.dominio.ParametrosmastPk">
+            <key-property name="companiacodigo" type="string">
+                <column name="COMPANIACODIGO" length="10" />
+            </key-property>
+            <key-property name="aplicacioncodigo" type="string">
+                <column name="APLICACIONCODIGO" length="2" />
+            </key-property>
+            <key-property name="parametroclave" type="string">
+                <column name="PARAMETROCLAVE" length="10" />
+            </key-property>
+        </composite-id>
+        <property name="descripcionparametro" type="string">
+            <column name="DESCRIPCIONPARAMETRO" length="50" />
+        </property>
+        <property name="explicacion" type="string">
+            <column name="EXPLICACION" length="150" />
+        </property>
+        <property name="tipodedatoflag" type="string">
+            <column name="TIPODEDATOFLAG" length="1" />
+        </property>
+        <property name="texto" type="string">
+            <column name="TEXTO" length="20" />
+        </property>
+        <property name="numero" type="integer">
+            <column name="NUMERO" length="22" />
+        </property>
+        <property name="fecha" type="timestamp">
+            <column name="FECHA" length="7" />
+        </property>
+        <property name="financecomunflag" type="string">
+            <column name="FINANCECOMUNFLAG" length="1" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="explicacionadicional" type="string">
+            <column name="EXPLICACIONADICIONAL" length="4000" />
+        </property>
+    </class>
+</hibernate-mapping>

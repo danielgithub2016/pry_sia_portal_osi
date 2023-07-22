@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.asistencia.dominio.AsAutorizacionfecha"
+		table="SGCORESYS.AS_AUTORIZACIONFECHA">
+		<composite-id name="pk"
+			class="net.royal.erp.asistencia.dominio.AsAutorizacionfechaPk">
+			<key-property name="empleado" type="integer">
+				<column name="EMPLEADO" length="22" />
+			</key-property>
+			<key-property name="fecha" type="timestamp">
+				<column name="FECHA" length="7" />
+			</key-property>
+			<key-property name="fechasolicitud" type="timestamp">
+				<column name="FECHASOLICITUD" length="7" />
+			</key-property>
+			<key-property name="desde" type="timestamp">
+				<column name="DESDE" length="7" />
+			</key-property>
+		</composite-id>
+		<property name="tipo" type="string">
+			<column name="TIPO" length="1" />
+		</property>
+		<property name="hasta" type="timestamp">
+			<column name="HASTA" length="7" />
+		</property>
+		<property name="cantidad" type="big_decimal">
+			<column name="CANTIDAD" length="22" />
+		</property>
+		<property name="cantidadreal" type="big_decimal">
+			<column name="CANTIDADREAL" length="22" />
+		</property>
+		<property name="diferencia" type="big_decimal">
+			<column name="DIFERENCIA" length="22" />
+		</property>
+		<property name="estado" type="string">
+			<column name="ESTADO" length="1" />
+		</property>
+		<property name="ultimoUsuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+		<property name="ultimaFechaModif" type="timestamp">
+			<column name="ULTIMAFECHAMODIF" />
+		</property>
+	</class>
+</hibernate-mapping>

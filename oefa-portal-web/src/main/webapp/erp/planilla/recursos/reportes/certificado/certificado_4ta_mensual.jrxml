@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado_4ta_mensual" language="groovy" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d63de674-382a-4cbe-a577-a38920e9bca1">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="328"/>
+	<parameter name="EMPLEADOR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{EMPLEADOR}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="RESPONSABLE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{RESPONSABLE}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="RESPONSABLE_PUESTO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{RESPONSABLE_PUESTO}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="RUC" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{RUC}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIRECCION" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{DIRECCION}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DEDUCCIONES" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{DEDUCCIONES}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EJERCICIO_FISCAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{EJERCICIO_FISCAL}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODIGO_EMPLEADOR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{CODIGO_EMPLEADOR}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{COMPANIA}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIPO_PLANILLA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{TIPO_PLANILLA}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EMPLEADO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{EMPLEADO}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CESADOS" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{CESADOS}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Fabrica\\Desarrollo\\DesarrolloProductos\\ROYAL\\JAVA\\OEFA(2)\\oefa-portal-web\\src\\main\\webapp\\erp\\planilla\\recursos\\reportes\\certificado\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_IMAGEN" class="java.lang.String"/>
+	<parameter name="TITULO_ANIO" class="java.lang.String"/>
+	<parameter name="FECHA" class="java.lang.String"/>
+	<parameter name="PATH_MARCA_DE_AGUA" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT     $P{EMPLEADOR} as Empleador,
+            $P{RESPONSABLE} as Responsable,
+            $P{RESPONSABLE_PUESTO} as ResponsablePuesto,
+            $P{RUC} as Ruc,
+            $P{DIRECCION} as Direccion,
+            PersonaMast.Nombres as Nombres,
+            PersonaMast.ApellidoMaterno as ApellidoMaterno,
+            PersonaMast.ApellidoPaterno as ApellidoPaterno,
+            EmpleadoMast.Empleado as Empleado,
+            PersonaMast.Direccion as DireccionEmpleado,
+            PersonaMast.Documento as DocumentoIdentidad,
+            nvl(HR_PuestoEmpresa.Descripcion,'') as Puesto,
+            $P{DEDUCCIONES} as Deducciones,
+            substr($P{EJERCICIO_FISCAL} ,1,4) as EjercicioFiscal ,
+            FechaCese as fechacese,
+            EstadoEmpleado  as estadoempleado,
+            case fechareingreso when null then fechaingreso else fechareingreso end  as FechaIngreso,
+            nvl(PersonaMast.Direccion,'') as DireccionEmp, PersonaMast.sexo,
+            $P{CODIGO_EMPLEADOR} as CodigoEmpleador,
+            (nvl((Select sum(nvl(x.Monto,0)) from SGCORESYS.Pr_PlanillaEmpleadoConcepto x,SGCORESYS.PR_CONCEPTO Z where X.CONCEPTO =Z.CONCEPTO AND Z.TIPOCONCEPTO IN ('IN') AND x.empleado=PersonaMast.Persona and x.CompaniaSocio=$P{COMPANIA}
+            and x.tipoplanilla=$P{TIPO_PLANILLA} and  substr(x.periodo,1,4)=substr( $P{EJERCICIO_FISCAL},1,4) and x.concepto
+            Not in (Select pc.concepto from SGCORESYS.Pr_ConjuntoDetalle pc where Conjunto='INGNAFE4TA') and
+            X.TIPOPROCESO IN (select P2.TIPOPROCESO from SGCORESYS.pr_tipoproceso P2 where NVL(P2.flagadelanto,'N')='N')),0)) -
+            (nvl((Select sum(nvl(x.Monto,0)) from SGCORESYS.Pr_PlanillaEmpleadoConcepto x,SGCORESYS.PR_CONCEPTO Z where X.CONCEPTO =Z.CONCEPTO AND x.empleado=PersonaMast.Persona and x.CompaniaSocio=$P{COMPANIA}
+            and x.tipoplanilla=$P{TIPO_PLANILLA} and  substr(x.periodo,1,4)=substr( $P{EJERCICIO_FISCAL},1,4) and x.concepto
+            in (Select pc.concepto from SGCORESYS.Pr_ConjuntoDetalle pc where Conjunto='FALTARD4TA') and
+            X.TIPOPROCESO IN (select P2.TIPOPROCESO from SGCORESYS.pr_tipoproceso P2 where NVL(P2.flagadelanto,'N')='N')),0))  AS MontoAfecto4ta,
+
+            nvl((Select sum(nvl(x.Monto,0)) from SGCORESYS.Pr_PlanillaEmpleadoConcepto x where x.empleado=PersonaMast.Persona and x.CompaniaSocio=$P{COMPANIA}
+            and x.tipoplanilla=$P{TIPO_PLANILLA} and  substr(x.periodo,1,4)=substr( $P{EJERCICIO_FISCAL},1,4) and x.concepto
+            in (Select pc.concepto from SGCORESYS.Pr_ConjuntoDetalle pc where Conjunto='CONC4TACAT') and
+            X.TIPOPROCESO IN (select P2.TIPOPROCESO from SGCORESYS.pr_tipoproceso P2 where NVL(P2.flagadelanto,'N')='N')),0) AS Monto4ta,
+
+            (select NVL(VALOR,0) from SGCORESYS.pr_conceptopersonalempleado X where X.empleado=EmpleadoMast.Empleado And concepto='E4TA') AS EXONERADO4TA,
+            PersonaMast.NombreCompleto,
+            EmpleadoMast.TipoPlanilla as tipoplanilla,
+            PersonaMast.documentofiscal,
+            (select nvl(TEXTO,'N') from SGCORESYS.parametrosmast where companiacodigo ='999999' and aplicacioncodigo = 'PR' and parametroclave='CER4TAFIR') as autorizafirma,
+            HR_TipoContrato.Descripcion As Modalidad
+
+FROM       SGCORESYS.PersonaMast
+            INNER JOIN SGCORESYS.EmpleadoMast
+                ON ( PersonaMast.Persona = EmpleadoMast.Empleado )
+            LEFT JOIN SGCORESYS.HR_PuestoEmpresa
+                ON ( EmpleadoMast.CodigoCargo = HR_PuestoEmpresa.CodigoPuesto )
+            LEFT JOIN SGCORESYS.HR_TipoContrato
+                ON ( EmpleadoMast.TipoContrato = HR_TipoContrato.TipoContrato )
+
+WHERE     ( EmpleadoMast.CompaniaSocio = $P{COMPANIA} )
+            AND ( EmpleadoMast.TipoPlanilla = $P{TIPO_PLANILLA} )
+            AND ( EmpleadoMast.Empleado IN ($P{EMPLEADO}))
+            AND ( EmpleadoMast.EstadoEmpleado <> '2' OR $P{CESADOS} = 'S')
+            AND (PERSONAMAST.PERSONA IN (SELECT X.EMPLEADO FROM  SGCORESYS.PR_PLANILLAEMPLEADO X WHERE SUBSTR(X.PERIODO,1,4) =substr($P{EJERCICIO_FISCAL},1,4) and substr(x.tipoproceso,1,2)='NO'))]]>
+	</queryString>
+	<field name="EMPLEADOR" class="java.lang.String"/>
+	<field name="RESPONSABLE" class="java.lang.String"/>
+	<field name="RESPONSABLEPUESTO" class="java.lang.String"/>
+	<field name="RUC" class="java.lang.String"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="APELLIDOMATERNO" class="java.lang.String"/>
+	<field name="APELLIDOPATERNO" class="java.lang.String"/>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="DIRECCIONEMPLEADO" class="java.lang.String"/>
+	<field name="DOCUMENTOIDENTIDAD" class="java.lang.String"/>
+	<field name="PUESTO" class="java.lang.String"/>
+	<field name="DEDUCCIONES" class="java.lang.String"/>
+	<field name="EJERCICIOFISCAL" class="java.lang.String"/>
+	<field name="FECHACESE" class="java.sql.Timestamp"/>
+	<field name="ESTADOEMPLEADO" class="java.lang.String"/>
+	<field name="FECHAINGRESO" class="java.sql.Timestamp"/>
+	<field name="DIRECCIONEMP" class="java.lang.String"/>
+	<field name="SEXO" class="java.lang.String"/>
+	<field name="CODIGOEMPLEADOR" class="java.lang.String"/>
+	<field name="MONTOAFECTO4TA" class="java.math.BigDecimal"/>
+	<field name="MONTO4TA" class="java.math.BigDecimal"/>
+	<field name="EXONERADO4TA" class="java.math.BigDecimal"/>
+	<field name="NOMBRECOMPLETO" class="java.lang.String"/>
+	<field name="TIPOPLANILLA" class="java.lang.String"/>
+	<field name="DOCUMENTOFISCAL" class="java.lang.String"/>
+	<field name="AUTORIZAFIRMA" class="java.lang.String"/>
+	<field name="MODALIDAD" class="java.lang.String"/>
+	<background>
+		<band height="802" splitType="Immediate">
+			<image>
+				<reportElement x="59" y="115" width="458" height="638" uuid="c0b19ec3-2439-4378-b9d2-2c152602d57d"/>
+				<imageExpression><![CDATA[$P{PATH_MARCA_DE_AGUA}]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="164" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="82" width="555" height="22" forecolor="#333333" uuid="a6d4249b-42dd-435e-95b9-498f5d3568ab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CERTIFICADO DE RETENCIONES DEL IMPUESTO A LA RENTA DE CUARTA CATEGORÍA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="104" width="555" height="19" forecolor="#333333" uuid="859171a9-e1a6-45a0-8f89-2ed291bcd3c7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[( D.L. Nº 774, Art. 33º Ley del Impuesto a la Renta D.S. Nº 122-94-EF, Art. 45° )]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="3" y="123" width="555" height="20" forecolor="#333333" uuid="f203a114-8a97-4fc9-a46e-9fcdea230487"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["EJERCICIO " + $F{EJERCICIOFISCAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="144" width="555" height="20" forecolor="#333333" uuid="02a6bd1e-10fb-460a-98e7-b917e0d8e986"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[( EXPRESADO EN SOLES )]]></text>
+			</staticText>
+			<image>
+				<reportElement x="3" y="0" width="555" height="61" uuid="712794ae-b406-4b3d-8fa4-f11bf804dc84"/>
+				<imageExpression><![CDATA[$P{PATH_IMAGEN}]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="3" y="61" width="555" height="21" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="1348476b-68fa-400c-9b13-62dff1d62f01"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TITULO_ANIO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="218" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="68" width="132" height="20" forecolor="#000000" uuid="4a9df075-2030-43c3-aa0b-97cecfbf8eca"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Domicilio Fiscal		:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="161" width="132" height="20" forecolor="#000000" uuid="b58efdca-ddac-4319-9574-0eec36e3e0ce"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Domicilio Fiscal		:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="135" y="141" width="400" height="20" forecolor="#333333" uuid="2654ece1-e3e1-4b97-a814-d4e8332628fe"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MODALIDAD}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="68" width="400" height="20" forecolor="#333333" uuid="729b9608-13b6-4dc6-a2e0-ffddc4aad48e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIRECCION}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="8" width="174" height="20" forecolor="#000000" uuid="06cc98e6-857b-4a92-a727-c5f3c8c1e6c9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS DEL AGENTE RETENEDOR :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="28" width="132" height="20" forecolor="#000000" uuid="2744e083-b23e-480a-8794-8c3b6d9c2521"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Razón Social		:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="101" width="174" height="20" forecolor="#000000" uuid="9bc10409-251d-42e0-875f-91192d5e3ae4"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS DEL CONTRIBUYENTE :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="141" width="132" height="20" forecolor="#000000" uuid="7591b70a-e9a0-415b-bc9e-7e2665b8ef98"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Modalidad Contratación	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="48" width="132" height="20" forecolor="#000000" uuid="e3936905-d5a5-4fff-bbd6-13d501995162"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R.U.C			:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="121" width="132" height="20" forecolor="#000000" uuid="4951daee-cc19-4729-bbb0-f7b152b05428"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellidos y Nombres	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="181" width="132" height="20" forecolor="#000000" uuid="fd250517-493d-4033-beb7-84f06cd48615"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R.U.C			:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="135" y="28" width="400" height="20" forecolor="#333333" uuid="61b80d87-3b55-4d39-9cfd-28dbde326b83"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMPLEADOR}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="121" width="400" height="20" forecolor="#333333" uuid="7888ab0b-9673-4098-b173-f84f2ac9c903"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(( $F{APELLIDOPATERNO} == null ? "" : $F{APELLIDOPATERNO} ) + " "  +
+( $F{APELLIDOMATERNO} == null ? "" : $F{APELLIDOMATERNO} ) + ", " +
+( $F{NOMBRES} == null ? "" : $F{NOMBRES} )).toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="161" width="400" height="20" forecolor="#333333" uuid="e6b9b166-883f-4870-891f-4e73a0cc2f64"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIRECCIONEMPLEADO}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="48" width="161" height="20" forecolor="#333333" uuid="476bf45b-4e98-4c76-85d9-800f3eaa40e7"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RUC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="135" y="181" width="161" height="20" forecolor="#333333" uuid="63ff0ffa-3f79-4532-89c4-e0a36f5e1882"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DOCUMENTOFISCAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="54">
+			<staticText>
+				<reportElement x="3" y="0" width="555" height="20" uuid="955d3e5b-2a96-4580-8440-c2f71d58e4c8"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[El OEFA ha abonado y retenido por el periodo correspondiente, los importes indicados a continuación:]]></text>
+			</staticText>
+			<subreport isUsingCache="true">
+				<reportElement stretchType="RelativeToTallestObject" x="213" y="30" width="83" height="23" uuid="fec321e6-27f2-4fc0-8ecb-02bd4fb15ff4"/>
+				<subreportParameter name="EMPLEADO">
+					<subreportParameterExpression><![CDATA[$P{EMPLEADO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TIPO_PLANILLA">
+					<subreportParameterExpression><![CDATA[$P{TIPO_PLANILLA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COMPANIA">
+					<subreportParameterExpression><![CDATA[$P{COMPANIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="EJERCICIO_FISCAL">
+					<subreportParameterExpression><![CDATA[$P{EJERCICIO_FISCAL}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["certificado_4ta_mensual_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="111">
+			<textField isBlankWhenNull="true">
+				<reportElement x="27" y="66" width="221" height="17" forecolor="#333333" uuid="c0f88f54-b1fa-48e0-8985-ac3be8e32792"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RESPONSABLE}.equals("XXXXXXXXXXXXXXXX") ? "" : $F{RESPONSABLE}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="336" y="65" width="160" height="1" uuid="d7d18bdc-50ef-432c-81a6-a139c01b2d5a"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="5" y="84" width="264" height="20" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="985f1317-abd1-48f2-9608-94650affcff0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RESPONSABLEPUESTO}.equals("XXXXXXXXXXXXXXXX") ? "" : $F{RESPONSABLEPUESTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="324" y="66" width="183" height="17" forecolor="#333333" uuid="984b915f-72b3-4271-b2be-a6625751c910"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{APELLIDOPATERNO} == null ? "" : $F{APELLIDOPATERNO} ) + " "  +
+( $F{APELLIDOMATERNO} == null ? "" : $F{APELLIDOMATERNO} ) + ", " +
+( $F{NOMBRES} == null ? "" : $F{NOMBRES} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="337" y="84" width="160" height="20" forecolor="#333333" uuid="cc8d3979-bd1d-4d27-844e-5e23fb6bd8b1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DNI N° " + $F{DOCUMENTOIDENTIDAD}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="55" y="65" width="160" height="1" uuid="9b95e579-25c1-42e2-9a6d-348185da5c78"/>
+			</line>
+			<textField>
+				<reportElement x="13" y="0" width="285" height="16" forecolor="#333333" uuid="ec32e94e-fccd-46ee-bfae-d3f727d6646d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["San Isidro, " + $P{FECHA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

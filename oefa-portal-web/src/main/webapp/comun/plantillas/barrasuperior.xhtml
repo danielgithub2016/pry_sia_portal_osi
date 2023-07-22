@@ -1,0 +1,60 @@
+<ui:composition 
+	xmlns:p="http://primefaces.org/ui"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+    <h:form id="frmBarraSuperior">
+    
+    <div id="layout-header" class="Unselectable fontRegular">
+        <a href="bienvenida.xhtml" id="layout-logo">
+            <h:graphicImage name="images/LOGO.svg" styleClass="Fleft" library="sentinel-layout"/>
+            <span class="Fs19 FontTitilliumSemiBoldItalic Fleft"><span class="softblue">SIA</span><span class="hardblue">WEB</span></span>
+        </a>
+        
+        <p:spacer width="20" height="40" />
+        <a href="#" class="white Unselectable" style="font-size: 15px;">Periodo: 2015-08</a>
+        <p:spacer width="20" height="20" />
+         <a href="#" class="white Unselectable" style="font-size: 15px;">Locación: LIMA</a>
+        <p:spacer width="20" height="20" />
+        <a href="#" class="white Unselectable" style="font-size: 15px;">#{msg.sistema_usuario} : ${usuario.nombreCompleto} ( ${usuario.loginUsuario} )</a>
+        <p:spacer width="20" height="20" />
+        <a href="#" class="white Unselectable" style="font-size: 15px;">Unidad Negocio 0001 LIMA - VER 3.10 </a>
+        
+    	<ul id="sm-topmenu" class="layout-header-widgets white Fs14">
+    		<li class="Fleft BordRadHalf TexAlCenter"><i class="icon-user-male"></i>
+    			<ul class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
+    				<li class="Animated05"><a class="white Unselectable"><i class="icon-user-male Fs26 OvHidden"></i><span class="Fs18">${usuario.nombreCompleto}<br/><span class="Fs10">Last Login - 18.08.2014</span></span></a></li>    				
+    				<li class="Animated05"><a href="#" class="white Unselectable"><i class="icon-sliders"></i>#{msg.sistema_preferencias_usuario}</a></li>
+    			</ul>
+    		</li>    		
+    		<li class="Fleft BordRadHalf TexAlCenter"><i class="icon-wrench-1"></i>
+    			<ul class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
+    				<li class="Animated05"><a href="#" class="white Unselectable"><i class="icon-sun"></i>#{msg.sistema_configuracion_aplicacion}</a></li>
+    				<li class="Animated05"><a href="#" class="white Unselectable"><i class="icon-lifebuoy"></i>#{msg.sistema_help_desk}</a></li>
+    			</ul>
+    		</li>
+    		<li class="Fleft BordRadHalf TexAlCenter"><i class="icon-power"></i>
+    			<ul class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
+    				<li class="Animated05"><a class="white Unselectable" onclick="document.getElementById('frmBarraSuperior:btnOcultoReiniciar').click();" ><i class="icon-ccw-1"></i>#{msg.sistema_reiniciar}</a></li>
+    				<li class="Animated05"><a class="white Unselectable" onclick="document.getElementById('frmBarraSuperior:btnOcultoSalir').click();"><i class="icon-logout"></i>#{msg.sistema_salir}</a></li>
+    			</ul>
+    		</li>
+    	</ul>
+    	<!-- NEVER REMOVE FOLLOWING 'UL' TAG ! BECAUSE THIS CONTAINS RESPONSIVE MODE HEADER MENU OPEN-CLOSE BUTTON -->
+    	<ul id="sm-mobiletopmenu" class="layout-header-widgets white Fs14">
+    		<li class="Fleft BordRadHalf TexAlCenter Animated05 DisplayOnResponsive"><i class="icon-th-1"></i></li>
+    	</ul>
+    	<!-- ****** -->
+   	</div>
+	
+	<p:commandLink id="btnOcultoReiniciar" 
+			action="#{cLogin.reiniciar}" immediate="true" style="color:blue; display:none;" />
+			
+	<p:commandLink id="btnOcultoSalir" 
+			action="#{cLogin.salir}" immediate="true" style="color:blue; display:none;" />
+						
+	</h:form>
+	    
+</ui:composition>

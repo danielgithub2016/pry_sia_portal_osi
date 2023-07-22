@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.rrhh.dominio.HrPuestoempresa" table="SGCORESYS.HR_PUESTOEMPRESA">
+		<composite-id name="pk"
+			class="net.royal.erp.rrhh.dominio.HrPuestoempresaPk">
+			<key-property name="codigopuesto" type="integer">
+				<column name="CODIGOPUESTO" length="22" />
+			</key-property>
+		</composite-id>
+		<property name="rpt_formacion" type="string">
+			<column name="RPT_FORMACION" length="1500" />
+		</property>
+		<property name="plantillapotencial" type="string">
+			<column name="PLANTILLAPOTENCIAL" length="5" />
+		</property>
+		<property name="codigortps" type="string">
+			<column name="CODIGORTPS" length="6" />
+		</property>
+		<property name="cursominimo" type="big_decimal">
+			<column name="CURSOMINIMO" length="22" />
+		</property>
+		<property name="codigoposicion" type="integer">
+			<column name="CODIGOPOSICION" length="22" />
+		</property>
+		<property name="familiapuesto" type="string">
+			<column name="FAMILIAPUESTO" length="3" />
+		</property>
+		<property name="lineacarrera" type="string">
+			<column name="LINEACARRERA" length="10" />
+		</property>
+		<property name="descripcion" type="string">
+			<column name="DESCRIPCION" length="150" />
+		</property>
+		<property name="grupoocupacional" type="integer">
+			<column name="GRUPOOCUPACIONAL" length="22" />
+		</property>
+		<property name="codigointerno" type="string">
+			<column name="CODIGOINTERNO" length="20" />
+		</property>
+		<property name="cursomaximo" type="big_decimal">
+			<column name="CURSOMAXIMO" length="22" />
+		</property>
+		<property name="descripcionpuestoanterior" type="string">
+			<column name="DESCRIPCIONPUESTOANTERIOR" length="100" />
+		</property>
+		<property name="cflagesconfianza" type="string">
+			<column name="CFLAGESCONFIANZA" length="1" />
+		</property>
+		<property name="codigopuestoconfianza" type="string">
+			<column name="CODIGOPUESTOCONFIANZA" length="3" />
+		</property>
+		<property name="unidadnegocio" type="string">
+			<column name="UNIDADNEGOCIO" length="4" />
+		</property>
+		<property name="puestosuperior" type="integer">
+			<column name="PUESTOSUPERIOR" length="22" />
+		</property>
+		<property name="numerovacantes" type="integer">
+			<column name="NUMEROVACANTES" length="22" />
+		</property>
+		<property name="categoriafuncional" type="string">
+			<column name="CATEGORIAFUNCIONAL" length="4" />
+		</property>
+		<property name="estado" type="string">
+			<column name="ESTADO" length="1" />
+		</property>
+		<property name="descripcioncap" type="string">
+			<column name="DESCRIPCIONCAP" length="60" />
+		</property>
+		<property name="experienciaunitario" type="big_decimal">
+			<column name="EXPERIENCIAUNITARIO" length="22" />
+		</property>
+		<property name="flagpuestopracticante" type="string">
+			<column name="FLAGPUESTOPRACTICANTE" length="1" />
+		</property>
+		<property name="descripcioningles" type="string">
+			<column name="DESCRIPCIONINGLES" length="100" />
+		</property>
+		<property name="rpt_conocimientos" type="string">
+			<column name="RPT_CONOCIMIENTOS" length="1500" />
+		</property>
+		<property name="rpt_experiencia" type="string">
+			<column name="RPT_EXPERIENCIA" length="1500" />
+		</property>
+		<property name="cflagesdirectivo" type="string">
+			<column name="CFLAGESDIRECTIVO" length="1" />
+		</property>
+		<property name="experienciaminimo" type="big_decimal">
+			<column name="EXPERIENCIAMINIMO" length="22" />
+		</property>
+		<property name="unidadreplicacion" type="string">
+			<column name="UNIDADREPLICACION" length="4" />
+		</property>
+		<property name="gradosalario" type="string">
+			<column name="GRADOSALARIO" length="3" />
+		</property>
+		<property name="comentarios" type="string">
+			<column name="COMENTARIOS" length="250" />
+		</property>
+		<property name="clasificadorcargo" type="string">
+			<column name="CLASIFICADORCARGO" length="3" />
+		</property>
+		<property name="tipopuesto" type="integer">
+			<column name="TIPOPUESTO" length="22" />
+		</property>
+		<property name="codigocap" type="string">
+			<column name="CODIGOCAP" length="20" />
+		</property>
+		<property name="denominacion" type="string">
+			<column name="DENOMINACION" length="100" />
+		</property>
+		<property name="cursounitario" type="big_decimal">
+			<column name="CURSOUNITARIO" length="22" />
+		</property>
+		<property name="plantillaevaluacion" type="string">
+			<column name="PLANTILLAEVALUACION" length="5" />
+		</property>
+		<property name="codigoanterior" type="string">
+			<column name="CODIGOANTERIOR" length="10" />
+		</property>
+		<property name="experienciamaximo" type="big_decimal">
+			<column name="EXPERIENCIAMAXIMO" length="22" />
+		</property>
+		<property name="centrocosto" type="string">
+			<column name="CENTROCOSTO" length="10" />
+		</property>
+		<property name="codanterior" type="string">
+			<column name="CODANTERIOR" length="10" />
+		</property>
+		<property name="plantilladocumento" type="integer">
+			<column name="PLANTILLADOCUMENTO" length="22" />
+		</property>
+		<property name="flagddjj" type="string">
+			<column name="FLAGDDJJ" length="1" />
+		</property>
+		<property name="profesional" type="string">
+			<column name="PROFESIONAL" length="3" />
+		</property>
+		<property name="plantillaentregas" type="string">
+			<column name="PLANTILLAENTREGAS" length="3" />
+		</property>
+		<property name="xdigitalperpuestohrlsc" type="string">
+			<column name="X_DIGITAL_PERPUESTO_HR_LSC" length="4000" />
+		</property>
+		<property name="xdescperpuestohrlsc" type="string">
+			<column name="X_DESC_PERPUESTO_HR_LSC" length="4000" />
+		</property>
+		<property name="ultimoUsuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+		<property name="ultimaFechaModif" type="timestamp">
+			<column name="ULTIMAFECHAMODIF" />
+		</property>
+
+	</class>
+</hibernate-mapping>

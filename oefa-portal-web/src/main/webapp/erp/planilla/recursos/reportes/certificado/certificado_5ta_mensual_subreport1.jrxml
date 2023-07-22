@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado_5ta_mensual_subreport1" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="8eb66f05-5014-4fad-bb46-0068d3277340">
+	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.x" value="19"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="EMPLEADO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{EMPLEADO}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EJERCICIO_FISCAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{EJERCICIO_FISCAL}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{COMPANIA}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIPO_PLANILLA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{TIPO_PLANILLA}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT CASE WHEN SUBSTR(PERIODO,-2,2)='01' THEN 'ENERO'
+            WHEN SUBSTR(PERIODO,-2,2)='02' THEN 'FEBRERO'
+            WHEN SUBSTR(PERIODO,-2,2)='03' THEN 'MARZO'
+            WHEN SUBSTR(PERIODO,-2,2)='04' THEN 'ABRIL'
+            WHEN SUBSTR(PERIODO,-2,2)='05' THEN 'MAYO'
+            WHEN SUBSTR(PERIODO,-2,2)='06' THEN 'JUNIO'
+            WHEN SUBSTR(PERIODO,-2,2)='07' THEN 'JULIO'
+            WHEN SUBSTR(PERIODO,-2,2)='08' THEN 'AGOSTO'
+            WHEN SUBSTR(PERIODO,-2,2)='09' THEN 'SETIEMBRE'
+            WHEN SUBSTR(PERIODO,-2,2)='10' THEN 'OCTUBRE'
+            WHEN SUBSTR(PERIODO,-2,2)='11' THEN 'NOVIEMBRE'
+            WHEN SUBSTR(PERIODO,-2,2)='12' THEN 'DICIEMBRE' END AS MES
+        ,NVL(acumuladosueldo,0)-NVL(montogratificacion,0)-/*NVL(montoliquidacion,0)*/-NVL(montoescolaridad,0) AS BASICO
+        ,nvl(montootros,0) as otros_ingresos
+        ,nvl(montoescolaridad,0) as escolaridad
+FROM (
+SELECT (Select sum(nvl(x.Monto,0))
+            from SGCORESYS.Pr_PlanillaEmpleadoConcepto x
+            where x.empleado=$P{EMPLEADO}
+                    and x.CompaniaSocio=$P{COMPANIA}
+                    and x.tipoplanilla=$P{TIPO_PLANILLA}
+                    and  substr(x.periodo,1,6)=trim(y.EJERCICIOFISCAL)
+                    and x.concepto in (Select pc.concepto from SGCORESYS.Pr_ConjuntoDetalle pc where Conjunto='CONC5TAGRT')
+                    and  X.TIPOPROCESO IN (select P2.TIPOPROCESO from SGCORESYS.pr_tipoproceso P2 where NVL(P2.flagadelanto,'N')='N')) as montogratificacion
+        ,(Select sum(x.Monto)
+            from SGCORESYS.Pr_PlanillaEmpleadoConcepto x
+            where x.empleado=$P{EMPLEADO} and x.CompaniaSocio=$P{COMPANIA}
+                    and x.tipoplanilla=$P{TIPO_PLANILLA}
+                    and  substr(x.periodo,1,6)=trim(y.EJERCICIOFISCAL)
+                    and x.concepto in (Select pc.concepto from SGCORESYS.Pr_ConjuntoDetalle pc where Conjunto='CONC5TALIQ')
+                    and  X.TIPOPROCESO IN (select P2.TIPOPROCESO from SGCORESYS.pr_tipoproceso P2 where NVL(P2.flagadelanto,'N')='N')) as montoliquidacion
+         ,(Select sum(x.Monto)
+            from SGCORESYS.Pr_PlanillaEmpleadoConcepto x
+            where x.empleado=$P{EMPLEADO}
+            and x.CompaniaSocio=$P{COMPANIA}
+            and x.tipoplanilla=$P{TIPO_PLANILLA}
+            and  substr(x.periodo,1,6)=trim(y.EJERCICIOFISCAL)
+            and x.concepto in (Select pc.concepto from SGCORESYS.Pr_ConjuntoDetalle pc where Conjunto='CONC5TAESC')
+            and  X.TIPOPROCESO IN (select P2.TIPOPROCESO from SGCORESYS.pr_tipoproceso P2 where NVL(P2.flagadelanto,'N')='N')) as montoescolaridad
+
+         ,(Select sum(x.Monto)
+            from SGCORESYS.Pr_PlanillaEmpleadoConcepto x
+            where x.empleado=$P{EMPLEADO}
+            and x.CompaniaSocio=$P{COMPANIA}
+            and x.tipoplanilla=$P{TIPO_PLANILLA}
+            and  substr(x.periodo,1,6)=trim(y.EJERCICIOFISCAL)
+            and x.concepto in (Select pc.concepto from SGCORESYS.Pr_ConjuntoDetalle pc where Conjunto='CONC5TAOIN')
+            and  X.TIPOPROCESO IN (select P2.TIPOPROCESO from SGCORESYS.pr_tipoproceso P2 where NVL(P2.flagadelanto,'N')='N')) as montootros
+
+
+         ,y.ACUMULADOSUELDOEXTERNO as acumuladosueldoexterno
+         ,y.ACUMULADORETENCIONEXTERNO as acumuladoretencionexterno
+         ,y.SueldoActual  as sueldoactual
+         ,y.EstimadoImpuestoMensual as estimadoimpuestomensual
+         ,nvl(y.AcumuladoRetencion,0) + nvl(y.AcumuladoRetencionInterno,0) + nvl(y.AcumuladoRetencionExterno,0) + CASE WHEN nvl(y.EstimadoImpuestoMensual,0) <0 THEN 0 ELSE nvl(y.EstimadoImpuestoMensual,0) END   as AcumuladoRetencion
+        -- ,nvl(y.AcumuladoSueldo,0) + nvl(y.AcumuladoSueldoInteno,0) + nvl(y.AcumuladoSueldoExterno,0) + nvl(y.SueldoActual,0) as AcumuladoSueldo
+         ,nvl(y.SueldoActual,0) as AcumuladoSueldo
+         ,nvl(y.EstimadoimpuestoAnual,0) as ImpuestoAnualCalculado
+         ,abs(nvl(y.CreditoFiscalUtilizado,0)) as RetencionExceso
+         ,y.EJERCICIOFISCAL AS PERIODO
+FROM SGCORESYS.PR_ImpuestoRenta y
+WHERE y.EMPLEADO = $P{EMPLEADO} AND substr(y.EJERCICIOFISCAL,1,4)=substr($P{EJERCICIO_FISCAL},1,4)) z
+ORDER BY Z.PERIODO]]>
+	</queryString>
+	<field name="MES" class="java.lang.String"/>
+	<field name="BASICO" class="java.math.BigDecimal"/>
+	<field name="OTROS_INGRESOS" class="java.math.BigDecimal"/>
+	<field name="ESCOLARIDAD" class="java.math.BigDecimal"/>
+	<variable name="TOTAL_REMUNERACION" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{BASICO}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_OTROS_INGRESOS" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{OTROS_INGRESOS}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_ESCOLARIDAD" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{ESCOLARIDAD}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_INGRESOS" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{TOTAL_REMUNERACION} + $V{TOTAL_OTROS_INGRESOS} + $V{TOTAL_ESCOLARIDAD}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement x="309" y="0" width="77" height="16" forecolor="#333333" uuid="84f3aa78-2f3e-4c81-9ebe-8544188d45dd"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL INGRESOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="76" y="0" width="79" height="16" isPrintWhenDetailOverflows="true" forecolor="#333333" uuid="24862a42-1859-45ab-97f5-f2ad5e66ad8c"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REMUNERACIÓN
+MENSUAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="155" y="0" width="77" height="16" forecolor="#333333" uuid="42672999-0ec0-4d76-9e47-76bf34fad304"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OTROS INGRESOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="76" height="16" forecolor="#333333" uuid="78a358b4-0193-48c7-8cf5-561c09a6d711"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MESES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="232" y="0" width="77" height="16" forecolor="#333333" uuid="94ad540d-4d77-4aaa-916a-2744e847a15c"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESCOLARIDAD GRATIFICACION]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="76" y="0" width="79" height="15" forecolor="#333333" uuid="28c4141f-b59a-43a9-a893-b6edb7356ddc"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BASICO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="155" y="0" width="77" height="15" forecolor="#333333" uuid="ef2dcfcb-daf1-48c8-a40b-56e1100ed154"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OTROS_INGRESOS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="232" y="0" width="77" height="15" forecolor="#333333" uuid="442c91d6-3127-4d12-bcae-210e6833694a"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ESCOLARIDAD}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="309" y="0" width="77" height="15" forecolor="#333333" uuid="17d2723f-9038-4a1e-900f-f923348db647"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BASICO} + $F{OTROS_INGRESOS} + $F{ESCOLARIDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="76" height="15" forecolor="#333333" uuid="4696e64c-2503-48b4-a83a-48323dafe730"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MES}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="76" height="15" forecolor="#000000" uuid="0f72adc9-5179-4ac8-b55a-cc8be5f352ea"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUB TOTAL : ]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="76" y="0" width="79" height="15" forecolor="#333333" uuid="5f5cd473-19d1-4631-bfb6-6893ba33addf"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_REMUNERACION}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="155" y="0" width="77" height="15" forecolor="#333333" uuid="667ccd08-71b8-440e-b215-09455c036931"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_OTROS_INGRESOS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="232" y="0" width="77" height="15" forecolor="#333333" uuid="e775905c-daab-455e-b0d4-2b4eee63856b"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_ESCOLARIDAD}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="309" y="0" width="77" height="15" forecolor="#333333" uuid="c6425319-f1e1-4242-a0a9-ac48475fb292"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_INGRESOS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

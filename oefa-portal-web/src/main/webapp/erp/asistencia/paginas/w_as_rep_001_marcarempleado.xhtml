@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="content">
+		<h2>Reporte de Marcas</h2>
+		<h:form id="frmReporteMarcacion">
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+
+			<p:panel>
+				<p:panelGrid columns="6" id="grdFiltro"
+					columnClasses="ui-grid-col-6,ui-grid-col-0.5,ui-grid-col-1,ui-grid-col-0.5,ui-grid-col-1,ui-grid-col-1"
+					layout="grid" styleClass="ui-panelgrid-blank">
+
+					<p:panelGrid columns="5" id="grdEmpleado"
+						columnClasses="ui-grid-col-1.5,ui-grid-col-2,ui-grid-col-5,ui-grid-col-1,ui-grid-col-1"
+						layout="grid" styleClass="ui-panelgrid-blank">
+						<h:outputLabel value="Empleado" />
+						<h:outputText value="Seleccionados"
+							onkeypress="return validarIngreso(event,'N');"
+							rendered="#{!cwAsRep001ReporteMarcaEmpleado.verSeleccionados}" />
+						<h:outputLabel
+							rendered="#{!cwAsRep001ReporteMarcaEmpleado.verSeleccionados}" />
+						<p:inputText onkeypress="return validarIngreso(event,'N');"
+							rendered="#{cwAsRep001ReporteMarcaEmpleado.verSeleccionados}"
+							value="#{cwAsRep001ReporteMarcaEmpleado.datosgenerico.codEmpleado}" />
+						<p:inputText readonly="true"
+							rendered="#{cwAsRep001ReporteMarcaEmpleado.verSeleccionados}"
+							value="#{cwAsRep001ReporteMarcaEmpleado.datosgenerico.nombreCompleto}" />
+						<p:commandButton icon="buscar" styleClass="botonTextoImagenChico"
+							update="grdEmpleado"
+							action="#{cwAsEmpleadoSelectMultiple.iniciarControladora}">
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.nombreContenedorRefrescar}"
+								value="frmReporteMarcacion:grdEmpleado" />
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.iMantenimientoReferencia}"
+								value="#{cwAsRep001ReporteMarcaEmpleado}" />
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.nombreVentanaEmergente}"
+								value="w_as_empleado_select_multiple" />
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.pantallaReferencia}"
+								value="w_as_rep_001_marcarempleado" />
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.flgReporteTodo}" value="S" />
+						</p:commandButton>
+
+						<p:commandButton icon="limpiar"
+							action="#{cwAsRep001ReporteMarcaEmpleado.limpiezaEmpleado}"
+							styleClass="botonTextoImagenChico" update="grdEmpleado">
+						</p:commandButton>
+					</p:panelGrid>
+
+					<p:outputLabel value="Desde" />
+					<p:calendar pattern="dd/MM/yyyy" locale="es" navigator="true"
+						showButtonPanel="true" mask="true"
+						converterMessage="Formato incorrecto. El formato debe ser dd/MM/yyyy"
+						value="#{cwAsRep001ReporteMarcaEmpleado.datosgenerico.fechadesde}">
+					</p:calendar>
+
+					<p:outputLabel value="Hasta" />
+					<p:calendar pattern="dd/MM/yyyy" locale="es" navigator="true"
+						showButtonPanel="true" mask="true"
+						converterMessage="Formato incorrecto. El formato debe ser dd/MM/yyyy"
+						value="#{cwAsRep001ReporteMarcaEmpleado.datosgenerico.fechahasta}">
+					</p:calendar>
+
+					<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+						icon="buscar" update="@form" onstart="PF('bUI').block();"
+						oncomplete="PF('bUI').unblock();" process="@form"
+						action="#{cwAsRep001ReporteMarcaEmpleado.buscar}" />
+
+				</p:panelGrid>
+			</p:panel>
+
+			<pe:documentViewer value="#{cwAsRep001ReporteMarcaEmpleado.reporte}"
+				style="width:99%;height:780px;" />
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

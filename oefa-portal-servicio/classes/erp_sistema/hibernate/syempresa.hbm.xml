@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.erp.sistema.dominio.SyEmpresa" table="SGCORESYS.SY_EMPRESA">
+        <composite-id name="pk" class="net.royal.erp.sistema.dominio.SyEmpresaPk">
+            <key-property name="empresa" type="string">
+                <column name="EMPRESA" length="6" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="30" />
+        </property>
+        <property name="pais" type="string">
+            <column name="PAIS" length="3" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

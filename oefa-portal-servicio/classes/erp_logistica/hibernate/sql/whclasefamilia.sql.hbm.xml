@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : logistica.WhClasefamilia
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!-- uso  whclasefamilia.xxxxxxxxxxx -->
+    
+    <!-- syfinan.dw_ma_wh_lineafamilia_sub_retrieve FILTRO3-->
+	<sql-query name="whclasefamilia.DwMaWhLineafamiliaSubRetrieveFiltro3">
+    SELECT distinct
+   		WH_ClaseLinea.DescripcionLocal as "descripcionlocal",   
+		WH_ClaseSubFamilia.DescripcionLocal as "descripcionlocal_1",   
+		WH_ClaseSubFamilia.Linea as "linea",   
+		WH_ClaseSubFamilia.Familia as "familia",   
+		WH_ClaseFamilia.DescripcionLocal as "descripcionlocal_2",   
+		WH_ClaseSubFamilia.SubFamilia as "subfamilia",
+		WH_ClaseSubFamilia.Linea || ' ' ||WH_ClaseLinea.DescripcionLocal as
+		"lineaCompleta",
+     	WH_ClaseSubFamilia.Familia || ' ' ||WH_ClaseFamilia.DescripcionLocal as
+		"familiaCompleta",
+    	WH_ClaseSubFamilia.SubFamilia || ' ' ||WH_ClaseSubFamilia.DescripcionLocal as
+		"subfamiliaCompleta"		
+		FROM SGCORESYS.WH_ClaseFamilia
+			INNER JOIN SGCORESYS.WH_ClaseLinea
+				ON (WH_ClaseFamilia.Linea = WH_ClaseLinea.Linea)
+			INNER JOIN SGCORESYS.WH_ClaseSubFamilia  
+				ON (WH_ClaseFamilia.Linea = WH_ClaseSubFamilia.Linea AND
+					 WH_ClaseFamilia.Familia = WH_ClaseSubFamilia.Familia)
+		WHERE ( WH_ClaseLinea.Estado = 'A' ) and 
+    to_number(WH_ClaseSubFamilia.Familia) = :familiaNumber
+    and 
+    to_number(WH_ClaseSubFamilia.Linea) = :lineaNumber  
+      ORDER BY 
+			WH_ClaseSubFamilia.Linea ASC, 
+			WH_ClaseSubFamilia.Familia ASC,    
+			WH_ClaseSubFamilia.SubFamilia ASC  
+	</sql-query>
+    
+    <!-- syfinan.dw_ma_wh_lineafamilia_sub_retrieve FILTRO2 -->
+	<sql-query name="whclasefamilia.DwMaWhLineafamiliaSubRetrieveFiltro2">
+  SELECT distinct
+   		WH_ClaseLinea.DescripcionLocal as "descripcionlocal",   
+		WH_ClaseSubFamilia.DescripcionLocal as "descripcionlocal_1",   
+		WH_ClaseSubFamilia.Linea as "linea",   
+		WH_ClaseSubFamilia.Familia as "familia",   
+		WH_ClaseFamilia.DescripcionLocal as "descripcionlocal_2",   
+		WH_ClaseSubFamilia.SubFamilia as "subfamilia",
+		WH_ClaseSubFamilia.Linea || ' ' ||WH_ClaseLinea.DescripcionLocal as
+		"lineaCompleta",
+     	WH_ClaseSubFamilia.Familia || ' ' ||WH_ClaseFamilia.DescripcionLocal as
+		"familiaCompleta",
+    	WH_ClaseSubFamilia.SubFamilia || ' ' ||WH_ClaseSubFamilia.DescripcionLocal as
+		"subfamiliaCompleta"
+		FROM SGCORESYS.WH_ClaseFamilia
+			INNER JOIN SGCORESYS.WH_ClaseLinea
+				ON (WH_ClaseFamilia.Linea = WH_ClaseLinea.Linea)
+			INNER JOIN SGCORESYS.WH_ClaseSubFamilia  
+				ON (WH_ClaseFamilia.Linea = WH_ClaseSubFamilia.Linea AND
+					 WH_ClaseFamilia.Familia = WH_ClaseSubFamilia.Familia)
+		WHERE ( WH_ClaseLinea.Estado = 'A' ) and 
+    to_number(WH_ClaseSubFamilia.Linea) = :lineaNumber
+		ORDER BY 
+		WH_ClaseSubFamilia.Familia ASC
+	</sql-query>
+    
+    <!-- syfinan.dw_ma_wh_lineafamilia_sub_retrieve -->
+	<sql-query name="whclasefamilia.DwMaWhLineafamiliaSubRetrieve">
+	SELECT 
+		WH_ClaseLinea.DescripcionLocal as "descripcionlocal",   
+		WH_ClaseSubFamilia.DescripcionLocal as "descripcionlocal_1",   
+		WH_ClaseSubFamilia.Linea as "linea",   
+		WH_ClaseSubFamilia.Familia as "familia",   
+		WH_ClaseFamilia.DescripcionLocal as "descripcionlocal_2",   
+		WH_ClaseSubFamilia.SubFamilia as "subfamilia",
+		WH_ClaseSubFamilia.Linea || ' ' ||WH_ClaseLinea.DescripcionLocal as
+		"lineaCompleta",
+     	WH_ClaseSubFamilia.Familia || ' ' ||WH_ClaseFamilia.DescripcionLocal as
+		"familiaCompleta",
+    	WH_ClaseSubFamilia.SubFamilia || ' ' ||WH_ClaseSubFamilia.DescripcionLocal as
+		"subfamiliaCompleta"
+		FROM SGCORESYS.WH_ClaseFamilia
+			INNER JOIN SGCORESYS.WH_ClaseLinea
+				ON (WH_ClaseFamilia.Linea = WH_ClaseLinea.Linea)
+			INNER JOIN SGCORESYS.WH_ClaseSubFamilia  
+				ON (WH_ClaseFamilia.Linea = WH_ClaseSubFamilia.Linea AND
+					 WH_ClaseFamilia.Familia = WH_ClaseSubFamilia.Familia)
+		WHERE ( WH_ClaseLinea.Estado = 'A' )
+		ORDER BY 
+		WH_ClaseSubFamilia.Linea ASC,   
+		WH_ClaseSubFamilia.Familia ASC,    
+		WH_ClaseSubFamilia.SubFamilia ASC 
+	</sql-query>
+    
+    <sql-query name="whclasefamilia.obtenerDescripcionLocal">
+		SELECT 
+		 	WH_ClaseFamilia.DescripcionLocal as "descripcionlocal"
+     	FROM 
+     		SGCORESYS.WH_ClaseFamilia  
+     	WHERE 
+     	  	( WH_ClaseFamilia.Linea   = :p_linea ) AND  
+            ( WH_ClaseFamilia.Familia = :p_familia ) 
+    </sql-query>
+    
+    	
+         
+</hibernate-mapping>

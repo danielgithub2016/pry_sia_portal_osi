@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : sycommon. -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- sycommon.sycommon.f_sql_find_meta -->
+	<sql-query name="sycommon.FSqlFindMeta">
+		SELECT
+		    Max( BU_ComponenteMeta.Componente) as "componente"
+		FROM sgcoresys.BU_ComponenteMeta,
+		     sgcoresys.BU_Meta
+		WHERE ( BU_ComponenteMeta.Ano = BU_Meta.Ano ) and
+		( BU_ComponenteMeta.CompaniaSocio = BU_Meta.CompaniaSocio ) and
+		( BU_ComponenteMeta.Meta = BU_Meta.Meta ) and
+		( ( BU_ComponenteMeta.CompaniaSocio = :w_companiasocio ) AND
+		( BU_ComponenteMeta.Ano = :w_ano ) AND
+		( BU_Meta.MetaAux = :w_meta ))
+	</sql-query>
+
+</hibernate-mapping>

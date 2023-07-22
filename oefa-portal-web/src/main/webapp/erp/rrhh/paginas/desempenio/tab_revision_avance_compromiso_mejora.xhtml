@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panelGrid columns="1" layout="grid" columnClasses="ui-grid-col-2"
+		styleClass="ui-panelgrid-blank">
+		<p:commandButton value="Agregar" rendered="false"
+			action="#{cwHrRevisionAvanceCompromisoMejora.nuevo}"
+			oncomplete="filterTable();" icon="nuevo"
+			styleClass="botonTextoImagen"
+			update=":frmEvaluacionEmpleado:tvDatos:dtRevisionAvanceCompromisoMejora"
+			disabled="#{cwHrEvaluacionempleadoEdit.opciones.p16cb4_disable}">
+			<f:setPropertyActionListener
+				target="#{cwHrRevisionAvanceSelector.nombreContenedorRefrescar}"
+				value="frmEvaluacionEmpleado:tvDatos:dtRevisionAvanceCompromisoMejora" />
+			<f:setPropertyActionListener
+				target="#{cwHrRevisionAvanceSelector.nombreVentanaEmergente}"
+				value="popRevisionAvanceCompMejora" />
+		</p:commandButton>
+	</p:panelGrid>
+
+	<p:remoteCommand autoRun="true"
+		oncomplete="PF('tableRevisionAvanceCompromisoMejora').filter()"
+		name="filterTable" />
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		id="dtRevisionAvanceCompromisoMejora"
+		scrollable="true" widgetVar="tableRevisionAvanceCompromisoMejora"
+		value="#{cwHrRevisionAvanceCompromisoMejora.dwrevision}" var="row"
+		rowIndexVar="index" reflow="true"
+		selection="#{cwHrRevisionAvanceCompromisoMejora.registroSeleccionado}"
+		selectionMode="single" rowKey="#{row.pk.secuencia}"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+		<p:ajax event="rowSelect" />
+		<p:column headerText="" width="10">
+			<h:outputText value="#{index + 1}" />
+		</p:column>
+		<p:column headerText="Revisión del Avance  del Compromiso de Mejora"
+			width="350">
+			<h:outputText value="#{row.descripcion}" />
+		</p:column>
+		<p:column headerText="periodo" width="100">
+			<h:outputText value="#{row.periodo}" />
+		</p:column>
+		<p:column headerText="Observación" width="350">
+			<h:outputText value="#{row.observacion}" />
+		</p:column>
+		<p:column width="70" styleClass="columnatablaCentro"
+			headerText="Acción">
+			<p:commandButton type="image" icon="editar"
+				action="#{cwHrRevisionAvanceCompromisoMejora.editar}">
+				<f:setPropertyActionListener
+					target="#{cwHrRevisionAvanceCompromisoMejora.registroSeleccionado}"
+					value="#{row}" />
+			</p:commandButton>
+
+			<p:commandButton type="image" icon="eliminar"
+				action="#{cwHrRevisionAvanceCompromisoMejora.eliminar}"
+				oncomplete="filterTable();" title="Eliminar Registro"
+				disabled="#{cwHrEvaluacionempleadoEdit.opciones.p16cb5_disable}"
+				update=":frmEvaluacionEmpleado:tvDatos:dtRevisionAvanceCompromisoMejora">
+
+				<f:setPropertyActionListener
+					target="#{cwHrRevisionAvanceCompromisoMejora.registroSeleccionado}"
+					value="#{row}" />
+			</p:commandButton>
+
+		</p:column>
+		<p:column filterBy="#{row.eliminado}" width="0">
+			<f:facet name="filter">
+				<p:inputText value="N" style="height:1px;"/>
+			</f:facet>
+		</p:column>
+
+		<f:facet name="footer">
+			<table style="border-color: transparent;"></table>
+		</f:facet>
+
+	</p:dataTable>
+
+</ui:composition>

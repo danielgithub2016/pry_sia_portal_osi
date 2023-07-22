@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrPuestoexperiencia" table="SGCORESYS.HR_PUESTOEXPERIENCIA">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrPuestoexperienciaPk">
+            <key-property name="codigopuesto" type="integer">
+                <column name="CODIGOPUESTO" length="22" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+            <key-property name="areaexperiencia" type="string">
+                <column name="AREAEXPERIENCIA" length="4000" />
+            </key-property>
+        </composite-id>
+        <property name="tipoexperiencia" type="string">
+            <column name="TIPOEXPERIENCIA" length="10" />
+        </property>
+        <property name="flagnecesario" type="string">
+            <column name="FLAGNECESARIO" length="1" />
+        </property>
+        <property name="meses" type="integer">
+            <column name="MESES" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="gradocuantitativo" type="string">
+            <column name="GRADOCUANTITATIVO" length="2" />
+        </property>
+        <property name="puntosgrado" type="integer">
+            <column name="PUNTOSGRADO" length="22" />
+        </property>
+        <property name="porcentajegrado" type="integer">
+            <column name="PORCENTAJEGRADO" length="22" />
+        </property>
+        <property name="flagconocimiento" type="string">
+            <column name="FLAGCONOCIMIENTO" length="1" />
+        </property>
+        <property name="puntos" type="integer">
+            <column name="PUNTOS" length="22" />
+        </property>
+        <property name="meseshasta" type="integer">
+            <column name="MESESHASTA" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

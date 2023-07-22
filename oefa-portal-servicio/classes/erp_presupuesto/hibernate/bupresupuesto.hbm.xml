@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.presupuesto.dominio.BuPresupuesto" table="SGCORESYS.BU_PRESUPUESTO">
+        <composite-id name="pk" class="net.royal.erp.presupuesto.dominio.BuPresupuestoPk">
+            <key-property name="companiasocio" type="string">
+                <column name="COMPANIASOCIO" length="8" />
+            </key-property>
+            <key-property name="ano" type="string">
+                <column name="ANO" length="4" />
+            </key-property>
+            <key-property name="ejercicio" type="string">
+                <column name="EJERCICIO" length="6" />
+            </key-property>
+            <key-property name="cuentacontable" type="string">
+                <column name="CUENTACONTABLE" length="20" />
+            </key-property>
+            <key-property name="centrocosto" type="string">
+                <column name="CENTROCOSTO" length="10" />
+            </key-property>
+            <key-property name="elementogasto" type="string">
+                <column name="ELEMENTOGASTO" length="6" />
+            </key-property>
+            <key-property name="proyecto" type="string">
+                <column name="PROYECTO" length="15" />
+            </key-property>
+            <key-property name="sucursal" type="string">
+                <column name="SUCURSAL" length="4" />
+            </key-property>
+            <key-property name="referencia01" type="string">
+                <column name="REFERENCIA01" length="15" />
+            </key-property>
+            <key-property name="referencia02" type="string">
+                <column name="REFERENCIA02" length="15" />
+            </key-property>
+            <key-property name="monedacodigo" type="string">
+                <column name="MONEDACODIGO" length="2" />
+            </key-property>
+            <key-property name="efp" type="string">
+                <column name="EFP" length="50" />
+            </key-property>
+        </composite-id>
+        <property name="monto01" type="integer">
+            <column name="MONTO01" length="22" />
+        </property>
+        <property name="monto02" type="integer">
+            <column name="MONTO02" length="22" />
+        </property>
+        <property name="monto03" type="integer">
+            <column name="MONTO03" length="22" />
+        </property>
+        <property name="monto04" type="integer">
+            <column name="MONTO04" length="22" />
+        </property>
+        <property name="monto05" type="integer">
+            <column name="MONTO05" length="22" />
+        </property>
+        <property name="monto06" type="integer">
+            <column name="MONTO06" length="22" />
+        </property>
+        <property name="monto07" type="integer">
+            <column name="MONTO07" length="22" />
+        </property>
+        <property name="monto08" type="integer">
+            <column name="MONTO08" length="22" />
+        </property>
+        <property name="monto09" type="integer">
+            <column name="MONTO09" length="22" />
+        </property>
+        <property name="monto10" type="integer">
+            <column name="MONTO10" length="22" />
+        </property>
+        <property name="monto11" type="integer">
+            <column name="MONTO11" length="22" />
+        </property>
+        <property name="monto12" type="integer">
+            <column name="MONTO12" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="2" />
+        </property>
+        <property name="origen" type="string">
+            <column name="ORIGEN" length="1" />
+        </property>
+        <property name="montoreferencial" type="integer">
+            <column name="MONTOREFERENCIAL" length="22" />
+        </property>
+        <property name="montoanual01" type="integer">
+            <column name="MONTOANUAL01" length="22" />
+        </property>
+        <property name="montoanual02" type="integer">
+            <column name="MONTOANUAL02" length="22" />
+        </property>
+        <property name="montoanual03" type="integer">
+            <column name="MONTOANUAL03" length="22" />
+        </property>
+        <property name="montoanual04" type="integer">
+            <column name="MONTOANUAL04" length="22" />
+        </property>
+        <property name="montoanual05" type="integer">
+            <column name="MONTOANUAL05" length="22" />
+        </property>
+        <property name="referenciafiscal01" type="string">
+            <column name="REFERENCIAFISCAL01" length="10" />
+        </property>
+        <property name="referenciafiscal03" type="string">
+            <column name="REFERENCIAFISCAL03" length="10" />
+        </property>
+        <property name="ampliacionnumero" type="string">
+            <column name="AMPLIACIONNUMERO" length="10" />
+        </property>
+        <property name="periodopoa" type="integer">
+            <column name="PERIODOPOA" length="22" />
+        </property>
+        <property name="identificadorpoa" type="integer">
+            <column name="IDENTIFICADORPOA" length="22" />
+        </property>
+        <property name="referencia" type="string">
+            <column name="REFERENCIA" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

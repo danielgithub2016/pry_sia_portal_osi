@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<p:panelGrid columns="2" style="border-spacing:0px;"
+		columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid"
+		styleClass="ui-panelgrid-blank">
+		<p:commandButton value="Agregar" icon="nuevo" />
+
+		<p:commandButton value="Eliminar" icon="eliminar" />
+	</p:panelGrid>
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		paginator="true" paginatorPosition="bottom" scrollable="true"
+		scrollHeight="250" lazy="true" rows="20" reflow="true"
+		id="tblFunciones" value="#{cwHrPuestosEdit.dw_detail_funciones}"
+		var="c"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+		<p:column headerText="#" width="50">
+			<p:outputLabel value="#{c.pk.codigofuncion}" />
+		</p:column>
+
+		<p:column headerText="Funcion" width="150">
+			<p:outputLabel value="#{c.auxFuncion}" />
+		</p:column>
+
+		<p:column headerText="Peso" width="70">
+			<p:outputLabel value="#{c.factorparticipacion}" />
+		</p:column>
+
+		<p:column headerText="Estado" width="80">
+			<p:outputLabel value="#{c.estado.equals('A')?'Activo':'Inactivo'}" />
+		</p:column>
+
+		<p:column headerText="Comentarios" width="300">
+			<p:outputLabel value="#{c.comentarios}" />
+		</p:column>
+
+	</p:dataTable>
+
+
+</ui:composition>
+

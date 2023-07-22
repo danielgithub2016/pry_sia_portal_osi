@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : logistica.WhCommoditysub -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="whcommoditysub.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+	</sql-query>
+	<sql-query name="whcommoditysub.obtenerCuentaGastoClasificacion">
+		SELECT
+		WH_CommoditySub.CuentaContableGasto as
+		"cuentacontablegasto",
+		WH_CommoditySub.CuentaContableExtranjera as
+		"cuentacontableextranjera",
+		WH_CommoditySub.ElementoGasto as
+		"elementogasto",
+		WH_Commodity.Clasificacion as "clasificacion"
+		FROM
+		SGCORESYS.WH_CommoditySub, SGCORESYS.WH_Commodity
+		WHERE
+		(
+		WH_Commodity.Commodity01 = WH_CommoditySub.Commodity01 ) and
+		(
+		WH_CommoditySub.Commodity = :p_commodity )
+	</sql-query>
+
+	<!-- syfinan.dw_ma_wh_commoditysub_select -->
+	<sql-query name="whcommoditysub.DwMaWhCommoditysubSelect">
+		SELECT
+		row_number() OVER (ORDER BY WH_CommoditySub.Commodity) as "secuencia",
+		WH_Commodity.DescripcionLocal as "descripcionlocal",
+		WH_CommoditySub.Commodity01 as "commodity01",
+		WH_CommoditySub.Commodity02 as "commodity02",
+		WH_CommoditySub.Commodity as "commodity",
+		WH_CommoditySub.DescripcionLocal as "descripcionlocalcomsub",
+		WH_CommoditySub.CodigoInterno as "codigointerno",
+		WH_CommoditySub.CommodityLinea as "commoditylinea",
+		WH_CommoditySub.CommodityFamilia as "commodityfamilia",
+		WH_CommodityLinea.DescripcionLocal as "descripcionlocalcomlinea",
+		WH_CommodityFamilia.DescripcionLocal as "descripcionlocalcomfamilia",
+		WH_CommoditySub.CommodityGrupoLinea as "commoditygrupolinea",
+		'C3' as "flagcabecera"
+		FROM SGCORESYS.WH_Commodity,
+		SGCORESYS.WH_CommoditySub,
+		SGCORESYS.WH_CommodityLinea,
+		SGCORESYS.WH_CommodityFamilia
+		WHERE
+		( WH_Commodity.Commodity01 = WH_CommoditySub.Commodity01 ) and
+		( WH_CommoditySub.CommodityGrupoLinea = WH_CommodityLinea.GrupoLinea )
+		and
+		( WH_CommoditySub.CommodityLinea = WH_CommodityLinea.Linea ) and
+		( WH_CommoditySub.CommodityGrupoLinea = WH_CommodityFamilia.GrupoLinea
+		) and
+		( WH_CommoditySub.CommodityLinea = WH_CommodityFamilia.Linea ) and
+		( WH_CommoditySub.CommodityFamilia = WH_CommodityFamilia.Familia ) and
+		( ( WH_Commodity.Estado = :p_estado ) AND
+		( WH_CommoditySub.Estado = :p_estado ) )
+	</sql-query>
+
+	<!-- syfinan.dw_ma_wh_commoditysub_select -->
+	<sql-query name="whcommoditysub.DwMaWhCommoditysubSelectCab2">
+		SELECT
+		WH_CommoditySub.CommodityLinea as "commoditylinea",
+		WH_CommoditySub.CommodityFamilia as "commodityfamilia",
+		WH_CommodityFamilia.DescripcionLocal as "descripcionlocalcomfamilia",
+		WH_CommoditySub.CommodityGrupoLinea as "commoditygrupolinea",
+		'C2' as "flagcabecera",
+		'background-color: rgb(230,230,230)' as "css"
+		FROM SGCORESYS.WH_Commodity,
+		SGCORESYS.WH_CommoditySub,
+		SGCORESYS.WH_CommodityLinea,
+		SGCORESYS.WH_CommodityFamilia
+		WHERE
+		( WH_Commodity.Commodity01 = WH_CommoditySub.Commodity01 ) and
+		( WH_CommoditySub.CommodityGrupoLinea = WH_CommodityLinea.GrupoLinea )
+		and
+		( WH_CommoditySub.CommodityLinea = WH_CommodityLinea.Linea ) and
+		( WH_CommoditySub.CommodityGrupoLinea = WH_CommodityFamilia.GrupoLinea
+		) and
+		( WH_CommoditySub.CommodityLinea = WH_CommodityFamilia.Linea ) and
+		( WH_CommoditySub.CommodityFamilia = WH_CommodityFamilia.Familia ) and
+		( ( WH_Commodity.Estado = :p_estado ) AND
+		( WH_CommoditySub.Estado = :p_estado ) )
+	</sql-query>
+
+	<!-- syfinan.dw_ma_wh_commoditysub_select -->
+	<sql-query name="whcommoditysub.DwMaWhCommoditysubSelectCab1">
+		SELECT
+		WH_CommoditySub.CommodityLinea as "commoditylinea",
+		WH_CommodityLinea.DescripcionLocal as "descripcionlocalcomlinea",
+		WH_CommoditySub.CommodityGrupoLinea as "commoditygrupolinea",
+		'C1' as "flagcabecera",
+		'background-color: rgb(230,230,230)' as "css"
+		FROM SGCORESYS.WH_Commodity,
+		SGCORESYS.WH_CommoditySub,
+		SGCORESYS.WH_CommodityLinea,
+		SGCORESYS.WH_CommodityFamilia
+		WHERE
+		( WH_Commodity.Commodity01 = WH_CommoditySub.Commodity01 ) and
+		( WH_CommoditySub.CommodityGrupoLinea = WH_CommodityLinea.GrupoLinea )
+		and
+		( WH_CommoditySub.CommodityLinea = WH_CommodityLinea.Linea ) and
+		( WH_CommoditySub.CommodityGrupoLinea = WH_CommodityFamilia.GrupoLinea
+		) and
+		( WH_CommoditySub.CommodityLinea = WH_CommodityFamilia.Linea ) and
+		( WH_CommoditySub.CommodityFamilia = WH_CommodityFamilia.Familia ) and
+		( ( WH_Commodity.Estado = :p_estado ) AND
+		( WH_CommoditySub.Estado = :p_estado ) )
+	</sql-query>
+
+	<!-- syfinan.dw_ma_wh_commodity_retrieve -->
+	<sql-query name="whcommoditysub.DwMaWhCommodityRetrieve">
+		SELECT
+		WH_COMMODITYSUB.COMMODITY as "commodity",
+		WH_COMMODITYSUB.DESCRIPCIONLOCAL as "descripcionlocal" ,
+		WH_COMMODITYSUB.DESCRIPCIONINGLES as "descripcioningles",
+		WH_COMMODITYSUB.UNIDADPORDEFECTO as "unidadpordefecto",
+		WH_COMMODITYSUB.CUENTACONTABLEGASTO as "cuentacontablegasto",
+		WH_COMMODITYSUB.PARTIDAPRESUPUESTAL as "partidapresupuestal",
+		WH_COMMODITYSUB.FLUJODECAJA as "flujodecaja",
+		WH_COMMODITYSUB.ESTADO as "estado",
+		WH_COMMODITYSUB.ELEMENTOGASTO as "elementogasto",
+		WH_COMMODITYSUB.MONTOREFERENCIAL as "montoreferencial",
+		WH_COMMODITYSUB.MONTOREFERENCIALMONEDA as "montoreferencialmoneda",
+		WH_COMMODITY.DESCRIPCIONLOCAL as "descripcionlocalcommodity",
+		WH_COMMODITY.CLASIFICACION as "clasificacion",
+		WH_COMMODITYSUB.REFERENCIAFISCAL02 as "referenciafiscal02",
+		CAST(WH_COMMODITYSUB.IGVEXONERADOFLAG as varchar(1)) as "igvexoneradoflag"
+		FROM SGCORESYS.WH_COMMODITYSUB,
+		SGCORESYS.WH_COMMODITY
+		WHERE ( WH_COMMODITY.COMMODITY01 = WH_COMMODITYSUB.COMMODITY01 ) and
+		( ( WH_CommoditySub.Commodity = :p_commodity ) AND
+		( WH_CommoditySub.Estado = 'A' ) )
+	</sql-query>
+
+	<sql-query name="whcommoditysub.DwMaWhCommodityLineaFamiliaSubSelect">
+		SELECT 
+			WH_CommoditySubFamilia.linea as "linea",
+			WH_CommodityLinea.DescripcionLocal as "lineadescripcion"
+        FROM 
+        	sgcoresys.WH_CommodityFamilia,
+	        sgcoresys.WH_CommodityLinea,
+	        sgcoresys.WH_CommoditySubFamilia
+        WHERE 
+        	( WH_CommodityLinea.GrupoLinea = WH_CommodityFamilia.GrupoLinea)  and
+	        ( WH_CommodityLinea.Linea = WH_CommodityFamilia.Linea ) and
+	        ( WH_CommoditySubFamilia.GrupoLinea = WH_CommodityFamilia.GrupoLinea ) and
+	        ( WH_CommoditySubFamilia.Linea = WH_CommodityFamilia.Linea ) and
+	        ( WH_CommoditySubFamilia.Familia = WH_CommodityFamilia.Familia ) and
+	        ( ( WH_CommodityLinea.Estado = 'A' ) AND
+	        ( WH_CommoditySubFamilia.Estado = 'A' ) ) AND
+	        WH_CommodityLinea.GrupoLinea = nvl(:p_grupolinea,WH_CommodityLinea.GrupoLinea)
+        group by 
+	       WH_CommoditySubFamilia.linea,
+	       WH_CommodityLinea.DescripcionLocal
+        order by 
+       		WH_CommoditySubFamilia.linea
+	</sql-query>
+	
+	
+	<sql-query name="whcommoditysub.DwMaWhCommodityLineaFamiliaSubSelect2">
+		SELECT 
+			WH_CommoditySubFamilia.linea as "linea",
+			WH_CommodityLinea.DescripcionLocal as "lineadescripcion",
+			WH_CommoditySubFamilia.Familia as "familia",
+		    WH_CommodityFamilia.DescripcionLocal as "familiadescripcion"
+        FROM 
+        	sgcoresys.WH_CommodityFamilia,
+	        sgcoresys.WH_CommodityLinea,
+	        sgcoresys.WH_CommoditySubFamilia
+        WHERE 
+        	( WH_CommodityLinea.GrupoLinea = WH_CommodityFamilia.GrupoLinea)  and
+	        ( WH_CommodityLinea.Linea = WH_CommodityFamilia.Linea ) and
+	        ( WH_CommoditySubFamilia.GrupoLinea = WH_CommodityFamilia.GrupoLinea ) and
+	        ( WH_CommoditySubFamilia.Linea = WH_CommodityFamilia.Linea ) and
+	        ( WH_CommoditySubFamilia.Familia = WH_CommodityFamilia.Familia ) and
+	        ( ( WH_CommodityLinea.Estado = 'A' ) AND
+	        ( WH_CommoditySubFamilia.Estado = 'A' ) ) AND
+	        WH_CommodityLinea.GrupoLinea = nvl(:p_grupolinea,WH_CommodityLinea.GrupoLinea) and
+            WH_CommoditySubFamilia.Linea = :p_linea 
+        group by 
+            WH_CommoditySubFamilia.linea,
+			WH_CommodityLinea.DescripcionLocal,
+			WH_CommoditySubFamilia.Familia,
+			WH_CommodityFamilia.DescripcionLocal
+		order by 
+			WH_CommoditySubFamilia.Familia
+	</sql-query>
+	
+	<sql-query name="whcommoditysub.DwMaWhCommodityLineaFamiliaSubSelect3">
+		SELECT 
+		    WH_CommoditySubFamilia.linea as "linea",
+			WH_CommodityLinea.DescripcionLocal as "lineadescripcion",
+			WH_CommoditySubFamilia.Familia as "familia",
+		    WH_CommodityFamilia.DescripcionLocal as "familiadescripcion",
+			WH_CommoditySubFamilia.SubFamilia as "subfamilia",
+			WH_CommoditySubFamilia.DescripcionLocal as "subfamiliadescripcion"
+        FROM 
+        	sgcoresys.WH_CommodityFamilia,
+	        sgcoresys.WH_CommodityLinea,
+	        sgcoresys.WH_CommoditySubFamilia
+        WHERE 
+        	( WH_CommodityLinea.GrupoLinea = WH_CommodityFamilia.GrupoLinea)  and
+	        ( WH_CommodityLinea.Linea = WH_CommodityFamilia.Linea ) and
+	        ( WH_CommoditySubFamilia.GrupoLinea = WH_CommodityFamilia.GrupoLinea ) and
+	        ( WH_CommoditySubFamilia.Linea = WH_CommodityFamilia.Linea ) and
+	        ( WH_CommoditySubFamilia.Familia = WH_CommodityFamilia.Familia ) and
+	        ( ( WH_CommodityLinea.Estado = 'A' ) AND
+	        ( WH_CommoditySubFamilia.Estado = 'A' ) ) AND
+	        WH_CommodityLinea.GrupoLinea = nvl(:p_grupolinea,WH_CommodityLinea.GrupoLinea) and
+            WH_CommoditySubFamilia.Linea = :p_linea and
+            WH_CommoditySubFamilia.Familia = :p_familia
+        group by 
+            WH_CommoditySubFamilia.linea,
+			WH_CommodityLinea.DescripcionLocal,
+			WH_CommoditySubFamilia.Familia,
+		    WH_CommodityFamilia.DescripcionLocal,
+			WH_CommoditySubFamilia.SubFamilia,
+			WH_CommoditySubFamilia.DescripcionLocal
+		order 
+			by WH_CommoditySubFamilia.SubFamilia
+	</sql-query>
+
+</hibernate-mapping>

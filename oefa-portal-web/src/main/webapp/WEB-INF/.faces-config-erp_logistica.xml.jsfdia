@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="wwhrequisitionbase::#erp#logistica#paginas#w_wh_requisition_base.xhtml"
+    NAME="output"
+    PATH="/erp/logistica/paginas/w_wh_requisition_base.xhtml"
+    TARGET="rules:#erp#logistica#paginas#w_wh_requisition_base.xhtml"
+    TITLE="wwhrequisitionbase" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:1" PATH="*" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:1" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="wwhrequisitionlist::#erp#logistica#paginas#w_wh_requisition_list.xhtml"
+    NAME="output"
+    PATH="/erp/logistica/paginas/w_wh_requisition_list.xhtml"
+    TARGET="rules:#erp#logistica#paginas#w_wh_requisition_list.xhtml"
+    TITLE="wwhrequisitionlist" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#erp#logistica#paginas#w_wh_requisition_base.xhtml"
+  PATH="/erp/logistica/paginas/w_wh_requisition_base.xhtml"
+  SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#erp#logistica#paginas#w_wh_requisition_list.xhtml"
+  PATH="/erp/logistica/paginas/w_wh_requisition_list.xhtml"
+  SHAPE="240,145,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:2" PATH="*" SHAPE="32,241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:2" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="w_bu_ma_demanda_recurrente_adicional_list::#erp#logistica#paginas#w_bu_ma_demanda_recurrente_adicional_list.xhtml"
+    NAME="output"
+    PATH="/erp/logistica/paginas/w_bu_ma_demanda_recurrente_adicional_list.xhtml"
+    TARGET="rules:#erp#logistica#paginas#w_bu_ma_demanda_recurrente_adicional_list.xhtml"
+    TITLE="w_bu_ma_demanda_recurrente_adicional_list" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#erp#logistica#paginas#w_bu_ma_demanda_recurrente_adicional_list.xhtml"
+  PATH="/erp/logistica/paginas/w_bu_ma_demanda_recurrente_adicional_list.xhtml"
+  SHAPE="240,257,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

@@ -1,0 +1,521 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+	xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
+	xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans 
+    	http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://jax-ws.dev.java.net/spring/core 
+        http://jax-ws.dev.java.net/spring/core.xsd
+		http://jax-ws.dev.java.net/spring/servlet 
+		http://jax-ws.dev.java.net/spring/servlet.xsd">
+
+
+	<bean id="BeanFactoryErpHr" class="net.royal.erp.rrhh.factory.FactoryErpHRImpl"
+		scope="singleton">
+		<property name="hrprocDatawindow">
+			<ref bean="BeanServicioHrprocDatawindow" />
+		</property>
+		<property name="hrrepDatawindow">
+			<ref bean="BeanServicioHrrepDatawindow" />
+		</property>
+
+		<property name="prmastDatawindow">
+			<ref bean="BeanServicioPrmastDatawindow" />
+		</property>
+
+
+		<property name="commodityFuncion">
+			<ref bean="BeanServicioCommodityFuncion" />
+		</property>
+
+		<property name="hrrepusFuncion">
+			<ref bean="BeanServicioHrrepusFuncion" />
+		</property>
+
+		<property name="hrcommonDatawindow">
+			<ref bean="BeanServicioHRHrcommonDatawindow" />
+		</property>
+
+		<property name="hrmastDatawindow">
+			<ref bean="BeanServicioHRHrmastDatawindow" />
+		</property>
+
+		<property name="hrothersDatawindow">
+			<ref bean="BeanServicioHrothersDatawindow" />
+		</property>
+
+		<property name="hrOracleDatawindows">
+			<ref bean="BeanServicioHrOracleDatawindows" />
+		</property>
+
+	</bean>
+
+	<bean id="BeanFactoryErpRrhh" class="net.royal.erp.rrhh.factory.FactoryErpRrhhImpl"
+		scope="singleton">
+		<property name="hr">
+			<ref bean="BeanFactoryErpHr" />
+		</property>
+		<property name="hrEncuestasujetoServicio">
+			<ref bean="BeanServicioHrEncuestasujeto" />
+		</property>
+
+		<property name="hrEncuestapreguntavaloresServicio">
+			<ref bean="BeanServicioHrEncuestapreguntavalores" />
+		</property>
+
+		<property name="hrEncuestapreguntaServicio">
+			<ref bean="BeanServicioHrEncuestapregunta" />
+		</property>
+
+		<property name="hrEncuestaplantilladetalleServicio">
+			<ref bean="BeanServicioHrEncuestaplantilladetalle" />
+		</property>
+
+		<property name="hrEncuestaplantillaServicio">
+			<ref bean="BeanServicioHrEncuestaplantilla" />
+		</property>
+
+		<property name="hrEncuestadetalleServicio">
+			<ref bean="BeanServicioHrEncuestadetalle" />
+		</property>
+
+		<property name="hrEncuestaServicio">
+			<ref bean="BeanServicioHrEncuesta" />
+		</property>
+
+		<property name="hrActividadparticipanteServicio">
+			<ref bean="BeanServicioHrActividadparticipante" />
+		</property>
+
+		<property name="hrActividadServicio">
+			<ref bean="BeanServicioHrActividad" />
+		</property>
+
+		<property name="hrTipoevaluadorServicio">
+			<ref bean="BeanServicioHrTipoevaluador" />
+		</property>
+
+		<property name="hrTipocontratoServicio">
+			<ref bean="BeanServicioHrTipocontrato" />
+		</property>
+
+		<property name="hrSueldosServicio">
+			<ref bean="BeanServicioHrSueldos" />
+		</property>
+
+		<property name="hrSeguridadServicio">
+			<ref bean="BeanServicioHrSeguridad" />
+		</property>
+
+		<property name="hrPuestoempresaServicio">
+			<ref bean="BeanServicioHrPuestoempresa" />
+		</property>
+
+		<property name="hrPlantillafactorevaluacionServicio">
+			<ref bean="BeanServicioHrPlantillafactorevaluacion" />
+		</property>
+
+		<property name="hrMeritosfaltasServicio">
+			<ref bean="BeanServicioHrMeritosfaltas" />
+		</property>
+
+		<property name="hrFactorvalorServicio">
+			<ref bean="BeanServicioHrFactorvalor" />
+		</property>
+
+		<property name="hrFactoresevaluacionplantillaServicio">
+			<ref bean="BeanServicioHrFactoresevaluacionplantilla" />
+		</property>
+
+		<property name="hrFactoresevaluacionServicio">
+			<ref bean="BeanServicioHrFactoresevaluacion" />
+		</property>
+
+		<property name="hrEvaluaciontipoevaluadorServicio">
+			<ref bean="BeanServicioHrEvaluaciontipoevaluador" />
+		</property>
+
+		<property name="hrEvaluacionperiodovalorServicio">
+			<ref bean="BeanServicioHrEvaluacionperiodovalor" />
+		</property>
+
+		<property name="hrEvaluacionperiodocriterioServicio">
+			<ref bean="BeanServicioHrEvaluacionperiodocriterio" />
+		</property>
+
+		<property name="hrEvaluacionperiodoServicio">
+			<ref bean="BeanServicioHrEvaluacionperiodo" />
+		</property>
+
+		<property name="hrEvaluacionesrangoServicio">
+			<ref bean="BeanServicioHrEvaluacionesrango" />
+		</property>
+
+		<property name="hrEvaluacionempleadoServicio">
+			<ref bean="BeanServicioHrEvaluacionempleado" />
+		</property>
+
+		<property name="hrEvaluacionareaServicio">
+			<ref bean="BeanServicioHrEvaluacionarea" />
+		</property>
+
+		<property name="hrEvaluacionServicio">
+			<ref bean="BeanServicioHrEvaluacion" />
+		</property>
+
+		<property name="hrEvaluacionRequerimientoServicio">
+			<ref bean="BeanServicioHrEvaluacionRequerimiento" />
+		</property>
+
+		<property name="hrEmpleadorevisionServicio">
+			<ref bean="BeanServicioHrEmpleadorevision" />
+		</property>
+
+		<property name="hrEmpleadonecesidadcapacitaServicio">
+			<ref bean="BeanServicioHrEmpleadonecesidadcapacita" />
+		</property>
+
+		<property name="hrEmpleadometasServicio">
+			<ref bean="BeanServicioHrEmpleadometas" />
+		</property>
+
+		<property name="hrEmpleadofuncionServicio">
+			<ref bean="BeanServicioHrEmpleadofuncion" />
+		</property>
+
+		<property name="hrEmpleadodesempenoServicio">
+			<ref bean="BeanServicioHrEmpleadodesempeno" />
+		</property>
+
+		<property name="hrEmpleadoconsiderapotencialServicio">
+			<ref bean="BeanServicioHrEmpleadoconsiderapotencial" />
+		</property>
+
+		<property name="hrEmpleadocomentariosServicio">
+			<ref bean="BeanServicioHrEmpleadocomentarios" />
+		</property>
+
+		<property name="hrEmpleadoServicio">
+			<ref bean="BeanServicioHrEmpleado" />
+		</property>
+
+		<property name="hrDetalleevaluacionmejoraServicio">
+			<ref bean="BeanServicioHrDetalleevaluacionmejora" />
+		</property>
+
+		<property name="hrDetalleevaluacionServicio">
+			<ref bean="BeanServicioHrDetalleevaluacion" />
+		</property>
+
+		<property name="hrDepartamentoServicio">
+			<ref bean="BeanServicioHrDepartamento" />
+		</property>
+
+		<property name="hrContratosServicio">
+			<ref bean="BeanServicioHrContratos" />
+		</property>
+
+		<property name="hrCargosmastServicio">
+			<ref bean="BeanServicioHrCargosmast" />
+		</property>
+
+		<property name="hrBsMetaServicio">
+			<ref bean="BeanServicioHrBsMeta" />
+		</property>
+
+		<property name="hrBsLineadeaccionServicio">
+			<ref bean="BeanServicioHrBsLineadeaccion" />
+		</property>
+
+		<property name="hrAfpServicio">
+			<ref bean="BeanServicioHrAfp" />
+		</property>
+
+		<property name="hrActividadRutasServicio">
+			<ref bean="BeanServicioHrActividadRutas" />
+		</property>
+
+		<property name="hrActividadChecklistServicio">
+			<ref bean="BeanServicioHrActividadChecklist" />
+		</property>
+
+		<property name="hrActividadprogramacionServicio">
+			<ref bean="BeanServicioHrActividadprogramacion" />
+		</property>
+
+		<property name="hrActividadbeneficiarioServicio">
+			<ref bean="BeanServicioHrActividadbeneficiario" />
+		</property>
+
+		<property name="hrPlantillaevapotencialServicio">
+			<ref bean="BeanServicioHrPlantillaevapotencial" />
+		</property>
+
+		<property name="hrEvaluacioncandidatohistServicio">
+			<ref bean="BeanServicioHrEvaluacioncandidatohist" />
+		</property>
+
+		<property name="hrCapacitacionServicio">
+			<ref bean="BeanServicioHrCapacitacion" />
+		</property>
+
+		<property name="hrCursodescripcionServicio">
+			<ref bean="BeanServicioHrCursodescripcion" />
+		</property>
+
+		<property name="hrFactorvalorcapacServicio">
+			<ref bean="BeanServicioHrFactorvalorcapac" />
+		</property>
+
+		<property name="hrEvaluacioncapacvalorServicio">
+			<ref bean="BeanServicioHrEvaluacioncapacvalor" />
+		</property>
+
+		<property name="hrEmpleadoasistenciasServicio">
+			<ref bean="BeanServicioHrEmpleadoasistencias" />
+		</property>
+
+		<property name="hrCursocomprobantesServicio">
+			<ref bean="BeanServicioHrCursocomprobantes" />
+		</property>
+
+		<property name="hrCapacitacionevalServicio">
+			<ref bean="BeanServicioHrCapacitacioneval" />
+		</property>
+
+		<property name="hrProfesionServicio">
+			<ref bean="BeanServicioHrProfesion" />
+		</property>
+
+		<property name="hrGradosalariomastServicio">
+			<ref bean="BeanServicioHrGradosalariomast" />
+		</property>
+
+		<property name="hrRequerimientoreemplazoServicio">
+			<ref bean="BeanServicioHrRequerimientoreemplazo" />
+		</property>
+
+		<property name="hrRequerimientopuestoobjServicio">
+			<ref bean="BeanServicioHrRequerimientopuestoobj" />
+		</property>
+
+		<property name="hrRequerimientopuestoidiServicio">
+			<ref bean="BeanServicioHrRequerimientopuestoidi" />
+		</property>
+
+		<property name="hrRequerimientopuestofunServicio">
+			<ref bean="BeanServicioHrRequerimientopuestofun" />
+		</property>
+
+		<property name="hrRequerimientopuestoforServicio">
+			<ref bean="BeanServicioHrRequerimientopuestofor" />
+		</property>
+
+		<property name="hrRequerimientopuestoexpServicio">
+			<ref bean="BeanServicioHrRequerimientopuestoexp" />
+		</property>
+
+		<property name="hrRequerimientopuestoestServicio">
+			<ref bean="BeanServicioHrRequerimientopuestoest" />
+		</property>
+
+		<property name="hrRequerimientopuestocompServicio">
+			<ref bean="BeanServicioHrRequerimientopuestocomp" />
+		</property>
+
+		<property name="hrRequerimientopuestoServicio">
+			<ref bean="BeanServicioHrRequerimientopuesto" />
+		</property>
+
+		<property name="hrRequerimientoobservacionServicio">
+			<ref bean="BeanServicioHrRequerimientoobservacion" />
+		</property>
+
+		<property name="hrRequerimientomotivoAprobServicio">
+			<ref bean="BeanServicioHrRequerimientomotivoAprob" />
+		</property>
+
+		<property name="hrRequerimientofunpracServicio">
+			<ref bean="BeanServicioHrRequerimientofunprac" />
+		</property>
+
+		<property name="hrRequerimientofuncasdetServicio">
+			<ref bean="BeanServicioHrRequerimientofuncasdet" />
+		</property>
+
+		<property name="hrRequerimientofuncasServicio">
+			<ref bean="BeanServicioHrRequerimientofuncas" />
+		</property>
+
+		<property name="hrRequerimientodocaprobacionServicio">
+			<ref bean="BeanServicioHrRequerimientodocaprobacion" />
+		</property>
+
+		<property name="hrRequerimientoServicio">
+			<ref bean="BeanServicioHrRequerimiento" />
+		</property>
+
+		<property name="hrCentroestudiosServicio">
+			<ref bean="BeanServicioHrCentroestudios" />
+		</property>
+
+		<property name="hrEmpleadocapacitacionServicio">
+			<ref bean="BeanServicioHrEmpleadocapacitacion" />
+		</property>
+
+		<property name="hrDncSolicitanteServicio">
+			<ref bean="BeanServicioHrDncSolicitante" />
+		</property>
+
+		<property name="hrTipotrabajadorServicio">
+			<ref bean="BeanServicioHrTipotrabajador" />
+		</property>
+
+		<property name="hrPuestosubordinadoServicio">
+			<ref bean="BeanServicioHrPuestosubordinado" />
+		</property>
+
+		
+
+		<property name="hrPuestosimilarServicio">
+			<ref bean="BeanServicioHrPuestosimilar" />
+		</property>
+
+		<property name="hrPuestoriesgotrabajoServicio">
+			<ref bean="BeanServicioHrPuestoriesgotrabajo" />
+		</property>
+
+		<property name="hrPuestoresponsabilidadesServicio">
+			<ref bean="BeanServicioHrPuestoresponsabilidades" />
+		</property>
+
+		<property name="hrPuestoreportaServicio">
+			<ref bean="BeanServicioHrPuestoreporta" />
+		</property>
+
+		<property name="hrPuestorelacionesServicio">
+			<ref bean="BeanServicioHrPuestorelaciones" />
+		</property>
+
+		<property name="hrPuestopersonaacargoServicio">
+			<ref bean="BeanServicioHrPuestopersonaacargo" />
+		</property>
+
+		<property name="hrPuestoinformaticaServicio">
+			<ref bean="BeanServicioHrPuestoinformatica" />
+		</property>
+
+		<property name="hrPuestoidiomasServicio">
+			<ref bean="BeanServicioHrPuestoidiomas" />
+		</property>
+
+		<property name="hrPuestofuncionesServicio">
+			<ref bean="BeanServicioHrPuestofunciones" />
+		</property>
+
+		<property name="hrPuestoformacionServicio">
+			<ref bean="BeanServicioHrPuestoformacion" />
+		</property>
+
+		<property name="hrPuestoexperienciaServicio">
+			<ref bean="BeanServicioHrPuestoexperiencia" />
+		</property>
+
+		<property name="hrPuestoevaluacionServicio">
+			<ref bean="BeanServicioHrPuestoevaluacion" />
+		</property>
+
+		<property name="hrPuestoempresaDocServicio">
+			<ref bean="BeanServicioHrPuestoempresaDoc" />
+		</property>
+
+		<property name="hrPuestocursosServicio">
+			<ref bean="BeanServicioHrPuestocursos" />
+		</property>
+
+		<property name="hrPuestoconfianzaServicio">
+			<ref bean="BeanServicioHrPuestoconfianza" />
+		</property>
+
+		<property name="hrPuestocondicionestrabajoServicio">
+			<ref bean="BeanServicioHrPuestocondicionestrabajo" />
+		</property>
+
+		<property name="hrPuestoclaveServicio">
+			<ref bean="BeanServicioHrPuestoclave" />
+		</property>
+		<property name="hrMetaspuestoServicio">
+			<ref bean="BeanServicioHrMetaspuesto" />
+		</property>
+
+		<property name="hrIdiomasmastServicio">
+			<ref bean="BeanServicioHrIdiomasmast" />
+		</property>
+		<property name="hrPosicionempresaServicio">
+			<ref bean="BeanServicioHrPosicionempresa" />
+		</property>
+		<property name="hrOrganigramaServicio">
+			<ref bean="BeanServicioHrOrganigrama" />
+		</property>
+		<property name="hrGradoinstruccionServicio">
+			<ref bean="BeanServicioHrGradoinstruccion" />
+		</property>
+		<property name="hrCorreoflujoServicio">
+			<ref bean="BeanServicioHrCorreoflujo" />
+		</property>
+		<property name="hrCtrlentregasplantillaServicio">
+			<ref bean="BeanServicioHrCtrlentregasplantilla" />
+		</property>
+		<property name="hrClasificadorcargoServicio">
+			<ref bean="BeanServicioHrClasificadorcargo" />
+		</property>
+		<property name="hrMotivoceseServicio">
+			<ref bean="BeanServicioHrMotivocese" />
+		</property>
+		<property name="hrEmpleadocursosServicio">
+			<ref bean="BeanServicioHrEmpleadocursos" />
+		</property>
+		<property name="hrEmpleadocursosdocumentoServicio">
+			<ref bean="BeanServicioHrEmpleadocursosdocumento" />
+		</property>
+		<property name="hrPosRequerServicio">
+			<ref bean="BeanServicioHrPosRequer" />
+		</property>
+		<property name="hrEvaluacionetapaServicio">
+			<ref bean="BeanServicioHrEvaluacionetapa" />
+		</property>
+		<property name="hrEvaluacionpostulanteServicio">
+			<ref bean="BeanServicioHrEvaluacionpostulante" />
+		</property>
+		<property name="hrPostulantesServicio">
+			<ref bean="BeanServicioHrPostulantes" />
+		</property>
+		<property name="hrPostulanteexperienciaServicio">
+			<ref bean="BeanServicioHrPostulanteexperiencia" />
+		</property>
+		<property name="hrEmpleadocapaDocumentoServicio">
+			<ref bean="BeanServicioHrEmpleadocapaDocumento" />
+		</property>
+		<property name="hrEvalrequerimientoServicio">
+			<ref bean="BeanServicioHrEvalrequerimiento" />
+		</property>
+		
+		<property name="hrRequerimientoAdjuntoServicio">
+			<ref bean="BeanServicioHrRequerimientoAdjuntoServicio" />
+		</property>
+	</bean>
+
+
+</beans>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado_5ta_mensual_subreport3" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="e569b2c6-c6b8-4329-ba48-2ae11aa9e976">
+	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="EMPLEADO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{EMPLEADO}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EJERCICIO_FISCAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{EJERCICIO_FISCAL}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COMPANIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{COMPANIA}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIPO_PLANILLA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{TIPO_PLANILLA}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT  CASE     WHEN substr(TRIM(Z.PERIODO),1,2)='01' THEN  'ENERO'
+                 WHEN substr(TRIM(Z.PERIODO),1,2)='02' THEN  'FEBRERO'
+                 WHEN substr(TRIM(Z.PERIODO),1,2)='03' THEN  'MARZO'
+                 WHEN substr(TRIM(Z.PERIODO),1,2)='04' THEN  'ABRIL'
+                 WHEN substr(TRIM(Z.PERIODO),1,2)='05' THEN  'MAYO'
+                 WHEN substr(TRIM(Z.PERIODO),1,2)='06' THEN  'JUNIO'
+                 WHEN substr(TRIM(Z.PERIODO),1,2)='07' THEN  'JULIO'
+                 WHEN substr(TRIM(Z.PERIODO),1,2)='08' THEN  'AGOSTO'
+                 WHEN substr(TRIM(Z.PERIODO),1,2)='09' THEN  'SETIEMBRE'
+                 WHEN substr(TRIM(Z.PERIODO),1,2)='10' THEN  'OCTUBRE'
+                 WHEN substr(TRIM(Z.PERIODO),1,2)='11' THEN  'NOVIEMBRE'
+                 WHEN substr(TRIM(Z.PERIODO),1,2)='12' THEN  'DICIEMBRE' END AS MES
+        ,NVL(acumuladosueldo,0)-NVL(montogratificacion,0)-NVL(montoescolaridad,0) AS BASICO
+        ,nvl(acumuladosueldoexterno,0)+nvl(montogratificacion,0)+(nvl(montoliquidacion,0)*0) as otros_ingresos
+        ,nvl(montoescolaridad,0) as escolaridad
+FROM (
+SELECT (Select sum(nvl(x.Monto,0))
+            from SGCORESYS.Pr_PlanillaEmpleadoConcepto x
+            where x.empleado=$P{EMPLEADO}
+                    and x.CompaniaSocio=$P{COMPANIA}
+                    and x.tipoplanilla=$P{TIPO_PLANILLA}
+                    and  substr(x.periodo,1,6)=trim(y.EJERCICIOFISCAL)
+                    and x.concepto in (Select pc.concepto from SGCORESYS.Pr_ConjuntoDetalle pc where Conjunto='CONC5TAGRT')
+                    and  X.TIPOPROCESO IN (select P2.TIPOPROCESO from SGCORESYS.pr_tipoproceso P2 where NVL(P2.flagadelanto,'N')='N')) as montogratificacion
+        ,(Select sum(x.Monto)
+            from SGCORESYS.Pr_PlanillaEmpleadoConcepto x
+            where x.empleado=$P{EMPLEADO} and x.CompaniaSocio=$P{COMPANIA}
+                    and x.tipoplanilla=$P{TIPO_PLANILLA}
+                    and  substr(x.periodo,1,6)=trim(y.EJERCICIOFISCAL)
+                    and x.concepto in (Select pc.concepto from SGCORESYS.Pr_ConjuntoDetalle pc where Conjunto='CONC5TALIQ')
+                    and  X.TIPOPROCESO IN (select P2.TIPOPROCESO from SGCORESYS.pr_tipoproceso P2 where NVL(P2.flagadelanto,'N')='N')) as montoliquidacion
+         ,(Select sum(x.Monto)
+            from SGCORESYS.Pr_PlanillaEmpleadoConcepto x
+            where x.empleado=$P{EMPLEADO}
+            and x.CompaniaSocio=$P{COMPANIA}
+            and x.tipoplanilla=$P{TIPO_PLANILLA}
+            and  substr(x.periodo,1,6)=trim(y.EJERCICIOFISCAL)
+            and x.concepto in (Select pc.concepto from SGCORESYS.Pr_ConjuntoDetalle pc where Conjunto='CONC5TAESC')
+            and  X.TIPOPROCESO IN (select P2.TIPOPROCESO from SGCORESYS.pr_tipoproceso P2 where NVL(P2.flagadelanto,'N')='N')) as montoescolaridad
+         ,y.ACUMULADOSUELDOEXTERNO as acumuladosueldoexterno
+         ,y.ACUMULADORETENCIONEXTERNO as acumuladoretencionexterno
+         ,y.SueldoActual  as sueldoactual
+         ,y.EstimadoImpuestoMensual as estimadoimpuestomensual
+         ,nvl(y.AcumuladoRetencion,0) + nvl(y.AcumuladoRetencionInterno,0) + nvl(y.AcumuladoRetencionExterno,0) + CASE WHEN nvl(y.EstimadoImpuestoMensual,0) <0 THEN 0 ELSE nvl(y.EstimadoImpuestoMensual,0) END   as AcumuladoRetencion
+        -- ,nvl(y.AcumuladoSueldo,0) + nvl(y.AcumuladoSueldoInteno,0) + nvl(y.AcumuladoSueldoExterno,0) + nvl(y.SueldoActual,0) as AcumuladoSueldo
+         ,nvl(y.SueldoActual,0) as AcumuladoSueldo
+         ,nvl(y.EstimadoimpuestoAnual,0) as ImpuestoAnualCalculado
+         ,abs(nvl(y.CreditoFiscalUtilizado,0)) as RetencionExceso
+         ,y.EJERCICIOFISCAL AS PERIODO
+FROM SGCORESYS.PR_ImpuestoRenta y
+WHERE y.EMPLEADO = $P{EMPLEADO} AND substr(y.EJERCICIOFISCAL,1,4)=substr($P{EJERCICIO_FISCAL},1,4)) z
+UNION ALL
+Select   Max(y.descripcion)
+		, 0
+        , sum(nvl(x.Monto,0))
+		,0
+from SGCORESYS.Pr_PlanillaEmpleadoConcepto x
+inner join SGCORESYS.pr_concepto y on x.concepto = y.concepto
+            where x.empleado=$P{EMPLEADO} and x.CompaniaSocio=$P{COMPANIA}
+                    and x.tipoplanilla=$P{TIPO_PLANILLA}
+                    and  substr(x.periodo,1,4)=substr(trim($P{EJERCICIO_FISCAL}),1,4)
+                    and x.concepto in (Select pc.concepto from SGCORESYS.Pr_ConjuntoDetalle pc where Conjunto='CONC5TALIQ')
+                    and  X.TIPOPROCESO IN (select P2.TIPOPROCESO from SGCORESYS.pr_tipoproceso P2 where NVL(P2.flagadelanto,'N')='N')
+group by substr(x.periodo,1,4),x.concepto]]>
+	</queryString>
+	<field name="MES" class="java.lang.String"/>
+	<field name="BASICO" class="java.math.BigDecimal"/>
+	<field name="OTROS_INGRESOS" class="java.math.BigDecimal"/>
+	<field name="ESCOLARIDAD" class="java.math.BigDecimal"/>
+	<variable name="TOTAL_REMUNERACION" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{BASICO}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_OTROS_INGRESOS" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{OTROS_INGRESOS}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_ESCOLARIDAD" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{ESCOLARIDAD}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_INGRESOS" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{TOTAL_REMUNERACION} + $V{TOTAL_OTROS_INGRESOS} + $V{TOTAL_ESCOLARIDAD}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnFooter>
+		<band height="16">
+			<textField pattern="#,##0.00">
+				<reportElement x="309" y="0" width="77" height="16" forecolor="#333333" uuid="cc38ee3b-fcab-4d5a-8cad-91dec1210c14"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_INGRESOS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="232" y="0" width="77" height="16" forecolor="#333333" uuid="8aa2f608-060f-4aa4-a915-c0ef603397ef"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_ESCOLARIDAD}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="155" y="0" width="77" height="16" forecolor="#333333" uuid="c9af84ed-8b33-4de1-96ea-16f8fb88cc78"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_OTROS_INGRESOS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="76" y="0" width="79" height="16" forecolor="#333333" uuid="6b939382-f907-48f6-9135-bb57cb178f55"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_REMUNERACION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="76" height="16" forecolor="#000000" uuid="19a0d68f-7e77-452e-84c9-b32f66772e22"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#333333"/>
+					<topPen lineWidth="0.25" lineColor="#333333"/>
+					<leftPen lineWidth="0.25" lineColor="#333333"/>
+					<bottomPen lineWidth="0.25" lineColor="#333333"/>
+					<rightPen lineWidth="0.25" lineColor="#333333"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL : ]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>

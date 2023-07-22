@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:idleMonitor onactive="PF('sessionTimeOutDialog').show();"
+		timeout="#{cComunSession.timeoutSesion}" />
+	
+	<p:dialog header="Fin de la sesión"
+		widgetVar="sessionTimeOutDialog" modal="true" fixedCenter="true"
+		closable="false" width="300" height="70" visible="false">
+		<h:outputText value="Expiró la sesión, ir a la " />
+		<a href="#{request.contextPath}/comun/paginas/login.xhtml" style="font-weight: bold;">pantalla de inicio.</a>
+	</p:dialog>
+
+</ui:composition>
+
+		<!-- <h:link value="ir a pantalla de ingreso" onclick="window.location='#{request.contextPath}/comun/paginas/login.jsf';" /> -->
+

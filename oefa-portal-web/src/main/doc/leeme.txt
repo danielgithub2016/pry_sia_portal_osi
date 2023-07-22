@@ -1,0 +1,23 @@
+Varibales de Entorno
+----------------------------------------------
+- Path
+  C:\app\jdk1.7\jre\bin;C:\app\apache-maven\bin;
+- JAVA_HOME 
+  C:\app\jdk1.7
+- M2_HOME
+  C:\app\apache-maven
+- MAVEN_HOME
+  C:\app\apache-maven
+- JBOSS_HOME  
+  C:\JBoss.org\tools\jboss-as
+  
+Parametros Utilizados
+---------------------
+
+
+JAVA OPTIONS
+------------
+-Xms512m -Xmx512m -XX:MaxPermSize=128m 
+
+DATOS GENERALES 
+---------------

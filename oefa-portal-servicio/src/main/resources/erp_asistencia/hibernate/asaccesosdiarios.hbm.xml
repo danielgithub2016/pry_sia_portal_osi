@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.erp.asistencia.dominio.AsAccesosdiarios"
+		table="SGCORESYS.AS_ACCESOSDIARIOS">
+		<composite-id name="pk"
+			class="net.royal.erp.asistencia.dominio.AsAccesosdiariosPk">
+			<key-property name="carnetid" type="string">
+				<column name="CARNETID" length="15" />
+			</key-property>
+			<key-property name="fecha" type="timestamp">
+				<column name="FECHA" length="7" />
+			</key-property>
+			<key-property name="secuencia" type="integer">
+				<column name="SECUENCIA" length="22" />
+			</key-property>
+			<key-property name="empleado" type="integer">
+				<column name="EMPLEADO" length="22" />
+			</key-property>
+		</composite-id>
+		<property name="codigotransaccion" type="string">
+			<column name="CODIGOTRANSACCION" length="2" />
+		</property>
+		<property name="clasificacion" type="string">
+			<column name="CLASIFICACION" length="3" />
+		</property>
+		<property name="tipovalidacion" type="string">
+			<column name="TIPOVALIDACION" length="1" />
+		</property>
+		<property name="carnetsupervisor" type="string">
+			<column name="CARNETSUPERVISOR" length="15" />
+		</property>
+		<property name="empleadosupervisor" type="integer">
+			<column name="EMPLEADOSUPERVISOR" length="22" />
+		</property>
+		<property name="hora" type="timestamp">
+			<column name="HORA" length="7" />
+		</property>
+		<property name="observacion" type="string">
+			<column name="OBSERVACION" length="40" />
+		</property>
+		<property name="lugarrecoleccion" type="string">
+			<column name="LUGARRECOLECCION" length="10" />
+		</property>
+		<property name="unidadreplicacion" type="string">
+			<column name="UNIDADREPLICACION" length="4" />
+		</property>
+		<property name="ano" type="integer">
+			<column name="ANO" length="22" />
+		</property>
+		<property name="mes" type="integer">
+			<column name="MES" length="22" />
+		</property>
+		<property name="dia" type="integer">
+			<column name="DIA" length="22" />
+		</property>
+		<property name="lectora" type="string">
+			<column name="LECTORA" length="20" />
+		</property>
+		<property name="empleadoA" type="integer">
+			<column name="EMPLEADO_A" length="22" />
+		</property>
+		<property name="fechaA" type="timestamp">
+			<column name="FECHA_A" length="7" />
+		</property>
+		<property name="conceptoaccesoA" type="string">
+			<column name="CONCEPTOACCESO_A" length="5" />
+		</property>
+		<property name="desdeA" type="timestamp">
+			<column name="DESDE_A" length="7" />
+		</property>
+		<property name="terminal" type="integer">
+			<column name="TERMINAL" length="22" />
+		</property>
+		<property name="ultimoUsuario" type="string">
+			<column name="ULTIMOUSUARIO" length="20" />
+		</property>
+		<property name="ultimaFechaModif" type="timestamp">
+			<column name="ULTIMAFECHAMODIF" />
+		</property>
+	</class>
+</hibernate-mapping>

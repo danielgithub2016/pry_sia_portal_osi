@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.presupuesto.dominio.BuDemandaCfpPpr" table="SGCORESYS.BU_DEMANDA_CFP_PPR">
+        <composite-id name="pk" class="net.royal.erp.presupuesto.dominio.BuDemandaCfpPprPk">
+            <key-property name="companiasocio" type="string">
+                <column name="COMPANIASOCIO" length="8" />
+            </key-property>
+            <key-property name="ano" type="string">
+                <column name="ANO" length="4" />
+            </key-property>
+            <key-property name="version" type="integer">
+                <column name="VERSION" length="22" />
+            </key-property>
+            <key-property name="demanda" type="string">
+                <column name="DEMANDA" length="20" />
+            </key-property>
+            <key-property name="referenciafiscal" type="string">
+                <column name="REFERENCIAFISCAL" length="50" />
+            </key-property>
+            <key-property name="tipoDemanda" type="string">
+                <column name="TIPO_DEMANDA" length="20" />
+            </key-property>
+        </composite-id>
+        <property name="metodo" type="string">
+            <column name="METODO" length="20" />
+        </property>
+        <property name="nivel" type="string">
+            <column name="NIVEL" length="2" />
+        </property>
+    </class>
+</hibernate-mapping>

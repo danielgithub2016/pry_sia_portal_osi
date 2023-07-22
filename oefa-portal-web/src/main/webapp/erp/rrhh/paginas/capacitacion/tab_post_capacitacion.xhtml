@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<p:panel style="height:500px;">
+		<h:panelGrid columns="2" width="80%">
+
+			<h:panelGrid columns="2" styleClass="columnatablaIzquierda">
+				<p:commandButton value="Anterior" />
+				<p:commandButton value="Siguiente" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" styleClass="columnatablaDerecha">
+				<p:commandButton value="Calificar" />
+				<p:commandButton value="Actualizar" />
+			</h:panelGrid>
+
+		</h:panelGrid>
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			scrollWidth="900" scrollable="true" scrollHeight="400"
+			paginator="true" paginatorPosition="bottom" tableStyle="width:880px;"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+			<p:column width="10" headerText="#">
+			</p:column>
+			<p:column width="300" headerText="Factor">
+			</p:column>
+			<p:column width="100" headerText="Calificación">
+			</p:column>
+			<p:column width="100" headerText="Respuesta">
+			</p:column>
+			<p:column width="200" headerText="Comentario">
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+</ui:composition>

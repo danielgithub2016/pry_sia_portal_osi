@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+	<class name="net.royal.seguridad.dominio.Companyowner" table="SGCORESYS.COMPANYOWNER">
+		<composite-id name="pk"
+			class="net.royal.seguridad.dominio.CompanyownerPk">
+			<key-property name="companyowner" type="string">
+				<column name="COMPANYOWNER" length="8" />
+			</key-property>
+		</composite-id>
+		<property name="company" type="string">
+			<column name="COMPANY" length="6" />
+		</property>
+		<property name="description" type="string">
+			<column name="DESCRIPTION" length="40" />
+		</property>
+		<property name="englishdescription" type="string">
+			<column name="ENGLISHDESCRIPTION" length="40" />
+		</property>
+		<property name="percentage" type="big_decimal">
+			<column name="PERCENTAGE" length="22" />
+		</property>
+		<property name="owner" type="string">
+			<column name="OWNER" length="2" />
+		</property>
+		<property name="changerate" type="big_decimal">
+			<column name="CHANGERATE" length="22" />
+		</property>
+		<property name="lastuser" type="string">
+			<column name="LASTUSER" length="20" />
+		</property>
+		<property name="lastdate" type="timestamp">
+			<column name="LASTDATE" length="7" />
+		</property>
+	</class>
+</hibernate-mapping>

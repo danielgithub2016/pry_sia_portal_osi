@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : symast01. -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<!-- symast01.ds_ma_report_sign -->
+	<sql-query name="symast01.DsMaReportSign">
+	</sql-query>
+	
+	<sql-query name="symast.obtenerListaFiltrada">
+		  SELECT  AC_CASHFLOWMAJOR.TIPOREGISTROFLAG as "tiporegistroflag",
+          AC_CASHFLOWGROUP.CASHFLOWMAJOR as "cashflowmajor",  
+          AC_CASHFLOWMAJOR.LOCALNAME as "localname", 
+          AC_CASHFLOWGROUP.CASHFLOWGROUP as "cashflowfgroup",
+          AC_CASHFLOWGROUP.LOCALNAME as "localname_cg", 
+          AC_CASHFLOWMST.CASHFLOWCODE as "cashflowcode",
+          AC_CASHFLOWMST.LOCALNAME as "localname_cm",
+          AC_CASHFLOWMAJOR.TIPOOPERACIONFLAG as "tipooperacionflag"
+          FROM SGCORESYS.AC_CASHFLOWGROUP ,  SGCORESYS.AC_CASHFLOWMST ,  SGCORESYS.AC_CASHFLOWMAJOR     
+          WHERE ( AC_CASHFLOWGROUP.CASHFLOWGROUP = AC_CASHFLOWMST.CASHFLOWGROUP ) and          
+          ( AC_CASHFLOWMAJOR.CASHFLOWMAJOR = AC_CASHFLOWGROUP.CASHFLOWMAJOR ) and          
+          ( ( AC_CashFlowMst.Status = 'A' ) ) 
+	</sql-query>
+	
+	<sql-query name="symast.obtenerLista">
+		  SELECT  AC_CASHFLOWMAJOR.TIPOREGISTROFLAG as "tiporegistroflag",
+          AC_CASHFLOWGROUP.CASHFLOWMAJOR as "cashflowmajor",  
+          AC_CASHFLOWMAJOR.LOCALNAME as "localname", 
+          AC_CASHFLOWGROUP.CASHFLOWGROUP as "cashflowfgroup",
+          AC_CASHFLOWGROUP.LOCALNAME as "localname_cg", 
+          AC_CASHFLOWMST.CASHFLOWCODE as "cashflowcode",
+          AC_CASHFLOWMST.LOCALNAME as "localname_cm",
+          AC_CASHFLOWMAJOR.TIPOOPERACIONFLAG as "tipooperacionflag"
+          FROM SGCORESYS.AC_CASHFLOWGROUP ,  SGCORESYS.AC_CASHFLOWMST ,  SGCORESYS.AC_CASHFLOWMAJOR     
+          WHERE ( AC_CASHFLOWGROUP.CASHFLOWGROUP = AC_CASHFLOWMST.CASHFLOWGROUP ) and          
+          ( AC_CASHFLOWMAJOR.CASHFLOWMAJOR = AC_CASHFLOWGROUP.CASHFLOWMAJOR ) and          
+          ( ( AC_CashFlowMst.Status = 'A' ) ) ORDER BY AC_CASHFLOWGROUP.CASHFLOWMAJOR          ASC,
+          AC_CASHFLOWGROUP.CASHFLOWGROUP ASC, 
+          AC_CASHFLOWMST.CASHFLOWCODE ASC  
+	</sql-query>
+
+	<sql-query name="symast.DwMaElementSelectCombo">
+		SELECT 
+		EM.element as "element",   
+		EM.localname as "localname",   
+		EM.englishname as "englishname",   
+		EM.elementgroup as "elementgroup",   
+		EG.localname as "localname_1"  
+		FROM 
+		SGCORESYS.ELEMENTMST EM
+		    INNER JOIN SGCORESYS.ELEMENTGROUPMST  EG
+		        ON (EM.elementgroup = EG.elementgroup)
+		WHERE 
+		( EM.status = :status )    
+		ORDER BY 
+		EM.element ASC
+	</sql-query>
+	
+	<sql-query name="symast01.wfsqlreadtipopersona">
+		SELECT PersonaMast.TipoPersona as
+		"tipopersona"
+		FROM sgcoresys.PersonaMast
+		WHERE PersonaMast.Persona =
+		:par_persona
+	</sql-query>
+
+	<!--  FALTA MAPEAR
+	symast01.ds_sy_security_responsable -->
+	<sql-query name="symast01.DsSySecurityResponsable">
+		SELECT
+		MA_ResponsibleUser.responsible AS "responsible"
+		FROM MA_ResponsibleUser
+		WHERE
+		( MA_ResponsibleUser.Vendor =:p_vendor ) AND
+		( MA_ResponsibleUser.UserType = :p_usertype )
+		GROUP BY MA_ResponsibleUser.responsible
+	</sql-query>
+
+	<!-- symast01.dw_ac_afe_select_list 
+	<sql-query name="symast01.DwAcAfeSelectList">
+		SELECT
+		afemst.localname as "localname",
+		afemst.status as "status",
+		afemst.afe as "afe",
+		afemst.afetype as
+		"afetype",
+		afemst.InternalNumber as "internalnumber",
+		rownum as
+		"rowkey"
+		FROM
+		SGCORESYS.afemst
+	</sql-query>
+
+	<sql-query name="symast01.DwAcAfeSelectListConteo">
+		SELECT
+		count(1)
+		FROM
+		SGCORESYS.afemst
+
+	</sql-query>-->
+
+	<!-- esta funcion se utiliza en la controladora CwCpReportegastosEdit -->
+	<sql-query name="symast01.obtenerAPAgenteRetencionIGVProveedor">
+	<![CDATA[
+	     SELECT count(*)
+					 FROM sgcoresys.AP_AgenteRetencionIGVProveedor,   
+							sgcoresys.AP_AgenteRetencionIGV  
+					WHERE ( AP_AgenteRetencionIGV.NumeroRegistro = AP_AgenteRetencionIGVProveedor.NumeroRegistro ) and  
+							( AP_AgenteRetencionIGVProveedor.ProveedorRUC = :w_documentofiscal ) AND  
+							( AP_AgenteRetencionIGV.PeriodoDesde <= :w_periodo ) AND  
+							( AP_AgenteRetencionIGV.PeriodoHasta >= :w_periodo ) AND  
+							( AP_AgenteRetencionIGV.Estado = 'AP' ) AND
+							( AP_AgenteRetencionIGVProveedor.Estado = 'A' )
+							
+		]]>
+	</sql-query>
+	
+	
+
+	<!-- symast01.dw_ac_afe_select_list_by_company -->
+	<sql-query name="symast01.DwAcAfeSelectListByCompany">
+		SELECT
+		afemst.localname as "localname",
+		afemst.status as "status",
+		afemst.afe as "afe",
+		afemst.afetype as
+		"afetype"
+		FROM
+		SGCORESYS.afemst INNER JOIN
+		SGCORESYS.AC_AfeCompany ON
+		(afemst.afe = AC_AfeCompany.afe)
+	</sql-query>
+
+	<!-- symast01.dw_ac_afe_select_list_by_company CONTAR -->
+	<sql-query name="symast01.DwAcAfeSelectListByCompanyConteo">
+		SELECT
+		count(1)
+		FROM
+		SGCORESYS.afemst INNER JOIN
+		SGCORESYS.AC_AfeCompany ON (afemst.afe = AC_AfeCompany.afe)
+	</sql-query>
+
+	<!-- symast01.dw_ac_afe_select_security_list 
+	<sql-query name="symast01.DwAcAfeSelectSecurityList">
+		SELECT
+		afemst.localname as "localname",
+		afemst.status as "status",
+		afemst.afe as "afe",
+		afemst.afetype as
+		"afetype"
+		FROM
+		SGCORESYS.afemst INNER JOIN
+		SGCORESYS.SY_SeguridadAutorizaciones ON ( afemst.afe =
+		SY_SeguridadAutorizaciones.Concepto)
+	</sql-query>
+
+	<sql-query name="symast01.DwAcAfeSelectSecurityListConteo">
+		SELECT
+		count(1)
+		FROM
+		SGCORESYS.afemst INNER JOIN
+		SGCORESYS.SY_SeguridadAutorizaciones ON ( afemst.afe =
+		SY_SeguridadAutorizaciones.Concepto)
+	</sql-query>-->
+
+	<!-- FALTA MAPEAR
+	symast01.dw_ac_cashflow_select_position -->
+	<sql-query name="symast01.DwAcCashflowSelectPosition">
+		SELECT 
+		CJ.TIPOREGISTROFLAG AS "tiporegistroflag",
+		CG.CASHFLOWMAJOR AS "cashflowmajor",
+		CJ.LOCALNAME AS "localname",
+		CG.CASHFLOWGROUP AS "cashflowgroup",
+		CG.LOCALNAME AS "localname_cg",
+		CM.CASHFLOWCODE AS "cashflowcode",
+		CM.LOCALNAME AS "localname_cm",
+		CJ.TIPOOPERACIONFLAG AS "tipooperacionflag",
+		ROWNUM AS "total"
+		FROM SGCORESYS.AC_CASHFLOWGROUP CG, SGCORESYS.AC_CASHFLOWMST CM, SGCORESYS.AC_CASHFLOWMAJOR CJ
+		WHERE (CG.CASHFLOWGROUP =CM.CASHFLOWGROUP )
+		AND (CJ.CASHFLOWMAJOR = CG.CASHFLOWMAJOR)
+		AND ((CM.STATUS='A')) 
+	</sql-query>
+	
+
+	<!-- BORRAR  FALTA MAPEAR
+	symast01.dw_ac_cashflow_select_list -->
+	<sql-query name="symast01.DwAcCashflowSelectList">
+		SELECT
+			AC_CashFlowMajor.TipoRegistroFlag as
+			"tiporegistroflag",
+			AC_CashFlowGroup.CashFlowMajor as "cashflowmajor",
+			AC_CashFlowMajor.LocalName as "localname",
+			AC_CashFlowGroup.CashFlowGroup as "cashflowgroup",
+			AC_CashFlowGroup.LocalName as "localname_1",
+			AC_CashFlowMst.CashFlowCode as "cashflowcode",
+			AC_CashFlowMst.LocalName as "localname_2",
+			AC_CashFlowMajor.TipoOperacionFlag as "tipooperacionflag",
+			row_number() over (partition by cashflowcode order by cashflowcode )
+			as "id"
+			FROM
+			sgcoresys.AC_CashFlowGroup,
+			sgcoresys.AC_CashFlowMst,
+			sgcoresys.AC_CashFlowMajor
+	</sql-query>
+
+	<!--BORRAR  FALTA MAPEAR
+	 symast01.dw_ac_cashflow_select_list contar -->
+	<sql-query name="symast01.DwAcCashflowSelectContar">
+		SELECT
+		count(*)
+		FROM
+		sgcoresys.AC_CashFlowGroup,
+		sgcoresys.AC_CashFlowMst,
+		sgcoresys.AC_CashFlowMajor
+	</sql-query>
+	
+	
+	<!--BORRAR
+	 symast01.dw_ma_ac_cashflowmajor_select 
+	<sql-query name="symast01.DwMaAcCashflowmajorSelect">
+	        SELECT 
+		        AC_CashFlowMajor.CashFlowMajor as "cashflowmajor",   
+		        AC_CashFlowMajor.LocalName  as "localname"
+		        FROM 
+		        sgcoresys.AC_CashFlowMajor  
+		        WHERE 
+		        AC_CashFlowMajor.Status = 'A'   
+		        ORDER BY 
+		        AC_CashFlowMajor.CashFlowMajor ASC  
+	</sql-query>-->
+	
+	<!-- symast01.dw_ma_ac_costcenter_select -->
+	<sql-query name="symast01.DwMaAcCostcenterSelect">
+		SELECT
+		AC_COSTCENTERMST.COSTCENTER as
+		"costcenter",
+		AC_COSTCENTERMST.LOCALNAME as "localname",
+		AC_COSTCENTERMST.ENGLISHNAME as "englishname"
+		FROM
+		SGCORESYS.AC_COSTCENTERMST
+		WHERE
+		AC_CostCenterMst.Status = 'A'
+		ORDER BY
+		AC_COSTCENTERMST.COSTCENTER ASC
+	</sql-query>
+
+
+	<!-- BORRAR
+	symast01.dw_ma_ac_costcenter_select_master 
+	<sql-query name="symast01.DwMaAcCostcenterSelectMaster">
+		SELECT
+		AC_CostCenterMst.CostCenter as
+		"costcenter",
+		AC_CostCenterMst.LocalName as "localname",
+		AC_CostCenterMst.ExpenseFinanceFlag as "expensefinanceflag",
+		AC_CostCenterMst.ExpenseAdministrativeFlag as
+		"expenseadministrativeflag",
+		AC_CostCenterMst.ExpenseSalesFlag as
+		"expensesalesflag",
+		AC_CostCenterMst.ExpenseProductionFlag as
+		"expenseproductionflag",
+		rownum as "rowkey"
+		FROM
+		SGCORESYS.SY_SeguridadAutorizaciones
+		INNER JOIN
+		SGCORESYS.AC_CostCenterMst
+		ON
+		(SGCORESYS.SY_SeguridadAutorizaciones.Concepto =
+		SGCORESYS.AC_CostCenterMst.CostCenter)
+	</sql-query>
+
+	<sql-query name="symast01.DwMaAcCostcenterSelectMasterContar">
+		SELECT
+		count(1)
+		FROM
+		SGCORESYS.SY_SeguridadAutorizaciones
+		INNER JOIN
+		SGCORESYS.AC_CostCenterMst
+		ON
+		(SGCORESYS.SY_SeguridadAutorizaciones.Concepto =
+		SGCORESYS.AC_CostCenterMst.CostCenter)
+
+	</sql-query>
+
+	<sql-query name="symast01.DwMaAcCostcenterSelectSupervisor">
+
+		SELECT
+		AC_CostCenterMst.CostCenter as
+		"costcenter",
+		AC_CostCenterMst.LocalName as "localname",
+		AC_CostCenterMst.ExpenseFinanceFlag as "expensefinanceflag",
+		AC_CostCenterMst.ExpenseAdministrativeFlag as
+		"expenseadministrativeflag",
+		AC_CostCenterMst.ExpenseSalesFlag as
+		"expensesalesflag",
+		AC_CostCenterMst.ExpenseProductionFlag as
+		"expenseproductionflag",
+		rownum as "rowkey"
+		FROM
+		SGCORESYS.AC_CostCenterMst
+
+	</sql-query>
+
+	<sql-query name="symast01.DwMaAcCostcenterSelectSupervisorContar">
+
+		SELECT
+		count(1)
+		FROM
+		SGCORESYS.AC_CostCenterMst
+	</sql-query>
+
+	<sql-query name="symast01.DwMaAcCostcenterSelectXpersona">
+		SELECT
+		AC_CostCenterMst.CostCenter as
+		"costcenter",
+		AC_CostCenterMst.LocalName as "localname",
+		MA_PersonaCentroCostoAutorizac.PreparacionFlag as "preparacionflag",
+		MA_PersonaCentroCostoAutorizac.RevisionFlag as "revisionflag",
+		MA_PersonaCentroCostoAutorizac.AprobacionFlag as "aprobacionflag",
+		rownum as "rowkey"
+		FROM
+		SGCORESYS.AC_CostCenterMst
+		INNER JOIN
+		SGCORESYS.MA_PersonaCentroCostoAutorizac
+		ON
+		(AC_CostCenterMst.CostCenter =
+		MA_PersonaCentroCostoAutorizac.CentroCostos)
+
+	</sql-query>
+
+	<sql-query name="symast01.DwMaAcCostcenterSelectXpersonaContar">
+		SELECT
+		count(1)
+		FROM
+		SGCORESYS.AC_CostCenterMst
+		INNER JOIN SGCORESYS.MA_PersonaCentroCostoAutorizac
+		ON
+		(AC_CostCenterMst.CostCenter =
+		MA_PersonaCentroCostoAutorizac.CentroCostos)
+
+	</sql-query>-->
+	
+	<!-- symast01.dw_ma_ac_referenciafiscal_edit_detail 
+	<sql-query name="symast01.DwMaAcReferenciafiscalEditDetail">
+		  SELECT AC_REFERENCIAFISCALDISTRIB.ANO as "anio",   
+		         AC_REFERENCIAFISCALDISTRIB.TIPOREFERENCIAFISCAL as "tiporeferenciafiscal",   
+		         AC_REFERENCIAFISCALDISTRIB.NIVEL as "nivel",   
+		         AC_REFERENCIAFISCALDISTRIB.REFERENCIAFISCAL as "referenciafiscal",   
+		         AC_REFERENCIAFISCALDISTRIB.METAPRESUPUESTAL as "metapresupuestal",   
+		         AC_REFERENCIAFISCALDISTRIB.PORCENTAJE as "porcentaje" 
+		    FROM sgcoresys.AC_REFERENCIAFISCALDISTRIB  
+		   WHERE ( AC_ReferenciaFiscalDistrib.Ano = :anio ) AND  
+		         ( AC_ReferenciaFiscalDistrib.TipoReferenciaFiscal = :tiporeferenciafiscal ) AND  
+		         ( AC_ReferenciaFiscalDistrib.Nivel = :nivel ) AND  
+		         ( AC_ReferenciaFiscalDistrib.ReferenciaFiscal = :referenciafiscal ) 
+	
+	</sql-query>-->
+
+	<!-- symast01.dw_ma_ac_referenciafiscal_select_data -->
+	<sql-query name="symast01.DwMaAcReferenciafiscalSelectData">
+		<![CDATA[
+			  SELECT AC_REFERENCIAFISCAL.NIVEL as "nivel",   
+		         AC_REFERENCIAFISCAL.REFERENCIAFISCAL as "referenciafiscal",   
+		         AC_REFERENCIAFISCAL.DESCRIPCIONLOCAL as "descripcionlocal",
+		         AC_REFERENCIAFISCAL.REFERENCIAFISCAL || ' ' || AC_REFERENCIAFISCAL.DESCRIPCIONLOCAL as "descripcioncompleta",   
+		         AC_REFERENCIAFISCAL.REFERENCIAFISCALRELACIONADA as "referenciafiscalrelacionada"
+		    FROM SGCORESYS.AC_REFERENCIAFISCAL
+			   WHERE ( AC_ReferenciaFiscal.CompaniaSocio = :companiasocio ) AND  
+		         ( AC_ReferenciaFiscal.Version = :version ) AND  
+		         ( AC_ReferenciaFiscal.Ano = :anio ) AND  
+		         ( AC_ReferenciaFiscal.TipoReferenciaFiscal = :tiporeferenciafiscal ) AND  
+		         ( AC_ReferenciaFiscal.Estado = 'A' ) AND  
+		         ( AC_ReferenciaFiscal.Nivel <> '99' ) 
+		         order by AC_REFERENCIAFISCAL.REFERENCIAFISCAL
+		]]>
+	</sql-query>
+
+	<!-- BORRAR
+	symast01.dw_ma_ac_referenciafiscal_select_meta_x_ref01
+	<sql-query name="symast01.DwMaAcReferenciafiscalSelectMetaXRef01">
+		  SELECT BU_META.METAAUX as "metaaux",   
+		         BU_META.DESCRIPCION as "descripcion",   
+		         BU_COMPONENTEMETA.FINALIDAD as "finalidad"  
+		    FROM sgcoresys.BU_COMPONENTEMETA,   
+		         sgcoresys.BU_META
+		   WHERE ( BU_COMPONENTEMETA.META = BU_META.META ) and  
+		         ( BU_COMPONENTEMETA.ANO = BU_META.ANO ) and  
+		         ( BU_COMPONENTEMETA.COMPANIASOCIO = BU_META.COMPANIASOCIO ) and  
+		         ( ( BU_ComponenteMeta.CompaniaSocio = :companiasocio ) AND  
+		         ( BU_ComponenteMeta.Version = :version ) AND  
+		         ( BU_ComponenteMeta.Ano = :anio ) AND  
+		         ( BU_ComponenteMeta.Componente = :componente ) ) 
+	</sql-query> -->
+
+	<!-- symast01.dw_ma_ac_referenciafiscal_select_nivel -->
+	<sql-query name="symast01.DwMaAcReferenciafiscalSelectNivel">	
+		  SELECT AC_REFERENCIAFISCAL.NIVEL as "nivel",   
+	         AC_REFERENCIAFISCAL.REFERENCIAFISCAL as "referenciafiscal",   
+	         AC_REFERENCIAFISCAL.DESCRIPCIONLOCAL as "descripcionlocal"
+	    FROM SGCORESYS.AC_REFERENCIAFISCAL
+		   WHERE ( AC_ReferenciaFiscal.CompaniaSocio = :companiasocio ) AND  
+         ( AC_ReferenciaFiscal.Ano = :anio ) AND  
+         ( AC_ReferenciaFiscal.TipoReferenciaFiscal = :tiporeferenciafiscal ) AND  
+         ( AC_ReferenciaFiscal.Version = :version ) 
+
+	</sql-query>
+
+	<!--BORRAR
+	 symast01.dw_ma_ac_sucursal_select 
+	<sql-query name="symast01.DwMaAcSucursalSelect">
+		SELECT AC_Sucursal.DescripcionLocal as "descripcionlocal",
+		AC_Sucursal.Sucursal as "sucursal",
+		AC_Sucursal.SucursalGrupo as "sucursalgrupo"
+		FROM SGCORESYS.AC_Sucursal
+		WHERE AC_Sucursal.Estado = 'A'
+		AND AC_Sucursal.Sucursal=NVL(:par_sucursal,AC_Sucursal.Sucursal)
+	</sql-query>-->
+
+	<!-- symast01.dw_ma_companyowner_select -->
+	<sql-query name="symast01.DwMaCompanyownerSelect">
+
+		SELECT DISTINCT
+		companyowner.companyowner as
+		"companyowner",
+		companyowner.description as "description",
+		CompaniaMast.TipoCompania as "tipocompania",
+		CompaniaMast.DescripcionCorta as "descripcioncorta",
+		CompaniaMast.DescripcionLarga as "descripcionlarga",
+		CompaniaMast.DocumentoFiscal as "documentofiscal",
+		CompaniaMast.Telefono1 as "telefono1",
+		CompaniaMast.Fax1 as "fax1",
+		CompaniaMast.DireccionComun as "direccioncomun",
+		companyowner.englishdescription as "englishdescription",
+		CompaniaMast.LogoFile as "logofile"
+		FROM
+		SGCORESYS.companyowner
+		INNER
+		JOIN SGCORESYS.CompaniaMast
+		ON (companyowner.company =
+		CompaniaMast.CompaniaCodigo)
+		WHERE
+		( CompaniaMast.Estado = 'A' )
+		AND
+		companyowner.companyowner=NVL(:par_company,companyowner.companyowner)
+		ORDER BY
+		companyowner.companyowner ASC
+	</sql-query>
+
+	<!--BORRAR 
+	symast01.dw_ma_companyowner_select_security
+	<sql-query name="symast01.DwMaCompanyownerSelectSecurity">
+		SELECT
+		companyowner.companyowner as
+		"companyowner",
+		companyowner.description as "description",
+		CompaniaMast.TipoCompania as "tipocompania",
+		CompaniaMast.DescripcionCorta as "descripcioncorta",
+		CompaniaMast.DescripcionLarga as "descripcionlarga",
+		CompaniaMast.DocumentoFiscal as "documentofiscal",
+		CompaniaMast.Telefono1 as "telefono1",
+		CompaniaMast.Fax1 as "fax1",
+		CompaniaMast.DireccionComun as "direccioncomun",
+		companyowner.englishdescription as "englishdescription",
+		CompaniaMast.LogoFile as "logofile"
+		FROM
+		SGCORESYS.companyowner
+		INNER
+		JOIN SGCORESYS.CompaniaMast
+		ON (companyowner.company =
+		CompaniaMast.CompaniaCodigo)
+		INNER JOIN
+		SGCORESYS.SY_SeguridadAutorizaciones
+		ON (companyowner.companyowner =
+		SY_SeguridadAutorizaciones.Concepto)
+		WHERE
+		( CompaniaMast.Estado = 'A' )
+		AND
+		( SY_SeguridadAutorizaciones.AplicacionCodigo = 'SY' ) AND
+		(
+		SY_SeguridadAutorizaciones.Grupo = 'COMPANIASOCIO' ) AND
+		(
+		SY_SeguridadAutorizaciones.Estado = 'A' ) AND
+		(
+		LOWER(SY_SeguridadAutorizaciones.Usuario) = LOWER(:par_usuario))
+		ORDER
+		BY
+		companyowner.companyowner ASC
+	</sql-query> -->
+
+	
+	<!-- symast01.dw_ma_department_select_whse -->
+	<sql-query name="symast01.DwMaDepartmentSelectWhse">
+		SELECT DISTINCT
+		departmentmst.description as
+		"description",
+		departmentmst.department as "department"
+		FROM
+		SGCORESYS.departmentmst
+		WHERE
+		( departmentmst.status = 'A' ) AND
+		(
+		departmentmst.WarehouseAvailableFlag = 'Y' )
+		ORDER BY
+		departmentmst.description ASC
+	</sql-query>
+
+	<!-- symast01.dw_ma_persona_retrieve -->
+	<sql-query name="symast01.DwMaPersonaRetrieve">
+		select personamast.persona as "persona",
+		personamast.origen as "origen",
+		personamast.apellidopaterno as
+		"apellidopaterno",
+		personamast.apellidomaterno as "apellidomaterno",
+		personamast.nombres as "nombres",
+		personamast.nombrecompleto as
+		"nombrecompleto",
+		personamast.busqueda as "busqueda",
+		personamast.tipodocumento as "tipodocumento",
+		personamast.documento as
+		"documento",
+		personamast.codigobarras as "codigobarras",
+		personamast.escliente as "escliente",
+		personamast.esproveedor as
+		"esproveedor",
+		personamast.esempleado as "esempleado",
+		personamast.esotro as "esotro",
+		personamast.tipopersona as
+		"tipopersona",
+		personamast.fechanacimiento as "fechanacimiento",
+		personamast.ciudadnacimiento as "ciudadnacimiento",
+		personamast.sexo as
+		"sexo",
+		personamast.nacionalidad as "nacionalidad",
+		personamast.estadocivil as "estadocivil",
+		personamast.nivelinstruccion
+		as "nivelinstruccion",
+		personamast.direccion as "direccion",
+		personamast.codigopostal as "codigopostal",
+		personamast.provincia as
+		"provincia",
+		personamast.departamento as "departamento",
+		personamast.telefono as "telefono",
+		personamast.fax as "fax",
+		personamast.documentofiscal as "documentofiscal",
+		personamast.documentoidentidad as "documentoidentidad",
+		personamast.carnetextranjeria as "carnetextranjeria",
+		personamast.documentomilitarfa as "documentomilitarfa",
+		personamast.tipobrevete as "tipobrevete",
+		personamast.brevete as
+		"brevete",
+		personamast.pasaporte as "pasaporte",
+		personamast.nombreemergencia as "nombreemergencia",
+		personamast.direccionemergencia as "direccionemergencia",
+		personamast.telefonoemergencia as "telefonoemergencia",
+		personamast.bancomonedalocal as "bancomonedalocal",
+		personamast.tipocuentalocal as "tipocuentalocal",
+		personamast.cuentamonedalocal as "cuentamonedalocal",
+		personamast.bancomonedaextranjera as "bancomonedaextranjera",
+		personamast.tipocuentaextranjera as "tipocuentaextranjera",
+		personamast.cuentamonedaextranjera as "cuentamonedaextranjera",
+		personamast.personaant as "personaant",
+		personamast.correoelectronico
+		as "correoelectronico",
+		personamast.enfermedadgraveflag as
+		"enfermedadgraveflag",
+		personamast.estado as "estado",
+		personamast.ultimousuario as "ultimousuario",
+		personamast.ultimafechamodif as "ultimafechamodif"
+		FROM
+		SGCORESYS.PERSONAMAST
+		WHERE PersonaMast.Persona = :par_persona
+
+	</sql-query>
+
+	<!-- symast01.proveedorDetraccion
+	<sql-query name="symast01.proveedorDetraccion">
+		SELECT ProveedorMast.DetraccionCodigoFlag as
+		"detraccioncodigoflag",
+		ProveedorMast.DetraccionCodigo as
+		"detraccioncodigo"
+		FROM SGCORESYS.ProveedorMast
+		WHERE
+		ProveedorMast.Proveedor = :par_proveedor
+	</sql-query> -->
+
+	<!-- symast01.dw_ma_persona_select_by_busqueda -->
+	<sql-query name="symast01.DwMaPersonaSelectByBusqueda">
+		SELECT
+		PersonaMast.Persona as "persona",
+		PersonaMast.Busqueda as "busqueda" ,
+		PersonaMast.EsCliente as
+		"escliente" ,
+		PersonaMast.EsProveedor as "esproveedor" ,
+		PersonaMast.EsEmpleado as "esempleado" ,
+		PersonaMast.EsOtro as
+		"esotro",
+		PersonaMast.Documento as "documento",
+		PersonaMast.PersonaAnt
+		as "personaant",
+		PersonaMast.DocumentoFiscal as "documentofiscal",
+		PersonaMast.DocumentoIdentidad as "documentoidentidad",
+		PersonaMast.Estado as "estado"
+		FROM sgcoresys.PersonaMast
+	</sql-query>
+
+	<!-- symast01.dw_ma_persona_select_by_busqueda Listar 
+	<sql-query name="symast01.DwMaPersonaSelectByBusquedaListar">
+		SELECT
+		PersonaMast.Persona as "persona",
+		PersonaMast.Busqueda as "busqueda" ,
+		PersonaMast.EsCliente as
+		"escliente" ,
+		PersonaMast.EsProveedor as "esproveedor" ,
+		PersonaMast.EsEmpleado as "esempleado" ,
+		PersonaMast.EsOtro as
+		"esotro",
+		PersonaMast.Documento as "documento",
+		PersonaMast.PersonaAnt
+		as "personaant",
+		PersonaMast.DocumentoFiscal as "documentofiscal",
+		PersonaMast.DocumentoIdentidad as "documentoidentidad",
+		PersonaMast.Estado as "estado"
+		FROM sgcoresys.PersonaMast
+	</sql-query>
+
+	<sql-query name="symast01.DwMaPersonaSelectByBusquedaContar">
+		SELECT
+		count(1)
+		FROM sgcoresys.PersonaMast
+	</sql-query>-->
+
+	<!-- symast01.dw_ma_tiposervicio_select_by_regimenfisc -->
+	<sql-query name="symast01.DwMaTiposervicioSelectByRegimenfisc">
+		select tiposervicio.tiposervicio as
+		"tiposervicio",
+		tiposervicio.descripcion as "descripcion",
+		tiposervicio.regimenfiscal as "regimenfiscal",
+		tiposervicio.clasificacionfiscal as "clasificacionfiscal"
+		from
+		SGCORESYS.tiposervicio
+		WHERE ( TipoServicio.RegimenFiscal =
+		:par_regimenFiscal ) AND
+		( TipoServicio.Estado = 'A' )
+	</sql-query>
+
+<!-- 
+	<sql-query name="symast01.sumaMontosAdelanto">
+	<![CDATA[
+		SELECT sum(MontoAdelantos)
+		FROM SGCORESYS.AP_CajaChica
+		WHERE ( AP_CajaChica.Beneficiario = :par_persona ) AND
+		( AP_CajaChica.CompaniaSocio = :par_companiasocio ) AND
+		( AP_CajaChica.Estado <> 'PA' ) AND
+		( AP_CajaChica.Estado <> 'AN' ) AND
+		( AP_CajaChica.MonedaPago = 'EX' ) AND
+		( NumeroAdelanto = :par_numeroadelanto)
+		]]>
+	</sql-query>
+ 
+
+	<sql-query name="symast01.apgastoadelantocertificacionnumero">
+	<![CDATA[
+	    select 	ap_gastoadelanto.certificacionnumero as "certificacionnumero",   
+					ap_gastoadelanto.compromisonumero as "compromisonumero",   
+					ap_gastoadelanto.ano as "ano",
+					ap_gastoadelanto.siaf_expediente as "siafExpediente"
+		 from SGCORESYS.ap_gastoadelanto  
+		 WHERE 	( AP_GastoAdelanto.UnidadReplicacion = :iv_unidadreplicacion ) AND  
+			( AP_GastoAdelanto.TipoAdelanto = :par_tipoadelanto ) AND  
+			( AP_GastoAdelanto.NumeroAdelanto = :par_numeroadelanto )
+						
+		]]>
+	</sql-query>-->
+	
+	
+
+	<!-- symast01.dw_ma_unidadnegocio_select_security 
+	<sql-query name="symast01.DwMaUnidadnegocioSelectSecurity">
+		select ma_unidadnegocio.unidadnegocio as
+		"unidadnegocio",
+		ma_unidadnegocio.zona as "zona",
+		ma_unidadnegocio.descripcionlocal as "descripcionlocal",
+		ma_unidadnegocio.companiasocio as "companiasocio",
+		ma_unidadnegocio.registropatronalplanilla as
+		"registropatronalplanilla"
+		from sgcoresys.ma_unidadnegocio,
+		sgcoresys.sy_seguridadautorizaciones
+		where (
+		ma_unidadnegocio.unidadnegocio =
+		sy_seguridadautorizaciones.concepto )
+		and
+		( ( ma_unidadnegocio.estado = 'A' ) and
+		(
+		sy_seguridadautorizaciones.aplicacioncodigo = 'SY' ) and
+		(
+		sy_seguridadautorizaciones.grupo = 'UNIDADNEGOCIO' ) and
+		(
+		LOWER(sy_seguridadautorizaciones.usuario) =LOWER(:par_usuario )) )
+		order by
+		ma_unidadnegocio.unidadnegocio asc
+	</sql-query>-->
+
+</hibernate-mapping>

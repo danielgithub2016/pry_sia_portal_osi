@@ -1,0 +1,97 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>
+			Consulta de Boletas
+		</h2>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="frmReporteSucursales">
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+			
+			<p:panelGrid columns="6" layout="grid"
+			columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3"
+			styleClass="ui-panelgrid-blank">
+			<p:outputLabel value="Empleado" />
+			<p:inputText disabled="true"
+				value="${usuario.idPersona} - ${usuario.nombreCompleto}" />
+
+			<p:outputLabel value="Área Operativa" />
+			<p:inputText value="${usuario.areaCodigo} - ${usuario.areaNombre}"
+				disabled="true" />
+
+			<p:outputLabel value="Centro de Costos" />
+			<p:inputText
+				value="${usuario.centroCostosCodigo} - ${usuario.centroCostosNombre}"
+				disabled="true" />
+
+			<p:outputLabel value="Puesto" />
+			<p:inputText value="${usuario.cargoCodigo} - ${usuario.cargoNombre}"
+				disabled="true" />
+
+			<p:outputLabel value="Sucursal" />
+			<p:inputText
+				value="${usuario.sucursalCodigo} - ${usuario.sucursalNombre}"
+				disabled="true" />
+
+			<p:outputLabel value="Unidad de Negocio" />
+			<p:inputText
+				value="${usuario.unidadNegocioCodigo} - ${usuario.unidadNegocioNombre}"
+				disabled="true" />
+
+		</p:panelGrid>
+		
+		<p:panelGrid columns="6" layout="grid"
+				columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3"
+					styleClass="ui-panelgrid-blank">	
+
+					<p:outputLabel value="Planilla" id="lblPlanilla" />
+					<p:selectOneMenu id="cboPlanilla"
+						value="#{cConsultaBoletasEmpleado.planilla}">
+						<f:selectItems 
+							value="#{cConsultaBoletasEmpleado.listaTipoPlanilla}"
+							var="tipoplanilla" itemValue="#{tipoplanilla.pk.tipoplanilla}"
+							itemLabel="#{tipoplanilla.pk.tipoplanilla} - #{tipoplanilla.descripcion}" />
+						<p:ajax listener="#{cConsultaBoletasEmpleado.listarPeriodoXPlanilla}" update="@form" />
+						<p:ajax listener="#{cConsultaBoletasEmpleado.listarProcesosXPlanillaPeriodo}" update="@form" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Periodo" id="lblPeriodo" />
+					<p:selectOneMenu id="cboPeriodo"
+						value="#{cConsultaBoletasEmpleado.periodo}">
+						<f:selectItems 
+							value="#{cConsultaBoletasEmpleado.listaPeriodos}"
+							var="periodo" itemValue="#{periodo.pk.periodo}"
+							itemLabel="#{periodo.pk.periodo}" />
+						<p:ajax listener="#{cConsultaBoletasEmpleado.listarProcesosXPlanillaPeriodo}" update="@form" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Proceso" id="lblProceso" />
+					<p:selectOneMenu id="cboProceso"
+						value="#{cConsultaBoletasEmpleado.proceso}">
+						<f:selectItems 
+							value="#{cConsultaBoletasEmpleado.listaProcesos}"
+							var="proceso" itemValue="#{proceso.TIPOPROCESO}"
+							itemLabel="#{proceso.TIPOPROCESO} - #{proceso.PROCESODESCRIPCION}" />
+					</p:selectOneMenu>
+					
+			</p:panelGrid> 
+			
+			<p:panelGrid columns="1" layout="grid" id="grdBotones" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-2">
+				<p:commandButton value="Imprimir" styleClass="botonTextoImagen"
+					icon="buscar" update="@form" onstart="PF('bUI').block();"
+					oncomplete="PF('bUI').unblock();"
+					action="#{cConsultaBoletasEmpleado.imprimir}" />
+			</p:panelGrid>
+			
+			<pe:documentViewer value="#{cConsultaBoletasEmpleado.reporte}" style="width:100%;height:450px;" />
+
+		</h:form>
+	</ui:define>
+</ui:composition>

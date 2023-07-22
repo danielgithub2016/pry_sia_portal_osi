@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : presupuesto.BuDemandaCfpPpr
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="budemandacfpppr.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+    </sql-query>
+    
+    <sql-query name="budemandacfpppr.DwBuDemandaObtenerMaximoDemandaVersion">
+    	SELECT 
+            MAX(BU_DEMANDA.DEMANDA) AS "demanda"
+        FROM 
+            SGCORESYS.BU_DEMANDA
+    	WHERE
+    		BU_DEMANDA.COMPANIASOCIO = :p_compania AND
+    		BU_DEMANDA.ANO = :p_anio AND
+    		BU_DEMANDA.COSTCENTER = :p_centrocosto
+    	ORDER BY 
+             1 DESC 
+    </sql-query>
+    
+     <!-- logistica.dw_bu_demada -->
+    <sql-query name="budemandacfpppr.DwBuDemada">
+    	INSERT INTO SGCORESYS.BU_DEMANDA
+    		(COMPANIASOCIO, ANO, VERSION, DEMANDA, COSTCENTER, GLOSA, ESTADO, 
+    		 FECHA_DEMANDA, FECHA_CREACION, TOTALDEMANDA, ULTIMOUSUARIO,
+    		 ULTIMAFECHAMODIF, SUCURSAL)
+    	VALUES
+    		(:p_compania, :p_ano, :p_version, :p_demanda, :p_centrocosto,
+    		 :p_glosa, :p_estado, :p_fechademanda, :p_fechacreacion,
+    		 :p_totaldemanda, :p_ultimousuario, :p_ultimafechamodif,
+    		 :p_sucursal)
+    </sql-query>
+    
+      <sql-query name="budemandacfpppr.DwBuDemandaInsumo">
+    	INSERT INTO SGCORESYS.BU_DEMANDA_INSUMO	
+    		(COMPANIASOCIO, ANO, VERSION, DEMANDA, REFERENCIAFISCAL, INSUMO,
+    		 CLASIFICADOR, META, TIPO_INSUMO, VALOR_REFERENCIAL, 
+    		 FECHA_INICIO_SERVICIO, FECHA_FIN_SERVICIO, CANTIDAD_DEMANDADA, 
+    		 IMPORTE_REFERENCIAL, TIPO_DEMANDA, COMENTARIO,
+    		 IMPORTE_REFERENCIAL_AP, ESTADO, UNIDADCOMPRA, ULTIMOUSUARIO, 
+    		 ULTIMAFECHAMODIF)
+    	VALUES
+    		(:p_compania, :p_ano, :p_version, :p_demanda, :p_referencia_fiscal,
+    		 :p_insumo, :p_clasificador, :p_meta, :p_tipoinsumo, :p_valor_referencial,
+    		 :p_fecha_inicio_servicio, :p_fecha_fin_servicio, 
+    		 :p_cantidad_demanda, :p_importe_referencial, :p_tipodemanda,
+    		 :p_comentario, :p_importe_referencial_ap, :p_estado,
+    		 :p_unidadcompra, :p_ultimousuario, :p_ultimafechamodif)
+    </sql-query>
+    
+     <sql-query name="budemandacfpppr.DwBuDemandaInsumoProyecion">
+    	INSERT INTO SGCORESYS.BU_DEMANDA_INSUMO_PROYECCION
+    		(COMPANIASOCIO, ANO, VERSION, DEMANDA, REFERENCIAFISCAL, INSUMO,
+    		 PERIODO, TIPO_DEMANDA, TIPO_INSUMO, 
+    		 CANTIDAD_IMPORTE, ULTIMOUSUARIO, 
+    		 ULTIMAFECHAMODIF)
+    	VALUES
+    		(:p_compania, :p_ano, :p_version, :p_demanda, :p_referencia_fiscal,
+    		 :p_insumo, :p_periodo, :p_tipodemanda, :p_tipoinsumo, 
+    		 :p_cantidad_importe, :p_ultimousuario, :p_ultimafechamodif)
+    </sql-query>
+    
+    <sql-query name="budemandacfpppr.dwbudemanda">
+    	  SELECT bu_demanda.demanda as "demanda",   
+			         bu_demanda.resultado_especifico as "resultadoespecifico", 
+			         bu_demanda.fecha_creacion as "fechacreacion",   
+			         bu_demanda.fecha_demanda as "fechademanda",   
+			         bu_demanda.estado as "estado",   
+			         bu_demanda.costcenter as "costcenter",   
+					bu_demanda.glosa as "glosa",
+			         bu_demanda.ultimousuario as "ultimousuario",
+					c.descripcion as "descripcion",
+					bu_demanda.sucursal as "sucursal",
+					SUCU.DESCRIPCIONLOCAL as "sucursaldescripcion",
+					bu_demanda.totaldemanda as "totaldemanda"		
+			    FROM SGCORESYS.bu_demanda  
+			inner join SGCORESYS.ac_costcenter_compania c 
+			    on (bu_demanda.companiasocio = c.companiasocio) and (bu_demanda.ano = c.ano) and (bu_demanda.version = c.version)
+			    and (bu_demanda.costcenter = c.costcenter)
+			     LEFT JOIN SGCORESYS.AC_SUCURSAL sucu ON SUCU.SUCURSAL =  bu_demanda.sucursal 
+			   WHERE ( bu_demanda.companiasocio = :par_companiasocio ) AND  
+			         ( bu_demanda.ano = :par_periodo ) AND  
+			         ( bu_demanda.version = :par_version ) AND  
+			         ( bu_demanda.costcenter = :par_area ) and
+			         ( bu_demanda.estado = NVL(:estado,bu_demanda.estado) ) AND
+			         ( bu_demanda.sucursal = NVL(:sucursal,bu_demanda.sucursal) ) AND
+			         ( (CASE WHEN :rechazados = 'N' THEN 1 ELSE 2 END) = (CASE WHEN bu_demanda.estado = 'RE' THEN 2 ELSE 1 END) ) AND
+					exists(select 1
+								from SGCORESYS.bu_demanda_cfp_ppr di
+								where di.companiasocio = bu_demanda.companiasocio
+								and di.ano = bu_demanda.ano
+								and di.version = bu_demanda.version
+								and di.demanda =bu_demanda.demanda
+								and di.tipo_demanda = :par_tipo_demanda)
+    </sql-query>
+    
+    <sql-query name="budemandacfpppr.dwbudemandaactividadlista">
+    <![CDATA[
+		    select 
+		        p.referenciafiscal as "referenciafiscal",
+		        p.tipo_demanda as "tipodemanda", 
+		        d.costcenter as "costcenter",
+		        (select descripcionlocal  
+		        from SGCORESYS.ac_referenciafiscal 
+		        where companiasocio=:par_companiasocio and ano=:par_periodo and version=:par_version and ac_referenciafiscal.referenciafiscal = p.referenciafiscal 
+		         and tiporeferenciafiscal = :as_tabla_efp AND nivel = :as_nivel_efp)  as "actividaddescripcion"
+		from SGCORESYS.bu_demanda_cfp_ppr p
+		        inner join SGCORESYS.bu_demanda d 
+		        on (p.companiasocio = d.companiasocio) and
+		        (p.ano = d.ano) and
+		        (p.version = d.version) and
+		        (p.demanda = d.demanda)
+		where (p.companiasocio = :par_companiasocio) 
+		        and (p.ano = :par_periodo) 
+		        and (p.version = :par_version) 
+		        and (p.demanda = :par_demanda) 
+		        and (p.nivel = :as_nivel_efp) 
+		        and (d.costcenter = :par_ccosto)
+    ]]>
+    </sql-query>
+    
+    <sql-query name="budemandacfpppr.dwbudemandainsumolista">
+    <![CDATA[
+		      SELECT bu_demanda_insumo.tipo_insumo as "tipoinsumo",   
+         bu_demanda_insumo.referenciafiscal as "referenciafiscal",   
+         bu_demanda_insumo.clasificador as "clasificador",   
+         bu_demanda_insumo.importe_referencial as "valorreferencial",   
+         bu_demanda_insumo.insumo as "insumo",
+         bu_demanda_insumo.cantidad_demandada as "cantidaddemandada",
+         bu_demanda_insumo.cantidad_aprobada as "cantidadaprobada",
+        b.descripcionlocal as "descripcion"
+    FROM SGCORESYS.bu_demanda_insumo,   
+         SGCORESYS.wh_commoditysub b,   
+         SGCORESYS.wh_commodity c,   
+         SGCORESYS.wh_commoditylinea d  
+   WHERE ( bu_demanda_insumo.insumo = b.commodity ) and  
+         ( b.commodity01 = c.commodity01 ) and  
+         ( b.commoditygrupolinea = d.grupolinea ) and  
+         ( b.commoditylinea = d.linea ) and  
+         ( bu_demanda_insumo.companiasocio = :par_companiasocio ) AND  
+         ( bu_demanda_insumo.ano = :par_periodo ) AND  
+         ( bu_demanda_insumo.version = :par_version ) AND  
+         ( bu_demanda_insumo.demanda = :par_demanda ) AND  
+         c.clasificacion = 'SER' AND  
+         tipo_insumo = 'CO' 
+            and not NVL(capacitacion,'SER') in ('PAS','CAJ','VIA','PLA')
+    ]]>
+    </sql-query>
+    
+    <sql-query name="budemandacfpppr.dwbudemandabieneslista">
+    <![CDATA[
+    SELECT  bu_demanda_insumo.tipo_insumo  as "tipoinsumo",    
+			 bu_demanda_insumo.referenciafiscal as "referenciafiscal" ,        
+			bu_demanda_insumo.clasificador as "clasificador",     
+			bu_demanda_insumo.importe_referencial as "valorreferencial",
+			bu_demanda_insumo.insumo as "insumo",
+			bu_demanda_insumo.cantidad_demandada as "cantidaddemandada",
+         	bu_demanda_insumo.cantidad_aprobada as "cantidadaprobada",
+			b.descripcionlocal  as "descripcion" 
+			FROM SGCORESYS.bu_demanda_insumo   
+			INNER JOIN SGCORESYS.WH_ITEMMAST b  ON bu_demanda_insumo.insumo = b.item AND nvl(activofijoflag,'N') = 'S'
+			where bu_demanda_insumo.companiasocio = :par_companiasocio and bu_demanda_insumo.ano= :par_periodo and bu_demanda_insumo.version = :par_version 
+			and bu_demanda_insumo.demanda = :par_demanda and tipo_insumo = 'SU'
+    ]]>
+    </sql-query>
+    
+    <sql-query name="budemandacfpppr.dwbudemandasuministroslista">
+    <![CDATA[
+    SELECT  bu_demanda_insumo.tipo_insumo as "tipoinsumo" ,    
+			bu_demanda_insumo.referenciafiscal  as "referenciafiscal",        
+			bu_demanda_insumo.clasificador as "clasificador",     
+			bu_demanda_insumo.importe_referencial as "valorreferencial",
+			bu_demanda_insumo.insumo as "insumo",
+			bu_demanda_insumo.cantidad_demandada as "cantidaddemandada",
+         	bu_demanda_insumo.cantidad_aprobada as "cantidadaprobada",
+			b.descripcionlocal  as "descripcion" 
+			FROM SGCORESYS.bu_demanda_insumo   
+			INNER JOIN SGCORESYS.WH_ITEMMAST b  ON bu_demanda_insumo.insumo = b.item AND nvl(activofijoflag,'N') = 'N'
+			where bu_demanda_insumo.companiasocio = :par_companiasocio and bu_demanda_insumo.ano= :par_periodo and bu_demanda_insumo.version = :par_version 
+			and bu_demanda_insumo.demanda = :par_demanda and tipo_insumo = 'SU'
+    ]]>
+    </sql-query>
+    
+</hibernate-mapping>

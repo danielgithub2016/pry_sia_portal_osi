@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Obligacionesxcuenta" table="SGCORESYS.OBLIGACIONESXCUENTA">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.ObligacionesxcuentaPk">
+            <key-property name="proveedor" type="big_decimal">
+                <column name="PROVEEDOR" length="22" />
+            </key-property>
+            <key-property name="tipodocumento" type="string">
+                <column name="TIPODOCUMENTO" length="2" />
+            </key-property>
+            <key-property name="numerodocumento" type="string">
+                <column name="NUMERODOCUMENTO" length="14" />
+            </key-property>
+            <key-property name="linea" type="integer">
+                <column name="LINEA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="monto" type="big_decimal">
+            <column name="MONTO"  length="2"/>
+        </property>
+        <property name="cuentacontable" type="string">
+            <column name="CUENTACONTABLE" length="20" />
+        </property>
+        <property name="proyecto" type="string">
+            <column name="PROYECTO" length="15" />
+        </property>
+        <property name="destinocompaniasocio" type="string">
+            <column name="DESTINOCOMPANIASOCIO" length="8" />
+        </property>
+        <property name="destinocuenta" type="string">
+            <column name="DESTINOCUENTA" length="20" />
+        </property>
+        <property name="centrocostodestino" type="string">
+            <column name="CENTROCOSTODESTINO" length="6" />
+        </property>
+        <property name="centrocosto" type="string">
+            <column name="CENTROCOSTO" length="10" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="50" />
+        </property>
+        <property name="persona" type="big_decimal">
+            <column name="PERSONA"  length="2"/>
+        </property>
+        <property name="flujodecaja" type="string">
+            <column name="FLUJODECAJA" length="4" />
+        </property>
+        <property name="partidapresupuestal" type="string">
+            <column name="PARTIDAPRESUPUESTAL" length="50" />
+        </property>
+        <property name="documentoreferencia" type="string">
+            <column name="DOCUMENTOREFERENCIA" length="14" />
+        </property>
+        <property name="activo" type="string">
+            <column name="ACTIVO" length="10" />
+        </property>
+        <property name="diferidoflag" type="string">
+            <column name="DIFERIDOFLAG" length="1" />
+        </property>
+        <property name="sucursal" type="string">
+            <column name="SUCURSAL" length="4" />
+        </property>
+        <property name="camporeferencia" type="string">
+            <column name="CAMPOREFERENCIA" length="12" />
+        </property>
+        <property name="noafectoigvflag" type="string">
+            <column name="NOAFECTOIGVFLAG" length="1" />
+        </property>
+        <property name="splitdistributionflag" type="string">
+            <column name="SPLITDISTRIBUTIONFLAG" length="1" />
+        </property>
+        <property name="numeroorden" type="string">
+            <column name="NUMEROORDEN" length="10" />
+        </property>
+        <property name="referenciafiscal01" type="string">
+            <column name="REFERENCIAFISCAL01" length="10" />
+        </property>
+        <property name="referenciafiscal02" type="string">
+            <column name="REFERENCIAFISCAL02" length="20" />
+        </property>
+        <property name="referenciafiscal03" type="string">
+            <column name="REFERENCIAFISCAL03" length="10" />
+        </property>
+        <property name="conceptogasto" type="string">
+            <column name="CONCEPTOGASTO" length="10" />
+        </property>
+        <property name="nivelservicio" type="string">
+            <column name="NIVELSERVICIO" length="6" />
+        </property>
+    </class>
+</hibernate-mapping>

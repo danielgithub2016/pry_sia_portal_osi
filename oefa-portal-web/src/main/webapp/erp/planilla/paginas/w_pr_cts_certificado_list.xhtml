@@ -1,0 +1,118 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+
+
+	<ui:define name="title">
+		<h2>
+			CTS
+			</h2>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="frmEvaluacionCandidatos">
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+			<p:panel>
+				<ui:include src="/erp/rrhh/paginas/usuarioActual01.xhtml" />
+				<p:panelGrid columns="2"
+					columnClasses="ui-grid-col-8,ui-grid-col-8"
+					 layout="grid" yleClass="ui-panelgrid-blank">
+
+					<p:panelGrid id="idPeriodos" columns="4" layout="grid"
+						columnClasses="ui-grid-col-2,ui-grid-col-6,ui-grid-col-2,ui-grid-col-6"
+						styleClass="ui-panelgrid-blank">
+
+						<h:outputLabel value="Periodo Inicio"
+							style="color:MidnightBlue;font-weight: bold; " />
+						<p:selectOneMenu id="cboPeriodoInicio"
+							value="#{cCertificadoCTSList.periodoInicio.numerocts}">
+							<f:selectItems
+								value="#{cCertificadoCTSList.lstPeriodoInicio}"
+								var="c" itemLabel="#{c.descripcion}" itemValue="#{c.numerocts}" />
+						</p:selectOneMenu>
+						
+						<h:outputLabel value="Periodo Fin"
+							style="color:MidnightBlue;font-weight: bold; " />
+						<p:selectOneMenu id="cboPeriodoFin" 
+							value="#{cCertificadoCTSList.periodoFin.numerocts}" >
+							<f:selectItems
+								value="#{cCertificadoCTSList.lstPeriodoFin}"
+								var="n" itemLabel="#{n.descripcion}" itemValue="#{n.numerocts}" />
+						</p:selectOneMenu>
+						
+<!-- 						<h:outputLabel value="Periodo Fin" -->
+<!-- 							style="color:MidnightBlue;font-weight: bold; " /> -->
+<!-- 						<p:selectOneMenu id="cboPeriodoFin" converter="CtvPeriodo" -->
+<!-- 							value="#{cCertificadoCTSList.periodoFin}" var="p" > -->
+<!-- 							<f:selectItems -->
+<!-- 								value="#{cCertificadoCTSList.lstPeriodoFin}" -->
+<!-- 								var="n" itemLabel="#{n.descripcion}" itemValue="#{n}" /> -->
+<!-- 							<p:column> -->
+<!-- 								<p:outputLabel value="#{p.numerocts}" /> -->
+<!-- 							</p:column> -->
+<!-- 							<p:column> -->
+<!-- 								<p:outputLabel value="#{p.regimen}" /> -->
+<!-- 							</p:column> -->
+<!-- 							<p:column> -->
+<!-- 								<p:outputLabel value="#{p.descripcion}" /> -->
+<!-- 							</p:column> -->
+<!-- 						</p:selectOneMenu> -->
+
+<!-- 						<h:outputLabel value="Moneda" -->
+<!-- 							style="color:MidnightBlue;font-weight: bold; " /> -->
+<!-- 						<p:selectOneMenu -->
+<!-- 							value="#{cCertificadoCTSList.dw_position.moneda}"> -->
+<!-- 							<f:selectItem itemLabel="Moneda Extranjera" itemValue="E" /> -->
+<!-- 							<f:selectItem itemLabel="Moneda Local" itemValue="L" /> -->
+<!-- 						</p:selectOneMenu> -->
+					</p:panelGrid>
+				
+					<p:panelGrid id="idDocumentos" columns="3" layout="grid"
+						columnClasses="ui-grid-col-4,ui-grid-col-2,ui-grid-col-5"
+						styleClass="ui-panelgrid-blank">
+
+						<p:selectOneRadio id="rbnCertificado" 
+						 onclick="document.getElementById('frmEvaluacionCandidatos:filtracts').click()"
+						 value="#{cCertificadoCTSList.dw_position.tipo}" layout="grid" columns="2">				
+							<f:selectItem itemLabel="Certificado" itemValue="C" />
+							<f:selectItem itemLabel="Constancia" itemValue="X" />
+							<p:ajax update=":frmEvaluacionCandidatos:idDocumentos"/>
+						</p:selectOneRadio>
+											
+						<h:outputLabel value="Documento" id="cboDocumento"
+								style="color:MidnightBlue;font-weight: bold; " />
+						<p:selectOneMenu 
+								disabled="#{cCertificadoCTSList.dw_position.all_tipo}"
+								value="#{cCertificadoCTSList.dw_position.documento}">
+								<f:selectItem itemLabel="01 Constancia de Deposito CTS" itemValue="01" />
+<!-- 								<f:selectItem itemLabel="02 Carta de Solicitud al Banco" itemValue="02" /> -->
+<!-- 								<f:selectItem itemLabel="03 Carta de Depósito de CTS" itemValue="03" /> -->
+<!-- 								<f:selectItem itemLabel="04 Carta de Transferencia" itemValue="04" /> -->
+						</p:selectOneMenu>	
+						<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+							onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+							style="width:100px; margin-top: 5px; margin-bottom: 5px;"
+							update="@form" icon="buscar"
+							action="#{cCertificadoCTSList.wf_imprimir}">
+						</p:commandButton>							
+					</p:panelGrid>
+					
+					<h:commandLink id="filtracts" 
+						action="#{cCertificadoCTSList.filtrar}" immediate="true"  />	
+			 </p:panelGrid>
+			</p:panel>
+			
+			<p:spacer width="1" height="8" />
+				
+			<pe:documentViewer value="#{cCertificadoCTSList.reporte}" id="reportes" 
+				style="width:99%;height:460px;" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+
+

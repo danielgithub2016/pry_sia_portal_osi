@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.sistema.dominio.SySeguridadautorizaciones" table="SGCORESYS.SY_SEGURIDADAUTORIZACIONES">
+        <composite-id name="pk" class="net.royal.erp.sistema.dominio.SySeguridadautorizacionesPk">
+            <key-property name="aplicacioncodigo" type="string">
+                <column name="APLICACIONCODIGO" length="2" />
+            </key-property>
+            <key-property name="grupo" type="string">
+                <column name="GRUPO" length="20" />
+            </key-property>
+            <key-property name="concepto" type="string">
+                <column name="CONCEPTO" length="20" />
+            </key-property>
+            <key-property name="usuario" type="string">
+                <column name="USUARIO" length="20" />
+            </key-property>
+        </composite-id>
+        <property name="masterbrowseflag" type="string">
+            <column name="MASTERBROWSEFLAG" length="1" />
+        </property>
+        <property name="masterupdateflag" type="string">
+            <column name="MASTERUPDATEFLAG" length="1" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="masterapproveflag" type="string">
+            <column name="MASTERAPPROVEFLAG" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

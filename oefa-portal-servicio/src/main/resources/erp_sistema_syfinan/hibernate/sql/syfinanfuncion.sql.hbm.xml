@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : syfinanfuncion. -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- esta funcion se utiliza en la controladora CwCpReportegastosEdit -->
+	<sql-query name="syfinan.obtenerACCostCenterMst">
+		select ac_costcentermst.expensefinanceflag as
+		"expensefinanceflag",
+		ac_costcentermst.expenseadministrativeflag as
+		"expenseadministrativeflag",
+		ac_costcentermst.expensesalesflag as
+		"expensesalesflag",
+		ac_costcentermst.expenseproductionflag as
+		"expenseproductionflag",
+		status as "status"
+		FROM
+		sgcoresys.AC_CostCenterMst
+		WHERE
+		AC_CostCenterMst.CostCenter =
+		:w_CostCenter
+	</sql-query>
+
+	<!-- esta funcion se utiliza en la controladora CwCpReportegastosEdit -->
+	<sql-query name="syfinan.obteneraccountmst">
+		SELECT afevalidation as "afevalidation",
+		vendorvalidation as "vendorvalidation",
+		CostCenterValidation as
+		"costcentervalidation",
+		CostCenterDestValidation as
+		"costcenterdestvalidation",
+		ExpenseFinanceFlag as "expensefinanceflag",
+		ExpenseAdministrativeFlag as "expenseadministrativeflag",
+		ExpenseSalesFlag as "expensesalesflag",
+		ExpenseProductionFlag as
+		"expenseproductionflag",
+		Code08Validation as "code08validation",
+		SucursalValidation as "sucursalvalidation",
+		CheckValidation as
+		"checkvalidation",
+		ResponsibleDefault as "responsibledefault",
+		status as
+		"status",
+		StatisticsGenerationFlag as "statisticsgenerationflag",
+		accounttype as "accounttype"
+		FROM SGCORESYS.accountmst
+		WHERE ( account =
+		:w_account) AND (PlanContable = :str_plancontable)
+	</sql-query>
+
+	<!-- BORRAR f_sql_read_tiposervicio_% -->
+	<sql-query name="syfinan.fsqlreadtiposerviciox">
+		SELECT
+		Impuestos.FactorPorcentaje as
+		"factorporcentaje",
+		Impuestos.Signo as "signo",
+		Impuestos.Impuesto as
+		"impuesto",
+		Impuestos.TipoImpuesto as "tipoimpuesto",
+		ServicioXImpuesto.TipoServicio as "tiposervicio"
+		FROM
+		SGCORESYS.ServicioXImpuesto
+		INNER JOIN SGCORESYS.Impuestos
+		ON
+		(Impuestos.Impuesto = ServicioXImpuesto.Impuesto)
+		WHERE
+		(
+		ServicioXImpuesto.TipoServicio = :par_tiposervicio )
+	</sql-query>
+	
+	<sql-query name="syfinan.obtenerPersonaObligaciones">
+		SELECT count(*)
+		FROM SGCORESYS.Obligaciones,
+		SGCORESYS.PersonaMast
+		WHERE ( Obligaciones.Proveedor =
+		PersonaMast.Persona ) and
+		( Obligaciones.TipoDocumento =
+		:par_tipodocumento ) AND
+		( Obligaciones.NumeroDocumento =
+		:par_numerodocumento ) AND
+		( PersonaMast.DocumentoFiscal =
+		:par_proveedorruc )
+	</sql-query>
+	
+	<!-- BORRAR -->
+	<sql-query name="syfinan.obtenerCuentaGastoClasificacion">
+		  SELECT 
+		  		 WH_CommoditySub.CuentaContableGasto as "cuentacontablegasto",   
+			 	 WH_CommoditySub.CuentaContableExtranjera as "cuentacontableextranjera",
+         		 WH_CommoditySub.ElementoGasto as "elementogasto",
+         		 WH_Commodity.Clasificacion as "clasificacion" 
+   		  FROM 
+   		  		SGCORESYS.WH_CommoditySub,  SGCORESYS.WH_Commodity  
+  		  WHERE 
+  		  		( WH_Commodity.Commodity01 = WH_CommoditySub.Commodity01 ) and  
+         		( WH_CommoditySub.Commodity = :p_commodity )
+	</sql-query>
+	
+	<!-- BORRAR -->
+	<sql-query name="syfinan.FUpdateFileBlob">
+		Update SGCORESYS.wh_documentoarchivo
+		Set ARCHIVODATA = :p_blob
+		Where 	
+			COMPANIASOCIO 	= :p_companiasocio
+			And TIPODOCUMENTO 	= :p_tipodocumento
+			And	NUMERODOCUMENTO = :p_numerodocumento
+			And LINEA = :p_linea
+			And SECUENCIA = :p_secuencia
+	</sql-query>
+	
+	<!-- BORRAR syfinan.f_sql_validate_item -->
+	<sql-query name="syfinan.fSqlValidateItem">
+		 SELECT WH_ItemMast.Item as "item"  
+		    FROM sgcoresys.WH_ItemMast  
+		   WHERE WH_ItemMast.Item = :p_item
+
+	</sql-query>
+</hibernate-mapping>

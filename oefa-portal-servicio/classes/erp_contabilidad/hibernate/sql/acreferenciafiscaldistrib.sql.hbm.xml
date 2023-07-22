@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : contabilidad.AcReferenciafiscaldistrib
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="acreferenciafiscaldistrib.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+    </sql-query>
+    
+    <!-- symast01.dw_ma_ac_referenciafiscal_edit_detail -->
+	<sql-query name="acreferenciafiscaldistrib.DwMaAcReferenciafiscalEditDetail">
+		  SELECT AC_REFERENCIAFISCALDISTRIB.ANO as "anio",   
+		         AC_REFERENCIAFISCALDISTRIB.TIPOREFERENCIAFISCAL as "tiporeferenciafiscal",   
+		         AC_REFERENCIAFISCALDISTRIB.NIVEL as "nivel",   
+		         AC_REFERENCIAFISCALDISTRIB.REFERENCIAFISCAL as "referenciafiscal",   
+		         AC_REFERENCIAFISCALDISTRIB.METAPRESUPUESTAL as "metapresupuestal",   
+		         AC_REFERENCIAFISCALDISTRIB.PORCENTAJE as "porcentaje" 
+		    FROM sgcoresys.AC_REFERENCIAFISCALDISTRIB  
+		   WHERE ( AC_ReferenciaFiscalDistrib.Ano = :anio ) AND  
+		         ( AC_ReferenciaFiscalDistrib.TipoReferenciaFiscal = :tiporeferenciafiscal ) AND  
+		         ( AC_ReferenciaFiscalDistrib.Nivel = :nivel ) AND  
+		         ( AC_ReferenciaFiscalDistrib.ReferenciaFiscal = :referenciafiscal ) 
+	
+	</sql-query>
+</hibernate-mapping>

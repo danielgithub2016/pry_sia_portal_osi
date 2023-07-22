@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : logistica.WhItemtipo
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="whitemtipo.xxxxxx">
+		SELECT SYSDATE FROM DUAL
+    </sql-query>
+    
+    <sql-query name="whitemtipo.DwMaWhItemtipoSelect">
+    	SELECT 
+			WH_ItemTipo.ItemTipo as "itemtipo",   
+			WH_ItemTipo.DescripcionLocal as "descripcionlocal"  
+		FROM 
+			SGCORESYS.WH_ItemTipo  
+		WHERE 
+			WH_ItemTipo.Estado = 'A'  
+    </sql-query>
+    
+     <sql-query name="whitemtipo.DwMaWhItemtipo">
+    	SELECT 
+			WH_ItemTipo.ItemTipo as "itemtipo",   
+			WH_ItemTipo.DescripcionLocal as "descripcionlocal"  
+		FROM 
+			SGCORESYS.WH_ItemTipo  
+		WHERE 
+			WH_ItemTipo.Estado = 'A'  
+	    AND WH_ItemTipo.ItemTipo = :p_itemtipo
+    </sql-query>
+    
+</hibernate-mapping>

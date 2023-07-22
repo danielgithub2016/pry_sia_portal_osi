@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Ultimonumeropago" table="SGCORESYS.ULTIMONUMEROPAGO">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.UltimonumeropagoPk">
+            <key-property name="cuentabancaria" type="string">
+                <column name="CUENTABANCARIA" length="15" />
+            </key-property>
+            <key-property name="tipopago" type="string">
+                <column name="TIPOPAGO" length="2" />
+            </key-property>
+        </composite-id>
+        <property name="ultimonumeropago" type="integer">
+            <column name="ULTIMONUMEROPAGO" length="22" />
+        </property>
+        <property name="numeropagodesde" type="integer">
+            <column name="NUMEROPAGODESDE" length="22" />
+        </property>
+        <property name="numeropagohasta" type="integer">
+            <column name="NUMEROPAGOHASTA" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

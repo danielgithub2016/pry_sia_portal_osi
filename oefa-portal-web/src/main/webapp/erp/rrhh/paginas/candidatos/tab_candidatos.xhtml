@@ -1,0 +1,304 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panel>
+		<p:panelGrid columns="13" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<p:commandButton value="Ver Postulante">
+			</p:commandButton>
+
+			<p:commandButton value="Contratar" id="btnContratar" update="@form">
+			</p:commandButton>
+
+
+			<p:commandButton value="No Califica"
+			id="btnNoCalifica" update="@form" action="evaluacion_candidatos_edit">
+			</p:commandButton>
+
+			<p:commandButton value="Califica" id="btnCalifica" update="@form">
+
+			</p:commandButton>
+
+			<p:commandButton value="Acción de Personal" id="btnAccionPersonal"
+			update="@form">
+
+			</p:commandButton>
+
+			<p:commandButton value="Agregar" id="btnAgregar"
+			update="@form">
+
+			</p:commandButton>
+
+			<p:commandButton value="Resultado x Etapa" id="btnResultado" />
+				
+			<p:commandButton value="Ver Informe" id="btnVerInforme"
+				onclick="document.getElementById('frmCandidatosEdit:lnkReportInforme').click()">
+			</p:commandButton>
+			
+			<p:commandButton value="Finalistas" id="btnFinalistas"
+				onclick="document.getElementById('frmCandidatosEdit:lnkReportFinalistas').click()">
+			</p:commandButton>
+
+			<p:commandButton value="Reporte Integral" id="btnReporteIntegral"			
+				onclick="document.getElementById('frmCandidatosEdit:lnkReportReporteI').click()">
+			</p:commandButton>
+
+			<p:commandButton value="Imprimir Formato Evaluación" id="btnImprimirFormato" 
+				immediate="true"
+				 onclick="document.getElementById('frmCandidatosEdit:lnkReportFormato').click()">
+			</p:commandButton>
+
+		</p:panelGrid>
+
+		
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			rowKey="#{row.postulante}" selectionMode="single"
+			selection="#{cwHrRequerimientoCandidatosEdit.dwpostulantesSeleccion}"
+			value="#{cwHrRequerimientoCandidatosEdit.dwpostulantes}" var="row"
+			rowIndexVar="indice" reflow="true">
+
+			<p:ajax event="rowSelect"
+				listener="#{cwHrRequerimientoCandidatosEdit.onRowSelect}" />
+
+			<p:column headerText="#" width="10" styleClass="columnatablaCentro">
+				<h:outputText value="#{indice+1}" />
+			</p:column>
+
+			<p:column headerText="Revisado" width="40"
+				styleClass="columnatablaCentro">
+				<p:selectBooleanCheckbox value="#{row.flagrevisadobool}" />
+			</p:column>
+
+			<p:column headerText="Postulante N°" width="50"
+				styleClass="columnatablaCentro">
+				<h:outputText value="#{row.postulante}" />
+			</p:column>
+
+			<p:column headerText="Nombres" width="200">
+				<h:outputText value="#{row.nombre}" />
+			</p:column>
+
+			<p:column headerText="#Etapa" width="30"
+				styleClass="columnatablaCentro">
+				<h:outputText value="#{row.secuencia}" />
+			</p:column>
+
+			<p:column headerText="#Puesto" width="30"
+				styleClass="columnatablaCentro">
+				<h:outputText value="#{row.secuencia2}" />
+			</p:column>
+
+			<p:column headerText="Ganador" width="30"
+				styleClass="columnatablaCentro">
+				<p:selectBooleanCheckbox value="#{row.flagganadorbool}" />
+			</p:column>
+
+			<p:column headerText="Estado" width="60"
+				styleClass="columnatablaCentro">
+				<h:outputText value="#{row.auxestadodescripcion}" />
+			</p:column>
+
+			<p:column headerText="Estado Postulante" width="100">
+				<p:selectOneMenu value="#{row.estadoseguimiento}">
+					<f:selectItem />
+					<f:selectItem itemLabel="Apto" itemValue="AP" />
+					<f:selectItem itemLabel="No Apto" itemValue="NA" />
+					<f:selectItem itemLabel="No Participó" itemValue="NP" />
+					<f:selectItem itemLabel="Desistió" itemValue="DE" />
+				</p:selectOneMenu>
+			</p:column>
+
+			<p:column headerText="Fec. Evaluac." width="60">
+				<h:outputText value="#{row.fechapostulante}">
+					<f:convertDateTime pattern="#{msg.formato_fecha_fecha_2}" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="Cursos" width="80">
+				<p:selectOneMenu value="#{row.flagotrosestudios}">
+					<f:selectItem />
+					<f:selectItem itemLabel="Apto" itemValue="A" />
+					<f:selectItem itemLabel="No Apto" itemValue="N" />
+				</p:selectOneMenu>
+			</p:column>
+
+			<p:column headerText="Experiencia" width="80">
+				<p:selectOneMenu value="#{row.flagexperiencia}">
+					<f:selectItem />
+					<f:selectItem itemLabel="Apto" itemValue="A" />
+					<f:selectItem itemLabel="No Apto" itemValue="N" />
+				</p:selectOneMenu>
+			</p:column>
+
+			<p:column headerText="Exp. Laboral" width="80">
+				<h:outputText value="#{row.auxexperiencialaboral}" />
+			</p:column>
+
+			<p:column headerText="Exp. Profesional" width="80">
+				<h:outputText value="#{row.auxexperienciaprofesional}" />
+			</p:column>
+
+			<p:column headerText="Formación" width="80">
+				<p:selectOneMenu value="#{row.flagformacion}">
+					<f:selectItem />
+					<f:selectItem itemLabel="Apto" itemValue="A" />
+					<f:selectItem itemLabel="No Apto" itemValue="N" />
+				</p:selectOneMenu>
+			</p:column>
+
+			<p:column headerText="Observaciones" width="150">
+				<h:outputText value="#{row.observacionesfinales}" />
+			</p:column>
+
+			<p:column headerText="Correo" width="150">
+				<h:outputText value="#{row.correo}" />
+			</p:column>
+
+			<p:column headerText="Variable Remun." width="80"
+				styleClass="columnatablaDerecha">
+				<h:outputText value="#{row.variableremunerativa}">
+					<f:convertNumber pattern="#{msg.formato_monto_patron}" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="Tipo" width="80">
+				<p:selectOneMenu value="#{row.tipopostulante}">
+					<f:selectItem />
+					<f:selectItem itemLabel="Externo" itemValue="E" />
+					<f:selectItem itemLabel="Interno" itemValue="I" />
+				</p:selectOneMenu>
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+
+	<ui:repeat var="epe"
+		value="#{cwHrRequerimientoCandidatosEdit.dwevaluacionpostulanteetapa}">
+		<p:panel rendered="#{!epe.ocultar}">
+			<p:panelGrid columns="2" layout="grid"
+				styleClass="ui-panelgrid-blank">
+				<p:panelGrid columns="1" layout="grid">
+					<p:panelGrid columns="3" layout="grid"
+						columnClasses="ui-grid-col-10,ui-grid-col-1,ui-grid-col-1">
+						<p:outputLabel value="#{epe.descripcioneval}" />
+
+						<p:outputLabel value="Etapa" />
+						<h:outputText value="#{epe.secuencia} - #{epe.secuencia2}" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-1,ui-grid-col-11">
+						<p:outputLabel value="Evaluador" />
+						<h:outputText value="#{epe.descripcionpuesto}" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="4" layout="grid"
+						columnClasses="ui-grid-col-1,ui-grid-col-4,ui-grid-col-4,ui-grid-col-2">
+						<p:outputLabel value="Estado" />
+						<h:outputText value="#{epe.auxestado}" />
+						<h:outputLabel value="¿Recomienda su Incorporación?"
+							style="color:MidnightBlue;font-weight: bold; " />
+						<p:selectOneRadio value="#{epe.flagincorporacion}">
+							<f:selectItem itemLabel="Si" itemValue="S" />
+							<f:selectItem itemLabel="No" itemValue="N" />
+						</p:selectOneRadio>
+					</p:panelGrid>
+
+				</p:panelGrid>
+
+				<p:panelGrid columns="1" layout="grid">
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-4,ui-grid-col-8">
+						<h:outputText value="Observaciones durante la entrevista"
+							style="color: #2E6EB6;" />
+
+						<p:outputLabel
+							value="(Para visualizar el texto completo hacer click en ver Informe)"
+							style="color: #E06820;" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="1" layout="grid">
+						<p:inputTextarea cols="2" value="#{epe.observaciones}" />
+
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panelGrid>
+		</p:panel>
+	</ui:repeat>
+
+	<p:panelGrid columns="3">
+		<p:outputLabel
+			value="Dar doble click para responder y/o ver detalle de la competencia" />
+
+		<p:panelGrid columns="3">
+			<p:commandButton />
+			<p:outputLabel value="Etapas" />
+			<p:commandButton />
+		</p:panelGrid>
+
+		<p:outputLabel value="Resumen por Etapas" />
+
+	</p:panelGrid>
+
+	<p:panelGrid columns="2" layout="grid">
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			rowStyleClass="#{row.ocultar?'oculto':''}" 
+			value="#{cwHrRequerimientoCandidatosEdit.dwevaluacionpostulante}"
+			var="row" rows="10" reflow="true">
+			<p:column headerText="Descripción" width="90">
+				<h:outputText value="#{row.descripcion}" />
+			</p:column>
+			<p:column headerText="Punt." width="3">
+				<h:outputText value="Requerido" style="font-size:0.8em;" />
+				<p:panelGrid columns="1" styleClass="columnatablaDerecha">
+					<h:outputText value="#{row.valorrequerido}" style="color:red;">
+						<f:convertNumber minFractionDigits="2" maxFractionDigits="2"
+							minIntegerDigits="1" />
+					</h:outputText>
+					<h:outputText value="#{row.puntaje}">
+						<f:convertNumber minFractionDigits="2" maxFractionDigits="2"
+							minIntegerDigits="1" />
+					</h:outputText>
+				</p:panelGrid>
+			</p:column>
+			<p:column headerText="Escala" width="80">
+				<p:spacer />
+				<p:panelGrid columns="1" styleClass="columnatablaCentro">
+					<p:progressBar value="#{row.valorrequerido*100/row.valorrequerido}"
+						styleClass="idvalorRequerido" />
+					<p:progressBar value="#{row.puntaje*100/row.valorrequerido}"
+						styleClass="idvalorRegistrado" />
+				</p:panelGrid>
+			</p:column>
+			<p:column headerText="Acción" width="2">
+				<p:commandButton type="icon" image="editar" />
+			</p:column>
+
+		</p:dataTable>
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			rows="10" reflow="true">
+
+			<p:column headerText="Etapas de Evaluación" width="90">
+			</p:column>
+
+			<p:column headerText="Estado" width="30">
+			</p:column>
+
+			<p:column headerText="Suma" width="30">
+			</p:column>
+
+			<p:column headerText="Prom." width="30">
+			</p:column>
+
+			<p:column headerText="Tipo" width="80">
+			</p:column>
+
+		</p:dataTable>
+		
+	</p:panelGrid>
+
+</ui:composition>

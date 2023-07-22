@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : asrepus.w_as_captura_string_idle -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<!-- asrepus.dw_am_ano -->
+	<sql-query name="asrepus.DwAmAno">
+	</sql-query>
+
+	<!-- asrepus.dw_am_ano_select -->
+	<sql-query name="asrepus.DwAmAnoSelect">
+	</sql-query>
+
+	<!-- asrepus.dw_am_mes -->
+	<sql-query name="asrepus.DwAmMes">
+	</sql-query>
+
+	<!-- asrepus.dw_am_namemes_select -->
+	<sql-query name="asrepus.DwAmNamemesSelect">
+	</sql-query>
+
+	<!-- asrepus.dw_as_areadetalle_edit -->
+	<sql-query name="asrepus.DwAsAreadetalleEdit">
+	</sql-query>
+
+	<!-- asrepus.dw_as_areas_detalle -->
+	<sql-query name="asrepus.DwAsAreasDetalle">
+	</sql-query>
+
+	<!-- asrepus.dw_as_areas_position -->
+	<sql-query name="asrepus.DwAsAreasPosition">
+	</sql-query>
+
+	<!-- asrepus.dw_as_areasxareas_hijos_select -->
+	<sql-query name="asrepus.DwAsAreasxareasHijosSelect">
+	</sql-query>
+
+	<!-- asrepus.dw_as_areasxusuario_select -->
+	<sql-query name="asrepus.DwAsAreasxusuarioSelect">
+	</sql-query>
+
+	<!-- asrepus.dw_as_areasxusuario_select_sinjerarquia -->
+	<sql-query name="asrepus.DwAsAreasxusuarioSelectSinjerarquia">
+	</sql-query>
+
+	<!-- asrepus.dw_as_asistencia_crosstab -->
+	<sql-query name="asrepus.DwAsAsistenciaCrosstab">
+	</sql-query>
+
+	<!-- asrepus.dw_as_asistencia_mensual -->
+	<sql-query name="asrepus.DwAsAsistenciaMensual">
+	</sql-query>
+
+	<!-- asrepus.dw_as_autorizacion_asistencia_diaria_gra -->
+	<sql-query name="asrepus.DwAsAutorizacionAsistenciaDiariaGra">
+	</sql-query>
+
+	<!-- asrepus.dw_as_autorizacion_asistencia_diaria_sav -->
+	<sql-query name="asrepus.DwAsAutorizacionAsistenciaDiariaSav">
+	</sql-query>
+
+	<!-- asrepus.dw_as_autorizacion_masive_save -->
+	<sql-query name="asrepus.DwAsAutorizacionMasiveSave">
+	</sql-query>
+
+	<!-- asrepus.dw_as_autorizacion_preproceso_excepcion -->
+	<sql-query name="asrepus.DwAsAutorizacionPreprocesoExcepcion">
+		<![CDATA[
+		select 
+			d.fecha as "fecha", 
+			b.empleado as "empleado", 
+			b.intervaloacceso as "intervaloacceso", 
+			b.tipohorario as "tipohorario", 
+			0 AS "cantidadhoras", 
+			horainicio as "horainicio", 
+			horafin as "horafin", 
+			secuencia as "secuencia", 
+			lunes as "lunes", 
+			martes as "martes", 
+			miercoles as "miercoles", 
+			jueves as "jueves", 
+			viernes as "viernes", 
+			sabado as "sabado", 
+			domingo as "domingo",  
+			FlagRestriccion as "flagrestriccion", 
+			ConceptoAccesoRestringido as "conceptoaccesorestringido", 
+			ConceptoAccesoComplemento as "conceptoaccesocomplemento", 
+			TiempoRestringido as "tiemporestringido",
+			b.tipodia as "tipodia"
+		from SGCORESYS.as_empleadoexcepciondetalle b
+		INNER JOIN SGCORESYS.as_empleadoexcepcion d ON ( d.empleado = b.empleado )
+		where 
+			d.Fecha <= :p_fecha and 
+			d.FechaHasta >= :p_fecha and 
+			d.fecha = b.fecha and 
+			d.empleado = :p_empleado and
+			d.CLASEHORARIO = 'D' and
+			d.CLASEHORARIO = b.CLASEHORARIO
+		 ]]>
+	</sql-query>
+
+	<!-- asrepus.dw_as_autorizacion_x_periodo -->
+	<sql-query name="asrepus.DwAsAutorizacionXPeriodo">
+	</sql-query>
+
+	<!-- asrepus.dw_as_autorizaciones_asistencia_area_pos -->
+	<sql-query name="asrepus.DwAsAutorizacionesAsistenciaAreaPos">
+	</sql-query>
+
+	<!-- asrepus.dw_as_autorizaciones_permisosfaltas -->
+	<sql-query name="asrepus.DwAsAutorizacionesPermisosfaltas">
+	</sql-query>
+
+	<!-- asrepus.dw_as_autorizacionespre_grabar -->
+	<sql-query name="asrepus.DwAsAutorizacionespreGrabar">
+	</sql-query>
+
+	<!-- asrepus.dw_as_descuenta_sobretiempo_masivo -->
+	<sql-query name="asrepus.DwAsDescuentaSobretiempoMasivo">
+	</sql-query>
+
+	<!-- asrepus.dw_as_empleado_mesingreso -->
+	<sql-query name="asrepus.DwAsEmpleadoMesingreso">
+	</sql-query>
+
+	<!-- asrepus.dw_as_empleadoexcepcion -->
+	<sql-query name="asrepus.DwAsEmpleadoexcepcion">
+	</sql-query>
+
+	<!-- asrepus.dw_as_empleadoexcepcion_detalle -->
+	<sql-query name="asrepus.DwAsEmpleadoexcepcionDetalle">
+	</sql-query>
+
+	<!-- asrepus.dw_as_empleadomast_list_generar_marcas -->
+	<sql-query name="asrepus.DwAsEmpleadomastListGenerarMarcas">
+	</sql-query>
+
+	<!-- asrepus.dw_as_estadoautorizacion_filtro -->
+	<sql-query name="asrepus.DwAsEstadoautorizacionFiltro">
+	</sql-query>
+
+	<!-- asrepus.dw_as_generar_marcaciones_masivas_completas_marcas -->
+	<sql-query name="asrepus.DwAsGenerarMarcacionesMasivasCompletasMarcas">
+	</sql-query>
+
+	<!-- asrepus.dw_as_generar_marcaciones_masivas_hora -->
+	<sql-query name="asrepus.DwAsGenerarMarcacionesMasivasHora">
+	</sql-query>
+
+	<!-- asrepus.dw_as_horasextras_mandatorias -->
+	<sql-query name="asrepus.DwAsHorasextrasMandatorias">
+	</sql-query>
+
+	<!-- asrepus.dw_as_ingreso_diasvaciones_position -->
+	<sql-query name="asrepus.DwAsIngresoDiasvacionesPosition">
+	</sql-query>
+
+	<!-- asrepus.dw_as_ingreso_vacaciones_masivas -->
+	<sql-query name="asrepus.DwAsIngresoVacacionesMasivas">
+	</sql-query>
+
+	<!-- asrepus.dw_as_marcaciones_impares_rpt -->
+	<sql-query name="asrepus.DwAsMarcacionesImparesRpt">
+	</sql-query>
+
+	<!-- asrepus.dw_as_marcaciones_spring -->
+	<sql-query name="asrepus.DwAsMarcacionesSpring">
+	</sql-query>
+
+	<!-- asrepus.dw_as_marcaciones_texto -->
+	<sql-query name="asrepus.DwAsMarcacionesTexto">
+	</sql-query>
+
+	<!-- asrepus.dw_as_marcaciones_texto_linea -->
+	<sql-query name="asrepus.DwAsMarcacionesTextoLinea">
+	</sql-query>
+
+	<!-- asrepus.dw_as_proceso_asistencia_diaria_tipohor -->
+	<sql-query name="asrepus.DwAsProcesoAsistenciaDiariaTipohor">
+		SELECT
+		as_TipoHorario.TipoHorario as
+		"tipohorario",
+		as_TipoHorario.DescripcionLocal as "descripcionlocal",
+		as_TipoHorario.DescripcionExtranjera as "descripcionextranjera",
+		as_TipoHorario.Lunes as "lunes",
+		as_TipoHorario.Martes as "martes",
+		as_TipoHorario.Miercoles as "miercoles",
+		as_TipoHorario.Jueves as
+		"jueves",
+		as_TipoHorario.Viernes as "viernes",
+		as_TipoHorario.Sabado as
+		"sabado",
+		as_TipoHorario.Domingo as "domingo",
+		as_TipoHorario.Estado as
+		"estado",
+		as_TipoHorario.UltimoUsuario as "ultimousuario",
+		as_TipoHorario.UltimaFechaModif as "ultimafechamodif",
+		as_TipoHorario.TipoTurno as "tipoturno"
+		FROM
+		SGCORESYS.as_TipoHorario
+	</sql-query>
+
+	<!-- asrepus.dw_as_rep_002_asistencia_diaria_filtro_c -->
+	<sql-query name="asrepus.DwAsRep002AsistenciaDiariaFiltroC">
+	</sql-query>
+
+	<!-- asrepus.dw_as_reporte_autorizacion_solicitud -->
+	<sql-query name="asrepus.DwAsReporteAutorizacionSolicitud">
+	</sql-query>
+
+	<!-- asrepus.dw_as_reporte_sobretiempos -->
+	<sql-query name="asrepus.DwAsReporteSobretiempos">
+	</sql-query>
+
+	<!-- asrepus.dw_as_reportecambios -->
+	<sql-query name="asrepus.DwAsReportecambios">
+	</sql-query>
+
+	<!-- asrepus.dw_as_reportecambios_filtro -->
+	<sql-query name="asrepus.DwAsReportecambiosFiltro">
+	</sql-query>
+
+	<!-- asrepus.dw_as_reportecambiosdeturno -->
+	<sql-query name="asrepus.DwAsReportecambiosdeturno">
+	</sql-query>
+
+	<!-- asrepus.dw_as_seleccionar_empleado_autorizacionp -->
+	<sql-query name="asrepus.DwAsSeleccionarEmpleadoAutorizacionp">
+	</sql-query>
+
+	<!-- asrepus.dw_as_seleccionar_empleado_reprogramacio -->
+	<sql-query name="asrepus.DwAsSeleccionarEmpleadoReprogramacio">
+	</sql-query>
+
+	<!-- asrepus.dw_as_tipodia_activo_select -->
+	<sql-query name="asrepus.DwAsTipodiaActivoSelect">
+	</sql-query>
+
+	<!-- asrepus.dw_as_tipodia_select -->
+	<sql-query name="asrepus.DwAsTipodiaSelect">
+	</sql-query>
+
+	<!-- asrepus.dw_as_tipohorario_activo_select -->
+	<sql-query name="asrepus.DwAsTipohorarioActivoSelect">
+	</sql-query>
+
+	<!-- asrepus.dw_as_tipohorario_browse -->
+	<sql-query name="asrepus.DwAsTipohorarioBrowse">
+	</sql-query>
+
+	<!-- asrepus.dw_as_tipohorario_edit -->
+	<sql-query name="asrepus.DwAsTipohorarioEdit">
+	</sql-query>
+
+	<!-- asrepus.dw_as_tipohorario_select -->
+	<sql-query name="asrepus.DwAsTipohorarioSelect">
+	</sql-query>
+
+	<!-- asrepus.dw_hr_captura_string_idle_texto -->
+	<sql-query name="asrepus.DwHrCapturaStringIdleTexto">
+	</sql-query>
+
+	<!-- asrepus.dw_hr_licencia -->
+	<sql-query name="asrepus.DwHrLicencia">
+	</sql-query>
+
+	<!-- asrepus.dw_hr_licencia_2 -->
+	<sql-query name="asrepus.DwHrLicencia2">
+	</sql-query>
+
+	<!-- asrepus.dw_hr_licencia_filtro -->
+	<sql-query name="asrepus.DwHrLicenciaFiltro">
+	</sql-query>
+
+	<!-- asrepus.dw_hr_reporte_rolvacaciones -->
+	<sql-query name="asrepus.DwHrReporteRolvacaciones">
+	</sql-query>
+
+	<!-- asrepus.dw_hr_rolvacaciones_filtro -->
+	<sql-query name="asrepus.DwHrRolvacacionesFiltro">
+	</sql-query>
+
+	<!-- asrepus.dw_ma_compania_select -->
+	<sql-query name="asrepus.DwMaCompaniaSelect">
+	</sql-query>
+
+	<!-- asrepus.dw_ma_correlativosmast_edit -->
+	<sql-query name="asrepus.DwMaCorrelativosmastEdit">
+	</sql-query>
+
+	<!-- asrepus.dw_ma_hr_codigocargosmast_select -->
+	<sql-query name="asrepus.DwMaHrCodigocargosmastSelect">
+	</sql-query>
+
+	<!-- asrepus.dw_pr_vacaciones_utilizacion_reporte -->
+	<sql-query name="asrepus.DwPrVacacionesUtilizacionReporte">
+	</sql-query>
+
+	<!-- asrepus.dw_pr_vacaciones_utilizacion_reporte2 -->
+	<sql-query name="asrepus.DwPrVacacionesUtilizacionReporte2">
+	</sql-query>
+
+</hibernate-mapping>

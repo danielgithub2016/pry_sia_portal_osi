@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrEncuestaplantilla" table="SGCORESYS.HR_ENCUESTAPLANTILLA">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrEncuestaplantillaPk">
+            <key-property name="plantilla" type="integer">
+                <column name="PLANTILLA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="200" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="tipoencuesta" type="string">
+            <column name="TIPOENCUESTA" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

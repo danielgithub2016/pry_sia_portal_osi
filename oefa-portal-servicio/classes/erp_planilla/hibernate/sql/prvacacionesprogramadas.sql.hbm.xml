@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : planilla.PrVacacionesprogramadas -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="prvacacionesprogramadas.dwprvacacionesprogramadas">
+		<![CDATA[
+		SELECT 
+		         A.EMPLEADO AS "empleado"  
+		        ,D.NOMBRECOMPLETO AS "nombre"
+		        ,E.DESCRIPCION AS "cargo"
+		        ,'' AS "unidadorganica"
+		        ,NVL(C.FECHAINGRESO,C.FECHAREINGRESO) AS "fechaingreso"
+		         ,NVL(C.FECHAINGRESO,C.FECHAREINGRESO)+NVL((SELECT SUM(NVL(HR_LICENCIAS.DIAS,0)) 
+		                FROM SGCORESYS.HR_LICENCIAS 
+		                WHERE       A.EMPLEADO = HR_LICENCIAS.EMPLEADO 
+		                        AND HR_LICENCIAS.TIPOLICENCIA='05' 
+		                        AND HR_LICENCIAS.FECHAINICIO >= (NVL(C.FECHAINGRESO,C.FECHAREINGRESO)) 
+		                        AND HR_LICENCIAS.FECHAFINAL  <= (SYSDATE) 
+		                        AND HR_LICENCIAS.COMPANYOWNER=B.COMPANIASOCIO
+		                        ),0)            AS "fecharecalculada"
+		         ,A.NROCARGA AS "nrocarga"
+		         ,A.FECHAINICIO AS "fechainicio"
+		         ,A.FECHAFIN  AS "fechafin" 
+		         ,C.TIPOPLANILLA AS "tipoplanilla"
+		        ,A.TIPOUTILIZACION AS "tipoutilizacion"
+		FROM SGCORESYS.PR_VACACIONESPROGRAMADAS A 
+		INNER JOIN SGCORESYS.PR_VACACIONPERIODO B ON A.EMPLEADO=B.EMPLEADO AND A.NUMEROPERIODO=B.NUMEROPERIODO
+		INNER JOIN SGCORESYS.EMPLEADOMAST C ON B.COMPANIASOCIO = C.COMPANIASOCIO AND A.EMPLEADO = C.EMPLEADO
+		INNER JOIN SGCORESYS.PERSONAMAST D ON A.EMPLEADO = D.PERSONA
+		INNER JOIN SGCORESYS.HR_PUESTOEMPRESA E ON C.CODIGOCARGO= E.CODIGOPUESTO
+		WHERE 
+		     NVL(A.ESTADOUTILIZACION,'NULL') =NVL(:estado,NVL(A.ESTADOUTILIZACION,'NULL')) AND
+		     TO_NUMBER(TO_CHAR(A.FECHAINICIO,'YYYY')) = NVL(:ano,TO_NUMBER(TO_CHAR(A.FECHAINICIO,'YYYY')) ) AND
+		     A.EMPLEADO = NVL(:empleado,A.EMPLEADO) AND
+		     B.COMPANIASOCIO = NVL(:compania,B.COMPANIASOCIO) AND
+		     C.TIPOPLANILLA = NVL(:tipoplanilla,C.TIPOPLANILLA) AND
+		     C.ESTADO = 'A'
+		ORDER BY A.EMPLEADO,B.ANO, TO_CHAR(A.FECHAINICIO,'YYYYMMDD')    
+		]]>
+	</sql-query>
+
+	<sql-query name="prvacacionesprogramadas.contarVacacionesUtilizacion">
+		 <![CDATA[
+			SELECT COUNT(*)
+			FROM
+			sgcoresys.PR_VacacionUtilizacion
+			WHERE Empleado = :p_empleado
+			AND
+			FechaInicio =:p_fecha
+			AND FechaFin =:p_fechafin
+			AND TIPOUTILIZACION not in ('SEF')
+		]]>
+	</sql-query>
+
+
+	<sql-query name="prvacacionesprogramadas.dwprresumenreporte">
+         <![CDATA[
+         SELECT 
+			EMPLEADOMAST.COMPANIASOCIO AS "companiasocio",
+			PERSONAMAST.PERSONA  AS "persona",
+			PERSONAMAST.PERSONAANT AS "codigoanterior",
+			PERSONAMAST.NOMBRECOMPLETO as "nombrecompleto",   
+			TIPOPLANILLA as "tipoplanilla",
+			FECHAINGRESO AS "fechaingreso",
+			FECHACESE as "fechacese",
+			SUM(PR_VACACIONPERIODO.DERECHO) AS "derecho",    
+			SUM(PR_VACACIONPERIODO.DIASGOZADOS) AS "diasgozados",   
+			SUM(PR_VACACIONPERIODO.DIASTRABAJADOS) AS "diastrabajados",   
+			SUM(PR_VACACIONPERIODO.DIASINTERRUMPIDOS) AS "diasinterrumpidos", 
+			SUM(PR_VACACIONPERIODO.DIASPRESCRITOS) AS "diasprescritos",     
+			SUM(PR_VACACIONPERIODO.TOTALUTILIZADOS) AS "totalutilizados",   
+			(SELECT SUM(PENDIENTES) FROM SGCORESYS.PR_VACACIONPERIODO
+			WHERE EMPLEADO = EMPLEADOMAST.EMPLEADO AND NUMEROPERIODO IN (SELECT MAX (NUMEROPERIODO) 
+			                                    FROM SGCORESYS.PR_VACACIONPERIODO WHERE EMPLEADO = EMPLEADOMAST.EMPLEADO
+			                                )
+			    ) AS "pendientes",
+			(SELECT SUM(PENDIENTES) - SUM(DERECHO) FROM SGCORESYS.PR_VACACIONPERIODO
+			WHERE EMPLEADO = EMPLEADOMAST.EMPLEADO AND NUMEROPERIODO IN (SELECT MAX (NUMEROPERIODO)
+			                                    FROM SGCORESYS.PR_VACACIONPERIODO WHERE EMPLEADO = EMPLEADOMAST.EMPLEADO
+			                                )
+			    ) AS "pendientessintruncos",
+			(SELECT SUM (DIASPAGO) FROM SGCORESYS.PR_VACACIONPAGO WHERE EMPLEADO = EMPLEADOMAST.EMPLEADO) AS "pagados"
+			FROM SGCORESYS.EMPLEADOMAST,   
+			SGCORESYS.PERSONAMAST,   
+			SGCORESYS.PR_VACACIONPERIODO  
+			WHERE ( EMPLEADOMAST.EMPLEADO = PERSONAMAST.PERSONA ) AND  
+			( PERSONAMAST.PERSONA = PR_VACACIONPERIODO.EMPLEADO ) AND
+			 EMPLEADOMAST.COMPANIASOCIO = NVL(:compania,EMPLEADOMAST.COMPANIASOCIO) AND
+			 EMPLEADOMAST.TIPOPLANILLA = NVL(:tipoplanilla,EMPLEADOMAST.TIPOPLANILLA) AND
+			 EMPLEADOMAST.CENTROCOSTOS = NVL(:centrocosto,EMPLEADOMAST.CENTROCOSTOS) AND
+			 NVL(EMPLEADOMAST.AFE,'XXX') = NVL(:afe,NVL(EMPLEADOMAST.AFE,'XXX') ) AND
+			 NVL(EMPLEADOMAST.SUCURSAL,'XXX') = NVL(:sucursal,NVL(EMPLEADOMAST.SUCURSAL,'XXX') ) AND
+			 EMPLEADOMAST.EMPLEADO = NVL(:empleado, EMPLEADOMAST.EMPLEADO ) AND
+			 EMPLEADOMAST.ESTADO = 'A' AND
+			 EMPLEADOMAST.ESTADOEMPLEADO = '0'
+			GROUP BY EMPLEADOMAST.COMPANIASOCIO,NOMBRECOMPLETO, PERSONA, EMPLEADOMAST.EMPLEADO, FECHAINGRESO,FECHACESE,TIPOPLANILLA, PERSONAMAST.PERSONAANT
+			ORDER BY PERSONAMAST.NOMBRECOMPLETO 
+         ]]>
+	</sql-query>
+
+
+	<sql-query name="prvacacionesprogramadas.generarSaldoEmpleado">
+			<![CDATA[
+			call sgcoresys.SNp_HR_VacacionPeriodoTraer (:p_empleado, :p_fecha, :p_fechainiorig, :p_fechafinorig ,'01000000', :p_accion, :p_concepto)
+			]]>
+	</sql-query>
+
+	<sql-query name="prvacacionesprogramadas.generarSaldoAdelantoEmpleado">
+			<![CDATA[
+			call sgcoresys.SNp_HR_VacacionAdelantoTraer (:p_empleado, :p_fecha, :p_fechainiorig, :p_fechafinorig ,'01000000', :p_accion, :p_concepto)
+			]]>
+	</sql-query>
+
+
+	<sql-query
+		name="prvacacionesprogramadas.obtenerPendientesNroPeriodoPorEmpleado">
+			<![CDATA[
+			select 
+			pendiente as "pendientes",
+			pendiente_adelanto as "pendientesadelanto",
+			nro_periodo_adelanto as "nroperiodo",
+			flg_periodo_adelanto_valido as "flgperiodovalido",
+			programados as "programados",
+			utilizados as "utilizados",
+			solicitados as "solicitados",
+			adelantos as "adelantos",
+			fraccionadosdias as "fraccionadosdias",
+			fraccionadoshoras as "fraccionadoshoras"
+			from SGCORESYS.PR_SALDO_PROYECTADO_EMPLEADO
+			where empleado = :p_empleado
+			]]>
+	</sql-query>
+
+	<sql-query name="prvacacionesprogramadas.obtenerDiasUitlesPorEmpleado">
+		 <![CDATA[
+			SELECT 
+				NVL(SUM(DIASUTILES),0) as "diasutiles", 
+				NVL(SUM(DIASUTILIZACION),0) as "diasutilizacion", 
+				MAX(NUMEROPERIODO) as "numeroperiodo"
+			FROM   
+				sgcoresys.PR_VacacionUtilizacion 
+			WHERE  
+				Empleado = :p_empleado AND
+				TIPOUTILIZACION not in ('SEF')
+				AND NUMEROPERIODO = (
+							SELECT MAX(NUMEROPERIODO)
+							FROM sgcoresys.PR_VacacionPeriodo
+							WHERE  Empleado = :p_empleado
+				)
+		]]>
+	</sql-query>
+
+	<sql-query name="prvacacionesprogramadas.obtenerDerechoPorEmpleado">
+		 <![CDATA[
+			SELECT  
+				DERECHO as "derecho"
+        	FROM  
+        		sgcoresys.PR_VACACIONPERIODO
+        	WHERE   
+        		Empleado = :p_empleado
+                AND NUMEROPERIODO = :p_periodo
+		]]>
+	</sql-query>
+
+	<sql-query name="prvacacionesprogramadas.eliminarVacacionPago">
+		 <![CDATA[
+			DELETE
+        	FROM  
+        		sgcoresys.PR_VACACIONPAGO
+        	WHERE   
+        		Empleado = :p_empleado AND
+                FechaInicio = :p_fechainicio AND
+			    FechaFin = :p_fechafin
+		]]>
+	</sql-query>
+
+	<sql-query name="prvacacionesprogramadas.sinEfectoVacacionUtilizacion">
+		 <![CDATA[
+			UPDATE
+        	   sgcoresys.PR_VACACIONUTILIZACION
+        	SET TIPOUTILIZACION = 'SEF'
+        	WHERE   
+        		Empleado = :p_empleado AND
+                CompaniaSocio = :p_compania AND
+                FechaInicio = :p_fechainicio AND
+			    FechaFin = :p_fechafin
+		]]>
+	</sql-query>
+
+	<sql-query name="prvacacionesprogramadas.sinEfectoVacacionProgramda">
+		 <![CDATA[
+			UPDATE
+        	    sgcoresys.PR_VACACIONESPROGRAMADAS
+        		SET TIPOUTILIZACION = 'S'
+        	WHERE   
+        		Empleado = :p_empleado AND
+                PeriodoAsistencia = :p_periodo AND
+                FechaInicio = :p_fechainicio AND
+			    FechaFin = :p_fechafin
+		]]>
+	</sql-query>
+
+
+	<sql-query name="prvacacionesprogramadas.listarVacacionPeriodo">
+		 <![CDATA[
+			SELECT
+        	    NUMEROPERIODO as "nroperiodo", 
+        	    ANO as "ano",
+        	    ANO || '-' || (ANO+1) as "anoTexto"
+            FROM 
+            	sgcoresys.PR_VACACIONPERIODO
+        	WHERE   
+        		Empleado = :p_empleado
+            ORDER BY NUMEROPERIODO DESC
+		]]>
+	</sql-query>
+
+
+	<sql-query name="prvacacionesprogramadas.listarVacacionUtilizacion">
+		 <![CDATA[
+			SELECT
+				NUMEROPERIODO AS "nroperiodo",
+                FECHAINICIO as "fechainicio", 
+                FECHAFIN as "fechafin",
+                TIPOUTILIZACION as "utilizacion",
+                (CASE TIPOUTILIZACION
+                    WHEN 'GOC' THEN 'Goce'
+                    WHEN 'ADE' THEN 'Adelantada'
+                    WHEN 'PEN' THEN 'Pendientes'
+                    WHEN 'REP' THEN 'Programadas'
+                    WHEN 'SEF' THEN 'Sin Efecto'
+                    ELSE '' END) as "utilizacionNombre",
+                DIASUTILIZACION AS "dias"
+            FROM 
+                sgcoresys.PR_VACACIONUTILIZACION
+        	WHERE   
+        		Empleado = :p_empleado AND
+        		NumeroPeriodo = :p_periodo
+		]]>
+	</sql-query>
+
+
+
+
+
+</hibernate-mapping>

@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<p:commandButton value="Agregar consideración"
+		disabled="#{cwHrEvaluacionempleadoEdit.opciones.p10cbagregaconsidera_disable}"
+		style="margin-bottom:3px;" />
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		style="#{cwHrEvaluacionempleadoEdit.opciones.dw10_disable ? 'pointer-events:none' : null}"
+		paginator="true" paginatorPosition="bottom" scrollWidth="940"
+		tableStyle="width:920px" scrollable="true" scrollHeight="250"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+		<p:column
+			headerText="De acuerdo a la estimación integral del potencial, considera usted que el trabajador:"
+			width="400">
+		</p:column>
+		<p:column headerText="Respuesta" width="70">
+		</p:column>
+		<p:column headerText="Comentario" width="200">
+		</p:column>
+
+	</p:dataTable>
+
+</ui:composition>

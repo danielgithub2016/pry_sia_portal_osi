@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>Plataforma de Entrevistas CAS</h2>
+		<h2>Convocatoria #{cHrEntrevistaCAS.proceso} -
+			#{cHrEntrevistaCAS.puesto}</h2>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="frmEvaluacion_lista">
+			<p:growl autoUpdate="true" life="#{msg.generico_tiempo_growl}"
+				widgetVar="growlWV" />
+			<h:panelGrid columns="2" width="100%" rendered="false"
+				style="padding-top: 5px;padding-bottom: 5px;">
+				<p:commandButton value="Buscar" icon="buscar" style="float:right;"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					styleClass="botonTextoImagen" action="#{cHrEntrevistaCAS.buscar}"
+					update="@(form)" />
+			</h:panelGrid>
+			<p:dataTable emptyMessage="Este proceso no contiene Postulantes."
+				id="dtPostulante" paginator="true" paginatorPosition="bottom"
+				reflow="true" value="#{cHrEntrevistaCAS.lstEntrPost}" var="row"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages}"
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+				<p:column headerText="Orden" width="10"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.orden}" />
+				</p:column>
+				<p:column headerText="Postulante" width="150"
+					styleClass="columnatablaIzquierda">
+					<h:outputText value="#{row.postulante}" />
+				</p:column>
+				<p:column headerText="Estado" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.estado}" />
+				</p:column>
+				<p:column headerText="Puntaje" width="60"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{row.puntaje}" />
+				</p:column>
+				<p:column headerText="Acciones" width="40"
+					styleClass="columnatableCentro">
+					<p:commandButton type="icon" icon="ui-icon-newwin"
+						title="Ingresar Puntaje"
+						rendered="#{row.n_estado == '1' or row.n_estado == '2' or row.n_estado == '3' or row.n_estado == '4'}"
+						action="#{cHrEntrevistaCAS.ingresarPost}">
+						<f:setPropertyActionListener
+							target="#{cHrEntrevistaCAS.registroSeleccionadopost}"
+							value="#{row}" />
+					</p:commandButton>
+					<p:commandButton value="Restaurar NSP" title="Restaurar NSP"
+						rendered="#{(row.n_estado == '5' or row.n_estado == '6' ) and cHrEntrevistaCAS.flg_estado != '0'}"
+						disabled="#{row.n_estado == '6'}"
+						action="#{cHrEntrevistaCAS.resetNSP}">
+						<f:setPropertyActionListener
+							target="#{cHrEntrevistaCAS.registroSeleccionadopost}"
+							value="#{row}" />
+					</p:commandButton>
+					<p:commandButton value="Reporte" title="Reporte por Postulante"
+						rendered="#{cHrEntrevistaCAS.flg_estado == '0' and row.n_estado != '5'}"
+						action="#{cHrEntrevistaCAS.reportexPost}">
+						<f:setPropertyActionListener
+							target="#{cHrEntrevistaCAS.registroSeleccionadopost}"
+							value="#{row}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<BR />
+			<div class="ui-grid-col-3">
+				<p:commandButton value="Ir a Lista de Procesos" update="@form"
+					styleClass="botonTextoImagenGrande" id="regresar"
+					action="#{cHrEntrevistaCAS.iniciarControladora}" />
+			</div>
+			<div class="ui-grid-col-2"></div>
+			<div class="ui-grid-col-3">
+				<p:commandButton value="Enviar Información" update="@form"
+					rendered="#{cHrEntrevistaCAS.valRegistro == '0' or cHrEntrevistaCAS.valRegistro == '2'}"
+					styleClass="botonTextoImagenGrande" id="EnviarInfo"
+					action="#{cHrEntrevistaCAS.registrarPuntaje}" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

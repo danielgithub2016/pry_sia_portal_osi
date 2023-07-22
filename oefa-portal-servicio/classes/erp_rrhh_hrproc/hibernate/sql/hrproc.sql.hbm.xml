@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="hrProc.listarRequerimientoList">
+		<![CDATA[
+			SELECT  
+				HR_Requerimiento.Requerimiento as "requerimiento",           
+				HR_Requerimiento.EmpleadoSolicitante as "empleadosolicitante",
+				HR_Requerimiento.CodigoPosicionSolicitante as "codigoposicionsolicitante",           
+				HR_Requerimiento.CodigoPuesto as "codigopuesto",
+				 HR_Requerimiento.proceso as "proceso",              
+				HR_Requerimiento.FechaSolicitud as "fechasolicitud",           
+				HR_Requerimiento.UnidadNegocio as "unidadnegocio",           
+				HR_Requerimiento.NumeroSolicitado as "numerosolicitado",           
+				HR_Requerimiento.NumeroPendiente as "numeropendiente",           
+				HR_Requerimiento.Estado as "estado",           
+				HR_Requerimiento.CompanyOwner as "companyowner",    
+				COMPANYOWNER.DESCRIPTION AS "description",       
+				HR_PuestoEmpresa.Descripcion as "descripcion",  HR_PosicionEmpresa.Descripcion as "descripcionposicion",
+				hr_requerimientoobservacion.InicioVigencia as "iniciovigencia", hr_requerimientoobservacion.FinVigencia as "finvigencia",
+				HR_Requerimiento.fechalimite as "fechalimite",
+				    (select count(1) 
+				    from SGCORESYS.HR_EvalRequerimiento_2 b, SGCORESYS.HR_PosRequer c
+				    where 
+				    b.Requerimiento = HR_Requerimiento.Requerimiento AND
+				    b.CompanyOwner = HR_Requerimiento.CompanyOwner AND
+				    (  (b.flagcodigopuesto = 'S' and HR_Requerimiento.CodigoPuestoSolicitante = :par_codigopuesto) or 
+				        (  NVL(b.flagcodigopuesto, 'N') <> 'S' and b.CodigoPuesto = :par_codigopuesto) )   AND
+				    b.Requerimiento= c.Requerimiento AND
+				    b.CompanyOwner = c.CompanyOwner AND
+				    c.Secuencia = b.Secuencia AND
+				    c.Secuencia_2 = b.Secuencia_2 AND
+				    c.Estado = 'P'
+				    ) as "cf_pendientes", 
+				HR_Requerimiento.numeroconcurso as "numeroconcurso",
+				HR_REQUERIMIENTO.CONVOCATORIA as "convocatoria",
+				HR_REQUERIMIENTO.CONCURSO as "concurso",
+				HR_Requerimiento.TEMAEVALUACIONCONOCIMIENTO as "temaevaluacionconocimiento",  
+				HR_Requerimiento.DESCRIPCIONPUESTOINFORMATIVO as "descripcionpuestoinformativo",  
+				PersonaMast.NOMBRECOMPLETO as "nombrecompleto",
+				HR_REQUERIMIENTO.FECHAENVIO as "fechaenvio", SGCORESYS.FN_FECHA_DIA_UTIL(HR_REQUERIMIENTO.FECHAENVIO) AS "fechaquiebre",
+				FLAGDESIERTO as "flagdesierto", MOTIVODESIERTO as "motivodesierto", FECHARESULTADO as "fecharesultado",
+				(select numeroestandar from SGCORESYS.hr_organigrama where HR_Requerimiento.CodigoPuesto = hr_organigrama.CodigoPuesto and HR_organigrama.companyowner = HR_Requerimiento.companyowner and  
+				        rownum=1 and ano in (select numero from SGCORESYS.parametrosmast where parametroclave = 'ORGAN_YEAR')) as "puesto_vacante",
+				HR_REQUERIMIENTO.flagEnviado as "flagEnviado",
+				(select fechaaprobacion FROM
+				sgcoresys.HR_RequerimientoDocAprobacion rda 
+				where rda.requerimiento = HR_Requerimiento.requerimiento and rda.secuencial = 1) as "fechaEnviado"
+			FROM 
+			SGCORESYS.HR_Requerimiento
+			    LEFT OUTER JOIN SGCORESYS.HR_PuestoEmpresa
+			        ON (HR_Requerimiento.CodigoPuesto = HR_PuestoEmpresa.CodigoPuesto)
+			    left outer join SGCORESYS.HR_PosicionEmpresa
+			        on (HR_PosicionEmpresa.CodigoPosicion = HR_Requerimiento.CodigoPosicionSolicitante)
+    			LEFT OUTER JOIN SGCORESYS.companyowner
+        			ON(HR_REQUERIMIENTO.CompanyOwner = companyowner.COMPANYOWNER )
+        		LEFT OUTER JOIN SGCORESYS.PersonaMast
+        			ON(HR_REQUERIMIENTO.EMPLEADOSOLICITANTE = PersonaMast.persona )
+			    left outer join SGCORESYS.hr_requerimientoobservacion
+			        on (hr_requerimientoobservacion.Requerimiento = HR_Requerimiento.Requerimiento and
+			             hr_requerimientoobservacion.CompanyOwner =    HR_Requerimiento.CompanyOwner)
+			
+			WHERE 
+			1=1 and
+			  ((HR_REQUERIMIENTO.EMPLEADOSOLICITANTE IN (
+                                   SELECT as_empleados_autorizados.empleado
+                                     FROM SGCORESYS.as_empleados_autorizados
+                                    WHERE as_empleados_autorizados.SID =
+                                                                       :p_an_sid) ) or
+                               HR_REQUERIMIENTO.USUARIOCREACION = :p_userid ) 
+		]]>
+	</sql-query>
+
+	<sql-query name="hrProc.dwfactorescompetenciahistorial">
+		<![CDATA[
+		SELECT
+			A.SECUENCIAEVAL AS "secuenciaeval",
+		    B.DESCRIPCION AS "descripcion",
+		    B.PERIODO AS "periodo",
+		    B.FECHAINICIO AS "fechainicio",
+		    B.FECHAFIN AS "fechafin",
+		    A.CALIFICACION AS "calificacion",
+		    A.VALORREQUERIDO AS "valorrequerido",
+		    ROWNUM AS "total"
+		FROM SGCORESYS.HR_DETALLEEVALUACIONMEJORA A 
+		JOIN SGCORESYS.HR_EVALUACIONPERIODO B ON A.COMPANYOWNER = B.COMPANYOWNER AND A.SECUENCIAEVAL = B.SECUENCIAEVAL
+		WHERE A.COMPANYOWNER = :par_compania AND A.EMPLEADO = :par_empleado AND A.FACTOR = :par_factor
+		AND A.SECUENCIAEVAL <> :par_secuencia
+		]]>
+	</sql-query>
+
+	<sql-query name="hrProc.DWHrTipoContratoSelect">
+    <![CDATA[
+    	select 
+			hr_tipocontrato.tipocontrato as "tipocontrato",   
+			hr_tipocontrato.descripcion as "descripcion" ,
+			CAST(hr_tipocontrato.tieneperiodoprueba AS VARCHAR2(1)) as "tieneperiodoprueba"
+			from 
+			sgcoresys.hr_tipocontrato  where estado = 'A'
+			and flgrequerimientoWeb = 'S'
+			order by hr_tipocontrato.descripcion asc   
+    ]]>
+	</sql-query>
+
+	<sql-query name="hrProc.obtenerDatosSolicitante">
+    <![CDATA[
+    	SELECT	Empleado as "empleado", 
+			CODIGOPOSICION as "codigoposicion",
+			a.centrocostos as "centrocostos"
+			FROM	SGCORESYS.EmpleadoMast a,
+					SGCORESYS.HR_Organigrama_Puestos b , 
+					SGCORESYS.HR_Organigrama C 
+			WHERE a.Empleado = b.CodigoEmpleado
+					AND C.CODIGOORG = B.CODIGOORG
+					AND a.CodigoUsuario = :codigo_usuario
+    ]]>
+	</sql-query>
+
+	<sql-query name="hrProc.dwHrRequerimientoEdit">
+    <![CDATA[
+	 SELECT  
+		HR_Requerimiento.Requerimiento  as "requerimiento",           
+		HR_Requerimiento.CompanyOwner as "companyowner" ,           
+		HR_Requerimiento.EmpleadoSolicitante  as "empleadosolicitante",           
+		HR_Requerimiento.CodigoPosicionSolicitante  as "codigoposicionsolicitante",           
+		HR_Requerimiento.CodigoPuesto  as "codigopuesto",           
+		HR_Requerimiento.FechaSolicitud  as "fechasolicitud",           
+		HR_Requerimiento.Motivo as "motivo",           
+		HR_Requerimiento.TipoContrato  as "tipocontrato" ,           
+		HR_Requerimiento.FechaDesde  as "fechadesde",           
+		HR_Requerimiento.FechaHasta as "fechahasta",   
+		HR_Requerimiento.proceso as "proceso",                      
+		HR_Requerimiento.PerfilAdicional  as "perfiladicional",           
+		HR_Requerimiento.UnidadNegocio as "unidadnegocio",           
+		HR_Requerimiento.NumeroSolicitado as "numerosolicitado",           
+		HR_Requerimiento.NumeroPendiente as "numeropendiente" ,           
+		HR_Requerimiento.Estado as "estado",           
+		HR_Requerimiento.UltimoUsuario as "ultimousuario" ,           
+		HR_Requerimiento.UltimaFechaModif  as "ultimafechamodif",           
+		HR_Requerimiento.RequerimientoNumero as "requerimientonumero",           
+		HR_Requerimiento.UnidadReplicacion as "unidadreplicacion",           
+		HR_Requerimiento.clasificacion  as "clasificacion",   
+		CAST(HR_Requerimiento.tiporequerimiento as varchar(2)) as "tiporequerimiento",       
+		HR_Requerimiento.CentroCosto  as "centrocosto",           
+		HR_Requerimiento.FechaFinRequerimiento "fechafinrequerimiento",           
+		HR_Requerimiento.afe  as "afe",           
+		HR_Requerimiento.RemuneracionReferencialBruto  as "remuneracionreferencialbruto",           
+		HR_Requerimiento.RemuneracionReferencialNeto as "remuneracionreferencialneto" ,           
+		HR_Requerimiento.CorreoElectronico as "correoelectronico" ,           
+		HR_Requerimiento.FlagTarjetaPersonal as "flagtarjetapersonal", 
+		CAST(HR_Requerimiento.FlagTipoContrato AS VARCHAR(1)) as "flagtipocontrato",          
+		HR_Requerimiento.GrupoCorreoElectronico as "grupocorreoelectronico",
+		HR_Requerimiento.FlagAccesoInternet as "flagaccesointernet" ,           
+		HR_Requerimiento.DispHorarioDia  as "disphorariodia",           
+		HR_Requerimiento.DispHorarioHoraFlag as "disphorariohoraflag" ,           
+		HR_Requerimiento.DispHorarioHora as "disphorariohora",           
+		HR_Requerimiento.DispViajeTipo as "dispviajetipo" ,           
+		HR_Requerimiento.DispViajeLugarFlag  as "dispviajelugarflag" ,           
+		HR_Requerimiento.DispViajeLugar as "dispviajelugar" ,           
+		HR_Requerimiento.TipoTrabajador  as "tipotrabajador" ,           
+		HR_Requerimiento.TipoPlanilla  as "tipoplanilla",           
+		HR_Requerimiento.TipoHorario as "tipohorario" ,           
+		HR_Requerimiento.DeptoOrganizacion as "deptoorganizacion" ,           
+		HR_Requerimiento.Categoria  as "categoria" ,           
+		HR_Requerimiento.Acceso_Correo  as "accesocorreo",           
+        HR_Requerimiento.Acceso_Internet as "accesointernet" ,           
+        HR_Requerimiento.Acceso_SII as "accesosii",           
+        HR_Requerimiento.Acceso_Otros as "accesootros",           
+        HR_Requerimiento.Acceso_Telefono  as "accesotelefono",           
+        HR_Requerimiento.Acceso_Celular as "accesocelular" ,           
+        HR_Requerimiento.Acceso_Oficina as "accesooficina" ,           
+        HR_Requerimiento.Acceso_PC as "accesopc" ,           
+        HR_Requerimiento.Acceso_OtrosSistemas as "accesootrossistemas", 
+		HR_Requerimiento.Acceso_OtrosSistemasComentario  as "acceso_otrossistemascomentario",           
+		HR_Requerimiento.Observaciones as "observaciones" ,           
+		HR_Requerimiento.IncrementoComentario as "incrementocomentario" ,           
+		HR_Requerimiento.LineaCarrera  as "lineacarrera" ,           
+		HR_Requerimiento.Acceso_OtrosComentario  as "acceso_otroscomentario"  ,           
+		HR_Requerimiento.CodigoPuestoSolicitante  as "codigopuestosolicitante" ,           
+		HR_Requerimiento.CodigoJefe as "codigojefe",
+		HR_Requerimiento.TipoReclutamiento as "tiporeclutamiento",
+		HR_Requerimiento.LineaCarrera_2  as "lineacarrera_2",
+		HR_Requerimiento.desnuevocurso as "desnuevocurso",
+		HR_Requerimiento.CodigoPuestonuevo as "codigopuestonuevo",
+		HR_Requerimiento.numeroconcurso as "numeroconcurso",
+		HR_Requerimiento.nivelservicio as "nivelservicio", 
+		HR_REQUERIMIENTO.X_DESC_ORIG_HR_FP as "rutasustento",
+		HR_Requerimiento.NUMEROSOLICITUD  as "numerosolicitud",  
+		HR_Requerimiento.X_DIGITAL_RH_FP as "uuidalfresco",
+		HR_Requerimiento.REFERENCIAFISCAL01 as "referenciafiscal01",
+		HR_Requerimiento.FUENTEFINANCIAMIENTO as "fuentefinanciamiento",
+		HR_Requerimiento.flagEnviado as "flagEnviado",
+		CERTIFICACIONNUMERO as "certificacionnumero", 
+		COMPROMISONUMERO as "compromisonumero", 
+		montoapagar as "montoapagar", 
+		motivorechazo as "motivorechazo", 
+		CONVOCATORIA as "convocatoria", 
+		CONCURSO as "concurso",
+		FECHAENVIO as "fechaEnvio", 
+		SUCURSAL as "sucursal", 
+		FECHACONVOCATORIA as "fechaconvocatoria",
+        ACCESO_MOBILIARIO as "accesomobiliario", 
+        ACCESO_PUNTOELECTRONICO as "accesopuntoelectronico", 
+        UBICACION as "ubicacion", 
+        EMPLEADORESPONSABLE as "empleadoresponsable", 
+        NUMEROPROCESO as "numeroproceso", 
+        CODIGOPROCESO as "codigoproceso", 
+        NIVELAPROBACION as "nivelaprobacion",
+        HR_Requerimiento.MESES_PRUEBA  as "mesesprueba",
+        HR_REQUERIMIENTO.TEMAEVALUACIONCONOCIMIENTO as "temaevaluacionconocimiento",
+        HR_REQUERIMIENTO.DESCRIPCIONPUESTOINFORMATIVO as "descripcionpuestoinformativo"
+		FROM SGCORESYS.HR_Requerimiento      
+		WHERE ( HR_Requerimiento.CompanyOwner = :par_companyowner ) and          
+		( HR_Requerimiento.Requerimiento = :par_requerimiento )
+		   
+		 ]]>
+	</sql-query>
+
+	<sql-query name="hrProc.obtenerCategoriaFuncional">
+    <![CDATA[
+		  SELECT 
+		  			lineacarrera as "lineacarrera", 
+		  			categoriafuncional as "categoriafuncional" 
+		   from SGCORESYS.HR_PuestoEmpresa 
+		   where codigopuesto = :ll_codigopuesto
+     ]]>
+	</sql-query>
+
+	<sql-query name="hrProc.obtenerMinGradoSalario">
+    	<![CDATA[
+			SELECT MIN(GRADOSALARIO) AS "gradosalario" 
+				FROM SGCORESYS.HR_GRADOSALARIOMAST 
+				WHERE CARGO = :ls_familia
+  		]]>
+	</sql-query>
+
+	<sql-query name="hrProc.dddWMaHrGradoSalairalMastSelect">
+    	<![CDATA[
+			SELECT 
+			    HR_GradoSalarioMast.GradoSalario as "gradosalario",   
+			    HR_GradoSalarioMast.DescripcionLocal as "descripcionlocal",
+			    HR_GradoSalarioMast.Cargo  as "cargo"  
+			   FROM 
+			    SGCORESYS.HR_GradoSalarioMast  
+			   WHERE 
+			    HR_GradoSalarioMast.Estado = 'A' AND
+			     nvl(HR_GradoSalarioMast.CATEGORIA,1) = nvl(:p_categoria, nvl(HR_GradoSalarioMast.CATEGORIA,1))
+			   ORDER BY 
+			    HR_GradoSalarioMast.DescripcionLocal ASC  
+  		]]>
+	</sql-query>
+
+	<sql-query name="hrProc.obtenerTipoTrabajadorPlanillaPerfil">
+    	<![CDATA[
+			SELECT 
+				TIPOTRABAJADOR as "tipotrabajador", 
+				PLANILLAPERFIL as "planillaperfil" 
+			FROM SGCORESYS.PR_TIPOPLANILLA 
+			WHERE TIPOPLANILLA = :par_tipoplanilla
+  		]]>
+	</sql-query>
+
+	<sql-query name="hrProc.obtenerCentroCostoXUnidadCompania">
+	<![CDATA[
+			SELECT CENTROCOSTOS as "centrocostos" 
+				FROM SGCORESYS.HR_POSICIONEMPRESA 
+				WHERE CODIGOPOSICION = :w_codigounidad AND 
+				COMPANYOWNER = :w_companiasocio
+	]]>
+	</sql-query>
+
+</hibernate-mapping>

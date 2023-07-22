@@ -1,0 +1,207 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="content">
+		<style>
+.separarRadio {
+	font-size: 0px;
+}
+
+.separarRadio .ui-radiobutton {
+	margin-right: 60px;
+	margin-left: 60px;
+}
+</style>
+		<h:form id="frmEncuestaEjecucion">
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+			<p:panel>
+				<p>
+				<h2>Encuesta : #{cEjecutarEncuesta.encuesta.titulo}</h2>
+				</p>
+
+				<p:fieldset legend="INFORMACIÓN GENERAL" toggleable="true">
+					<p:panelGrid columns="5" layout="grid"
+						styleClass="columnGrid ui-panelgrid-blank">
+						<p:panelGrid columns="1" layout="grid">
+							<p:outputLabel value="EDAD" />
+							<p:selectOneRadio layout="grid" columns="1" required="true"
+								value="#{cEjecutarEncuesta.edad}"
+								requiredMessage="Selecciona la edad">
+								<f:selectItem itemValue="20 a 30 años" itemLabel="20 a 30 años" />
+								<f:selectItem itemValue="31 a 40 años" itemLabel="31 a 40 años" />
+								<f:selectItem itemValue="41 a 50 años" itemLabel="41 a 50 años" />
+								<f:selectItem itemValue="51 a más" itemLabel="51 a más" />
+							</p:selectOneRadio>
+						</p:panelGrid>
+						<p:panelGrid columns="1" layout="grid">
+							<p:outputLabel value="TIPO DE PLANILLA" />
+							<p:selectOneRadio layout="grid" columns="1" required="true"
+								value="#{cEjecutarEncuesta.tipoplanilla}"
+								requiredMessage="Seleccion el tipo de planilla">
+								<f:selectItems value="#{cEjecutarEncuesta.lstTipoPlanilla}"
+									var="tp" itemValue="#{tp.tipoplanilla}"
+									itemLabel="#{tp.descripcion}" />
+							</p:selectOneRadio>
+						</p:panelGrid>
+						<p:panelGrid columns="1" layout="grid">
+							<p:outputLabel value="SEXO" />
+							<p:selectOneRadio layout="grid" columns="1" required="true"
+								value="#{cEjecutarEncuesta.sexo}"
+								requiredMessage="Seleccione el sexo">
+								<f:selectItem itemValue="M" itemLabel="MASCULINO" />
+								<f:selectItem itemValue="F" itemLabel="FEMENINO" />
+							</p:selectOneRadio>
+						</p:panelGrid>
+						<p:panelGrid columns="1" layout="grid">
+							<p:outputLabel value="ÁREA OPERATIVA" />
+							<p:panelGrid columns="1" id="pgArea" layout="grid"
+								columnClasses="ui-grid-col-12">
+
+								<p:selectOneMenu requiredMessage="Selecciona una area"
+									value="#{cEjecutarEncuesta.areaOperariva}" required="true"
+									style="width:220px" filter="true" filterMatchMode="startsWith">
+									<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}"></f:selectItem>
+									<f:selectItems value="#{cEjecutarEncuesta.lstAsArea}" var="cbo"
+										itemLabel="#{cbo.nombre}" itemValue="#{cbo.pk.area}">
+									</f:selectItems>
+								</p:selectOneMenu>
+							</p:panelGrid>
+
+
+							<p:outputLabel value="CARGO ESTRUCTURAL" />
+							<p:panelGrid columns="1" id="pgCargo" layout="grid"
+								columnClasses="ui-grid-col-12">
+								<p:selectOneMenu
+									requiredMessage="El campo Cargo Estructural es Obligatorio"
+									value="#{cEjecutarEncuesta.cargo}" required="true"
+									style="width:220px" filter="true" filterMatchMode="startsWith">
+									<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}"></f:selectItem>
+									<f:selectItems value="#{cEjecutarEncuesta.listarCargosmast}"
+										var="cbo" itemLabel="#{cbo.descripcionlocal}"
+										itemValue="#{cbo.pk.cargo}">
+									</f:selectItems>
+								</p:selectOneMenu>
+							</p:panelGrid>
+
+
+							<p:outputLabel value="GRADO INSTRUCCIÓN" />
+							<p:panelGrid columns="1" id="pgGrado" layout="grid"
+								columnClasses="ui-grid-col-12">
+								<p:selectOneMenu
+									requiredMessage="El campo Grado de Instrucción es Obligatorio"
+									value="#{cEjecutarEncuesta.gradoInstruccion}" required="true"
+									style="width:220px" filter="true" filterMatchMode="startsWith">
+									<f:selectItem itemLabel="#{msg.generico_listar_seleccionar}"></f:selectItem>
+									<f:selectItems
+										value="#{cEjecutarEncuesta.listarGradoInstruccion}" var="cbo"
+										itemLabel="#{cbo.descripcion}"
+										itemValue="#{cbo.pk.gradoinstruccion}">
+									</f:selectItems>
+								</p:selectOneMenu>
+							</p:panelGrid>
+
+
+
+						</p:panelGrid>
+						<p:panelGrid columns="1" layout="grid">
+							<p:outputLabel value="TIEMPO DE SERVICIO" />
+							<p:selectOneRadio layout="grid" columns="1" required="true"
+								value="#{cEjecutarEncuesta.tiemposevicio}"
+								requiredMessage="Seleccion el tiempo de servicio">
+								<f:selectItem itemValue="1" itemLabel="0 a 05 años" />
+								<f:selectItem itemValue="2" itemLabel="06 a 10 años" />
+								<f:selectItem itemValue="3" itemLabel="11 a 20 años" />
+								<f:selectItem itemValue="4" itemLabel="21 a 30 años" />
+								<f:selectItem itemValue="5" itemLabel="31 alos a más" />
+							</p:selectOneRadio>
+						</p:panelGrid>
+					</p:panelGrid>
+				</p:fieldset>
+				<h:panelGrid>
+					<p:outputLabel value="INSTRUCCIONES"
+						rendered="#{cEjecutarEncuesta.encuesta.tipoencuesta eq 'C'}" />
+					<p:outputLabel value="#{msg.hrencuesta_instruccion_clima}"
+						rendered="#{cEjecutarEncuesta.encuesta.tipoencuesta eq 'C'}" />
+					<p:outputLabel value="#{msg.hrencuesta_instruccion_actividad}"
+						rendered="#{cEjecutarEncuesta.encuesta.tipoencuesta eq 'A'}" />
+				</h:panelGrid>
+
+
+				<h3
+					style="color: #000000; font-weight: bolder; font-size: 1.7em; margin: 0px;">#{cEjecutarEncuesta.encuesta.tipoencuesta
+					eq 'P'?cEjecutarEncuesta.titulo2:''}</h3>
+
+				<ui:repeat var="p" value="#{cEjecutarEncuesta.detalle}">
+					<h:panelGrid columns="2">
+						<h:outputText value="#{p.orden} .- "
+							style="font-weight: bold;font-size: 15px;" />
+						<h:outputText value="#{p.descripcion}"
+							style="font-weight: bold;font-size: 15px;" />
+						<p:spacer />
+						<p:selectOneRadio layout="grid" columns="1" required="true"
+							value="#{p.valor}" rendered="#{p.tipo eq 'P'}"
+							requiredMessage="Responda la pregunta #{p.orden}">
+							<f:selectItems value="#{p.valores}" var="v"
+								itemValue="#{v.valor}" itemLabel="#{v.descripcion}" />
+						</p:selectOneRadio>
+						<p:inputTextarea rendered="#{p.tipo eq 'C'}" required="true"
+							value="#{p.observacion}" style="height: 100px;width: 600px;"
+							maxlength="4000"
+							requiredMessage="Responda la pregunta #{p.orden}" />
+					</h:panelGrid>
+					<br />
+				</ui:repeat>
+
+
+				<p:commandButton icon="guardar" styleClass="botonTextoImagen"
+					value="Guardar" update="@(form)"
+					rendered="#{ not empty cEjecutarEncuesta.detalle}"
+					action="#{cEjecutarEncuesta.guardar}"
+					style="float:left;margin-top:15px;margin-bottom:10px;" />
+			</p:panel>
+		</h:form>
+
+
+		<p:confirmDialog appendTo="@(body)" closable="false" header="Aviso"
+			responsive="true" id="cdAviso" widgetVar="confAviso" severity="error"
+			closeOnEscape="false" message="#{cEjecutarEncuesta.errormen}">
+			<h:form>
+				<p:commandButton value="Aceptar" action="#{cEjecutarEncuesta.salir}"
+					immediate="true" ajax="false" />
+			</h:form>
+		</p:confirmDialog>
+
+	</ui:define>
+</ui:composition>
+
+
+<!-- 
+<ol>
+					<ui:repeat var="p" value="#{cEjecutarEncuesta.detalle}">
+						<h:panelGrid columns="2">
+							<h:outputText value="#{p.orden} .- "
+								style="font-weight: bold;font-size: 15px;" />
+							<h:outputText value="#{p.descripcion}"
+								style="font-weight: bold;font-size: 15px;" />
+							<p:spacer />
+							<p:selectOneRadio layout="grid" columns="1" required="true"
+								value="#{p.valor}" rendered="#{p.tipo eq 'P'}"
+								requiredMessage="Responda la pregunta #{p.orden}">
+								<f:selectItems value="#{p.valores}" var="v"
+									itemValue="#{v.valor}" itemLabel="#{v.descripcion}" />
+							</p:selectOneRadio>
+							<p:inputTextarea rendered="#{p.tipo eq 'C'}" required="true"
+								value="#{p.observacion}" style="height: 100px;width: 600px;"
+								maxlength="4000"
+								requiredMessage="Responda la pregunta #{p.orden}" />
+						</h:panelGrid>
+					</ui:repeat>
+					
+					
+				</ol> -->

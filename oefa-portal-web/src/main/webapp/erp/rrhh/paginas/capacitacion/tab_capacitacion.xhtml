@@ -1,0 +1,241 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panel style="zoom:0.99">
+		<h:panelGrid columns="2" style="border-spacing:0px;" width="80%">
+
+			<h:panelGrid columns="2" style="border-spacing:0px;" width="80%">
+				<p:outputLabel value="Capacitación" />
+				<h:panelGrid columns="3" style="border-spacing:0px;">
+					<p:inputText style="width:120px;" />
+					<p:outputLabel value="Estado"
+						style="margin-left: 5px;margin-right: 20px;" />
+					<p:inputText style="width:120px;" />
+				</h:panelGrid>
+				<p:outputLabel value="Entidad" />
+				<p:selectOneMenu style="width:300px;"></p:selectOneMenu>
+				<p:outputLabel value="Documento Referencia" />
+				<p:inputText style="width: 314px;" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" style="border-spacing:0px;">
+				<p:spacer height="20" />
+				<p:spacer height="20" />
+				<p:outputLabel value="Año" />
+				<p:inputText style="width:40px;" />
+				<p:outputLabel value="Fecha Fin Capacitación" />
+				<p:calendar showOn="button" size="12" locale="es"
+					pattern="#{msg.formato_fecha_fecha}" mask="true"
+					showButtonPanel="true" navigator="true" />
+			</h:panelGrid>
+
+		</h:panelGrid>
+
+		<p:separator />
+
+		<h:panelGrid columns="2" style="border-spacing:0px;" width="100%">
+
+			<h:panelGrid columns="2" style="border-spacing:0px;" width="235px">
+				<p:outputLabel value="Fecha Solicitud" />
+				<p:calendar size="12" pattern="#{msg.formato_fecha_fecha}"
+					style="margin-left: -2px;" mask="true" showButtonPanel="true"
+					navigator="true" locale="es"/>
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" style="border-spacing:0px;float:left;">
+				<p:outputLabel styleClass="oefa-required"
+					value="Empleado Solicitante" />
+				<h:panelGrid columns="2" style="border-spacing:0px;">
+					<p:inputText style="width:300px;" />
+					<p:commandButton type="image" icon="buscar" />
+				</h:panelGrid>
+			</h:panelGrid>
+
+		</h:panelGrid>
+
+		<h:panelGrid columns="2" style="border-spacing:0px;" width="74%">
+
+			<h:panelGrid columns="2" style="border-spacing:0px;">
+
+				<h:panelGrid columns="2" style="border-spacing:0px;">
+					<p:outputLabel value="Curso Nuevo" styleClass="oefa-required"
+						style="margin-right: 30px;" />
+					<p:selectBooleanCheckbox />
+				</h:panelGrid>
+				<p:inputText style="width:350px;margin-left: 1px;" />
+
+				<p:outputLabel value="Area Temática" styleClass="oefa-required" />
+				<h:panelGrid columns="2" style="border-spacing:0px;">
+					<p:inputText style="width: 290px;" />
+					<p:commandButton type="image" icon="buscar" />
+				</h:panelGrid>
+
+				<p:outputLabel value="Curso" styleClass="oefa-required" />
+				<p:selectOneMenu style="width: 336px;"></p:selectOneMenu>
+
+				<p:outputLabel value="Institución" styleClass="oefa-required" />
+				<h:panelGrid columns="2" style="border-spacing:0px;">
+					<p:inputText style="width: 290px;" />
+					<p:commandButton type="image" icon="buscar" />
+				</h:panelGrid>
+
+				<p:outputLabel value="País Capacitación" />
+				<p:selectOneMenu style="width: 336px;"></p:selectOneMenu>
+
+				<p:outputLabel value="Lugar del Evento" />
+				<p:inputText style="width:350px;" />
+
+				<p:outputLabel value="Capacitador" />
+				<p:inputText style="width:350px;" />
+
+				<p:outputLabel value="Tipo Capacitador" />
+				<p:selectOneMenu style="width:106px;"></p:selectOneMenu>
+
+				<p:outputLabel value="Financiamiento" />
+				<p:selectOneMenu style="width: 186px;"></p:selectOneMenu>
+
+				<p:spacer />
+				<h:panelGrid columns="3" style="border-spacing:0px;">
+
+					<h:panelGrid columns="2" style="border-spacing:0px;">
+						<p:outputLabel value="% Entidad" />
+						<p:inputText style="width:40px;" />
+					</h:panelGrid>
+
+					<h:panelGrid columns="2" style="border-spacing:0px;">
+						<p:outputLabel value="% Empleado" />
+						<p:inputText style="width:40px;" />
+					</h:panelGrid>
+
+					<h:panelGrid columns="2" style="border-spacing:0px;">
+						<p:outputLabel value="% E. Capacitadora" />
+						<p:inputText style="width:40px;" />
+					</h:panelGrid>
+
+				</h:panelGrid>
+
+				<p:outputLabel value="Modalidad" />
+				<p:selectOneMenu style="width: 336px;"></p:selectOneMenu>
+
+				<p:outputLabel value="Tipo Capacitación" />
+				<p:selectOneMenu style="width: 336px;"></p:selectOneMenu>
+
+				<p:outputLabel value="Observaciones" />
+				<p:inputTextarea
+					style="width:350px;min-width:350px;max-width:350px;height:40px;" />
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" style="border-spacing:0px;" width="100%"
+				columnClasses="columnatablaIzquierda,columnatablaDerecha">
+				<p:spacer height="20" />
+				<p:spacer />
+				<p:outputLabel value="Tipo Curso" styleClass="oefa-required" />
+				<p:selectOneMenu style="width:100px;"></p:selectOneMenu>
+
+				<p:outputLabel value="Vacantes" styleClass="oefa-required" />
+				<p:inputText style="width:50px;" />
+
+				<p:outputLabel value="Participantes" />
+				<p:inputText style="width:50px;" />
+
+				<p:outputLabel value="Inicio" styleClass="oefa-required" />
+				<p:calendar size="15" pattern="#{msg.formato_fecha_fecha}"
+					mask="true" showButtonPanel="true" navigator="true" locale="es"/>
+
+				<p:outputLabel value="Fin" styleClass="oefa-required" />
+				<p:calendar size="15" pattern="#{msg.formato_fecha_fecha}"
+					mask="true" showButtonPanel="true" navigator="true" locale="es"/>
+
+				<p:outputLabel value="Costo Estimado Total" />
+				<p:spacer height="20" />
+
+				<p:outputLabel value="Moneda Local" styleClass="oefa-required" />
+				<p:inputText style="width: 74px;" />
+
+				<p:outputLabel value="Moneda Extranjera" />
+				<p:inputText style="width: 74px;" />
+
+				<p:spacer height="20" />
+				<p:spacer height="20" />
+
+				<p:spacer height="20" />
+				<p:spacer height="20" />
+
+				<p:outputLabel value="Centro Costos" styleClass="oefa-required" />
+				<p:selectOneMenu style="width:150px;"></p:selectOneMenu>
+
+			</h:panelGrid>
+
+		</h:panelGrid>
+
+		<p:separator />
+
+		<h:panelGrid columns="2" style="border-spacing:0px;" width="68%">
+
+			<h:panelGrid columns="3" style="border-spacing:0px;"
+				columnClasses="columnatablaIzquierda,columnatablaCentro,columnatablaCentro">
+				<p:outputLabel value="Costos" />
+				<p:outputLabel value="Moneda Local" />
+				<p:outputLabel value="Moneda Extranjera" />
+
+				<p:outputLabel value="Sub Total" />
+				<p:inputText style="width:120px;" />
+				<p:inputText style="width:120px;" />
+
+				<p:outputLabel value="Total Impuestos" style="margin-right: 32px;" />
+				<p:inputText style="width:120px;" />
+				<p:inputText style="width:120px;" />
+
+				<p:spacer />
+				<p:inputText style="width:120px;" />
+				<p:inputText style="width:120px;" />
+			</h:panelGrid>
+
+
+			<h:panelGrid columns="2" style="border-spacing:0px;">
+				<p:outputLabel value="Tiempos" />
+				<h:panelGrid columns="2" style="border-spacing:0px;">
+					<p:inputText style="width:30px" />
+					<p:outputLabel value="Días" />
+				</h:panelGrid>
+				<p:spacer />
+				<h:panelGrid columns="2" style="border-spacing:0px;">
+					<p:inputText style="width:30px" />
+					<p:outputLabel value="Horas" />
+				</h:panelGrid>
+				<p:outputLabel value="Tipo de Horario" />
+				<p:selectOneMenu style="width:60px"></p:selectOneMenu>
+			</h:panelGrid>
+
+		</h:panelGrid>
+
+		<p:separator />
+
+		<h:panelGrid columns="1" style="border-spacing:0px;" width="100%">
+
+			<h:panelGrid columns="2" style="border-spacing:0px;"
+				styleClass="columnGrid">
+				<p:fieldset legend="Motivo de Rechazo  de RRHH">
+					<p:inputText style="width:700px;" />
+				</p:fieldset>
+				<p:outputLabel styleClass="oefa-required"
+					value="Campos Obligatorios" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" style="border-spacing:0px;">
+				<p:fieldset legend="Estado en Logística" style="width: 90px;margin-top: 10px;"
+					styleClass="oefa-required">
+				</p:fieldset>
+				<p:inputText style="width: 650px;" />
+			</h:panelGrid>
+
+		</h:panelGrid>
+
+	</p:panel>
+
+</ui:composition>

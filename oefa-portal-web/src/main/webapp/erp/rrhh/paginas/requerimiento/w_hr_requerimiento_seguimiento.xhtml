@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		id="tblSeguimiento" paginator="true" paginatorPosition="bottom"
+		scrollable="true" scrollHeight="355" rows="10"
+		sortBy="#{msg.generico_tabla_sinregistros}" reflow="true" var="seg"
+		value="#{cWHrRequerimientoEdit.dw_reqseguimientolist}"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+		<p:column headerText="Sec." width="20" styleClass="columnatablaCentro">
+			<h:outputText value="#{seg.secuencial}" />
+		</p:column>
+
+		<p:column headerText="Código" width="30"
+			styleClass="columnatablaCentro">
+			<h:outputText value="#{seg.responsable}" />
+		</p:column>
+
+		<p:column headerText="Responsable" width="300">
+			<h:outputText value="#{seg.nombrecompleto}" />
+		</p:column>
+
+		<p:column headerText="Ind. aprob." width="50"
+			styleClass="columnatablaCentro">
+			<h:outputText value="SI" rendered="#{seg.indicadorAprobacion == 2}" />
+		</p:column>
+
+		<p:column headerText="Fecha aprob." width="70"
+			styleClass="columnatablaCentro">
+			<h:outputText value="#{seg.fechaaprobacion}">
+				<f:convertDateTime pattern="#{msg.formato_fecha_fechahora_estandar}" locale="es" />
+			</h:outputText>
+		</p:column>
+
+		<p:column headerText="Comentario" width="200"
+			styleClass="columnatablaCentro">
+			<h:outputText value="#{seg.comentario}" />
+		</p:column>
+
+		<p:column headerText="Estado" width="80"
+			styleClass="columnatablaCentro">
+			<h:outputText rendered="#{seg.estado=='A'}" value="Activo" />
+			<h:outputText rendered="#{seg.estado=='I'}" value="Inactivo" />
+		</p:column>
+
+	</p:dataTable>
+</ui:composition>

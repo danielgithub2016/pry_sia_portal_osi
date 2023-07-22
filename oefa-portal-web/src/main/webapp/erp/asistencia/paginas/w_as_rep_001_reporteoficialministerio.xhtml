@@ -1,0 +1,360 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="content">
+
+		<h:form id="frmReporteAsistencia">
+			<h2>Reporte de Asistencia</h2>
+			<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+
+			<p:panel>
+				<p:panelGrid columns="2" style="border-spacing:0px;" id="grdFiltros"
+					columnClasses="ui-grid-col-10,ui-grid-col-10" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:panelGrid columns="5"
+						columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-4,ui-grid-col-1,ui-grid-col-1"
+						layout="grid" styleClass="ui-panelgrid-blank">
+						<h:outputLabel value="Entidad" />
+						<p:inputText onkeypress="return validarIngreso(event,'N');"
+							value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.codCompania}" />
+						<p:inputText readonly="true"
+							value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.desCompania}" />
+
+						<p:commandButton icon="buscar"
+							action="#{cwAsRep001ReporteOficialMinisterio.listarPopGenericos}"
+							styleClass="botonTextoImagenChico">
+							<f:setPropertyActionListener value="compania"
+								target="#{cwAsRep001ReporteOficialMinisterio.tipo}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener
+								target="#{cUFiltros.iMantenimientoReferencia}"
+								value="#{cwAsRep001ReporteOficialMinisterio}" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreContenedorRefrescar}"
+								value="frmReporteAsistencia:grdFiltros" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreVentanaEmergente}"
+								value="w_as_compania_select_individual" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.pantallaReferencia}"
+								value="w_as_rep_001_reporteoficialministerio" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.isseleccionmultiple}" value="false" />
+						</p:commandButton>
+
+						<p:commandButton icon="limpiar"
+							update="frmReporteAsistencia:grdFiltros"
+							action="#{cwAsRep001ReporteOficialMinisterio.limpieza}"
+							styleClass="botonTextoImagenChico">
+
+							<f:setPropertyActionListener value="compania"
+								target="#{cwAsRep001ReporteOficialMinisterio.tipo}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreContenedorRefrescar}"
+								value="frmReporteAsistencia:grdFiltros" />
+						</p:commandButton>
+
+
+						<h:outputLabel value="Centro Costo" />
+						<p:inputText onkeypress="return validarIngreso(event,'N');"
+							value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.codCentroCosto}" />
+						<p:inputText readonly="true"
+							value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.desCentroCosto}" />
+						<p:commandButton icon="buscar"
+							action="#{cwAsRep001ReporteOficialMinisterio.listarPopGenericos}"
+							styleClass="botonTextoImagenChico">
+							<f:setPropertyActionListener value="costos"
+								target="#{cwAsRep001ReporteOficialMinisterio.tipo}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener
+								target="#{cUFiltros.iMantenimientoReferencia}"
+								value="#{cwAsRep001ReporteOficialMinisterio}" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreContenedorRefrescar}"
+								value="frmReporteAsistencia:grdFiltros" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreVentanaEmergente}"
+								value="w_as_compania_select_individual" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.pantallaReferencia}"
+								value="w_as_rep_001_reporteoficialministerio" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.isseleccionmultiple}" value="false" />
+						</p:commandButton>
+
+						<p:commandButton icon="limpiar"
+							update="frmReporteAsistencia:grdFiltros"
+							action="#{cwAsRep001ReporteOficialMinisterio.limpieza}"
+							styleClass="botonTextoImagenChico">
+
+							<f:setPropertyActionListener value="costos"
+								target="#{cwAsRep001ReporteOficialMinisterio.tipo}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreContenedorRefrescar}"
+								value="frmReporteAsistencia:grdFiltros" />
+						</p:commandButton>
+
+						<h:outputLabel value="Sucursal" />
+						<p:inputText onkeypress="return validarIngreso(event,'N');"
+							value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.codSucursal}" />
+						<p:inputText readonly="true"
+							value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.desSucursal}" />
+						<p:commandButton icon="buscar"
+							action="#{cwAsRep001ReporteOficialMinisterio.listarPopGenericos}"
+							styleClass="botonTextoImagenChico">
+							<f:setPropertyActionListener value="sucursal"
+								target="#{cwAsRep001ReporteOficialMinisterio.tipo}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener
+								target="#{cUFiltros.iMantenimientoReferencia}"
+								value="#{cwAsRep001ReporteOficialMinisterio}" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreContenedorRefrescar}"
+								value="frmReporteAsistencia:grdFiltros" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreVentanaEmergente}"
+								value="w_as_compania_select_individual" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.pantallaReferencia}"
+								value="w_as_rep_001_reporteoficialministerio" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.isseleccionmultiple}" value="false" />
+						</p:commandButton>
+
+						<p:commandButton icon="limpiar"
+							update="frmReporteAsistencia:grdFiltros"
+							action="#{cwAsRep001ReporteOficialMinisterio.limpieza}"
+							styleClass="botonTextoImagenChico">
+
+							<f:setPropertyActionListener value="sucursal"
+								target="#{cwAsRep001ReporteOficialMinisterio.tipo}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreContenedorRefrescar}"
+								value="frmReporteAsistencia:grdFiltros" />
+						</p:commandButton>
+
+						<h:outputLabel value="Empleado" />
+						<h:outputText value="Seleccionados"
+							onkeypress="return validarIngreso(event,'N');" id="grdEmpleado"
+							rendered="#{!cwAsRep001ReporteOficialMinisterio.verSeleccionados}" />
+						<h:outputLabel
+							rendered="#{!cwAsRep001ReporteOficialMinisterio.verSeleccionados}" />
+						<p:inputText onkeypress="return validarIngreso(event,'N');"
+							rendered="#{cwAsRep001ReporteOficialMinisterio.verSeleccionados}"
+							value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.codEmpleado}" />
+						<p:inputText readonly="true"
+							rendered="#{cwAsRep001ReporteOficialMinisterio.verSeleccionados}"
+							value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.nombreCompleto}" />
+						<p:commandButton icon="buscar" styleClass="botonTextoImagenChico"
+							action="#{cwAsEmpleadoSelectMultiple.iniciarControladora}">
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.nombreContenedorRefrescar}"
+								value="frmReporteAsistencia:grdFiltros" />
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.iMantenimientoReferencia}"
+								value="#{cwAsRep001ReporteOficialMinisterio}" />
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.nombreVentanaEmergente}"
+								value="w_as_empleado_select_multiple" />
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.pantallaReferencia}"
+								value="w_as_rep_001_reporteoficialministerio" />
+							<f:setPropertyActionListener
+								target="#{cwAsEmpleadoSelectMultiple.flgReporteTodo}" value="S" />
+						</p:commandButton>
+
+						<p:commandButton icon="limpiar"
+							action="#{cwAsRep001ReporteOficialMinisterio.limpiezaEmpleado}"
+							styleClass="botonTextoImagenChico"
+							update="frmReporteAsistencia:grdFiltros">
+						</p:commandButton>
+					</p:panelGrid>
+
+
+					<p:panelGrid columns="5"
+						columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-4,ui-grid-col-1,ui-grid-col-1"
+						layout="grid" styleClass="ui-panelgrid-blank">
+						<h:outputLabel value="Tipo de Planilla" />
+						<p:inputText onkeypress="return validarIngreso(event,'N');"
+							value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.codPlantilla}" />
+						<p:inputText readonly="true"
+							value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.desPlantilla}" />
+						<p:commandButton icon="buscar"
+							action="#{cwAsRep001ReporteOficialMinisterio.listarPopGenericos}"
+							styleClass="botonTextoImagenChico">
+							<f:setPropertyActionListener value="planilla"
+								target="#{cwAsRep001ReporteOficialMinisterio.tipo}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener
+								target="#{cUFiltros.iMantenimientoReferencia}"
+								value="#{cwAsRep001ReporteOficialMinisterio}" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreContenedorRefrescar}"
+								value="frmReporteAsistencia:grdFiltros" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreVentanaEmergente}"
+								value="w_as_compania_select_individual" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.pantallaReferencia}"
+								value="w_as_rep_001_reporteoficialministerio" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.isseleccionmultiple}" value="false" />
+						</p:commandButton>
+						<p:commandButton icon="limpiar"
+							update="frmReporteAsistencia:grdFiltros"
+							action="#{cwAsRep001ReporteOficialMinisterio.limpieza}"
+							styleClass="botonTextoImagenChico">
+
+							<f:setPropertyActionListener value="planilla"
+								target="#{cwAsRep001ReporteOficialMinisterio.tipo}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreContenedorRefrescar}"
+								value="frmReporteAsistencia:grdFiltros" />
+						</p:commandButton>
+
+
+						<h:outputLabel value="Área Operativa" />
+						<p:inputText onkeypress="return validarIngreso(event,'N');"
+							value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.codAreaOperativa}" />
+						<p:inputText readonly="true"
+							value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.desAreaOperativa}" />
+						<p:commandButton icon="buscar"
+							action="#{cwAsRep001ReporteOficialMinisterio.listarPopGenericos}"
+							styleClass="botonTextoImagenChico">
+							<f:setPropertyActionListener value="operaria"
+								target="#{cwAsRep001ReporteOficialMinisterio.tipo}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener
+								target="#{cUFiltros.iMantenimientoReferencia}"
+								value="#{cwAsRep001ReporteOficialMinisterio}" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreContenedorRefrescar}"
+								value="frmReporteAsistencia:grdFiltros" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreVentanaEmergente}"
+								value="w_as_compania_select_individual" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.pantallaReferencia}"
+								value="w_as_rep_001_reporteoficialministerio" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.isseleccionmultiple}" value="false" />
+						</p:commandButton>
+						<p:commandButton icon="limpiar"
+							update="frmReporteAsistencia:grdFiltros"
+							action="#{cwAsRep001ReporteOficialMinisterio.limpieza}"
+							styleClass="botonTextoImagenChico">
+
+							<f:setPropertyActionListener value="operaria"
+								target="#{cwAsRep001ReporteOficialMinisterio.tipo}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreContenedorRefrescar}"
+								value="frmReporteAsistencia:grdFiltros" />
+						</p:commandButton>
+
+						<h:outputLabel value="Puesto" />
+						<p:inputText onkeypress="return validarIngreso(event,'N');"
+							value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.codPuesto}" />
+						<p:inputText readonly="true"
+							value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.desPuesto}" />
+						<p:commandButton icon="buscar"
+							action="#{cwAsRep001ReporteOficialMinisterio.listarPopGenericos}"
+							styleClass="botonTextoImagenChico">
+							<f:setPropertyActionListener value="puestos"
+								target="#{cwAsRep001ReporteOficialMinisterio.tipo}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener
+								target="#{cUFiltros.iMantenimientoReferencia}"
+								value="#{cwAsRep001ReporteOficialMinisterio}" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreContenedorRefrescar}"
+								value="frmReporteAsistencia:grdFiltros" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreVentanaEmergente}"
+								value="w_as_compania_select_individual" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.pantallaReferencia}"
+								value="w_as_rep_001_reporteoficialministerio" />
+							<f:setPropertyActionListener
+								target="#{cUFiltros.isseleccionmultiple}" value="false" />
+						</p:commandButton>
+						<p:commandButton icon="limpiar"
+							update="frmReporteAsistencia:grdFiltros"
+							action="#{cwAsRep001ReporteOficialMinisterio.limpieza}"
+							styleClass="botonTextoImagenChico">
+
+							<f:setPropertyActionListener value="puestos"
+								target="#{cwAsRep001ReporteOficialMinisterio.tipo}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener
+								target="#{cUFiltros.nombreContenedorRefrescar}"
+								value="frmReporteAsistencia:grdFiltros" />
+						</p:commandButton>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+
+
+			<p:panel>
+				<p:panelGrid columns="7" id="grdFechas" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-1,ui-grid-col-1,ui-grid-col-1,ui-grid-col-1,ui-grid-col-1,ui-grid-col-1,ui-grid-col-2"
+					layout="grid" styleClass="ui-panelgrid-blank">
+
+					<p:outputLabel value="Fechas" styleClass="formularioEtiquetaChico2" />
+
+					<p:outputLabel value="Desde" />
+					<p:calendar pattern="dd/MM/yyyy" locale="es" navigator="true"
+						showButtonPanel="true" mask="true"
+						converterMessage="Formato incorrecto. El formato debe ser dd/MM/yyyy"
+						value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.fechadesde}">
+					</p:calendar>
+
+					<p:outputLabel value="Hasta" />
+					<p:calendar pattern="dd/MM/yyyy" locale="es" navigator="true"
+						showButtonPanel="true" mask="true"
+						converterMessage="Formato incorrecto. El formato debe ser dd/MM/yyyy"
+						value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.fechahasta}">
+					</p:calendar>
+
+					<p:outputLabel value="Concepto" />
+					<p:selectOneMenu
+						value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.conceptoacceso}"
+						filter="true" filterMatchMode="contains">
+						<f:selectItem itemLabel="TODOS" />
+						<f:selectItem itemLabel="Permanencias No Autorizadas"
+							itemValue="HE" />
+						<f:selectItem itemLabel="Tardanza" itemValue="TA" />
+						<f:selectItem itemLabel="Permisos No Autorizados" itemValue="FH" />
+						<f:selectItem itemLabel="Otros Conceptos" itemValue="FA" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+
+			</p:panel>
+
+			<p:panel>
+				<p:panelGrid columns="5"
+					columnClasses="ui-grid-col-0.5,ui-grid-col-1.5,ui-grid-col-0.5,ui-grid-col-1.5,ui-grid-col-2"
+					layout="grid" styleClass="ui-panelgrid-blank">
+
+					<p:selectBooleanCheckbox rendered="true"
+						value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.cesados}">
+					</p:selectBooleanCheckbox>
+					<p:outputLabel value="+ Cesados" rendered="true" />
+
+					<p:selectBooleanCheckbox
+						value="#{cwAsRep001ReporteOficialMinisterio.datosgenerico.nogeneraasistencia}" />
+					<p:outputLabel value="Incluir los días que no generan Asistencia" />
+
+
+					<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+						icon="buscar" onstart="PF('bUI').block();"
+						oncomplete="PF('bUI').unblock();" update="@form"
+						action="#{cwAsRep001ReporteOficialMinisterio.buscar}" />
+				</p:panelGrid>
+			</p:panel>
+
+
+			<pe:documentViewer
+				value="#{cwAsRep001ReporteOficialMinisterio.reporte}"
+				style="width:99%;height:600px;" />
+		</h:form>
+
+	</ui:define>
+</ui:composition>

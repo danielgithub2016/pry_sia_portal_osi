@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * @author : desarrollo * @powerbuilder : rrhh.HrFactoresevaluacion -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="hrfactoresevaluacion.obtenerValores">
+		select fe.plantilla as "plantilla",
+		fe.factor
+		as "factor",
+		fe.descripcion "descripcion",
+		0 as "ordenplantilla",
+		fe.ValorRequerido as "valorrequerido",
+		fe.ValorMinimoEsperado as
+		"valorminimoesperado",
+		fe.FlagCalificacion as "flagcalificacion",
+		(select min (a.valor) from SGCORESYS.HR_FactorValor a where a.factor =
+		fe.factor) as "cf_minimo",
+		(select max(a.valorhasta) from
+		SGCORESYS.HR_FactorValor a where a.factor =
+		fe.factor) as "cf_maximo"
+		FROM SGCORESYS.HR_FactoresEvaluacion fe
+		WHERE
+		fe.plantilla=
+		:par_plantilla
+	</sql-query>
+
+	<sql-query name="hrfactoresevaluacion.obtenerFactores">
+		SELECT
+		hr_factoresevaluacion.flagconcepto as
+		"flagconcepto",
+		hr_factoresevaluacion.factor as "factor",
+		hr_factoresevaluacion.ordenplantilla as "ordenplantilla",
+		1
+		"ponderacionfactor" ,
+		1 "factorparticipacion",
+		hr_factoresevaluacion.area as "area",
+		hr_evaluacionarea.descripcion
+		"descripcionarea",
+		hr_evaluacionarea.ponderacion "ponderacionarea" ,
+		hr_factoresevaluacion.flagpotencial "flagpotencial",
+		(hr_factoresevaluacion.descripcion) as "descripcion_factor",
+		hr_factoresevaluacion.flagcompetencia as "flagcompetencia",
+		(hr_factoresevaluacion.explicacion) as "explicacion_factor",
+		hr_factoresevaluacion.valorrequerido as "valorrequerido",
+		hr_factoresevaluacion.valorminimoesperado as "valorminimoesperado",
+		(select min (a.valor) from SGCORESYS.HR_FactorValor a where a.factor =
+		HR_FactoresEvaluacion.factor) as "cf_minimo",
+		(select max(a.valorhasta)
+		from SGCORESYS.HR_FactorValor a where a.factor =
+		HR_FactoresEvaluacion.factor) as "cf_maximo"
+		FROM
+		SGCORESYS.HR_FactoresEvaluacion
+		LEFT JOIN SGCORESYS.HR_EvaluacionArea
+		ON
+		(HR_FactoresEvaluacion.Area=HR_EvaluacionArea.Area)
+		WHERE
+		(
+		HR_FactoresEvaluacion.Plantilla = :par_plantilla )
+	</sql-query>
+
+	<sql-query name="hrfactoresevaluacion.obtenerPromedioCategoriaDesempeno">
+		<![CDATA[
+		SELECT	
+			round(sum(a.calificacion)/ count(a.empleado),2) as "promedio"
+		FROM	 
+			SGCORESYS.hr_detalleevaluacion a
+				inner join SGCORESYS.hr_factoresevaluacion b on (b.factor = a.factor)
+				left join SGCORESYS.hr_evaluacionarea c on (b.area = c.area)
+				left join SGCORESYS.HR_EvaluacionPeriodo d on (d.SecuenciaEval = a.SecuenciaEval and d.CompanyOwner = a.CompanyOwner)
+				LEFT JOIN SGCORESYS.empleadomast f ON (f.EMPLEADO = a.EMPLEADO AND F.COMPANIASOCIO = a.COMPANYOWNER)
+		WHERE	 
+			b.FlagConcepto = 'N' and
+			a.Tipo = 'N' AND
+			f.cargo = (SELECT cargo FROM SGCORESYS.EMPLEADOMAST WHERE EMPLEADO = :empleado AND COMPANIASOCIO = :compania)	and
+			a.companyowner		 = :compania  AND
+			a.SecuenciaEval	 = :secuenciaeval and
+			a.factor = :factor
+		]]>
+	</sql-query>
+
+
+
+
+
+</hibernate-mapping>

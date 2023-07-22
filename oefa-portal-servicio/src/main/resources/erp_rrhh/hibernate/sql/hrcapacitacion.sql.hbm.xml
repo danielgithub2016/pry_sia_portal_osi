@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : rrhh.HrCapacitacion
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <sql-query name="hrcapacitacion.listaCapacitacionPublicas">
+		<![CDATA[
+			SELECT CAPA.CAPACITACION AS "auxpkcapacitacion",
+                        CAPA.COMPANYOWNER AS "auxpkcompanyowner",
+                        CAPA.CURSODESCRIPCION AS "cursodescripcion",
+                        CAPA.LUGARCAPACITACION AS "lugarcapacitacion",
+                        CE.DESCRIPCION AS "auxcentrocapacitacion",
+                        CAPA.AULA AS "aula",
+                        CAPA.NUMEROVACANTES AS "numerovacantes",
+                        CAPA.FECHADESDE as "fechadesde",
+                        CAPA.FECHAHASTA as "fechahasta",
+                        
+                        
+                          CAST(D.DESCRIPCIONLOCAL as varchar(200)) as "auxTipoCapacitacion",
+                          CAST(TIP.DESCRIPCIONLOCAL as varchar(200)) as "auxTipoRegistro",
+                          CAST(CAPA.TIEMPOPERMANENCIA as varchar(200))as "auxTiempoPermanencia" ,
+                           CAPA.TOTALHORAS as "totalhorasAux",
+                           SGCORESYS.HR_OBTENER_AREA_TEMATICA(CAPA.CURSO) AS "auxAreaTematica"
+                           
+            FROM SGCORESYS.HR_CAPACITACION CAPA
+             LEFT JOIN SGCORESYS.HR_CENTROESTUDIOS CE 
+                        ON CAPA.CENTROCAPACITACION =  CE.CENTRO
+            LEFT JOIN SGCORESYS.MA_MISCELANEOSDETALLE D
+                                            ON D.APLICACIONCODIGO='HR'
+                                            AND D.CODIGOTABLA='TIPOCAPA'
+                                            AND D.CODIGOELEMENTO = CAPA.TIPO
+            LEFT JOIN SGCORESYS.MA_MISCELANEOSDETALLE TIP
+                                            ON TIP.APLICACIONCODIGO='HR'
+                                            AND TIP.CODIGOTABLA='TIPOREGCAP'
+                                            AND TIP.CODIGOELEMENTO = CAPA.TIPO_REG
+            WHERE CAPA.ESTADO = 'A'
+            AND upper(CAPA.CURSODESCRIPCION) LIKE '%'|| upper(:curso) || '%'
+            [FILTROTIPOCAPA]
+		]]>
+    </sql-query>
+    
+            
+
+    <sql-query name="hrcapacitacion.listaCapacitacionPublicadas">
+		<![CDATA[
+			SELECT CAPA.CAPACITACION AS "auxpkcapacitacion",
+			            CAPA.COMPANYOWNER AS "auxpkcompanyowner",
+			            CAPA.CURSODESCRIPCION AS "cursodescripcion",
+			            CAPA.LUGARCAPACITACION AS "lugarcapacitacion",
+			            CE.DESCRIPCION AS "auxcentrocapacitacion",
+			            CAPA.AULA AS "aula",
+			            CAPA.NUMEROVACANTES AS "numerovacantes",
+			            CAPA.FECHADESDEINSCRIPCION as "fechadesdeinscripcion",
+			            CAPA.FECHAHASTAINSCRIPCION as "fechahastainscripcion",
+			            CAPA.FECHADESDE as "fechadesde",
+			            CAPA.FECHAHASTA as "fechahasta"
+			FROM SGCORESYS.HR_CAPACITACION CAPA LEFT JOIN SGCORESYS.HR_CENTROESTUDIOS CE 
+			            ON CAPA.CENTROCAPACITACION =  CE.CENTRO
+			WHERE CAPA.FLAGINSCRIPCIONPUBLICA = 'S' AND CAPA.ESTADO = 'A'
+			            AND SYSDATE BETWEEN CAPA.FECHADESDEINSCRIPCION  AND
+			                                                 CAPA.FECHAHASTAINSCRIPCION
+		]]>
+    </sql-query>
+    
+    <sql-query name="hrcapacitacion.contarCapacitacionPublicadas">
+		<![CDATA[
+			SELECT COUNT(1)
+			FROM SGCORESYS.HR_CAPACITACION CAPA LEFT JOIN SGCORESYS.HR_CENTROESTUDIOS CE 
+			            ON CAPA.CENTROCAPACITACION =  CE.CENTRO
+			WHERE CAPA.FLAGINSCRIPCIONPUBLICA = 'S' AND CAPA.ESTADO = 'A'
+			            AND SYSDATE BETWEEN CAPA.FECHADESDEINSCRIPCION AND 
+			                                                 CAPA.FECHAHASTAINSCRIPCION
+		]]>
+    </sql-query>
+    
+    <sql-query name="hrcapacitacion.listarCapacitacionDocumentoPendiente">
+    	<![CDATA[
+    	SELECT CAPA.CAPACITACION AS "auxpkcapacitacion",
+                        CAPA.COMPANYOWNER AS "auxpkcompanyowner",
+                        CAPA.CURSODESCRIPCION AS "cursodescripcion",
+                        CAPA.LUGARCAPACITACION AS "lugarcapacitacion",
+                        CE.DESCRIPCION AS "auxcentrocapacitacion",
+                        CAPA.AULA AS "aula",
+                        CAPA.NUMEROVACANTES AS "numerovacantes",
+                        CAPA.FECHADESDEINSCRIPCION as "fechadesdeinscripcion",
+                        CAPA.FECHAHASTAINSCRIPCION as "fechahastainscripcion",
+                        CAPA.FECHADESDE as "fechadesde",
+                        CAPA.FECHAHASTA as "fechahasta",
+                       -- DOCCAPA.ARCHIVO as "archivo",
+                        DOCCAPA.NOMBREARCHIVO as "nombrearchivo",
+                        DOCCAPA.EXTENSION as "extension"
+                                              
+            FROM SGCORESYS.HR_CAPACITACION CAPA LEFT JOIN SGCORESYS.HR_CENTROESTUDIOS CE 
+                        ON CAPA.CENTROCAPACITACION =  CE.CENTRO INNER JOIN SGCORESYS.HR_EMPLEADOCAPACITACION ECAPA
+                        ON CAPA.CAPACITACION = ECAPA.CAPACITACION
+                        LEFT JOIN SGCORESYS.HR_EMPLEADOCAPA_DOCUMENTO DOCCAPA
+                        ON DOCCAPA.CAPACITACION=CAPA.CAPACITACION
+            WHERE ECAPA.EMPLEADO = :empleado 
+            AND 
+            (
+            (:soli = 'N' AND NVL(ECAPA.FLG_ADJUNTO_SOLICITUD,'N') = NVL(:soli,NVL(ECAPA.FLG_ADJUNTO_SOLICITUD,'N') ) )
+            OR 
+            (:info = 'N' AND NVL(ECAPA.FLG_ADJUNTO_INFORM_FINAL,'N') = NVL(:info,NVL(ECAPA.FLG_ADJUNTO_INFORM_FINAL,'N') ) )
+            )
+    	]]>
+    </sql-query>
+    
+</hibernate-mapping>
+
+
+
+

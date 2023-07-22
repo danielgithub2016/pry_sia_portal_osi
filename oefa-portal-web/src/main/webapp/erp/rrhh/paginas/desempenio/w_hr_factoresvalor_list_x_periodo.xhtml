@@ -1,0 +1,55 @@
+<!--
+@powerbuilder : w_hr_factoresvalor_list_x_periodo
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form id="frmCalificativos">
+		<p:panel>
+			<h:panelGrid columns="2">
+				<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+					scrollWidth="300" scrollable="true" scrollHeight="230"
+					tableStyle="width:300px;" lazy="true"
+					value="#{cwHrFactoresvalorListXperiodo.dw_1}"
+					selection="#{cwHrFactoresvalorListXperiodo.registroSeleccionado}"
+					selectionMode="single" rowKey="#{c.total}" id="idTabla" var="c"
+					currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+					paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+					<p:ajax event="rowSelect" update=":frmCalificativos:idTextArea"
+						listener="#{cwHrFactoresvalorListXperiodo.actualizaEstado}"
+						partialSubmit="true" process="@this" />
+					<p:ajax event="rowDblselect"
+						listener="#{cwHrFactoresvalorListXperiodo.onRowSelectList}"
+						partialSubmit="true" process="@this" />
+
+					<p:column headerText="Valor" width="60">
+						<h:outputText value="#{c.valor}" />
+					</p:column>
+					<p:column headerText="Descripción" width="120">
+						<h:outputText value="#{c.descripcion}" />
+					</p:column>
+				</p:dataTable>
+				<p:inputTextarea
+					style="height: 240px;min-height:240px;max-height:240px;width: 200px;min-width:200px;max-width:200px;background-color: rgba(134, 181, 217, 0.46);color:black;"
+					value="#{cwHrFactoresvalorListXperiodo.mle_1}" id="idTextArea" disabled="true" />
+
+			</h:panelGrid>
+		</p:panel>
+		<p:panel style="margin-top:5px;">
+			<h:panelGrid width="100%">
+				<h:panelGrid style="float:right;" columns="2">
+					<p:commandButton value="Aceptar" icon="aceptar"
+						action="#{cwHrFactoresvalorListXperiodo.wf_set_calificativo}"
+						styleClass="botonTextoImagen" style="float:right;" />
+					<p:commandButton value="Cancelar" icon="cancelar"
+						styleClass="botonTextoImagen" style="float:right;"
+						oncomplete="PF('popFactoresValorPeriodo').hide()" />
+				</h:panelGrid>
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
+</ui:composition>

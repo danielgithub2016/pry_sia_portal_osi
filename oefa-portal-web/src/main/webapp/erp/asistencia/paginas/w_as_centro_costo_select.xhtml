@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+
+	<ui:define name="content">
+		<h:form id="wascentrocostoselect">
+			<p:focus for="txtbuscaCompania" />
+
+			<p:panelGrid columns="4"
+				columnClasses="ui-grid-col-1,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+				layout="grid" styleClass="ui-panelgrid-blank">
+				<p:selectOneMenu
+					value="#{cUFiltros.dw_filtro.codigodescripcionflag}">
+					<f:selectItem itemLabel="Código" itemValue="C" />
+					<f:selectItem itemLabel="Nombre" itemValue="N" />
+				</p:selectOneMenu>
+
+				<p:inputText id="txtbuscaCompania"
+					value="#{cUFiltros.dw_filtro.codigodescripciontext}"
+					onkeypress="return noAcepto(event);" />
+
+				<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+					icon="buscar" action="#{cUFiltros.buscar}" update="tbcompania" />
+
+				<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+					icon="cancelar" action="#{cUFiltros.salir}" />
+
+			</p:panelGrid>
+
+
+			<p:dataTable id="tbcompania"
+				emptyMessage="#{msg.generico_tabla_sinregistros}" paginator="true"
+				paginatorPosition="bottom" rows="20" selectionMode="single"
+				rowKey="#{c.idrow}" scrollable="true" reflow="true"
+				scrollHeight="300" selection="#{cUFiltros.objetoSeleccionado}"
+				currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+				paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+				value="#{cUFiltros.lstFiltro}" var="c">
+
+				<p:ajax event="rowDblselect" listener="#{cUFiltros.onRowSelect}"
+					oncomplete="document.getElementById('wascentrocostoselect:btnRedireccionar').click()" />
+
+				<p:column headerText="Código" width="10"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{c.codigo}" />
+				</p:column>
+
+				<p:column headerText="Nombre" width="200">
+					<h:outputText value="#{c.descripcion}" />
+				</p:column>
+
+			</p:dataTable>
+
+			<p:commandButton action="#{cUFiltros.salir}"
+				style="display:none" id="btnRedireccionar" />
+		</h:form>
+	</ui:define>
+</ui:composition>

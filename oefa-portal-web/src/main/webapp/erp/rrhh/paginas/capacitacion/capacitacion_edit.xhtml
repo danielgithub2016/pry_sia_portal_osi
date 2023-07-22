@@ -1,0 +1,145 @@
+<!-- 
+@powerbuilder hr.w_hr_capacitacion_edit
+ -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<style>
+.ui-panel .ui-panel-content {
+	border: 0 !important;
+	background: none !important;
+	padding: -5px 1px -5px 1px !important;
+}
+
+.ui-tabs .ui-tabs-nav li a {
+	float: left;
+	padding: 0.1em;
+	text-decoration: none;
+}
+</style>
+	<h:form>
+		<p:tabView dynamic="true" id="tvDatos">
+
+			<p:tab>
+				<f:facet name="title">
+					<h:panelGrid columns="2">
+						<p:graphicImage
+							value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1278.bmp" />
+						<h:outputText value="Capacitación" />
+					</h:panelGrid>
+				</f:facet>
+				<ui:include
+					src="/erp/rrhh/paginas/capacitacion/tab_capacitacion.xhtml" />
+			</p:tab>
+
+			<p:tab>
+				<f:facet name="title">
+					<h:panelGrid columns="2">
+						<p:graphicImage
+							value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1012.bmp" />
+						<h:outputText value="Justificación" />
+					</h:panelGrid>
+				</f:facet>
+				<ui:include
+					src="/erp/rrhh/paginas/capacitacion/tab_justificacion.xhtml" />
+			</p:tab>
+
+			<p:tab>
+				<f:facet name="title">
+					<h:panelGrid columns="2">
+						<p:graphicImage
+							value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1308.bmp" />
+						<h:outputText value="Participantes" />
+					</h:panelGrid>
+				</f:facet>
+				<ui:include
+					src="/erp/rrhh/paginas/capacitacion/tab_participantes.xhtml" />
+			</p:tab>
+
+			<p:tab>
+				<f:facet name="title">
+					<h:panelGrid columns="2">
+						<p:graphicImage
+							value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2438.bmp" />
+						<h:outputText value="Horarios" />
+					</h:panelGrid>
+				</f:facet>
+				<ui:include src="/erp/rrhh/paginas/capacitacion/tab_horarios.xhtml" />
+			</p:tab>
+
+			<p:tab>
+				<f:facet name="title">
+					<h:panelGrid columns="2">
+						<p:graphicImage
+							value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2504.bmp" />
+						<h:outputText value="Gastos" />
+					</h:panelGrid>
+				</f:facet>
+				<ui:include src="/erp/rrhh/paginas/capacitacion/tab_gastos.xhtml" />
+			</p:tab>
+
+			<p:tab>
+				<f:facet name="title">
+					<h:panelGrid columns="2">
+						<p:graphicImage
+							value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2560.bmp" />
+						<h:outputText value="Evaluación de Participante" />
+					</h:panelGrid>
+				</f:facet>
+				<ui:include
+					src="/erp/rrhh/paginas/capacitacion/tab_evaluacion_participante.xhtml" />
+			</p:tab>
+
+			<p:tab>
+				<f:facet name="title">
+					<h:panelGrid columns="2">
+						<p:graphicImage
+							value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1052.bmp" />
+						<h:outputText value="Post Capacitación" />
+					</h:panelGrid>
+				</f:facet>
+				<ui:include
+					src="/erp/rrhh/paginas/capacitacion/tab_post_capacitacion.xhtml" />
+			</p:tab>
+
+			<p:tab>
+				<f:facet name="title">
+					<h:panelGrid columns="2">
+						<p:graphicImage
+							value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2484.bmp" />
+						<h:outputText value="Aprobación" />
+					</h:panelGrid>
+				</f:facet>
+				<ui:include src="/erp/rrhh/paginas/capacitacion/tab_aprobacion.xhtml"/>
+			</p:tab>
+
+			<p:tab>
+				<f:facet name="title">
+					<h:panelGrid columns="2">
+						<p:graphicImage
+							value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2692.bmp" />
+						<h:outputText value="Reporte de Evaluación" />
+					</h:panelGrid>
+				</f:facet>
+				<ui:include src="/erp/rrhh/paginas/capacitacion/tab_reporte_evaluacion.xhtml"/>
+			</p:tab>
+
+			<p:tab>
+				<f:facet name="title">
+					<h:panelGrid columns="2">
+						<p:graphicImage
+							value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2490.bmp" />
+						<h:outputText value="Asistencia/Capacitación" />
+					</h:panelGrid>
+				</f:facet>
+				<ui:include src="/erp/rrhh/paginas/capacitacion/tab_asistencia_capacitacion.xhtml"/>
+			</p:tab>
+
+		</p:tabView>
+	</h:form>
+</ui:composition>
+

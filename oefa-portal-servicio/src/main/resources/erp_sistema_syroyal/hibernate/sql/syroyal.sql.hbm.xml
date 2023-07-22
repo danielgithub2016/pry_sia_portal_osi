@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : syroyal.w_sy_selectr_database
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- syroyal.d_calendar -->
+    <sql-query name="syroyal.DCalendar">
+    </sql-query>
+
+    <!-- syroyal.d_dw_filter_dialog -->
+    <sql-query name="syroyal.DDwFilterDialog">
+    </sql-query>
+
+    <!-- syroyal.d_dw_sort_dialog -->
+    <sql-query name="syroyal.DDwSortDialog">
+    </sql-query>
+
+    <!-- syroyal.dw_filter_values -->
+    <sql-query name="syroyal.DwFilterValues">
+    </sql-query>
+
+    <!-- syroyal.dw_label -->
+    <sql-query name="syroyal.DwLabel">
+    </sql-query>
+
+    <!-- syroyal.dw_report_properties_group_external -->
+    <sql-query name="syroyal.DwReportPropertiesGroupExternal">
+    </sql-query>
+
+    <!-- syroyal.dw_report_properties_group_select -->
+    <sql-query name="syroyal.DwReportPropertiesGroupSelect">
+    </sql-query>
+
+    <!-- syroyal.dw_report_properties_sort_external -->
+    <sql-query name="syroyal.DwReportPropertiesSortExternal">
+    </sql-query>
+
+    <!-- syroyal.dw_report_properties_sort_select -->
+    <sql-query name="syroyal.DwReportPropertiesSortSelect">
+    </sql-query>
+
+    <!-- syroyal.dw_selector_datawindow -->
+    <sql-query name="syroyal.DwSelectorDatawindow">
+    </sql-query>
+
+    <!-- syroyal.dw_source -->
+    <sql-query name="syroyal.DwSource">
+    </sql-query>
+
+    <!-- syroyal.dw_spring_about -->
+    <sql-query name="syroyal.DwSpringAbout">
+    </sql-query>
+
+</hibernate-mapping>

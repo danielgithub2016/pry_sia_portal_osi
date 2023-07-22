@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="frmHrRequerimientoReemplazo">
+
+		<p:growl life="#{msg.generico_tiempo_growl}" />
+
+		<p:panelGrid columns="3" style="border-spacing:0px;"
+			columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+			layout="grid" styleClass="ui-panelgrid-blank">
+			<p:commandButton value="Agregar" icon="nuevo" immediate="true"
+				process="@form"
+				action="#{cWHrRequerimientoEdit.nuevoRequerimientoAdicional}"
+				rendered="#{cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}" />
+			<p:commandButton value="Editar" icon="editar"
+				update="frmHrRequerimientoReemplazo" process="@form"
+				immediate="true"
+				rendered="#{cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+				action="#{cWHrRequerimientoEdit.editarRequerimientoAdicional}" />
+			<p:commandButton value="Eliminar" icon="eliminar" immediate="true"
+				process="@form"
+				rendered="#{cWHrRequerimientoEdit.opciones.ishabilitardwrequerimiento}"
+				action="#{cWHrRequerimientoEdit.eliminarRequerimientoAdicional}"
+				update="tblReemplazo" />
+		</p:panelGrid>
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			id="tblReemplazo" paginator="true" paginatorPosition="bottom"
+			scrollable="true" scrollHeight="355" rows="10"
+			sortBy="#{msg.generico_tabla_sinregistros}" reflow="true"
+			selection="#{cWHrRequerimientoEdit.dw_reqadicionalregistro}"
+			selectionMode="single" var="reem" rowKey="#{reem.pk.empleado}"
+			value="#{cWHrRequerimientoEdit.dw_reqadicionallist}"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+			<p:ajax event="rowSelect"
+				listener="#{cWHrRequerimientoEdit.onRowSelectReemplazo}" />
+
+			<p:column headerText="Código" width="40"
+				styleClass="columnatablaCentro">
+				<h:outputText value="#{reem.pk.empleado}" />
+			</p:column>
+
+			<p:column headerText="Nombres y Apellidos" width="200">
+				<h:outputText value="#{reem.auxiliarempleado}" />
+			</p:column>
+
+			<p:column headerText="Motivo de Requerimiento" width="160">
+				<h:outputText value="#{reem.auxiliarmotivo}" />
+			</p:column>
+
+			<p:column headerText="Puesto" width="160">
+				<h:outputText value="#{reem.auxiliarpuesto}" />
+			</p:column>
+
+			<p:column headerText="Fecha del Cese" width="70"
+				styleClass="columnatablaCentro">
+				<h:outputText value="#{reem.fechacese}">
+					<f:convertDateTime pattern="#{msg.formato_fecha_fecha}" locale="es" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="Sueldo" width="65"
+				styleClass="columnatablaCentro">
+				<h:outputText value="#{reem.auxiliarsueldo}" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+</ui:composition>

@@ -1,0 +1,534 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/comun/plantillas/main.xhtml">
+
+	<ui:define name="content">
+
+
+		<div class="ui-fluid">
+
+			<p:outputLabel
+				value="Reprogramación de Vacaciones #{cwAsAutorizacionReprogramacionVacacionesEdit.pantallaTituloReferente}"
+				styleClass="tituloSubrayado" />
+			<br />
+
+			<h:form id="wasautorizacionreprogramacionvacasedit">
+
+
+				<p:growl life="#{msg.generico_tiempo_growl}" autoUpdate="true" />
+
+				<p:commandButton style="display:none" id="btnbuscaremp"
+					update="wasautorizacionreprogramacionvacasedit" rendered="false"
+					action="#{cwAsAutorizacionReprogramacionVacacionesEdit.empleadoKeyEvent}">
+				</p:commandButton>
+
+				<p:panel>
+					<p:panelGrid columns="3" id="grdEmpleado"
+						style="border-spacing:0px;"
+						columnClasses="ui-grid-col-1,ui-grid-col-4,ui-grid-col-5"
+						layout="grid" styleClass="ui-panelgrid-blank">
+
+						<p:outputLabel value="Cod. Empleado" />
+						<p:panelGrid columns="2" style="border-spacing:0px;"
+							columnClasses="ui-grid-col-3,ui-grid-col-10" layout="grid"
+							styleClass="ui-panelgrid-blank">
+							<p:inputText disabled="true"
+								value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.empleado}">
+							</p:inputText>
+							<p:inputText disabled="true"
+								value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.empleadonombre}" />
+							<p:commandButton icon="buscar" immediate="true"
+								title="Buscar Empleado" rendered="false"
+								disabled="#{!cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ishabilitarcb1 or
+						            !cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ishabilitarok}"
+								action="#{cwAsEmpleadoSelect.iniciarControladora}"
+								update="@form">
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.nombreContenedorRefrescar}"
+									value="wasautorizacionreprogramacionvacasedit" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.iMantenimientoReferencia}"
+									value="#{cwAsAutorizacionReprogramacionVacacionesEdit}" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.nombreVentanaEmergente}"
+									value="w_as_empleado_select" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.pantallaReferencia}"
+									value="w_as_autorizacion_preproceso_hextra_edit" />
+
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.nombreTipoBusqueda}"
+									value="agregarEmpleado" />
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.flgTodos}" value="N" />
+
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.esPermisoSIGED}" value="false" />
+
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.usuarioRed}" value="" />
+
+								<f:setPropertyActionListener
+									target="#{cwAsEmpleadoSelect.mostraAsignarTodos}" value="false" />
+							</p:commandButton>
+						</p:panelGrid>
+						<p:outputLabel value="" />
+
+						<p:outputLabel value="Área Operativa" />
+						<p:inputText disabled="true"
+							value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.puesto}" />
+						<p:panelGrid columns="2"
+							columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid"
+							styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+							<p:outputLabel value="Estado: " style="font-size:18px" />
+							<p:outputLabel value="Solicitado" style="font-size:18px"
+								rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.estado == 'S'}" />
+							<p:outputLabel value="Aprobado" style="font-size:18px"
+								rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.estado == 'A'}" />
+							<p:outputLabel value="Visado" style="font-size:18px"
+								rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.estado == 'V'}" />
+							<p:outputLabel value="Rechazado" style="font-size:18px"
+								rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.estado == 'R'}" />
+						</p:panelGrid>
+
+
+
+						<p:outputLabel value="Centro de Costo" />
+						<p:inputText disabled="true"
+							value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.centrocosto}" />
+						<p:panelGrid columns="2" style="border-spacing:0px;"
+							columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid"
+							styleClass="ui-panelgrid-blank">
+							<p:commandButton value="Aceptar" icon="aceptar" update="@form"
+								onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+								rendered="#{!cwAsAutorizacionReprogramacionVacacionesEdit.ib_elimina}"
+								action="#{cwAsAutorizacionReprogramacionVacacionesEdit.guardar}">
+								<f:param name="validation1" value="1"></f:param>
+							</p:commandButton>
+
+
+							<p:commandButton value="Cancelar" icon="cancelar"
+								immediate="true"
+								action="#{cwAsAutorizacionReprogramacionVacacionesEdit.salir}">
+								<p:confirm header="#{msg.generico_mensaje_confirmacion}"
+									icon="alerta" message="¿Desea cancelar la Operación?" />
+							</p:commandButton>
+						</p:panelGrid>
+
+					</p:panelGrid>
+				</p:panel>
+
+				<p:panel>
+					<p:panelGrid columns="3"
+						columnClasses="ui-grid-col-12,ui-grid-col-10,ui-grid-col-1"
+						layout="grid" styleClass="ui-panelgrid-blank"
+						style="border-spacing:0px;">
+
+						<p:fieldset>
+
+							<p:panelGrid columns="1" columnClasses="ui-grid-col-20"
+								layout="grid" styleClass="ui-panelgrid-blank"
+								style="border-spacing:0px;">
+								<h:outputLabel value="Evento"
+									style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+
+								<p:outputPanel>
+									<p:selectOneRadio id="customRadio" layout="custom"
+										required="#{param['validation1']=='1'}"
+										requiredMessage="Debe ingresar un evento"
+										disabled="#{!cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ishabilitardweventos or
+									cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.empleado == NULL or !cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ishabilitarok}"
+										valueChangeListener="#{cwAsAutorizacionReprogramacionVacacionesEdit.valueChangeEventEvento}"
+										value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.categoriaautorizacion}">
+										<f:selectItems itemValue="#{event.conceptoacceso}"
+											itemLabel="#{event.nombrelargo}" var="event"
+											value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_eventos}" />
+										<p:ajax update="@form" />
+									</p:selectOneRadio>
+
+									<ui:repeat
+										value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_eventos}"
+										var="eve">
+										<p:panelGrid columns="2" cellpadding="1">
+											<p:radioButton
+												for="wasautorizacionreprogramacionvacasedit:customRadio"
+												itemIndex="#{eve.indice}" />
+											<p:outputLabel value="#{eve.nombrelargo}" />
+										</p:panelGrid>
+									</ui:repeat>
+								</p:outputPanel>
+							</p:panelGrid>
+
+							<p:panelGrid columns="1" columnClasses="ui-grid-col-20"
+								layout="grid" styleClass="ui-panelgrid-blank"
+								style="border-spacing:0px;"
+								rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.categoriaautorizacion == 'CHOR' and
+									cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.empleado != NULL}">
+								<p:outputLabel value="Horario" />
+								<p:selectOneMenu
+									value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.tipohorario}"
+									style="width:200px">
+									<f:selectItem itemLabel="--Seleccione--" />
+									<f:selectItems
+										value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dwc_tipohorario}" />
+								</p:selectOneMenu>
+							</p:panelGrid>
+
+							<p:panelGrid columns="2"
+								columnClasses="ui-grid-col-2,ui-grid-col-6" layout="grid"
+								styleClass="ui-panelgrid-blank" style="border-spacing:0px;"
+								rendered="#{(cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.categoriaautorizacion == 'OTRO'  or 
+											 cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.categoriaautorizacion == 'COMP')
+									and cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.empleado != NULL}">
+								<p:outputLabel value="Concepto" />
+								<p:selectOneMenu
+									requiredMessage="El campo Concepto es obligatorio."
+									filter="true" filterMatchMode="contains"
+									required="#{cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ishabilitarconcepto}"
+									disabled="#{!cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ishabilitarconcepto}"
+									valueChangeListener="#{cwAsAutorizacionReprogramacionVacacionesEdit.valuechangedConceptoAcceso}"
+									value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.conceptoacceso}">
+									<f:selectItem itemLabel="--Seleccione--" />
+									<f:selectItems
+										value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dwc_ConceptoAccesoFiltrado}"
+										var="conac" itemValue="#{conac.conceptoacceso}"
+										itemLabel="#{conac.conceptoacceso} - #{conac.descripcionlocal} - (#{conac.descripcion})" />
+									<p:ajax update="@form" />
+								</p:selectOneMenu>
+							</p:panelGrid>
+
+
+							<p:panelGrid columns="2" id="grdDetEvento"
+								columnClasses="ui-grid-col-2,ui-grid-col-20" layout="grid"
+								styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+								<p:outputLabel value="Lugar"
+									rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.categoriaautorizacion == 'SOBR' and
+							cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.empleado != NULL}" />
+								<p:selectOneRadio required="true"
+									disabled="#{!cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ishabilitarlugar}"
+									requiredMessage="Debe seleccionar el Lugar"
+									rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.categoriaautorizacion == 'SOBR' and
+							cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.empleado != NULL}"
+									value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.tipoautorizacion}"
+									valueChangeListener="#{cwAsAutorizacionReprogramacionVacacionesEdit.valuechangeTipoAutorizacion}">
+									<f:selectItem itemValue="D"
+										itemLabel="DENTRO de la Institución" />
+									<f:selectItem itemValue="F" itemLabel="FUERA de la Institución" />
+								</p:selectOneRadio>
+
+								<h:outputLabel value="Fecha"
+									style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+								<p:panelGrid columns="2"
+									columnClasses="ui-grid-col-1,ui-grid-col-12" layout="grid"
+									styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+									<p:outputLabel value="del" />
+									<p:panelGrid columns="4"
+										columnClasses="columnGrid ui-grid-col-12,columnGrid ui-grid-col-2,columnGrid ui-grid-col-12,columnGrid ui-grid-col-5"
+										layout="grid" styleClass="ui-panelgrid-blank"
+										style="border-spacing:0px;">
+										<p:calendar required="true" locale="es" navigator="true"
+											showButtonPanel="true" mask="true" id="clddel"
+											disabled="#{!cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ishabilitarfecha}"
+											requiredMessage="El campo fecha del es requerida"
+											validator="#{cwAsAutorizacionReprogramacionVacacionesEdit.validarfechainicio}"
+											converterMessage="El formato de fecha debe ser dd/MM/yyyy Ejem: 01/01/1900"
+											value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.fecha}"
+											pattern="dd/MM/yyyy">
+											<p:ajax event="blur"
+												listener="#{cwAsAutorizacionReprogramacionVacacionesEdit.keyfechainicio}"
+												update="cldal,lblDiasDif" />
+											<p:ajax event="dateSelect"
+												listener="#{cwAsAutorizacionReprogramacionVacacionesEdit.valuechangeFecha}"
+												update="cldal,lblDiasDif" />
+										</p:calendar>
+										<h:outputLabel value="al"
+											rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.categoriaautorizacion != 'OMIS'}" />
+										<p:calendar locale="es" navigator="true"
+											showButtonPanel="true" id="cldal"
+											requiredMessage="El campo fecha al es requerida" mask="true"
+											required="#{cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ishabilitarfechafin}"
+											validator="#{cwAsAutorizacionReprogramacionVacacionesEdit.validarfechafin}"
+											converterMessage="El formato de fecha debe ser dd/MM/yyyy Ejem: 01/01/1900"
+											disabled="#{!cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ishabilitarfechafin}"
+											rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.categoriaautorizacion != 'OMIS'}"
+											value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.fechafin}"
+											pattern="dd/MM/yyyy">
+											<p:ajax event="dateSelect" update="lblDiasDif"
+												listener="#{cwAsAutorizacionReprogramacionVacacionesEdit.valuechangeFechaFin}" />
+											<p:ajax event="blur"
+												listener="#{cwAsAutorizacionReprogramacionVacacionesEdit.keyfechafin}"
+												update="lblDiasDif" />
+										</p:calendar>
+										<p:outputLabel
+											rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.categoriaautorizacion == 'OMIS'}" />
+										<p:outputLabel
+											rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.categoriaautorizacion == 'OMIS'}" />
+										<p:outputLabel id="lblDiasDif"
+											value="Días: #{cwAsAutorizacionReprogramacionVacacionesEdit.diferenciaDia}"
+											rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.categoriaautorizacion != 'OMIS'}" />
+									</p:panelGrid>
+								</p:panelGrid>
+
+
+								<p:outputLabel value="Descripción" />
+								<p:inputTextarea cols="70" maxlength="255"
+									disabled="#{!cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ishabilitarobservaciones}"
+									value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.observacion}" />
+
+								<p:outputLabel value="N° Resolución"
+									rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ismostrarnroresolucion and
+							cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.empleado != NULL}" />
+								<p:panelGrid columns="3"
+									columnClasses="ui-grid-col-8,ui-grid-col-2,ui-grid-col-8"
+									layout="grid" styleClass="ui-panelgrid-blank"
+									style="border-spacing:0px;"
+									rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ismostrarnroresolucion and
+							cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.empleado != NULL}">
+									<p:inputText maxlength="25"
+										disabled="#{!cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ishabilitarnroresolucion}"
+										value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.nroresolucion}" />
+
+									<p:outputLabel value="Fecha" />
+
+									<p:calendar locale="es" navigator="true" showButtonPanel="true"
+										mask="true"
+										converterMessage="El formato de fecha debe ser dd/MM/yyyy Ejem: 01/01/1900"
+										value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.fecharesolucion}"
+										pattern="dd/MM/yyyy" />
+								</p:panelGrid>
+
+
+								<p:outputLabel value="Archivo Adjunto"
+									rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ismostrarrutadocumento}" />
+								<p:panelGrid columns="3"
+									rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ismostrarrutadocumento}"
+									columnClasses="ui-grid-col-12,ui-grid-col-2,ui-grid-col-2"
+									layout="grid" styleClass="ui-panelgrid-blank"
+									style="border-spacing:0px;" id="grdArchivo">
+									<p:inputText disabled="true"
+										rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ismostrarrutadocumento}"
+										value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.rutadocumento}">
+									</p:inputText>
+									<p:commandButton icon="archivo"
+										disabled="#{!cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ishabilitarverarchivo}"
+										title="Adjuntar Archivo" immediate="true"
+										action="#{cwWhDocumentoArchivoList.nuevo}"
+										rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ismostrarrutadocumento}">
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.iMantenimientoReferencia}"
+											value="#{cwAsAutorizacionReprogramacionVacacionesEdit}" />
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.nombreTipoBusqueda}"
+											value="cargarDocumento" />
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.nombreContenedorRefrescar}"
+											value="wasautorizacionreprogramacionvacasedit:grdArchivo" />
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.islistado}" value="false" />
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.isrequierecomentario}"
+											value="false" />
+										<f:setPropertyActionListener
+											target="#{cwWhDocumentoArchivoList.isIformeFinal}"
+											value="false" />
+									</p:commandButton>
+									<h:commandLink title="Ver" target="_blank" immediate="true"
+										action="#{cwAsAutorizacionReprogramacionVacacionesEdit.verDocumento}"
+										rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ismostrarver}">
+										<h:graphicImage
+											value="/comun/recursos/imagenes/mantenimiento/btn_preview1_16.png" />
+									</h:commandLink>
+									<p:outputLabel
+										rendered="#{!cwAsAutorizacionReprogramacionVacacionesEdit.opciones.ismostrarver}" />
+								</p:panelGrid>
+
+								<p:outputLabel value="Solicitado por"
+									styleClass="formularioEtiquetaChico1" />
+								<p:panelGrid columns="2"
+									columnClasses="ui-grid-col-12,ui-grid-col-8" layout="grid"
+									styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+									<p:inputText
+										value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.solicitadopornombre}"
+										disabled="true" />
+									<p:inputText
+										value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.fechasolicitud}"
+										disabled="true">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm a" />
+									</p:inputText>
+								</p:panelGrid>
+
+								<p:outputLabel value="Autorizado por"
+									styleClass="formularioEtiquetaChico1" />
+								<p:panelGrid columns="2"
+									columnClasses="ui-grid-col-12,ui-grid-col-8" layout="grid"
+									styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+									<p:inputText disabled="true"
+										value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.autorizadopornombre}" />
+									<p:inputText
+										value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.fechaautorizacion}"
+										disabled="true">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm a" />
+									</p:inputText>
+								</p:panelGrid>
+
+
+
+								<p:outputLabel value="Últ. Modificación" />
+								<p:panelGrid columns="2"
+									columnClasses="ui-grid-col-12,ui-grid-col-8" layout="grid"
+									styleClass="ui-panelgrid-blank" style="border-spacing:0px;">
+									<p:inputText
+										value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.ultimousuarionombre}"
+										disabled="true" />
+									<p:inputText
+										value="#{cwAsAutorizacionReprogramacionVacacionesEdit.dw_1.ultimafechamodif}"
+										disabled="true">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm a" />
+									</p:inputText>
+								</p:panelGrid>
+							</p:panelGrid>
+						</p:fieldset>
+						<p:fieldset>
+							<p:panelGrid columns="1" columnClasses="ui-grid-col-20"
+								rendered="#{cwAsAutorizacionReprogramacionVacacionesEdit.verHistorialVacaciones}">
+								<ui:include src="w_historial_vacaciones.xhtml" />
+							</p:panelGrid>
+						</p:fieldset>
+
+
+						<p:outputLabel />
+					</p:panelGrid>
+				</p:panel>
+			</h:form>
+		</div>
+
+		<p:dialog id="dgDocumento" widgetVar="popDocumento" modal="true"
+			appendTo="@(Body)" header="Selector de Documento" resizable="false"
+			responsive="true" fitViewport="true" dynamic="true">
+			<ui:include
+				src="/comun/paginas/frm_documento_selector_emergente.xhtml" />
+		</p:dialog>
+
+		<p:dialog id="dgIntervalosAutorizacion" dynamic="true"
+			resizable="false" draggable="false" fitViewport="true"
+			header="Intervalos de Autorización" responsive="true"
+			widgetVar="popIntervalosAutorizacion" appendTo="@(body)" modal="true">
+			<ui:include
+				src="w_as_autorizacion_reprogramacion_vacaciones_intervalo.xhtml" />
+		</p:dialog>
+
+		<p:dialog id="dgMensajeConsideracion" dynamic="true" resizable="false"
+			draggable="false" fitViewport="true" header="Mensaje"
+			responsive="true" widgetVar="popMensajeConsideracion"
+			appendTo="@(body)" modal="true">
+
+			<h:outputText
+				value="Las Vacaciones reprogramadas se anularán cuando se Aprueben estas nuevas fechas." />
+
+			<p:commandButton value="Continuar" icon="aceptar" immediate="true"
+				process="@this" onstart="PF('bUI').block();"
+				oncomplete="PF('bUI').unblock();"
+				action="#{cwAsAutorizacionReprogramacionVacacionesEdit.listarReprogramaciones}" />
+		</p:dialog>
+
+
+		<p:confirmDialog id="dgAvisoSiNo" closable="false"
+			widgetVar="popAvisoSiNo" header="Aviso" resizable="false"
+			severity="info" appendTo="@(body)" responsive="true"
+			message="Fecha ingresada muy superior al actual. ¿Desea Grabar?">
+			<div class="ui-fluid">
+				<h:form>
+					<p:panelGrid columns="2" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<p:commandButton value="Si" onstart="PF('bUI').block()"
+							oncomplete="PF('bUI').unblock()"
+							action="#{cwAsAutorizacionReprogramacionVacacionesEdit.validarFechaFin}" />
+						<p:commandButton value="No" onclick="PF('popAvisoSiNo').hide();" />
+					</p:panelGrid>
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+		<p:confirmDialog id="dgNuevaSolicitud" closable="false"
+			widgetVar="popNuevaSolicitud" header="Advertencia" resizable="false"
+			severity="info" appendTo="@(body)" responsive="true"
+			message="Se guardará el registro como una nueva solicitud en estado SOLICITADO. ¿Desea continuar?">
+			<div class="ui-fluid">
+				<h:form>
+					<p:panelGrid columns="2" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<p:commandButton value="Si"
+							action="#{cwAsAutorizacionReprogramacionVacacionesEdit.nuevaSolicitud}" />
+						<p:commandButton value="No"
+							onclick="PF('popNuevaSolicitud').hide();" />
+					</p:panelGrid>
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+		<p:dialog id="dgHorarioMantenimiento" dynamic="true" resizable="false"
+			header="Cambio de Horario" widgetVar="popHorarioMantenimiento"
+			appendTo="@(body)" modal="true" responsive="true">
+			<ui:include src="horario_mantenimiento.xhtml" />
+		</p:dialog>
+
+		<p:confirmDialog id="dgAlertaLicencia" closable="false"
+			widgetVar="popAlertaLicencia" header="Advertencia" resizable="false"
+			severity="info" appendTo="@(body)" responsive="true"
+			message="#{cwAsAutorizacionReprogramacionVacacionesEdit.mensajelicencia}">
+			<div class="ui-fluid">
+				<h:form>
+					<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+						paginator="true" paginatorPosition="bottom" scrollable="true"
+						value="#{cwAsAutorizacionReprogramacionVacacionesEdit.licencias}"
+						var="licen" reflow="true" style="max-width:600px"
+						currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+						paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+						scrollHeight="200">
+
+						<f:facet name="header">
+							<h:outputText value="Días que generó Licencia sin Goce" />
+						</f:facet>
+
+						<p:column headerText="Desde" styleClass="columnatablaCentro">
+							<h:outputText value="#{licen.fecha}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Hasta" styleClass="columnatablaCentro">
+							<h:outputText value="#{licen.fechahasta}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Días Habiles"
+							styleClass="columnatablaDerecha">
+							<h:outputText value="#{licen.veces}" />
+						</p:column>
+					</p:dataTable>
+
+					<p:panelGrid columns="1" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-4" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<p:commandButton value="Ok"
+							action="#{cwAsAutorizacionReprogramacionVacacionesEdit.guardardesdelicencia}" />
+					</p:panelGrid>
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+
+	</ui:define>
+</ui:composition>
+
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrSeguridad" table="SGCORESYS.HR_SEGURIDAD">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrSeguridadPk">
+            <key-property name="usuario" type="string">
+                <column name="USUARIO" length="20" />
+            </key-property>
+            <key-property name="conceptoseguridad" type="string">
+                <column name="CONCEPTOSEGURIDAD" length="10" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="valortexto" type="string">
+            <column name="VALORTEXTO" length="100" />
+        </property>
+        <property name="valornumero" type="big_decimal">
+            <column name="VALORNUMERO" length="22" />
+        </property>
+        <property name="valorfecha" type="timestamp">
+            <column name="VALORFECHA" length="7" />
+        </property>
+    </class>
+</hibernate-mapping>

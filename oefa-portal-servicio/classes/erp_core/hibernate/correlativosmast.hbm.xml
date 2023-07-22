@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.core.dominio.Correlativosmast" table="SGCORESYS.CORRELATIVOSMAST">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.CorrelativosmastPk">
+            <key-property name="companiacodigo" type="string">
+                <column name="COMPANIACODIGO" length="6" />
+            </key-property>
+            <key-property name="tipocomprobante" type="string">
+                <column name="TIPOCOMPROBANTE" length="2" />
+            </key-property>
+            <key-property name="serie" type="string">
+                <column name="SERIE" length="4" />
+            </key-property>
+        </composite-id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="30" />
+        </property>
+        <property name="correlativonumero" type="integer">
+            <column name="CORRELATIVONUMERO" length="22" />
+        </property>
+        <property name="correlativodesde" type="integer">
+            <column name="CORRELATIVODESDE" length="22" />
+        </property>
+        <property name="correlativohasta" type="integer">
+            <column name="CORRELATIVOHASTA" length="22" />
+        </property>
+        <property name="almacencodigo" type="string">
+            <column name="ALMACENCODIGO" length="4" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="datawindowobjeto" type="string">
+            <column name="DATAWINDOWOBJETO" length="40" />
+        </property>
+        <property name="controlfisicoflag" type="string">
+            <column name="CONTROLFISICOFLAG" length="1" />
+        </property>
+        <property name="impresoraflag" type="string">
+            <column name="IMPRESORAFLAG" length="1" />
+        </property>
+        <property name="impresora" type="string">
+            <column name="IMPRESORA" length="50" />
+        </property>
+        <property name="ancho" type="integer">
+            <column name="ANCHO" length="22" />
+        </property>
+        <property name="alto" type="integer">
+            <column name="ALTO" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

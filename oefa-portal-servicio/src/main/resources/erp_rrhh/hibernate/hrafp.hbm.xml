@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrAfp" table="SGCORESYS.HR_AFP">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrAfpPk">
+            <key-property name="codigoafp" type="string">
+                <column name="CODIGOAFP" length="3" />
+            </key-property>
+        </composite-id>
+        <property name="nombreafp" type="string">
+            <column name="NOMBREAFP" length="40" />
+        </property>
+        <property name="direccionafp" type="string">
+            <column name="DIRECCIONAFP" length="60" />
+        </property>
+        <property name="casillapostal" type="string">
+            <column name="CASILLAPOSTAL" length="15" />
+        </property>
+        <property name="departamento" type="string">
+            <column name="DEPARTAMENTO" length="3" />
+        </property>
+        <property name="codigopostal" type="string">
+            <column name="CODIGOPOSTAL" length="3" />
+        </property>
+        <property name="documentofiscal" type="string">
+            <column name="DOCUMENTOFISCAL" length="8" />
+        </property>
+        <property name="aportefondopensiones" type="big_decimal">
+            <column name="APORTEFONDOPENSIONES" length="22" />
+        </property>
+        <property name="topeaplicacionprima" type="integer">
+            <column name="TOPEAPLICACIONPRIMA" length="22" />
+        </property>
+        <property name="comisionfija" type="integer">
+            <column name="COMISIONFIJA" length="22" />
+        </property>
+        <property name="comisionvariable" type="big_decimal">
+            <column name="COMISIONVARIABLE" length="22" />
+        </property>
+        <property name="seguro" type="big_decimal">
+            <column name="SEGURO" length="22" />
+        </property>
+        <property name="codigoproveedor" type="integer">
+            <column name="CODIGOPROVEEDOR" length="22" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="codigointegra" type="string">
+            <column name="CODIGOINTEGRA" length="3" />
+        </property>
+        <property name="codigosiete" type="string">
+            <column name="CODIGOSIETE" length="3" />
+        </property>
+        <property name="codigortps" type="string">
+            <column name="CODIGORTPS" length="2" />
+        </property>
+        <property name="codigointerfaseafp" type="string">
+            <column name="CODIGOINTERFASEAFP" length="2" />
+        </property>
+        <property name="comisionmixta" type="big_decimal">
+            <column name="COMISIONMIXTA" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>

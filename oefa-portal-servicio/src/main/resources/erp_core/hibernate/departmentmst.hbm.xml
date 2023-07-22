@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.erp.core.dominio.Departmentmst" table="SGCORESYS.DEPARTMENTMST">
+        <composite-id name="pk" class="net.royal.erp.core.dominio.DepartmentmstPk">
+            <key-property name="department" type="string">
+                <column name="DEPARTMENT" length="3" />
+            </key-property>
+        </composite-id>
+        <property name="description" type="string">
+            <column name="DESCRIPTION" length="120" />
+        </property>
+        <property name="accountavailableflag" type="string">
+            <column name="ACCOUNTAVAILABLEFLAG" length="1" />
+        </property>
+        <property name="warehouseavailableflag" type="string">
+            <column name="WAREHOUSEAVAILABLEFLAG" length="1" />
+        </property>
+        <property name="application" type="string">
+            <column name="APPLICATION" length="2" />
+        </property>
+        <property name="status" type="string">
+            <column name="STATUS" length="1" />
+        </property>
+        <property name="lastuser" type="string">
+            <column name="LASTUSER" length="20" />
+        </property>
+        <property name="lastdate" type="timestamp">
+            <column name="LASTDATE" length="7" />
+        </property>
+        <property name="codigosbs" type="string">
+            <column name="CODIGOSBS" length="3" />
+        </property>
+        <property name="codigosbsSup" type="string">
+            <column name="CODIGOSBS_SUP" length="3" />
+        </property>
+    </class>
+</hibernate-mapping>

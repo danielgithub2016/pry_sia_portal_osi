@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="w_hr_requerimiento_rep01" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dd070af5-2438-4b0f-a37b-705265473872">
+	<property name="ireport.zoom" value="1.4641000000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="320"/>
+	<parameter name="par_companyowner" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_requerimiento" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_Postulante" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_Etapa" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_Cargo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+HR_EvaluacionPostulante.Requerimiento ,
+HR_EvaluacionPostulante.Postulante ,
+HR_EvaluacionPostulante.Secuencia ,
+HR_EvaluacionPostulante.FlagAprobacion ,
+fe.Descripcion as Descripcion,
+HR_EvaluacionPostulante.UltimoUsuario ,
+HR_EvaluacionPostulante.UltimaFechaModif ,
+HR_EvaluacionPostulante.CompanyOwner ,
+HR_EvaluacionPostulante.Calificativo ,
+HR_EvaluacionPostulante.UnidadNegocio ,
+HR_EvalRequerimiento.Etapa ,
+HR_Requerimiento.CodigoPuesto,
+'' AS descevaluacion,
+HR_EvaluacionPostulante.factor as factor,
+fe.descripcion,
+HR_EvaluacionPostulante.puntaje AS Puntaje,
+puesto.descripcion as puesto,
+HR_PosRequer.observaciones,
+(select a.observaciones
+from HR_EvaluacionEtapa a
+where
+    a.Requerimiento = HR_PosRequer.Requerimiento AND
+    a.Secuencia = HR_EvaluacionPostulante.secuencia AND
+    a.Secuencia_2 = HR_EvaluacionPostulante.secuencia_2 AND
+    a.CompanyOwner = HR_PosRequer.CompanyOwner AND
+    a.Postulante = HR_PosRequer.Postulante
+) as ObservacionesAd,
+
+
+(select a.FechaEvaluacion
+from HR_EvalPostObs a
+where
+    a.Requerimiento = HR_PosRequer.Requerimiento AND
+    a.Secuencia = HR_EvaluacionPostulante.secuencia AND
+    a.Secuencia_2 = HR_EvaluacionPostulante.secuencia_2 AND
+    a.CompanyOwner = HR_PosRequer.CompanyOwner AND
+    a.Postulante = HR_PosRequer.Postulante
+) as fechapostulante_add,
+
+HR_PosRequer.VariabeRemunerativa,
+(SELECT HR_Evaluacion.Descripcion
+FROM HR_Evaluacion
+where HR_Evaluacion.Evaluacion = HR_EvalRequerimiento.Evaluacion
+) as EtapaEvaluacion,
+HR_EvalRequerimiento.Secuencia as aaa,
+HR_PosRequer.Secuencia,
+HR_PosRequer.CondVarRem,
+(select hr_puestoempresa.descripcion
+from HR_Evalrequerimiento_2 hr_2  ,
+hr_puestoempresa
+where (HR_EvaluacionPostulante.companyowner=hr_2.companyowner)
+and (HR_EvaluacionPostulante.secuencia=hr_2.secuencia)
+and (HR_EvaluacionPostulante.secuencia_2=hr_2.secuencia_2)
+and (HR_EvaluacionPostulante.requerimiento=hr_2.requerimiento)
+and (hr_2.codigopuesto =hr_puestoempresa.codigopuesto)) AS DesPuesto,
+HR_EvaluacionPostulante.Secuencia_2,
+HR_EvaluacionPostulante.ValorCompetencia AS ValorCompetencia,
+HR_EvaluacionPostulante.ValorhastaCompetencia AS ValorhastaCompetencia,
+(select HR_Evaluacion.PuntajeMinimo
+from HR_Evaluacion
+where HR_Evaluacion.Evaluacion = HR_EvalRequerimiento.Evaluacion)  AS Ponderacion,
+fe.ValorRequerido,
+fe.FlagCalificacion,
+comentario,
+(select /*top 1*/ descripcion  from HR_FactorValor   where ROWNUM <= 1 AND HR_EvaluacionPostulante.factor= HR_FactorValor.Factor and (HR_EvaluacionPostulante.puntaje=HR_FactorValor.Valor)) AS DesValorPuntaje,
+HR_EvaluacionPostulante.FlagCalificado AS FlagCalificado,
+(
+Select Ma_MiscelaneosDetalle.DescripcionLocal
+From Ma_MiscelaneosDetalle
+Where    Ma_MiscelaneosDetalle.AplicacionCodigo = 'HR' and
+            Ma_MiscelaneosDetalle.CodigoTabla = 'CONVARREM' and
+            Ma_MiscelaneosDetalle.Compania = '999999' and
+            Ma_MiscelaneosDetalle.CodigoElemento = HR_PosRequer.Condvarrem
+) AS DescripcionLocal,
+(SELECT HR_EvaluacionArea.Descripcion
+from HR_EvaluacionArea
+where HR_EvaluacionArea.Area = fe.area) as area_des,
+fechapostulante,
+(select descripcion from hr_puestoempresa where codigopuesto in(select codigocargo from empleadomast where empleado = HR_Requerimiento.empleadosolicitante)) as des_puestosolicitante,
+postulante.apellidopaterno || ' ' ||postulante.apellidomaterno || ' ' || postulante.nombres as nombrepostulante,
+(SELECT FLOOR(MONTHS_BETWEEN(SYSDATE,postulante.fechanacimiento) /12) FROM DUAL) as año,
+(select trunc( months_between( SYSDATE, postulante.fechanacimiento ) - trunc( months_between( SYSDATE, postulante.fechanacimiento ) / 12 ) * 12 ) from DUAL) as mes,
+(select trunc(add_months( SYSDATE, - trunc( months_between( SYSDATE, postulante.fechanacimiento ) ) ) - postulante.fechanacimiento) from DUAL) as dia
+FROM HR_EvaluacionPostulante  ,
+        HR_EvalRequerimiento  ,
+           HR_FactoresEvaluacion fe  ,
+        HR_Requerimiento  ,
+        hr_puestoempresa puesto  ,
+        HR_PosRequer,
+        HR_Postulantes postulante
+WHERE
+      ( HR_EvaluacionPostulante.CompanyOwner = $P{par_companyowner} ) and
+      ( HR_EvaluacionPostulante.Requerimiento = $P{par_requerimiento}) and
+      ( HR_EvaluacionPostulante.Postulante = $P{par_Postulante} ) and
+      ( HR_EvaluacionPostulante.Secuencia = $P{par_Etapa} ) and
+      ( HR_EvaluacionPostulante.secuencia_2 = $P{par_Cargo} ) and
+        HR_EvaluacionPostulante.factor=fe.factor and
+        HR_EvaluacionPostulante.Requerimiento        = HR_EvalRequerimiento.Requerimiento AND
+        HR_EvaluacionPostulante.Secuencia             = HR_EvalRequerimiento.Secuencia AND
+        HR_EvaluacionPostulante.CompanyOwner        = HR_EvalRequerimiento.CompanyOwner and
+        HR_Requerimiento.codigopuesto                = puesto.codigopuesto and
+        HR_EvaluacionPostulante.CompanyOwner     = HR_Requerimiento.CompanyOwner and
+        HR_EvaluacionPostulante.Requerimiento        = HR_Requerimiento.Requerimiento     and
+        HR_EvaluacionPostulante.CompanyOwner     = HR_PosRequer.CompanyOwner     AND
+           HR_EvaluacionPostulante.Requerimiento        = HR_PosRequer.Requerimiento and
+        HR_EvaluacionPostulante.postulante            = HR_PosRequer.Postulante and
+        HR_EvaluacionPostulante.postulante            = postulante.Postulante]]>
+	</queryString>
+	<field name="REQUERIMIENTO" class="java.lang.String"/>
+	<field name="POSTULANTE" class="java.lang.String"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="FLAGAPROBACION" class="java.lang.String"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="ULTIMOUSUARIO" class="java.lang.String"/>
+	<field name="ULTIMAFECHAMODIF" class="java.sql.Timestamp"/>
+	<field name="COMPANYOWNER" class="java.lang.String"/>
+	<field name="CALIFICATIVO" class="java.math.BigDecimal"/>
+	<field name="UNIDADNEGOCIO" class="java.lang.String"/>
+	<field name="ETAPA" class="java.lang.String"/>
+	<field name="CODIGOPUESTO" class="java.math.BigDecimal"/>
+	<field name="DESCEVALUACION" class="java.lang.String"/>
+	<field name="FACTOR" class="java.math.BigDecimal"/>
+	<field name="PUNTAJE" class="java.math.BigDecimal"/>
+	<field name="PUESTO" class="java.lang.String"/>
+	<field name="OBSERVACIONES" class="java.lang.String"/>
+	<field name="OBSERVACIONESAD" class="java.lang.String"/>
+	<field name="FECHAPOSTULANTE_ADD" class="java.sql.Timestamp"/>
+	<field name="VARIABEREMUNERATIVA" class="java.math.BigDecimal"/>
+	<field name="ETAPAEVALUACION" class="java.lang.String"/>
+	<field name="AAA" class="java.math.BigDecimal"/>
+	<field name="CONDVARREM" class="java.lang.String"/>
+	<field name="DESPUESTO" class="java.lang.String"/>
+	<field name="SECUENCIA_2" class="java.math.BigDecimal"/>
+	<field name="VALORCOMPETENCIA" class="java.lang.Double"/>
+	<field name="VALORHASTACOMPETENCIA" class="java.lang.Double"/>
+	<field name="PONDERACION" class="java.math.BigDecimal"/>
+	<field name="VALORREQUERIDO" class="java.math.BigDecimal"/>
+	<field name="FLAGCALIFICACION" class="java.lang.String"/>
+	<field name="COMENTARIO" class="java.lang.String"/>
+	<field name="DESVALORPUNTAJE" class="java.lang.String"/>
+	<field name="FLAGCALIFICADO" class="java.lang.String"/>
+	<field name="DESCRIPCIONLOCAL" class="java.lang.String"/>
+	<field name="AREA_DES" class="java.lang.String"/>
+	<field name="FECHAPOSTULANTE" class="java.sql.Timestamp"/>
+	<field name="DES_PUESTOSOLICITANTE" class="java.lang.String"/>
+	<field name="NOMBREPOSTULANTE" class="java.lang.String"/>
+	<field name="AÑO" class="java.math.BigDecimal"/>
+	<field name="MES" class="java.math.BigDecimal"/>
+	<field name="DIA" class="java.math.BigDecimal"/>
+	<variable name="TOTAL" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{PUNTAJE}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="46" splitType="Stretch">
+			<textField>
+				<reportElement x="142" y="10" width="287" height="26" uuid="ac5982f6-a6b9-4ac1-b6b2-afd09486c178"/>
+				<textElement>
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ETAPAEVALUACION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="220" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="522" height="219" uuid="77f27c1f-faa8-490b-9c7a-f647f5471662"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="22" width="522" height="1" uuid="0848df30-67bc-4156-a57f-1ca508eda555"/>
+			</line>
+			<line>
+				<reportElement x="0" y="47" width="522" height="1" uuid="0683c64e-90e1-4226-8337-7129d7411b4e"/>
+			</line>
+			<line>
+				<reportElement x="0" y="71" width="522" height="1" uuid="441cb76f-8798-4292-a90d-bc673808f98c"/>
+			</line>
+			<line>
+				<reportElement x="0" y="95" width="522" height="1" uuid="6ad673c6-1f90-4bae-a187-56fa312470dc"/>
+			</line>
+			<line>
+				<reportElement x="0" y="120" width="522" height="1" uuid="dbc4add2-4751-41dd-8ddd-5c7f7c7fe836"/>
+			</line>
+			<line>
+				<reportElement x="0" y="143" width="522" height="1" uuid="b5a8eb1d-c572-4631-a666-27d1e2545fd9"/>
+			</line>
+			<line>
+				<reportElement x="0" y="169" width="522" height="1" uuid="ceb79715-42bf-4716-b9fb-0cf61df2de80"/>
+			</line>
+			<line>
+				<reportElement x="0" y="194" width="522" height="1" uuid="9578c5c3-8db0-40bd-a35b-8528a148c94b"/>
+			</line>
+			<line>
+				<reportElement x="263" y="0" width="1" height="219" uuid="9da46ce7-f72b-4036-99c5-36ee6b6ef6ec"/>
+			</line>
+			<staticText>
+				<reportElement x="10" y="0" width="210" height="20" uuid="4578da50-45e3-4e03-baed-c6cfc07d7378"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PUESTO AL QUE POSTULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="23" width="210" height="20" uuid="71d04a17-74f2-45a6-910a-bd2790c754f6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE DEL POSTULANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="48" width="210" height="20" uuid="67c87823-cbbd-403a-8ace-5db91e949b63"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="72" width="210" height="20" uuid="de11474d-917e-4938-83d9-3cc8608f9b49"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REFERENCIADO POR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="96" width="210" height="20" uuid="084cfb30-eeef-4206-a144-023e5a36faa8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VARIABLE REMUNERATIVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="121" width="228" height="20" uuid="8fa34048-8147-4548-90e3-fa51c06c409a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONDICION DE LA VARIABLE REMUNERATIVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="144" width="90" height="20" uuid="bfe69b4c-2f67-422d-93f2-f1774daa6f1f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="170" width="210" height="20" uuid="0a47e1ca-9d9a-4623-b000-e522a408393a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PUESTO EVALUADOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="88" y="199" width="100" height="20" uuid="5d739d99-3479-45dd-a80d-69ed50876a44"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIMENSION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="200" width="139" height="20" uuid="e9b501b4-c3e6-41e0-bde2-516f0b47b6e9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESCALA DE CALIFICACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="95" width="68" height="20" uuid="f9f8328e-276c-4386-84dc-458005a15141"/>
+				<text><![CDATA[Requiere: S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="47" width="11" height="21" uuid="c2fd2238-b816-454d-aee4-b1ee6431e1d7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[a]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="48" width="13" height="20" uuid="0f5e8f21-03e3-446c-bf33-d2dff8684960"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[m]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="418" y="47" width="11" height="20" uuid="0684007e-eb28-402e-9ce2-07099aeefa10"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[d]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="276" y="71" width="246" height="20" uuid="f048efe7-8904-40f2-9e55-9137ec4135f8"/>
+				<textFieldExpression><![CDATA[$F{OBSERVACIONES}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="276" y="120" width="246" height="20" uuid="d26d0e4b-da4d-47dc-b157-9ca79d204e80"/>
+				<textFieldExpression><![CDATA[$F{DESCRIPCIONLOCAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="276" y="143" width="124" height="20" uuid="0e7765c7-d005-492f-a06d-3bb1ad30b0e9"/>
+				<textFieldExpression><![CDATA[$F{FECHAPOSTULANTE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="344" y="95" width="178" height="20" uuid="b8d61832-7b21-4eab-96f2-1f9b7ad613fc"/>
+				<textFieldExpression><![CDATA[$F{VARIABEREMUNERATIVA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="3" width="246" height="20" uuid="8376eb0b-5767-4b1e-b29e-9258d43fdd29"/>
+				<textFieldExpression><![CDATA[$F{PUESTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="170" width="246" height="20" uuid="4068c049-5031-43aa-a80b-3c32f229c13f"/>
+				<textFieldExpression><![CDATA[$F{DES_PUESTOSOLICITANTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="23" width="246" height="20" uuid="b5230586-3af2-48c8-9b63-e3321dfee619"/>
+				<textFieldExpression><![CDATA[$F{NOMBREPOSTULANTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="298" y="47" width="18" height="20" uuid="f14f408e-2c21-4a90-bfaf-e3d50167b784"/>
+				<textFieldExpression><![CDATA[$F{AÑO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="348" y="48" width="20" height="20" uuid="e396844a-5163-4a44-8701-49b4b123d22e"/>
+				<textFieldExpression><![CDATA[$F{MES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="47" width="18" height="20" uuid="61f4cf32-b3dd-41b3-9168-47c67c63c6ce"/>
+				<textFieldExpression><![CDATA[$F{DIA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="182" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="30" width="263" height="20" uuid="6fc68863-d2ad-482a-8402-9f888905fb0d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="153" y="61" width="111" height="20" uuid="bef71ce6-550e-4174-843d-cefebf1063b8"/>
+				<text><![CDATA[Total Valor Obtenido :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="30" width="263" height="20" uuid="20b43972-6cb7-4793-8dfc-fc496f86cbb4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="10" width="263" height="20" uuid="dca7a0d4-275a-40de-b291-41245e5e6168"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AREA_DES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="276" y="10" width="51" height="20" forecolor="#FF0000" uuid="0f8d7938-99bd-45b4-8f44-870415918269"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[V.Requerido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="30" width="51" height="20" forecolor="#0000FF" uuid="50cb5b24-16fc-41bb-9d33-fcba6fca7492"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[V.Obtenido]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="327" y="10" width="21" height="20" forecolor="#FF0033" uuid="32cdcda6-d884-491e-b632-11c4ea7e9f60"/>
+				<textFieldExpression><![CDATA[$F{VALORREQUERIDO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="327" y="30" width="21" height="20" forecolor="#0000FF" uuid="3fb471ba-b49a-43a1-9d64-752b4e16686c"/>
+				<textFieldExpression><![CDATA[$F{PUNTAJE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="287" y="61" width="57" height="20" uuid="c7a02480-56f4-4b81-85d9-052561ba6d31"/>
+				<textFieldExpression><![CDATA[$V{TOTAL}]]></textFieldExpression>
+			</textField>
+			<barChart>
+				<chart isShowLegend="false">
+					<reportElement isPrintRepeatedValues="false" x="358" y="8" width="164" height="42" uuid="55a4303b-02b1-4dce-bcd8-55005362fc65"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["mayor"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{VALORREQUERIDO}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{VALORREQUERIDO}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["menor"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{PUNTAJE}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{PUNTAJE}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="false" isShowTickLabels="false" isShowTickMarks="false">
+					<plot orientation="Horizontal"/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat verticalTickLabels="false"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat verticalTickLabels="false"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="198" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="522" height="198" uuid="59979908-f0ae-4f10-aaad-4bfcd570c280"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="22" width="522" height="1" uuid="c8d3d410-319e-4970-8a6d-230d406d9ae5"/>
+			</line>
+			<staticText>
+				<reportElement x="10" y="3" width="228" height="20" uuid="a3a7acb6-3a09-4d2f-be72-893675282f57"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBSERVACIONES:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="33" width="512" height="115" uuid="b2536735-6ec7-4c71-bca9-f473060025e5"/>
+				<textFieldExpression><![CDATA[$F{OBSERVACIONESAD}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

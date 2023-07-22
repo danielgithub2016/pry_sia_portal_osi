@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.royal.marcainterna.pcoefa.dominio.MapPcOefa"
+		table="SGCORESYS.T_MAP_PC_OEFA">
+		<id name="secuencia" type="big_decimal">
+			<column name="SECUENCIA" length="16" />
+		</id>
+
+		<property name="tx_nombre" type="string">
+			<column name="TX_NOMBRE" length="300" />
+		</property>
+
+		<property name="tx_sistema_operativo" type="string">
+			<column name="TX_SISTEMA_OPERATIVO" length="1000" />
+		</property>
+
+		<property name="activo" type="string">
+			<column name="ACTIVO" length="1" />
+		</property>
+
+		<property name="tx_codigo_usuario_creacion" type="string">
+			<column name="TX_CODIGO_USUARIO_CREACION" length="20" />
+		</property>
+
+		<property name="fe_fecha_creacion" type="timestamp">
+			<column name="FE_FECHA_CREACION" length="10" />
+		</property>
+
+		<property name="tx_codigo_usuario_modificacion" type="string">
+			<column name="TX_CODIGO_USUARIO_MODIFICACION" length="20" />
+		</property>
+
+		<property name="fe_fecha_modificacion" type="timestamp">
+			<column name="FE_FECHA_MODIFICACION" length="10" />
+		</property>
+
+		<property name="flg_prestamo" type="string">
+			<column name="FLG_PRESTAMO" length="1" />
+		</property>
+
+
+
+	</class>
+</hibernate-mapping>

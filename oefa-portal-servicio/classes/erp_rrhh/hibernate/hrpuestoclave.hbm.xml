@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrPuestoclave" table="SGCORESYS.HR_PUESTOCLAVE">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrPuestoclavePk">
+            <key-property name="companiasocio" type="string">
+                <column name="COMPANIASOCIO" length="8" />
+            </key-property>
+            <key-property name="codigopuesto" type="integer">
+                <column name="CODIGOPUESTO" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="estadopuestoclave" type="string">
+            <column name="ESTADOPUESTOCLAVE" length="1" />
+        </property>
+        <property name="sustento" type="string">
+            <column name="SUSTENTO" length="255" />
+        </property>
+        <property name="usuarioaprobador" type="string">
+            <column name="USUARIOAPROBADOR" length="20" />
+        </property>
+        <property name="usuariocreador" type="string">
+            <column name="USUARIOCREADOR" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

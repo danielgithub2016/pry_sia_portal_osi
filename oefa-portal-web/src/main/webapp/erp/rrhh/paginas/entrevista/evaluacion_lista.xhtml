@@ -1,0 +1,120 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="title">
+		<h2>Plataforma de Entrevistas CAS</h2>
+		<h2>Convocatoria: #{cHrEntrevistaCAS.proceso} -
+			#{cHrEntrevistaCAS.puesto}</h2>
+		<h2>Postulante: #{cHrEntrevistaCAS.nompostulante}</h2>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="frmEvaluacion_lista">
+			<p:growl autoUpdate="true" life="#{msg.generico_tiempo_growl}"
+				widgetVar="growlWV" />
+			<h:panelGrid columns="2" width="100%" rendered="false"
+				style="padding-top: 5px;padding-bottom: 5px;">
+				<p:commandButton value="Buscar" icon="buscar" style="float:right;"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					styleClass="botonTextoImagen" action="#{cHrEntrevistaCAS.buscar}"
+					update="@(form)" />
+			</h:panelGrid>
+			<p:dataTable emptyMessage="Este proceso no contiene Puntaje."
+				id="dtPuntos" value="#{cHrEntrevistaCAS.lstPuntosEscala}" var="rowp">
+				<p:column headerText="ESCALA GENERAL DE CALIFICACIÓN" width="160"
+					styleClass="columnatablaIzquierda">
+					<h:outputText value="#{rowp.valor_s}" />
+				</p:column>
+				<p:column headerText="PUNTAJE" width="40"
+					styleClass="columnatablaCentro">
+					<h:outputText value="#{rowp.valor_n}" />
+					<input type="hidden" id="idpostulante" name="idpostulante"
+						value="#{cHrEntrevistaCAS.idpostulante}" />
+				</p:column>
+			</p:dataTable>
+			<BR />
+			<p:dataTable emptyMessage="Este proceso no contiene Aptitudes."
+				id="dtAptitudes" value="#{cHrEntrevistaCAS.lstEntrPostEval}"
+				var="rowa">
+				<p:column headerText="CRITERIOS DE EVALUACIÓN" width="160"
+					styleClass="columnatablaIzquierda">
+					<h:outputText value="#{rowa.aptitud}" />
+				</p:column>
+				<p:column headerText="CONDUCTAS" width="160"
+					styleClass="columnatablaIzquierda"
+					rendered="#{cHrEntrevistaCAS.flagtipopuesto == 'E'}">
+					<ui:repeat var="con" value="#{rowa.lstConductas}">
+						<p:row>
+							<p:outputLabel value="#{con.secuencia} - #{con.conducta}" />
+						</p:row>
+						<p:row>
+							<p:selectOneMenu id="ListaPuntos" value="#{con.puntaje}"
+								disabled="#{cHrEntrevistaCAS.visible}"
+								valueChangeListener="#{cHrEntrevistaCAS.valueChangedConducta}"
+								required="true">
+								<f:selectItems value="#{cHrEntrevistaCAS.listaPuntos}" var="val"
+									itemValue="#{val.valor_n.concat('-').concat(rowa.idaptitud).concat('-').concat(con.idconducta)}"
+									itemLabel="#{val.valor_n}">
+								</f:selectItems>
+								<p:ajax update="@form" onstart="PF('bUI').block();"
+									oncomplete="PF('bUI').unblock();" />
+							</p:selectOneMenu>
+						</p:row>
+						<p:row>
+							<div style="height: 20px" />
+						</p:row>
+
+					</ui:repeat>
+				</p:column>
+				<p:column headerText="Puntaje Obtenido" width="40"
+					styleClass="columnatablaCentro"
+					rendered="#{cHrEntrevistaCAS.flagtipopuesto == 'E'}">
+					<p:outputLabel value="#{rowa.puntaje}" />
+				</p:column>
+				<p:column headerText="Puntaje Obtenido" width="40"
+					styleClass="columnatablaCentro"
+					rendered="#{cHrEntrevistaCAS.flagtipopuesto != 'E'}">
+					<p:selectOneMenu disabled="#{cHrEntrevistaCAS.visible}"
+						id="ListaPuntos" value="#{rowa.puntaje}"
+						valueChangeListener="#{cHrEntrevistaCAS.valueChanged}"
+						required="true">
+						<f:selectItems value="#{cHrEntrevistaCAS.listaPuntos}" var="val"
+							itemValue="#{val.valor_n.concat('-').concat(rowa.idaptitud)}"
+							itemLabel="#{val.valor_n}">
+						</f:selectItems>
+					</p:selectOneMenu>
+				</p:column>
+
+
+			</p:dataTable>
+			<!-- <h:outputText class="h2" value="Puntaje Total: #{cHrEntrevistaCAS.puntaje}" /> -->
+			<BR />
+			<div class="ui-grid-col-3">
+				<p:commandButton value="Ir a Lista de Postulantes" update="@form"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					styleClass="botonTextoImagenGrande" id="regresar"
+					action="#{cHrEntrevistaCAS.ingresar}" />
+			</div>
+			<div class="ui-grid-col-2"></div>
+			<div class="ui-grid-col-3">
+				<p:commandButton value="Siguiente Postulante" update="@form"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					rendered="#{cHrEntrevistaCAS.nextPost != '0' and cHrEntrevistaCAS.valRegistro != '0' }"
+					styleClass="botonTextoImagenGrande" id="siguiente"
+					action="#{cHrEntrevistaCAS.nextPst(cHrEntrevistaCAS.nextPost)}" />
+			</div>
+			<div class="ui-grid-col-2"></div>
+			<div class="ui-grid-col-3 pull-right">
+				<p:commandButton value="Postulante NSP" update="@form"
+					onstart="PF('bUI').block();" oncomplete="PF('bUI').unblock();"
+					rendered="#{cHrEntrevistaCAS.nspPost == '0' and cHrEntrevistaCAS.valRegistro != '0' and cHrEntrevistaCAS.enviado != '0'}"
+					styleClass="botonTextoImagenGrandeRojo" id="PstNSP"
+					action="#{cHrEntrevistaCAS.NSP()}" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

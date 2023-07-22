@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		paginator="true" paginatorPosition="bottom" scrollable="true"
+		scrollHeight="250" lazy="true" rows="20" id="tblSeleccion"
+		reflow="true" value="#{cwHrPuestosEdit.dw_seleccion}" var="s"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+		<f:facet name="header">
+        Grupo de Competencia
+    	</f:facet>
+
+		<p:column headerText="Descripcion" width="500">
+			<h:outputText value="#{s.descripcion}" />
+		</p:column>
+
+		<p:column headerText="Valor Requerido" width="230">
+			<h:outputText value="#{s.valorequerido}" />
+		</p:column>
+
+	</p:dataTable>
+
+
+</ui:composition>

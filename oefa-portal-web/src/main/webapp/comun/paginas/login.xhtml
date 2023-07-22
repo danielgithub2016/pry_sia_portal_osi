@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html" encoding="windows-1252" locale="es">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<title>#{cComunGlobal.nombreAplicacion}</title>
+		<link rel="stylesheet" type="text/css"
+			href="#{request.contextPath}/comun/recursos/css/login.css" />
+		<link rel="Shortcut Icon"
+			href="http://www.oefa.gob.pe/wp-content/themes/topbusiness/favicon.png"
+			type="image/x-icon" />
+
+	</h:head>
+
+	<h:body>
+		<p:growl showDetail="true" showSummary="false" life="4000"
+			autoUpdate="true" />
+		<header> </header>
+		<section>
+			<figure>
+				<img width="230px" class="logologin" height="89"
+					src="#{request.contextPath}/comun/recursos/imagenes/sistema/oefa-logo-header.png" />
+			</figure>
+		</section>
+		<section>
+			<div id="form-main">
+				<div id="form-div">
+					<h:form>
+						<f:event type="preRenderView" listener="#{cLogin.init}" />
+						<p:focus for="txtusuario" />
+						<span>Nombre de Usuario</span>
+						<h:inputText value="#{cLogin.loginUsuario}" immediate="true"
+							required="true" requiredMessage="Debe Ingresar el Usuario"
+							styleClass="feedback-input" id="txtusuario" />
+
+						<span>Contraseña</span>
+						<h:inputSecret value="#{cLogin.loginContrasenia}"
+							redisplay="false" immediate="true" styleClass="feedback-input" />
+
+						<h:commandButton styleClass="button-blue" value="Ingresar"
+							action="#{cLogin.ingresar}" />
+
+						<!-- <a
+							href="http://localhost:8080/oefa-portal-web/comun/recursos/marcapresencial/MarcacionPresencial.jnlp">
+							Ejecutar marca presencial </a> -->
+
+
+					</h:form>
+				</div>
+				<div class="aplicacion">#{cComunGlobal.nombreAplicacion}</div>
+			</div>
+		</section>
+
+		<footer>
+
+
+			<div class='define'>
+				<p style="font-size: xx-small;"></p>
+			</div>
+		</footer>
+	</h:body>
+
+</f:view>
+</html>
+

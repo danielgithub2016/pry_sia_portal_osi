@@ -1,0 +1,63 @@
+<!-- NO SE HACE : NO SE MUESTRA LA OPCIÓN EN LA CONFIGURACIÓN DE LA EVALUACIÓN -->
+<!-- ERROR EN EL DATATABLE -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:panelGrid width="100%" styleClass="columnGridMiddle"
+		style="margin-bottom:1px;">
+		<center>
+			<h:panelGrid columns="2" style="margin:0 auto;">
+				<p:commandButton value="Agregar" oncomplete="filterTableEvaCampo();"
+					update="" action="#{cwHrEvaluacionCampo.nuevo}"
+					disabled="#{cwHrEvaluacionempleadoEdit.opciones.p12cbagregarcampo_disable}" />
+				<p:commandButton value="Eliminar"
+					oncomplete="filterTableEvaCampo();" update=""
+					action="#{cwHrEvaluacionCampo.eliminar}"
+					disabled="#{cwHrEvaluacionempleadoEdit.opciones.p12cbeliminarcampo_disable}" />
+			</h:panelGrid>
+		</center>
+	</h:panelGrid>
+	<!-- <p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		paginator="true" paginatorPosition="bottom" scrollWidth="70%"
+		id="dtEvalCampo" widgetVar="tableEvalCampo"
+		style="#{cwHrEvaluacionempleadoEdit.opciones.dwcampo_disable ? 'pointer-events:none' : null}"
+		scrollable="true" scrollHeight="230" tableStyle="width:69%"
+		value="#{cwHrEvaluacionCampo.dwcampo}" var="#{row}"
+		selection="#{cwHrEvaluacionCampo.registroSeleccionado}"
+		selectionMode="single" rowKey="#{row.pk.secuencia}"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+		<p:ajax event="rowSelect" />
+		<p:column headerText="tipo" width="250">
+			<p:selectOneMenu value="#{row.plantilla}">
+				<f:selectItem />
+				<f:selectItems value="#{cwHrEvaluacionCampo.dwcampo_child}" var="ch"
+					itemValue="#{ch.codigoelemento}" itemLabel="#{ch.descripcionlocal}" />
+			</p:selectOneMenu>
+		</p:column>
+		<p:column headerText="observaciones" width="500">
+			<h:outputText value="#{row.descripcion}" />
+		</p:column>
+		<p:column headerText="Acción" width="40"
+			styleClass="columnatablaCentro">
+			<p:commandButton type="image" icon="editar"
+				oncomplete="PF('popEvaluacionCampo').show()"
+				update=":dgEvaluacionCampo">
+				<f:setPropertyActionListener
+					target="#{cwHrEvaluacionCampo.registroSeleccionado}" value="#{row}" />
+			</p:commandButton>
+		</p:column>
+		<p:column width="1" filterBy="#{row.eliminado}" style="display:none;">
+			<p:inputText value="N" />
+		</p:column>
+	</p:dataTable> 
+	 -->
+
+	<p:remoteCommand autoRun="true"
+		oncomplete="PF('tableEvalCampo').filter()" name="filterTableEvaCampo" />
+
+</ui:composition>

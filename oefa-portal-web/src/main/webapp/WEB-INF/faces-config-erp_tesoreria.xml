@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+
+	<application>
+		<resource-bundle>
+			<base-name>erp_tesoreria.messages</base-name>
+			<var>msgAP</var>
+		</resource-bundle>
+	</application>
+
+	<!-- Modulo de Tesoreria -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>programacion</from-outcome>
+			<to-view-id>/erp/tesoreria/paginas/calendariopagos/programacion_mantenimiento.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>programacionLista</from-outcome>
+			<to-view-id>/erp/tesoreria/paginas/calendariopagos/programacion_lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consolidacion</from-outcome>
+			<to-view-id>/erp/tesoreria/paginas/calendariopagos/calendario.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consolidaciondetalle</from-outcome>
+			<to-view-id>/erp/tesoreria/paginas/calendariopagos/calendario_mantenimiento.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>wcpreportegastoslist</from-outcome>
+			<to-view-id>/erp/tesoreria/paginas/w_cp_reportegastos_list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>wcpgastoadelantoedit</from-outcome>
+			<to-view-id>/erp/tesoreria/paginas/w_cp_gastoadelanto_edit.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>wcpgastoadelantodescuento</from-outcome>
+			<to-view-id>/erp/tesoreria/paginas/w_cp_gastoadelanto_descuento.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>wcpreportegastosedit</from-outcome>
+			<to-view-id>/erp/tesoreria/paginas/w_cp_reportegastos_edit.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

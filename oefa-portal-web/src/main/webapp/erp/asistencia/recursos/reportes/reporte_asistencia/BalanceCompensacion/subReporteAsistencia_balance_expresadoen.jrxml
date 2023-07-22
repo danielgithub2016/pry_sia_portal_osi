@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subReporte_asistencia_balance_horas" language="groovy" pageWidth="595" pageHeight="600" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6cfb6edc-0d8b-402c-9776-c5e7411969d2">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="273"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_persona" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="positivos" class="java.lang.String"/>
+	<parameter name="negativos" class="java.lang.String"/>
+	<parameter name="saldopositivos" class="java.lang.String"/>
+	<parameter name="saldonegativo" class="java.lang.String"/>
+	<parameter name="resultadoPositivo" class="java.lang.String"/>
+	<parameter name="resultadoNegativo" class="java.lang.String"/>
+	<parameter name="balance" class="java.lang.String"/>
+	<parameter name="p_fecha_hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha_desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_sid" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_FlagFiltroPeriodo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="balancePersonal" class="java.lang.String"/>
+	<parameter name="balancepersonalhexa" class="java.lang.String"/>
+	<parameter name="p_empleado" class="java.math.BigDecimal"/>
+	<parameter name="p_mesesacompensar" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Fabrica\\Desarrollo\\DesarrolloProductos\\OEFA\\oefa-portal-web\\src\\main\\webapp\\erp\\asistencia\\recursos\\reportes\\reporte_asistencia\\BalanceCompensacion\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT                   AS_ConceptoAcceso.ExpresadoEn,
+                        case AS_ConceptoAcceso.ExpresadoEn when 'D' THEN 'COMPENSACIÓN DE SOBRETIEMPO POR DÍAS' ELSE 'COMPENSACIÓN DE SOBRETIEMPO POR HORAS' END AS expresadoent,
+                                         AS_ConceptoAcceso.DescripcionLocal,
+                                         AS_Autorizacion.Fecha,
+                                         AS_Autorizacion.FechaFin,
+                                         AS_Autorizacion.Desde,
+                                         AS_Autorizacion.Hasta,
+                                         round(AS_AutorizacionFecha.Cantidad * 60) AS CANTIDAD,
+                                         sgcoresys.f_cent2sex_texto(AS_AutorizacionFecha.Cantidad) AS CANTIDADT,
+                                         AS_Autorizacion.FechaSolicitud,
+                                         AS_Autorizacion.SolicitadoPor,
+                                         AS_Autorizacion.UltimaFechaModif
+FROM                     sgcoresys.AS_Autorizacion
+                                         JOIN   sgcoresys.AS_ConceptoAcceso
+                                                          ON  (AS_Autorizacion.ConceptoAcceso = AS_ConceptoAcceso.ConceptoAcceso)
+                                         JOIN   sgcoresys.AS_AutorizacionFecha
+                                                          ON  (AS_AutorizacionFecha.Empleado = AS_Autorizacion.Empleado) AND
+                                                                        (AS_AutorizacionFecha.FechaSolicitud = AS_Autorizacion.Fecha) AND
+                                                                        (AS_AutorizacionFecha.Desde = AS_Autorizacion.Desde)
+WHERE           (AS_Autorizacion.CategoriaAutorizacion = 'COMP') AND
+                                        (AS_Autorizacion.Empleado = $P{p_empleado})  AND
+                                        (to_char(AS_Autorizacion.Fecha,'YYYYMMDD')  >= to_char($P{p_fecha_desde},'YYYYMMDD'))  AND (to_char(AS_Autorizacion.Fecha,'YYYYMMDD') <= to_char($P{p_fecha_hasta},'YYYYMMDD'))
+ORDER BY                 AS_ConceptoAcceso.ExpresadoEn,
+                                         AS_Autorizacion.Fecha]]>
+	</queryString>
+	<field name="EXPRESADOEN" class="java.lang.String"/>
+	<field name="EXPRESADOENT" class="java.lang.String"/>
+	<field name="DESCRIPCIONLOCAL" class="java.lang.String"/>
+	<field name="FECHA" class="java.sql.Timestamp"/>
+	<field name="FECHAFIN" class="java.sql.Timestamp"/>
+	<field name="DESDE" class="java.sql.Timestamp"/>
+	<field name="HASTA" class="java.sql.Timestamp"/>
+	<field name="CANTIDAD" class="java.math.BigDecimal"/>
+	<field name="CANTIDADT" class="java.lang.String"/>
+	<field name="FECHASOLICITUD" class="java.sql.Timestamp"/>
+	<field name="SOLICITADOPOR" class="java.lang.String"/>
+	<field name="ULTIMAFECHAMODIF" class="java.sql.Timestamp"/>
+	<group name="EXPRESADOEN">
+		<groupExpression><![CDATA[$F{EXPRESADOEN}]]></groupExpression>
+		<groupFooter>
+			<band height="32">
+				<subreport>
+					<reportElement isPrintRepeatedValues="false" x="8" y="2" width="545" height="28" printWhenGroupChanges="EXPRESADOEN" uuid="34bffd0b-781a-4305-b978-02f975d33d75"/>
+					<subreportParameter name="p_empleado">
+						<subreportParameterExpression><![CDATA[$P{p_empleado}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="p_expresadoen">
+						<subreportParameterExpression><![CDATA[$F{EXPRESADOEN}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="p_fecha_hasta">
+						<subreportParameterExpression><![CDATA[$P{p_fecha_hasta}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="p_fecha_desde">
+						<subreportParameterExpression><![CDATA[$P{p_fecha_desde}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["subReporteAsistencia_balance_expresadoen_total.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="115" y="16" width="42" height="13" uuid="596afc96-36e5-4254-9227-b27b67227c88"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="7" y="1" width="479" height="14" forecolor="#990000" uuid="0abe2b20-4c63-4854-9a19-1256cf16f652"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXPRESADOENT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="16" width="100" height="13" uuid="d0d7e252-cc95-4800-b07d-7ed697b9b2b9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCIONLOCAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="158" y="16" width="45" height="13" uuid="9d585a76-36cb-4701-a1e8-dc4c07162130"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHAFIN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm">
+				<reportElement x="204" y="16" width="36" height="13" uuid="bdc9f417-0530-46a5-92cd-6010f74dbe3f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESDE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm">
+				<reportElement x="240" y="16" width="45" height="13" uuid="969fd70a-703d-49a9-ba0c-785c13d38a75"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HASTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="16" width="49" height="13" uuid="748abdc7-dfad-4b97-a978-c7eebf733e38"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="345" y="16" width="45" height="13" uuid="8898e16d-8fa6-442b-9aed-2a2754f02dea"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTIDADT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="394" y="16" width="49" height="13" uuid="0bf9e3a4-fa67-4dfd-ad22-6f9f4a6678ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHASOLICITUD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="16" width="43" height="13" uuid="05b5b8e4-4477-407d-b87b-6be523a626d4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SOLICITADOPOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="486" y="16" width="67" height="13" uuid="4d198473-0c1d-476f-8406-00a47113514b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ULTIMAFECHAMODIF}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panelGrid columns="3" style="border-spacing:0px;"
+		columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+		layout="grid" styleClass="ui-panelgrid-blank">
+		<p:commandButton value="Seleccionar Puesto" icon="aceptar"
+			id="btnSeleccionarPuesto" />
+
+		<p:commandButton value="Eliminar" id="btnEliminarPuesto"
+			icon="eliminar" />
+
+		<p:commandButton value="Agregar" id="btnAgregarPuesto" icon="nuevo" />
+	</p:panelGrid>
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		paginator="true" paginatorPosition="bottom" reflow="true"
+		scrollable="true" scrollHeight="250" rows="20"
+		id="tblSeleccionarPuestosSimilares"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+		value="#{cwHrPuestosEdit.dw_similar}" var="c">
+
+		<p:column headerText="N°" width="50">
+			<p:outputLabel value="#{c.pk.secuencia}" />
+		</p:column>
+
+		<p:column headerText="Puesto" width="500">
+			<p:outputLabel value="#{c.pk.codigopuestosimilar}" />
+		</p:column>
+
+		<p:column headerText="Estado" width="100">
+			<p:outputLabel value="#{c.estado.equals('A')?'Activo':'Inactivo'}" />
+		</p:column>
+
+	</p:dataTable>
+
+
+</ui:composition>

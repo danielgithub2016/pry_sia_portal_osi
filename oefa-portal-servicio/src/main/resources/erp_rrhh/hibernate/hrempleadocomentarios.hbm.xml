@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.erp.rrhh.dominio.HrEmpleadocomentarios" table="SGCORESYS.HR_EMPLEADOCOMENTARIOS">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrEmpleadocomentariosPk">
+            <key-property name="companyowner" type="string">
+                <column name="COMPANYOWNER" length="8" />
+            </key-property>
+            <key-property name="secuenciaeval" type="integer">
+                <column name="SECUENCIAEVAL" length="22" />
+            </key-property>
+            <key-property name="empleado" type="integer">
+                <column name="EMPLEADO" length="22" />
+            </key-property>
+            <key-property name="empleadoevaluador" type="integer">
+                <column name="EMPLEADOEVALUADOR" length="22" />
+            </key-property>
+            <key-property name="secuencia" type="integer">
+                <column name="SECUENCIA" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="factor" type="integer">
+            <column name="FACTOR" length="22" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="255" />
+        </property>
+        <property name="comentarios" type="string">
+            <column name="COMENTARIOS" length="1000" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : whsiaf.w_wh_requisition_import_filter
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- whsiaf.dw_siaf_wh_po_header -->
+    <sql-query name="whsiaf.DwSiafWhPoHeader">
+    </sql-query>
+
+    <!-- whsiaf.dw_siaf_wh_po_list -->
+    <sql-query name="whsiaf.DwSiafWhPoList">
+    </sql-query>
+
+    <!-- whsiaf.dw_siaf_wh_po_list_position -->
+    <sql-query name="whsiaf.DwSiafWhPoListPosition">
+    </sql-query>
+
+    <!-- whsiaf.dw_siaf_wh_po_list_position_siga -->
+    <sql-query name="whsiaf.DwSiafWhPoListPositionSiga">
+    </sql-query>
+
+</hibernate-mapping>

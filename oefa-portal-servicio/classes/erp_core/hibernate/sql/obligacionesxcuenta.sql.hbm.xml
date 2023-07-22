@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * @author : desarrollo
+ * @powerbuilder : core.Obligacionesxcuenta
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!-- apmain.dw_cp_obligacionxcuenta_retrieve -->
+	<sql-query name="obligacionesxcuenta.DwCpObligacionxcuentaRetrieve">
+		select obligacionesxcuenta.destinocompaniasocio as "destinocompaniasocio",
+		obligacionesxcuenta.descripcion as "descripcion",
+		obligacionesxcuenta.proveedor as "proveedor",
+		obligacionesxcuenta.numerodocumento as "numerodocumento",
+		obligacionesxcuenta.linea as "linea",
+		obligacionesxcuenta.monto as "monto",
+		obligacionesxcuenta.proyecto as "proyecto",
+		obligaciones.monedadocumento as "monedadocumento",
+		obligaciones.monedapago as "monedapago",
+		obligacionesxcuenta.centrocosto as "centrocosto",
+		obligacionesxcuenta.destinocuenta as "destinocuenta",
+		obligacionesxcuenta.centrocostodestino as "centrocostodestino",
+		obligacionesxcuenta.cuentacontable as "cuentacontable",
+		obligacionesxcuenta.partidapresupuestal as "partidapresupuestal",
+		obligacionesxcuenta.persona as "persona",
+		obligacionesxcuenta.documentoreferencia as "documentoreferencia",
+		obligaciones.fecharegistro as "fecharegistro",
+		obligaciones.fechadocumento as "fechadocumento",
+		obligacionesxcuenta.activo as "activo",
+		obligacionesxcuenta.sucursal as "sucursal",
+		obligacionesxcuenta.flujodecaja as "flujodecaja",
+		obligacionesxcuenta.noafectoigvflag as "noafectoigvflag",
+		obligacionesxcuenta.tipodocumento as "tipodocumento",
+		obligacionesxcuenta.camporeferencia as "camporeferencia",
+		obligacionesxcuenta.splitdistributionflag as "splitdistributionflag",
+		obligacionesxcuenta.numeroorden as "numeroorden",
+		obligacionesxcuenta.referenciafiscal03 as "referenciafiscal03",
+		obligacionesxcuenta.referenciafiscal02 as "referenciafiscal02",
+		obligacionesxcuenta.referenciafiscal01 as "referenciafiscal01",
+		obligacionesxcuenta.diferidoflag as "diferidoflag",
+		obligacionesxcuenta.nivelservicio as "nivelservicio",
+		obligacionesxcuenta.conceptogasto as "conceptogasto"
+		from sgcoresys.obligacionesxcuenta,
+		sgcoresys.obligaciones
+		WHERE ( OBLIGACIONESXCUENTA.PROVEEDOR = OBLIGACIONES.PROVEEDOR) and
+		( OBLIGACIONESXCUENTA.TIPODOCUMENTO = OBLIGACIONES.TIPODOCUMENTO) and
+		( OBLIGACIONESXCUENTA.NUMERODOCUMENTO = OBLIGACIONES.NUMERODOCUMENTO )
+		and
+		( ( ObligacionesXCuenta.Proveedor = :Proveedor ) AND
+		( ObligacionesXCuenta.TipoDocumento = :TipoDocumento ) AND
+		( ObligacionesXCuenta.NumeroDocumento = :NumeroDocumento ) )
+
+	</sql-query>
+    
+</hibernate-mapping>

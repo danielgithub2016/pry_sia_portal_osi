@@ -1,0 +1,176 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+	xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
+	xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans 
+    	http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://jax-ws.dev.java.net/spring/core 
+        http://jax-ws.dev.java.net/spring/core.xsd
+		http://jax-ws.dev.java.net/spring/servlet 
+		http://jax-ws.dev.java.net/spring/servlet.xsd">
+
+	<bean id="BeanFactoryErpCore" class="net.royal.erp.core.factory.FactoryErpCoreImpl"
+		scope="singleton">
+
+		<property name="accountmstServicio">
+			<ref bean="BeanServicioAccountmst" />
+		</property>
+
+		<property name="afemstServicio">
+			<ref bean="BeanServicioAfemst" />
+		</property>
+
+		<property name="afetypemstServicio">
+			<ref bean="BeanServicioAfetypemst" />
+		</property>
+
+		<property name="colormastServicio">
+			<ref bean="BeanServicioColormast" />
+		</property>
+
+		<property name="companiamastServicio">
+			<ref bean="BeanServicioCompaniamast" />
+		</property>
+
+		<property name="companyownerServicio">
+			<ref bean="BeanServicioCompanyowner" />
+		</property>
+
+		<property name="departmentmstServicio">
+			<ref bean="BeanServicioDepartmentmst" />
+		</property>
+
+		<property name="empleadomastServicio">
+			<ref bean="BeanServicioEmpleadomast" />
+		</property>
+
+		<property name="maMiscelaneosdetalleServicio">
+			<ref bean="BeanServicioMaMiscelaneosdetalle" />
+		</property>
+
+		<property name="maPersonacentrocostoautorizacServicio">
+			<ref bean="BeanServicioMaPersonacentrocostoautorizac" />
+		</property>
+
+		<property name="maUnidadnegocioServicio">
+			<ref bean="BeanServicioMaUnidadnegocio" />
+		</property>
+
+		<property name="parametrosmastServicio">
+			<ref bean="BeanServicioParametrosmast" />
+		</property>
+
+		<property name="personamastServicio">
+			<ref bean="BeanServicioPersonamast" />
+		</property>
+
+		<property name="referencefieldmstServicio">
+			<ref bean="BeanServicioReferencefieldmst" />
+		</property>
+
+		<property name="referencefieldvaluesServicio">
+			<ref bean="BeanServicioReferencefieldvalues" />
+		</property>
+
+		<property name="responsiblemstServicio">
+			<ref bean="BeanServicioResponsiblemst" />
+		</property>
+
+		<property name="tipocambiomastServicio">
+			<ref bean="BeanServicioTipocambiomast" />
+		</property>
+
+		<property name="tipodocumentocxpServicio">
+			<ref bean="BeanServicioTipodocumentocxp" />
+		</property>
+
+		<property name="tipopagoServicio">
+			<ref bean="BeanServicioTipopago" />
+		</property>
+
+		<property name="tiposervicioServicio">
+			<ref bean="BeanServicioTiposervicio" />
+		</property>
+
+		<property name="unidadesmastServicio">
+			<ref bean="BeanServicioUnidadesmast" />
+		</property>
+		
+		<property name="ultimonumeropagoServicio">
+			<ref bean="BeanServicioUltimonumeropago"/>
+		</property>
+
+		<property name="servicioximpuestoServicio">
+			<ref bean="BeanServicioServicioximpuesto"/>
+		</property>
+
+		<property name="proveedormastServicio">
+			<ref bean="BeanServicioProveedormast"/>
+		</property>
+
+		<property name="primemstServicio">
+			<ref bean="BeanServicioPrimemst"/>
+		</property>
+
+		<property name="ordenpagoServicio">
+			<ref bean="BeanServicioOrdenpago"/>
+		</property>
+
+		<property name="obligacionesximpuestoServicio">
+			<ref bean="BeanServicioObligacionesximpuesto"/>
+		</property>
+
+		<property name="obligacionesServicio">
+			<ref bean="BeanServicioObligaciones"/>
+		</property>
+
+		<property name="cuentabancariaServicio">
+			<ref bean="BeanServicioCuentabancaria"/>
+		</property>
+
+		<property name="correlativosmastServicio">
+			<ref bean="BeanServicioCorrelativosmast"/>
+		</property>
+		
+		<property name="maMiscelaneosheaderServicio">
+			<ref bean="BeanServicioMaMiscelaneosheader"/>
+		</property>
+
+		<property name="maCtsServicio">
+			<ref bean="BeanServicioMaCts"/>
+		</property>
+		
+		<property name="bancoServicio">
+			<ref bean="BeanServicioBanco"/>
+		</property>
+		
+		<property name="paisServicio">
+			<ref bean="BeanServicioPais"/>
+		</property>
+		
+		<property name="maPersonagrupoServicio">
+			<ref bean="BeanServicioMaPersonagrupo"/>
+		</property>		
+		
+		<property name="correoServicio">
+			<ref bean="BeanServicioCorreo" />
+		</property>	
+		
+	</bean>
+
+</beans>

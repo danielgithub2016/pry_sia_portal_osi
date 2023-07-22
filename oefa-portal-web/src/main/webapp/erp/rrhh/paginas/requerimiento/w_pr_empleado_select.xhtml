@@ -1,0 +1,167 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/comun/plantillas/main.xhtml">
+	<ui:define name="content">
+		<h:form id="wprempleadoselect">
+			<p:focus for="txtSleBuscar" />
+			<p:panelGrid columns="1" style="border-spacing:0px;"
+				columnClasses="ui-grid-col-12" layout="grid"
+				styleClass="ui-panelgrid-blank">
+
+				<p:panel>
+					<p:panelGrid columns="2" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid"
+						styleClass="ui-panelgrid-blank">
+
+						<p:panelGrid columns="3" style="border-spacing:0px;"
+							columnClasses="ui-grid-col-5,ui-grid-col-2,ui-grid-col-4"
+							layout="grid" styleClass="ui-panelgrid-blank">
+
+							<p:selectOneRadio id="cboTipoBusqueda"
+								value="#{cwPrEmpleadoSelect.dw_position.tipobusqueda}">
+								<f:selectItem itemLabel="Descripcion" itemValue="A" />
+								<f:selectItem itemLabel="Código" itemValue="C" />
+								<p:ajax event="click" execute="@this" render="pnlBusc"
+									update="pnlBusc" />
+							</p:selectOneRadio>
+
+							<h:outputLabel value="Buscar" />
+
+							<p:inputText id="txtSleBuscar"
+								value="#{cwPrEmpleadoSelect.dw_position.sle_buscar}"
+								onkeypress="return noAcepto(event);" />
+						</p:panelGrid>
+
+
+						<p:panelGrid columns="3" style="border-spacing:0px;"
+							columnClasses="ui-grid-col-3,ui-grid-col-1,ui-grid-col-6"
+							layout="grid" styleClass="ui-panelgrid-blank" id="pnlBusc">
+							<h:outputLabel value="Centro Costo" />
+							<p:selectBooleanCheckbox id="chkcentrocosto"
+								value="#{cwPrEmpleadoSelect.dw_position.boolCentrocosto}">
+								<p:ajax update="cbocentrocosto" />
+							</p:selectBooleanCheckbox>
+
+							<p:selectOneMenu
+								value="#{cwPrEmpleadoSelect.dw_position.centroCosto}" var="cc"
+								converter="AcCostcenter" id="cbocentrocosto"
+								disabled="#{cwPrEmpleadoSelect.dw_position.boolCentrocosto}">
+								<f:selectItem itemLabel="" />
+								<f:selectItems value="#{cwPrEmpleadoSelect.lstcostcenter}"
+									var="c" itemLabel="#{c.localname}" itemValue="#{c}" />
+								<p:column>
+									<p:outputLabel value="#{cc.pk.costcenter}" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{cc.localname}" />
+								</p:column>
+
+							</p:selectOneMenu>
+
+							<h:outputLabel value="Tipo Planilla" />
+							<p:selectBooleanCheckbox id="chktipoplanilla"
+								value="#{cwPrEmpleadoSelect.dw_position.boolTipoplanilla}">
+								<p:ajax update="cbotipoplanilla" />
+							</p:selectBooleanCheckbox>
+
+							<p:selectOneMenu
+								value="#{cwPrEmpleadoSelect.dw_position.tipoplanilla}" var="tp"
+								converter="PrTipoplanilla" id="cbotipoplanilla"
+								disabled="#{cwPrEmpleadoSelect.dw_position.boolTipoplanilla}">
+								<f:selectItem itemLabel="" />
+								<f:selectItems value="#{cwPrEmpleadoSelect.lsttipoplanilla}"
+									var="t" itemLabel="#{t.descripcion}" itemValue="#{t}" />
+								<p:column>
+									<p:outputLabel value="#{tp.pk.tipoplanilla}" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{tp.descripcion}" />
+								</p:column>
+							</p:selectOneMenu>
+
+						</p:panelGrid>
+					</p:panelGrid>
+				</p:panel>
+
+
+
+				<p:panelGrid columns="2" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-8,ui-grid-col-4" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<h:outputLabel value="Seleccione un empleado con dobleClick"
+						style="font-size:11px; font-family:Open sans,sans-serif; font-weight: bold;color:#800000" />
+
+					<p:panelGrid columns="2" style="border-spacing:0px;"
+						columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<p:commandButton value="Buscar"
+							action="#{cwPrEmpleadoSelect.buscar}" icon="buscar"
+							process="@form" update="@form" />
+						<p:commandButton value="Cancelar" icon="cancelar"
+							action="#{cwPrEmpleadoSelect.salir}" />
+					</p:panelGrid>
+				</p:panelGrid>
+
+
+
+				<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+					paginator="true" paginatorPosition="bottom" rows="20"
+					scrollHeight="380" reflow="true" rowKey="#{e.persona}"
+					selection="#{cwPrEmpleadoSelect.registroSeleccionado}"
+					selectionMode="single" scrollable="true"
+					rowStyleClass="#{e.estadoempleado eq 2 ? 'colored' : null}"
+					currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+					paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} "
+					value="#{cwPrEmpleadoSelect.dw_1List}" var="e">
+
+					<p:ajax event="rowDblselect" immediate="true" partialSubmit="false"
+						listener="#{cwPrEmpleadoSelect.onRowSelect}"
+						oncomplete="document.getElementById('wprempleadoselect:btnRedireccionar').click()" />
+
+					<p:column headerText="Código" width="20"
+						styleClass="columnatablaCentro">
+						<h:outputText value="#{e.persona}" />
+					</p:column>
+
+					<p:column headerText="estado" width="20" rendered="false"
+						styleClass="columnatablaCentro">
+						<h:outputText value="#{e.estadoempleado}" />
+					</p:column>
+					<p:column headerText="Empleado" width="500">
+						<h:outputText value="#{e.nombrecompleto}" />
+					</p:column>
+
+					<p:column headerText="Entidad" width="90" rendered="false">
+						<h:outputText value="#{e.companiasocio}" />
+					</p:column>
+
+				</p:dataTable>
+
+
+				<p:panelGrid columns="4" style="border-spacing:0px;"
+					columnClasses="ui-grid-col-1,ui-grid-col-2,ui-grid-col-1,ui-grid-col-2"
+					layout="grid" styleClass="ui-panelgrid-blank">
+					<p:selectBooleanCheckbox
+						value="#{cwPrEmpleadoSelect.dw_position.boolCesados}">
+					</p:selectBooleanCheckbox>
+					<h:outputText value="Cesados" />
+
+					<p:selectBooleanCheckbox
+						value="#{cwPrEmpleadoSelect.dw_position.boolInactivos}">
+					</p:selectBooleanCheckbox>
+					<h:outputText value="Sin Asistencia" />
+				</p:panelGrid>
+
+				<p:commandButton id="btnRedireccionar" style="display:none"
+					action="#{cwPrEmpleadoSelect.salir}" />
+
+			</p:panelGrid>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

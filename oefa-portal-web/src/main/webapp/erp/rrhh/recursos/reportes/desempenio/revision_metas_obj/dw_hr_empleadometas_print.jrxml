@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dw_hr_empleadometas_print" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" whenResourceMissingType="Empty" uuid="39fea22b-939a-4fa3-8f92-5975f2d58468">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="par_empleado" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_secuenciaeval" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_evaluador" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+HR_EmpleadoMetas.SecuenciaEval,
+HR_EmpleadoMetas.Secuencia,
+HR_EmpleadoMetas.Empleado,
+HR_EmpleadoMetas.EmpleadoEvaluador,
+HR_EmpleadoMetas.Periodo,
+HR_EmpleadoMetas.Descripcion as empleadometasdescripcion  ,
+'' Descripcion ,
+HR_EmpleadoMetas.Calificacion,
+HR_EmpleadoMetas.FactorParticipacion,
+HR_EmpleadoMetas.FactorSecuencia
+FROM
+SGCORESYS.HR_EmpleadoMetas
+WHERE
+( HR_EmpleadoMetas.Empleado = $P{par_empleado}) AND
+( HR_EmpleadoMetas.SecuenciaEval = $P{par_secuenciaeval} )     AND
+HR_EmpleadoMetas.EmpleadoEvaluador	= $P{par_evaluador}]]>
+	</queryString>
+	<field name="SECUENCIAEVAL" class="java.math.BigDecimal"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="EMPLEADOEVALUADOR" class="java.math.BigDecimal"/>
+	<field name="PERIODO" class="java.lang.String"/>
+	<field name="EMPLEADOMETASDESCRIPCION" class="java.lang.String"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="CALIFICACION" class="java.math.BigDecimal"/>
+	<field name="FACTORPARTICIPACION" class="java.math.BigDecimal"/>
+	<field name="FACTORSECUENCIA" class="java.math.BigDecimal"/>
+	<variable name="TOTALCALIFICACION" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{CALIFICACION}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="152" splitType="Stretch">
+			<textField>
+				<reportElement x="389" y="1" width="80" height="20" uuid="f239a29b-4f64-46c0-b6c7-cd1cb42a0f63"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="469" y="1" width="40" height="20" uuid="ad733ae7-5278-45ee-9bef-31cd27389f90"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h:mm:ss a">
+				<reportElement x="405" y="21" width="141" height="20" uuid="d7c3e9e8-b85c-49fd-8f6d-fc8bfcbf21ed"/>
+				<textElement>
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="84" width="555" height="32" uuid="80f4568e-86c3-4b41-b669-5378be801caf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBJETIVOS Y/O METAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="116" width="555" height="29" uuid="9a45a527-c000-43e6-99db-efc32bd90417"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EVALUACIÓN DEL PERSONAL]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="26" uuid="a466c18f-1102-4c3b-a5ed-180043d63d4d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="6" y="0" width="375" height="26" uuid="1bb0a612-1453-4bc6-ac50-2d3ecf4c12ff"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Metas específicas y/o compromisos establecidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="0" width="67" height="26" uuid="10008eca-e430-4256-a6b6-ebc2a49b4d80"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Periodo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="465" y="0" width="81" height="26" uuid="0a4cc8d3-ad34-4911-ad88-b86edb91cf41"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Calificación]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="15" y="0" width="366" height="20" uuid="a295a8c4-cd6c-4bcd-b1e6-dc2db80a7f9a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMPLEADOMETASDESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="389" y="0" width="67" height="20" uuid="16680d54-4ba9-48b5-a638-ab19f4657924"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PERIODO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="465" y="0" width="60" height="20" uuid="f2948fdd-0f93-4e30-b00b-1a197be58bef"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CALIFICACION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" uuid="13a2d99f-457c-457b-ac08-1b5d68511a32"/>
+			</rectangle>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="465" y="0" width="60" height="20" uuid="a1713576-59d2-4479-b7a7-27fd7e1fed89"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTALCALIFICACION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

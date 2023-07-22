@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.royal.seguridad.dominio.Exchangerate" table="SGCORESYS.EXCHANGERATE">
+        <composite-id name="pk" class="net.royal.seguridad.dominio.ExchangeratePk">
+            <key-property name="period" type="string">
+                <column name="PERIOD" length="6" />
+            </key-property>
+        </composite-id>
+        <property name="rate" type="big_decimal">
+            <column name="RATE" length="22" />
+        </property>
+        <property name="monthcloserate" type="big_decimal">
+            <column name="MONTHCLOSERATE" length="22" />
+        </property>
+        <property name="monthbuyrate" type="big_decimal">
+            <column name="MONTHBUYRATE" length="22" />
+        </property>
+        <property name="monthsalerate" type="big_decimal">
+            <column name="MONTHSALERATE" length="22" />
+        </property>
+        <property name="gainandlossrate" type="big_decimal">
+            <column name="GAINANDLOSSRATE" length="22" />
+        </property>
+        <property name="inflationfactor" type="big_decimal">
+            <column name="INFLATIONFACTOR" length="22" />
+        </property>
+        <property name="inflationfactoracumulated" type="big_decimal">
+            <column name="INFLATIONFACTORACUMULATED" length="22" />
+        </property>
+        <property name="sbsrate" type="integer">
+            <column name="SBSRATE" length="22" />
+        </property>
+        <property name="lastuser" type="string">
+            <column name="LASTUSER" length="20" />
+        </property>
+        <property name="lastdate" type="timestamp">
+            <column name="LASTDATE" length="7" />
+        </property>
+        <property name="status" type="string">
+            <column name="STATUS" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

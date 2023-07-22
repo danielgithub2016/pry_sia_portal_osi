@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="ui-fluid">
+
+		<h:form id="frmDocumentosAlfrescoMantenimiento"
+			enctype="multipart/form-data">
+
+			<p:growl life="#{msg.generico_tiempo_growl}" />
+
+			<p:panel>
+
+				<div class="ui-messages ui-widget" aria-live="polite"
+					data-global="false" data-summary="data-summary"
+					data-detail="data-detail" data-severity="all,error"
+					data-redisplay="true">
+					<div class="ui-messages-info ui-corner-all">
+						<span class="ui-messages-info-icon"></span>
+						<ul>
+							<li><span class="ui-messages-info-summary"></span><span
+								class="ui-messages-info-detail">Tamaño Max:
+									#{cDocumentoAlfrescoMantenimiento.tamanioArchivo} </span></li>
+						</ul>
+					</div>
+				</div>
+
+				<p:panelGrid columns="2"
+					columnClasses="ui-grid-col-3,ui-grid-col-10" layout="grid"
+					styleClass="ui-panelgrid-blank">
+
+					<p:outputLabel value="Adjuntar" />
+
+					<p:fileUpload value="#{cDocumentoAlfrescoMantenimiento.fileUpload}"
+						fileUploadListener="#{cDocumentoAlfrescoMantenimiento.handleFileUpload}"
+						label="Seleccionar Archivo" auto="true" id="pnlCargaDocumento"
+						update="txtFile" showButtons="false" onstart="PF('bUI').block();"
+						oncomplete="PF('bUI').unblock();"
+						sizeLimit="#{cDocumentoAlfrescoMantenimiento.tamanioBytes}"
+						invalidFileMessage="Archivo Inválido" mode="advanced"
+						invalidSizeMessage="Tamanio Inválido" />
+
+					<p:outputLabel value="Nombre" />
+					<p:inputTextarea cols="40" id="txtFile" onclick="return false"
+						disabled="true"
+						value="#{cDocumentoAlfrescoMantenimiento.documento.nombre}" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="1" columnClasses="ui-grid-col-10"
+					layout="grid" styleClass="ui-panelgrid-blank">
+
+					<p:outputLabel value="#{cDocumentoAlfrescoMantenimiento.documento.error}" />
+				</p:panelGrid>
+			</p:panel>
+
+			<p:panel>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6"
+					layout="grid" styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Aceptar" process="@form" icon="guardar"
+						styleClass="botonTextoImagenGrande" onstart="PF('bUI').block();"
+						oncomplete="PF('bUI').unblock();"
+						action="#{cDocumentoAlfrescoMantenimiento.guardar}" />
+
+					<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+						icon="cancelar" immediate="true"
+						rendered="#{cDocumentoAlfrescoMantenimiento.ismostrarbtncancelar}"
+						onclick="PF('popDocumentoMantenimiento').hide()" />
+				</p:panelGrid>
+			</p:panel>
+
+			<p:tooltip for="txtFile" showEffect="clip" />
+
+		</h:form>
+
+	</div>
+
+</ui:composition>
+
+
+

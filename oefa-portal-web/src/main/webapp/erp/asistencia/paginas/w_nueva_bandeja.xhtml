@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:outputLabel value="Asignación de Nuevas Bandejas"
+		style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+
+	<p:panel header="DATOS SIGED">
+		<p:panelGrid columns="2" id="grdEmpleadoNuevaBandeja"
+			style="border-spacing:0px;"
+			columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<h:outputLabel value="Area"
+				style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+			<h:outputLabel
+				value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.nuevaBandeja.nombreAreaSIA}" />
+
+			<h:outputLabel value="Cargo"
+				style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+			<h:outputLabel
+				value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.nuevaBandeja.nombreCargoSIA}" />
+
+			<h:outputLabel value="Area Siged"
+				style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+			<p:selectOneMenu
+				requiredMessage="El campo Area Siged es obligatorio." filter="true"
+				filterMatchMode="contains" required="true"
+				disabled="#{cwAsAutorizacionPreprocesoHextraEditSIGED.puedeEditarPermisosSIGED}"
+				valueChangeListener="#{cwAsAutorizacionPreprocesoHextraEditSIGED.obtenerCargosSegunArea}"
+				value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.nuevaBandeja.idAreaSIGED}">
+
+				<f:selectItem itemLabel="--Seleccione--" />
+				<f:selectItems
+					value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.listaAreasSIGED}"
+					var="area" itemValue="#{area.idArea}" itemLabel="#{area.nombre}" />
+				<p:ajax update="@form" />
+			</p:selectOneMenu>
+
+			<h:outputLabel value="Cargo/Rol Siged"
+				style="color: navy;font-family:Open sans,sans-serif; font-weight: bold;font-size:12px;  " />
+
+			<p:selectOneMenu
+				requiredMessage="El campo Cargo Siged es obligatorio." filter="true"
+				filterMatchMode="contains" required="true"
+				disabled="#{cwAsAutorizacionPreprocesoHextraEditSIGED.puedeEditarPermisosSIGED}"
+				value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.nuevaBandeja.idCargoSIGED}">
+
+				<f:selectItem itemLabel="--Seleccione--" />
+				<f:selectItems
+					value="#{cwAsAutorizacionPreprocesoHextraEditSIGED.listaCargosSIGED}"
+					var="cargo" itemValue="#{cargo.idCargo}"
+					itemLabel="#{cargo.nombre}" />
+			</p:selectOneMenu>
+
+		</p:panelGrid>
+	</p:panel>
+
+
+</ui:composition>

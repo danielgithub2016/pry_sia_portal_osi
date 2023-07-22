@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subReporte_asistencia_balance_horas" language="groovy" pageWidth="595" pageHeight="600" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6cfb6edc-0d8b-402c-9776-c5e7411969d2">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_persona" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="positivos" class="java.lang.String"/>
+	<parameter name="negativos" class="java.lang.String"/>
+	<parameter name="saldopositivos" class="java.lang.String"/>
+	<parameter name="saldonegativo" class="java.lang.String"/>
+	<parameter name="resultadoPositivo" class="java.lang.String"/>
+	<parameter name="resultadoNegativo" class="java.lang.String"/>
+	<parameter name="balance" class="java.lang.String"/>
+	<parameter name="p_fecha_hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha_desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_sid" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_FlagFiltroPeriodo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="balancePersonal" class="java.lang.String"/>
+	<parameter name="balancepersonalhexa" class="java.lang.String"/>
+	<parameter name="p_empleado" class="java.math.BigDecimal"/>
+	<parameter name="p_mesesacompensar" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Fabrica\\Desarrollo\\DesarrolloProductos\\OEFA\\oefa-portal-web\\src\\main\\webapp\\erp\\asistencia\\recursos\\reportes\\reporte_asistencia\\BalanceCompensacion\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+                AS_HorasAprobabas.Empleado,
+                AS_HorasAprobabas.Fecha,
+                NVL(SUM(round(AS_HorasAprobabas.HorasAprobadas * 60)),0.00) as horasaprobadas,
+                NVL(AS_HorasConsumidas.HorasDeAsistencia, 0.00) AS HorasDeAsistencia,
+                round(NVL(AS_HorasConsumidas.HorasConsumidas,0) * 60) AS HorasConsumidas,
+sgcoresys.f_cent2sex_texto( SUM(AS_HorasAprobabas.HorasAprobadas)) as horasaprobadast,
+sgcoresys.f_cent2sex_texto(NVL(AS_HorasConsumidas.HorasConsumidas, 0.00)) as horasconsumidast,
+                AS_HorasAprobabas.VencidoOVigente
+FROM        (
+                    SELECT       AS_SaldoHoras.Empleado As Empleado,
+                                    AS_SaldoHoras.Fecha_Saldo As Fecha,
+                                    AS_SaldoHoras.CantidadAuxiliar As HorasAprobadas,
+                                    CASE
+                                    WHEN     (TO_CHAR(AS_SaldoHoras.Fecha_Saldo,'YYYYMMDD') < TO_CHAR(ADD_MONTHS(SYSDATE, $P{p_mesesacompensar}), 'YYYYMMDD' ))
+                                    THEN         'VENCIDOS'
+                                    ELSE         'VIGENTES'
+                                    END    AS     VencidoOVigente
+                    FROM         sgcoresys.AS_SaldoHoras
+                    WHERE       AS_SaldoHoras.Tipo = 'M' AND
+                                    AS_SaldoHoras.Empleado = $P{p_empleado} AND
+                                    (to_char(AS_SaldoHoras.Fecha_Saldo,'YYYYMMDD')  >= to_char($P{p_fecha_desde},'YYYYMMDD'))  AND (to_char(AS_SaldoHoras.Fecha_Saldo,'YYYYMMDD') <= to_char($P{p_fecha_hasta},'YYYYMMDD'))
+
+                    UNION ALL
+
+                    SELECT
+                                    AS_AsistenciaDiaria.Empleado As Empleado,
+                                    AS_AsistenciaDiaria.Fecha   As  Fecha,
+                                    AS_AsistenciaDiaria.CantidadReal As HorasAprobadas,
+                                    CASE
+                                    WHEN     (TO_CHAR(AS_AsistenciaDiaria.Fecha,'YYYYMMDD') < TO_CHAR(ADD_MONTHS(SYSDATE,  $P{p_mesesacompensar}), 'YYYYMMDD' ))
+                                    THEN         'VENCIDOS'
+                                    ELSE         'VIGENTES'
+                                    END    AS     VencidoOVigente
+                    FROM         sgcoresys.AS_AsistenciaDiaria
+                    WHERE       AS_AsistenciaDiaria.ConceptoAcceso = 'HAUT' AND
+                                    AS_AsistenciaDiaria.Empleado = $P{p_empleado}  AND
+                                    (to_char(AS_AsistenciaDiaria.Fecha,'YYYYMMDD')  >= to_char($P{p_fecha_desde},'YYYYMMDD'))  AND (to_char(AS_AsistenciaDiaria.Fecha,'YYYYMMDD') <= to_char($P{p_fecha_hasta},'YYYYMMDD'))
+                )            AS_HorasAprobabas
+                        LEFT JOIN
+                                (
+                                 SELECT        AS_AutorizacionFecha.Empleado AS Empleado,
+                                                 AS_AutorizacionFecha.Fecha As Fecha,
+                                                 NVL(SUM(AS_AutorizacionFecha.CantidadReal),0.00) AS HorasDeAsistencia,
+                                                 NVL(SUM(AS_AutorizacionFecha.Cantidad),0.00) AS HorasConsumidas
+                                 FROM         sgcoresys.AS_AutorizacionFecha
+                                 GROUP BY   AS_AutorizacionFecha.Empleado,
+                                                 AS_AutorizacionFecha.Fecha
+                                    )       AS_HorasConsumidas
+                                        ON  (AS_HorasAprobabas.Empleado = AS_HorasConsumidas.Empleado) AND
+                                             (AS_HorasAprobabas.Fecha = AS_HorasConsumidas.Fecha)
+group by
+
+ AS_HorasAprobabas.Empleado,
+                AS_HorasAprobabas.Fecha,
+               AS_HorasConsumidas.HorasDeAsistencia,
+               AS_HorasConsumidas.HorasConsumidas,
+ AS_HorasAprobabas.VencidoOVigente
+ORDER BY   AS_HorasAprobabas.Fecha ASC]]>
+	</queryString>
+	<field name="EMPLEADO" class="java.math.BigDecimal"/>
+	<field name="FECHA" class="java.sql.Timestamp"/>
+	<field name="HORASAPROBADAS" class="java.math.BigDecimal"/>
+	<field name="HORASDEASISTENCIA" class="java.math.BigDecimal"/>
+	<field name="HORASCONSUMIDAS" class="java.math.BigDecimal"/>
+	<field name="HORASAPROBADAST" class="java.lang.String"/>
+	<field name="HORASCONSUMIDAST" class="java.lang.String"/>
+	<field name="VENCIDOOVIGENTE" class="java.lang.String"/>
+	<group name="vencidocigente">
+		<groupExpression><![CDATA[$F{VENCIDOOVIGENTE}]]></groupExpression>
+		<groupFooter>
+			<band height="33">
+				<subreport>
+					<reportElement isPrintRepeatedValues="false" x="3" y="3" width="493" height="28" printWhenGroupChanges="vencidocigente" uuid="34bffd0b-781a-4305-b978-02f975d33d75"/>
+					<subreportParameter name="p_mesesacompensar">
+						<subreportParameterExpression><![CDATA[$P{p_mesesacompensar}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="p_vigentevencido">
+						<subreportParameterExpression><![CDATA[$F{VENCIDOOVIGENTE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="p_empleado">
+						<subreportParameterExpression><![CDATA[$P{p_empleado}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="p_fecha_hasta">
+						<subreportParameterExpression><![CDATA[$P{p_fecha_hasta}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="p_fecha_desde">
+						<subreportParameterExpression><![CDATA[$P{p_fecha_desde}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["subReporteAsistencia_balance_vigentes_total.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<detail>
+		<band height="32" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="3" y="19" width="48" height="12" uuid="596afc96-36e5-4254-9227-b27b67227c88"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="53" y="19" width="51" height="12" uuid="b1fb79c7-ee37-4949-ac3b-a35e6491c9cf"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+					<paragraph tabStopWidth="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORASAPROBADAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="109" y="19" width="53" height="12" uuid="3b9eb78b-8d32-4a54-ac14-f1ca50d67902"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORASCONSUMIDAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="169" y="19" width="54" height="12" uuid="12dc0337-beaf-42c4-8ef9-c537c728361c"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORASAPROBADAST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="227" y="20" width="52" height="12" uuid="ab76e3cc-c7e0-44ac-b6b5-6df22fc1cb36"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORASCONSUMIDAST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="1" y="1" width="153" height="16" forecolor="#990000" uuid="0abe2b20-4c63-4854-9a19-1256cf16f652"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VENCIDOOVIGENTE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

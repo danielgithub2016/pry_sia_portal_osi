@@ -1,0 +1,127 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<style>
+.ui-tabs .ui-tabs-nav li a {
+	float: left;
+	padding: .0em 1em 0em 0em;
+	text-decoration: none;
+}
+</style>
+
+	<h:form id="wbucertificacionselect">
+		<p:panel>
+			<h:panelGrid columns="10" style="width:100%">
+				<h:outputLabel value="Entidad" />
+				<p:selectOneMenu style="width:100px">
+				</p:selectOneMenu>
+
+				<h:outputLabel value="Año" />
+				<p:inputText />
+
+				<h:outputLabel value="Estado" />
+				<p:selectBooleanCheckbox />
+				<p:selectOneMenu>
+				</p:selectOneMenu>
+
+				<p:commandButton value="Buscar" styleClass="botonTextoImagen"
+					icon="buscar" style="float:right" />
+
+				<p:commandButton value="Cancelar" styleClass="botonTextoImagen"
+					style="float:right" icon="cancelar" />
+			</h:panelGrid>
+
+		</p:panel>
+
+		<p:spacer width="1" height="10"></p:spacer>
+
+		<h:outputLabel value="Seleccione un registro con doble click"
+			style="font-size:11px; font-family:Open sans,sans-serif; font-weight: bold;color:#800000;margin:10px" />
+
+		<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+			paginator="true" paginatorPosition="bottom" scrollable="true"
+			scrollHeight="200" rows="20" scrollWidth="980"
+			tableStyle="width:970px" lazy="true"
+			currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+			paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+			<p:column headerText="Fase" width="20"
+				styleClass="columnatablaIzquierda">
+			</p:column>
+
+			<p:column headerText="Nro. Certificacion" width="60">
+			</p:column>
+
+			<p:column headerText="Secuencia" width="20"
+				styleClass="columnatablaCentro">
+			</p:column>
+
+			<p:column headerText="Documento" width="100"
+				styleClass="columnatablaCentro">
+			</p:column>
+
+			<p:column headerText="Fecha" width="15"
+				styleClass="columnatablaCentro">
+			</p:column>
+
+			<p:column headerText="Centro Costo" width="20"
+				styleClass="columnatablaCentro">
+			</p:column>
+
+			<p:column headerText="Monto Total" width="70"
+				styleClass="columnatablaCentro">
+			</p:column>
+
+			<p:column headerText="Estado" width="50"
+				styleClass="columnatablaCentro">
+			</p:column>
+
+			<p:column headerText="Periodo" width="50"
+				styleClass="columnatablaCentro">
+			</p:column>
+
+			<p:column headerText="Observacion" width="150">
+			</p:column>
+		</p:dataTable>
+				<p:spacer width="1" height="5"></p:spacer>
+
+		<p:tabView id="tabView" dynamic="true"
+			activeIndex="#{cwMaAcCostcenterSelectMaster.tabActivo}">
+			<p:ajax event="tabChange"
+				listener="#{cwMaAcCostcenterSelectMaster.onTabChange}" />
+
+			<p:tab id="tdetacertificacion">
+				<f:facet name="title">
+					<h:panelGrid columns="2">
+						<p:graphicImage
+							value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn2752.png" />
+						<h:outputText value="Detalle de la Certificación" />
+					</h:panelGrid>
+				</f:facet>
+				<ui:include src="tab_DetaCertificacion.xhtml" />
+			</p:tab>
+
+			<p:tab id="tsaldisponible">
+				<f:facet name="title">
+					<h:panelGrid columns="2">
+						<p:graphicImage
+							value="#{request.contextPath}/../comun/recursos/imagenes/mantenimiento/fn1080.bmp" />
+						<h:outputText value="Saldo Disponible" />
+					</h:panelGrid>
+				</f:facet>
+				<ui:include src="tab_SalDisponible.xhtml" />
+			</p:tab>
+
+
+		</p:tabView>
+
+
+
+	</h:form>
+</ui:composition>

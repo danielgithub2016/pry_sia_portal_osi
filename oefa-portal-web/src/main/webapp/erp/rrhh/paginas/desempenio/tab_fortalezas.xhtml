@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<p:remoteCommand autoRun="true" name="filtrarTable"
+		oncomplete="PF('tableFortalezas').filter()" />
+	<p:panelGrid columns="1" layout="grid" columnClasses="ui-grid-col-2"
+		styleClass="ui-panelgrid-blank">
+		<p:commandButton value="Agregar" styleClass="botonTextoImagen"
+			oncomplete="filtrarTable();" icon="nuevo"
+			disabled="#{cwHrEvaluacionempleadoEdit.opciones.p5cbagregar_disable}"
+			update=":frmEvaluacionEmpleado:tvDatos:dtFortalezas"
+			action="#{cwHrFortalezasDebilidades.nuevo}" style="float:right">
+
+			<f:setPropertyActionListener
+				target="#{cwHrFortalezasDebilidadesSelector.nombreContenedorRefrescar}"
+				value="frmEvaluacionEmpleado:tvDatos:dtFortalezas" />
+
+			<f:setPropertyActionListener
+				target="#{cwHrFortalezasDebilidadesSelector.nombreVentanaEmergente}"
+				value="popFortalezasDebilidades" />
+
+		</p:commandButton>
+
+	</p:panelGrid>
+
+	<p:dataTable emptyMessage="#{msg.generico_tabla_sinregistros}"
+		widgetVar="tableFortalezas" value="#{cwHrFortalezasDebilidades.dw5}"
+		var="lst" rowKey="#{lst.pk.secuencia}"
+		selection="#{cwHrFortalezasDebilidades.registroSeleccionado}"
+		style="#{cwHrEvaluacionempleadoEdit.opciones.dw5_disable ? 'pointer-events:none' : null}"
+		selectionMode="single" reflow="true" id="dtFortalezas"
+		currentPageReportTemplate=" #{msg.registros_tablas} : {totalRecords} - #{msg.registros_pagina} : {currentPage} #{msg.de_tablas} {totalPages} "
+		paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+							           {PageLinks} {NextPageLink} {LastPageLink} ">
+
+		<p:ajax event="rowSelect" />
+
+		<p:column headerText="Tipo" width="150">
+			<h:outputText value="#{lst.descripcionFoda}" />
+		</p:column>
+		<p:column headerText="Descripción" width="580">
+			<h:outputText value="#{lst.descripcion}" />
+		</p:column>
+
+		<p:column headerText="Acción" width="70"
+			styleClass="columnatablaCentro">
+
+			<p:panelGrid columns="2" layout="grid"
+				columnClasses="ui-grid-col-7,ui-grid-col-7"
+				styleClass="ui-panelgrid-blank">
+				<p:commandButton type="image" icon="editar"
+					action="#{cwHrFortalezasDebilidades.editar}"
+					update="dgFortalezasDebilidades">
+					<f:setPropertyActionListener
+						target="#{cwHrFortalezasDebilidades.registroSeleccionado}"
+						value="#{lst}" />
+
+				</p:commandButton>
+
+				<p:commandButton type="image" icon="eliminar"
+					action="#{cwHrFortalezasDebilidades.eliminar}"
+					disabled="#{cwHrEvaluacionempleadoEdit.opciones.p5cbeliminar_disable}"
+					oncomplete="filtrarTable();" title="Eliminar Registro"
+					update=":frmEvaluacionEmpleado:tvDatos:dtFortalezas">
+
+					<f:setPropertyActionListener
+						target="#{cwHrFortalezasDebilidades.registroSeleccionado}"
+						value="#{lst}" />
+				</p:commandButton>
+			</p:panelGrid>
+		</p:column>
+
+		<p:column headerText="" id="filtro" width="0"
+			filterBy="#{lst.eliminado}">
+			<f:facet name="filter">
+				<p:inputText value="N" style="height:1px;color:transparent;" />
+			</f:facet>
+		</p:column>
+
+		<f:facet name="footer">
+			<table style="border-color: transparent;"></table>
+		</f:facet>
+
+	</p:dataTable>
+
+</ui:composition>
+

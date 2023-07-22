@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+    <class name="net.royal.erp.rrhh.dominio.HrPuestofunciones" table="SGCORESYS.HR_PUESTOFUNCIONES">
+        <composite-id name="pk" class="net.royal.erp.rrhh.dominio.HrPuestofuncionesPk">
+            <key-property name="codigofuncion" type="integer">
+                <column name="CODIGOFUNCION" length="22" />
+            </key-property>
+            <key-property name="codigopuesto" type="integer">
+                <column name="CODIGOPUESTO" length="22" />
+            </key-property>
+        </composite-id>
+        <property name="funcion" type="string">
+            <column name="FUNCION" length="10" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="40" />
+        </property>
+        <property name="descripcioningles" type="string">
+            <column name="DESCRIPCIONINGLES" length="40" />
+        </property>
+        <property name="comentarios" type="string">
+            <column name="COMENTARIOS" length="600" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
+        <property name="unidadreplicacion" type="string">
+            <column name="UNIDADREPLICACION" length="4" />
+        </property>
+        <property name="factorparticipacion" type="integer">
+            <column name="FACTORPARTICIPACION" length="22" />
+        </property>
+    </class>
+</hibernate-mapping>
